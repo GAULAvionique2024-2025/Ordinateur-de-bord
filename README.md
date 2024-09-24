@@ -5,6 +5,8 @@
 
 Main Repo pour l'ODB du GAUL 2024-2025
 
+Le projet fonctionne avec un MCU (STM32F103C8) pairé avec un accéléromètre(ICM20602), un baromètre(BMP280), un Buzzer, un lecteur de carte SD(MEM2067), un module radio(L76LM33) et une LED RGB. Leur intégration permet ainsi de concevoir un ordinateur de bord qui répond auc besoins d'un lancement de fusée de type L4.
+
 [Explications plus en détail](./Documentation/Explications.md)
 
 ## Images de l'ODB

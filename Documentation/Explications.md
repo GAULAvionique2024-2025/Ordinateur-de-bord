@@ -1,5 +1,7 @@
 # Explication de l'ordinateur de bord
 
+Code de l'ODB1 du GAUL
+
 ```
 - header.flightmode (toujours 01)
 - header.pyro0 (toujours 0 car les igniters ne sont pas installées pour launch canada)
