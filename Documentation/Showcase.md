@@ -12,4 +12,10 @@ Programmation par l'éditeur du MCU STM32F103C8:
 
 ![Programmation du MCU](./Showcase/STM32_CubeIDE_MCU.png)
 
+Voici les résultats compilés de la première itération de l'ordinateur de bord (ODB1):
+
+![Analyse](./Showcase/Rocket_Flight_Analysis.png)
+
+[Figure Matlab](./Showcase/ODB1_Data.fig)
+
 Retour à la [page principale](../README.md)
