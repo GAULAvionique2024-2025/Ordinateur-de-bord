@@ -9,17 +9,18 @@ Main Repo pour l'ODB du GAUL 2024-2025
 
 ## Images de l'ODB
 
-[Showcase](./Documentation//Showcase.md)
+[Showcase](./Documentation/Showcase.md)
 
-![ODB1](./Documentation/Showcsae/ODB1_PCB.png)
+![ODB1](./Documentation/Showcase/ODB1_PCB.png)
 
 ## Documentation
 
-[Documentation](https://linktodocumentation)
+[Composantes](./Documentation/Composantes.md)
+[Drivers](./Documentation/Drivers.md)
 
 ## Autres
 
-[Roadmap](Documentation/Roadmap.md)
+[Roadmap](./Documentation/Roadmap.md)
 
 ## Acknowledgements
 
