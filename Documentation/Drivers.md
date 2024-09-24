@@ -3,14 +3,20 @@
 Voici une description des drivers programmés pour l'implémentation des composantes avec le IMU.
 
 ## Table des Matières
-1. [Driver GPIO](#driver-gpio)
-2. [Driver SPI](#driver-spi)
-3. [Driver USART](#driver-usart)
-4. [Driver CRC](#driver-crc)
-5. [Driver Baromètre (BMP280)](#driver-baromètre-bmp280)
-6. [Driver Buzzer](#driver-buzzer)
-7. [Driver Multiplexeur (CD74HC4051)](#driver-multiplexeur-cd74hc4051)
-8. [Driver Accéléromètre (ICM20602)](#driver-accéléromètre-icm20602)
+1.  [Driver GPIO](#driver-gpio)
+2.  [Driver SPI](#driver-spi)
+3.  [Driver USART](#driver-usart)
+4.  [Driver CRC](#driver-crc)
+5.  [Driver Baromètre (BMP280)](#driver-baromètre-bmp280)
+6.  [Driver Buzzer](#driver-buzzer)
+7.  [Driver Multiplexeur (CD74HC4051)](#driver-multiplexeur-cd74hc4051)
+8.  [Driver Accéléromètre (ICM20602)](#driver-accéléromètre-icm20602)
+9.  [Driver GPS (L76LM33)](#driver-gps-l76lm33)
+10. [Driver Lecteur de carte SD (MEM2067)](#driver-lecteur-de-carte-sd-mem2067)
+11. [Driver NMEA0183](#driver-nmea0183)
+12. [Driver RFD900x](#driver-rfd900x)
+13. [Driver Pyro](#driver-pyro)
+
 
 ---
 
@@ -324,7 +330,7 @@ bool isFunctional = Pyro_Check(&hadc1, PYRO_CHANNEL_1);
 ```
 Dans cet exemple, l'intégrité du pyrodispositif 1 est vérifiée.
 
-## Driver Accelerometre (ICM20602)
+## Driver Accéléromètre (ICM20602)
 
 Ce driver permet de configurer et d'utiliser le capteur d'accéléromètre et de gyroscope ICM20602 sur un microcontrôleur STM32. Il fournit des fonctions pour initialiser le périphérique, mettre à jour les données des capteurs, calibrer les capteurs et lire/écrire des données via SPI.
 
