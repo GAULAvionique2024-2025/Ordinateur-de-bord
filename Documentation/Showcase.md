@@ -2,7 +2,7 @@
 
 PCB de l'ordinateur de bord:
 
-![ODB1](./Showcsae/ODB1_PCB.png)
+![ODB1](./Showcase/ODB1_PCB.png)
 
 Interface de l'éditeur STM32CubeIDE:
 
