@@ -2,28 +2,32 @@
 
 Voici une description des drivers programmés pour l'implémentation des composantes avec le IMU.
 
-# Driver GPIO:
+## Table des Matières
+1. [Driver GPIO](#driver-gpio)
+2. [Driver SPI](#driver-spi)
+3. [Driver USART](#driver-usart)
+4. [Driver CRC](#driver-crc)
+5. [Driver Baromètre (BMP280)](#driver-baromètre-bmp280)
+6. [Driver Buzzer](#driver-buzzer)
+7. [Driver Multiplexeur (CD74HC4051)](#driver-multiplexeur-cd74hc4051)
+8. [Driver Accéléromètre (ICM20602)](#driver-accéléromètre-icm20602)
+
+---
+
+## Driver GPIO:
 
 Ce driver permet de gérer les ports GPIO (General Purpose Input/Output) sur un microcontrôleur STM32. Il fournit des fonctions pour initialiser les broches GPIO, lire leur état, écrire des valeurs et basculer leur état.
 
-- Définition broche GPIO
+### Configuration des Broches GPIO
 
-Le driver utilise plusieurs constantes pour définir la configuration des GPIO :
+- **Direction**: Mode d'une broche GPIO (Input, Output).
+- **Options d'une broche Input**: Type (Analogique, Push-Pull).
+- **Options d'une broche Output**: Type (Push-Pull, Open-drain, Alternative).
+- **États**: 
+  - `LOW`: État bas
+  - `HIGH`: État haut
 
-Direction:
-Détermine le mode d'une broche GPIO (Input, Output).
-
-Options d'une broche Input:
-Détermine l'option d'une broche de type Input selon le besoin (Analogique, Push-Pull).
-
-Option d'une broche Output:
-Détermine l'option d'une broche de type Output selon le besoin (Push-Pull, Open-drain, Alternative).
-
-États:
-LOW : État bas
-HIGH : État haut
-
-- Fonctions et explications du driver
+### Fonctions et explications du driver
 
 Voici une présentation des fonctions utilisées.
 
@@ -61,11 +65,11 @@ Write_GPIO(GPIOA, 5, HIGH);
 Dans cet exemple, l'état de PA5 est mis à HIGH.
 
 
-# Driver SPI:
+## Driver SPI:
 
 Ce driver permet de configurer et d'utiliser le protocole de communication SPI (Serial Peripheral Interface) sur un microcontrôleur STM32. Il fournit des fonctions pour initialiser le périphérique SPI, transmettre des données, recevoir des données, et effectuer des opérations de transmission/réception simultanées.
 
-- Fonctions et explications du driver
+### Fonctions et explications du driver
 
 ```
 void SPI_Init(SPI_TypeDef *SPIx)
@@ -124,11 +128,11 @@ if (result == 0) {
 }
 ```
 
-# Driver USART
+## Driver USART
 
 Ce driver permet de gérer les communications série via les périphériques USART (Universal Synchronous/Asynchronous Receiver-Transmitter) sur un microcontrôleur STM32. Il fournit des fonctions pour initialiser le périphérique USART, envoyer et recevoir des données en mode de sondage (polling).
 
-- Fonctions et explications du driver
+### Fonctions et explications du driver
 
 ```
 void USART_Init(USART_TypeDef *USARTx, uint16_t baudrate, uint16_t frequency_MHz)
@@ -167,7 +171,7 @@ if (USART_RX(USART1, buffer, sizeof(buffer)) < 0) {
 }
 ```
 
-- Détails techniques
+### Détails techniques
 
 Le registre de contrôle (CR1) est configuré pour activer la transmission (TE) et la réception (RE).
 La vitesse de transmission est définie par le registre BRR, calculée à partir de la fréquence d'horloge et du baudrate spécifié.
@@ -175,11 +179,11 @@ Le format de données est configuré pour 8 bits sans parité, avec un bit d'arr
 Un timeout est utilisé pour éviter que le programme ne se bloque indéfiniment lors de l'attente de la disponibilité des registres.
 Des messages d'erreur peuvent être gérés en vérifiant la valeur de retour des fonctions de transmission et de réception.
 
-# Driver CRC
+## Driver CRC
 
 Ce driver permet de calculer un code de contrôle de redondance cyclique sur 16 bits (CRC16) sur un tableau de données. Le CRC est une méthode utilisée pour détecter les erreurs dans les données transmises ou stockées.
 
-- Fonctions et explications du driver
+### Fonctions et explications du driver
 
 ```
 uint16_t CRC16_Calculate(uint8_t *data, uint8_t size)
@@ -192,11 +196,11 @@ int8_t message[] = {0x01, 0x02, 0x03, 0x04};
 uint16_t crc = CRC16_Calculate(message, sizeof(message));
 ```
 
-# Driver Baromètre (BMP280)
+## Driver Baromètre (BMP280)
 
 Le BMP280 est un capteur barométrique utilisé pour mesurer la pression atmosphérique et déterminer l'altitude. Ce driver permet de communiquer avec le BMP280 via SPI pour obtenir des mesures de température et de pression, et calculer l'altitude en conséquence.
 
-- Fonctions et explications du driver
+### Fonctions et explications du driver
 
 ```
 uint8_t BMP280_Init(BMP280 *dev)
@@ -254,11 +258,11 @@ uint8_t BMP280_SwapMode(uint8_t mode)
 ```
 Cette fonction change le mode de fonctionnement du BMP280 en consommation normal ou basse.
 
-# Driver Buzzer
+## Driver Buzzer
 
 Ce driver permet de contrôler un buzzer via un signal PWM (Modulation de Largeur d'Impulsion) sur un microcontrôleur STM32. Il est configuré avec différentes routines de son, telles que STOP, START, PENDING, ARMED et CRASH, chacune ayant des paramètres spécifiques comme le nombre de bips, la fréquence de départ et de fin, ainsi que des délais de pause et de modulation.
 
-- Fonctions et descriptions du driver
+### Fonctions et descriptions du driver
 
 ```
 void Buzz(TIM_TypeDef *TIMx, uint32_t channel, buzzRoutines_t routine)
@@ -270,11 +274,11 @@ Buzz(TIM2, LL_TIM_CHANNEL_CH1, START);
 ```
 Cela va produire un son avec les paramètres définis pour la routine START.
 
-# Driver Multiplexeur (CD74HC4051)
+## Driver Multiplexeur (CD74HC4051)
 
 Ce driver permet de contrôler un multiplexeur CD74HC4051 pour lire des tensions à partir de différents canaux d'entrée ainsi que pour tester des circuits pyrotechniques. Il utilise un microcontrôleur STM32 et communique avec des composants via des GPIO.
 
-- Définition broche GPIO
+### Définition broche GPIO
 
 Le driver utilise plusieurs constantes pour définir la configuration du multiplexeur :
 
@@ -284,7 +288,7 @@ PYRO_CHANNEL_0 et PYRO_CHANNEL_1 : Identifiants pour les différents pyrodisposi
 
 PYRO_CONTINUITY_THRESHOLD : Seuil pour déterminer si un pyrodispositif détecte une countinuité ou non.
 
-- Fonctions et explications du driver
+### Fonctions et explications du driver
 
 ```
 uint8_t CD74HC4051_Init(ADC_HandleTypeDef *hadc);
@@ -320,11 +324,11 @@ bool isFunctional = Pyro_Check(&hadc1, PYRO_CHANNEL_1);
 ```
 Dans cet exemple, l'intégrité du pyrodispositif 1 est vérifiée.
 
-# Driver Accelerometre (ICM20602)
+## Driver Accelerometre (ICM20602)
 
 Ce driver permet de configurer et d'utiliser le capteur d'accéléromètre et de gyroscope ICM20602 sur un microcontrôleur STM32. Il fournit des fonctions pour initialiser le périphérique, mettre à jour les données des capteurs, calibrer les capteurs et lire/écrire des données via SPI.
 
-- Fonctions et explications du driver
+### Fonctions et explications du driver
 
 ```
 uint8_t ICM20602_Init(ICM20602 *dev)
@@ -383,11 +387,11 @@ void ICM20602_Write(ICM20602 *dev, uint8_t address, uint8_t value)
 ```
 Cette fonction écrit une valeur dans un registre spécifique du capteur en utilisant SPI.
 
-# Driver GPS (L76LM33)
+## Driver GPS (L76LM33)
 
 Ce driver permet d'interagir avec le module GNSS L76LM33, utilisé pour obtenir la position (latitude, longitude) d'une fusée. Il gère la lecture des données via UART, le parsing des phrases NMEA, et le stockage des données dans une structure.
 
-- Fonctions et explications du driver
+### Fonctions et explications du driver
 
 ```
 int8_t L76LM33_Init(L76LM33 *L76_data, UART_HandleTypeDef *huart)
@@ -449,11 +453,11 @@ if (L76LM33_Send_Command(&gpsSensor, command, sizeof(command)) != L76LM33_OK) {
 }
 ```
 
-# Driver Lecteur de carte SD (MEM2067)
+## Driver Lecteur de carte SD (MEM2067)
 
 Le driver MEM2067 permet d'interagir avec une carte SD, en facilitant les opérations de lecture, écriture, et gestion des erreurs.
 
-- Fonctions et explications du driver
+### Fonctions et explications du driver
 
 ```
 uint8_t MEM2067_Mount(const char* filename);
@@ -512,19 +516,19 @@ if (result != FR_OK) {
 }
 ```
 
-# Driver NMEA0183
+## Driver NMEA0183
 
 Le driver NMEA0183 permet de parser une phrase NMEA de type RMC pour extraire l'heure, la latitude et la longitude.
 
-- Fonctions et explications du driver
+### Fonctions et explications du driver
 
 Ce driver permet de récupérer efficacement les informations de localisation à partir de phrases NMEA standard, facilitant l'intégration des données GPS dans votre projet.
 
-# Driver RFD900x
+## Driver RFD900x
 
 Le driver RFD900X permet d'initialiser et d'envoyer des données via un module de communication RFD900.
 
-- Fonctions et explications du driver
+### Fonctions et explications du driver
 
 ```
 uint8_t RFD900_Init(RFD900 *devRFD);
@@ -551,11 +555,11 @@ rfd900_device.crc = CalculateCRC(rfd900_device.data, rfd900_device.size);
 RFD900_Send(&rfd900_device);
 ```
 
-# Driver Pyro
+## Driver Pyro
 
 Le driver Pyro permet de contrôler des dispositifs pyrotechniques, comme des allumeurs, en utilisant des GPIO pour activer ou désactiver les signaux de déclenchement des parachûtes.
 
-- Fonctions et explications du driver
+### Fonctions et explications du driver
 
 ```
 void Pyro_Init(void);
