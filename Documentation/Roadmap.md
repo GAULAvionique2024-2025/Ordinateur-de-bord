@@ -73,6 +73,7 @@
   - Gestion du Mach lock
     - [ ] Développer la logique de gestion du Mach lock
     - [ ] Tester les transitions de Mach lock
+    - [ ] Définir les composantes à mettre sous le Mach lock
 - Baromètre
   - Mesure d'altitude
     - [ ] Écrire le driver pour le baromètre
