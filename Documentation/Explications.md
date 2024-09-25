@@ -2,9 +2,15 @@
 
 Ce document décrit le fonctionnement du code de l'ODB1 utilisé pour la fusée du GAUL.
 
+## 🌳 **Diagramme d'implémentation**
+
+Voici le diagramme qui montre la liaisons entres les différents modules de l'ordinateur de bord:
+
+Ajouter diagramme...
+
 ## 🛠️ **Données principales**
 
-Voici les différentes variables suivies par l'ordinateur de bord pendant le vol :
+Voici les différentes variables suivies par l'ordinateur de bord pendant le vol:
 
 ```bash
 - header.flightmode        : Mode de vol (toujours 01)
@@ -51,7 +57,7 @@ Le Mach lock est un mécanisme qui désactive le capteur barométrique lorsque l
 ## 🪂 **Informations sur les parachutes**
 
 ### **Drogue Chute**
-Le **drogue chute** est un petit parachute qui est déployé à l'apogée pour stabiliser la fusée pendant la descente sans provoquer trop de dérive à cause des vents.
+Le **drogue chute** est un petit parachute qui est déployé à l'apogée pour stabiliser la fusée pendant la descente sans provoquer trop de dérive à cause des vents en haute altitude.
 
 ### **Main Chute**
 Le **parachute principal** est déployé à basse altitude pour garantir un atterrissage en douceur et sécurisé près du site de récupération.
