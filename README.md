@@ -9,7 +9,7 @@ Ce projet met en œuvre un **MCU** en association avec divers capteurs et module
 ### **Composants Intégrés**
 L'intégration inclut :
 
-- **Accéléromètre**
+- **Accéléromètre / Gyroscope**
   Un capteur de mouvement qui fournit des données sur l'accélération et l'orientation de la fusée.
   
 - **Baromètre**
