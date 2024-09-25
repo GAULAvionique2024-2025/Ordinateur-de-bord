@@ -66,5 +66,5 @@ Pour les fonctionnalités à venir et les améliorations prévues, veuillez cons
 - [@SamLol12](https://github.com/SamLol12)
 - [@bestrider14](https://github.com/bestrider14)
 - [@mathouqc](https://github.com/mathouqc)
-
+- [Autres participants](./Documentation/Participants.md)
 ---
