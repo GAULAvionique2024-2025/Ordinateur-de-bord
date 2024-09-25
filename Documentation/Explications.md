@@ -6,7 +6,11 @@ Ce document décrit le fonctionnement du code de l'ODB1 utilisé pour la fusée 
 
 Voici le diagramme qui montre la liaisons entres les différents modules de l'ordinateur de bord:
 
-Ajouter diagramme...
+<div align="center">
+  
+![Diagramme](./Explications/Diagramme.png)
+
+</div>
 
 ## 🛠️ **Données principales**
 
