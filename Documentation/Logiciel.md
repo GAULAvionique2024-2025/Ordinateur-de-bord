@@ -4,11 +4,11 @@
 1. [Installation de STM32CubeIDE](#1-installation-de-stm32cubeide)
 2. [Ouvrir un projet existant à partir de fichiers système](#2-ouvrir-un-projet-existant-à-partir-de-fichiers-système)
 3. [Exploration de la structure des fichiers](#3-exploration-de-la-structure-des-fichiers)
-4. [Consoles Problems et Tasks](##8-consoles-problems-et-tasks)
-5. [Outils de Build](#4-outils-de-build)
-6. [Débogage avec ST-Link](#5-débogage-avec-st-link)
-7. [Exécution et Flash du programme](#6-exécution-et-flash-du-programme)
-8. [Autres indications importantes pour STM32CubeIDE](#7-autres-indications-importantes-pour-stm32cubeide)
+4. [Consoles Problems et Tasks](##4-consoles-problems-et-tasks)
+5. [Outils de Build](#5-outils-de-build)
+6. [Débogage avec ST-Link](#6-débogage-avec-st-link)
+7. [Exécution et Flash du programme](#7-exécution-et-flash-du-programme)
+8. [Autres indications importantes pour STM32CubeIDE](#8-autres-indications-importantes-pour-stm32cubeide)
 
 ---
 
