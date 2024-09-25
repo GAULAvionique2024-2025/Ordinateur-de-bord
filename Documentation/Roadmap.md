@@ -57,6 +57,70 @@
   - [ ] Établir une structure d'exécution des différents composants liés
   - [ ] Tester le chargement du firmware sur le prototype
 
+## 🌳 **Diagramme des composantes**
+
+- ICM20602 (Accéléromètre)
+  - Mesure d'accélération
+    - [ ] Écrire le driver pour le capteur
+    - [ ] Tester la fonctionnalité de mesure
+  - Détection de rotation
+    - [ ] Implémenter la fonction de détection de rotation
+    - [ ] Vérifier l'exactitude des données
+  - Orientation (roll, pitch)
+    - [ ] Intégrer les mesures d'orientation dans le code
+    - [ ] Tester les valeurs d'orientation
+- BMP280 (Baromètre)
+  - Mesure d'altitude
+    - [ ] Écrire le driver pour le baromètre
+    - [ ] Tester la précision des mesures d'altitude
+  - Mesure de température
+    - [ ] Implémenter la lecture de la température
+    - [ ] Vérifier la calibration du capteur
+  - Gestion du Mach lock
+    - [ ] Développer la logique de gestion du Mach lock
+    - [ ] Tester les transitions de Mach lock
+- GPS Module
+  - Latitude
+    - [ ] Écrire le driver pour le module GPS
+    - [ ] Tester la lecture de la latitude
+  - Longitude
+    - [ ] Tester la lecture de la longitude
+    - [ ] Vérifier la précision des coordonnées
+- Microcontrôleur (STM32)
+  - Traitement des données
+    - [ ] Établir l'organisation des fichiers et des modules
+    - [ ] Implémenter la boucle principale d'exécution
+  - Communication
+    - [ ] Configurer les protocoles de communication (ex: USART, SPI, I2C)
+    - [ ] Tester la communication entre les différents modules
+  - Gestion des capteurs
+    - [ ] Initialiser les composants matériels
+    - [ ] Implémenter les fonctions de lecture des capteurs
+- Carte SD
+  - Stockage des données
+    - [ ] Écrire les fonctions de sauvegarde des données
+    - [ ] Tester l'écriture sur la carte SD
+  - Récupération des données
+    - [ ] Développer les fonctions de lecture des données
+    - [ ] Tester la récupération des données stockées
+- Pyro0 (Drogue chute)
+  - Déclenchement à l'apogée
+    - [ ] Écrire le code pour le déclenchement
+    - [ ] Tester le mécanisme de déclenchement
+- Pyro1 (Main chute)
+  - Déclenchement à basse altitude
+    - [ ] Implémenter la logique de déclenchement
+    - [ ] Vérifier le fonctionnement à différentes altitudes
+- Alimentation (Batterie)
+  - [ ] Vérifier l'alimentation et les connexions
+  - [ ] Tester la durée de vie de la batterie
+- Indicateurs LED
+  - [ ] Développer le code pour contrôler les LEDs
+  - [ ] Tester les indications visuelles
+- Connecteurs
+  - [ ] Vérifier la compatibilité des connecteurs
+  - [ ] Tester la connectivité entre les composants
+
 ---
 
 🔙 Retour à la [page principale](../README.md)
