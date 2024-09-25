@@ -33,4 +33,5 @@ Le projet fonctionne avec un MCU (STM32F103C8) pairé avec un accéléromètre(I
 ## Authors
 
 - [@SamLol12](https://github.com/SamLol12)
+- [@bestrider14](https://github.com/bestrider14)
 
