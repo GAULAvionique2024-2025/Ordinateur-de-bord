@@ -1,5 +1,7 @@
 # 👤 **Participants au Projet**
 
+Liste de tous les membres actifs et collaborateurs à la réalisation du projet GAUL 2024-2025
+
 ## 👥 **Équipe de Développement**
 
 - **Samuel Gagnon**
