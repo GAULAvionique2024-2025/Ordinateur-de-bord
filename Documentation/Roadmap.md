@@ -1,6 +1,6 @@
 # 🛤️ **Roadmap de l'Ordinateur de Bord**
 
-## Objectifs à Déterminer
+## 🎯 **Objectifs à Déterminer**
 - À déterminer...
 
 ## 🛠️ **Conception du PCB**
