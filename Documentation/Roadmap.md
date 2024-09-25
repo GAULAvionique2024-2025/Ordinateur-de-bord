@@ -1,6 +1,7 @@
 # 🛤️ **Roadmap de l'Ordinateur de Bord**
 
 ## 🎯 **Objectifs à Déterminer**
+- ODB autonomne pouvant déclencher les pyros sans support CUTS
 - À déterminer...
 
 ## 🛠️ **Conception du PCB**
@@ -120,6 +121,16 @@
 - Connecteurs
   - [ ] Vérifier la compatibilité des connecteurs
   - [ ] Tester la connectivité entre les composants
+
+## 🐛 **Notes d'amélioration**
+
+L'itération de ce projet (ODB2) vis à améliorer la première version de se projet (ODB1).
+- Retirer module bluetooth N'est pas utile à longue portée.
+- Retirer LED RGB Remplacer par LEDS d'états individuels ou implémenter des états via des modulations sonores du buzzer.
+- Augmenter puissance radio
+- Modification des paramètres des composants onboard
+- Implémentation des modes de consommation énergétique
+- ...
 
 ---
 
