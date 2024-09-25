@@ -22,13 +22,12 @@ Liste de tous les membres actifs et collaborateurs à la réalisation du projet 
   - Rôle : [Rôle du collaborateur]
   - Contact : 📧 [email@example.com](mailto:email@example.com)
 
----
-
 ## 🙏 **Remerciements**
 
 **Commanditaires**
 
 ---
+
 <div style="display: flex; justify-content: space-around;">
   <img src="./Participants/Équipe_Maia.jpg" alt="ODB1" width="45%">
   <img src="./Participants/Équipe_Road.jpg" alt="Rocket Launch" width="45%">
