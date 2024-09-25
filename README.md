@@ -10,24 +10,31 @@ Ce projet met en œuvre un **MCU** en association avec divers capteurs et module
 L'intégration inclut :
 
 - **Accéléromètre / Gyroscope**
+  
   Un capteur de mouvement qui fournit des données sur l'accélération et l'orientation de la fusée.
   
 - **Baromètre**
+
   Mesure la pression atmosphérique, permettant de calculer l'altitude.
 
-- **Buzzer**  
+- **Buzzer**
+- 
   Utilisé pour signaler des événements critiques ou des alertes pendant le vol.
 
 - **Lecteur de carte SD**
+  
   Permet d'enregistrer les données de télémétrie pour une analyse ultérieure.
 
 - **Module GPS**
+  
   Fournit des données de position pour suivre la trajectoire de la fusée.
 
 - **Module radio externe**
+  
   Assure la communication en temps réel avec la station de contrôle au sol.
 
-- **LED RGB**  
+- **LED RGB**
+  
   Indique visuellement l'état du système (par exemple, prêt, en vol, erreur).
 
 L’ensemble forme un système de télémétrie complet, idéal pour monitorer les performances et la trajectoire d’une fusée en temps réel. Pour plus d'informations détaillées sur le fonctionnement de chaque composant, consultez [les explications détaillées](./Documentation/Explications.md).
