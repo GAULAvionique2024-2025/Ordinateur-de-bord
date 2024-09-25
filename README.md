@@ -1,4 +1,4 @@
-# **Ordinateur de Bord GAUL 2024-2025**
+# **Ordinateur de bord GAUL 2024-2025**
 
 ![GAUL Banner](Documentation/GAUL/logo-full.webp)
 
