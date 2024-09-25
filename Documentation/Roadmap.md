@@ -60,7 +60,7 @@
 
 ## 🌳 **Diagramme des composantes**
 
-- ICM20602 (Accéléromètre)
+- Accéléromètre / Gyroscope
   - Mesure d'accélération
     - [ ] Écrire le driver pour le capteur
     - [ ] Tester la fonctionnalité de mesure
@@ -70,16 +70,16 @@
   - Orientation (roll, pitch)
     - [ ] Intégrer les mesures d'orientation dans le code
     - [ ] Tester les valeurs d'orientation
-- BMP280 (Baromètre)
+  - Gestion du Mach lock
+    - [ ] Développer la logique de gestion du Mach lock
+    - [ ] Tester les transitions de Mach lock
+- Baromètre
   - Mesure d'altitude
     - [ ] Écrire le driver pour le baromètre
     - [ ] Tester la précision des mesures d'altitude
   - Mesure de température
     - [ ] Implémenter la lecture de la température
     - [ ] Vérifier la calibration du capteur
-  - Gestion du Mach lock
-    - [ ] Développer la logique de gestion du Mach lock
-    - [ ] Tester les transitions de Mach lock
 - GPS Module
   - Latitude
     - [ ] Écrire le driver pour le module GPS
@@ -104,11 +104,11 @@
   - Récupération des données
     - [ ] Développer les fonctions de lecture des données
     - [ ] Tester la récupération des données stockées
-- Pyro0 (Drogue chute)
+- Drogue chute
   - Déclenchement à l'apogée
     - [ ] Écrire le code pour le déclenchement
     - [ ] Tester le mécanisme de déclenchement
-- Pyro1 (Main chute)
+- Main chute
   - Déclenchement à basse altitude
     - [ ] Implémenter la logique de déclenchement
     - [ ] Vérifier le fonctionnement à différentes altitudes
@@ -118,6 +118,10 @@
 - Indicateurs LED
   - [ ] Développer le code pour contrôler les LEDs
   - [ ] Tester les indications visuelles
+- Buzzer
+  - [ ] Développer le code pour contrôler le buzzer
+  - [ ] Créer des modèles sonores pour déterminer le comportement de l'ODB
+  - [ ] Tester les modèles sonores dans différents états de l'ODB
 - Connecteurs
   - [ ] Vérifier la compatibilité des connecteurs
   - [ ] Tester la connectivité entre les composants
@@ -129,7 +133,7 @@ L'itération de ce projet (ODB2) vis à améliorer la première version de se pr
 - Retirer LED RGB Remplacer par LEDS d'états individuels ou implémenter des états via des modulations sonores du buzzer.
 - Augmenter puissance radio
 - Modification des paramètres des composants onboard
-- Implémentation des modes de consommation énergétique
+- Implémentation des modes de consommation énergétique (Fix ODB1)
 - ...
 
 ---
