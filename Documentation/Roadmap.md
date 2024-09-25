@@ -1,7 +1,13 @@
 # 🛤️ **Roadmap de l'Ordinateur de Bord**
 
+Liste en diagramme d'organisation de l'ordinateur de bord.
+
+## 📅 **Calendrier des tâches**
+
+Les tâches et réunions sont gérées via [le calendrier Teams Avionique](https://ulavaldti.sharepoint.com/sites/exch_fsg_0572/SitePages/Avionique.aspx). Cliquez pour accéder aux événements à venir.
+
 ## 🎯 **Objectifs à Déterminer**
-- ODB autonomne pouvant déclencher les pyros sans support CUTS
+- [ ] ODB autonomne pouvant déclencher les pyros sans support CUTS
 - À déterminer...
 
 ## 🛠️ **Conception du PCB**
