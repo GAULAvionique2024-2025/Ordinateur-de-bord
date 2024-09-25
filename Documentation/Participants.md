@@ -24,7 +24,7 @@ Liste de tous les membres actifs et collaborateurs à la réalisation du projet 
 
 ---
 
-## **Remerciements**
+## 🙏 **Remerciements**
 
 **Commanditaires**
 
