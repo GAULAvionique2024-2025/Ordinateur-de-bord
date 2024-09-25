@@ -26,10 +26,7 @@ Découvrez une galerie illustrant le design et l'implémentation de l'ordinateur
 
 <div style="display: flex; justify-content: space-around;">
   <img src="./Documentation/Showcase/ODB1_PCB.png" alt="ODB1" width="45%">
-  <video width="45%" controls>
-    <source src="./Documentation/Showcase/Rocket_Launch.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
+  <img src="./Documentation/Showcase/Rocket_Launch.jpg" alt="Rocket Launch" width="45%">
 </div>
 
 ## 📚 Documentation
