@@ -1,25 +1,38 @@
-# Ordinateur de Bord GAUL 2024-2025
+# **Ordinateur de Bord GAUL 2024-2025**
 
 ![GAUL Banner](Documentation/GAUL/logo-full.webp)
 
 **Main Repo pour l'ODB du GAUL**
 
-Ce projet met en œuvre un **STM32F103C8** en association avec divers capteurs et modules pour créer un ordinateur de bord performant, optimisé pour un lancement de fusée de type L4. L'intégration inclut :
+Ce projet met en œuvre un **MCU** en association avec divers capteurs et modules pour créer un ordinateur de bord performant, optimisé pour un lancement de fusée de type L4. Ce système embarqué est conçu pour collecter et analyser des données en temps réel, permettant ainsi une évaluation précise des performances de la fusée.
 
-- **Accéléromètre** : ICM20602
-- **Baromètre** : BMP280
-- **Buzzer**
-- **Lecteur de carte SD** : MEM2067
-- **Module GPS** : L76LM33
-- **Module radio externe** : RFD900x
-- **LED RGB**
+### **Composants Intégrés**
+L'intégration inclut :
 
-L’ensemble forme un système de télémétrie complet, idéal pour monitorer les performances et la trajectoire d’une fusée en temps réel.
+- **Accéléromètre**
+  Un capteur de mouvement qui fournit des données sur l'accélération et l'orientation de la fusée.
+  
+- **Baromètre**
+  Mesure la pression atmosphérique, permettant de calculer l'altitude.
 
-[Voir plus d'explications détaillées](./Documentation/Explications.md)
+- **Buzzer**  
+  Utilisé pour signaler des événements critiques ou des alertes pendant le vol.
+
+- **Lecteur de carte SD**
+  Permet d'enregistrer les données de télémétrie pour une analyse ultérieure.
+
+- **Module GPS**
+  Fournit des données de position pour suivre la trajectoire de la fusée.
+
+- **Module radio externe**
+  Assure la communication en temps réel avec la station de contrôle au sol.
+
+- **LED RGB**  
+  Indique visuellement l'état du système (par exemple, prêt, en vol, erreur).
+
+L’ensemble forme un système de télémétrie complet, idéal pour monitorer les performances et la trajectoire d’une fusée en temps réel. Pour plus d'informations détaillées sur le fonctionnement de chaque composant, consultez [les explications détaillées](./Documentation/Explications.md).
 
 ## 📷 Images de l'ODB
-
 Découvrez une galerie illustrant le design et l'implémentation de l'ordinateur de bord :
 
 [Voir la Showcase](./Documentation/Showcase.md)
@@ -30,25 +43,21 @@ Découvrez une galerie illustrant le design et l'implémentation de l'ordinateur
 </div>
 
 ## 📚 Documentation
-
 Toutes les informations sur les composants et les drivers sont disponibles ici :
 
 - [Composantes](./Documentation/Composantes.md)
 - [Drivers](./Documentation/Drivers.md)
 
 ## 🛠 Roadmap
-
-Pour les fonctionnalités à venir et les améliorations prévues :
-
-[Consultez la roadmap](./Documentation/Roadmap.md)
+Pour les fonctionnalités à venir et les améliorations prévues, veuillez consulter la [roadmap](./Documentation/Roadmap.md).
 
 ## 💡 Liens utiles
-
 - L'[ODB1](https://github.com/GAULAvionique2023-2024/ODB1_Firmware) pour voir la première itération de l'ordinateur de bord.
-- [deepbluembedded](https://deepbluembedded.com/stm32-arm-programming-tutorials/) pour ses tutos sur la programmation STM32.
+- [deepbluembedded](https://deepbluembedded.com/stm32-arm-programming-tutorials/) pour ses tutoriels sur la programmation STM32.
 
-## 👥 Auteurs et contributeurs
-
+## 👥 Auteurs et Contributeurs
 - [@SamLol12](https://github.com/SamLol12)
 - [@bestrider14](https://github.com/bestrider14)
 - [@mathouqc](https://github.com/mathouqc)
+
+---
