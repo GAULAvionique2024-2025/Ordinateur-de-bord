@@ -18,7 +18,7 @@ L'intégration inclut :
   Mesure la pression atmosphérique, permettant de calculer l'altitude.
 
 - **Buzzer**
-- 
+  
   Utilisé pour signaler des événements critiques ou des alertes pendant le vol.
 
 - **Lecteur de carte SD**
@@ -33,9 +33,9 @@ L'intégration inclut :
   
   Assure la communication en temps réel avec la station de contrôle au sol.
 
-- **LED RGB**
+- **Autres optionnels**
   
-  Indique visuellement l'état du système (par exemple, prêt, en vol, erreur).
+  ...
 
 L’ensemble forme un système de télémétrie complet, idéal pour monitorer les performances et la trajectoire d’une fusée en temps réel. Pour plus d'informations détaillées sur le fonctionnement de chaque composant, consultez [les explications détaillées](./Documentation/Explications.md).
 
