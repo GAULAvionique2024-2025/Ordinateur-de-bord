@@ -44,7 +44,7 @@ Pour les fonctionnalités à venir et les améliorations prévues :
 
 ## 💡 Liens utiles
 
-- [Ordinateur de bord 1](https://github.com/GAULAvionique2023-2024/ODB1_Firmware)
+- L'[ODB1](https://github.com/GAULAvionique2023-2024/ODB1_Firmware) pour voir la première itération de l'ordinateur de bord.
 - [deepbluembedded](https://deepbluembedded.com/stm32-arm-programming-tutorials/) pour ses tutos sur la programmation STM32.
 
 ## 👥 Auteurs et contributeurs
