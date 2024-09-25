@@ -37,6 +37,8 @@ Une fois l'apogée atteinte et la descente amorcée (Mach lock désactivé), la 
 
 Lorsque le drogue est déployé et que l'altitude passe en dessous d'une certaine hauteur déterminée par le baromètre, le charge du pyro1 (main chute)*** est déclenché.
 
+Les détailles concernant la description des [composantes](./Composantes.md)
+
 Les détailles concernant l'implémentation des composantes au niveau logiciel [Drivers](./Drivers.md)
 
 *Le Mach lock est un mécanisme utilisé principalement en aérospatiale pour désactiver les capteurs barométriques lorsque la fusée dépasse la vitesse du son (Mach 1). À ces vitesses supersoniques, les capteurs sensibles comme les baromètres peuvent devenir instables en raison des perturbations créées par les ondes de choc. Le Mach lock prévient l'acquisition de données erronées pendant cette phase. Une fois que la fusée ralentit sous Mach 1, le Mach lock est désactivé, et les capteurs peuvent reprendre des mesures fiables. Cela est souvent crucial pour les systèmes de mesure d'altitude ou de vitesse basés sur la pression. ​[Référence](https://www.rocketryforum.com/threads/mach-buster-rocket-kit-go-fast-on-a-budget.140413/)
