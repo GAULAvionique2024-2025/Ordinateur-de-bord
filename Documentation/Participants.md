@@ -1,6 +1,6 @@
 # 👤 **Participants au Projet**
 
-## **Équipe de Développement**
+## 👥 **Équipe de Développement**
 
 - **Samuel Gagnon**
   - Rôle : Directeur Ordinateur de bord
