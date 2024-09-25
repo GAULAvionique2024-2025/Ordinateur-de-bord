@@ -8,7 +8,15 @@ Voici le diagramme qui montre les liaisons entre les différents modules de l'or
 
 <div align="center">
   
-![Diagramme](./Explications/Diagramme.png)
+![Communications](./Explications/Diagramme_Communications.png)
+
+</div>
+
+Le diagramme suivant offre une vue d'ensemble des composants clés de l'ODB ainsi que leur rôle dans l'architecture globale:
+
+<div align="center">
+  
+![Structure](./Explications/Diagramme_Structure.png)
 
 </div>
 
@@ -21,7 +29,7 @@ Voici les différentes variables suivies par l'ordinateur de bord pendant le vol
 - header.pyro0             : 0 (igniters non connecté -> 0 sinon 1)
 - header.pyro1             : 0 (igniters non connecté -> 0 sinon 1)
 - header.accelerometer     : 0 si erreur avec l'ICM à l'initialisation, sinon 1
-- header.barometer         : 0 si erreur avec le BMP280 à l'initialisation, sinon 1
+- header.barometer         : 0 si erreur avec le baromètre à l'initialisation, sinon 1
 - header.gps_fix           : 1 si GPS a un fix avec les satellites
 - header.sd                : 0 si erreur avec la carte SD à l'initialisation, sinon 1
 
@@ -41,10 +49,10 @@ Voici les différentes variables suivies par l'ordinateur de bord pendant le vol
 
 ## ⚙️ **Fonctionnement**
 
-### **Accéléromètre (ICM20602)**
+### **Accéléromètre**
 L'accéléromètre est utilisé pour déterminer le mouvement de la fusée et son orientation en temps réel sur les trois axes (X, Y, Z).
 
-### **Baromètre (BMP280)**
+### **Baromètre**
 Le baromètre est utilisé pour déterminer si la fusée est en montée ou en descente. Il mesure également la température intérieure de la fusée. Lorsque la fusée dépasse une certaine vitesse, un **Mach lock** logiciel est activé, désactivant le baromètre pendant la phase supersonique. 
 
 ### **Mach Lock** 
