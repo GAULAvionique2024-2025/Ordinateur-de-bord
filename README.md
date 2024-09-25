@@ -59,7 +59,7 @@ Toutes les informations sur les composants et les drivers sont disponibles ici :
 Pour les fonctionnalités à venir et les améliorations prévues, veuillez consulter la [roadmap](./Documentation/Roadmap.md).
 
 ## 💡 Liens utiles
-- L'[ODB1](https://github.com/GAULAvionique2023-2024/ODB1_Firmware) pour voir la première itération de l'ordinateur de bord.
+- pour voir la première itération de l'ordinateur de bord, voir le projet [ODB1](https://github.com/GAULAvionique2023-2024/ODB1_Firmware).
 - L'environnement de développement intégré pour STM32 est [STM32CubeIDE](https://www.st.com/en/development-tools/stm32cubeide.html).
 - [deepbluembedded](https://deepbluembedded.com/stm32-arm-programming-tutorials/) pour ses tutoriels sur la programmation STM32.
 
