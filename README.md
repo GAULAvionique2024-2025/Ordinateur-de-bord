@@ -2,11 +2,11 @@
 
 ![GAUL Banner](Documentation/GAUL/logo-full.webp)
 
-**Main Repo pour l'ODB du GAUL**
+## 🌟 **Main Repo pour l'ODB du GAUL**
 
 Ce projet met en œuvre un **MCU** en association avec divers capteurs et modules pour créer un ordinateur de bord performant, optimisé pour un lancement de fusée de type L4. Ce système embarqué est conçu pour collecter et analyser des données en temps réel, permettant ainsi une évaluation précise des performances de la fusée.
 
-### **Composants Intégrés**
+## 📦 **Composants Intégrés**
 L'intégration inclut :
 
 - **Accéléromètre / Gyroscope**
