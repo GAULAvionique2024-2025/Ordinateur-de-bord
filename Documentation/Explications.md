@@ -1,4 +1,4 @@
-# 🛰️ Explication de l'Ordinateur de Bord
+# 🛰️ **Explication de l'Ordinateur de Bord**
 
 Ce document décrit le fonctionnement du code de l'ODB1 utilisé pour la fusée du GAUL.
 

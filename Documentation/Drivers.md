@@ -2,7 +2,7 @@
 
 Cette section présente une description des drivers programmés pour l'implémentation des composantes avec le IMU.
 
-## Table des Matières
+## **Table des Matières**
 1.  [Driver GPIO](#driver-gpio)
 2.  [Driver SPI](#driver-spi)
 3.  [Driver USART](#driver-usart)
