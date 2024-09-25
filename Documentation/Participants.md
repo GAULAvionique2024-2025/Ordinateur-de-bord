@@ -14,16 +14,18 @@
 
 - **Nom du Collaborateur**
   - Rôle : [Rôle du collaborateur]
-  - Contact : [email@example.com](mailto:email@example.com)
+  - Contact : 📧 [email@example.com](mailto:email@example.com)
 
 - **Nom du Collaborateur**
   - Rôle : [Rôle du collaborateur]
-  - Contact : [email@example.com](mailto:email@example.com)
+  - Contact : 📧 [email@example.com](mailto:email@example.com)
+
+---
 
 ## **Remerciements**
 
-Commanditaires
+**Commanditaires**
 
 Un grand merci à tous les participants pour leur collaboration et leur engagement dans ce projet !
 
-
+🔙 Retour à la [page principale](../README.md)
