@@ -4,7 +4,7 @@ Ce document décrit le fonctionnement du code de l'ODB1 utilisé pour la fusée 
 
 ## 🌳 **Diagramme d'implémentation**
 
-Voici le diagramme qui montre la liaisons entres les différents modules de l'ordinateur de bord:
+Voici le diagramme qui montre les liaisons entre les différents modules de l'ordinateur de bord:
 
 <div align="center">
   
@@ -45,7 +45,7 @@ Voici les différentes variables suivies par l'ordinateur de bord pendant le vol
 L'accéléromètre est utilisé pour déterminer le mouvement de la fusée et son orientation en temps réel sur les trois axes (X, Y, Z).
 
 ### **Baromètre (BMP280)**
-Le baromètre est utilisé pour déterminer si la fusée est en montée ou en descente. Il mesure également la température à l'intérieur de la fusée. Lorsque la fusée dépasse une certaine vitesse, le **Mach lock** est activé, désactivant le baromètre pendant la phase supersonique. 
+Le baromètre est utilisé pour déterminer si la fusée est en montée ou en descente. Il mesure également la température intérieure de la fusée. Lorsque la fusée dépasse une certaine vitesse, un **Mach lock** logiciel est activé, désactivant le baromètre pendant la phase supersonique. 
 
 ### **Mach Lock** 
 Le Mach lock est un mécanisme qui désactive le capteur barométrique lorsque la fusée dépasse Mach 1, rendant le baromètre instable à ces vitesses. Une fois la vitesse redescendue sous Mach 1, le baromètre se réactive.
@@ -55,16 +55,16 @@ Le Mach lock est un mécanisme qui désactive le capteur barométrique lorsque l
 - **Pyro1 (Main chute)** : Déclenché à basse altitude pour ralentir la fusée avant l'atterrissage.
 
 ## 📄 **Documentation complémentaire**
-- [Composantes](./Composantes.md) : Détails sur les composants matériels utilisés.
-- [Drivers](./Drivers.md) : Explication du code des pilotes logiciels.
+- [Composantes](./Composantes.md) : Détails sur les composantes matérielles utilisées.
+- [Drivers](./Drivers.md) : Explications du code des drivers logiciels.
 
 ## 🪂 **Informations sur les parachutes**
 
 ### **Drogue Chute**
-Le **drogue chute** est un petit parachute qui est déployé à l'apogée pour stabiliser la fusée pendant la descente sans provoquer trop de dérive à cause des vents en haute altitude.
+Le **drogue chute** est un petit parachute qui est déployé à l'apogée pour stabiliser la fusée pendant la descente pour éviter trop de dérive à cause des vents en haute altitude.
 
 ### **Main Chute**
-Le **parachute principal** est déployé à basse altitude pour garantir un atterrissage en douceur et sécurisé près du site de récupération.
+Le **parachute principal** est déployé à basse altitude pour garantir un atterrissage en douceur et en toute sécurisé près du site de lancement.
 
 ## 📘 **Références**
 - [Explication du Mach Lock](https://www.rocketryforum.com/threads/mach-buster-rocket-kit-go-fast-on-a-budget.140413/)
