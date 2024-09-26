@@ -56,7 +56,7 @@ L'accéléromètre est utilisé pour déterminer le mouvement de la fusée et so
 Le baromètre est utilisé pour déterminer si la fusée est en montée ou en descente. Il mesure également la température intérieure de la fusée. Lorsque la fusée dépasse une certaine vitesse, un **Mach lock** logiciel est activé, désactivant le baromètre pendant la phase supersonique. 
 
 ### **Mach Lock** 
-Le Mach lock est un mécanisme qui désactive le capteur barométrique lorsque la fusée dépasse Mach 1, rendant le baromètre instable à ces vitesses. Une fois la vitesse redescendue sous Mach 1, le baromètre se réactive.
+Un Mach lock pour une fusée est une fonctionnalité de sécurité utilisée dans le système de contrôle de vol. Le terme "Mach" fait référence au nombre de Mach, qui mesure la vitesse par rapport à la vitesse du son. Le Mach lock est activé lorsque la fusée dépasse une certaine vitesse supersonique (généralement à Mach 1 ou plus) et désactive certains modules ou commandes implémentées dans le système. Cela permet de **prévenir les erreurs de mesure** dans les cas où des capteurs sont moins fiables à haute vitesse en raison des turbulences ou de la chaleur extrême. Le Mach lock permet d'éviter l'utilisation de ces données à ce moment critique et ainsi, limiter les comportements inattendus du système. Une fois que la fusée redescend sous une certaine **vitesse** (inférieure au nombre de Mach défini), le lock peut être désactivé, permettant à nouveau l'utilisation des commandes et des capteurs concernés.
 
 ### **Déclenchement des charges pyrotechniques**
 - **Pyro0 (Drogue chute)** : Déclenché à l'apogée lorsque la fusée commence sa descente.
@@ -75,8 +75,9 @@ Le **drogue chute** est un petit parachute qui est déployé à l'apogée pour s
 Le **parachute principal** est déployé à basse altitude pour garantir un atterrissage en douceur et en toute sécurisé près du site de lancement.
 
 ## 📘 **Références**
-- [Explication du Mach Lock](https://www.rocketryforum.com/threads/mach-buster-rocket-kit-go-fast-on-a-budget.140413/)
-
+- Explication du Mach Lock - Définition générale et contexte: [lien](https://fr.wikipedia.org/wiki/Nombre_de_Mach)
+- Effets de la vitesse supersonique sur les capteurs embarqués: [lien](https://www.grc.nasa.gov/www/k-12/airplane/mach.html)
+- Détection d'Apogee avec filtre de Kalman pour ordinateur de vol : [lien](./Explications/DetectionApogeewithKalmanFilter.pdf)
 ---
 
 🔙 Retour à la [page principale](../README.md)
