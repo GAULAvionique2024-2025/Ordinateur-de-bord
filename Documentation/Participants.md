@@ -35,4 +35,6 @@ Liste de tous les membres actifs et collaborateurs à la réalisation du projet 
 
 Un grand merci à tous les participants pour leur collaboration et leur engagement dans ce projet !
 
+---
+
 🔙 Retour à la [page principale](../README.md)
