@@ -77,4 +77,6 @@ Le **parachute principal** est déployé à basse altitude pour garantir un atte
 ## 📘 **Références**
 - [Explication du Mach Lock](https://www.rocketryforum.com/threads/mach-buster-rocket-kit-go-fast-on-a-budget.140413/)
 
+---
+
 🔙 Retour à la [page principale](../README.md)
