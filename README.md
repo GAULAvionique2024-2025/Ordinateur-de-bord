@@ -1,6 +1,6 @@
 # **Ordinateur de bord GAUL 2024-2025**
 
-![GAUL Banner](Documentation/GAUL/GAUL_Logo_Animated.gif)
+![GAUL Banner](Documentation/GAUL/logo-full.webp)
 
 ## 🌟 **Main Repo pour l'ODB du GAUL**
 
