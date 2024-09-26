@@ -2,6 +2,8 @@
 
 <h1 align="center">Ordinateur de bord GAUL 2024-2025</h1>
 
+![Visitors](https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fgithub.com%2FGAULAvionique2024-2025%2FOrdinateur-de-bord&label=Visiteurs&labelColor=%23697689&countColor=%23f47373&style=flat)
+
 ## 🌟 **Main Repo pour l'ODB du GAUL**
 
 Ce projet met en œuvre un **MCU** associé à divers capteurs et modules pour créer un ordinateur de bord performant, optimisé pour un lancement de fusée de type L4. Ce système embarqué est conçu pour collecter et analyser des données en temps réel, permettant ainsi une évaluation précise des performances de la fusée.
