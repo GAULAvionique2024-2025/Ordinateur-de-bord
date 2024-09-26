@@ -82,4 +82,6 @@ Le bouton poussoir permet de démarrer ou d'arrêter manuellement certaines fonc
 
 La liste des autres composantes et leurs documentations techniques se trouvent [ici](./Composantes/).
 
+---
+
 🔙 Retour à la [page principale](../README.md).
