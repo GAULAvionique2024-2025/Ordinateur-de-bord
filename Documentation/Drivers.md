@@ -645,5 +645,6 @@ Pyro_Fire(armed, pyro_to_fire);
 - **Sécurité** : Le contrôle des dispositifs pyrotechniques nécessite des mesures de sécurité rigoureuses. Le driver inclut un mécanisme pour s'assurer que le système est en état "armé" avant de tirer. Cela évite des activations accidentelles. Il est crucial que la variable `armed` soit vérifiée avant d'envoyer un signal pour activer les dispositifs pyrotechniques.
 - **Gestion des GPIO** : Le driver configure les GPIO utilisés pour le déclenchement des dispositifs. Les pins doivent être initialisées en mode sortie et mises dans un état de repos lors de l'initialisation. Cela permet d'assurer que les dispositifs ne s'activent pas de manière inattendue. Après le tir, les GPIO sont désactivées pour éviter toute activation continue.
 
+---
 
 🔙 Retour à la [page principale](../README.md).
