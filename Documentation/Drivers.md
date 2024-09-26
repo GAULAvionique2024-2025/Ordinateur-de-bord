@@ -43,6 +43,7 @@ void Init_GPIO(GPIO_TypeDef *port, unsigned short pin, unsigned short dir, unsig
 Cette fonction initialise un port GPIO en spécifiant le port, la broche, la direction et l'option souhaitées.
 ```
 Exemple
+
 Init_GPIO(GPIOA, 5, OUT10, O_GP_PP);
 ```
 Ici, la broche PA5 est configurée pour être une sortie à une vitesse de 10MHz en mode push-pull.
@@ -53,6 +54,7 @@ int Read_GPIO(GPIO_TypeDef *port, unsigned short pin)
 Cette fonction lit l'état d'une broche GPIO en mode Input et renvoie HIGH(1) ou LOW(0).
 ```
 Exemple
+
 int state = Read_GPIO(GPIOA, 5);
 if (state == HIGH) {
     // L'état est HIGH
@@ -66,6 +68,7 @@ void Write_GPIO(GPIO_TypeDef *port, unsigned short pin, unsigned short state)
 Cette fonction écrit un état HIGH(1) ou LOW(0) sur une broche GPIO.
 ```
 Exemple
+
 Write_GPIO(GPIOA, 5, HIGH);
 ```
 Dans cet exemple, l'état de PA5 est mis à HIGH.
@@ -83,6 +86,7 @@ void SPI_Init(SPI_TypeDef *SPIx)
 Cette fonction initialise le périphérique SPI spécifié (SPI1 ou SPI2). Elle configure les broches GPIO nécessaires pour le fonctionnement du SPI, y compris le CS (Chip Select), le CLK (horloge), le MISO (Master In Slave Out) et le MOSI (Master Out Slave In).
 ```
 Exemple
+
 SPI_Init(SPI1);
 ```
 Dans cet exemple, le périphérique SPI1 est initialisé avec les broches appropriées.
@@ -93,6 +97,7 @@ int SPI_TX(SPI_TypeDef *SPIx, uint8_t *data, int size)
 Cette fonction transmet un tableau de données via SPI. Elle envoie chaque octet de données en attendant que le buffer TX soit vide avant d'écrire le prochain octet.
 ```
 Exemple
+
 uint8_t txData[] = {0xAA, 0xBB, 0xCC};
 int result = SPI_TX(SPI1, txData, sizeof(txData));
 if (result == 0) {
@@ -108,6 +113,7 @@ int SPI_RX(SPI_TypeDef *SPIx, uint8_t *data, int size)
 Cette fonction reçoit des données via SPI. Elle envoie un octet "dummy" pour générer l'horloge nécessaire à la réception des données.
 ```
 Exemple
+
 uint8_t rxData[3];
 int result = SPI_RX(SPI1, rxData, sizeof(rxData));
 if (result == 0) {
