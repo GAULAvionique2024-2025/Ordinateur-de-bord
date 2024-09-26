@@ -1,6 +1,6 @@
-# **Ordinateur de bord GAUL 2024-2025**
+[![MasterHead](Documentation/GAUL/logo-full.webp)](https://gaulspace.web.app/home)
 
-![GAUL Banner](Documentation/GAUL/logo-full.webp)
+<h1 align="center">Ordinateur de bord GAUL 2024-2025</h1>
 
 ## 🌟 **Main Repo pour l'ODB du GAUL**
 
