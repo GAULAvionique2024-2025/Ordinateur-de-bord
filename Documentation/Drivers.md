@@ -73,6 +73,13 @@ Write_GPIO(GPIOA, 5, HIGH);
 ```
 Dans cet exemple, l'état de PA5 est mis à HIGH.
 
+### Détails techniques
+
+- **Initialisation des GPIO**: La fonction `Init_GPIO` configure le registre de configuration des broches (MODER) pour définir la direction (entrée ou sortie) et d'autres paramètres comme le type de sortie (push-pull, open-drain).
+- **Lecture des GPIO**: La fonction `Read_GPIO` interroge le registre d'entrée des GPIO (IDR) pour déterminer l'état actuel de la broche.
+- **Écriture des GPIO**: La fonction `Write_GPIO` modifie le registre de sortie des GPIO (ODR) pour changer l'état de la broche.
+- **Configurations possibles**: Les broches GPIO peuvent être configurées en mode analogique, numérique, ou en modes alternatifs pour diverses fonctions. La vitesse de commutation est également déterminée par des réglages dans les registres appropriés.
+- **Sécurité et précautions**: Les entrées doivent être correctement dimensionnées pour éviter d'endommager le microcontrôleur. Les résistances de tirage peuvent être nécessaires pour les entrées.
 
 ## **Driver SPI**:
 
@@ -139,6 +146,14 @@ if (result == 0) {
     // Erreur lors de la transmission/réception
 }
 ```
+
+### Détails techniques
+
+- **Initialisation SPI**: La fonction `SPI_Init` configure les registres de contrôle (CR1 et CR2) pour établir la vitesse de l'horloge, le mode de fonctionnement (master/slave), ainsi que le mode de transmission (CPOL, CPHA).
+- **Transmission des données**: La fonction `SPI_TX` utilise le registre de données (DR) pour écrire les octets à transmettre. Elle attend que le buffer de transmission soit prêt avant d'écrire un nouvel octet.
+- **Réception des données**: La fonction `SPI_RX` envoie un octet "dummy" pour générer l'horloge SPI, ce qui permet de synchroniser la réception des données à partir du périphérique esclave.
+- **Transmission/Réception simultanées**: La fonction `SPI_TransmitReceive` permet d'effectuer une communication pleine duplex en utilisant les buffers TX et RX, ce qui optimise les opérations de communication.
+- **Gestion des erreurs**: Chaque fonction de communication retourne un code d'état pour indiquer le succès ou l'échec de l'opération, permettant ainsi une gestion des erreurs appropriée.
 
 ## **Driver USART**:
 
@@ -208,6 +223,13 @@ int8_t message[] = {0x01, 0x02, 0x03, 0x04};
 uint16_t crc = CRC16_Calculate(message, sizeof(message));
 ```
 
+### Détails techniques
+
+- **Initialisation du registre CRC**: La fonction commence par initialiser le registre CRC à une valeur prédéfinie (généralement 0xFFFF ou 0x0000) pour assurer un calcul correct.
+- **Calcul du CRC**: Pour chaque octet du tableau de données, le CRC est mis à jour en appliquant une série d'opérations logiques (généralement XOR et décalages) basées sur un polynôme prédéfini, qui détermine la forme du CRC.
+- **Retour du résultat**: À la fin du traitement de tous les octets, le résultat final du CRC est renvoyé sous forme d'un entier non-signé de 16 bits, prêt à être utilisé pour la vérification de l'intégrité des données.
+- **Utilisation du CRC**: Le CRC calculé peut être comparé à un CRC pré-calculé lors de la réception des données pour vérifier leur intégrité. Si les deux valeurs sont identiques, cela indique que les données n'ont pas été altérées.
+
 ## **Driver Baromètre (BMP280)**:
 
 Le BMP280 est un capteur barométrique utilisé pour mesurer la pression atmosphérique et déterminer l'altitude. Ce driver permet de communiquer avec le BMP280 via SPI pour obtenir des mesures de température et de pression, et calculer l'altitude en conséquence.
@@ -270,6 +292,15 @@ uint8_t BMP280_SwapMode(uint8_t mode)
 ```
 Cette fonction change le mode de fonctionnement du BMP280 en consommation normal ou basse.
 
+### Détails techniques
+
+- **Initialisation**: Lors de l'initialisation, le driver configure la communication SPI en s'assurant que le capteur est correctement connecté et que les broches CS, CLK, MISO et MOSI sont bien configurées.
+- **Lecture des mesures**: Les fonctions de lecture récupèrent les valeurs de température et de pression en accédant aux registres internes du BMP280. Ces valeurs sont ensuite compensées en fonction des données de calibration lues précédemment.
+- **Calcul de l'altitude**: La conversion de la pression en altitude utilise la formule barométrique, prenant en compte la pression au niveau de la mer. La pression est convertie de pascals à hPa (hectopascals) en divisant par 100.0f.
+- **Gestion des modes**: Le BMP280 peut fonctionner en mode normal ou basse consommation. La fonction `BMP280_SwapMode` permet de changer entre ces modes, affectant la fréquence des mesures et la consommation d'énergie.
+- **Erreurs potentielles**: Lors de l'initialisation et des lectures, il est important de gérer les erreurs, telles que les échecs de communication SPI ou des valeurs invalides lues à partir des registres.
+
+
 ## **Driver Buzzer**:
 
 Ce driver permet de contrôler un buzzer via un signal PWM (Modulation de Largeur d'Impulsion) sur un microcontrôleur STM32. Il est configuré avec différentes routines de son, telles que STOP, START, PENDING, ARMED et CRASH, chacune ayant des paramètres spécifiques comme le nombre de bips, la fréquence de départ et de fin, ainsi que des délais de pause et de modulation.
@@ -286,19 +317,21 @@ Buzz(TIM2, LL_TIM_CHANNEL_CH1, START);
 ```
 Cela va produire un son avec les paramètres définis pour la routine START.
 
+### Détails techniques
+
+- **Configuration PWM**: Le driver configure le Timer (TIMx) spécifié pour générer un signal PWM. Les canaux peuvent être configurés pour différents types de modulation afin de produire des sons variés en ajustant la fréquence et le rapport cyclique.
+
 ## **Driver Multiplexeur (CD74HC4051)**:
 
 Ce driver permet de contrôler un multiplexeur CD74HC4051 pour lire des tensions à partir de différents canaux d'entrée ainsi que pour tester des circuits pyrotechniques. Il utilise un microcontrôleur STM32 et communique avec des composants via des GPIO.
 
-### Définition broche GPIO
+### Définition configuration MUX
 
 Le driver utilise plusieurs constantes pour définir la configuration du multiplexeur :
 
-CHANNEL_0 à CHANNEL_7 : Identifiants pour les différents canaux du multiplexeur.
-
-PYRO_CHANNEL_0 et PYRO_CHANNEL_1 : Identifiants pour les différents pyrodispositifs.
-
-PYRO_CONTINUITY_THRESHOLD : Seuil pour déterminer si un pyrodispositif détecte une countinuité ou non.
+- CHANNEL_0 à CHANNEL_7 : Identifiants pour les différents canaux du multiplexeur.
+- PYRO_CHANNEL_0 et PYRO_CHANNEL_1 : Identifiants pour les différents pyrodispositifs.
+- PYRO_CONTINUITY_THRESHOLD : Seuil pour déterminer si un pyrodispositif détecte une countinuité ou non.
 
 ### Fonctions et explications du driver
 
@@ -335,6 +368,13 @@ Exemple
 bool isFunctional = Pyro_Check(&hadc1, PYRO_CHANNEL_1);
 ```
 Dans cet exemple, l'intégrité du pyrodispositif 1 est vérifiée.
+
+### Détails techniques
+
+- **Type de Multiplexeur** : CD74HC4051 est un multiplexeur/démultiplexeur analogique 8:3 qui permet de sélectionner un des 8 canaux de sortie.
+- **Configuration GPIO** : Lors de l'initialisation (`CD74HC4051_Init`), les GPIO nécessaires pour le contrôle du multiplexeur et des dispositifs pyrotechniques sont configurées. Les pins de sélection de canal (MUL_S0, MUL_S1, MUL_S2) sont configurées en sortie, et la pin de contrôle **MUL_E** est configurée avec une résistance de pull-up, ce qui la maintient à un état **HIGH** par défaut. Cela permet de désactiver le multiplexeur lorsque le système est en repos. Seuls les canaux valides (0-6) sont utilisés, les canaux 1 et 7 non.
+- **Contrôle des dispositifs pyrotechniques** : Avant de lire un canal, le driver peut activer un dispositif pyrotechnique associé. La fonction `Pyro_Check` permet de tester la continuité d'un canal pyro en utilisant le multiplexeur et en vérifiant la valeur ADC retournée. Cela garantit que le dispositif fonctionne comme prévu.
+- **Lecture de l'ADC** : Pour lire les valeurs analogiques, la fonction `ADC_Sampling` est utilisée après avoir réactivé le multiplexeur. La valeur lue est ensuite convertie en millivolts en utilisant la référence de tension fournie (`vref`).
 
 ## **Driver Accéléromètre (ICM20602)**:
 
@@ -465,6 +505,11 @@ if (L76LM33_Send_Command(&gpsSensor, command, sizeof(command)) != L76LM33_OK) {
 }
 ```
 
+### Détails techniques
+
+- **Configuration PMTK** : Le module L76LM33 utilise les commandes PMTK pour configurer les paramètres de fonctionnement.
+- **Conversion NMEA0183** : Les données reçues du L76LM33 sont formatées selon le standard NMEA 0183. Le message GPRMC fournit des informations essentielles telles que la date, l'heure, la latitude, la longitude, la vitesse et le cap. Le parsing de ces données implique l'extraction de chaque champ du message NMEA pour une utilisation ultérieure dans l'application.
+
 ## **Driver Lecteur de carte SD (MEM2067)**:
 
 Le driver MEM2067 permet d'interagir avec une carte SD, en facilitant les opérations de lecture, écriture, et gestion des erreurs.
@@ -528,6 +573,11 @@ if (result != FR_OK) {
 }
 ```
 
+### Détails techniques
+
+- **Intégration de FATFS dans les middleware du STM32** : Ce driver utilise la bibliothèque FATFS, intégrée dans les middleware du STM32, pour gérer le système de fichiers sur la carte SD. FATFS fournit une interface standard pour accéder aux fichiers et permet de travailler avec des systèmes de fichiers FAT. L'intégration dans les middleware facilite l'utilisation des fonctions de gestion de fichiers, offrant une abstraction de bas niveau pour interagir avec la carte SD sans avoir à gérer directement les détails matériels.
+- **Format de fichier** : Le code génère par défaut un classeur .csv organiser selon le type de données pour facilité le traitement de toutes les données enregistrées.
+
 ## **Driver NMEA0183**:
 
 Le driver NMEA0183 permet de parser une phrase NMEA de type RMC pour extraire l'heure, la latitude et la longitude.
@@ -589,5 +639,11 @@ bool armed = true; // Exemple d'état armé
 char pyro_to_fire = 0; // Exemple de pyrotechnique à tirer
 Pyro_Fire(armed, pyro_to_fire);
 ```
+
+### Détails techniques
+
+- **Sécurité** : Le contrôle des dispositifs pyrotechniques nécessite des mesures de sécurité rigoureuses. Le driver inclut un mécanisme pour s'assurer que le système est en état "armé" avant de tirer. Cela évite des activations accidentelles. Il est crucial que la variable `armed` soit vérifiée avant d'envoyer un signal pour activer les dispositifs pyrotechniques.
+- **Gestion des GPIO** : Le driver configure les GPIO utilisés pour le déclenchement des dispositifs. Les pins doivent être initialisées en mode sortie et mises dans un état de repos lors de l'initialisation. Cela permet d'assurer que les dispositifs ne s'activent pas de manière inattendue. Après le tir, les GPIO sont désactivées pour éviter toute activation continue.
+
 
 🔙 Retour à la [page principale](../README.md).
