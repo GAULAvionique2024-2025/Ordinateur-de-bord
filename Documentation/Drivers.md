@@ -1,4 +1,4 @@
-# 🖥️ **Drivers de l'ordinateur de bord**
+# 🔌 **Drivers de l'ordinateur de bord**
 
 Cette section présente une description des drivers programmés pour l'implémentation des composantes avec le IMU.
 
@@ -12,7 +12,7 @@ Cette section présente une description des drivers programmés pour l'implémen
 7.  [Driver Buzzer](#driver-buzzer)
 8.  [Driver Multiplexeur (CD74HC4051)](#driver-multiplexeur-cd74hc4051)
 9.  [Driver Accéléromètre (ICM20602)](#driver-accéléromètre-icm20602)
-10.  [Driver GPS (L76LM33)](#driver-gps-l76lm33)
+10. [Driver GPS (L76LM33)](#driver-gps-l76lm33)
 11. [Driver Lecteur de carte SD (MEM2067)](#driver-lecteur-de-carte-sd-mem2067)
 12. [Driver NMEA0183](#driver-nmea0183)
 13. [Driver RFD900x](#driver-rfd900x)
