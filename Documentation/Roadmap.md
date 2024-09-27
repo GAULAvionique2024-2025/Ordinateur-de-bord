@@ -134,7 +134,7 @@ Les tâches et réunions sont gérées via [le calendrier Teams Avionique](https
   - [ ] Vérifier la compatibilité des connecteurs
   - [ ] Tester la connectivité entre les composants
 
-## 🐛 **Notes d'amélioration**
+## 📈 **Notes d'amélioration**
 
 L'itération de ce projet (ODB2) vis à améliorer la première version de se projet (ODB1).
 - Retirer module bluetooth N'est pas utile à longue portée.
