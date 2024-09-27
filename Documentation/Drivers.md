@@ -6,17 +6,17 @@ Cette section présente une description des drivers programmés pour l'implémen
 1.  [Driver GPIO](#driver-gpio)
 2.  [Driver SPI](#driver-spi)
 3.  [Driver USART](#driver-usart)
-4.  [Driver CRC](#driver-crc)
-5.  [Driver Baromètre (BMP280)](#driver-baromètre-bmp280)
-6.  [Driver Buzzer](#driver-buzzer)
-7.  [Driver Multiplexeur (CD74HC4051)](#driver-multiplexeur-cd74hc4051)
-8.  [Driver Accéléromètre (ICM20602)](#driver-accéléromètre-icm20602)
-9.  [Driver GPS (L76LM33)](#driver-gps-l76lm33)
-10. [Driver Lecteur de carte SD (MEM2067)](#driver-lecteur-de-carte-sd-mem2067)
-11. [Driver NMEA0183](#driver-nmea0183)
-12. [Driver RFD900x](#driver-rfd900x)
-13. [Driver Pyro](#driver-pyro)
-
+4.  [Driver TIM](#driver-tim)
+5.  [Driver CRC](#driver-crc)
+6.  [Driver Baromètre (BMP280)](#driver-baromètre-bmp280)
+7.  [Driver Buzzer](#driver-buzzer)
+8.  [Driver Multiplexeur (CD74HC4051)](#driver-multiplexeur-cd74hc4051)
+9.  [Driver Accéléromètre (ICM20602)](#driver-accéléromètre-icm20602)
+10.  [Driver GPS (L76LM33)](#driver-gps-l76lm33)
+11. [Driver Lecteur de carte SD (MEM2067)](#driver-lecteur-de-carte-sd-mem2067)
+12. [Driver NMEA0183](#driver-nmea0183)
+13. [Driver RFD900x](#driver-rfd900x)
+14. [Driver Pyro](#driver-pyro)
 
 ---
 
@@ -24,7 +24,15 @@ Cette section présente une description des drivers programmés pour l'implémen
 
 Ce driver permet de gérer les ports GPIO (General Purpose Input/Output) sur un microcontrôleur STM32. Il fournit des fonctions pour initialiser les broches GPIO, lire leur état, écrire des valeurs et basculer leur état.
 
-### Configuration des Broches GPIO
+### Configuration des GPIO:
+- **1. Activer l'horloge pour le port GPIO** : Activer l'horloge dans `RCC->AHB1ENR` (pour STM32F4) ou le registre approprié pour votre microcontrôleur.
+- **2. Configurer le mode des broches** : Définir chaque broche en entrée, sortie, fonction alternative ou analogique dans le registre MODER (`GPIOx->MODER`).
+- **3. Configurer la vitesse des broches** : Régler la vitesse (faible, moyenne, élevée) dans le registre OSPEEDR (`GPIOx->OSPEEDR`).
+- **4. Configurer le type de sortie** : Définir le type de sortie (Push-Pull ou Open-Drain) dans OTYPER (`GPIOx->OTYPER`).
+- **5. Configurer les résistances pull-up/pull-down** : Activer les résistances pull-up ou pull-down dans PUPDR (`GPIOx->PUPDR`).
+- **6. Lire ou écrire sur les broches** : Lire l’état de la broche dans le registre IDR (`GPIOx->IDR`). Écrire sur une broche dans ODR (`GPIOx->ODR`).
+
+### Options des Broches GPIO
 
 - **Direction**: Mode d'une broche GPIO (Input, Output).
 - **Options d'une broche Input**: Type (Analogique, Push-Pull).
@@ -73,17 +81,18 @@ Write_GPIO(GPIOA, 5, HIGH);
 ```
 Dans cet exemple, l'état de PA5 est mis à HIGH.
 
-### Détails techniques
-
-- **Initialisation des GPIO**: La fonction `Init_GPIO` configure le registre de configuration des broches (MODER) pour définir la direction (entrée ou sortie) et d'autres paramètres comme le type de sortie (push-pull, open-drain).
-- **Lecture des GPIO**: La fonction `Read_GPIO` interroge le registre d'entrée des GPIO (IDR) pour déterminer l'état actuel de la broche.
-- **Écriture des GPIO**: La fonction `Write_GPIO` modifie le registre de sortie des GPIO (ODR) pour changer l'état de la broche.
-- **Configurations possibles**: Les broches GPIO peuvent être configurées en mode analogique, numérique, ou en modes alternatifs pour diverses fonctions. La vitesse de commutation est également déterminée par des réglages dans les registres appropriés.
-- **Sécurité et précautions**: Les entrées doivent être correctement dimensionnées pour éviter d'endommager le microcontrôleur. Les résistances de tirage peuvent être nécessaires pour les entrées.
-
 ## **Driver SPI**:
 
 Ce driver permet de configurer et d'utiliser le protocole de communication SPI (Serial Peripheral Interface) sur un microcontrôleur STM32. Il fournit des fonctions pour initialiser le périphérique SPI, transmettre des données, recevoir des données, et effectuer des opérations de transmission/réception simultanées.
+
+### Configuration du SPI:
+- **1. Activer l'horloge du périphérique SPI** : Activer l'horloge dans le registre de configuration du bus (ex: `RCC->APB2ENR` pour SPI1 ou `RCC->APB1ENR` pour SPI2).
+- **2. Configurer le mode SPI** : Régler le SPI en mode maître ou esclave dans le registre de contrôle CR1 (bit MSTR pour maître).
+- **3. Configurer les broches GPIO pour SPI** : Configurer les broches MOSI, MISO et SCK en mode fonction alternative via le registre `GPIOx->MODER`.
+- **4. Configurer la vitesse de l'horloge SPI** : Régler la vitesse de l'horloge via les bits BR (Baudrate) dans le registre `SPIx->CR1`.
+- **5. Choisir la taille des données** : Utiliser les bits DFF (Data Frame Format) dans `SPIx->CR1` pour définir la taille des données (8 ou 16 bits).
+- **6. Activer le SPI** : Mettre à jour le bit SPE dans `SPIx->CR1` pour activer la communication SPI.
+- **7. Écrire ou lire les données** : Les données sont envoyées et reçues via le registre de données DR (`SPIx->DR`). Possibilité de vérifier les statuts de transmission/réception via le registre de statut SR (bits TXE pour Transmission Empty et RXNE pour Réception).
 
 ### Fonctions et explications du driver
 
@@ -149,8 +158,6 @@ if (result == 0) {
 
 ### Détails techniques
 
-- **Initialisation SPI**: La fonction `SPI_Init` configure les registres de contrôle (CR1 et CR2) pour établir la vitesse de l'horloge, le mode de fonctionnement (master/slave), ainsi que le mode de transmission (CPOL, CPHA).
-- **Transmission des données**: La fonction `SPI_TX` utilise le registre de données (DR) pour écrire les octets à transmettre. Elle attend que le buffer de transmission soit prêt avant d'écrire un nouvel octet.
 - **Réception des données**: La fonction `SPI_RX` envoie un octet "dummy" pour générer l'horloge SPI, ce qui permet de synchroniser la réception des données à partir du périphérique esclave.
 - **Transmission/Réception simultanées**: La fonction `SPI_TransmitReceive` permet d'effectuer une communication pleine duplex en utilisant les buffers TX et RX, ce qui optimise les opérations de communication.
 - **Gestion des erreurs**: Chaque fonction de communication retourne un code d'état pour indiquer le succès ou l'échec de l'opération, permettant ainsi une gestion des erreurs appropriée.
@@ -158,6 +165,15 @@ if (result == 0) {
 ## **Driver USART**:
 
 Ce driver permet de gérer les communications série via les périphériques USART (Universal Synchronous/Asynchronous Receiver-Transmitter) sur un microcontrôleur STM32. Il fournit des fonctions pour initialiser le périphérique USART, envoyer et recevoir des données en mode de sondage (polling).
+
+### Configuration de l'USART:
+- **1. Activer l'horloge de l'USART** : Activer l'horloge dans `RCC->APB1ENR` (USART2) ou `RCC->APB2ENR` (USART1, USART6).
+- **2. Configurer les broches GPIO pour l'USART** : Configurer les broches TX et RX en mode fonction alternative via le registre `GPIOx->AFR`.
+- **3. Configurer le baudrate** : Calculer la valeur du baudrate et configurer le registre BRR (`USARTx->BRR`), qui dépend de la fréquence du bus.
+- **4. Configurer le mode de communication** : Activer la transmission (TE) et la réception (RE) dans le registre de contrôle CR1 (`USARTx->CR1`).
+- **5. Configurer les bits de parité et le format des données** : Ajuster la parité (bit PCE pour la parité activée) et le format des données (bits M pour la taille des données, 8 ou 9 bits) dans `USARTx->CR1`. Configurer les bits d'arrêt dans le registre de contrôle `CR2` (bits STOP).
+- **6. Activer l'USART** : Mettre à jour le bit UE dans `USARTx->CR1` pour démarrer l'USART.
+- **7. Transmettre et recevoir des données** : Écrire les données dans le registre DR (`USARTx->DR`) pour la transmission. Vérifier les statuts via le registre SR (bit TXE pour Transmission Empty, RXNE pour Données reçues).
 
 ### Fonctions et explications du driver
 
@@ -200,15 +216,64 @@ if (USART_RX(USART1, buffer, sizeof(buffer)) < 0) {
 
 ### Détails techniques
 
-Le registre de contrôle (CR1) est configuré pour activer la transmission (TE) et la réception (RE).
-La vitesse de transmission est définie par le registre BRR, calculée à partir de la fréquence d'horloge et du baudrate spécifié.
-Le format de données est configuré pour 8 bits sans parité, avec un bit d'arrêt.
-Un timeout est utilisé pour éviter que le programme ne se bloque indéfiniment lors de l'attente de la disponibilité des registres.
-Des messages d'erreur peuvent être gérés en vérifiant la valeur de retour des fonctions de transmission et de réception.
+- **Format de données** :  L'USART est onfiguré pour 8 bits sans parité, avec un bit d'arrêt.
+- **Attente de diffusion des bits** : Un timeout est utilisé pour éviter que le programme ne se bloque indéfiniment lors de l'attente de la disponibilité des registres.
+
+## **Driver TIM**:
+
+Le driver Timer permet de gérer les timers intégrés dans un microcontrôleur STM32. Il fournit des fonctions pour configurer et utiliser les timers pour diverses applications telles que la génération de PWM, la mesure du temps, ou la gestion d'événements périodiques par interruption.
+
+### Configuration du Timer:
+- **1. Activer l'horloge du Timer** : Activer l'horloge dans le registre `RCC->APB1ENR` pour les Timers sur APB1 (par exemple, TIM2) ou dans `RCC->APB2ENR` pour ceux sur APB2 (par exemple, TIM1).
+- **2. Configurer le prescaler** : Définir le prescaler dans le registre **PSC** (`TIMx->PSC`) pour diviser la fréquence de l'horloge et ajuster la résolution du timer.
+- **3. Configurer la période du timer** : Spécifier la période désirée dans le registre d'auto-rechargement **ARR** (`TIMx->ARR`) pour définir l'intervalle après lequel une interruption ou un événement se produit.
+- **4. Configurer le mode du Timer** : Choisir le mode de fonctionnement du Timer (mode compteur, PWM, etc.) dans le registre **CR1** (`TIMx->CR1`). Configurer d'autres options dans le registre **CR2** si nécessaire.
+- **5. Configurer les interruptions** (optionnel) : Activer les interruptions via le registre **DIER** (`TIMx->DIER`) pour être notifié lorsque des événements liés au Timer surviennent (comme une mise à jour ou un overflow).
+- **6. Démarrer le Timer** : Mettre à jour le bit **CEN** dans le registre **CR1** (`TIMx->CR1`) pour commencer à compter.
+- **7. Lire le statut ou réinitialiser** : Vérifier le registre de statut **SR** (`TIMx->SR`) pour suivre les événements tels que la mise à jour (bit **UIF**). Réinitialiser ces événements en écrivant dans le même registre.
+
+### Options des Timers
+
+- **Mode de comptage** : Le Timer peut être configuré pour compter en montée, descente ou dans les deux directions (bits DIR et CMS dans le registre CR1).
+- **Prescaler** : Permet de diviser la fréquence du timer pour ajuster la résolution du comptage.
+- **Mode PWM** : Le Timer peut être utilisé pour générer des signaux PWM, en configurant les sorties associées.
+- **Interruptions et DMA** : Le Timer peut générer des interruptions ou des requêtes DMA lorsque certains événements se produisent.
+
+### Fonctions et explications du driver
+
+Voici une présentation des fonctions typiquement utilisées dans un driver Timer.
+```
+void Init_Timer(TIM_TypeDef *timer, uint32_t prescaler, uint32_t period)
+```
+Cette fonction initialise un Timer en spécifiant le timer utilisé, le prescaler et la période souhaitée.
+```
+void Start_Timer(TIM_TypeDef *timer)
+```
+Cette fonction démarre le Timer en activant le bit **CEN** dans le registre CR1 du Timer.
+```
+void Stop_Timer(TIM_TypeDef *timer)
+```
+Cette fonction arrête le Timer en désactivant le bit **CEN** dans le registre CR1 du Timer.
+```
+void Timer_IRQHandler(void)
+```
+Cette fonction est appelée lorsqu'une interruption du Timer survient (par exemple, à la fin de la période). Le bit **UIF** dans le registre SR est vérifié pour savoir si une mise à jour s'est produite, et il est ensuite effacé.
+
+### Détails techniques
+
+- **Initialisation du Timer** : La fonction `Init_Timer` configure le registre de pré-scaler (PSC) pour ajuster la fréquence de comptage, ainsi que le registre d'auto-rechargement (ARR) pour définir la période.
+- **Démarrage et arrêt du Timer** : Le démarrage et l'arrêt du Timer se font en réglant ou en effaçant le bit CEN dans le registre CR1 du Timer.
+- **Gestion des interruptions** : Lorsqu'une interruption survient (comme un overflow ou la fin d'une période), l'indicateur approprié (comme UIF) doit être effacé pour éviter d'autres interruptions intempestives.
+- **Modes de fonctionnement avancés** : Les timers peuvent être configurés pour des applications plus complexes telles que le mode PWM, l'input capture ou l'output compare, en réglant les registres appropriés (CCR, CCMR, etc.).
 
 ## **Driver CRC**:
 
 Ce driver permet de calculer un code de contrôle de redondance cyclique sur 16 bits (CRC16) sur un tableau de données. Le CRC est une méthode utilisée pour détecter les erreurs dans les données transmises ou stockées.
+
+- **1. Activer l'horloge du module CRC** : Activer l'horloge dans le registre approprié (ex: `RCC->AHB1ENR` pour STM32).
+- **2. Réinitialiser le calcul du CRC** : Utiliser le registre de contrôle CR (`CRC->CR`) pour réinitialiser le calcul CRC.
+- **3. Entrer les données pour le calcul** : Charger les données dans le registre DR (`CRC->DR`).
+- **4. Lire le résultat du CRC** : Lire la valeur calculée dans le registre DR après que les données aient été introduites.
 
 ### Fonctions et explications du driver
 
