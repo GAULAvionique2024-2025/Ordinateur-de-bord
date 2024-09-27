@@ -66,7 +66,7 @@ Découvrez une galerie illustrant le design et l'implémentation de l'ordinateur
 
 ## 📚 **Documentation**
 
-Toutes les informations sur les composants et les drivers sont disponibles ici :
+Toutes les informations sur les composants hardware / logiciel et les drivers sont disponibles ici :
 
 - [Composantes](./Documentation/Composantes.md)
 - [Drivers](./Documentation/Drivers.md)
