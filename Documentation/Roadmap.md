@@ -6,8 +6,9 @@ Liste en diagramme d'organisation de l'ordinateur de bord.
 
 Les tâches et réunions sont gérées via [le calendrier Teams Avionique](https://ulavaldti.sharepoint.com/sites/exch_fsg_0572/SitePages/Avionique.aspx). Cliquez pour accéder aux événements à venir.
 
-## 🎯 **Objectifs à Déterminer**
+## 🎯 **Objectifs**
 - [ ] ODB autonomne pouvant déclencher les pyros sans support CUTS
+- [ ] Deux ODB autonomne pour la conception d'une fusée à 2 étage
 - À déterminer...
 
 ## 🛠️ **Conception du PCB**
