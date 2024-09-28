@@ -17,6 +17,7 @@ Cette section présente une description des drivers programmés pour l'implémen
 12. [Driver NMEA0183](#driver-nmea0183)
 13. [Driver RFD900x](#driver-rfd900x)
 14. [Driver Pyro](#driver-pyro)
+15. [Driver Filtre Kalman](#driver-filtre-kalman)
 
 ---
 
@@ -709,6 +710,15 @@ Pyro_Fire(armed, pyro_to_fire);
 
 - **Sécurité** : Le contrôle des dispositifs pyrotechniques nécessite des mesures de sécurité rigoureuses. Le driver inclut un mécanisme pour s'assurer que le système est en état "armé" avant de tirer. Cela évite des activations accidentelles. Il est crucial que la variable `armed` soit vérifiée avant d'envoyer un signal pour activer les dispositifs pyrotechniques.
 - **Gestion des GPIO** : Le driver configure les GPIO utilisés pour le déclenchement des dispositifs. Les pins doivent être initialisées en mode sortie et mises dans un état de repos lors de l'initialisation. Cela permet d'assurer que les dispositifs ne s'activent pas de manière inattendue. Après le tir, les GPIO sont désactivées pour éviter toute activation continue.
+
+## **Driver Filtre Kalman**
+
+Ce driver implémente un filtre de Kalman pour les microcontrôleurs STM32, utilisé pour fusionner des données de capteurs, comme des gyroscopes et des accéléromètres. Il permet d'estimer précisément l'angle à partir des données bruitées.
+
+### Détails techniques
+- **Estimation de l'angle** : Le filtre de Kalman utilise les mesures du capteur pour estimer l'angle en prenant en compte le bruit et les erreurs des capteurs.
+- **Covariance des erreurs** : Les matrices de covariance permettent de suivre les incertitudes des estimations du filtre.
+- **Correction avec la mesure** : Le filtre utilise la mesure actuelle pour corriger ses prédictions et ainsi fournir une estimation plus précise.
 
 ---
 
