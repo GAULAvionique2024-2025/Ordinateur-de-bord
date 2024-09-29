@@ -1,4 +1,27 @@
-# 🧩 **Prise en main STM32CubeIDE**
+# 🧩 **Prise en main STM32CubeIDE et Kicad 8**
+
+## **Table des matières**
+[STM32CubeIDE](#stm32cubeide)
+1. [Installation de STM32CubeIDE](#1-installation-de-stm32cubeide)
+2. [Ouvrir un projet existant à partir de fichiers système](#2-ouvrir-un-projet-existant-à-partir-de-fichiers-système)
+3. [Exploration de la structure des fichiers](#3-exploration-de-la-structure-des-fichiers)
+4. [Consoles Problems et Tasks](##4-consoles-problems-et-tasks)
+5. [Outils de Build](#5-outils-de-build)
+6. [Débogage avec ST-Link](#6-débogage-avec-st-link)
+7. [Exécution et Flash du programme](#7-exécution-et-flash-du-programme)
+8. [Autres indications importantes pour STM32CubeIDE](#8-autres-indications-importantes-pour-stm32cubeide)
+   
+[Kicad 8](#kicad-8)
+1. [Installation de KiCad 8](#1-installation-de-kicad-8)
+2. [Création d'un nouveau projet](#2-création-dun-nouveau-projet)
+3. [Exploration de l'interface utilisateur](#3-exploration-de-linterface-utilisateur)
+4. [Gestion des bibliothèques de composants](#4-gestion-des-bibliothèques-de-composants)
+5. [Conception du schéma](#5-conception-du-schéma)
+6. [Création du circuit imprimé (PCB)](#6-création-du-circuit-imprimé-pcb)
+7. [Génération des fichiers de fabrication](#7-génération-des-fichiers-de-fabrication)
+8. [Autres conseils utiles pour KiCad 8](#8-autres-conseils-utiles-pour-kicad-8)
+
+---
 
 ## **STM32CubeIDE**
 
@@ -6,20 +29,10 @@
   <img src="./Logiciel/STM32.png" alt="ODB1" width="25%">
 </div>
 
-STM32CubeIDE est un environnement de développement intégré (IDE) tout-en-un, qui inclut un compilateur, un éditeur de code, des outils de configuration de périphériques, ainsi que des outils de débogage.
-
-## **Table des matières**
-1. [Installation de STM32CubeIDE](#1-installation-de-stm32cubeide)
-2. [Ouvrir un projet existant à partir de fichiers système](#2-ouvrir-un-projet-existant-à-partir-de-fichiers-système)
-3. [Exploration de la structure des fichiers](#3-exploration-de-la-structure-des-fichiers)
-4. [Consoles Problems et Tasks](#4-consoles-problems-et-tasks)
-5. [Outils de Build](#5-outils-de-build)
-6. [Débogage avec ST-Link](#6-débogage-avec-st-link)
-7. [Exécution et Flash du programme](#7-exécution-et-flash-du-programme)
-8. [Autres indications importantes pour STM32CubeIDE](#8-autres-indications-importantes-pour-stm32cubeide)
+STM32CubeIDE un environnement de développement intégré (IDE) tout-en-un, qui inclut un compilateur, un éditeur de code, des outils de configuration de périphériques, ainsi que des outils de débogage.
 
 ## ⬇️ **1. Installation de STM32CubeIDE**
-Avant tout, vous devez installer STM32CubeIDE. Il est [téléchargeable](https://www.st.com/en/development-tools/stm32cubeide.html) gratuitement sur le site de STMicroelectronics.
+Avant tout, vous devez installer STM32CubeIDE. Il est téléchargeable gratuitement sur le [site officiel](https://www.st.com/en/development-tools/stm32cubeide.html) de STMicroelectronics.
 ## 📂 **2. Ouvrir un projet existant à partir de fichiers système**
 
 ### Cloner un dépôt Git
@@ -101,6 +114,75 @@ Le **ST-Link** est un outil de débogage et de programmation pour les microcontr
 
 ### Exploration de la documentation
 - STM32CubeIDE fournit une intégration avec **la documentation CMSIS** et **les fichiers HAL/LL**. Faites un **CTRL+LMB** sur une fonction pour accéder directement à sa définition ou documentation dans le code.
+
+---
+
+## **Kicad 8**
+
+<div style="display: flex; justify-content: space-around;">
+  <img src="./Logiciel/Kicad.png" alt="ODB1" width="25%">
+</div>
+
+KiCad est un logiciel open source de conception assistée par ordinateur (CAO) dédié à la création de circuits imprimés (PCB).
+
+## ⬇️ **1. Installation de KiCad 8**
+Pour commencer, téléchargez KiCad 8 sur le [site officiel](https://www.kicad.org/download/). KiCad est un logiciel libre de conception de circuits imprimés qui inclut des outils pour la conception de schémas, la création de PCB, et la gestion des bibliothèques de composants.
+
+## 📂 **2. Création d'un nouveau projet**
+### Démarrer un projet
+- **Lancez KiCad** et cliquez sur **New Project**.
+- Choisissez un emplacement pour enregistrer votre projet et donnez-lui un nom.
+
+## 🔍 **3. Exploration de l'interface utilisateur**
+Lorsque vous ouvrez un projet, l'interface de KiCad se compose de plusieurs éléments clés :
+
+### Barre d'outils
+- En haut, vous trouverez la barre d'outils avec des icônes pour accéder rapidement aux différentes fonctionnalités.
+
+### Zone de travail
+- La zone de travail est où vous dessinerez vos schémas et vos circuits imprimés.
+
+### Navigateur de projet
+- À gauche, le navigateur de projet affiche tous les fichiers associés à votre projet, y compris les schémas et les fichiers PCB.
+
+## 📋 **4. Gestion des bibliothèques de composants**
+### Ajouter des bibliothèques
+- KiCad utilise des bibliothèques pour stocker des composants. Pour ajouter des bibliothèques, allez dans **Preferences > Manage Footprint Libraries** et sélectionnez les bibliothèques nécessaires.
+
+### Rechercher des composants
+- Vous pouvez rechercher des composants via l'outil de recherche intégré lors de la conception de votre schéma.
+
+## 🛠️ **5. Conception du schéma**
+### Ouvrir l'éditeur de schéma
+- Cliquez sur l'icône **Schematic Editor** pour ouvrir l'éditeur de schéma.
+
+### Ajouter des composants
+- Utilisez l'outil **Place Symbol** pour ajouter des composants à votre schéma.
+- Connectez les composants avec l'outil **Place Wire**.
+
+## 🖨️ **6. Création du circuit imprimé (PCB)**
+### Passer à l'éditeur PCB
+- Une fois le schéma terminé, ouvrez l'éditeur PCB en cliquant sur l'icône **PCB Layout Editor**.
+
+### Placer les composants
+- Importez votre schéma et placez les composants sur le PCB. Utilisez l'outil **Move** pour les repositionner.
+
+### Routage
+- Utilisez l'outil **Route** pour connecter les pads des composants selon le schéma.
+
+## 📄 **7. Génération des fichiers de fabrication**
+### Fichiers Gerber
+- Une fois le PCB terminé, allez dans **File > Plot** pour générer les fichiers Gerber nécessaires à la fabrication de votre circuit imprimé.
+
+### Exporter la liste des matériaux
+- Utilisez l'outil **Generate Bill of Materials** pour créer une liste des matériaux nécessaires à la construction de votre projet.
+
+## 🔔 **8. Autres conseils utiles pour KiCad 8**
+### Sauvegarde fréquente
+- Pensez à sauvegarder régulièrement votre travail pour éviter toute perte de données.
+
+### Explorer la documentation
+- KiCad propose une documentation complète accessible dans le menu d'aide ou via ce [site](https://docs.kicad.org/8.0/). Profitez-en pour vous familiariser avec toutes les fonctionnalités disponibles.
 
 ---
 
