@@ -139,10 +139,20 @@ Les tâches et réunions sont gérées via [le calendrier Teams Avionique](https
 L'itération de ce projet (ODB2) vis à améliorer la première version de se projet (ODB1).
 - Retirer module bluetooth N'est pas utile à longue portée.
 - Retirer LED RGB Remplacer par LEDS d'états individuels ou implémenter des états via des modulations sonores du buzzer.
-- Augmenter puissance radio
+- Augmenter la puissance radio et le débit de données
+- Modifier le buzzer pour émettre des sons plus forts
 - Modification des paramètres des composants onboard
 - Implémentation des modes de consommation énergétique (Fix ODB1)
+- Améliorer la durée de vie des batteries de tous les systèmes
+- Transmettre les étapes d'évolution via les paquets radio
 - ...
+
+## 💡 **Idées**
+
+- Développer un système de recharge de batteries qui se déploie sur la platforme de lancement
+- Développer un module de caméra au sol et à l'intérieur de la fusée
+- Développer un système de *répeteur radio* via une charge utile éjectable (Payload)
+- Sous-systèmes de l'ordinateur de bord modulaire via la liaison CanBus
 
 ---
 
