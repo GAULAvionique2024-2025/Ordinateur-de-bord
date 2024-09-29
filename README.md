@@ -70,7 +70,7 @@ Toutes les informations sur les composants hardware / logiciel et les drivers so
 
 - [Composantes](./Documentation/Composantes.md)
 - [Drivers](./Documentation/Drivers.md)
-- [Prise en main](./Documentation/Logiciel.md)
+- [Prise en main des logiciels](./Documentation/Logiciel.md)
 
 ## 🛠 **Roadmap**
 
