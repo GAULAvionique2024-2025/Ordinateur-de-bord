@@ -10,7 +10,7 @@
 6. [Débogage avec ST-Link](#6-débogage-avec-st-link)
 7. [Exécution et Flash du programme](#7-exécution-et-flash-du-programme)
 8. [Autres indications importantes pour STM32CubeIDE](#8-autres-indications-importantes-pour-stm32cubeide)
-[Kicad](#kicad)
+   
 [Kicad 8](#kicad-8)
 1. [Installation de KiCad 8](#1-installation-de-kicad-8)
 2. [Création d'un nouveau projet](#2-création-dun-nouveau-projet)
@@ -25,7 +25,7 @@
 
 ## **STM32CubeIDE**
 
-[STM32](./Logiciel/STM32.png)
+![STM32](./Logiciel/STM32.png)
 
 STM32CubeIDE un environnement de développement intégré (IDE) tout-en-un, qui inclut un compilateur, un éditeur de code, des outils de configuration de périphériques, ainsi que des outils de débogage.
 
@@ -117,7 +117,7 @@ Le **ST-Link** est un outil de débogage et de programmation pour les microcontr
 
 ## **Kicad 8**
 
-[Kicad](./Logiciel/Kicad.png)
+![Kicad](./Logiciel/Kicad.png)
 
 KiCad est un logiciel open source de conception assistée par ordinateur (CAO) dédié à la création de circuits imprimés (PCB).
 
@@ -179,8 +179,6 @@ Lorsque vous ouvrez un projet, l'interface de KiCad se compose de plusieurs él�
 
 ### Explorer la documentation
 - KiCad propose une documentation complète accessible dans le menu d'aide. Profitez-en pour vous familiariser avec toutes les fonctionnalités disponibles.
-
----
 
 ---
 
