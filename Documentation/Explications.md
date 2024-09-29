@@ -64,10 +64,9 @@ Ce diagramme fonctionnel offre une vue d'ensemble des comportements essentiels d
 
 <div align="center" style="display: flex; justify-content: space-around;">
   <a href="./Explications/Diagramme_Fonctionnel.png" target="_blank">
-    <img src="./Explications/Diagramme_Fonctionnel.png" alt="Diagramme Fonctionnel" width="100%">
+    <img src="./Explications/Diagramme_Fonctionnel.png" alt="Diagramme Fonctionnel" style="max-width: 80%; height: auto;">
   </a>
 </div>
-
 
 ## 📄 **Documentation complémentaire**
 - [Composantes](./Composantes.md) : Détails sur les composantes matérielles utilisées.
