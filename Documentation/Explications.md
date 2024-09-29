@@ -6,20 +6,18 @@ Ce document décrit le fonctionnement du code de l'ODB1 utilisé pour la fusée 
 
 Voici le diagramme qui montre les liaisons entre les différents modules de l'ordinateur de bord:
 
-<div align="center">
-  
-![Communications](./Explications/Diagramme_Communications.png)
+<div align="center"; style="display: flex; justify-content: space-around;">
+  <img src="./Explications/Diagramme_Communications.png" alt="ODB1" width="60%">
+</div>
 
 </div>
 
 Le diagramme suivant offre une vue d'ensemble des composants clés de l'ODB ainsi que leur rôle dans l'architecture globale:
 
-<div align="center">
-  
-![Structure](./Explications/Diagramme_Structure.png)
-
+<div align="center"; style="display: flex; justify-content: space-around;">
+  <img src="./Explications/Diagramme_Structure.png" alt="ODB1" width="60%">
 </div>
-
+  
 ## 🛠️ **Données principales**
 
 Voici les différentes variables suivies par l'ordinateur de bord pendant le vol:
@@ -61,6 +59,15 @@ Un Mach lock pour une fusée est une fonctionnalité de sécurité utilisée dan
 ### **Déclenchement des charges pyrotechniques**
 - **Pyro0 (Drogue chute)** : Déclenché à l'apogée lorsque la fusée commence sa descente.
 - **Pyro1 (Main chute)** : Déclenché à basse altitude pour ralentir la fusée avant l'atterrissage.
+
+Ce diagramme fonctionnel offre une vue d'ensemble des comportements essentiels de la fusée. Bien qu'il ne soit pas exhaustif, il illustre clairement les principales interactions et processus impliqués dans le fonctionnement du système.
+
+<div align="center" style="display: flex; justify-content: space-around;">
+  <a href="./Explications/Diagramme_Fonctionnel.png" target="_blank">
+    <img src="./Explications/Diagramme_Fonctionnel.png" alt="Diagramme Fonctionnel" width="100%">
+  </a>
+</div>
+
 
 ## 📄 **Documentation complémentaire**
 - [Composantes](./Composantes.md) : Détails sur les composantes matérielles utilisées.
