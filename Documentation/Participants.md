@@ -8,9 +8,9 @@ Liste de tous les membres actifs et collaborateurs à la réalisation du projet 
   - Rôle : Directeur Ordinateur de bord
   - Contact : 📧 [gagnonsamuel12@gmail.com](gagnonsamuel12@gmail.com)
 
-- **Prénom Nom**
-  - Rôle : XXX
-  - Contact : 📧 [email@example.com](email@example.com)
+- **Nathan Armishaw**
+  - Rôle : Lead division avionique
+  - Contact : 📧 [armishawnathan@gmail.com](armishawnathan@gmail.com)
 
 ## 🤝 **Collaborateurs**
 
