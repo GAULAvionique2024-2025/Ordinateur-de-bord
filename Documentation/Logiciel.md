@@ -119,6 +119,8 @@ Le **ST-Link** est un outil de débogage et de programmation pour les microcontr
 ### Exploration de la documentation
 - STM32CubeIDE fournit une intégration avec **la documentation CMSIS** et **les fichiers HAL/LL**. Faites un **CTRL+LMB** sur une fonction pour accéder directement à sa définition ou documentation dans le code.
 
+🔝 Retour à la [table des matières](#-table-des-matières).
+
 ---
 
 ## **Kicad 8**
@@ -187,6 +189,8 @@ Lorsque vous ouvrez un projet, l'interface de KiCad se compose de plusieurs él�
 
 ### Explorer la documentation
 - KiCad propose une documentation complète accessible dans le menu d'aide ou via ce [site](https://docs.kicad.org/8.0/). Profitez-en pour vous familiariser avec toutes les fonctionnalités disponibles.
+
+🔝 Retour à la [table des matières](#-table-des-matières).
 
 ---
 
