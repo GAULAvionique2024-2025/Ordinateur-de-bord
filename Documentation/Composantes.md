@@ -10,50 +10,57 @@ Cette section fournit une vue d'ensemble détaillée des composants utilisés da
 
 ### 🖧 **MCU - [STM32F103C8](./Composantes/stm32f103c8.pdf)**
 
-Le microcontrôleur **STM32F103C8** assure la gestion centrale des opérations à bord, y compris la communication avec les capteurs et les modules périphériques.
 <img src="./Composantes/STM32.png" alt="STM32" width="200"/>
+
+Le microcontrôleur **STM32F103C8** assure la gestion centrale des opérations à bord, y compris la communication avec les capteurs et les modules périphériques.
 
 ---
 
 ### 🌡️ **Capteur de pression/température - [BMP280](./Composantes/bst-bmp280-ds001.pdf)**
 
-Le **BMP280** mesure la pression atmosphérique et la température, informations essentielles pour les calculs d'altitude en vol.
 <img src="./Composantes/BMP280.jpg" alt="BMP280" width="200"/>
+
+Le **BMP280** mesure la pression atmosphérique et la température, informations essentielles pour les calculs d'altitude en vol.
 
 ---
 
 ### 🌀 **Capteur d'accélération/gyroscope - [ICM-20602](./Composantes/DS-000176-ICM-20602-v1.0.pdf)**
 
-Le **ICM-20602** permet de mesurer les accélérations linéaires et les rotations angulaires sur trois axes, données cruciales pour le suivi du comportement de la fusée.
 <img src="./Composantes/ICM.png" alt="ICM20602" width="200"/>
+
+Le **ICM-20602** permet de mesurer les accélérations linéaires et les rotations angulaires sur trois axes, données cruciales pour le suivi du comportement de la fusée.
 
 ---
 
 ### 📡 **Module GPS - [L76LM33](./Composantes/Quectel_L76_Series_Hardware_Design_V3.1.pdf)**
 
-Le module **L76LM33** assure le suivi de la position en temps réel avec des informations précises de latitude et de longitude.
 <img src="./Composantes/L76L.jpg" alt="GPS L76LM33" width="200"/>
+
+Le module **L76LM33** assure le suivi de la position en temps réel avec des informations précises de latitude et de longitude.
 
 ---
 
 ### 🔀 **Multiplexeur - [CD74HC4051-EP](./Composantes/cd74hc4051-ep.pdf)**
 
-Le multiplexeur **CD74HC4051-EP** permet de sélectionner entre plusieurs signaux d'entrée analogiques, optimisant ainsi l'utilisation des broches GPIO du MCU.
 <img src="./Composantes/Multiplexer.jpg" alt="Multiplexeur CD74HC4051" width="200"/>
+
+Le multiplexeur **CD74HC4051-EP** permet de sélectionner entre plusieurs signaux d'entrée analogiques, optimisant ainsi l'utilisation des broches GPIO du MCU.
 
 ---
 
 ### 💾 **Lecteur de carte SD - [MEM2067](./Composantes/MEM2067.pdf)**
 
-Le lecteur **MEM2067** stocke les données de vol recueillies par les capteurs, assurant une récupération facile après le vol.
 <img src="./Composantes/MEM.png" alt="Lecteur SD MEM2067" width="200"/>
+
+Le lecteur **MEM2067** stocke les données de vol recueillies par les capteurs, assurant une récupération facile après le vol.
 
 ---
 
 ### 📶 **Module Radio - [RFD900x](./Composantes/RFD900x%20DataSheet%20V1.2.pdf)**
 
-Le module radio **RFD900x** transmet les données de télémétrie à la station au sol en temps réel, garantissant une surveillance continue des paramètres de vol.
 <img src="./Composantes/RFD.png" alt="Module radio RFD900x" width="200"/>
+
+Le module radio **RFD900x** transmet les données de télémétrie à la station au sol en temps réel, garantissant une surveillance continue des paramètres de vol.
 
 ---
 
@@ -65,15 +72,17 @@ Les igniters sont responsables du déclenchement des charges pyrotechniques pour
 
 ### 📲 **Module Bluetooth - [HM10_BLE](./Composantes/11.%20HM10%20BLE_FTDI.pdf)**
 
-Le module **HM10** permet une communication courte portée pour la configuration et le diagnostic de l'ODB via Bluetooth.
 <img src="./Composantes/BLE.jpg" alt="Module Bluetooth HM10" width="200"/>
+
+Le module **HM10** permet une communication courte portée pour la configuration et le diagnostic de l'ODB via Bluetooth.
 
 ---
 
 ### 🔊 **Buzzer - [GT-0930RP2](./Composantes/GT-0930RP2-14-Feb-2019.pdf)**
 
-Le buzzer **GT-0930RP2** est utilisé pour émettre des alertes sonores indiquant les états critiques ou les erreurs du système.
 <img src="./Composantes/Buzzer.jpg" alt="Buzzer GT-0930RP2" width="200"/>
+
+Le buzzer **GT-0930RP2** est utilisé pour émettre des alertes sonores indiquant les états critiques ou les erreurs du système.
 
 ---
 
@@ -95,7 +104,7 @@ Le bouton poussoir **LTC2954** permet d'activer ou désactiver certaines fonctio
 
 ---
 
-Retrouvez la documentation technique complète de chaque composant [ici](./Composantes/).
+> Retrouvez la documentation technique complète de chaque composant [ici](./Composantes/).
 
 ---
 
