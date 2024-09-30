@@ -1,6 +1,10 @@
 # 🧩 **Prise en main STM32CubeIDE et Kicad 8**
 
-## **Table des matières**
+Cette section vous guide à travers l'utilisation des deux principaux outils de développement utilisés dans le projet : STM32CubeIDE et KiCad 8. STM32CubeIDE est un environnement de développement intégré (IDE) puissant pour la programmation et la configuration des microcontrôleurs STM32. Il simplifie le processus de création de projets, depuis la configuration matérielle jusqu'au débogage du code.
+
+KiCad 8, quant à lui, est un logiciel libre de conception de circuits électroniques. Il permet de créer des schémas, de concevoir des PCB (circuits imprimés) et de gérer les bibliothèques de composants. Ce guide vous aidera à comprendre les bases de ces outils, à configurer votre environnement de travail, et à démarrer vos premiers projets d’électronique embarquée et de conception de circuits.
+
+## 📑 **Table des matières**
 [STM32CubeIDE](#stm32cubeide)
   1. [Installation de STM32CubeIDE](#installation-de-stm32cubeide)
   2. [Ouvrir un projet existant à partir de fichiers système](#ouvrir-un-projet-existant-a-partir-de-fichiers-systeme)
