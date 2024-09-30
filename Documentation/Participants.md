@@ -5,7 +5,7 @@ Liste de tous les membres actifs et collaborateurs à la réalisation du projet 
 ## 👥 **Équipe de Développement**
 
 - **Samuel Gagnon**
-  - Rôle : Directeur Ordinateur de bord
+  - Rôle : Lead Ordinateur de bord
   - Contact : 📧 [gagnonsamuel12@gmail.com](gagnonsamuel12@gmail.com)
 
 - **Nathan Armishaw**
