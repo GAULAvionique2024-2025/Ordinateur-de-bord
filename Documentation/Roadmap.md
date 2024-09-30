@@ -142,9 +142,10 @@ L'itération de ce projet (ODB2) vis à améliorer la première version de se pr
 - Augmenter la puissance radio et le débit de données
 - Modifier le buzzer pour émettre des sons plus forts
 - Modification des paramètres des composants onboard
-- Implémentation des modes de consommation énergétique (Fix ODB1)
+- Implémentation des modes de consommation énergétique (Fix ODB1 pin CS)
 - Améliorer la durée de vie des batteries de tous les systèmes
 - Transmettre les étapes d'évolution via les paquets radio
+- Améliorer la puissance du processeur (Série F4 monocoeur minimum)
 - ...
 
 ## 💡 **Idées**
