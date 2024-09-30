@@ -35,7 +35,7 @@ KiCad 8, quant à lui, est un logiciel libre de conception de circuits électron
 
 STM32CubeIDE un environnement de développement intégré (IDE) tout-en-un, qui inclut un compilateur, un éditeur de code, des outils de configuration de périphériques, ainsi que des outils de débogage.
 
-## ⬇️ **1. Installation de STM32CubeIDE**{#ouvrir-un-projet-existant-a-partir-de-fichiers-systeme}
+## ⬇️ **1. Installation de STM32CubeIDE**
 Avant tout, vous devez installer STM32CubeIDE. Il est téléchargeable gratuitement sur le [site officiel](https://www.st.com/en/development-tools/stm32cubeide.html) de STMicroelectronics.
 ## 📂 **2. Ouvrir un projet existant à partir de fichiers système**
 
@@ -51,7 +51,7 @@ Avant tout, vous devez installer STM32CubeIDE. Il est téléchargeable gratuitem
 ### Projets basés sur `.ioc` (STM32CubeMX)
 Si votre projet contient un fichier `.ioc`, c'est un fichier de configuration utilisé par **STM32CubeMX**, qui est intégré dans STM32CubeIDE. Ouvrez ce fichier pour reconfigurer les périphériques et générer des fichiers de code source (HAL, LL, etc.) automatiquement (utile au début, mais le projet est développé en low level **LL**).
 
-## 🔍 **3. Exploration de la structure des fichiers**{#exploration-de-la-structure-des-fichiers}
+## 🔍 **3. Exploration de la structure des fichiers**
 Lorsque le projet est chargé, STM32CubeIDE organise les fichiers dans l'onglet **Project Explorer**, habituellement tout à gauche de l'interface :
 
 ### Header files (.h)
@@ -66,17 +66,17 @@ Lorsque le projet est chargé, STM32CubeIDE organise les fichiers dans l'onglet 
 ### Middlewares
 - Si le projet utilise des bibliothèques de middleware comme FreeRTOS, USB, ou LwIP, ces fichiers seront stockés ici.
 
-## 📋 **4. Consoles "Problems" et "Tasks"**{#consoles-problems-et-tasks}
+## 📋 **4. Consoles "Problems" et "Tasks"**
 
 ### Console "Problems"
 - La console **Problems** affiche les erreurs et avertissements détectés dans votre projet. Elle vous aide à identifier rapidement les problèmes de compilation et de configuration. 
 - Vous pouvez accéder à cette console via **Window > Show View > Problems**.
 
 ### Console "Tasks"
-- La console **Tasks** vous permet de gérer les tâches, les rappels et les TODOs (//TODO) dans votre code. Vous pouvez y ajouter des notes ou des éléments à vérifier. 
+- La console **Tasks** vous permet de gérer les tâches, les rappels et les TODOs (`//TODO`) dans votre code. Vous pouvez y ajouter des notes ou des éléments à vérifier. 
 - Accédez à cette console via **Window > Show View > Tasks**. Cela vous aide à garder une trace des éléments à améliorer ou des fonctionnalités à implémenter dans votre projet à travers le code.
 
-## 🛠️ **5. Outils de Build**{#outils-de-build}
+## 🛠️ **5. Outils de Build**
 STM32CubeIDE utilise **GNU Make** pour construire (compiler et lier) le projet. Voici les étapes pour réaliser le build de votre projet :
 
 ### Build simple
@@ -86,7 +86,7 @@ STM32CubeIDE utilise **GNU Make** pour construire (compiler et lier) le projet. 
 ### Configuration du build
 - Vous pouvez ajuster les options de compilation dans **Project > Properties > C/C++ Build > Settings**. Vous pouvez, par exemple, modifier les optimisations du compilateur (par défaut -0n) ou ajuster les options de debug.
 
-## 🐛 **6. Débogage avec ST-Link**{#debugage-avec-st-link}
+## 🐛 **6. Débogage avec ST-Link**
 
 ### Connexion du ST-Link
 Le **ST-Link** est un outil de débogage et de programmation pour les microcontrôleurs STM32.
@@ -105,13 +105,13 @@ Le **ST-Link** est un outil de débogage et de programmation pour les microcontr
 - Cliquez sur l'icône 🐞 pour démarrer le mode débogage. Cela compile le projet (si nécessaire), télécharge le binaire sur la carte, et arrête le processeur au point d'entrée (généralement dans `main()`).
 - Vous pouvez ensuite utiliser des fonctionnalités comme les **points d'arrêt**, **step into/over** (avancer pas à pas dans le code), inspecter les **variables**, la **mémoire**, les **registres**, etc.
 
-## 🏃‍♂️ **7. Exécution et Flash du programme**{#execution-et-flash-du-programme}
+## 🏃‍♂️ **7. Exécution et Flash du programme**
 
 ### Lancer le programme sans débogage
-- Pour exécuter directement votre programme sans mode debug, cliquez sur le bouton ▶️ (vert) ou utilisez **CTRL+F11**.
+- Pour exécuter directement votre programme sans mode debug, cliquez sur le bouton ▶️ (`vert`) ou utilisez **CTRL+F11**.
 - Le binaire sera flashé sur la carte et le programme démarrera immédiatement après le téléchargement.
 
-## 🔔 **8. Autres indications importantes pour STM32CubeIDE**{#autres-indications-importantes-pour-stm32cubeide}
+## 🔔 **8. Autres indications importantes pour STM32CubeIDE**
 
 ### Générer du code avec STM32CubeMX
 - Si vous avez un fichier `.ioc`, vous pouvez l'ouvrir et ajouter des périphériques, ajuster la configuration (comme les GPIO, Timers, UART, I2C, etc.), et générer à nouveau le code. STM32CubeIDE synchronisera automatiquement les fichiers générés avec votre projet.
@@ -129,15 +129,15 @@ Le **ST-Link** est un outil de débogage et de programmation pour les microcontr
 
 KiCad est un logiciel open source de conception assistée par ordinateur (CAO) dédié à la création de circuits imprimés (PCB).
 
-## ⬇️ **1. Installation de KiCad 8**{#installation-de-kicad-8}
+## ⬇️ **1. Installation de KiCad 8**
 Pour commencer, téléchargez KiCad 8 sur le [site officiel](https://www.kicad.org/download/). KiCad est un logiciel libre de conception de circuits imprimés qui inclut des outils pour la conception de schémas, la création de PCB, et la gestion des bibliothèques de composants.
 
-## 📂 **2. Création d'un nouveau projet**{#creation-dun-nouveau-projet}
+## 📂 **2. Création d'un nouveau projet**
 ### Démarrer un projet
 - **Lancez KiCad** et cliquez sur **New Project**.
 - Choisissez un emplacement pour enregistrer votre projet et donnez-lui un nom.
 
-## 🔍 **3. Exploration de l'interface utilisateur**{#exploration-de-linterface-utilisateur}
+## 🔍 **3. Exploration de l'interface utilisateur**
 Lorsque vous ouvrez un projet, l'interface de KiCad se compose de plusieurs éléments clés :
 
 ### Barre d'outils
@@ -149,14 +149,14 @@ Lorsque vous ouvrez un projet, l'interface de KiCad se compose de plusieurs él�
 ### Navigateur de projet
 - À gauche, le navigateur de projet affiche tous les fichiers associés à votre projet, y compris les schémas et les fichiers PCB.
 
-## 📋 **4. Gestion des bibliothèques de composants**{#gestion-des-bibliotheques-de-composants}
+## 📋 **4. Gestion des bibliothèques de composants**
 ### Ajouter des bibliothèques
 - KiCad utilise des bibliothèques pour stocker des composants. Pour ajouter des bibliothèques, allez dans **Preferences > Manage Footprint Libraries** et sélectionnez les bibliothèques nécessaires.
 
 ### Rechercher des composants
 - Vous pouvez rechercher des composants via l'outil de recherche intégré lors de la conception de votre schéma.
 
-## 🛠️ **5. Conception du schéma**{#conception-du-schema}
+## 🛠️ **5. Conception du schéma**
 ### Ouvrir l'éditeur de schéma
 - Cliquez sur l'icône **Schematic Editor** pour ouvrir l'éditeur de schéma.
 
@@ -164,7 +164,7 @@ Lorsque vous ouvrez un projet, l'interface de KiCad se compose de plusieurs él�
 - Utilisez l'outil **Place Symbol** pour ajouter des composants à votre schéma.
 - Connectez les composants avec l'outil **Place Wire**.
 
-## 🖨️ **6. Création du circuit imprimé (PCB)**{#creation-du-circuit-imprime-pcb}
+## 🖨️ **6. Création du circuit imprimé (PCB)**
 ### Passer à l'éditeur PCB
 - Une fois le schéma terminé, ouvrez l'éditeur PCB en cliquant sur l'icône **PCB Layout Editor**.
 
@@ -174,7 +174,7 @@ Lorsque vous ouvrez un projet, l'interface de KiCad se compose de plusieurs él�
 ### Routage
 - Utilisez l'outil **Route** pour connecter les pads des composants selon le schéma.
 
-## 📄 **7. Génération des fichiers de fabrication**{#generation-des-fichiers-de-fabrication}
+## 📄 **7. Génération des fichiers de fabrication**
 ### Fichiers Gerber
 - Une fois le PCB terminé, allez dans **File > Plot** pour générer les fichiers Gerber nécessaires à la fabrication de votre circuit imprimé.
 
@@ -185,7 +185,7 @@ Lorsque vous ouvrez un projet, l'interface de KiCad se compose de plusieurs él�
 ### Sauvegarde fréquente
 - Pensez à sauvegarder régulièrement votre travail pour éviter toute perte de données.
 
-### Explorer la documentation{#autres-conseils-utiles-pour-kicad-8}
+### Explorer la documentation
 - KiCad propose une documentation complète accessible dans le menu d'aide ou via ce [site](https://docs.kicad.org/8.0/). Profitez-en pour vous familiariser avec toutes les fonctionnalités disponibles.
 
 ---
