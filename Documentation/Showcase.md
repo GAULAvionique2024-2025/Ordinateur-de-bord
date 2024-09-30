@@ -14,6 +14,7 @@ Voici les résultats compilés de la première itération de l'ordinateur de bor
 ![Analyse](./Showcase/Rocket_Flight_Analysis.png)
 
 Voici le lien Matlab pour visualiser la [Figure](./Showcase/ODB1_Data.fig) 3D de l'analyse.
+<a href="./Showcase/ODB1_Data.fig" download="ODB1_Data.fig">📥 Télécharger la figure 3D (.fig)</a>
 
 ---
 
