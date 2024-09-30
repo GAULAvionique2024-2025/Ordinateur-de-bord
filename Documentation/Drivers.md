@@ -82,7 +82,7 @@ Write_GPIO(GPIOA, 5, HIGH);
 ```
 Dans cet exemple, l'état de PA5 est mis à HIGH.
 
-🔝 Retour à la [table des matières](#table-des-matieres).
+🔝 Retour à la [table des matières](#-table-des-matières).
 
 ## **Driver SPI**:
 
@@ -165,7 +165,7 @@ if (result == 0) {
 - **Transmission/Réception simultanées**: La fonction `SPI_TransmitReceive` permet d'effectuer une communication pleine duplex en utilisant les buffers TX et RX, ce qui optimise les opérations de communication.
 - **Gestion des erreurs**: Chaque fonction de communication retourne un code d'état pour indiquer le succès ou l'échec de l'opération, permettant ainsi une gestion des erreurs appropriée.
 
-🔝 Retour à la [table des matières](#table-des-matieres).
+🔝 Retour à la [table des matières](#-table-des-matières).
 
 ## **Driver USART**:
 
@@ -224,7 +224,7 @@ if (USART_RX(USART1, buffer, sizeof(buffer)) < 0) {
 - **Format de données** :  L'USART est onfiguré pour 8 bits sans parité, avec un bit d'arrêt.
 - **Attente de diffusion des bits** : Un timeout est utilisé pour éviter que le programme ne se bloque indéfiniment lors de l'attente de la disponibilité des registres.
 
-🔝 Retour à la [table des matières](#table-des-matieres).
+🔝 Retour à la [table des matières](#-table-des-matières).
 
 ## **Driver TIM**:
 
@@ -273,7 +273,7 @@ Cette fonction est appelée lorsqu'une interruption du Timer survient (par exemp
 - **Gestion des interruptions** : Lorsqu'une interruption survient (comme un overflow ou la fin d'une période), l'indicateur approprié (comme UIF) doit être effacé pour éviter d'autres interruptions intempestives.
 - **Modes de fonctionnement avancés** : Les timers peuvent être configurés pour des applications plus complexes telles que le mode PWM, l'input capture ou l'output compare, en réglant les registres appropriés (CCR, CCMR, etc.).
 
-🔝 Retour à la [table des matières](#table-des-matieres).
+🔝 Retour à la [table des matières](#-table-des-matières).
 
 ## **Driver CRC**:
 
@@ -304,7 +304,7 @@ uint16_t crc = CRC16_Calculate(message, sizeof(message));
 - **Retour du résultat**: À la fin du traitement de tous les octets, le résultat final du CRC est renvoyé sous forme d'un entier non-signé de 16 bits, prêt à être utilisé pour la vérification de l'intégrité des données.
 - **Utilisation du CRC**: Le CRC calculé peut être comparé à un CRC pré-calculé lors de la réception des données pour vérifier leur intégrité. Si les deux valeurs sont identiques, cela indique que les données n'ont pas été altérées.
 
-🔝 Retour à la [table des matières](#table-des-matieres).
+🔝 Retour à la [table des matières](#-table-des-matières).
 
 ## **Driver Baromètre (BMP280)**:
 
@@ -376,7 +376,7 @@ Cette fonction change le mode de fonctionnement du BMP280 en consommation normal
 - **Gestion des modes**: Le BMP280 peut fonctionner en mode normal ou basse consommation. La fonction `BMP280_SwapMode` permet de changer entre ces modes, affectant la fréquence des mesures et la consommation d'énergie.
 - **Erreurs potentielles**: Lors de l'initialisation et des lectures, il est important de gérer les erreurs, telles que les échecs de communication SPI ou des valeurs invalides lues à partir des registres.
 
-🔝 Retour à la [table des matières](#table-des-matieres).
+🔝 Retour à la [table des matières](#-table-des-matières).
 
 ## **Driver Buzzer**:
 
@@ -398,7 +398,7 @@ Cela va produire un son avec les paramètres définis pour la routine START.
 
 - **Configuration PWM**: Le driver configure le Timer (TIMx) spécifié pour générer un signal PWM. Les canaux peuvent être configurés pour différents types de modulation afin de produire des sons variés en ajustant la fréquence et le rapport cyclique.
 
-🔝 Retour à la [table des matières](#table-des-matieres).
+🔝 Retour à la [table des matières](#-table-des-matières).
 
 ## **Driver Multiplexeur (CD74HC4051)**:
 
@@ -455,7 +455,7 @@ Dans cet exemple, l'intégrité du pyrodispositif 1 est vérifiée.
 - **Contrôle des dispositifs pyrotechniques** : Avant de lire un canal, le driver peut activer un dispositif pyrotechnique associé. La fonction `Pyro_Check` permet de tester la continuité d'un canal pyro en utilisant le multiplexeur et en vérifiant la valeur ADC retournée. Cela garantit que le dispositif fonctionne comme prévu.
 - **Lecture de l'ADC** : Pour lire les valeurs analogiques, la fonction `ADC_Sampling` est utilisée après avoir réactivé le multiplexeur. La valeur lue est ensuite convertie en millivolts en utilisant la référence de tension fournie (`vref`).
 
-🔝 Retour à la [table des matières](#table-des-matieres).
+🔝 Retour à la [table des matières](#-table-des-matières).
 
 ## **Driver Accéléromètre (ICM20602)**:
 
@@ -520,7 +520,7 @@ void ICM20602_Write(ICM20602 *dev, uint8_t address, uint8_t value)
 ```
 Cette fonction écrit une valeur dans un registre spécifique du capteur en utilisant SPI.
 
-🔝 Retour à la [table des matières](#table-des-matieres).
+🔝 Retour à la [table des matières](#-table-des-matières).
 
 ## **Driver GPS (L76LM33)**:
 
@@ -593,7 +593,7 @@ if (L76LM33_Send_Command(&gpsSensor, command, sizeof(command)) != L76LM33_OK) {
 - **Configuration PMTK** : Le module L76LM33 utilise les commandes PMTK pour configurer les paramètres de fonctionnement.
 - **Conversion NMEA0183** : Les données reçues du L76LM33 sont formatées selon le standard NMEA 0183. Le message GPRMC fournit des informations essentielles telles que la date, l'heure, la latitude, la longitude, la vitesse et le cap. Le parsing de ces données implique l'extraction de chaque champ du message NMEA pour une utilisation ultérieure dans l'application.
 
-🔝 Retour à la [table des matières](#table-des-matieres).
+🔝 Retour à la [table des matières](#-table-des-matières).
 
 ## **Driver Lecteur de carte SD (MEM2067)**:
 
@@ -663,7 +663,7 @@ if (result != FR_OK) {
 - **Intégration de FATFS dans les middleware du STM32** : Ce driver utilise la bibliothèque FATFS, intégrée dans les middleware du STM32, pour gérer le système de fichiers sur la carte SD. FATFS fournit une interface standard pour accéder aux fichiers et permet de travailler avec des systèmes de fichiers FAT. L'intégration dans les middleware facilite l'utilisation des fonctions de gestion de fichiers, offrant une abstraction de bas niveau pour interagir avec la carte SD sans avoir à gérer directement les détails matériels.
 - **Format de fichier** : Le code génère par défaut un classeur .csv organiser selon le type de données pour facilité le traitement de toutes les données enregistrées.
 
-🔝 Retour à la [table des matières](#table-des-matieres).
+🔝 Retour à la [table des matières](#-table-des-matières).
 
 ## **Driver NMEA0183**:
 
@@ -673,7 +673,7 @@ Le driver NMEA0183 permet de parser une phrase NMEA de type RMC pour extraire l'
 
 Ce driver permet de récupérer efficacement les informations de localisation à partir de phrases NMEA standard, facilitant l'intégration des données GPS dans votre projet.
 
-🔝 Retour à la [table des matières](#table-des-matieres).
+🔝 Retour à la [table des matières](#-table-des-matières).
 
 ## **Driver RFD900x**:
 
@@ -706,7 +706,7 @@ rfd900_device.crc = CalculateCRC(rfd900_device.data, rfd900_device.size);
 RFD900_Send(&rfd900_device);
 ```
 
-🔝 Retour à la [table des matières](#table-des-matieres).
+🔝 Retour à la [table des matières](#-table-des-matières).
 
 ## **Driver Pyro**:
 
@@ -736,7 +736,7 @@ Pyro_Fire(armed, pyro_to_fire);
 - **Sécurité** : Le contrôle des dispositifs pyrotechniques nécessite des mesures de sécurité rigoureuses. Le driver inclut un mécanisme pour s'assurer que le système est en état "armé" avant de tirer. Cela évite des activations accidentelles. Il est crucial que la variable `armed` soit vérifiée avant d'envoyer un signal pour activer les dispositifs pyrotechniques.
 - **Gestion des GPIO** : Le driver configure les GPIO utilisés pour le déclenchement des dispositifs. Les pins doivent être initialisées en mode sortie et mises dans un état de repos lors de l'initialisation. Cela permet d'assurer que les dispositifs ne s'activent pas de manière inattendue. Après le tir, les GPIO sont désactivées pour éviter toute activation continue.
 
-🔝 Retour à la [table des matières](#table-des-matieres).
+🔝 Retour à la [table des matières](#-table-des-matières).
 
 ## **Driver Filtre Kalman**
 
@@ -747,7 +747,7 @@ Ce driver implémente un filtre de Kalman pour les microcontrôleurs STM32, util
 - **Covariance des erreurs** : Les matrices de covariance permettent de suivre les incertitudes des estimations du filtre.
 - **Correction avec la mesure** : Le filtre utilise la mesure actuelle pour corriger ses prédictions et ainsi fournir une estimation plus précise.
 
-🔝 Retour à la [table des matières](#table-des-matieres).
+🔝 Retour à la [table des matières](#-table-des-matières).
 
 ---
 
