@@ -23,7 +23,7 @@
 
 ---
 
-## **STM32CubeIDE**{#stm32cubeide}
+## **STM32CubeIDE**
 
 <div style="display: flex; justify-content: space-around;">
   <img src="./Logiciel/STM32.png" alt="ODB1" width="25%">
@@ -117,7 +117,7 @@ Le **ST-Link** est un outil de débogage et de programmation pour les microcontr
 
 ---
 
-## **Kicad 8**{#kicad-8}
+## **Kicad 8**
 
 <div style="display: flex; justify-content: space-around;">
   <img src="./Logiciel/Kicad.png" alt="ODB1" width="25%">
