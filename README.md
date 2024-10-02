@@ -57,19 +57,23 @@ L’ensemble forme un système de télémétrie complet, idéal pour monitorer l
 
 Découvrez une galerie illustrant le design et l'implémentation de l'ordinateur de bord :
 
-[Voir la Showcase](./Documentation/Showcase.md)
+[Voir la Showcase](./Documentation/ODB1/Showcase.md)
 
 <div style="display: flex; justify-content: space-around;">
-  <img src="./Documentation/Showcase/ODB1_PCB.png" alt="ODB1" width="45%">
-  <img src="./Documentation/Showcase/Rocket_Launch.jpg" alt="Rocket Launch" width="45%">
+  <img src="./Documentation/ODB1/Showcase/ODB1_PCB.png" alt="ODB1" width="45%">
+  <img src="./Documentation/ODB1/Showcase/Rocket_Launch.jpg" alt="Rocket Launch" width="45%">
 </div>
 
 ## 📚 **Documentation**
 
 Toutes les informations sur les composants hardware / logiciel et les drivers sont disponibles ici :
 
-- [Composantes](./Documentation/Composantes.md)
-- [Drivers](./Documentation/Drivers.md)
+### **Ordinateur de bord 1**
+- [Composantes](./Documentation/ODB1/Composantes.md)
+- [Drivers](./Documentation/ODB1/Drivers.md)
+
+### **Ordinateur de bord 2**
+
 - [Prise en main des logiciels](./Documentation/Logiciel.md)
 
 ## 🛠 **Roadmap**
