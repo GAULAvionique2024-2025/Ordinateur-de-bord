@@ -108,4 +108,4 @@ Le bouton poussoir **LTC2954** permet d'activer ou désactiver certaines fonctio
 
 ---
 
-🔙 **Retour à la [page principale](.../README.md)**
+🔙 **Retour à la [page principale](../../README.md)**
