@@ -74,7 +74,10 @@ Toutes les informations sur les composants hardware / logiciel et les drivers so
 
 ### **Ordinateur de bord 2**
 
-- [Prise en main des logiciels](./Documentation/Logiciel.md)
+- [Composantes](./Documentation/ODB2/Composantes.md)
+- [Drivers](./Documentation/ODB2/Drivers.md)
+
+> [Prise en main des logiciels](./Documentation/Logiciel.md)
 
 ## 🛠 **Roadmap**
 
