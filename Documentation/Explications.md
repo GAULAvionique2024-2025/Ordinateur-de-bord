@@ -20,7 +20,7 @@ Le diagramme suivant offre une vue d'ensemble des composants clés de l'ODB ains
   
 ## 🛠️ **Données principales**
 
-Voici les différentes variables suivies par l'ordinateur de bord pendant le vol:
+Voici les différentes variables à suivre par l'ordinateur de bord pendant le vol:
 
 ```bash
 - header.flightmode        : Mode de vol (toujours 01)
