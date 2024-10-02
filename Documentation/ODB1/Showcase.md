@@ -18,4 +18,4 @@ Voici les résultats compilés de la première itération de l'ordinateur de bor
 
 ---
 
-🔙 Retour à la [page principale](../README.md)
+🔙 Retour à la [page principale](../../README.md)
