@@ -1,4 +1,4 @@
-# 🛰️ **Explication de l'Ordinateur de Bord**
+# 🛰️ **Explication de l'Ordinateur de bord**
 
 Ce document décrit le fonctionnement du code de l'ODB1 utilisé pour la fusée du GAUL.
 
@@ -8,8 +8,6 @@ Voici le diagramme qui montre les liaisons entre les différents modules de l'or
 
 <div align="center"; style="display: flex; justify-content: space-around;">
   <img src="./Explications/Diagramme_Communications.png" alt="ODB1" width="60%">
-</div>
-
 </div>
 
 Le diagramme suivant offre une vue d'ensemble des composants clés de l'ODB ainsi que leur rôle dans l'architecture globale:
