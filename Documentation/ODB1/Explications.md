@@ -86,4 +86,4 @@ Le **parachute principal** est déployé à basse altitude pour garantir un atte
 - Détection d'Apogee avec filtre de Kalman pour ordinateur de vol : [lien](./Explications/DetectionApogeewithKalmanFilter.pdf)
 ---
 
-🔙 Retour à la [page principale](../README.md)
+🔙 Retour à la [page principale](../../README.md)
