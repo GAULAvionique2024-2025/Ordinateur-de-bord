@@ -19,7 +19,7 @@ Celui-ci donne une vue sur les différentes fonctionnalitées que l'ordinateur d
 Le diagramme suivant offre une vue d'ensemble des composants clés de l'ODB ainsi que leur rôle dans l'architecture globale:
 
 <div align="center"; style="display: flex; justify-content: space-around;">
-  <img src="./Explications/Diagramme_ODB2.png" alt="ODB2" width="60%">
+  <img src="./Explications/Diagram_ODB2.png" alt="ODB2" width="60%">
 </div>
   
 ## 🛠️ **Données principales**
