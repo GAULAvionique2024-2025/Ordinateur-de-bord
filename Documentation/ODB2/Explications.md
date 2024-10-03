@@ -12,9 +12,7 @@ Voici le diagramme qui montre la division de l'avionique à travers le **Booster
 
 Celui-ci donne une vue sur les différentes fonctionnalitées que l'ordinateur de bord doit et peut gérer:
 
-<div align="center"; style="display: flex; justify-content: space-around;">
-  <img src="./Explications/Diagram_Structure.png" alt="ODB2" width="60%">
-</div>
+...
 
 Le diagramme suivant offre une vue d'ensemble des composants clés de l'ODB ainsi que leur rôle dans l'architecture globale:
 
