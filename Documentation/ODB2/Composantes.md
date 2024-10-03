@@ -1,4 +1,4 @@
-# 🖥️ **Documentation des Composants de l'Ordinateur de Bord**
+# 🖥️ **Documentation des Composants de l'Ordinateur de bord**
 
 Cette section fournit une vue d'ensemble détaillée des composants utilisés dans la conception de l'ordinateur de bord de la fusée **ODB2**. Vous trouverez ici les spécifications techniques et les descriptions des principaux modules, capteurs, et systèmes intégrés à l'ODB1.
 
