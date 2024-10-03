@@ -51,7 +51,8 @@ L'intégration inclut :
 - **Autres Optionnels**  
   ...
 
-L’ensemble forme un système de télémétrie complet, idéal pour monitorer les performances et la trajectoire d’une fusée en temps réel. Pour des informations détaillées sur le fonctionnement de chaque composant, consultez [les explications détaillées](./Documentation/Explications.md).
+L’ensemble forme un système de télémétrie complet, idéal pour monitorer les performances et la trajectoire d’une fusée en temps réel. Pour des informations détaillées sur le fonctionnement de chaque composant et de leur rôle, consultez [les explications détaillées](./Documentation/ODB2/Explications.md).
+> [Explications détaillées ODB1](./Documentation/ODB1/Explications.md).
 
 ## 📷 **Images de l'ODB**
 
