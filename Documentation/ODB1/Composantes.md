@@ -48,7 +48,7 @@ Le multiplexeur **CD74HC4051-EP** permet de sélectionner entre plusieurs signau
 
 ---
 
-### 💾 **Lecteur de carte SD - [MEM2067](./Composantes/MEM2067.pdf)**
+### 💿 **Lecteur de carte SD - [MEM2067](./Composantes/MEM2067.pdf)**
 
 <img src="./Composantes/MEM.png" alt="Lecteur SD MEM2067" width="200"/>
 
