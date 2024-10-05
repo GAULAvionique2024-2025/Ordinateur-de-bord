@@ -28,7 +28,7 @@ L'intégration inclut :
   
   Un capteur de mouvement qui fournit des données sur l'accélération et l'orientation de la fusée.
 
-- **Baromètre**
+- **Altimètre**
   
   Un capteur de pression atmosphérique, permettant de calculer l'altitude.
 
