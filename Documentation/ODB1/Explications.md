@@ -67,8 +67,8 @@ Ce diagramme fonctionnel offre une vue d'ensemble des comportements essentiels d
 </div>
 
 ## 📄 **Documentation complémentaire**
-- [Composantes](./ODB1/Composantes.md) : Détails sur les composantes matérielles utilisées.
-- [Drivers](./ODB1/Drivers.md) : Explications du code des drivers logiciels.
+- [Composantes](./Composantes.md) : Détails sur les composantes matérielles utilisées.
+- [Drivers](./Drivers.md) : Explications du code des drivers logiciels.
 
 ## 🪂 **Informations sur les parachutes**
 
