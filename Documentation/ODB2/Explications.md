@@ -57,8 +57,8 @@ Un Mach lock pour une fusée est une fonctionnalité de sécurité utilisée dan
 - **Pyro2 (Main chute)** : Déclenché à basse altitude pour ralentir la fusée avant l'atterrissage.
 
 ## 📄 **Documentation complémentaire**
-- [Composantes](./ODB2/Composantes.md) : Détails sur les composantes matérielles utilisées.
-- [Drivers](./ODB2/Drivers.md) : Explications du code des drivers logiciels.
+- [Composantes](./Composantes.md) : Détails sur les composantes matérielles utilisées.
+- [Drivers](./Drivers.md) : Explications du code des drivers logiciels.
 
 ## 🪂 **Informations sur les parachutes**
 
