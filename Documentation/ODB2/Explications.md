@@ -43,18 +43,25 @@ Le baromètre est utilisé pour déterminer si la fusée est en montée ou en de
 Un Mach lock pour une fusée est une fonctionnalité de sécurité utilisée dans le système de contrôle de vol. Le terme "Mach" fait référence au nombre de Mach, qui mesure la vitesse par rapport à la vitesse du son. Le Mach lock est activé lorsque la fusée dépasse une certaine vitesse supersonique (généralement à Mach 1 ou plus) et désactive certains modules ou commandes implémentées dans le système. Cela permet de **prévenir les erreurs de mesure** dans les cas où des capteurs sont moins fiables à haute vitesse en raison des turbulences ou de la chaleur extrême. Le Mach lock permet d'éviter l'utilisation de ces données à ce moment critique et ainsi, limiter les comportements inattendus du système. Une fois que la fusée redescend sous une certaine **vitesse** (inférieure au nombre de Mach défini), le lock peut être désactivé, permettant à nouveau l'utilisation des commandes et des capteurs concernés.
 
 ### **GPS**
+Le module GPS est utilisé pour suivre la position en temps réel de la fusée pendant son vol. Il permet de déterminer les coordonnées exactes de la fusée, sa vitesse horizontale et verticale, ainsi que sa trajectoire. Ces informations sont cruciales pour la télémétrie en direct et les calculs de récupération post-vol.
 
 ### **Mémoire Flash**
+Le module GPS est utilisé pour suivre la position en temps réel de la fusée pendant son vol. Il permet de déterminer les coordonnées exactes de la fusée, sa vitesse horizontale et verticale, ainsi que sa trajectoire. Ces informations sont cruciales pour la télémétrie en direct et les calculs de récupération post-vol.
 
 ### **Buzzer**
+Le buzzer est utilisé comme signal sonore pour indiquer différents états ou événements pendant la préparation du vol ou juste après l'atterrissage. Il peut, par exemple, émettre des sons pour signaler un problème de capteur ou le succès d'une phase critique comme l'activation des parachutes.
 
 ### **Radio**
+Le module radio permet la transmission des données en temps réel entre la fusée et la station au sol. Cette communication est essentielle pour recevoir des informations sur l'état de la fusée pendant le vol, comme la vitesse, l'altitude, et les événements critiques tels que la séparation des étages ou le déploiement des parachutes.
 
 ### **Balise**
+La balise est utilisée pour la récupération de la fusée après son atterrissage. Elle émet un signal permettant à l'équipe au sol de localiser la fusée, même si elle a atterri dans une zone éloignée ou difficile d'accès.
 
 ### **Bluetooth**
+Le module Bluetooth permet une communication à courte distance entre l'ordinateur de bord et un dispositif mobile pour vérifier les systèmes avant le lancement. Il est utilisé pour tester le bon fonctionnement des capteurs et des déclencheurs pyrotechniques avant l'envol ainsi qu'à armer ceux-ci.
 
 ### **Igniters**
+Les igniters (ou allumeurs) sont utilisés pour déclencher les charges pour la propulsion de la fusée ainsi la séparation des différentes sections nécessaires au déploiement des parachutes. Ils sont contrôlés par l'ordinateur de bord selon les phases critiques du vol, comme l'allumage du moteur du **Substainer** après la séparation du **Booster**.
 
 ### **Déclenchement des charges pyrotechniques**
 - **Pyro0 (Substainer motor)** : Déclenché à l'apogée du **Booster** pour effectuer la séparation du **Substainer** et déclencher la charge de son propulseur.
