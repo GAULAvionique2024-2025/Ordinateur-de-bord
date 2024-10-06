@@ -50,6 +50,8 @@ Un Mach lock pour une fusée est une fonctionnalité de sécurité utilisée dan
 
 ### **Radio**
 
+### **Balise**
+
 ### **Bluetooth**
 
 ### **Igniters**
