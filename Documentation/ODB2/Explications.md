@@ -22,6 +22,12 @@ Le diagramme suivant offre une vue d'ensemble des composants clés de l'ODB ains
 <div align="center"; style="display: flex; justify-content: space-around;">
   <img src="./Explications/Diagram_ODB2.png" alt="ODB2" width="60%">
 </div>
+
+Le diagramme montre les composantes rattachées au récepteur RF de la balise:
+
+<div align="center"; style="display: flex; justify-content: space-around;">
+  <img src="./Explications/Diagram_Receiver.png" alt="ODB2" width="50%">
+</div>
   
 ## 🛠️ **Données principales**
 
