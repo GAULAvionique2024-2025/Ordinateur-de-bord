@@ -25,7 +25,7 @@ Le **ICM-20948** permet de mesurer les accélérations linéaires sur trois axes
 
 ---
 
-### 📡 **Module GPS - [L76LM33](./Composantes/L76LM33.pdf)**
+### 🛰️ **Module GPS - [L76LM33](./Composantes/L76LM33.pdf)**
 
 
 Le module **L76LM33** assure le suivi de la position en temps réel avec des informations précises de latitude et de longitude.
@@ -59,6 +59,12 @@ Les igniters sont responsables du déclenchement des charges pyrotechniques pour
 ### 📲 **Module Bluetooth - [HM10_BLE](./Composantes/HM10_BLE.pdf)**
 
 Le module **HM10** permet une communication courte portée pour l'armement et le diagnostic de l'ODB via Bluetooth.
+
+---
+
+### 📡 **Module Émetteur-Récepteur RF - [RFM22B](./Composantes/RFM22B-S2.pdf)**
+
+Le module **RFM22B** permet une communication courte portée pour signaler la position approximatives des parties de la fusée.
 
 ---
 
