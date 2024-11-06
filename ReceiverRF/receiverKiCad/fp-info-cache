@@ -1,4 +1,4 @@
-22363835335363847
+22360376245850744
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -92239,12 +92239,12 @@ varistor
 2
 2
 footprint-receiver
-CONN_RF2-04A-T-00-50-G_ADM
-connecteur coaxial SMA
-RF2-04A-T-00-50-G 
+DPAK-3_ONS-M
+
+NCV5501DT33RKG 
 0
-5
-5
+3
+3
 footprint-receiver
 LQFP64-10x10mm
 footprint du STM32F103RET6 
@@ -92267,13 +92267,6 @@ LED
 2
 2
 footprint-receiver
-MF05A_TEX
-footprint régulateur 5V (LP2980)
-LP2980AIM5-5.0/NOPB 
-0
-5
-5
-footprint-receiver
 QFN-16_MLX90393_MEL-L
 footprint bousolle (MLX90393)
 MLX90393SLW-ABA-011-RE 
@@ -92288,16 +92281,9 @@ footprint RFM22B
 16
 16
 footprint-receiver
-SMTB-0927-TW-R_PUI
-buzzer
-SMTB-0927-TW-R 
+SOT-23-5
+SOT, 5 Pin (https://www.jedec.org/sites/default/files/docs/Mo-178c.PDF variant AA), generated with kicad-footprint-generator ipc_gullwing_generator.py
+SOT TO_SOT_SMD
 0
-2
-2
-footprint-receiver
-SOT_3.3TRG1_DIO
-footprint régulateur 3.3V (AP2210)
-AP2210N-3.3TRG1 
-0
-3
-3
+5
+5

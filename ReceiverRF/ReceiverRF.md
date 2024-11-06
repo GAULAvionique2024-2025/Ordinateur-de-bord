@@ -5,8 +5,8 @@ Soit les librairies KiCad, les schématics KiCad, ainsi que le code.
 
 TODO:
 - choisir buzzer actif
-- choisir régulateurs avec plus de courant
 - choisir ferrite bead 150R
-- nouveau footprint coaxial 90deg
+- choisir connecteur coaxial SMA 90deg
+- choisir cristal 8 MHz
 - choisir boutons
 - assigner footprint à chaque composante
