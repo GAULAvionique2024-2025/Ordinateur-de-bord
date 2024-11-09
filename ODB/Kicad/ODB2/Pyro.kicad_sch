@@ -4,5 +4,22 @@
 	(generator_version "8.0")
 	(uuid "1e84272f-8019-4e3b-b195-f9e1a3e696c3")
 	(paper "A4")
+	(title_block
+		(title "Pyros")
+		(date "2024-11-09")
+		(company "GAUL")
+	)
 	(lib_symbols)
+	(text "Pyros"
+		(exclude_from_sim no)
+		(at 21.59 16.51 0)
+		(effects
+			(font
+				(size 4 4)
+				(thickness 0.8)
+				(bold yes)
+			)
+		)
+		(uuid "1c130337-ea8d-4e5a-9a7e-1103a68d08d4")
+	)
 )

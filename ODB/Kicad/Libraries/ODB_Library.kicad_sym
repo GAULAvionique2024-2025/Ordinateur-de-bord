@@ -3927,8 +3927,8 @@
 		)
 		(symbol "STM32F479ZGTx_0_1"
 			(rectangle
-				(start -30.48 -83.82)
-				(end 33.02 86.36)
+				(start -30.48 86.36)
+				(end 33.02 -83.82)
 				(stroke
 					(width 0.254)
 					(type default)
