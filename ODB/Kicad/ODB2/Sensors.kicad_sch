@@ -1,0 +1,20 @@
+(kicad_sch
+	(version 20231120)
+	(generator "eeschema")
+	(generator_version "8.0")
+	(uuid "a2b0fc26-5c07-436e-a7c3-5598f42a8e9f")
+	(paper "A4")
+	(lib_symbols)
+	(text "Sensors"
+		(exclude_from_sim no)
+		(at 32.258 18.542 0)
+		(effects
+			(font
+				(size 6 6)
+				(thickness 0.254)
+				(bold yes)
+			)
+		)
+		(uuid "97ffa2fa-a553-473a-ab29-136c15a072ac")
+	)
+)
