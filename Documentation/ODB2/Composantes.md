@@ -32,12 +32,6 @@ Le module **L76LM33** assure le suivi de la position en temps réel avec des inf
 
 ---
 
-### 💿 **Lecteur de carte SD - [MEM2067](./Composantes/MEM2067.pdf)**
-
-Le lecteur **MEM2067** stocke les données de vol recueillies par les capteurs, assurant une récupération facile après le vol.
-
----
-
 ### 💾 **Mémoire Flash - [MX30UF4G28AD](./Composantes/MX30UF4G28AD.pdf)**
 
 Le **MX30UF4G28AD** stocke les données de vol recueillies par les capteurs, assurant une récupération facile après le vol.
