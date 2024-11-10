@@ -1,4 +1,4 @@
-# 🛠️ Conception KiCad pour l'Ordinateur de Bord ODB1 🚀
+# 🛠🚀 Conception KiCad pour l'Ordinateur de bord ODB1
 
 Ce projet consiste à la conception d'une carte électronique pour l'ordinateur de bord de la fusée ODB1, réalisée avec **KiCad**. Voici un aperçu de l'approche utilisée pour la création du schéma et du circuit imprimé (PCB) de ce projet.
 
@@ -24,6 +24,7 @@ L'objectif principal est de réaliser une carte électronique compacte et perfor
 ## 🔧 Outils utilisés
 
 - **KiCad** : Outil principal pour la conception du schéma et du PCB.
+- **STM32CubeIDE** : IDE pour le développement du logiciel embarqué sur le microcontrôleur STM32&#8203;:contentReference[oaicite:0]{index=0}&#8203;:contentReference[oaicite:1]{index=1}.
 
 ## 📅 Suivi de la progression
 
@@ -31,4 +32,4 @@ Les étapes de conception, de tests et de validation de la carte sont détaillé
 
 ---
 
-Pour en savoir plus sur les composants et les spécifications techniques, consultez [la documentation complète des composants ODB1](https://github.com/GAULAvionique2024-2025/Ordinateur-de-bord/tree/main/Documentation/ODB2)&#8203;:contentReference[oaicite:2]{index=2}.
+Pour en savoir plus sur les composants et les spécifications techniques, consultez [la documentation complète des composants ODB1](https://github.com/GAULAvionique2024-2025/Ordinateur-de-bord/tree/main/Documentation/ODB2)
