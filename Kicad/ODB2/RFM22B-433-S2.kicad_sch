@@ -2,7 +2,7 @@
 	(version 20231120)
 	(generator "eeschema")
 	(generator_version "8.0")
-	(uuid "df0306aa-4ab3-43eb-8bce-134e36ee1dbd")
+	(uuid "e6a92626-69f9-4dfe-8e51-b6d6e9124556")
 	(paper "A4")
 	(title_block
 		(title "Beacon")
@@ -10,4 +10,16 @@
 		(company "GAUL")
 	)
 	(lib_symbols)
+	(text "Beacon"
+		(exclude_from_sim no)
+		(at 31.75 18.796 0)
+		(effects
+			(font
+				(size 6 6)
+				(thickness 1.2)
+				(bold yes)
+			)
+		)
+		(uuid "b23c6f5d-6989-4e4f-885c-268e4289d8ff")
+	)
 )
