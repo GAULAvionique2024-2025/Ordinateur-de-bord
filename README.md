@@ -24,6 +24,7 @@ L'objectif principal est de réaliser une carte électronique compacte et perfor
 ## 🔧 Outils utilisés
 
 - **KiCad** : Outil principal pour la conception du schéma et du PCB.
+- **STM32CubeIDE** : IDE pour le développement du logiciel embarqué sur le microcontrôleur STM32&#8203;:contentReference[oaicite:0]{index=0}&#8203;:contentReference[oaicite:1]{index=1}.
 
 ## 📅 Suivi de la progression
 
