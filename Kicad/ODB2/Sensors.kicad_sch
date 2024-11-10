@@ -22,4 +22,270 @@
 		)
 		(uuid "97ffa2fa-a553-473a-ab29-136c15a072ac")
 	)
+	(sheet
+		(at 0 302.26)
+		(size 144.78 81.28)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "1aed36b0-35f7-4484-8e94-e5e2b4b655b6")
+		(property "Sheetname" "L76LM33"
+			(at 0 301.5484 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "L76LM33.kicad_sch"
+			(at 0 384.1246 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "ODB2"
+				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/eac5f07f-d6a3-4c95-b286-7cebf46e30db"
+					(page "8")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 149.86 213.36)
+		(size 147.32 83.82)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "59725e48-5ae0-4c5e-8605-8169105f55a0")
+		(property "Sheetname" "ICM20948"
+			(at 149.86 212.6484 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "ICM20948.kicad_sch"
+			(at 149.86 297.7646 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "ODB2"
+				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/eac5f07f-d6a3-4c95-b286-7cebf46e30db"
+					(page "7")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 0 474.98)
+		(size 144.78 83.82)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "6f89a267-7956-46d0-9079-a19e23eac9f2")
+		(property "Sheetname" "RFM22B-433-S2"
+			(at 0 474.2684 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "RFM22B-433-S2.kicad_sch"
+			(at 0 559.3846 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "ODB2"
+				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/eac5f07f-d6a3-4c95-b286-7cebf46e30db"
+					(page "12")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 149.86 302.26)
+		(size 147.32 81.28)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "a22c617e-0d66-4985-a85f-0ed5b022cb45")
+		(property "Sheetname" "MS580301BA01-00-TE"
+			(at 149.86 301.5484 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "MS580301BA01-00-TE.kicad_sch"
+			(at 149.86 384.1246 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "ODB2"
+				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/eac5f07f-d6a3-4c95-b286-7cebf46e30db"
+					(page "9")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 0 388.62)
+		(size 144.78 81.28)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "e6a1943e-8956-415f-a4c3-f86d483e4e60")
+		(property "Sheetname" "MX30UF4G28AD"
+			(at 0 387.9084 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "MX30UF4G28AD.kicad_sch"
+			(at 0 470.4846 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "ODB2"
+				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/eac5f07f-d6a3-4c95-b286-7cebf46e30db"
+					(page "10")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 0 213.36)
+		(size 144.78 83.82)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "fde591df-8db1-4658-bb0c-169e0f50af3c")
+		(property "Sheetname" "HM-10"
+			(at 0 212.6484 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "HM-10.kicad_sch"
+			(at 0 297.7646 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "ODB2"
+				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/eac5f07f-d6a3-4c95-b286-7cebf46e30db"
+					(page "6")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 149.86 388.62)
+		(size 147.32 81.28)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "ff4cd1df-b3e2-453b-8073-5bc744ab38df")
+		(property "Sheetname" "RFD900x"
+			(at 149.86 387.9084 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "RFD900x.kicad_sch"
+			(at 149.86 470.4846 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "ODB2"
+				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/eac5f07f-d6a3-4c95-b286-7cebf46e30db"
+					(page "11")
+				)
+			)
+		)
+	)
 )
