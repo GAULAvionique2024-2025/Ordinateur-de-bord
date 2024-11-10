@@ -1,4 +1,4 @@
-# 🛠️ Conception KiCad pour l'Ordinateur de Bord ODB1 🚀
+# 🛠🚀 Conception KiCad pour l'Ordinateur de bord ODB1
 
 Ce projet consiste à la conception d'une carte électronique pour l'ordinateur de bord de la fusée ODB1, réalisée avec **KiCad**. Voici un aperçu de l'approche utilisée pour la création du schéma et du circuit imprimé (PCB) de ce projet.
 
