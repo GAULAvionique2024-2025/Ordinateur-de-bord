@@ -31,4 +31,4 @@ Les étapes de conception, de tests et de validation de la carte sont détaillé
 
 ---
 
-Pour en savoir plus sur les composants et les spécifications techniques, consultez [la documentation complète des composants ODB1](https://github.com/GAULAvionique2024-2025/Ordinateur-de-bord/tree/main/Documentation/ODB2)&#8203;:contentReference[oaicite:2]{index=2}.
+Pour en savoir plus sur les composants et les spécifications techniques, consultez [la documentation complète des composants ODB1](https://github.com/GAULAvionique2024-2025/Ordinateur-de-bord/tree/main/Documentation/ODB2)
