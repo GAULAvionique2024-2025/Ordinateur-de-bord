@@ -3443,6 +3443,16 @@
 	)
 	(wire
 		(pts
+			(xy 171.45 54.61) (xy 175.26 54.61)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6ef91e96-d6d8-49d1-897f-05fbc86f1b26")
+	)
+	(wire
+		(pts
 			(xy 233.68 144.78) (xy 237.49 144.78)
 		)
 		(stroke
@@ -4142,17 +4152,6 @@
 		)
 		(uuid "9b54a8b9-a72b-49a3-9490-0937d5b3a899")
 	)
-	(text "Pin DAC"
-		(exclude_from_sim no)
-		(at 186.69 66.04 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "b9a3e3c2-3189-465a-8b8a-05bcee4405fa")
-	)
 	(text "SYS debug\n"
 		(exclude_from_sim no)
 		(at 220.98 30.48 0)
@@ -4276,6 +4275,28 @@
 		(uuid "20a2c8d3-99c3-4087-8894-43601b90cc53")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 186.8328 135.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "VOLUME"
+		(shape input)
+		(at 175.26 54.61 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "36d81c6c-d74b-49eb-a55e-3764d0e30d85")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 185.6233 54.61 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4995,7 +5016,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "footprint-receiver:LQFP64-10x10mm"
+		(property "Footprint" "Footprints:LQFP64-10x10mm"
 			(at 138.43 140.97 0)
 			(effects
 				(font
