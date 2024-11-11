@@ -5721,7 +5721,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Footprints:Ferrite_0603"
 			(at 187.96 35.052 90)
 			(effects
 				(font
@@ -5730,7 +5730,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "Ferrite bead"
+		(property "Datasheet" "https://www.digikey.ca/en/products/detail/vishay-dale/ILBB0603ER121V/2574888"
 			(at 187.96 36.83 0)
 			(effects
 				(font
@@ -5739,7 +5739,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "120 ohm @ 100 MHz"
 			(at 187.96 36.83 0)
 			(effects
 				(font
