@@ -1,4 +1,4 @@
-24210304942942601
+24204892195949652
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -56980,6 +56980,13 @@ emi filter
 5
 5
 Footprints
+Crystal
+Abracon Miniature Ceramic SMD Crystal ABS25 https://abracon.com/Resonators/abs25.pdf, 8.0x3.8mm^2 package
+SMD SMT crystal
+0
+4
+4
+Footprints
 DPAK-3_ONS-M
 
 NCV5501DT33RKG 
@@ -57028,6 +57035,13 @@ footprint RFM22B
 0
 16
 16
+Footprints
+SMA_90deg
+ Amphenol RF 901-143 https://www.amphenolrf.com/library/download/link/link_id/585682
+SMA THT Female Jack Horizontal
+0
+5
+2
 Footprints
 SOT-23-5
 SOT, 5 Pin (https://www.jedec.org/sites/default/files/docs/Mo-178c.PDF variant AA), generated with kicad-footprint-generator ipc_gullwing_generator.py

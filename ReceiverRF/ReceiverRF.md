@@ -5,7 +5,6 @@ Soit les librairies KiCad, les schématics KiCad, ainsi que le code.
 
 TODO:
 - choisir buzzer actif
-- choisir connecteur coaxial SMA 90deg
-- choisir cristal 8 MHz
+- circuit potentiomètre volume
 - choisir boutons + capacié filtrge
 - assigner footprint à chaque composante
