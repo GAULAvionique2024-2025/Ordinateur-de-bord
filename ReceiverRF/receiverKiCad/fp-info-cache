@@ -1,4 +1,4 @@
-24204892195949652
+24210086771749866
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -57022,6 +57022,13 @@ LED
 2
 2
 Footprints
+Potentiometer_Alps_RK09K_Single_Vertical
+113004U 1130A6S 11300DR 1130A8G 1130081 1130A5R 1130AP5 1130AST  D1130C3W D1130C1B D1130C3C D1130C2P Potentiometer, vertical, Alps RK09K Single, https://tech.alpsalpine.com/prod/e/pdf/potentiometer/rotarypotentiometers/rk09k/rk09k.pdf
+Potentiometer vertical Alps RK09K RK09D Single Snapin
+0
+5
+4
+Footprints
 QFN-16_MLX90393_MEL-L
 footprint bousolle (MLX90393)
 MLX90393SLW-ABA-011-RE 
@@ -57049,6 +57056,20 @@ SOT TO_SOT_SMD
 0
 5
 5
+Footprints
+SW_PUSH_6mm_H4.3mm
+tactile push button, 6x6mm e.g. PHAP33xx series, height=4.3mm
+tact sw push 6mm
+0
+4
+2
+Footprints
+Toggle_SW
+
+
+0
+3
+2
 Fuse
 FuseHolder_Blade_ATO_Littelfuse_FLR_178.6165
 Littelfuse fuse holder for ATO/FKS blade fuses, 80V, vertical, 20 x 6mm, PCB thickness up to 1.5mm, http://www.littelfuse.com/~/media/commercial-vehicle/datasheets/automotive-fuse-holders/ato/littelfuse-fuse-holder-ato-flr-pcb-datasheet.pdf

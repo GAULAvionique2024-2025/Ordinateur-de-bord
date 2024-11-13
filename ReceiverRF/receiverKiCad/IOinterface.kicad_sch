@@ -5,6 +5,126 @@
 	(uuid "123462aa-264a-43fc-8106-827499f7f2ff")
 	(paper "A4")
 	(lib_symbols
+		(symbol "+3.3V_1"
+			(power)
+			(pin_numbers hide)
+			(pin_names
+				(offset 0) hide)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "#PWR"
+				(at 0 -3.81 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Value" "+3.3V"
+				(at 0 3.556 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Power symbol creates a global label with name \"+3.3V\""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "global power"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "+3.3V_1_0_1"
+				(polyline
+					(pts
+						(xy -0.762 1.27) (xy 0 2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 0) (xy 0 2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 2.54) (xy 0.762 1.27)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "+3.3V_1_1_1"
+				(pin power_in line
+					(at 0 0 90)
+					(length 0)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+		)
 		(symbol "Device:Buzzer"
 			(pin_names
 				(offset 0.0254) hide)
@@ -589,6 +709,167 @@
 				)
 			)
 		)
+		(symbol "Device:R_Potentiometer"
+			(pin_names
+				(offset 1.016) hide)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "RV"
+				(at -4.445 0 90)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "R_Potentiometer"
+				(at -2.54 0 90)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Potentiometer"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "resistor variable"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "Potentiometer*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "R_Potentiometer_0_1"
+				(polyline
+					(pts
+						(xy 2.54 0) (xy 1.524 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.143 0) (xy 2.286 0.508) (xy 2.286 -0.508) (xy 1.143 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(rectangle
+					(start 1.016 2.54)
+					(end -1.016 -2.54)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "R_Potentiometer_1_1"
+				(pin passive line
+					(at 0 3.81 270)
+					(length 1.27)
+					(name "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 3.81 0 180)
+					(length 1.27)
+					(name "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -3.81 90)
+					(length 1.27)
+					(name "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+		)
 		(symbol "Diode:1N6858UR"
 			(pin_numbers hide)
 			(pin_names
@@ -725,6 +1006,102 @@
 						)
 					)
 					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+		)
+		(symbol "GND_1"
+			(power)
+			(pin_numbers hide)
+			(pin_names
+				(offset 0) hide)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "#PWR"
+				(at 0 -6.35 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Value" "GND"
+				(at 0 -3.81 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "global power"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "GND_1_0_1"
+				(polyline
+					(pts
+						(xy 0 0) (xy 0 -1.27) (xy 1.27 -1.27) (xy 0 -2.54) (xy -1.27 -1.27) (xy 0 -1.27)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "GND_1_1_1"
+				(pin power_in line
+					(at 0 0 270)
+					(length 0)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -1405,16 +1782,6 @@
 	)
 	(wire
 		(pts
-			(xy 120.65 91.44) (xy 120.65 92.71)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "10d62cbf-b5d5-4306-8702-c0fc4f82a144")
-	)
-	(wire
-		(pts
 			(xy 49.53 101.6) (xy 49.53 104.14)
 		)
 		(stroke
@@ -1462,6 +1829,16 @@
 			(type default)
 		)
 		(uuid "264314e5-fbd1-46c5-a063-4ff894322ef8")
+	)
+	(wire
+		(pts
+			(xy 173.99 40.64) (xy 181.61 40.64)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "26b9bdf0-96ed-4fdc-87d5-0c02be7f3d2a")
 	)
 	(wire
 		(pts
@@ -1522,6 +1899,16 @@
 			(type default)
 		)
 		(uuid "42ea7ba8-7786-4754-8f4c-6dc0ff59403c")
+	)
+	(wire
+		(pts
+			(xy 185.42 33.02) (xy 185.42 36.83)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "44bda96c-8d9b-4958-9262-d0d0a03654ca")
 	)
 	(wire
 		(pts
@@ -1685,6 +2072,16 @@
 	)
 	(wire
 		(pts
+			(xy 120.65 91.44) (xy 120.65 92.71)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b13f0ec2-a4f0-4b2b-9448-b6c81b17fc2b")
+	)
+	(wire
+		(pts
 			(xy 120.65 80.01) (xy 124.46 80.01)
 		)
 		(stroke
@@ -1732,6 +2129,16 @@
 			(type default)
 		)
 		(uuid "cc6bfe37-ed0b-43e6-a20d-5a5163dd4a28")
+	)
+	(wire
+		(pts
+			(xy 185.42 44.45) (xy 185.42 48.26)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ce57d08c-fc37-409e-8a4f-00f84ff84302")
 	)
 	(wire
 		(pts
@@ -1919,6 +2326,18 @@
 		)
 		(uuid e8cbe0b2-5ba8-4a30-80f7-ea23fbd3d9b6)
 	)
+	(rectangle
+		(start 160.02 21.59)
+		(end 209.55 57.15)
+		(stroke
+			(width 0)
+			(type dash)
+		)
+		(fill
+			(type none)
+		)
+		(uuid fc5073aa-9bba-4c17-b33f-da4d7492e9ce)
+	)
 	(text "3.3 -> 0\nTau = 10k * C\n0 -> 3.3\nTau = 12k * C"
 		(exclude_from_sim no)
 		(at 78.74 114.3 0)
@@ -1985,6 +2404,16 @@
 		)
 		(uuid "f7199da3-9d24-4ba8-b894-cbbc4ce1a45e")
 	)
+	(text "Potentiometre volume"
+		(exclude_from_sim no)
+		(at 172.974 24.638 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "ffac2972-05d4-4967-af3d-16e6a908058f")
+	)
 	(global_label "PUSH_4"
 		(shape input)
 		(at 140.97 80.01 0)
@@ -2025,6 +2454,28 @@
 					(size 1.27 1.27)
 				)
 				(justify left)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "VOLUME"
+		(shape input)
+		(at 173.99 40.64 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "4b5d5eea-68df-445e-ae0d-bb20aca54152")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 163.6267 40.64 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
 				(hide yes)
 			)
 		)
@@ -2158,76 +2609,6 @@
 				)
 				(justify left)
 				(hide yes)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Switch:SW_Push")
-		(at 120.65 50.8 270)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "02433a8f-dc82-49e5-af3d-07cfe6d930a5")
-		(property "Reference" "SW?"
-			(at 124.46 49.53 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "SW_Push"
-			(at 124.46 52.07 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" ""
-			(at 125.73 50.8 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 125.73 50.8 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 120.65 50.8 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "57a34096-90c7-4725-8693-5abda13495c2")
-		)
-		(pin "2"
-			(uuid "07a4752e-50f3-49aa-a6af-5bb864d44b22")
-		)
-		(instances
-			(project "receiver"
-				(path "/439ba515-58d4-4b14-87ab-b438dcf423a5/4d4f24f8-ecba-4dd7-9441-941d52592651"
-					(reference "SW?")
-					(unit 1)
-				)
 			)
 		)
 	)
@@ -2641,76 +3022,6 @@
 			(project "receiver"
 				(path "/439ba515-58d4-4b14-87ab-b438dcf423a5/4d4f24f8-ecba-4dd7-9441-941d52592651"
 					(reference "R?")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Switch:SW_Push")
-		(at 83.82 86.36 270)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "2d07ed53-ae66-411c-b8a3-4bf7a7adba7b")
-		(property "Reference" "SW?"
-			(at 87.63 85.09 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "SW_Push"
-			(at 87.63 87.63 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" ""
-			(at 88.9 86.36 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 88.9 86.36 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 83.82 86.36 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "41ae1f61-74d9-4f8d-8b7a-320dd4252375")
-		)
-		(pin "2"
-			(uuid "a1719260-468c-408b-be58-80acb0f5e897")
-		)
-		(instances
-			(project "receiver"
-				(path "/439ba515-58d4-4b14-87ab-b438dcf423a5/4d4f24f8-ecba-4dd7-9441-941d52592651"
-					(reference "SW?")
 					(unit 1)
 				)
 			)
@@ -3465,16 +3776,16 @@
 	)
 	(symbol
 		(lib_id "Switch:SW_Push")
-		(at 120.65 86.36 270)
+		(at 83.82 86.36 270)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "66871fd4-ad02-472f-8298-ef757f991511")
+		(uuid "64ced1cb-c768-4db9-a5be-90ebd5234566")
 		(property "Reference" "SW?"
-			(at 124.46 85.09 90)
+			(at 87.63 85.09 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3483,7 +3794,7 @@
 			)
 		)
 		(property "Value" "SW_Push"
-			(at 124.46 87.63 90)
+			(at 87.63 87.63 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3491,8 +3802,8 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
-			(at 125.73 86.36 0)
+		(property "Footprint" "Footprints:SW_PUSH_6mm_H4.3mm"
+			(at 88.9 86.36 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3500,8 +3811,8 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
-			(at 125.73 86.36 0)
+		(property "Datasheet" "https://www.digikey.ca/en/products/detail/e-switch/TL1105SPF250Q/271559?utm_adgroup=Switches&utm_source=google&utm_medium=cpc&utm_campaign=Dynamic%20Search_FR_Product&utm_term=&productid=&utm_content=Switches&utm_id=go_cmp-207527465_adg-17081065505_ad-665615849993_dsa-45015282538_dev-c_ext-_prd-_sig-CjwKCAiAudG5BhAREiwAWMlSjK-LtkkX5A-FA2E4kKSeBlfAvlKrne-i3wRhEQ7HHqFGyez9rcR0WxoChboQAvD_BwE&gad_source=1&gclid=CjwKCAiAudG5BhAREiwAWMlSjK-LtkkX5A-FA2E4kKSeBlfAvlKrne-i3wRhEQ7HHqFGyez9rcR0WxoChboQAvD_BwE"
+			(at 88.9 86.36 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3510,7 +3821,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 120.65 86.36 0)
+			(at 83.82 86.36 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3519,10 +3830,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "204d35bb-dbb1-43dd-a0d8-bcc5c61b60d1")
+			(uuid "188dbd5e-7954-4e63-bd62-39fcd5fe1378")
 		)
 		(pin "2"
-			(uuid "678b0330-9cff-4c04-bb3c-630b028a0a0e")
+			(uuid "648e940e-0a05-4575-ae4f-1ceb1a275842")
 		)
 		(instances
 			(project "receiver"
@@ -3597,6 +3908,73 @@
 			(project "receiver"
 				(path "/439ba515-58d4-4b14-87ab-b438dcf423a5/4d4f24f8-ecba-4dd7-9441-941d52592651"
 					(reference "C?")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_name "GND_1")
+		(lib_id "power:GND")
+		(at 185.42 48.26 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "6c079e01-85af-4207-b8f5-b27c4d9396c4")
+		(property "Reference" "#PWR061"
+			(at 185.42 54.61 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 185.42 53.34 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 185.42 48.26 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 185.42 48.26 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 185.42 48.26 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "afcd6441-54c9-4191-a88d-f45355641b16")
+		)
+		(instances
+			(project ""
+				(path "/439ba515-58d4-4b14-87ab-b438dcf423a5/4d4f24f8-ecba-4dd7-9441-941d52592651"
+					(reference "#PWR061")
 					(unit 1)
 				)
 			)
@@ -3731,6 +4109,76 @@
 			(project "receiver"
 				(path "/439ba515-58d4-4b14-87ab-b438dcf423a5/4d4f24f8-ecba-4dd7-9441-941d52592651"
 					(reference "#PWR043")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Switch:SW_Push")
+		(at 120.65 50.8 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "82b88231-4f00-4e49-8e0b-9925f8807e71")
+		(property "Reference" "SW?"
+			(at 124.46 49.53 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "SW_Push"
+			(at 124.46 52.07 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Footprints:SW_PUSH_6mm_H4.3mm"
+			(at 125.73 50.8 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://www.digikey.ca/en/products/detail/e-switch/TL1105SPF250Q/271559?utm_adgroup=Switches&utm_source=google&utm_medium=cpc&utm_campaign=Dynamic%20Search_FR_Product&utm_term=&productid=&utm_content=Switches&utm_id=go_cmp-207527465_adg-17081065505_ad-665615849993_dsa-45015282538_dev-c_ext-_prd-_sig-CjwKCAiAudG5BhAREiwAWMlSjK-LtkkX5A-FA2E4kKSeBlfAvlKrne-i3wRhEQ7HHqFGyez9rcR0WxoChboQAvD_BwE&gad_source=1&gclid=CjwKCAiAudG5BhAREiwAWMlSjK-LtkkX5A-FA2E4kKSeBlfAvlKrne-i3wRhEQ7HHqFGyez9rcR0WxoChboQAvD_BwE"
+			(at 125.73 50.8 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 120.65 50.8 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "d79cd26f-2ee4-44d0-a8db-e9b2263e993d")
+		)
+		(pin "2"
+			(uuid "1e63e1d3-7fb8-4c71-afdf-d2a87ec80e92")
+		)
+		(instances
+			(project "receiver"
+				(path "/439ba515-58d4-4b14-87ab-b438dcf423a5/4d4f24f8-ecba-4dd7-9441-941d52592651"
+					(reference "SW?")
 					(unit 1)
 				)
 			)
@@ -4621,6 +5069,147 @@
 		)
 	)
 	(symbol
+		(lib_name "+3.3V_1")
+		(lib_id "power:+3.3V")
+		(at 185.42 33.02 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "c149931c-1c53-4ce5-9aef-2eea89e51b1e")
+		(property "Reference" "#PWR062"
+			(at 185.42 36.83 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+3.3V"
+			(at 185.42 27.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 185.42 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 185.42 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+3.3V\""
+			(at 185.42 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "3340078c-ed20-46c5-9b9a-32fbcc67ff24")
+		)
+		(instances
+			(project ""
+				(path "/439ba515-58d4-4b14-87ab-b438dcf423a5/4d4f24f8-ecba-4dd7-9441-941d52592651"
+					(reference "#PWR062")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R_Potentiometer")
+		(at 185.42 40.64 0)
+		(mirror y)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "c8d14e76-8dc9-46da-8537-be62c7cb06da")
+		(property "Reference" "RV?"
+			(at 187.96 39.3699 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "R_Potentiometer"
+			(at 187.96 41.9099 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" "Footprints:Potentiometer_Alps_RK09K_Single_Vertical"
+			(at 185.42 40.64 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://www.digikey.ca/en/products/detail/alps-alpine/RK09K1130A5R/21721633"
+			(at 185.42 40.64 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Potentiometer"
+			(at 185.42 40.64 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "98a8657d-f3c8-4c3d-ab58-edd0fcd3e2a5")
+		)
+		(pin "3"
+			(uuid "46e92ce2-80f3-45bb-9ff9-6fae96617d3c")
+		)
+		(pin "1"
+			(uuid "fbad9ed4-fbbd-4c89-a80f-1171bd7d63e3")
+		)
+		(instances
+			(project ""
+				(path "/439ba515-58d4-4b14-87ab-b438dcf423a5/4d4f24f8-ecba-4dd7-9441-941d52592651"
+					(reference "RV?")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:LED")
 		(at 38.1 107.95 270)
 		(mirror x)
@@ -4785,7 +5374,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Footprints:SW_PUSH_6mm_H4.3mm"
 			(at 88.9 50.8 0)
 			(effects
 				(font
@@ -4794,7 +5383,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://www.digikey.ca/en/products/detail/e-switch/TL1105SPF250Q/271559?utm_adgroup=Switches&utm_source=google&utm_medium=cpc&utm_campaign=Dynamic%20Search_FR_Product&utm_term=&productid=&utm_content=Switches&utm_id=go_cmp-207527465_adg-17081065505_ad-665615849993_dsa-45015282538_dev-c_ext-_prd-_sig-CjwKCAiAudG5BhAREiwAWMlSjK-LtkkX5A-FA2E4kKSeBlfAvlKrne-i3wRhEQ7HHqFGyez9rcR0WxoChboQAvD_BwE&gad_source=1&gclid=CjwKCAiAudG5BhAREiwAWMlSjK-LtkkX5A-FA2E4kKSeBlfAvlKrne-i3wRhEQ7HHqFGyez9rcR0WxoChboQAvD_BwE"
 			(at 88.9 50.8 0)
 			(effects
 				(font
@@ -4817,6 +5406,76 @@
 		)
 		(pin "2"
 			(uuid "9608f2e9-5abe-404e-877e-a22bc449ff20")
+		)
+		(instances
+			(project "receiver"
+				(path "/439ba515-58d4-4b14-87ab-b438dcf423a5/4d4f24f8-ecba-4dd7-9441-941d52592651"
+					(reference "SW?")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Switch:SW_Push")
+		(at 120.65 86.36 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "d92c4b1e-4806-4a28-a94a-08ada72df96e")
+		(property "Reference" "SW?"
+			(at 124.46 85.09 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "SW_Push"
+			(at 124.46 87.63 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Footprints:SW_PUSH_6mm_H4.3mm"
+			(at 125.73 86.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://www.digikey.ca/en/products/detail/e-switch/TL1105SPF250Q/271559?utm_adgroup=Switches&utm_source=google&utm_medium=cpc&utm_campaign=Dynamic%20Search_FR_Product&utm_term=&productid=&utm_content=Switches&utm_id=go_cmp-207527465_adg-17081065505_ad-665615849993_dsa-45015282538_dev-c_ext-_prd-_sig-CjwKCAiAudG5BhAREiwAWMlSjK-LtkkX5A-FA2E4kKSeBlfAvlKrne-i3wRhEQ7HHqFGyez9rcR0WxoChboQAvD_BwE&gad_source=1&gclid=CjwKCAiAudG5BhAREiwAWMlSjK-LtkkX5A-FA2E4kKSeBlfAvlKrne-i3wRhEQ7HHqFGyez9rcR0WxoChboQAvD_BwE"
+			(at 125.73 86.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 120.65 86.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "cb4b436e-1707-4ab2-848b-1aad68ee2be8")
+		)
+		(pin "2"
+			(uuid "b38a6e9f-cfec-4fc7-a138-e1b0d073693e")
 		)
 		(instances
 			(project "receiver"
