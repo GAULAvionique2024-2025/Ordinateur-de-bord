@@ -1,4 +1,4 @@
-24210086771749866
+24187578797706320
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -56979,97 +56979,6 @@ emi filter
 0
 5
 5
-Footprints
-Crystal
-Abracon Miniature Ceramic SMD Crystal ABS25 https://abracon.com/Resonators/abs25.pdf, 8.0x3.8mm^2 package
-SMD SMT crystal
-0
-4
-4
-Footprints
-DPAK-3_ONS-M
-
-NCV5501DT33RKG 
-0
-3
-3
-Footprints
-Ferrite_0603
-Resistor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator
-resistor
-0
-2
-2
-Footprints
-LQFP64-10x10mm
-footprint du STM32F103RET6 
-STM32F103RET6 
-0
-64
-64
-Footprints
-LTST-C170GKT
-fooprint led
-LED
-0
-2
-2
-Footprints
-LTST-C190EKT
-fooprint led
-LED
-0
-2
-2
-Footprints
-Potentiometer_Alps_RK09K_Single_Vertical
-113004U 1130A6S 11300DR 1130A8G 1130081 1130A5R 1130AP5 1130AST  D1130C3W D1130C1B D1130C3C D1130C2P Potentiometer, vertical, Alps RK09K Single, https://tech.alpsalpine.com/prod/e/pdf/potentiometer/rotarypotentiometers/rk09k/rk09k.pdf
-Potentiometer vertical Alps RK09K RK09D Single Snapin
-0
-5
-4
-Footprints
-QFN-16_MLX90393_MEL-L
-footprint bousolle (MLX90393)
-MLX90393SLW-ABA-011-RE 
-0
-17
-17
-Footprints
-RFM22b-S2
-footprint RFM22B
-
-0
-16
-16
-Footprints
-SMA_90deg
- Amphenol RF 901-143 https://www.amphenolrf.com/library/download/link/link_id/585682
-SMA THT Female Jack Horizontal
-0
-5
-2
-Footprints
-SOT-23-5
-SOT, 5 Pin (https://www.jedec.org/sites/default/files/docs/Mo-178c.PDF variant AA), generated with kicad-footprint-generator ipc_gullwing_generator.py
-SOT TO_SOT_SMD
-0
-5
-5
-Footprints
-SW_PUSH_6mm_H4.3mm
-tactile push button, 6x6mm e.g. PHAP33xx series, height=4.3mm
-tact sw push 6mm
-0
-4
-2
-Footprints
-Toggle_SW
-
-
-0
-3
-2
 Fuse
 FuseHolder_Blade_ATO_Littelfuse_FLR_178.6165
 Littelfuse fuse holder for ATO/FKS blade fuses, 80V, vertical, 20 x 6mm, PCB thickness up to 1.5mm, http://www.littelfuse.com/~/media/commercial-vehicle/datasheets/automotive-fuse-holders/ato/littelfuse-fuse-holder-ato-flr-pcb-datasheet.pdf
