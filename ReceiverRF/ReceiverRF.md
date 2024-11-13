@@ -5,6 +5,5 @@ Soit les librairies KiCad, les schématics KiCad, ainsi que le code.
 
 TODO:
 - choisir buzzer actif
-- circuit potentiomètre volume
-- choisir boutons + capacié filtrge
+- choisir capacié filtrge boutons
 - assigner footprint à chaque composante
