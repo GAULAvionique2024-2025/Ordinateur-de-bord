@@ -3654,7 +3654,7 @@
 		)
 		(uuid "fa772f56-2df1-4a09-ab2f-6f3cbbace7a3")
 	)
-	(global_label "BUZZER_PWM"
+	(global_label "Buzzer_PWM"
 		(shape input)
 		(at 134.62 48.26 180)
 		(fields_autoplaced yes)
@@ -3668,7 +3668,7 @@
 		)
 		(uuid "036b7932-5c2b-4f58-b2a0-509844a9e84d")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 118.5799 48.26 0)
+			(at 119.6684 48.26 0)
 			(effects
 				(font
 					(size 1.27 1.27)
