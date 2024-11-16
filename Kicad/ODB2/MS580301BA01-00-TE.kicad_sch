@@ -813,7 +813,7 @@
 			)
 		)
 	)
-	(global_label "SPI4_Baro_MISO"
+	(global_label "SPI4_Baro_MOSI"
 		(shape input)
 		(at 33.02 38.1 180)
 		(fields_autoplaced yes)
@@ -857,7 +857,7 @@
 			)
 		)
 	)
-	(global_label "SPI4_Baro_MOSI"
+	(global_label "SPI4_Baro_MISO"
 		(shape input)
 		(at 33.02 35.56 180)
 		(fields_autoplaced yes)

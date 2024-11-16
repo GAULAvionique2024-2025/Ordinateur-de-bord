@@ -5796,7 +5796,7 @@
 			)
 		)
 	)
-	(global_label "SPI1_ICM_CS"
+	(global_label "SPI_CM_CS"
 		(shape input)
 		(at 237.49 66.04 0)
 		(fields_autoplaced yes)
@@ -5808,7 +5808,7 @@
 		)
 		(uuid "6fac041e-88e9-4de0-a2ce-efd5aa217c11")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 252.5099 66.04 0)
+			(at 250.6956 66.04 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5972,7 +5972,7 @@
 			)
 		)
 	)
-	(global_label "UART1_GPS_TX"
+	(global_label "GPS_TX"
 		(shape input)
 		(at 237.49 78.74 0)
 		(fields_autoplaced yes)
@@ -5984,7 +5984,7 @@
 		)
 		(uuid "ccbee32f-0769-4fc9-81fb-66f034fa2402")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 254.2032 78.74 0)
+			(at 247.3694 78.74 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6062,7 +6062,7 @@
 			)
 		)
 	)
-	(global_label "UART1_GPS_RX"
+	(global_label "GPS_RX"
 		(shape input)
 		(at 237.49 81.28 0)
 		(fields_autoplaced yes)
@@ -6074,7 +6074,7 @@
 		)
 		(uuid "e8c619f6-147a-4ed4-b060-caca5e0f5983")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 254.5056 81.28 0)
+			(at 247.6718 81.28 0)
 			(effects
 				(font
 					(size 1.27 1.27)
