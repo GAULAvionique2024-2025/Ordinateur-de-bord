@@ -4180,7 +4180,6 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "cf83f9b3-4d88-4630-9d77-9f3be5f401c1")
 		(property "Reference" "SW_J1"
 			(at 48.26 93.9799 0)
@@ -4189,10 +4188,11 @@
 					(size 1.27 1.27)
 				)
 				(justify left)
+				(hide yes)
 			)
 		)
-		(property "Value" "Conn_01x05_Socket"
-			(at 48.26 96.5199 0)
+		(property "Value" "SYS_Conn_01x05_Socket"
+			(at 35.052 87.122 0)
 			(effects
 				(font
 					(size 1.27 1.27)
