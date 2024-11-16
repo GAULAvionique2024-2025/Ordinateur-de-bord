@@ -5317,9 +5317,9 @@
 		)
 		(uuid ef016622-b7ca-4c12-9ad7-71d17a1b44ee)
 	)
-	(text "Vérifier res filtre (0-20R) -> 100MHz crystal"
+	(text "26MHz->compatibilité USB"
 		(exclude_from_sim no)
-		(at 383.286 123.698 0)
+		(at 387.604 123.19 0)
 		(effects
 			(font
 				(size 1 1)
@@ -5327,9 +5327,9 @@
 		)
 		(uuid "047760e9-58ae-48b7-8b84-bb896c721d8f")
 	)
-	(text "C=2(Cfabricant-Ctrace)=2(18pF-4pF)=28pF\n*Ctrace ~2-5pF"
+	(text "C=2(Cfabricant-Ctrace)=2(16pF-5pF)=22pF"
 		(exclude_from_sim no)
-		(at 351.536 163.322 0)
+		(at 351.79 163.83 0)
 		(effects
 			(font
 				(size 1.5 1.5)
@@ -6627,7 +6627,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "28pF"
+		(property "Value" "22pF"
 			(at 361.442 153.416 0)
 			(effects
 				(font
@@ -6765,7 +6765,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "28pF"
+		(property "Value" "22pF"
 			(at 388.112 153.416 0)
 			(effects
 				(font
@@ -7104,7 +7104,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "20R"
+		(property "Value" "10R"
 			(at 389.89 138.4299 0)
 			(effects
 				(font
@@ -8343,7 +8343,7 @@
 				)
 			)
 		)
-		(property "Value" "100MHz"
+		(property "Value" "26MHz"
 			(at 369.062 137.668 0)
 			(effects
 				(font
