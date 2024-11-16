@@ -835,7 +835,7 @@
 			)
 		)
 	)
-	(global_label "~SPI4_Baro_CS"
+	(global_label "SPI4_Baro_CS"
 		(shape input)
 		(at 33.02 43.18 180)
 		(fields_autoplaced yes)
@@ -847,7 +847,7 @@
 		)
 		(uuid "dd0378bb-0d7d-495b-bf8f-1391f5157118")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 16.065 43.18 0)
+			(at 16.9721 43.18 0)
 			(effects
 				(font
 					(size 1.27 1.27)
