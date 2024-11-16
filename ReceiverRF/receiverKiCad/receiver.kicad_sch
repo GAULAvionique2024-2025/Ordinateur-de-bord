@@ -3349,7 +3349,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "585b4118-4358-4841-9a33-65578d4f64cb")
+		(uuid "557e0553-db82-430c-a2d0-392193043e3f")
 	)
 	(wire
 		(pts
@@ -3370,16 +3370,6 @@
 			(type default)
 		)
 		(uuid "602be00b-d2ab-469e-ad00-0ace96278c7c")
-	)
-	(wire
-		(pts
-			(xy 132.08 85.09) (xy 135.89 85.09)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "62ac54fa-6c28-4a7a-84bc-f8d9ebcf09a9")
 	)
 	(wire
 		(pts
@@ -3500,6 +3490,16 @@
 			(type default)
 		)
 		(uuid "7a8e2aa5-b13a-466f-856c-9b150f55f0ea")
+	)
+	(wire
+		(pts
+			(xy 171.45 74.93) (xy 175.26 74.93)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7a9db94a-2179-4146-9697-2e193685f4ee")
 	)
 	(wire
 		(pts
@@ -4207,24 +4207,24 @@
 			)
 		)
 	)
-	(global_label "RFM_NSEL"
+	(global_label "SPI_RFM_CS"
 		(shape input)
-		(at 132.08 85.09 180)
+		(at 175.26 64.77 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right)
+			(justify left)
 		)
 		(uuid "090d5ea7-36f2-4665-9338-2a95d7460fac")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 119.6001 85.09 0)
+			(at 189.5542 64.77 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify right)
+				(justify left)
 				(hide yes)
 			)
 		)
@@ -4517,7 +4517,7 @@
 	)
 	(global_label "BUZZER"
 		(shape input)
-		(at 175.26 64.77 0)
+		(at 175.26 74.93 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -4527,7 +4527,7 @@
 		)
 		(uuid "7949aef8-cd3c-4a1b-aee8-ad0174b8d28c")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 185.6837 64.77 0)
+			(at 185.6837 74.93 0)
 			(effects
 				(font
 					(size 1.27 1.27)

@@ -2854,7 +2854,7 @@
 			)
 		)
 	)
-	(global_label "RFM_NSEL"
+	(global_label "SPI_RFM_CS"
 		(shape input)
 		(at 69.85 115.57 0)
 		(fields_autoplaced yes)
@@ -2866,7 +2866,7 @@
 		)
 		(uuid "659af082-0c8f-4d65-aa75-838045a0de8f")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 82.3299 115.57 0)
+			(at 84.1442 115.57 0)
 			(effects
 				(font
 					(size 1.27 1.27)
