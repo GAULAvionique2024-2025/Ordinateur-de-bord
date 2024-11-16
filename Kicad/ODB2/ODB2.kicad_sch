@@ -5795,7 +5795,7 @@
 			)
 		)
 	)
-	(global_label "SPI_CM_CS"
+	(global_label "SPI_ICM_CS"
 		(shape input)
 		(at 237.49 66.04 0)
 		(fields_autoplaced yes)
@@ -5807,7 +5807,7 @@
 		)
 		(uuid "6fac041e-88e9-4de0-a2ce-efd5aa217c11")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 250.6956 66.04 0)
+			(at 251.3004 66.04 0)
 			(effects
 				(font
 					(size 1.27 1.27)
