@@ -8239,7 +8239,6 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "c652530f-18b0-40b7-9ca3-f7cd940d80ee")
 		(property "Reference" "U1"
 			(at 205.3941 231.14 0)
@@ -8248,10 +8247,11 @@
 					(size 1.27 1.27)
 				)
 				(justify left)
+				(hide yes)
 			)
 		)
 		(property "Value" "STM32F412ZGTx"
-			(at 205.3941 233.68 0)
+			(at 193.294 142.748 0)
 			(effects
 				(font
 					(size 1.27 1.27)
