@@ -769,16 +769,6 @@
 		)
 		(uuid 90829d3e-91f2-4fcb-99f1-fc5931093617)
 	)
-	(text "PS LOW for use SPI"
-		(exclude_from_sim no)
-		(at 92.202 54.61 0)
-		(effects
-			(font
-				(size 0.762 0.762)
-			)
-		)
-		(uuid "462e8538-8e3f-4801-beed-816ae7d7496c")
-	)
 	(text "Barometer"
 		(exclude_from_sim no)
 		(at 36.068 18.034 0)
