@@ -5691,14 +5691,13 @@
 		(effects
 			(font
 				(size 1.27 1.27)
-				(thickness 0.254)
-				(bold yes)
+				(thickness 0.1588)
 			)
 			(justify right)
 		)
 		(uuid "32e4a996-8446-450c-ae86-00652cc5ff52")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 155.5307 60.96 0)
+			(at 156.0067 60.96 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5972,7 +5971,7 @@
 			)
 		)
 	)
-	(global_label "GPS_TX"
+	(global_label "UART1_GPS_TX"
 		(shape input)
 		(at 237.49 78.74 0)
 		(fields_autoplaced yes)
@@ -5984,7 +5983,7 @@
 		)
 		(uuid "ccbee32f-0769-4fc9-81fb-66f034fa2402")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 247.3694 78.74 0)
+			(at 254.2032 78.74 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6062,7 +6061,7 @@
 			)
 		)
 	)
-	(global_label "GPS_RX"
+	(global_label "UART1_GPS_RX"
 		(shape input)
 		(at 237.49 81.28 0)
 		(fields_autoplaced yes)
@@ -6074,7 +6073,7 @@
 		)
 		(uuid "e8c619f6-147a-4ed4-b060-caca5e0f5983")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 247.6718 81.28 0)
+			(at 254.5056 81.28 0)
 			(effects
 				(font
 					(size 1.27 1.27)

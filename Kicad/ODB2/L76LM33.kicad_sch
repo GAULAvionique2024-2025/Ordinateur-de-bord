@@ -1542,7 +1542,7 @@
 			)
 		)
 	)
-	(global_label "GPS_TX"
+	(global_label "UART1_GPS_TX"
 		(shape input)
 		(at 33.02 39.37 180)
 		(fields_autoplaced yes)
@@ -1554,7 +1554,7 @@
 		)
 		(uuid "6522916c-03f3-4bbc-8e4f-2aa98d7feb67")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 23.1406 39.37 0)
+			(at 16.3068 39.37 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1930,15 +1930,15 @@
 	(symbol
 		(lib_id "power:GND")
 		(at 19.05 36.83 0)
+		(mirror x)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "545a010f-cce4-4981-b4b1-c4f4cffe4aba")
 		(property "Reference" "#PWR048"
-			(at 19.05 43.18 0)
+			(at 19.05 30.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1947,7 +1947,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 19.05 41.91 0)
+			(at 19.05 31.75 0)
 			(effects
 				(font
 					(size 1.27 1.27)
