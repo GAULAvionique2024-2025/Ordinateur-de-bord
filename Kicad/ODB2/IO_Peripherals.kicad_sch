@@ -2523,6 +2523,16 @@
 	)
 	(wire
 		(pts
+			(xy 20.32 123.19) (xy 43.18 123.19)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8a3538b9-d36e-4644-927a-844bbc074def")
+	)
+	(wire
+		(pts
 			(xy 39.37 33.02) (xy 40.64 33.02)
 		)
 		(stroke
@@ -2540,6 +2550,16 @@
 			(type default)
 		)
 		(uuid "8d8edb9d-e6c3-4fab-9a6c-79aeabecd001")
+	)
+	(wire
+		(pts
+			(xy 20.32 116.84) (xy 20.32 123.19)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "985e3a67-41e2-40bc-9aff-1eb9cbde6511")
 	)
 	(wire
 		(pts
@@ -2570,6 +2590,16 @@
 			(type default)
 		)
 		(uuid "9aec6c0d-c953-434a-b995-510f70f6184f")
+	)
+	(wire
+		(pts
+			(xy 39.37 118.11) (xy 43.18 118.11)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9c828cc8-aa65-4b63-a484-925326160b38")
 	)
 	(wire
 		(pts
@@ -2633,16 +2663,6 @@
 	)
 	(wire
 		(pts
-			(xy 43.18 118.11) (xy 20.32 118.11)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "ccfd066a-537b-43b5-ab61-5c7bff83132b")
-	)
-	(wire
-		(pts
 			(xy 73.66 50.8) (xy 73.66 52.07)
 		)
 		(stroke
@@ -2660,16 +2680,6 @@
 			(type default)
 		)
 		(uuid "cf32753d-529c-4889-a9a0-f29b33e4b300")
-	)
-	(wire
-		(pts
-			(xy 39.37 123.19) (xy 43.18 123.19)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "d43ebbb1-f25c-4cae-b6fd-3e6a8c1fbf31")
 	)
 	(wire
 		(pts
@@ -2710,16 +2720,6 @@
 			(type default)
 		)
 		(uuid "e93d1a21-2610-4113-b1f2-fc6580d4c0b6")
-	)
-	(wire
-		(pts
-			(xy 20.32 118.11) (xy 20.32 116.84)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "ea9181a9-d6a2-4e67-97ab-6ef96bc79ac4")
 	)
 	(wire
 		(pts
@@ -2869,7 +2869,7 @@
 	)
 	(global_label "UART6_RFD_RX"
 		(shape input)
-		(at 39.37 123.19 180)
+		(at 39.37 118.11 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -2879,7 +2879,7 @@
 		)
 		(uuid "1ca96cff-c692-43f8-b7ad-f5ae6b28a138")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 22.4753 123.19 0)
+			(at 22.4753 118.11 0)
 			(effects
 				(font
 					(size 1.27 1.27)
