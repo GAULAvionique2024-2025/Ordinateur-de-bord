@@ -99,7 +99,7 @@
 		)
 	)
 	(sheet
-		(at 0 474.98)
+		(at 148.59 388.62)
 		(size 144.78 83.82)
 		(fields_autoplaced yes)
 		(stroke
@@ -111,7 +111,7 @@
 		)
 		(uuid "6f89a267-7956-46d0-9079-a19e23eac9f2")
 		(property "Sheetname" "RFM22B-433-S2"
-			(at 0 474.2684 0)
+			(at 148.59 387.9084 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -120,7 +120,7 @@
 			)
 		)
 		(property "Sheetfile" "RFM22B-433-S2.kicad_sch"
-			(at 0 559.3846 0)
+			(at 148.59 473.0246 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -246,44 +246,6 @@
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/eac5f07f-d6a3-4c95-b286-7cebf46e30db"
 					(page "6")
-				)
-			)
-		)
-	)
-	(sheet
-		(at 149.86 388.62)
-		(size 147.32 81.28)
-		(fields_autoplaced yes)
-		(stroke
-			(width 0.1524)
-			(type solid)
-		)
-		(fill
-			(color 0 0 0 0.0000)
-		)
-		(uuid "ff4cd1df-b3e2-453b-8073-5bc744ab38df")
-		(property "Sheetname" "RFD900x"
-			(at 149.86 387.9084 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left bottom)
-			)
-		)
-		(property "Sheetfile" "RFD900x.kicad_sch"
-			(at 149.86 470.4846 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left top)
-			)
-		)
-		(instances
-			(project "ODB2"
-				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/eac5f07f-d6a3-4c95-b286-7cebf46e30db"
-					(page "11")
 				)
 			)
 		)
