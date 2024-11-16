@@ -4821,16 +4821,6 @@
 	)
 	(wire
 		(pts
-			(xy 163.83 205.74) (xy 170.18 205.74)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "5af440cf-0ae6-4e29-b40b-fc2a0de82c0f")
-	)
-	(wire
-		(pts
 			(xy 388.62 41.91) (xy 388.62 43.18)
 		)
 		(stroke
@@ -5201,16 +5191,6 @@
 	)
 	(wire
 		(pts
-			(xy 163.83 203.2) (xy 170.18 203.2)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "bcd94f99-9770-40f0-a5fd-f9b7a68c9479")
-	)
-	(wire
-		(pts
 			(xy 389.89 76.2) (xy 389.89 78.74)
 		)
 		(stroke
@@ -5268,6 +5248,16 @@
 			(type default)
 		)
 		(uuid "d663104a-b175-4773-a986-7a9b95d88504")
+	)
+	(wire
+		(pts
+			(xy 163.83 203.2) (xy 170.18 203.2)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d751bcd1-b74a-42cc-b7ae-22501f555504")
 	)
 	(wire
 		(pts
@@ -5378,6 +5368,16 @@
 			(type default)
 		)
 		(uuid "fe2114c7-c199-48e7-bfb4-a5a8ba6cafff")
+	)
+	(wire
+		(pts
+			(xy 163.83 205.74) (xy 170.18 205.74)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "fe899728-2557-4501-a9ba-5be63a4e9133")
 	)
 	(rectangle
 		(start 251.46 260.35)
@@ -5532,7 +5532,7 @@
 		)
 		(uuid "b3d5f7d3-9c71-4351-be92-78802f95282c")
 	)
-	(global_label "SPI1_MISO"
+	(global_label "SPI1_ICM_MISO"
 		(shape input)
 		(at 237.49 71.12 0)
 		(fields_autoplaced yes)
@@ -5544,7 +5544,7 @@
 		)
 		(uuid "00b1cb5a-0052-4f64-a62d-79bf47cce83e")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 250.3328 71.12 0)
+			(at 254.6266 71.12 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5576,7 +5576,7 @@
 			)
 		)
 	)
-	(global_label "SPI4_SDI"
+	(global_label "SPI4_Baro_MISO"
 		(shape input)
 		(at 163.83 203.2 180)
 		(fields_autoplaced yes)
@@ -5588,7 +5588,7 @@
 		)
 		(uuid "0a23436d-e3ae-49bf-8185-fe4c27e9a226")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 152.4991 203.2 0)
+			(at 145.6654 203.2 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5598,7 +5598,7 @@
 			)
 		)
 	)
-	(global_label "SPI1_MOSI"
+	(global_label "SPI1_ICM_MOSI"
 		(shape input)
 		(at 237.49 73.66 0)
 		(fields_autoplaced yes)
@@ -5610,7 +5610,7 @@
 		)
 		(uuid "146b7acf-30b5-4cbf-a5ae-de7d22a211c1")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 250.3328 73.66 0)
+			(at 254.6266 73.66 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5620,7 +5620,7 @@
 			)
 		)
 	)
-	(global_label "~SPI4_CS"
+	(global_label "~SPI4_Baro_CS"
 		(shape input)
 		(at 163.83 180.34 180)
 		(fields_autoplaced yes)
@@ -5632,7 +5632,7 @@
 		)
 		(uuid "1a1d0805-8d8d-486d-be98-ed7ad7835ab4")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 152.1968 180.34 0)
+			(at 146.875 180.34 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5710,7 +5710,7 @@
 			)
 		)
 	)
-	(global_label "SPI4_SDO"
+	(global_label "SPI4_Baro_MOSI"
 		(shape input)
 		(at 163.83 205.74 180)
 		(fields_autoplaced yes)
@@ -5722,7 +5722,7 @@
 		)
 		(uuid "44c5d5fb-e8ce-4de0-908b-6bdb62e205b8")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 151.7734 205.74 0)
+			(at 145.6654 205.74 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5732,7 +5732,7 @@
 			)
 		)
 	)
-	(global_label "SPI4_CLK"
+	(global_label "SPI4_Baro_SCLK"
 		(shape input)
 		(at 163.83 200.66 180)
 		(fields_autoplaced yes)
@@ -5744,7 +5744,7 @@
 		)
 		(uuid "54e21b0c-0e34-416f-a1dd-979d23127af0")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 152.0153 200.66 0)
+			(at 145.484 200.66 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5754,7 +5754,7 @@
 			)
 		)
 	)
-	(global_label "ICM_CS"
+	(global_label "SPI_CM_CS"
 		(shape input)
 		(at 237.49 66.04 0)
 		(fields_autoplaced yes)
@@ -5766,7 +5766,7 @@
 		)
 		(uuid "6fac041e-88e9-4de0-a2ce-efd5aa217c11")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 247.2485 66.04 0)
+			(at 250.6956 66.04 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5820,7 +5820,7 @@
 			)
 		)
 	)
-	(global_label "SPI1_SCLK"
+	(global_label "SPI1_ICM_SCLK"
 		(shape input)
 		(at 237.49 68.58 0)
 		(fields_autoplaced yes)
@@ -5832,7 +5832,7 @@
 		)
 		(uuid "99d943a9-77c7-459d-a8fa-50f3070d37c0")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 250.5142 68.58 0)
+			(at 254.808 68.58 0)
 			(effects
 				(font
 					(size 1.27 1.27)

@@ -640,26 +640,26 @@
 		)
 	)
 	(junction
-		(at 74.93 40.64)
+		(at 80.01 40.64)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "23809d36-6df5-4118-8645-acaf09d0cfe9")
 	)
 	(junction
-		(at 73.66 40.64)
+		(at 78.74 40.64)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "542ec7bf-be54-4b90-8704-9de6a9cfbf0b")
 	)
 	(junction
-		(at 74.93 35.56)
+		(at 80.01 35.56)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "b39f3ed1-e663-4ae6-a93b-d05adfe6d105")
 	)
 	(wire
 		(pts
-			(xy 72.39 40.64) (xy 73.66 40.64)
+			(xy 77.47 40.64) (xy 78.74 40.64)
 		)
 		(stroke
 			(width 0)
@@ -669,7 +669,7 @@
 	)
 	(wire
 		(pts
-			(xy 73.66 40.64) (xy 74.93 40.64)
+			(xy 78.74 40.64) (xy 80.01 40.64)
 		)
 		(stroke
 			(width 0)
@@ -679,7 +679,7 @@
 	)
 	(wire
 		(pts
-			(xy 85.09 40.64) (xy 74.93 40.64)
+			(xy 90.17 40.64) (xy 80.01 40.64)
 		)
 		(stroke
 			(width 0)
@@ -689,7 +689,7 @@
 	)
 	(wire
 		(pts
-			(xy 72.39 35.56) (xy 74.93 35.56)
+			(xy 77.47 35.56) (xy 80.01 35.56)
 		)
 		(stroke
 			(width 0)
@@ -699,7 +699,7 @@
 	)
 	(wire
 		(pts
-			(xy 73.66 38.1) (xy 73.66 40.64)
+			(xy 78.74 38.1) (xy 78.74 40.64)
 		)
 		(stroke
 			(width 0)
@@ -709,7 +709,7 @@
 	)
 	(wire
 		(pts
-			(xy 74.93 40.64) (xy 74.93 48.26)
+			(xy 80.01 40.64) (xy 80.01 48.26)
 		)
 		(stroke
 			(width 0)
@@ -719,7 +719,7 @@
 	)
 	(wire
 		(pts
-			(xy 74.93 33.02) (xy 74.93 35.56)
+			(xy 80.01 33.02) (xy 80.01 35.56)
 		)
 		(stroke
 			(width 0)
@@ -729,7 +729,7 @@
 	)
 	(wire
 		(pts
-			(xy 72.39 38.1) (xy 73.66 38.1)
+			(xy 77.47 38.1) (xy 78.74 38.1)
 		)
 		(stroke
 			(width 0)
@@ -739,7 +739,7 @@
 	)
 	(wire
 		(pts
-			(xy 85.09 35.56) (xy 85.09 40.64)
+			(xy 90.17 35.56) (xy 90.17 40.64)
 		)
 		(stroke
 			(width 0)
@@ -749,7 +749,7 @@
 	)
 	(wire
 		(pts
-			(xy 74.93 35.56) (xy 77.47 35.56)
+			(xy 80.01 35.56) (xy 82.55 35.56)
 		)
 		(stroke
 			(width 0)
@@ -759,7 +759,7 @@
 	)
 	(rectangle
 		(start 13.97 25.4)
-		(end 93.98 55.88)
+		(end 99.06 55.88)
 		(stroke
 			(width 0)
 			(type dash)
@@ -771,7 +771,7 @@
 	)
 	(text "PS LOW for use SPI"
 		(exclude_from_sim no)
-		(at 87.122 54.61 0)
+		(at 92.202 54.61 0)
 		(effects
 			(font
 				(size 0.762 0.762)
@@ -791,9 +791,9 @@
 		)
 		(uuid "98ea7577-ee0b-44a4-8867-c119fc0c5ecd")
 	)
-	(global_label "SPI4_CLK"
+	(global_label "SPI4_Baro_SCLK"
 		(shape input)
-		(at 27.94 40.64 180)
+		(at 33.02 40.64 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -803,7 +803,7 @@
 		)
 		(uuid "7d4c0ec7-a1fe-400a-badf-2479eeebd6d5")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 16.1253 40.64 0)
+			(at 14.674 40.64 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -813,9 +813,9 @@
 			)
 		)
 	)
-	(global_label "SPI4_SDO"
+	(global_label "SPI4_Baro_MOSI"
 		(shape input)
-		(at 27.94 38.1 180)
+		(at 33.02 38.1 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -825,7 +825,7 @@
 		)
 		(uuid "a510f603-0ae6-49ff-974c-6fcf3e7a4e97")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 15.8834 38.1 0)
+			(at 14.8554 38.1 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -835,9 +835,9 @@
 			)
 		)
 	)
-	(global_label "~SPI4_CS"
+	(global_label "~SPI4_Baro_CS"
 		(shape input)
-		(at 27.94 43.18 180)
+		(at 33.02 43.18 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -847,7 +847,7 @@
 		)
 		(uuid "dd0378bb-0d7d-495b-bf8f-1391f5157118")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 16.3068 43.18 0)
+			(at 16.065 43.18 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -857,9 +857,9 @@
 			)
 		)
 	)
-	(global_label "SPI4_SDI"
+	(global_label "SPI4_Baro_MISO"
 		(shape input)
-		(at 27.94 35.56 180)
+		(at 33.02 35.56 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -869,7 +869,7 @@
 		)
 		(uuid "de8750d3-3833-4b28-97b4-cf353f649b97")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 16.6091 35.56 0)
+			(at 14.8554 35.56 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -881,7 +881,7 @@
 	)
 	(symbol
 		(lib_id "power:+3V3")
-		(at 74.93 33.02 0)
+		(at 80.01 33.02 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -890,7 +890,7 @@
 		(fields_autoplaced yes)
 		(uuid "61f7848d-d569-4709-af3f-54145ae9fd7f")
 		(property "Reference" "#PWR057"
-			(at 74.93 36.83 0)
+			(at 80.01 36.83 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -899,7 +899,7 @@
 			)
 		)
 		(property "Value" "+3V3"
-			(at 74.93 27.94 0)
+			(at 80.01 27.94 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -907,7 +907,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 74.93 33.02 0)
+			(at 80.01 33.02 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -916,7 +916,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 74.93 33.02 0)
+			(at 80.01 33.02 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -925,7 +925,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+3V3\""
-			(at 74.93 33.02 0)
+			(at 80.01 33.02 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -947,7 +947,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 74.93 48.26 0)
+		(at 80.01 48.26 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -956,7 +956,7 @@
 		(fields_autoplaced yes)
 		(uuid "64f0a405-da33-46e9-83fa-b73f5e7eb135")
 		(property "Reference" "#PWR058"
-			(at 74.93 54.61 0)
+			(at 80.01 54.61 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -965,7 +965,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 74.93 53.34 0)
+			(at 80.01 53.34 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -973,7 +973,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 74.93 48.26 0)
+			(at 80.01 48.26 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -982,7 +982,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 74.93 48.26 0)
+			(at 80.01 48.26 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -991,7 +991,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 74.93 48.26 0)
+			(at 80.01 48.26 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1013,7 +1013,7 @@
 	)
 	(symbol
 		(lib_id "ODB_Lib:MS580301BA01-00")
-		(at 27.94 35.56 0)
+		(at 33.02 35.56 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -1022,7 +1022,7 @@
 		(fields_autoplaced yes)
 		(uuid "ab6e7a17-3b57-417a-97f5-beceb467744c")
 		(property "Reference" "U7"
-			(at 50.8 25.4 0)
+			(at 55.88 25.4 0)
 			(effects
 				(font
 					(size 1.524 1.524)
@@ -1031,7 +1031,7 @@
 			)
 		)
 		(property "Value" "MS580301BA01-00"
-			(at 50.8 27.94 0)
+			(at 55.88 27.94 0)
 			(effects
 				(font
 					(size 1.524 1.524)
@@ -1040,7 +1040,7 @@
 			)
 		)
 		(property "Footprint" "MS5803-01BA01_TEC"
-			(at 51.054 23.114 0)
+			(at 56.134 23.114 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1050,7 +1050,7 @@
 			)
 		)
 		(property "Datasheet" "MS580301BA01-00"
-			(at 50.8 27.94 0)
+			(at 55.88 27.94 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1059,7 +1059,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 27.94 35.56 0)
+			(at 33.02 35.56 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1102,7 +1102,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 81.28 35.56 270)
+		(at 86.36 35.56 270)
 		(mirror x)
 		(unit 1)
 		(exclude_from_sim no)
@@ -1110,8 +1110,8 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "d18d057b-680e-4f44-afe2-c80caac34a7e")
-		(property "Reference" "Barometer_C1"
-			(at 79.502 29.464 90)
+		(property "Reference" "Baro_C1"
+			(at 84.328 29.972 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1120,7 +1120,7 @@
 			)
 		)
 		(property "Value" "100nF"
-			(at 79.502 32.004 90)
+			(at 84.582 32.004 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1129,7 +1129,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 77.47 34.5948 0)
+			(at 82.55 34.5948 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1138,7 +1138,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 81.28 35.56 0)
+			(at 86.36 35.56 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1147,7 +1147,7 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
-			(at 81.28 35.56 0)
+			(at 86.36 35.56 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1164,7 +1164,7 @@
 		(instances
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/eac5f07f-d6a3-4c95-b286-7cebf46e30db/a22c617e-0d66-4985-a85f-0ed5b022cb45"
-					(reference "Barometer_C1")
+					(reference "Baro_C1")
 					(unit 1)
 				)
 			)
