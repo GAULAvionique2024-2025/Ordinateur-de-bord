@@ -5581,16 +5581,6 @@
 		)
 		(uuid "9f47c8fc-9762-496f-9864-34ea33dc7596")
 	)
-	(text "Ajouter un bouton poussoir pour forcer un RST?"
-		(exclude_from_sim no)
-		(at 147.066 36.322 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "a692cb74-7837-4961-a121-2f1edd063cf8")
-	)
 	(text "External Crystal"
 		(exclude_from_sim no)
 		(at 363.728 120.65 0)
@@ -9175,8 +9165,8 @@
 		)
 	)
 	(sheet
-		(at 322.58 688.34)
-		(size 279.4 222.25)
+		(at 205.74 541.02)
+		(size 261.62 226.06)
 		(fields_autoplaced yes)
 		(stroke
 			(width 0.1524)
@@ -9187,7 +9177,7 @@
 		)
 		(uuid "8ab7427e-7183-4caa-ac8a-08b0bd412372")
 		(property "Sheetname" "Pyro"
-			(at 322.58 687.6284 0)
+			(at 205.74 540.3084 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9196,7 +9186,7 @@
 			)
 		)
 		(property "Sheetfile" "Pyro.kicad_sch"
-			(at 322.58 911.1746 0)
+			(at 205.74 767.6646 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9213,7 +9203,7 @@
 		)
 	)
 	(sheet
-		(at 323.85 435.61)
+		(at 201.93 309.88)
 		(size 266.7 220.98)
 		(fields_autoplaced yes)
 		(stroke
@@ -9225,7 +9215,7 @@
 		)
 		(uuid "93865dc8-71fa-4dc6-90ce-f5a9779dfd41")
 		(property "Sheetname" "IO_Peripherals"
-			(at 323.85 434.8984 0)
+			(at 201.93 309.1684 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9234,7 +9224,7 @@
 			)
 		)
 		(property "Sheetfile" "IO_Peripherals.kicad_sch"
-			(at 323.85 657.1746 0)
+			(at 201.93 531.4446 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9251,8 +9241,8 @@
 		)
 	)
 	(sheet
-		(at 1.27 683.26)
-		(size 261.62 229.87)
+		(at -76.2 538.48)
+		(size 266.7 229.87)
 		(fields_autoplaced yes)
 		(stroke
 			(width 0.1524)
@@ -9263,7 +9253,7 @@
 		)
 		(uuid "a0dfa29e-ccca-4096-8481-c7e33c67aac5")
 		(property "Sheetname" "PowerSupply"
-			(at 1.27 682.5484 0)
+			(at -76.2 537.7684 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9272,7 +9262,7 @@
 			)
 		)
 		(property "Sheetfile" "PowerSupply.kicad_sch"
-			(at 1.27 913.7146 0)
+			(at -76.2 768.9346 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9289,7 +9279,7 @@
 		)
 	)
 	(sheet
-		(at -1.27 434.34)
+		(at -74.93 307.34)
 		(size 267.97 223.52)
 		(fields_autoplaced yes)
 		(stroke
@@ -9301,7 +9291,7 @@
 		)
 		(uuid "eac5f07f-d6a3-4c95-b286-7cebf46e30db")
 		(property "Sheetname" "Sensors"
-			(at -1.27 433.6284 0)
+			(at -74.93 306.6284 0)
 			(show_name yes)
 			(effects
 				(font
@@ -9311,7 +9301,7 @@
 			)
 		)
 		(property "Sheetfile" "Sensors.kicad_sch"
-			(at -1.27 658.4446 0)
+			(at -74.93 531.4446 0)
 			(effects
 				(font
 					(size 1.27 1.27)

@@ -3661,14 +3661,13 @@
 		(effects
 			(font
 				(size 1.27 1.27)
-				(thickness 0.254)
-				(bold yes)
+				(thickness 0.1588)
 			)
 			(justify right)
 		)
 		(uuid "036b7932-5c2b-4f58-b2a0-509844a9e84d")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 119.6684 48.26 0)
+			(at 120.1444 48.26 0)
 			(effects
 				(font
 					(size 1.27 1.27)
