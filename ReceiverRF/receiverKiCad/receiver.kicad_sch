@@ -2934,6 +2934,12 @@
 		(uuid "2921c11f-40fa-45c0-bd6c-9a0798f860ad")
 	)
 	(junction
+		(at 161.29 36.83)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "2aa4ab4a-1053-4aca-ab29-28b3b867ee8c")
+	)
+	(junction
 		(at 246.38 91.44)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -2944,12 +2950,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "302a8a37-6f7c-42d4-a108-6b4fd2d58dd1")
-	)
-	(junction
-		(at 161.29 36.83)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "324ce994-c959-4c51-a187-25befac9052d")
 	)
 	(junction
 		(at 153.67 143.51)
@@ -3071,6 +3071,102 @@
 		(color 0 0 0 0)
 		(uuid "ffdeba5c-c73e-4b49-a639-55779105453a")
 	)
+	(no_connect
+		(at 135.89 77.47)
+		(uuid "06871346-334c-44e8-95f7-62406e69ff19")
+	)
+	(no_connect
+		(at 171.45 92.71)
+		(uuid "104bc8e1-8f4f-45f3-89ea-1372acd28dbc")
+	)
+	(no_connect
+		(at 171.45 118.11)
+		(uuid "1137a949-90be-4b81-835a-1a37d0750597")
+	)
+	(no_connect
+		(at 135.89 69.85)
+		(uuid "17646b81-7eff-4f63-848b-c594fc22fc49")
+	)
+	(no_connect
+		(at 135.89 82.55)
+		(uuid "363c6afa-e9dd-4b6f-ba43-672084835fe9")
+	)
+	(no_connect
+		(at 171.45 57.15)
+		(uuid "373862f6-1564-4c03-83e0-c849cc13ca87")
+	)
+	(no_connect
+		(at 135.89 95.25)
+		(uuid "399f7eda-23f7-4420-be1e-95d0b07a2183")
+	)
+	(no_connect
+		(at 171.45 59.69)
+		(uuid "4ed08ae5-bc2d-4428-bd85-c426e4c170f0")
+	)
+	(no_connect
+		(at 171.45 77.47)
+		(uuid "5150c601-6ad5-41d9-a854-e03678da3f6a")
+	)
+	(no_connect
+		(at 135.89 105.41)
+		(uuid "62704bc2-955f-4d9e-8b91-7c5c19770ef1")
+	)
+	(no_connect
+		(at 135.89 85.09)
+		(uuid "70f0ebec-6c3a-4acc-b3d6-018b59f92894")
+	)
+	(no_connect
+		(at 135.89 110.49)
+		(uuid "8197a6b2-78f0-456c-9a1a-8522dee17ed1")
+	)
+	(no_connect
+		(at 171.45 120.65)
+		(uuid "81ef7bd7-cf0b-4ecd-afa7-6e35d5b2e364")
+	)
+	(no_connect
+		(at 135.89 97.79)
+		(uuid "8bb178fa-f05b-47df-b62f-0dcf85045650")
+	)
+	(no_connect
+		(at 135.89 92.71)
+		(uuid "9ed66d9b-f1f4-4147-90c9-e42ebb4c6047")
+	)
+	(no_connect
+		(at 171.45 62.23)
+		(uuid "a6eca266-f480-485b-8429-835da0333616")
+	)
+	(no_connect
+		(at 171.45 110.49)
+		(uuid "b0d70965-b8c4-4893-9fcb-809028738033")
+	)
+	(no_connect
+		(at 135.89 80.01)
+		(uuid "b754a211-60e5-44ec-8b11-8095eedc6531")
+	)
+	(no_connect
+		(at 171.45 125.73)
+		(uuid "bc4480cd-f084-4f9d-b500-e7bee5bdb20e")
+	)
+	(no_connect
+		(at 135.89 90.17)
+		(uuid "cdf1807c-847a-4a77-ad33-8b74db58ea47")
+	)
+	(no_connect
+		(at 135.89 74.93)
+		(uuid "cf9e153d-ba25-4aac-99d4-6e6afc6c43de")
+	)
+	(no_connect
+		(at 135.89 107.95)
+		(uuid "d0f4746e-ff27-4d1b-9a42-add8e47d4ce6")
+	)
+	(no_connect
+		(at 135.89 113.03)
+		(uuid "e61d2c5c-5bcf-45ce-8e4c-308ae39593de")
+	)
+	(no_connect
+		(at 171.45 107.95)
+		(uuid "f9b1100b-2eb6-4ad7-b9d8-29ef262cc892")
+	)
 	(wire
 		(pts
 			(xy 132.08 100.33) (xy 135.89 100.33)
@@ -3133,7 +3229,7 @@
 	)
 	(wire
 		(pts
-			(xy 101.6 54.61) (xy 104.14 54.61)
+			(xy 97.79 54.61) (xy 104.14 54.61)
 		)
 		(stroke
 			(width 0)
@@ -3223,17 +3319,7 @@
 	)
 	(wire
 		(pts
-			(xy 161.29 36.83) (xy 161.29 49.53)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "39ca0263-abbf-4b78-a767-548779d47f7b")
-	)
-	(wire
-		(pts
-			(xy 234.95 52.07) (xy 242.57 52.07)
+			(xy 232.41 52.07) (xy 242.57 52.07)
 		)
 		(stroke
 			(width 0)
@@ -3593,7 +3679,7 @@
 	)
 	(wire
 		(pts
-			(xy 229.87 66.04) (xy 234.95 66.04)
+			(xy 229.87 66.04) (xy 232.41 66.04)
 		)
 		(stroke
 			(width 0)
@@ -3753,7 +3839,7 @@
 	)
 	(wire
 		(pts
-			(xy 101.6 53.34) (xy 101.6 54.61)
+			(xy 97.79 53.34) (xy 97.79 54.61)
 		)
 		(stroke
 			(width 0)
@@ -3963,6 +4049,16 @@
 	)
 	(wire
 		(pts
+			(xy 161.29 36.83) (xy 161.29 49.53)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e699d179-d091-4582-9bc0-4ad09b62df54")
+	)
+	(wire
+		(pts
 			(xy 242.57 71.12) (xy 242.57 63.5)
 		)
 		(stroke
@@ -3993,7 +4089,7 @@
 	)
 	(wire
 		(pts
-			(xy 234.95 55.88) (xy 234.95 52.07)
+			(xy 232.41 55.88) (xy 232.41 52.07)
 		)
 		(stroke
 			(width 0)
@@ -4033,7 +4129,7 @@
 	)
 	(wire
 		(pts
-			(xy 234.95 66.04) (xy 234.95 63.5)
+			(xy 232.41 66.04) (xy 232.41 63.5)
 		)
 		(stroke
 			(width 0)
@@ -5266,7 +5362,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "065b91fe-4937-46c7-a124-75b036dc5e45")
-		(property "Reference" "#PWR025"
+		(property "Reference" "#PWR026"
 			(at 176.53 53.34 0)
 			(effects
 				(font
@@ -5317,7 +5413,7 @@
 		(instances
 			(project "receiver"
 				(path "/439ba515-58d4-4b14-87ab-b438dcf423a5"
-					(reference "#PWR025")
+					(reference "#PWR026")
 					(unit 1)
 				)
 			)
@@ -5332,7 +5428,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "06f1c0e2-f286-4866-adce-e54f0d1cb848")
-		(property "Reference" "R?"
+		(property "Reference" "STM_R2"
 			(at 241.3 86.36 90)
 			(effects
 				(font
@@ -5386,7 +5482,7 @@
 		(instances
 			(project "receiver"
 				(path "/439ba515-58d4-4b14-87ab-b438dcf423a5"
-					(reference "R?")
+					(reference "STM_R2")
 					(unit 1)
 				)
 			)
@@ -5402,7 +5498,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "092baf69-95ad-4eb7-96c5-4075e8cf0f8c")
-		(property "Reference" "#PWR028"
+		(property "Reference" "#PWR037"
 			(at 238.76 146.05 0)
 			(effects
 				(font
@@ -5453,7 +5549,7 @@
 		(instances
 			(project "receiver"
 				(path "/439ba515-58d4-4b14-87ab-b438dcf423a5"
-					(reference "#PWR028")
+					(reference "#PWR037")
 					(unit 1)
 				)
 			)
@@ -5468,7 +5564,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "09cb35fe-6dce-421c-8bda-80b6c9145ff7")
-		(property "Reference" "C?"
+		(property "Reference" "CSTL_C2"
 			(at 250.19 133.35 0)
 			(effects
 				(font
@@ -5522,7 +5618,7 @@
 		(instances
 			(project "receiver"
 				(path "/439ba515-58d4-4b14-87ab-b438dcf423a5"
-					(reference "C?")
+					(reference "CSTL_C2")
 					(unit 1)
 				)
 			)
@@ -5537,7 +5633,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "1ce693b1-c661-4146-a12f-a3787e758d6c")
-		(property "Reference" "#PWR027"
+		(property "Reference" "#PWR023"
 			(at 196.85 38.1 0)
 			(effects
 				(font
@@ -5587,7 +5683,7 @@
 		(instances
 			(project "receiver"
 				(path "/439ba515-58d4-4b14-87ab-b438dcf423a5"
-					(reference "#PWR027")
+					(reference "#PWR023")
 					(unit 1)
 				)
 			)
@@ -5669,7 +5765,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "37efe0d6-41ea-43c4-adbf-a5784d3463fc")
-		(property "Reference" "R?"
+		(property "Reference" "STM_R1"
 			(at 107.95 49.53 90)
 			(effects
 				(font
@@ -5708,6 +5804,7 @@
 			(effects
 				(font
 					(size 1.27 1.27)
+					(italic yes)
 				)
 				(hide yes)
 			)
@@ -5721,7 +5818,7 @@
 		(instances
 			(project "receiver"
 				(path "/439ba515-58d4-4b14-87ab-b438dcf423a5"
-					(reference "R?")
+					(reference "STM_R1")
 					(unit 1)
 				)
 			)
@@ -5737,7 +5834,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "388c19f6-a9dd-4aa1-98e9-a1bb41a09f0f")
-		(property "Reference" "FB?"
+		(property "Reference" "FB1"
 			(at 188.0108 29.21 90)
 			(effects
 				(font
@@ -5789,7 +5886,7 @@
 		(instances
 			(project "receiver"
 				(path "/439ba515-58d4-4b14-87ab-b438dcf423a5"
-					(reference "FB?")
+					(reference "FB1")
 					(unit 1)
 				)
 			)
@@ -5805,7 +5902,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "3e0bdfc1-abc2-4bf6-b91d-2e940626be74")
-		(property "Reference" "#PWR015"
+		(property "Reference" "#PWR038"
 			(at 153.67 152.4 0)
 			(effects
 				(font
@@ -5856,7 +5953,7 @@
 		(instances
 			(project "receiver"
 				(path "/439ba515-58d4-4b14-87ab-b438dcf423a5"
-					(reference "#PWR015")
+					(reference "#PWR038")
 					(unit 1)
 				)
 			)
@@ -5871,7 +5968,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "49f042a9-a196-4c5d-8764-cca38ac8dec8")
-		(property "Reference" "#PWR024"
+		(property "Reference" "#PWR018"
 			(at 161.29 38.1 0)
 			(effects
 				(font
@@ -5921,7 +6018,7 @@
 		(instances
 			(project "receiver"
 				(path "/439ba515-58d4-4b14-87ab-b438dcf423a5"
-					(reference "#PWR024")
+					(reference "#PWR018")
 					(unit 1)
 				)
 			)
@@ -5936,7 +6033,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "5146b04e-e7a2-4eb8-9cd1-bc69dd52ed71")
-		(property "Reference" "C?"
+		(property "Reference" "STM_C6"
 			(at 140.97 39.37 0)
 			(effects
 				(font
@@ -5990,7 +6087,7 @@
 		(instances
 			(project "receiver"
 				(path "/439ba515-58d4-4b14-87ab-b438dcf423a5"
-					(reference "C?")
+					(reference "STM_C6")
 					(unit 1)
 				)
 			)
@@ -6070,7 +6167,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "53d32038-176d-4f40-a8ae-66d8b251a063")
-		(property "Reference" "JP?"
+		(property "Reference" "JP1"
 			(at 229.87 88.9 0)
 			(effects
 				(font
@@ -6123,7 +6220,7 @@
 		(instances
 			(project "receiver"
 				(path "/439ba515-58d4-4b14-87ab-b438dcf423a5"
-					(reference "JP?")
+					(reference "JP1")
 					(unit 1)
 				)
 			)
@@ -6139,7 +6236,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "59f8a257-94c1-43e2-8267-87e55106c12b")
-		(property "Reference" "#PWR037"
+		(property "Reference" "#PWR015"
 			(at 238.76 26.67 0)
 			(effects
 				(font
@@ -6189,7 +6286,7 @@
 		(instances
 			(project "receiver"
 				(path "/439ba515-58d4-4b14-87ab-b438dcf423a5"
-					(reference "#PWR037")
+					(reference "#PWR015")
 					(unit 1)
 				)
 			)
@@ -6204,7 +6301,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "620eb9cf-a9e3-49fa-818a-a53d92d8c1dc")
-		(property "Reference" "#PWR033"
+		(property "Reference" "#PWR028"
 			(at 242.57 53.34 0)
 			(effects
 				(font
@@ -6254,7 +6351,7 @@
 		(instances
 			(project "receiver"
 				(path "/439ba515-58d4-4b14-87ab-b438dcf423a5"
-					(reference "#PWR033")
+					(reference "#PWR028")
 					(unit 1)
 				)
 			)
@@ -6262,15 +6359,15 @@
 	)
 	(symbol
 		(lib_id "Device:R")
-		(at 234.95 59.69 0)
+		(at 232.41 59.69 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(uuid "68b78f99-2e0f-4cc0-b649-cdd9a80468df")
-		(property "Reference" "R?"
-			(at 236.22 58.42 0)
+		(property "Reference" "I2C_R1"
+			(at 233.68 58.42 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6279,7 +6376,7 @@
 			)
 		)
 		(property "Value" "10k"
-			(at 236.22 60.96 0)
+			(at 233.68 60.96 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6288,7 +6385,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 233.172 59.69 90)
+			(at 230.632 59.69 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6297,7 +6394,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 234.95 59.69 0)
+			(at 232.41 59.69 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6306,7 +6403,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 234.95 59.69 0)
+			(at 232.41 59.69 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6323,7 +6420,7 @@
 		(instances
 			(project "receiver"
 				(path "/439ba515-58d4-4b14-87ab-b438dcf423a5"
-					(reference "R?")
+					(reference "I2C_R1")
 					(unit 1)
 				)
 			)
@@ -6338,7 +6435,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "6a2304f4-7f86-4d9d-95a0-1da6f854abd7")
-		(property "Reference" "C?"
+		(property "Reference" "STM_C2"
 			(at 99.06 39.37 0)
 			(effects
 				(font
@@ -6392,7 +6489,7 @@
 		(instances
 			(project "receiver"
 				(path "/439ba515-58d4-4b14-87ab-b438dcf423a5"
-					(reference "C?")
+					(reference "STM_C2")
 					(unit 1)
 				)
 			)
@@ -6407,7 +6504,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "7310ffb5-dd02-4e65-a96e-6180056c93d0")
-		(property "Reference" "C?"
+		(property "Reference" "STM_C3"
 			(at 109.22 39.37 0)
 			(effects
 				(font
@@ -6461,7 +6558,7 @@
 		(instances
 			(project "receiver"
 				(path "/439ba515-58d4-4b14-87ab-b438dcf423a5"
-					(reference "C?")
+					(reference "STM_C3")
 					(unit 1)
 				)
 			)
@@ -6476,7 +6573,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "7c929466-0f0f-4d80-acc7-e9c30c37bab6")
-		(property "Reference" "R?"
+		(property "Reference" "STM_R3"
 			(at 247.65 97.79 0)
 			(effects
 				(font
@@ -6530,7 +6627,7 @@
 		(instances
 			(project "receiver"
 				(path "/439ba515-58d4-4b14-87ab-b438dcf423a5"
-					(reference "R?")
+					(reference "STM_R3")
 					(unit 1)
 				)
 			)
@@ -6546,7 +6643,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "80a45bc9-ca09-4a5c-a67b-8985adbb142d")
-		(property "Reference" "#PWR026"
+		(property "Reference" "#PWR027"
 			(at 196.85 53.34 0)
 			(effects
 				(font
@@ -6597,7 +6694,7 @@
 		(instances
 			(project "receiver"
 				(path "/439ba515-58d4-4b14-87ab-b438dcf423a5"
-					(reference "#PWR026")
+					(reference "#PWR027")
 					(unit 1)
 				)
 			)
@@ -6612,7 +6709,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "8a989c8a-5811-4a69-9272-febbd619362d")
-		(property "Reference" "C?"
+		(property "Reference" "CSTL_C1"
 			(at 233.68 133.35 0)
 			(effects
 				(font
@@ -6666,7 +6763,7 @@
 		(instances
 			(project "receiver"
 				(path "/439ba515-58d4-4b14-87ab-b438dcf423a5"
-					(reference "C?")
+					(reference "CSTL_C1")
 					(unit 1)
 				)
 			)
@@ -6681,7 +6778,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "935df82e-f968-4d2b-81ed-a3638fb46167")
-		(property "Reference" "C?"
+		(property "Reference" "STM_C9"
 			(at 199.39 39.37 0)
 			(effects
 				(font
@@ -6735,7 +6832,7 @@
 		(instances
 			(project "receiver"
 				(path "/439ba515-58d4-4b14-87ab-b438dcf423a5"
-					(reference "C?")
+					(reference "STM_C9")
 					(unit 1)
 				)
 			)
@@ -6750,7 +6847,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "93cfa94f-4c1d-45d7-ba0d-08f2b56fabac")
-		(property "Reference" "C?"
+		(property "Reference" "STM_C8"
 			(at 179.07 39.37 0)
 			(effects
 				(font
@@ -6804,7 +6901,7 @@
 		(instances
 			(project "receiver"
 				(path "/439ba515-58d4-4b14-87ab-b438dcf423a5"
-					(reference "C?")
+					(reference "STM_C8")
 					(unit 1)
 				)
 			)
@@ -6819,7 +6916,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "9890fb7e-59c4-433d-97f4-e8eee3e4dbf6")
-		(property "Reference" "C?"
+		(property "Reference" "STM_C4"
 			(at 119.38 39.37 0)
 			(effects
 				(font
@@ -6873,7 +6970,7 @@
 		(instances
 			(project "receiver"
 				(path "/439ba515-58d4-4b14-87ab-b438dcf423a5"
-					(reference "C?")
+					(reference "STM_C4")
 					(unit 1)
 				)
 			)
@@ -6881,7 +6978,7 @@
 	)
 	(symbol
 		(lib_id "power:+3.3V")
-		(at 101.6 53.34 0)
+		(at 97.79 53.34 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -6889,7 +6986,7 @@
 		(dnp no)
 		(uuid "9d824274-39b3-408d-a0e4-c7de7c911903")
 		(property "Reference" "#PWR029"
-			(at 101.6 57.15 0)
+			(at 97.79 57.15 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6898,7 +6995,7 @@
 			)
 		)
 		(property "Value" "+3.3V"
-			(at 101.6 49.53 0)
+			(at 97.79 49.53 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6906,7 +7003,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 101.6 53.34 0)
+			(at 97.79 53.34 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6915,7 +7012,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 101.6 53.34 0)
+			(at 97.79 53.34 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6924,7 +7021,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 101.6 53.34 0)
+			(at 97.79 53.34 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6953,7 +7050,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "a9add6cc-7a60-44a9-b7a8-76a9b677b5a2")
-		(property "Reference" "#PWR034"
+		(property "Reference" "#PWR033"
 			(at 223.52 92.71 0)
 			(effects
 				(font
@@ -7003,7 +7100,7 @@
 		(instances
 			(project "receiver"
 				(path "/439ba515-58d4-4b14-87ab-b438dcf423a5"
-					(reference "#PWR034")
+					(reference "#PWR033")
 					(unit 1)
 				)
 			)
@@ -7019,7 +7116,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "b703f524-726f-422d-8049-ac110a5e05d3")
-		(property "Reference" "R?"
+		(property "Reference" "STM_R4"
 			(at 254 119.38 90)
 			(effects
 				(font
@@ -7071,7 +7168,7 @@
 		(instances
 			(project "receiver"
 				(path "/439ba515-58d4-4b14-87ab-b438dcf423a5"
-					(reference "R?")
+					(reference "STM_R4")
 					(unit 1)
 				)
 			)
@@ -7086,7 +7183,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "bb4c85f7-49c5-4ba4-ba84-3fe5ec348763")
-		(property "Reference" "C?"
+		(property "Reference" "STM_C7"
 			(at 170.18 39.37 0)
 			(effects
 				(font
@@ -7140,7 +7237,7 @@
 		(instances
 			(project "receiver"
 				(path "/439ba515-58d4-4b14-87ab-b438dcf423a5"
-					(reference "C?")
+					(reference "STM_C7")
 					(unit 1)
 				)
 			)
@@ -7156,7 +7253,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "c06c235d-2d5a-49fd-a07f-5be0b46c1c95")
-		(property "Reference" "#PWR038"
+		(property "Reference" "#PWR024"
 			(at 238.76 43.18 0)
 			(effects
 				(font
@@ -7207,7 +7304,7 @@
 		(instances
 			(project "receiver"
 				(path "/439ba515-58d4-4b14-87ab-b438dcf423a5"
-					(reference "#PWR038")
+					(reference "#PWR024")
 					(unit 1)
 				)
 			)
@@ -7223,7 +7320,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "c493d559-9e06-4510-bde1-2ec1e0871e05")
-		(property "Reference" "J?"
+		(property "Reference" "J2"
 			(at 247.65 29.21 0)
 			(effects
 				(font
@@ -7286,7 +7383,7 @@
 		(instances
 			(project "receiver"
 				(path "/439ba515-58d4-4b14-87ab-b438dcf423a5"
-					(reference "J?")
+					(reference "J2")
 					(unit 1)
 				)
 			)
@@ -7301,7 +7398,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "d72beb04-8b64-4da5-9300-bb85b618bef6")
-		(property "Reference" "C?"
+		(property "Reference" "STM_C10"
 			(at 118.11 57.15 0)
 			(effects
 				(font
@@ -7355,7 +7452,7 @@
 		(instances
 			(project "receiver"
 				(path "/439ba515-58d4-4b14-87ab-b438dcf423a5"
-					(reference "C?")
+					(reference "STM_C10")
 					(unit 1)
 				)
 			)
@@ -7370,7 +7467,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "dcd0339f-98f8-49b4-84ee-b055ce5722cc")
-		(property "Reference" "C?"
+		(property "Reference" "STM_C1"
 			(at 88.9 39.37 0)
 			(effects
 				(font
@@ -7424,7 +7521,7 @@
 		(instances
 			(project "receiver"
 				(path "/439ba515-58d4-4b14-87ab-b438dcf423a5"
-					(reference "C?")
+					(reference "STM_C1")
 					(unit 1)
 				)
 			)
@@ -7512,7 +7609,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "e4596eac-9626-4ac0-b6eb-3b5889c8cecc")
-		(property "Reference" "C?"
+		(property "Reference" "STM_C5"
 			(at 129.54 39.37 0)
 			(effects
 				(font
@@ -7566,7 +7663,7 @@
 		(instances
 			(project "receiver"
 				(path "/439ba515-58d4-4b14-87ab-b438dcf423a5"
-					(reference "C?")
+					(reference "STM_C5")
 					(unit 1)
 				)
 			)
@@ -7581,7 +7678,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "f1e2fdd0-1438-4169-ae74-194a1c948eaf")
-		(property "Reference" "R?"
+		(property "Reference" "I2C_R2"
 			(at 243.84 58.42 0)
 			(effects
 				(font
@@ -7635,7 +7732,7 @@
 		(instances
 			(project "receiver"
 				(path "/439ba515-58d4-4b14-87ab-b438dcf423a5"
-					(reference "R?")
+					(reference "I2C_R2")
 					(unit 1)
 				)
 			)
@@ -7651,7 +7748,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "f35f8b5b-62db-47ba-95a5-8e36a2afec8b")
-		(property "Reference" "#PWR018"
+		(property "Reference" "#PWR034"
 			(at 246.38 110.49 0)
 			(effects
 				(font
@@ -7702,7 +7799,7 @@
 		(instances
 			(project "receiver"
 				(path "/439ba515-58d4-4b14-87ab-b438dcf423a5"
-					(reference "#PWR018")
+					(reference "#PWR034")
 					(unit 1)
 				)
 			)
@@ -7718,7 +7815,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "fbb9fbbe-f321-4202-9d8f-ad584c2b11b6")
-		(property "Reference" "#PWR023"
+		(property "Reference" "#PWR025"
 			(at 86.36 53.34 0)
 			(effects
 				(font
@@ -7769,7 +7866,7 @@
 		(instances
 			(project "receiver"
 				(path "/439ba515-58d4-4b14-87ab-b438dcf423a5"
-					(reference "#PWR023")
+					(reference "#PWR025")
 					(unit 1)
 				)
 			)
