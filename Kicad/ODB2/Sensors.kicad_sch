@@ -6621,7 +6621,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "HM-10:26.9X13X2.2_BOARD"
+		(property "Footprint" "ODB:HM-10"
 			(at 186.69 25.4 0)
 			(effects
 				(font
@@ -7196,7 +7196,7 @@
 				)
 			)
 		)
-		(property "Footprint" "QFN24_3X3X0P9_IVS"
+		(property "Footprint" "ODB:ICM-L"
 			(at 71.882 76.708 0)
 			(effects
 				(font
@@ -7468,7 +7468,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RFM23BP-433-S2:MODULE_RFM23BP-433-S2"
+		(property "Footprint" "ODB:RFM22B-433-S2"
 			(at 60.96 171.45 0)
 			(effects
 				(font
@@ -7887,7 +7887,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "MS5803-01BA01_TEC"
+		(property "Footprint" "ODB:MS5803-01BA01_TEC"
 			(at 57.404 112.014 0)
 			(effects
 				(font
@@ -8445,7 +8445,7 @@
 				)
 			)
 		)
-		(property "Footprint" "L76_QWS"
+		(property "Footprint" "ODB:L76_QWS"
 			(at 67.818 37.846 0)
 			(effects
 				(font
