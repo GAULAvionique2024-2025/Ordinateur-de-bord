@@ -2590,6 +2590,16 @@
 	)
 	(wire
 		(pts
+			(xy 85.09 31.75) (xy 95.25 31.75)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f2bd42e3-9608-4b2a-827a-92b02b2e4c36")
+	)
+	(wire
+		(pts
 			(xy 35.56 57.15) (xy 44.45 57.15)
 		)
 		(stroke
@@ -3518,6 +3528,73 @@
 		)
 	)
 	(symbol
+		(lib_id "power:GND")
+		(at 85.09 39.37 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "3050206b-b281-463b-a0e8-adac40b11a59")
+		(property "Reference" "#PWR063"
+			(at 85.09 45.72 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 85.09 44.45 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Footprint" ""
+			(at 85.09 39.37 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 85.09 39.37 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 85.09 39.37 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "174f4bd6-df63-4d64-a3c7-0cc37a7d0958")
+		)
+		(instances
+			(project "receiver"
+				(path "/439ba515-58d4-4b14-87ab-b438dcf423a5/56b56711-4d65-4df6-9470-6736a83e438d"
+					(reference "#PWR063")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Jumper:SolderJumper_2_Open")
 		(at 110.49 58.42 270)
 		(unit 1)
@@ -4350,6 +4427,75 @@
 			(project "receiver"
 				(path "/439ba515-58d4-4b14-87ab-b438dcf423a5/56b56711-4d65-4df6-9470-6736a83e438d"
 					(reference "MLX_C1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 85.09 35.56 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "c3e8e98d-3032-48ab-806a-524f41efed83")
+		(property "Reference" "MLX_C3"
+			(at 87.63 34.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1u"
+			(at 87.63 36.83 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+			(at 86.0552 39.37 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 85.09 35.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 85.09 35.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "e3427984-983d-47ef-af16-3884cbfaee77")
+		)
+		(pin "2"
+			(uuid "e2b42ead-9198-4e17-8bff-18889e9db155")
+		)
+		(instances
+			(project "receiver"
+				(path "/439ba515-58d4-4b14-87ab-b438dcf423a5/56b56711-4d65-4df6-9470-6736a83e438d"
+					(reference "MLX_C3")
 					(unit 1)
 				)
 			)
