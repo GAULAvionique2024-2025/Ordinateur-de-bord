@@ -32,9 +32,9 @@ Le module **L76LM33** assure le suivi de la position en temps réel avec des inf
 
 ---
 
-### 💾 **Mémoire Flash - [MX30UF4G28AD](./Composantes/MX30UF4G28AD.pdf)**
+### 💾 **Mémoire Flash - [W25Q512JV](./Composantes/W25Q512JV SPI RevB 06252019 KMS.pdf)**
 
-Le **MX30UF4G28AD** stocke les données de vol recueillies par les capteurs, assurant une récupération facile après le vol.
+Le **W25Q512JV** stocke les données de vol recueillies par les capteurs, assurant une récupération facile après le vol.
 
 ---
 
