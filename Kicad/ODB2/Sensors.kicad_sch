@@ -4504,6 +4504,16 @@
 	)
 	(wire
 		(pts
+			(xy 116.84 55.88) (xy 116.84 54.61)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "931cf8df-ae2b-4ff2-ad2c-c235d07ef777")
+	)
+	(wire
+		(pts
 			(xy 105.41 49.53) (xy 116.84 49.53)
 		)
 		(stroke
@@ -5447,7 +5457,7 @@
 			)
 		)
 	)
-	(global_label "SPI2_RFM_SCK"
+	(global_label "SPI2_RFM_SCLK"
 		(shape input)
 		(at 35.56 166.37 180)
 		(fields_autoplaced yes)
@@ -5459,7 +5469,7 @@
 		)
 		(uuid "e202cfd9-5f2b-4d0a-b4f9-3d31efd2344c")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 18.7863 166.37 0)
+			(at 17.7582 166.37 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6309,7 +6319,7 @@
 		(dnp no)
 		(uuid "6351dfdf-8540-4be3-9920-acc0c2c50dab")
 		(property "Reference" "BT_C1"
-			(at 155.448 66.294 0)
+			(at 158.496 66.294 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6318,7 +6328,7 @@
 			)
 		)
 		(property "Value" "10uF"
-			(at 155.956 71.12 0)
+			(at 158.496 68.072 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7082,7 +7092,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 116.84 54.61 0)
+		(at 116.84 55.88 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -7091,7 +7101,7 @@
 		(fields_autoplaced yes)
 		(uuid "a2855736-1aaf-4e18-91fa-ccfd646cd870")
 		(property "Reference" "#PWR051"
-			(at 116.84 60.96 0)
+			(at 116.84 62.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7100,7 +7110,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 116.84 59.69 0)
+			(at 116.84 60.96 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7108,7 +7118,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 116.84 54.61 0)
+			(at 116.84 55.88 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7117,7 +7127,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 116.84 54.61 0)
+			(at 116.84 55.88 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7126,7 +7136,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 116.84 54.61 0)
+			(at 116.84 55.88 0)
 			(effects
 				(font
 					(size 1.27 1.27)
