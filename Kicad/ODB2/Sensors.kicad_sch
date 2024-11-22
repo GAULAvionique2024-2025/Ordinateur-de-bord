@@ -760,471 +760,6 @@
 				)
 			)
 		)
-		(symbol "ODB2:RFM23BP-433-S2"
-			(pin_names
-				(offset 1.016)
-			)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(property "Reference" "U"
-				(at -12.7 18.415 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify left bottom)
-				)
-			)
-			(property "Value" "RFM23BP-433-S2"
-				(at -12.7 -25.4 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify left bottom)
-				)
-			)
-			(property "Footprint" "RFM23BP-433-S2:MODULE_RFM23BP-433-S2"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify bottom)
-					(hide yes)
-				)
-			)
-			(property "Datasheet" ""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Description" ""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "MF" "Hope Microelectronics"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify bottom)
-					(hide yes)
-				)
-			)
-			(property "Description_1" "\n                        \n                            Module: RF; FM transceiver; FSK; 433.92MHz; SPI; -120dBm; 3.3÷6VDC\n                        \n"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify bottom)
-					(hide yes)
-				)
-			)
-			(property "Package" "None"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify bottom)
-					(hide yes)
-				)
-			)
-			(property "Price" "None"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify bottom)
-					(hide yes)
-				)
-			)
-			(property "Check_prices" "https://www.snapeda.com/parts/RFM23BP-433-S2/Hoperf+Microelectronics/view-part/?ref=eda"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify bottom)
-					(hide yes)
-				)
-			)
-			(property "STANDARD" "Manufacturer Recommendations"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify bottom)
-					(hide yes)
-				)
-			)
-			(property "PARTREV" "2.0"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify bottom)
-					(hide yes)
-				)
-			)
-			(property "SnapEDA_Link" "https://www.snapeda.com/parts/RFM23BP-433-S2/Hoperf+Microelectronics/view-part/?ref=snap"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify bottom)
-					(hide yes)
-				)
-			)
-			(property "MP" "RFM23BP-433-S2"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify bottom)
-					(hide yes)
-				)
-			)
-			(property "Availability" "Not in stock"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify bottom)
-					(hide yes)
-				)
-			)
-			(property "MANUFACTURER" "Hoperf"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify bottom)
-					(hide yes)
-				)
-			)
-			(symbol "RFM23BP-433-S2_0_0"
-				(rectangle
-					(start -12.7 -22.86)
-					(end 12.7 17.78)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type background)
-					)
-				)
-				(pin bidirectional line
-					(at 17.78 5.08 180)
-					(length 5.08)
-					(name "ANT"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-				)
-				(pin output line
-					(at -17.78 10.16 0)
-					(length 5.08)
-					(name "SDO"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-					(number "10"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-				)
-				(pin input line
-					(at -17.78 7.62 0)
-					(length 5.08)
-					(name "SDI"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-					(number "11"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-				)
-				(pin input clock
-					(at -17.78 5.08 0)
-					(length 5.08)
-					(name "SCK"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-					(number "12"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-				)
-				(pin input line
-					(at -17.78 2.54 0)
-					(length 5.08)
-					(name "NSEL"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-					(number "13"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-				)
-				(pin output line
-					(at 17.78 10.16 180)
-					(length 5.08)
-					(name "NIRQ"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-					(number "14"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-				)
-				(pin input line
-					(at -17.78 -2.54 0)
-					(length 5.08)
-					(name "SDN"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-					(number "15"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-				)
-				(pin power_in line
-					(at 17.78 -17.78 180)
-					(length 5.08)
-					(name "GND__1"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-					(number "16"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-				)
-				(pin power_in line
-					(at 17.78 -15.24 180)
-					(length 5.08)
-					(name "GND"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-				)
-				(pin power_in line
-					(at 17.78 -20.32 180)
-					(length 5.08)
-					(name "GND__2"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-				)
-				(pin input line
-					(at -17.78 -10.16 0)
-					(length 5.08)
-					(name "RX_ON"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-					(number "3"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-				)
-				(pin input line
-					(at -17.78 -7.62 0)
-					(length 5.08)
-					(name "TX_ON"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-					(number "4"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-				)
-				(pin power_in line
-					(at 17.78 15.24 180)
-					(length 5.08)
-					(name "VCC"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-					(number "5"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-				)
-				(pin bidirectional line
-					(at 17.78 0 180)
-					(length 5.08)
-					(name "GPIO_0"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-					(number "6"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-				)
-				(pin bidirectional line
-					(at 17.78 -2.54 180)
-					(length 5.08)
-					(name "GPIO_1"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-					(number "7"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-				)
-				(pin bidirectional line
-					(at 17.78 -5.08 180)
-					(length 5.08)
-					(name "GPIO_2"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-					(number "8"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-				)
-			)
-		)
 		(symbol "ODB_Lib:HM-10"
 			(pin_names
 				(offset 1.016)
@@ -3657,12 +3192,6 @@
 		(uuid "64fd0ae1-3926-489b-94b3-0f6c7016cc41")
 	)
 	(junction
-		(at 81.28 189.23)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "7d6659cb-f8ec-406d-a92b-a64b390caf00")
-	)
-	(junction
 		(at 116.84 54.61)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -3729,12 +3258,6 @@
 		(uuid "d008fc56-5994-4ab2-91d4-e5a40760b6a7")
 	)
 	(junction
-		(at 81.28 191.77)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "e37e1876-7ae2-42a1-b314-e066bd586c68")
-	)
-	(junction
 		(at 29.21 46.99)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -3775,10 +3298,6 @@
 	(no_connect
 		(at 217.17 40.64)
 		(uuid "0e8c06cd-649a-4165-a572-5f62abc48399")
-	)
-	(no_connect
-		(at 78.74 173.99)
-		(uuid "1260f204-69eb-41e7-a805-0e395e0bf49e")
 	)
 	(no_connect
 		(at 217.17 48.26)
@@ -3837,20 +3356,8 @@
 		(uuid "7e268c61-b921-497c-9031-84046f806628")
 	)
 	(no_connect
-		(at 43.18 181.61)
-		(uuid "7f64c99d-bc13-4e2b-b191-c4bf92ce904c")
-	)
-	(no_connect
 		(at 181.61 50.8)
 		(uuid "80d85a2c-cc71-460d-a7b4-9308c00fe556")
-	)
-	(no_connect
-		(at 78.74 176.53)
-		(uuid "84513751-05cb-4e14-8788-619b45973f94")
-	)
-	(no_connect
-		(at 78.74 171.45)
-		(uuid "866c2f49-091a-4a5f-96cd-b10f320f356f")
 	)
 	(no_connect
 		(at 181.61 48.26)
@@ -3889,10 +3396,6 @@
 		(uuid "ef38e5fb-68ba-4824-8a50-7b9fa66629c9")
 	)
 	(no_connect
-		(at 43.18 179.07)
-		(uuid "f1c6c973-709b-4d67-96b1-2907c5d9ce39")
-	)
-	(no_connect
 		(at 181.61 45.72)
 		(uuid "f3a717d7-8561-440f-bacb-348c7283d61d")
 	)
@@ -3924,26 +3427,6 @@
 	)
 	(wire
 		(pts
-			(xy 78.74 186.69) (xy 81.28 186.69)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "03c9c0ac-331e-4fef-ad1e-fca69cf1072e")
-	)
-	(wire
-		(pts
-			(xy 87.63 156.21) (xy 87.63 154.94)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "047787ec-06bb-433c-bf04-df7c3f804935")
-	)
-	(wire
-		(pts
 			(xy 78.74 129.54) (xy 81.28 129.54)
 		)
 		(stroke
@@ -3961,16 +3444,6 @@
 			(type default)
 		)
 		(uuid "10a040df-098d-4d3b-89a1-aaff88e3e990")
-	)
-	(wire
-		(pts
-			(xy 35.56 173.99) (xy 43.18 173.99)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "13484951-a08d-4486-90d8-718d69a9353c")
 	)
 	(wire
 		(pts
@@ -4124,16 +3597,6 @@
 	)
 	(wire
 		(pts
-			(xy 78.74 156.21) (xy 87.63 156.21)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "408effe8-3a38-48a5-b119-6a7e3455fdf2")
-	)
-	(wire
-		(pts
 			(xy 31.75 39.37) (xy 34.29 39.37)
 		)
 		(stroke
@@ -4151,16 +3614,6 @@
 			(type default)
 		)
 		(uuid "469edd02-34bc-4144-baa6-9282f79afeb6")
-	)
-	(wire
-		(pts
-			(xy 35.56 163.83) (xy 43.18 163.83)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "4aa47985-30bc-4e60-a28b-dd673fdd53b7")
 	)
 	(wire
 		(pts
@@ -4211,16 +3664,6 @@
 			(type default)
 		)
 		(uuid "5249dd80-181e-41d7-9697-a2b7fc64cc4a")
-	)
-	(wire
-		(pts
-			(xy 78.74 161.29) (xy 83.82 161.29)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "545a3105-5fba-439d-9b29-c342251a9175")
 	)
 	(wire
 		(pts
@@ -4304,16 +3747,6 @@
 	)
 	(wire
 		(pts
-			(xy 78.74 191.77) (xy 81.28 191.77)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "63576412-5597-4aa9-b1b8-94ff648a334a")
-	)
-	(wire
-		(pts
 			(xy 172.72 35.56) (xy 181.61 35.56)
 		)
 		(stroke
@@ -4364,26 +3797,6 @@
 	)
 	(wire
 		(pts
-			(xy 35.56 166.37) (xy 43.18 166.37)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "70b0f94f-d2ad-4208-9b47-39012860bed7")
-	)
-	(wire
-		(pts
-			(xy 81.28 191.77) (xy 83.82 191.77)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "730efbe4-72db-4c4c-a6a3-db74e2a539dc")
-	)
-	(wire
-		(pts
 			(xy 168.91 73.66) (xy 168.91 72.39)
 		)
 		(stroke
@@ -4401,16 +3814,6 @@
 			(type default)
 		)
 		(uuid "751138b5-58b9-49db-8847-5559e159b485")
-	)
-	(wire
-		(pts
-			(xy 81.28 186.69) (xy 81.28 189.23)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "7a73021c-08aa-4118-8180-3e7c47b9dcd2")
 	)
 	(wire
 		(pts
@@ -4614,36 +4017,6 @@
 	)
 	(wire
 		(pts
-			(xy 81.28 189.23) (xy 81.28 191.77)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "b6de0413-2433-4918-94d7-311ca446f004")
-	)
-	(wire
-		(pts
-			(xy 78.74 189.23) (xy 81.28 189.23)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "ba7f77cf-1768-47b6-b7a7-946468ebcd40")
-	)
-	(wire
-		(pts
-			(xy 78.74 166.37) (xy 88.9 166.37)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "bad2214b-e288-4f79-aece-12fa75a8e4e7")
-	)
-	(wire
-		(pts
 			(xy 218.44 63.5) (xy 218.44 68.58)
 		)
 		(stroke
@@ -4651,16 +4024,6 @@
 			(type default)
 		)
 		(uuid "be202c19-3339-45ed-a00a-33e7663a120c")
-	)
-	(wire
-		(pts
-			(xy 35.56 168.91) (xy 43.18 168.91)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "c545450f-af4a-460c-a88d-2d7eaf1dc972")
 	)
 	(wire
 		(pts
@@ -4721,16 +4084,6 @@
 			(type default)
 		)
 		(uuid "d5c9996b-1a80-4113-8d90-e7846f0b21eb")
-	)
-	(wire
-		(pts
-			(xy 35.56 161.29) (xy 43.18 161.29)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "d66a2047-4d9a-4c4c-9ddf-de4cfc9432db")
 	)
 	(wire
 		(pts
@@ -4907,18 +4260,6 @@
 		(uuid 12967f17-fb5e-4513-8ae4-750aea237612)
 	)
 	(rectangle
-		(start 15.24 147.32)
-		(end 116.84 195.58)
-		(stroke
-			(width 0)
-			(type dash)
-		)
-		(fill
-			(type none)
-		)
-		(uuid 4ce84f9e-ee30-4301-bc23-1f5f94630429)
-	)
-	(rectangle
 		(start 13.97 22.86)
 		(end 148.59 63.5)
 		(stroke
@@ -4941,19 +4282,6 @@
 			(type none)
 		)
 		(uuid ed61e73e-e45c-4605-b546-194cfbf33919)
-	)
-	(text "Beacon"
-		(exclude_from_sim no)
-		(at 16.256 150.368 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-				(thickness 0.254)
-				(bold yes)
-			)
-			(justify left bottom)
-		)
-		(uuid "19949e00-620f-4673-9f0f-59f06ac7bef4")
 	)
 	(text "Accelerometer"
 		(exclude_from_sim no)
@@ -5027,61 +4355,6 @@
 			)
 		)
 		(uuid "f0c16dfd-807b-4294-a89d-88bc260da9ea")
-	)
-	(label "RFM_ANT"
-		(at 78.74 166.37 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "fc471875-1ed0-4f78-93dd-1d0e3cb5b880")
-	)
-	(global_label "RFM_SDN"
-		(shape input)
-		(at 35.56 173.99 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "18d26562-861c-4922-b5ed-02c27c5e7631")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 23.9872 173.99 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "RFM_NIRQ"
-		(shape input)
-		(at 83.82 161.29 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "210477df-a435-4f21-8ec8-cd4c65fd957d")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 96.1186 161.29 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
 	)
 	(global_label "GPS_RF"
 		(shape input)
@@ -5162,28 +4435,6 @@
 		(uuid "69b542e5-dc11-4071-bd4b-fd183dce2255")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 15.0368 36.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "SPI2_RFM_MISO"
-		(shape input)
-		(at 35.56 161.29 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "73f4c48b-2e7a-4673-9125-c97095f9ee20")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 17.9396 161.29 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5303,50 +4554,6 @@
 			)
 		)
 	)
-	(global_label "SPI2_RFM_MOSI"
-		(shape input)
-		(at 35.56 163.83 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "b9169c7c-3e4a-42b1-847a-04009689a390")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 17.9396 163.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "SPI2_RFM_CS"
-		(shape input)
-		(at 35.56 168.91 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "be969d1d-19b8-489a-b20b-bc18967aa68a")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 20.0563 168.91 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-				(hide yes)
-			)
-		)
-	)
 	(global_label "SPI4_Baro_MOSI"
 		(shape input)
 		(at 33.02 124.46 180)
@@ -5457,28 +4664,6 @@
 			)
 		)
 	)
-	(global_label "SPI2_RFM_SCLK"
-		(shape input)
-		(at 35.56 166.37 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "e202cfd9-5f2b-4d0a-b4f9-3d31efd2344c")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 17.7582 166.37 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-				(hide yes)
-			)
-		)
-	)
 	(global_label "SPI1_ICM_MOSI"
 		(shape input)
 		(at 109.22 76.2 0)
@@ -5498,76 +4683,6 @@
 				)
 				(justify left)
 				(hide yes)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:Conn_Coaxial")
-		(at 93.98 166.37 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "04d9a1ff-ea86-4d44-a8cb-b3c9746a78c7")
-		(property "Reference" "J5"
-			(at 97.79 165.3931 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-		(property "Value" "RFM_Conn_Coaxial"
-			(at 96.52 166.624 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" ""
-			(at 93.98 166.37 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 93.98 166.37 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "coaxial connector (BNC, SMA, SMB, SMC, Cinch/RCA, LEMO, ...)"
-			(at 93.98 166.37 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "44093d7e-cc5d-484c-9d09-b5476a9180b5")
-		)
-		(pin "1"
-			(uuid "b91e87aa-fc85-4421-99d2-ce58946d4a6c")
-		)
-		(instances
-			(project "ODB2"
-				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/eac5f07f-d6a3-4c95-b286-7cebf46e30db"
-					(reference "J5")
-					(unit 1)
-				)
 			)
 		)
 	)
@@ -6893,73 +6008,6 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 93.98 171.45 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "90d42a54-3fc8-4622-b1cd-170a776a218a")
-		(property "Reference" "#PWR069"
-			(at 93.98 177.8 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 93.98 176.53 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Footprint" ""
-			(at 93.98 171.45 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 93.98 171.45 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 93.98 171.45 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "b9bb927e-1884-41e2-87ae-b42f26b1dd80")
-		)
-		(instances
-			(project "ODB2"
-				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/eac5f07f-d6a3-4c95-b286-7cebf46e30db"
-					(reference "#PWR069")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
 		(at 218.44 69.85 0)
 		(unit 1)
 		(exclude_from_sim no)
@@ -7429,294 +6477,6 @@
 		)
 	)
 	(symbol
-		(lib_id "ODB2:RFM23BP-433-S2")
-		(at 60.96 171.45 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "b1b01ab8-4ff6-4385-93a4-da616960de18")
-		(property "Reference" "U9"
-			(at 60.96 148.59 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "RFM23BP-433-S2"
-			(at 57.658 155.448 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "ODB:RFM22B-433-S2"
-			(at 60.96 171.45 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 60.96 171.45 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 60.96 171.45 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "MF" "Hope Microelectronics"
-			(at 60.96 171.45 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "Description_1" "\n                        \n                            Module: RF; FM transceiver; FSK; 433.92MHz; SPI; -120dBm; 3.3÷6VDC\n                        \n"
-			(at 60.96 171.45 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "Package" "None"
-			(at 60.96 171.45 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "Price" "None"
-			(at 60.96 171.45 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "Check_prices" "https://www.snapeda.com/parts/RFM23BP-433-S2/Hoperf+Microelectronics/view-part/?ref=eda"
-			(at 60.96 171.45 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "STANDARD" "Manufacturer Recommendations"
-			(at 60.96 171.45 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "PARTREV" "2.0"
-			(at 60.96 171.45 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "SnapEDA_Link" "https://www.snapeda.com/parts/RFM23BP-433-S2/Hoperf+Microelectronics/view-part/?ref=snap"
-			(at 60.96 171.45 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "MP" "RFM23BP-433-S2"
-			(at 60.96 171.45 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "Availability" "Not in stock"
-			(at 60.96 171.45 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "MANUFACTURER" "Hoperf"
-			(at 60.96 171.45 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(pin "15"
-			(uuid "35a7aa5d-177f-43d0-9d17-158f7e405512")
-		)
-		(pin "10"
-			(uuid "b4b9b7f2-14ad-400c-9b8d-0acc1b648b74")
-		)
-		(pin "16"
-			(uuid "2771a0df-9dee-47e7-94d1-757e628c3bff")
-		)
-		(pin "8"
-			(uuid "21254219-1b1e-4d9a-979c-685bca6dd5d4")
-		)
-		(pin "2"
-			(uuid "5e0a74af-7704-4be5-acaa-a2ccc7fb0900")
-		)
-		(pin "11"
-			(uuid "f8cd42f6-bb45-48c4-8950-776a75cbb80d")
-		)
-		(pin "12"
-			(uuid "af6c67aa-d6c6-4022-85dc-f82179b03518")
-		)
-		(pin "7"
-			(uuid "5328e755-5151-4771-b16d-79d615f63eec")
-		)
-		(pin "6"
-			(uuid "2fd66004-34f2-4515-91dd-3277c0babeb8")
-		)
-		(pin "13"
-			(uuid "92246a7b-236e-4289-9a16-2880dbbf2bcf")
-		)
-		(pin "3"
-			(uuid "c9aac912-c934-4e0f-91b6-5402440fa316")
-		)
-		(pin "5"
-			(uuid "9201c4fb-5030-4680-9e91-dc0e03c38a90")
-		)
-		(pin "1"
-			(uuid "4d5ef656-65dd-4776-bdb4-eeffb7728edd")
-		)
-		(pin "14"
-			(uuid "cacca32c-6acf-4f76-b18f-faa5f525946f")
-		)
-		(pin "2"
-			(uuid "fbb0e877-2847-4b43-8677-86789de5dd34")
-		)
-		(pin "4"
-			(uuid "ed8bbfed-6262-4b56-9e0a-78536d0622bc")
-		)
-		(instances
-			(project "ODB2"
-				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/eac5f07f-d6a3-4c95-b286-7cebf46e30db"
-					(reference "U9")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 83.82 191.77 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "b92d81c3-4a9d-46f8-936e-d0e57a062223")
-		(property "Reference" "#PWR068"
-			(at 83.82 198.12 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 83.82 196.85 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Footprint" ""
-			(at 83.82 191.77 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 83.82 191.77 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 83.82 191.77 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "86af81cb-bc9f-41b8-ad9d-4f19ffbf6342")
-		)
-		(instances
-			(project "ODB2"
-				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/eac5f07f-d6a3-4c95-b286-7cebf46e30db"
-					(reference "#PWR068")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "power:GND")
 		(at 161.29 74.93 0)
 		(unit 1)
@@ -7776,71 +6536,6 @@
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/eac5f07f-d6a3-4c95-b286-7cebf46e30db"
 					(reference "#PWR063")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:+3V3")
-		(at 87.63 154.94 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "c3c67ef6-ae3b-407e-ac1d-4bc85ecc6458")
-		(property "Reference" "#PWR067"
-			(at 87.63 158.75 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+3V3"
-			(at 87.122 150.876 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 87.63 154.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 87.63 154.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+3V3\""
-			(at 87.63 154.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "849d4ee7-7fae-4dc3-a6a5-2bd82a15da73")
-		)
-		(instances
-			(project "ODB2"
-				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/eac5f07f-d6a3-4c95-b286-7cebf46e30db"
-					(reference "#PWR067")
 					(unit 1)
 				)
 			)
