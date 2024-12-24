@@ -475,6 +475,17 @@
 				(xyz 0 0 0)
 			)
 		)
+		(model "${KICAD6_3DMODEL_DIR}/Package_TO_SOT_SMD.3dshapes/SOT-23-5.step"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 0)
+			)
+		)
 	)
 	(footprint "Capacitor_SMD:C_0603_1608Metric"
 		(layer "F.Cu")
@@ -2824,7 +2835,7 @@
 		(descr "Generic Buzzer, D14mm height 7mm with pitch 10mm")
 		(tags "buzzer")
 		(property "Reference" "BZ1"
-			(at 4.173619 -5.054895 180)
+			(at 4.173619 -5.054895 360)
 			(layer "F.SilkS")
 			(uuid "fdfb758c-acc9-451f-afb6-0d139c4a8334")
 			(effects
@@ -2991,6 +3002,17 @@
 			)
 			(scale
 				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 0)
+			)
+		)
+		(model "${KICAD8_3DMODEL_DIR}/Buzzer_Beeper.3dshapes/Buzzer_15x7.5RM7.6.wrl"
+			(offset
+				(xyz -2.5 0 0)
+			)
+			(scale
+				(xyz 0.7 0.7 1)
 			)
 			(rotate
 				(xyz 0 0 0)
@@ -12357,6 +12379,17 @@
 			(pintype "power_in")
 			(uuid "f15c8090-4e17-4d22-bd77-7a2f97012095")
 		)
+		(model "${KICAD8_3DMODEL_DIR}/Package_QFP.3dshapes/LQFP-64_10x10mm_P0.5mm.step"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 0)
+			)
+		)
 	)
 	(footprint "Capacitor_SMD:C_0603_1608Metric"
 		(layer "F.Cu")
@@ -13429,7 +13462,7 @@
 			(pintype "passive")
 			(uuid "44e7c439-1f7d-4fe3-9cf5-7abffa414016")
 		)
-		(model "${KICAD8_3DMODEL_DIR}/Connector_Coaxial.3dshapes/SMA_Amphenol_901-143_Horizontal.wrl"
+		(model "${KICAD8_3DMODEL_DIR}/Connector_Coaxial.3dshapes/LEMO-EPL.00.250.NTN.wrl"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -13437,7 +13470,7 @@
 				(xyz 1 1 1)
 			)
 			(rotate
-				(xyz 0 0 0)
+				(xyz 0 0 -90)
 			)
 		)
 	)
@@ -15174,7 +15207,7 @@
 		(descr "Abracon Miniature Ceramic SMD Crystal ABS25 https://abracon.com/Resonators/abs25.pdf, 8.0x3.8mm^2 package")
 		(tags "SMD SMT crystal")
 		(property "Reference" "Y1"
-			(at 1.957593 5.168427 180)
+			(at 1.957593 5.168427 360)
 			(layer "F.SilkS")
 			(uuid "b7dc048d-6e4e-43c4-bc50-937d684011d1")
 			(effects
@@ -15483,6 +15516,17 @@
 			)
 			(scale
 				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 0)
+			)
+		)
+		(model "${KICAD8_3DMODEL_DIR}/Oscillator.3dshapes/Oscillator_SeikoEpson_SG-8002DB.wrl"
+			(offset
+				(xyz -2.3 3 0)
+			)
+			(scale
+				(xyz 0.6 0.4 0.6)
 			)
 			(rotate
 				(xyz 0 0 0)
@@ -16347,6 +16391,17 @@
 			(pinfunction "VOUT")
 			(pintype "output")
 			(uuid "bed53c0e-b001-4214-96df-13eb981e9189")
+		)
+		(model "${KICAD8_3DMODEL_DIR}/Package_TO_SOT_SMD.3dshapes/TO-252-2_TabPin1.step"
+			(offset
+				(xyz 0 -0.5 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 -90)
+			)
 		)
 	)
 	(footprint "Footprints:Potentiometer_Alps_RK09K_Single_Vertical"
