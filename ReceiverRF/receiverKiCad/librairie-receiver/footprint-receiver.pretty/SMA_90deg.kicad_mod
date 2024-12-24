@@ -128,16 +128,6 @@
 		(uuid "651a735f-b1a6-421a-b15c-e73b03248481")
 	)
 	(fp_line
-		(start 4.3 -4.5)
-		(end -4.3 -4.5)
-		(stroke
-			(width 0.1)
-			(type solid)
-		)
-		(layer "Edge.Cuts")
-		(uuid "f78bf029-e907-4428-b53a-981cd964b9ec")
-	)
-	(fp_line
 		(start -4.3 -12)
 		(end -4.3 4.3)
 		(stroke
