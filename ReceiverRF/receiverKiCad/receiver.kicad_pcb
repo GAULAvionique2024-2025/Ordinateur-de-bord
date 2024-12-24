@@ -2208,6 +2208,17 @@
 			(pintype "power_out")
 			(uuid "e39a94d1-52b3-4b31-af77-4fdc340d446c")
 		)
+		(model "${KICAD8_3DMODEL_DIR}/Package_DFN_QFN.3dshapes/QFN-16-1EP_3x3mm_P0.5mm_EP1.7x1.7mm.step"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 0)
+			)
+		)
 	)
 	(footprint "Footprints:LTST-C190EKT"
 		(layer "F.Cu")
@@ -2835,7 +2846,7 @@
 		(descr "Generic Buzzer, D14mm height 7mm with pitch 10mm")
 		(tags "buzzer")
 		(property "Reference" "BZ1"
-			(at 4.173619 -5.054895 360)
+			(at 4.173619 -5.054895 0)
 			(layer "F.SilkS")
 			(uuid "fdfb758c-acc9-451f-afb6-0d139c4a8334")
 			(effects
@@ -2995,17 +3006,6 @@
 			(pinfunction "+")
 			(pintype "passive")
 			(uuid "0fec3aad-1538-4585-9d27-18b0fc0cd86d")
-		)
-		(model "${KICAD8_3DMODEL_DIR}/Buzzer_Beeper.3dshapes/Buzzer_D14mm_H7mm_P10mm.wrl"
-			(offset
-				(xyz 0 0 0)
-			)
-			(scale
-				(xyz 1 1 1)
-			)
-			(rotate
-				(xyz 0 0 0)
-			)
 		)
 		(model "${KICAD8_3DMODEL_DIR}/Buzzer_Beeper.3dshapes/Buzzer_15x7.5RM7.6.wrl"
 			(offset
@@ -15207,7 +15207,7 @@
 		(descr "Abracon Miniature Ceramic SMD Crystal ABS25 https://abracon.com/Resonators/abs25.pdf, 8.0x3.8mm^2 package")
 		(tags "SMD SMT crystal")
 		(property "Reference" "Y1"
-			(at 1.957593 5.168427 360)
+			(at 1.957593 5.168427 0)
 			(layer "F.SilkS")
 			(uuid "b7dc048d-6e4e-43c4-bc50-937d684011d1")
 			(effects
@@ -16411,7 +16411,7 @@
 		(descr "113004U 1130A6S 11300DR 1130A8G 1130081 1130A5R 1130AP5 1130AST  D1130C3W D1130C1B D1130C3C D1130C2P Potentiometer, vertical, Alps RK09K Single, https://tech.alpsalpine.com/prod/e/pdf/potentiometer/rotarypotentiometers/rk09k/rk09k.pdf")
 		(tags "Potentiometer vertical Alps RK09K RK09D Single Snapin")
 		(property "Reference" "RV1"
-			(at 14.582282 -2.985096 180)
+			(at 14.582282 -2.985096 360)
 			(layer "B.SilkS")
 			(uuid "2a331d71-e283-4e84-aa04-1d3127227e7e")
 			(effects
@@ -16734,6 +16734,17 @@
 			)
 			(rotate
 				(xyz 0 0 0)
+			)
+		)
+		(model "${KIPRJMOD}/librairie-receiver/lib_3D/RK09K1130-20.STEP"
+			(offset
+				(xyz 7 -2.5 6.5)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 90)
 			)
 		)
 	)
@@ -18566,6 +18577,17 @@
 			(pintype "power_in")
 			(uuid "a478dea2-6485-4c49-940a-dd9df10c881f")
 		)
+		(model "${KIPRJMOD}/librairie-receiver/lib_3D/RFM22B_S1.STEP"
+			(offset
+				(xyz -7 -7.4 1)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 0)
+			)
+		)
 	)
 	(footprint "Footprints:D102J12S215PQA_CNK"
 		(layer "B.Cu")
@@ -18817,6 +18839,17 @@
 			(pinfunction "B")
 			(pintype "passive")
 			(uuid "4e79c13d-3a93-4ed9-890c-f1f2e48c30b4")
+		)
+		(model "${KIPRJMOD}/librairie-receiver/lib_3D/D102J12S215PQA.stp"
+			(offset
+				(xyz 0 -7 13)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz -90 0 90)
+			)
 		)
 	)
 	(gr_line
