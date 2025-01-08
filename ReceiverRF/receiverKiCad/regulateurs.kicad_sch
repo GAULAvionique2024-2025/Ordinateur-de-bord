@@ -2206,6 +2206,16 @@
 	)
 	(wire
 		(pts
+			(xy 58.42 33.02) (xy 64.77 33.02)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0f4d6aaa-1569-4e5b-be9d-b068b7c6e1aa")
+	)
+	(wire
+		(pts
 			(xy 190.5 81.28) (xy 201.93 81.28)
 		)
 		(stroke
@@ -2283,16 +2293,6 @@
 			(type default)
 		)
 		(uuid "6c5e8ae9-e62f-48b0-b816-f79efac91960")
-	)
-	(wire
-		(pts
-			(xy 58.42 33.02) (xy 64.77 33.02)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "6ffebda0-3197-4193-bded-cf276c2313ce")
 	)
 	(wire
 		(pts
@@ -2376,6 +2376,16 @@
 	)
 	(wire
 		(pts
+			(xy 43.18 33.02) (xy 48.26 33.02)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c3c77eae-cea8-428d-bc22-c5446aa14dd4")
+	)
+	(wire
+		(pts
 			(xy 63.5 68.58) (xy 63.5 69.85)
 		)
 		(stroke
@@ -2393,16 +2403,6 @@
 			(type default)
 		)
 		(uuid "d9c072ed-0041-424f-b000-063df30ca679")
-	)
-	(wire
-		(pts
-			(xy 43.18 33.02) (xy 48.26 33.02)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "db09b5da-9cad-4566-baf1-cb36c4b68cbf")
 	)
 	(wire
 		(pts
@@ -3376,12 +3376,12 @@
 	(symbol
 		(lib_id "Switch:SW_SPST")
 		(at 53.34 33.02 0)
+		(mirror y)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "46fed4e7-ea29-4c0e-afd5-19de07de8f49")
 		(property "Reference" "SW5"
 			(at 53.34 26.67 0)
