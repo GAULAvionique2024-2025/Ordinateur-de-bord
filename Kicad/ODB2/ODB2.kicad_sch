@@ -4833,6 +4833,16 @@
 	)
 	(wire
 		(pts
+			(xy 200.66 233.68) (xy 200.66 234.95)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1ba6ec4c-c95f-4b30-a859-fbe8d8adcf6c")
+	)
+	(wire
+		(pts
 			(xy 346.71 99.06) (xy 346.71 101.6)
 		)
 		(stroke
@@ -6744,7 +6754,7 @@
 			)
 		)
 	)
-	(global_label "Pyros_MainOn"
+	(global_label "Pyros_DrogueOn"
 		(shape input)
 		(at 237.49 160.02 0)
 		(fields_autoplaced yes)
@@ -6756,7 +6766,7 @@
 		)
 		(uuid "9cf6b2a7-4a80-4e94-aa2a-d21a3c1fe939")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 253.4774 160.02 0)
+			(at 255.715 160.02 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8583,6 +8593,72 @@
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78"
 					(reference "Crystal_C2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 200.66 234.95 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "7a6844e0-3a79-49b7-9346-ac6007b08c33")
+		(property "Reference" "#PWR092"
+			(at 200.66 241.3 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 200.66 240.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 200.66 234.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 200.66 234.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 200.66 234.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "4f9d726f-d4d2-4751-ae8d-321777d03793")
+		)
+		(instances
+			(project ""
+				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78"
+					(reference "#PWR092")
 					(unit 1)
 				)
 			)
