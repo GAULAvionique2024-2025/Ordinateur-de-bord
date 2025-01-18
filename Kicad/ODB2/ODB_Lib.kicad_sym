@@ -2,7 +2,7 @@
 	(version 20231120)
 	(generator "kicad_symbol_editor")
 	(generator_version "8.0")
-	(symbol "74LVC2G08DP_125"
+	(symbol "74HC08D_653"
 		(pin_names
 			(offset 0.254)
 		)
@@ -17,7 +17,7 @@
 				)
 			)
 		)
-		(property "Value" "74LVC2G08DP_125"
+		(property "Value" "74HC08D_653"
 			(at 20.32 7.62 0)
 			(effects
 				(font
@@ -25,8 +25,8 @@
 				)
 			)
 		)
-		(property "Footprint" "TSSOP8_SOT505-2_NEX"
-			(at 0 0 0)
+		(property "Footprint" "SO14_SOT108-1_NEX"
+			(at 19.558 3.048 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -35,8 +35,8 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "74LVC2G08DP_125"
-			(at 0 0 0)
+		(property "Datasheet" "74HC08D_653"
+			(at 20.066 0.254 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -62,7 +62,7 @@
 				)
 			)
 		)
-		(property "ki_keywords" "74LVC2G08DP,125"
+		(property "ki_keywords" "74HC08D,653"
 			(at 0 0 0)
 			(effects
 				(font
@@ -71,7 +71,7 @@
 				(hide yes)
 			)
 		)
-		(property "ki_fp_filters" "TSSOP8_SOT505-2_NEX TSSOP8_SOT505-2_NEX-M TSSOP8_SOT505-2_NEX-L"
+		(property "ki_fp_filters" "SO14_SOT108-1_NEX SO14_SOT108-1_NEX-M SO14_SOT108-1_NEX-L"
 			(at 0 0 0)
 			(effects
 				(font
@@ -80,10 +80,10 @@
 				(hide yes)
 			)
 		)
-		(symbol "74LVC2G08DP_125_0_1"
+		(symbol "74HC08D_653_0_1"
 			(polyline
 				(pts
-					(xy 7.62 -12.7) (xy 33.02 -12.7)
+					(xy 7.62 -20.32) (xy 33.02 -20.32)
 				)
 				(stroke
 					(width 0.127)
@@ -95,7 +95,7 @@
 			)
 			(polyline
 				(pts
-					(xy 7.62 5.08) (xy 7.62 -12.7)
+					(xy 7.62 5.08) (xy 7.62 -20.32)
 				)
 				(stroke
 					(width 0.127)
@@ -107,7 +107,7 @@
 			)
 			(polyline
 				(pts
-					(xy 33.02 -12.7) (xy 33.02 5.08)
+					(xy 33.02 -20.32) (xy 33.02 5.08)
 				)
 				(stroke
 					(width 0.127)
@@ -148,6 +148,96 @@
 				)
 			)
 			(pin input line
+				(at 40.64 -10.16 180)
+				(length 7.62)
+				(name "3B"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "10"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin output line
+				(at 40.64 -7.62 180)
+				(length 7.62)
+				(name "4Y"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "11"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin input line
+				(at 40.64 -5.08 180)
+				(length 7.62)
+				(name "4A"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "12"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin input line
+				(at 40.64 -2.54 180)
+				(length 7.62)
+				(name "4B"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "13"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin power_in line
+				(at 40.64 0 180)
+				(length 7.62)
+				(name "VCC"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "14"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin input line
 				(at 0 -2.54 0)
 				(length 7.62)
 				(name "1B"
@@ -168,7 +258,7 @@
 			(pin output line
 				(at 0 -5.08 0)
 				(length 7.62)
-				(name "2Y"
+				(name "1Y"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -183,10 +273,10 @@
 					)
 				)
 			)
-			(pin power_out line
+			(pin input line
 				(at 0 -7.62 0)
 				(length 7.62)
-				(name "GND"
+				(name "2A"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -202,9 +292,9 @@
 				)
 			)
 			(pin input line
-				(at 40.64 -7.62 180)
+				(at 0 -10.16 0)
 				(length 7.62)
-				(name "2A"
+				(name "2B"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -219,10 +309,10 @@
 					)
 				)
 			)
-			(pin input line
-				(at 40.64 -5.08 180)
+			(pin output line
+				(at 0 -12.7 0)
 				(length 7.62)
-				(name "2B"
+				(name "2Y"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -237,10 +327,10 @@
 					)
 				)
 			)
-			(pin output line
-				(at 40.64 -2.54 180)
+			(pin power_out line
+				(at 0 -15.24 0)
 				(length 7.62)
-				(name "1Y"
+				(name "GND"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -255,10 +345,10 @@
 					)
 				)
 			)
-			(pin power_in line
-				(at 40.64 0 180)
+			(pin output line
+				(at 40.64 -15.24 180)
 				(length 7.62)
-				(name "VCC"
+				(name "3Y"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -266,6 +356,24 @@
 					)
 				)
 				(number "8"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin input line
+				(at 40.64 -12.7 180)
+				(length 7.62)
+				(name "3A"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "9"
 					(effects
 						(font
 							(size 1.27 1.27)
