@@ -4283,25 +4283,6 @@
 		)
 		(uuid ed61e73e-e45c-4605-b546-194cfbf33919)
 	)
-	(text_box "Mettre bleu"
-		(exclude_from_sim no)
-		(at 226.06 45.72 0)
-		(size 12.7 5.08)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(fill
-			(type none)
-		)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left top)
-		)
-		(uuid "b63c21ed-c0ad-4b74-a3c2-d40608bd7247")
-	)
 	(text "Accelerometer"
 		(exclude_from_sim no)
 		(at 14.986 69.088 0)
