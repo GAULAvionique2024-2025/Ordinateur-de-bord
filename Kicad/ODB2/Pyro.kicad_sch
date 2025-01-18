@@ -1854,6 +1854,12 @@
 		(uuid "5971ccaf-b760-4245-8098-e36935dadabd")
 	)
 	(junction
+		(at 138.43 82.55)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "761a8b3b-49e3-4fef-82e4-5e0676afacb9")
+	)
+	(junction
 		(at 72.39 63.5)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -1896,12 +1902,6 @@
 		(uuid "d4b50166-65f6-4fae-9776-486d8aaa472a")
 	)
 	(junction
-		(at 142.24 82.55)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "d7c50802-1ab0-499b-8ebd-68a23082ef80")
-	)
-	(junction
 		(at 45.72 96.52)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -1925,7 +1925,7 @@
 	)
 	(wire
 		(pts
-			(xy 139.7 82.55) (xy 142.24 82.55)
+			(xy 135.89 82.55) (xy 138.43 82.55)
 		)
 		(stroke
 			(width 0)
@@ -2005,7 +2005,7 @@
 	)
 	(wire
 		(pts
-			(xy 142.24 97.79) (xy 143.51 97.79)
+			(xy 138.43 97.79) (xy 142.24 97.79)
 		)
 		(stroke
 			(width 0)
@@ -2032,16 +2032,6 @@
 			(type default)
 		)
 		(uuid "2ec0da7a-28ff-4114-8db1-05ab248db8f7")
-	)
-	(wire
-		(pts
-			(xy 179.07 137.16) (xy 181.61 137.16)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "32b19b79-e1e7-4760-973c-5950f0783803")
 	)
 	(wire
 		(pts
@@ -2105,16 +2095,6 @@
 	)
 	(wire
 		(pts
-			(xy 180.34 132.08) (xy 180.34 134.62)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "3c5224f8-ec28-47a5-a838-8bc0e194532a")
-	)
-	(wire
-		(pts
 			(xy 99.06 171.45) (xy 100.33 171.45)
 		)
 		(stroke
@@ -2135,7 +2115,7 @@
 	)
 	(wire
 		(pts
-			(xy 73.66 107.95) (xy 73.66 114.3)
+			(xy 73.66 107.95) (xy 73.66 111.76)
 		)
 		(stroke
 			(width 0)
@@ -2265,6 +2245,16 @@
 	)
 	(wire
 		(pts
+			(xy 138.43 82.55) (xy 144.78 82.55)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "63e07b63-aaf9-4837-83e3-a89567269e3e")
+	)
+	(wire
+		(pts
 			(xy 153.67 43.18) (xy 153.67 44.45)
 		)
 		(stroke
@@ -2282,16 +2272,6 @@
 			(type default)
 		)
 		(uuid "68642e0c-4b1e-4d8b-909d-91fcdb9da8f6")
-	)
-	(wire
-		(pts
-			(xy 138.43 137.16) (xy 137.16 137.16)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "6e3f7c2d-fa60-4234-b171-cf0e78a5783a")
 	)
 	(wire
 		(pts
@@ -2355,7 +2335,7 @@
 	)
 	(wire
 		(pts
-			(xy 142.24 82.55) (xy 142.24 97.79)
+			(xy 138.43 82.55) (xy 138.43 97.79)
 		)
 		(stroke
 			(width 0)
@@ -2375,7 +2355,7 @@
 	)
 	(wire
 		(pts
-			(xy 151.13 97.79) (xy 162.56 97.79)
+			(xy 149.86 97.79) (xy 162.56 97.79)
 		)
 		(stroke
 			(width 0)
@@ -2402,26 +2382,6 @@
 			(type default)
 		)
 		(uuid "85ca02c1-2f15-498d-841d-f339cfbb86f6")
-	)
-	(wire
-		(pts
-			(xy 180.34 134.62) (xy 179.07 134.62)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "8798e998-507d-431c-ae66-b94030fe3a13")
-	)
-	(wire
-		(pts
-			(xy 135.89 132.08) (xy 138.43 132.08)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "8b958b2b-2082-42a3-82e1-dc9d4864c294")
 	)
 	(wire
 		(pts
@@ -2462,16 +2422,6 @@
 			(type default)
 		)
 		(uuid "9d86a189-090d-4ffe-9f17-a8ee740dc4f5")
-	)
-	(wire
-		(pts
-			(xy 179.07 132.08) (xy 180.34 132.08)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "9f265cfe-88f9-4c7d-afe0-c3c6d7ed1e75")
 	)
 	(wire
 		(pts
@@ -2545,26 +2495,6 @@
 	)
 	(wire
 		(pts
-			(xy 179.07 129.54) (xy 180.34 129.54)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "b5b4bb4e-b050-41c1-b27d-85fe62d55e82")
-	)
-	(wire
-		(pts
-			(xy 180.34 129.54) (xy 180.34 128.27)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "bc139f95-86c0-4c89-911f-30db1d17b7b0")
-	)
-	(wire
-		(pts
 			(xy 140.97 36.83) (xy 143.51 36.83)
 		)
 		(stroke
@@ -2572,16 +2502,6 @@
 			(type default)
 		)
 		(uuid "bc14814c-d389-420d-bbf3-cfdfb23f0942")
-	)
-	(wire
-		(pts
-			(xy 137.16 137.16) (xy 137.16 138.43)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "bdc546e8-3c69-45d2-9ec0-3f380db74941")
 	)
 	(wire
 		(pts
@@ -2625,16 +2545,6 @@
 	)
 	(wire
 		(pts
-			(xy 144.78 82.55) (xy 142.24 82.55)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "c391993e-eb2a-42c5-b71e-460b6a5194ae")
-	)
-	(wire
-		(pts
 			(xy 45.72 96.52) (xy 45.72 99.06)
 		)
 		(stroke
@@ -2662,16 +2572,6 @@
 			(type default)
 		)
 		(uuid "cb3b3a5d-9c96-45e4-b102-2defe18428a7")
-	)
-	(wire
-		(pts
-			(xy 135.89 129.54) (xy 138.43 129.54)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "cd0ef347-caaa-4657-b814-9c60d8adc0a3")
 	)
 	(wire
 		(pts
@@ -2775,16 +2675,6 @@
 	)
 	(wire
 		(pts
-			(xy 135.89 134.62) (xy 138.43 134.62)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "f648dcbe-9aee-4b7d-8e2d-cff0efc79ec0")
-	)
-	(wire
-		(pts
 			(xy 83.82 140.97) (xy 83.82 143.51)
 		)
 		(stroke
@@ -2854,18 +2744,6 @@
 		(uuid "feb4096b-7123-4e8d-bda0-056d947f7e23")
 	)
 	(rectangle
-		(start 111.76 115.57)
-		(end 199.39 146.05)
-		(stroke
-			(width 0)
-			(type dash)
-		)
-		(fill
-			(type none)
-		)
-		(uuid 3b7b1733-85ad-4a92-a858-c982fe008d6f)
-	)
-	(rectangle
 		(start 15.24 22.86)
 		(end 106.68 154.94)
 		(stroke
@@ -2879,7 +2757,7 @@
 	)
 	(rectangle
 		(start 111.76 22.86)
-		(end 199.39 146.05)
+		(end 199.39 116.84)
 		(stroke
 			(width 0)
 			(type dash)
@@ -2950,19 +2828,6 @@
 			(justify left bottom)
 		)
 		(uuid "5f72888e-9d46-4d6c-ab54-c909b5254b14")
-	)
-	(text "PROTECTION PYRO MAIN"
-		(exclude_from_sim no)
-		(at 112.522 118.364 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-				(thickness 0.254)
-				(bold yes)
-			)
-			(justify left bottom)
-		)
-		(uuid "c13cdbd8-d7c9-4c28-a56f-f188e07cd508")
 	)
 	(text "PROTECTION PYRO MAIN"
 		(exclude_from_sim no)
@@ -3080,7 +2945,7 @@
 	)
 	(global_label "Pyros_MainADC"
 		(shape input)
-		(at 139.7 82.55 180)
+		(at 135.89 82.55 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -3090,7 +2955,7 @@
 		)
 		(uuid "260f12ed-b9d6-4357-80d9-44cc6b01a404")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 122.5635 82.55 0)
+			(at 118.7535 82.55 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3140,28 +3005,6 @@
 					(size 1.27 1.27)
 				)
 				(justify right)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "Pyros_Test"
-		(shape input)
-		(at 181.61 137.16 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "7c947c68-467d-42ec-a720-3c9a829c7cf1")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 194.5737 137.16 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
 				(hide yes)
 			)
 		)
@@ -3232,28 +3075,6 @@
 			)
 		)
 	)
-	(global_label "Pyros_MainODB"
-		(shape input)
-		(at 135.89 129.54 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "b497f1a0-dde9-415d-95f5-08e0466a44f3")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 118.5116 129.54 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-				(hide yes)
-			)
-		)
-	)
 	(global_label "Pyros_Bluetooth"
 		(shape input)
 		(at 39.37 140.97 180)
@@ -3267,50 +3088,6 @@
 		(uuid "c5f42719-1435-4b8c-9e11-cfaec0944416")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 21.1451 140.97 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "Pyros_Bluetooth"
-		(shape input)
-		(at 135.89 132.08 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "d1114745-c990-4b3d-84ce-d148371ba44e")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 117.6651 132.08 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "Pyros_MainOn"
-		(shape input)
-		(at 135.89 134.62 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "dc68f211-e697-43fd-9976-ae529e3f6d6f")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 119.9026 134.62 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3404,94 +3181,6 @@
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_R4")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "ODB_Lib:74LVC2G08DP_125")
-		(at 138.43 129.54 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "0727a3a4-5098-4f3d-bc78-b88dec139787")
-		(property "Reference" "U13"
-			(at 158.75 119.38 0)
-			(effects
-				(font
-					(size 1.524 1.524)
-				)
-			)
-		)
-		(property "Value" "74LVC2G08DP_125"
-			(at 158.75 121.92 0)
-			(effects
-				(font
-					(size 1.524 1.524)
-				)
-			)
-		)
-		(property "Footprint" "TSSOP8_SOT505-2_NEX"
-			(at 138.43 129.54 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-					(italic yes)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "74LVC2G08DP_125"
-			(at 138.43 129.54 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-					(italic yes)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 138.43 129.54 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "5"
-			(uuid "6bc4a381-1ff2-4ba4-b067-0a113bc7b4b8")
-		)
-		(pin "6"
-			(uuid "98323e3e-a4f2-43e3-bee3-34ea97e38aab")
-		)
-		(pin "8"
-			(uuid "46a033bf-6d00-4e8b-bd50-db456656a2aa")
-		)
-		(pin "2"
-			(uuid "6f75ba62-2bde-4b75-8b9d-02a583a1973a")
-		)
-		(pin "1"
-			(uuid "a65bf21f-5be2-482d-9264-e6af055f7492")
-		)
-		(pin "7"
-			(uuid "c1b93b44-0f2c-499e-b513-f7290f2c2323")
-		)
-		(pin "4"
-			(uuid "795b7ca4-c106-4735-99b9-ff5c1877dbc6")
-		)
-		(pin "3"
-			(uuid "c7c06ddf-8bf5-466e-858d-befc257d8bcd")
-		)
-		(instances
-			(project "ODB2"
-				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
-					(reference "U13")
 					(unit 1)
 				)
 			)
@@ -4243,72 +3932,6 @@
 		)
 	)
 	(symbol
-		(lib_id "power:+3V3")
-		(at 180.34 128.27 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "2da95b6c-6f81-4d53-9cb3-7430cd59fa19")
-		(property "Reference" "#PWR098"
-			(at 180.34 132.08 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+3V3"
-			(at 180.34 123.19 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 180.34 128.27 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 180.34 128.27 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+3V3\""
-			(at 180.34 128.27 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "2a27ee81-67d0-468a-8f56-a081031bd645")
-		)
-		(instances
-			(project "ODB2"
-				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
-					(reference "#PWR098")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Amplifier_Operational:TLV172IDCK")
 		(at 49.53 66.04 0)
 		(mirror y)
@@ -4730,7 +4353,7 @@
 	)
 	(symbol
 		(lib_id "Device:R")
-		(at 147.32 97.79 270)
+		(at 146.05 97.79 270)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -4738,7 +4361,7 @@
 		(dnp no)
 		(uuid "5b7699ef-9423-44bb-9762-6f46216e842a")
 		(property "Reference" "Pyros_R11"
-			(at 147.574 95.25 90)
+			(at 146.304 95.25 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4746,7 +4369,7 @@
 			)
 		)
 		(property "Value" "R"
-			(at 147.32 100.076 90)
+			(at 146.05 100.076 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4754,7 +4377,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 147.32 96.012 90)
+			(at 146.05 96.012 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4763,7 +4386,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 147.32 97.79 0)
+			(at 146.05 97.79 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4772,7 +4395,7 @@
 			)
 		)
 		(property "Description" "Resistor"
-			(at 147.32 97.79 0)
+			(at 146.05 97.79 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5705,7 +5328,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 73.66 114.3 0)
+		(at 73.66 111.76 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -5714,7 +5337,7 @@
 		(fields_autoplaced yes)
 		(uuid "9e9552a9-708e-48c0-99e8-082da02ecf5f")
 		(property "Reference" "#PWR088"
-			(at 73.66 120.65 0)
+			(at 73.66 118.11 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5723,7 +5346,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 73.66 119.38 0)
+			(at 73.66 116.84 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5731,7 +5354,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 73.66 114.3 0)
+			(at 73.66 111.76 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5740,7 +5363,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 73.66 114.3 0)
+			(at 73.66 111.76 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5749,7 +5372,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 73.66 114.3 0)
+			(at 73.66 111.76 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6539,72 +6162,6 @@
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_J1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 137.16 138.43 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "f25e8da2-b5ea-471d-bdfe-09158abd882a")
-		(property "Reference" "#PWR089"
-			(at 137.16 144.78 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 137.16 143.51 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 137.16 138.43 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 137.16 138.43 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 137.16 138.43 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "35d56c37-4634-43e9-890e-f75003ef0341")
-		)
-		(instances
-			(project "ODB2"
-				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
-					(reference "#PWR089")
 					(unit 1)
 				)
 			)
