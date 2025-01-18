@@ -4517,6 +4517,12 @@
 		(uuid "365b6e84-9ad6-4f32-aabf-30f6f476d2e3")
 	)
 	(junction
+		(at 247.65 44.45)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "3adcd3da-8b7d-4120-ad29-adb12319e71c")
+	)
+	(junction
 		(at 86.36 35.56)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -4535,10 +4541,10 @@
 		(uuid "5040961d-3ed5-43da-a02e-d5d78a8622d4")
 	)
 	(junction
-		(at 248.92 54.61)
+		(at 189.23 38.1)
 		(diameter 0)
 		(color 0 0 0 0)
-		(uuid "56019c9b-a196-401e-815a-8fd7a80363e4")
+		(uuid "5495d401-e1b3-44d9-ba0b-5b88badf850d")
 	)
 	(junction
 		(at 29.21 102.87)
@@ -4563,12 +4569,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "6a4ab0f3-2935-43bf-9a59-6aceb09b2630")
-	)
-	(junction
-		(at 248.92 44.45)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "72c142cc-d602-415e-ada9-8e3aaa62440a")
 	)
 	(junction
 		(at 86.36 63.5)
@@ -4625,12 +4625,6 @@
 		(uuid "8d670bf1-47a9-473a-b466-cdfe0a7a0875")
 	)
 	(junction
-		(at 251.46 54.61)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "8e535f65-44f0-41f8-8223-ea596fac0d6d")
-	)
-	(junction
 		(at 214.63 30.48)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -4641,6 +4635,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "919c3c23-77ed-4984-bd75-233984df3359")
+	)
+	(junction
+		(at 247.65 54.61)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "93229d88-c7af-4158-978f-ce6132b7d498")
 	)
 	(junction
 		(at 57.15 114.3)
@@ -4671,6 +4671,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "a54e2e99-463b-4f42-bb08-b10ad514d10e")
+	)
+	(junction
+		(at 251.46 54.61)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "a5f275cf-8b68-4d7a-b64e-b00bf6a2d158")
 	)
 	(junction
 		(at 52.07 95.25)
@@ -4868,7 +4874,7 @@
 	)
 	(wire
 		(pts
-			(xy 240.03 54.61) (xy 248.92 54.61)
+			(xy 240.03 54.61) (xy 247.65 54.61)
 		)
 		(stroke
 			(width 0)
@@ -4895,16 +4901,6 @@
 			(type default)
 		)
 		(uuid "0f2280d5-9740-4e6b-bf87-d433d563b945")
-	)
-	(wire
-		(pts
-			(xy 248.92 44.45) (xy 259.08 44.45)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "10182048-0eff-4ca1-b196-c42036847650")
 	)
 	(wire
 		(pts
@@ -5008,7 +5004,7 @@
 	)
 	(wire
 		(pts
-			(xy 259.08 44.45) (xy 259.08 45.72)
+			(xy 255.27 44.45) (xy 255.27 45.72)
 		)
 		(stroke
 			(width 0)
@@ -5448,7 +5444,7 @@
 	)
 	(wire
 		(pts
-			(xy 248.92 44.45) (xy 248.92 45.72)
+			(xy 247.65 44.45) (xy 247.65 45.72)
 		)
 		(stroke
 			(width 0)
@@ -5578,6 +5574,16 @@
 	)
 	(wire
 		(pts
+			(xy 247.65 44.45) (xy 255.27 44.45)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6dd27f26-ccb8-4314-bf9d-ed28bc6fe198")
+	)
+	(wire
+		(pts
 			(xy 241.3 64.77) (xy 242.57 64.77)
 		)
 		(stroke
@@ -5628,7 +5634,17 @@
 	)
 	(wire
 		(pts
-			(xy 240.03 44.45) (xy 248.92 44.45)
+			(xy 247.65 54.61) (xy 251.46 54.61)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "74979bc3-7c40-4fb4-bb89-a5539150d1c5")
+	)
+	(wire
+		(pts
+			(xy 240.03 44.45) (xy 247.65 44.45)
 		)
 		(stroke
 			(width 0)
@@ -5748,7 +5764,17 @@
 	)
 	(wire
 		(pts
-			(xy 259.08 53.34) (xy 259.08 54.61)
+			(xy 189.23 38.1) (xy 200.66 38.1)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "88d12808-c4e0-4a0b-813a-af8507fe1ad7")
+	)
+	(wire
+		(pts
+			(xy 255.27 53.34) (xy 255.27 54.61)
 		)
 		(stroke
 			(width 0)
@@ -5855,6 +5881,16 @@
 			(type default)
 		)
 		(uuid "977f6702-55a9-4733-b08d-3138ee314530")
+	)
+	(wire
+		(pts
+			(xy 251.46 54.61) (xy 255.27 54.61)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "97c2490d-2544-4aee-8b84-ba3bdfb8ece4")
 	)
 	(wire
 		(pts
@@ -6178,16 +6214,6 @@
 	)
 	(wire
 		(pts
-			(xy 259.08 54.61) (xy 251.46 54.61)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "bf2e4cec-c8a6-42e5-b16d-948255d0843b")
-	)
-	(wire
-		(pts
 			(xy 19.05 45.72) (xy 48.26 45.72)
 		)
 		(stroke
@@ -6208,7 +6234,7 @@
 	)
 	(wire
 		(pts
-			(xy 200.66 39.37) (xy 200.66 30.48)
+			(xy 200.66 38.1) (xy 200.66 30.48)
 		)
 		(stroke
 			(width 0)
@@ -6518,7 +6544,7 @@
 	)
 	(wire
 		(pts
-			(xy 248.92 53.34) (xy 248.92 54.61)
+			(xy 247.65 53.34) (xy 247.65 54.61)
 		)
 		(stroke
 			(width 0)
@@ -6638,7 +6664,7 @@
 	)
 	(wire
 		(pts
-			(xy 196.85 39.37) (xy 200.66 39.37)
+			(xy 185.42 38.1) (xy 189.23 38.1)
 		)
 		(stroke
 			(width 0)
@@ -6665,16 +6691,6 @@
 			(type default)
 		)
 		(uuid "f75c308a-19e6-4148-b226-a2c590ea3a9b")
-	)
-	(wire
-		(pts
-			(xy 248.92 54.61) (xy 251.46 54.61)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "f776b1bc-4b45-4de6-977b-2971fc408530")
 	)
 	(wire
 		(pts
@@ -6796,7 +6812,7 @@
 		)
 		(uuid cf192c6e-2b53-443b-a3c4-ed918231c311)
 	)
-	(text_box "Changer pour 6V"
+	(text_box "MMSZ4691-TP a changer\n"
 		(exclude_from_sim no)
 		(at 152.4 22.86 0)
 		(size 17.78 5.08)
@@ -6815,17 +6831,6 @@
 		)
 		(uuid "e9f611df-c0a6-4483-b527-d52033c000bd")
 	)
-	(text "VOLTAGE DIVIDER RATIO IS 0.2647"
-		(exclude_from_sim no)
-		(at 182.88 25.4 0)
-		(effects
-			(font
-				(size 0.75 0.75)
-			)
-			(justify left bottom)
-		)
-		(uuid "032d79c4-e502-4f12-9e20-d10cefa2db67")
-	)
 	(text "Under voltage protection set at 2.1v"
 		(exclude_from_sim no)
 		(at 16.51 85.09 0)
@@ -6836,6 +6841,17 @@
 			(justify left bottom)
 		)
 		(uuid "06c68a93-b76b-45de-a685-72357bf7ef5b")
+	)
+	(text "Calcul: \nR1 = 100k\nR2 = 120k\n\nVin = Vout x ((R1+R2)/R1)"
+		(exclude_from_sim no)
+		(at 175.768 64.77 0)
+		(effects
+			(font
+				(size 1 1)
+			)
+			(justify left bottom)
+		)
+		(uuid "10fd3a47-9abe-4963-8b05-d91438a66d0e")
 	)
 	(text "5V REGULATOR"
 		(exclude_from_sim no)
@@ -6931,7 +6947,7 @@
 		)
 		(uuid "53cdac11-6710-42f5-9af4-f72969dbd374")
 	)
-	(text "12V ISOLATION"
+	(text "6V ISOLATION"
 		(exclude_from_sim no)
 		(at 173.99 17.78 0)
 		(effects
@@ -6992,7 +7008,7 @@
 		)
 		(uuid "a5b60bcb-7ba4-4760-b11c-5f756fad7199")
 	)
-	(text "SOLDER JP6 TOO BYPASS THIS.\nTHIS WILL ENABLE THE 12V HOT ALL TIME\nSO WE CANNOT TEST THE PYRO"
+	(text "SOLDER JP6 TOO BYPASS THIS.\nTHIS WILL ENABLE THE 6V HOT ALL TIME\nSO WE CANNOT TEST THE PYRO"
 		(exclude_from_sim no)
 		(at 207.01 25.4 0)
 		(effects
@@ -7013,7 +7029,7 @@
 		)
 		(uuid "aeebf985-bc0d-4853-a4bd-b36adc9cf1d7")
 	)
-	(text "BATT USE IS A 3S LIPO (11.1v)"
+	(text "BATT USE IS A 2S LiFe (7.2v)"
 		(exclude_from_sim no)
 		(at 173.99 20.32 0)
 		(effects
@@ -7071,7 +7087,7 @@
 			)
 		)
 	)
-	(global_label "12vEnable"
+	(global_label "6vEnable"
 		(shape input)
 		(at 190.5 74.93 180)
 		(fields_autoplaced yes)
@@ -7083,7 +7099,7 @@
 		)
 		(uuid "38db3386-56e4-4443-9a90-218c48b1b391")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 177.7784 74.93 0)
+			(at 178.9879 74.93 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7137,9 +7153,9 @@
 			)
 		)
 	)
-	(global_label "12v_An"
+	(global_label "6v_An"
 		(shape input)
-		(at 196.85 39.37 180)
+		(at 185.42 38.1 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -7149,7 +7165,7 @@
 		)
 		(uuid "7dd75974-2919-4e77-8aee-f72ba7b8af80")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 187.273 39.37 0)
+			(at 177.0525 38.1 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7181,7 +7197,7 @@
 			)
 		)
 	)
-	(global_label "12vEnable"
+	(global_label "6vEnable"
 		(shape input)
 		(at 191.77 50.8 180)
 		(fields_autoplaced yes)
@@ -7193,7 +7209,7 @@
 		)
 		(uuid "e5a87dd0-68bf-4ca9-bd5d-00d93af07152")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 179.0484 50.8 0)
+			(at 180.2579 50.8 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7281,7 +7297,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "0882972e-6bbc-40d0-939c-0b4aae45b1e9")
-		(property "Reference" "12V_C1"
+		(property "Reference" "6V_C1"
 			(at 240.03 46.99 0)
 			(effects
 				(font
@@ -7335,7 +7351,74 @@
 		(instances
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/a0dfa29e-ccca-4096-8481-c7e33c67aac5"
-					(reference "12V_C1")
+					(reference "6V_C1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 189.23 45.72 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "0bd5982b-2c09-4b2d-ad3f-269c9a9d3bcb")
+		(property "Reference" "#PWR0102"
+			(at 189.23 52.07 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 189.23 50.8 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+			)
+		)
+		(property "Footprint" ""
+			(at 189.23 45.72 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 189.23 45.72 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 189.23 45.72 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "5cb0ad5f-b6d0-4349-b3e7-83a16a857f9f")
+		)
+		(instances
+			(project "ODB2"
+				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/a0dfa29e-ccca-4096-8481-c7e33c67aac5"
+					(reference "#PWR0102")
 					(unit 1)
 				)
 			)
@@ -7549,7 +7632,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "20d13424-c601-4823-9a66-3e5e045ad3c1")
-		(property "Reference" "Batt12V_R9"
+		(property "Reference" "Batt6V_R9"
 			(at 266.7 59.69 90)
 			(effects
 				(font
@@ -7603,7 +7686,7 @@
 		(instances
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/a0dfa29e-ccca-4096-8481-c7e33c67aac5"
-					(reference "Batt12V_R9")
+					(reference "Batt6V_R9")
 					(unit 1)
 				)
 			)
@@ -8459,7 +8542,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "444c0020-ca96-45db-b8d7-f78f112f65a9")
-		(property "Reference" "12V_R6"
+		(property "Reference" "6V_R6"
 			(at 243.84 62.23 90)
 			(effects
 				(font
@@ -8513,7 +8596,7 @@
 		(instances
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/a0dfa29e-ccca-4096-8481-c7e33c67aac5"
-					(reference "12V_R6")
+					(reference "6V_R6")
 					(unit 1)
 				)
 			)
@@ -8925,15 +9008,15 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 259.08 49.53 0)
+		(at 255.27 49.53 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(uuid "5aac9366-461f-43b1-a780-74d40e2fb7db")
-		(property "Reference" "12V_C3"
-			(at 259.08 46.99 0)
+		(property "Reference" "6V_C3"
+			(at 255.27 46.99 0)
 			(effects
 				(font
 					(size 1 1)
@@ -8942,7 +9025,7 @@
 			)
 		)
 		(property "Value" "100nf"
-			(at 259.08 52.07 0)
+			(at 255.27 52.07 0)
 			(effects
 				(font
 					(size 1 1)
@@ -8951,7 +9034,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_1206_3216Metric"
-			(at 260.0452 53.34 0)
+			(at 256.2352 53.34 0)
 			(effects
 				(font
 					(size 1 1)
@@ -8960,7 +9043,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 259.08 49.53 0)
+			(at 255.27 49.53 0)
 			(effects
 				(font
 					(size 1 1)
@@ -8969,7 +9052,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 259.08 49.53 0)
+			(at 255.27 49.53 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8986,7 +9069,7 @@
 		(instances
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/a0dfa29e-ccca-4096-8481-c7e33c67aac5"
-					(reference "12V_C3")
+					(reference "6V_C3")
 					(unit 1)
 				)
 			)
@@ -9079,7 +9162,7 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "12C"
+		(property "Value" "6C"
 			(at 241.3 22.86 0)
 			(effects
 				(font
@@ -9437,7 +9520,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "6783e8ac-3d16-4a5e-9b9e-35b5edbcb853")
-		(property "Reference" "12V_R4"
+		(property "Reference" "6V_R4"
 			(at 201.93 57.15 0)
 			(effects
 				(font
@@ -9491,7 +9574,7 @@
 		(instances
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/a0dfa29e-ccca-4096-8481-c7e33c67aac5"
-					(reference "12V_R4")
+					(reference "6V_R4")
 					(unit 1)
 				)
 			)
@@ -9506,7 +9589,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "6ebce91b-ca54-454d-8509-1fd3ba338ef4")
-		(property "Reference" "12V_R1"
+		(property "Reference" "6V_R1"
 			(at 190.5 27.94 90)
 			(effects
 				(font
@@ -9515,7 +9598,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "36k"
+		(property "Value" "100k 1%"
 			(at 190.5 33.02 90)
 			(effects
 				(font
@@ -9560,7 +9643,7 @@
 		(instances
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/a0dfa29e-ccca-4096-8481-c7e33c67aac5"
-					(reference "12V_R1")
+					(reference "6V_R1")
 					(unit 1)
 				)
 			)
@@ -10180,15 +10263,15 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 248.92 49.53 0)
+		(at 247.65 49.53 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(uuid "83409a50-e9da-449b-bd84-c3286144b14b")
-		(property "Reference" "12V_C2"
-			(at 248.92 46.99 0)
+		(property "Reference" "6V_C2"
+			(at 247.65 46.99 0)
 			(effects
 				(font
 					(size 1 1)
@@ -10197,7 +10280,7 @@
 			)
 		)
 		(property "Value" "33uf"
-			(at 248.92 52.07 0)
+			(at 247.65 52.07 0)
 			(effects
 				(font
 					(size 1 1)
@@ -10206,7 +10289,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_1206_3216Metric"
-			(at 249.8852 53.34 0)
+			(at 248.6152 53.34 0)
 			(effects
 				(font
 					(size 1 1)
@@ -10215,7 +10298,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 248.92 49.53 0)
+			(at 247.65 49.53 0)
 			(effects
 				(font
 					(size 1 1)
@@ -10224,7 +10307,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 248.92 49.53 0)
+			(at 247.65 49.53 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10241,7 +10324,7 @@
 		(instances
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/a0dfa29e-ccca-4096-8481-c7e33c67aac5"
-					(reference "12V_C2")
+					(reference "6V_C2")
 					(unit 1)
 				)
 			)
@@ -10537,7 +10620,7 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "12V"
+		(property "Value" "6V"
 			(at 247.65 17.78 0)
 			(effects
 				(font
@@ -10794,7 +10877,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "988f0509-7636-4f9b-9ec9-1e0a70444762")
-		(property "Reference" "12V_R2"
+		(property "Reference" "6V_R2"
 			(at 205.74 27.94 90)
 			(effects
 				(font
@@ -10803,7 +10886,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "100k"
+		(property "Value" "120k 1%"
 			(at 205.74 33.02 90)
 			(effects
 				(font
@@ -10848,7 +10931,7 @@
 		(instances
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/a0dfa29e-ccca-4096-8481-c7e33c67aac5"
-					(reference "12V_R2")
+					(reference "6V_R2")
 					(unit 1)
 				)
 			)
@@ -11323,6 +11406,75 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:C")
+		(at 189.23 41.91 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "a93f6894-801b-47fc-afd0-1aee5f18e58c")
+		(property "Reference" "6V_C4"
+			(at 189.23 39.37 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "100nf"
+			(at 189.23 44.45 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+			(at 190.1952 45.72 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 189.23 41.91 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 189.23 41.91 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "822b4957-88f0-41d4-b10e-72c03c1bec04")
+		)
+		(pin "2"
+			(uuid "7d6370f7-804b-437a-9516-66f8e42041da")
+		)
+		(instances
+			(project "ODB2"
+				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/a0dfa29e-ccca-4096-8481-c7e33c67aac5"
+					(reference "6V_C4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:R")
 		(at 198.12 74.93 90)
 		(unit 1)
@@ -11331,7 +11483,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "aa768153-64cd-4925-95ff-37087bc59be7")
-		(property "Reference" "12V_R8"
+		(property "Reference" "6V_R8"
 			(at 200.914 72.39 90)
 			(effects
 				(font
@@ -11340,7 +11492,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1k5"
+		(property "Value" "1k"
 			(at 199.39 77.47 90)
 			(effects
 				(font
@@ -11385,7 +11537,7 @@
 		(instances
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/a0dfa29e-ccca-4096-8481-c7e33c67aac5"
-					(reference "12V_R8")
+					(reference "6V_R8")
 					(unit 1)
 				)
 			)
@@ -11469,7 +11621,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "b4c0fc2e-4bb6-4735-97bc-b3316b4ab9ef")
-		(property "Reference" "Led12V"
+		(property "Reference" "Led6V"
 			(at 271.78 66.04 0)
 			(effects
 				(font
@@ -11521,7 +11673,7 @@
 		(instances
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/a0dfa29e-ccca-4096-8481-c7e33c67aac5"
-					(reference "Led12V")
+					(reference "Led6V")
 					(unit 1)
 				)
 			)
@@ -11605,7 +11757,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "ba24ba4c-d852-48aa-b409-9a22355bcea5")
-		(property "Reference" "12V_R3"
+		(property "Reference" "6V_R3"
 			(at 200.914 48.514 90)
 			(effects
 				(font
@@ -11659,7 +11811,7 @@
 		(instances
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/a0dfa29e-ccca-4096-8481-c7e33c67aac5"
-					(reference "12V_R3")
+					(reference "6V_R3")
 					(unit 1)
 				)
 			)
@@ -11884,7 +12036,7 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "12V"
+		(property "Value" "6V"
 			(at 234.95 48.26 0)
 			(effects
 				(font
@@ -12081,7 +12233,7 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "12V"
+		(property "Value" "6V"
 			(at 269.24 39.37 0)
 			(effects
 				(font
@@ -12686,7 +12838,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "da13717d-a6ea-4932-8f06-a46f6e06a08e")
-		(property "Reference" "12V_R5"
+		(property "Reference" "6V_R5"
 			(at 215.9 35.56 0)
 			(effects
 				(font
@@ -12740,7 +12892,7 @@
 		(instances
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/a0dfa29e-ccca-4096-8481-c7e33c67aac5"
-					(reference "12V_R5")
+					(reference "6V_R5")
 					(unit 1)
 				)
 			)
@@ -13194,7 +13346,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "e6f20669-93f7-4836-ab8a-5387c6c16c12")
-		(property "Reference" "12V_R7"
+		(property "Reference" "6V_R7"
 			(at 256.54 62.23 90)
 			(effects
 				(font
@@ -13248,7 +13400,7 @@
 		(instances
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/a0dfa29e-ccca-4096-8481-c7e33c67aac5"
-					(reference "12V_R7")
+					(reference "6V_R7")
 					(unit 1)
 				)
 			)
