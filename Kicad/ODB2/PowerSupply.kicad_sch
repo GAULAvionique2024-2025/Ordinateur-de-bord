@@ -6796,6 +6796,25 @@
 		)
 		(uuid cf192c6e-2b53-443b-a3c4-ed918231c311)
 	)
+	(text_box "Changer pour 6V"
+		(exclude_from_sim no)
+		(at 152.4 22.86 0)
+		(size 17.78 5.08)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(fill
+			(type none)
+		)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left top)
+		)
+		(uuid "e9f611df-c0a6-4483-b527-d52033c000bd")
+	)
 	(text "VOLTAGE DIVIDER RATIO IS 0.2647"
 		(exclude_from_sim no)
 		(at 182.88 25.4 0)
