@@ -4721,6 +4721,16 @@
 	)
 	(wire
 		(pts
+			(xy 231.14 86.36) (xy 237.49 86.36)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0645f16c-c541-438b-9acf-05e48d307358")
+	)
+	(wire
+		(pts
 			(xy 360.68 88.9) (xy 346.71 88.9)
 		)
 		(stroke
@@ -5511,6 +5521,16 @@
 	)
 	(wire
 		(pts
+			(xy 231.14 83.82) (xy 237.49 83.82)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "72534655-596f-4f8b-b42f-2fd3c3201150")
+	)
+	(wire
+		(pts
 			(xy 231.14 91.44) (xy 237.49 91.44)
 		)
 		(stroke
@@ -6211,6 +6231,16 @@
 	)
 	(wire
 		(pts
+			(xy 163.83 182.88) (xy 170.18 182.88)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "db07c7ef-f672-47a8-9241-004eecc645c4")
+	)
+	(wire
+		(pts
 			(xy 139.7 55.88) (xy 146.05 55.88)
 		)
 		(stroke
@@ -6338,16 +6368,6 @@
 			(type default)
 		)
 		(uuid "f2fd7987-6a0a-4f73-bf5a-dbd3289d5709")
-	)
-	(wire
-		(pts
-			(xy 231.14 86.36) (xy 237.49 86.36)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "f7d9067a-28e2-4ac9-9309-d9c3b4175c81")
 	)
 	(wire
 		(pts
@@ -6800,22 +6820,22 @@
 	)
 	(global_label "SPI5_Mem_MISO"
 		(shape input)
-		(at 237.49 86.36 0)
+		(at 163.83 182.88 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left)
+			(justify right)
 		)
 		(uuid "2f1d5f03-900d-45ba-ac85-3cd4a62c94b8")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 255.5337 86.36 0)
+			(at 145.7863 182.88 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
+				(justify right)
 				(hide yes)
 			)
 		)
@@ -7041,6 +7061,28 @@
 			)
 		)
 	)
+	(global_label "USBData-"
+		(shape input)
+		(at 237.49 83.82 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "6fb3d154-92b4-46c1-892c-4120356fed19")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 250.1513 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+	)
 	(global_label "SPI5_Mem_MOSI"
 		(shape input)
 		(at 237.49 119.38 0)
@@ -7098,6 +7140,28 @@
 		(uuid "7d2368f5-eb2d-4223-89c1-bfbea2b669cd")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 245.8575 149.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "USBData+"
+		(shape input)
+		(at 237.49 86.36 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "7f9a0385-f952-483f-becc-1aeac29fa4d1")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 250.1513 86.36 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8917,7 +8981,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "6pF"
+		(property "Value" "8pF"
 			(at 361.442 145.796 0)
 			(effects
 				(font
@@ -9055,7 +9119,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "6pF"
+		(property "Value" "8pF"
 			(at 388.112 145.796 0)
 			(effects
 				(font
@@ -9463,7 +9527,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "40R"
+		(property "Value" "0R"
 			(at 389.89 130.8099 0)
 			(effects
 				(font
