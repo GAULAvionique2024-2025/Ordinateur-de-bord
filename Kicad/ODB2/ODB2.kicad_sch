@@ -5031,16 +5031,6 @@
 	)
 	(wire
 		(pts
-			(xy 231.14 160.02) (xy 237.49 160.02)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "2e9c50a8-3bc4-4348-93dc-c36515f68e8b")
-	)
-	(wire
-		(pts
 			(xy 389.89 78.74) (xy 374.65 78.74)
 		)
 		(stroke
@@ -5621,6 +5611,16 @@
 	)
 	(wire
 		(pts
+			(xy 231.14 160.02) (xy 237.49 160.02)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "90456c6c-af5e-465a-a887-96741762105f")
+	)
+	(wire
+		(pts
 			(xy 360.68 78.74) (xy 346.71 78.74)
 		)
 		(stroke
@@ -5981,16 +5981,6 @@
 	)
 	(wire
 		(pts
-			(xy 231.14 157.48) (xy 237.49 157.48)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "be4d1405-a3e5-4907-b339-a73e90c3efd6")
-	)
-	(wire
-		(pts
 			(xy 231.14 101.6) (xy 237.49 101.6)
 		)
 		(stroke
@@ -6058,6 +6048,16 @@
 			(type default)
 		)
 		(uuid "ca6f1c2b-a9ee-4327-862e-0b287d8ee9b7")
+	)
+	(wire
+		(pts
+			(xy 231.14 157.48) (xy 237.49 157.48)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "cae94caa-531d-4801-9aaa-1c50f2f3eae2")
 	)
 	(wire
 		(pts
@@ -6756,6 +6756,28 @@
 			)
 		)
 	)
+	(global_label "~Pyros_Test"
+		(shape input)
+		(at 237.49 165.1 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "21d06f5e-e93a-41f1-baf4-12d0b185824d")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 251.3608 165.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+	)
 	(global_label "SPI5_Mem_MISO"
 		(shape input)
 		(at 237.49 86.36 0)
@@ -6999,7 +7021,7 @@
 			)
 		)
 	)
-	(global_label "Pyros_MainOn"
+	(global_label "Pyros_MainODB"
 		(shape input)
 		(at 237.49 157.48 0)
 		(fields_autoplaced yes)
@@ -7009,9 +7031,9 @@
 			)
 			(justify left)
 		)
-		(uuid "866edaf8-f658-4c9d-a388-45d4ec528555")
+		(uuid "72dc5599-97b8-4b3b-b62f-dac17122130c")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 253.4774 157.48 0)
+			(at 254.8684 157.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7132,28 +7154,6 @@
 			)
 		)
 	)
-	(global_label "Pyros_DrogueOn"
-		(shape input)
-		(at 237.49 160.02 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "9cf6b2a7-4a80-4e94-aa2a-d21a3c1fe939")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 255.715 160.02 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-	)
 	(global_label "VDD"
 		(shape input)
 		(at 163.83 71.12 180)
@@ -7198,9 +7198,9 @@
 			)
 		)
 	)
-	(global_label "Pyros_Test"
+	(global_label "Pyros_DrogueODB"
 		(shape input)
-		(at 237.49 165.1 0)
+		(at 237.49 160.02 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -7208,9 +7208,9 @@
 			)
 			(justify left)
 		)
-		(uuid "a448c52c-d052-4e7e-acaf-8ce8757e6009")
+		(uuid "a91aae56-a295-4ea8-b895-d7072e16d103")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 250.4537 165.1 0)
+			(at 257.106 160.02 0)
 			(effects
 				(font
 					(size 1.27 1.27)
