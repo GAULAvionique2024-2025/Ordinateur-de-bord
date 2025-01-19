@@ -4721,16 +4721,6 @@
 	)
 	(wire
 		(pts
-			(xy 231.14 162.56) (xy 237.49 162.56)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "03e4ef89-ac17-4815-a378-d2753fa99a24")
-	)
-	(wire
-		(pts
 			(xy 360.68 88.9) (xy 346.71 88.9)
 		)
 		(stroke
@@ -4738,6 +4728,16 @@
 			(type default)
 		)
 		(uuid "068c3574-5a7b-488e-9914-5d73092125e6")
+	)
+	(wire
+		(pts
+			(xy 231.14 149.86) (xy 237.49 149.86)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0723e03e-54dd-4b7b-a929-7f771026b01c")
 	)
 	(wire
 		(pts
@@ -4848,6 +4848,16 @@
 			(type default)
 		)
 		(uuid "192cb995-a8ac-4de5-817f-6d77a97dfed1")
+	)
+	(wire
+		(pts
+			(xy 163.83 157.48) (xy 170.18 157.48)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "196d1e52-a205-4104-abc0-4f4e2518ff28")
 	)
 	(wire
 		(pts
@@ -5331,6 +5341,16 @@
 	)
 	(wire
 		(pts
+			(xy 231.14 147.32) (xy 237.49 147.32)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5e134cc1-15d7-443d-bc60-30ed94504f81")
+	)
+	(wire
+		(pts
 			(xy 231.14 198.12) (xy 238.76 198.12)
 		)
 		(stroke
@@ -5428,6 +5448,16 @@
 			(type default)
 		)
 		(uuid "6be577f1-9790-4cc0-afe8-3d00be9be229")
+	)
+	(wire
+		(pts
+			(xy 163.83 160.02) (xy 170.18 160.02)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6bf1841d-b086-40c2-9586-b4c81002a03a")
 	)
 	(wire
 		(pts
@@ -5608,16 +5638,6 @@
 			(type default)
 		)
 		(uuid "8f686a46-8949-444f-8e45-8d7145ef9c68")
-	)
-	(wire
-		(pts
-			(xy 231.14 160.02) (xy 237.49 160.02)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "90456c6c-af5e-465a-a887-96741762105f")
 	)
 	(wire
 		(pts
@@ -5881,6 +5901,16 @@
 	)
 	(wire
 		(pts
+			(xy 163.83 154.94) (xy 170.18 154.94)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ab0e0526-151b-4c74-968a-ed4d3bc525c7")
+	)
+	(wire
+		(pts
 			(xy 388.62 31.75) (xy 392.43 31.75)
 		)
 		(stroke
@@ -5888,16 +5918,6 @@
 			(type default)
 		)
 		(uuid "ac2a90a0-9ad6-460a-831c-e16d7458814e")
-	)
-	(wire
-		(pts
-			(xy 231.14 165.1) (xy 237.49 165.1)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "b017f491-2cc8-487a-8696-60598e540e4c")
 	)
 	(wire
 		(pts
@@ -5941,6 +5961,16 @@
 	)
 	(wire
 		(pts
+			(xy 163.83 152.4) (xy 170.18 152.4)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b77909d4-0e42-412b-80c2-306b7008da64")
+	)
+	(wire
+		(pts
 			(xy 360.68 66.04) (xy 346.71 66.04)
 		)
 		(stroke
@@ -5978,6 +6008,16 @@
 			(type default)
 		)
 		(uuid "bbc49f9f-f202-407a-b1c6-ea42b8a84e11")
+	)
+	(wire
+		(pts
+			(xy 163.83 149.86) (xy 170.18 149.86)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "bf62b290-8cb7-4856-a97e-79f5d8c7056c")
 	)
 	(wire
 		(pts
@@ -6048,16 +6088,6 @@
 			(type default)
 		)
 		(uuid "ca6f1c2b-a9ee-4327-862e-0b287d8ee9b7")
-	)
-	(wire
-		(pts
-			(xy 231.14 157.48) (xy 237.49 157.48)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "cae94caa-531d-4801-9aaa-1c50f2f3eae2")
 	)
 	(wire
 		(pts
@@ -6178,16 +6208,6 @@
 			(type default)
 		)
 		(uuid "da8b3324-fed0-45e4-998b-544791df0c84")
-	)
-	(wire
-		(pts
-			(xy 231.14 167.64) (xy 237.49 167.64)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "db9bada8-2f12-427c-b405-59c8306d47ff")
 	)
 	(wire
 		(pts
@@ -6692,22 +6712,22 @@
 	)
 	(global_label "6vEnable"
 		(shape input)
-		(at 237.49 167.64 0)
+		(at 163.83 160.02 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left)
+			(justify right)
 		)
 		(uuid "0f7df9ab-754a-4f04-a64b-a593ae783309")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 249.0021 167.64 0)
+			(at 152.3179 160.02 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
+				(justify right)
 				(hide yes)
 			)
 		)
@@ -6758,22 +6778,22 @@
 	)
 	(global_label "~Pyros_Test"
 		(shape input)
-		(at 237.49 165.1 0)
+		(at 163.83 157.48 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left)
+			(justify right)
 		)
 		(uuid "21d06f5e-e93a-41f1-baf4-12d0b185824d")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 251.3608 165.1 0)
+			(at 149.9592 157.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
+				(justify right)
 				(hide yes)
 			)
 		)
@@ -6977,6 +6997,28 @@
 			)
 		)
 	)
+	(global_label "3v7_An"
+		(shape input)
+		(at 237.49 147.32 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "6b2b7df8-1789-4fab-ac2e-b2b5f044907d")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 247.067 147.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+	)
 	(global_label "SPI_ICM_CS"
 		(shape input)
 		(at 237.49 66.04 0)
@@ -7023,7 +7065,29 @@
 	)
 	(global_label "Pyros_MainODB"
 		(shape input)
-		(at 237.49 157.48 0)
+		(at 163.83 149.86 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "72dc5599-97b8-4b3b-b62f-dac17122130c")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 146.4516 149.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "6v_An"
+		(shape input)
+		(at 237.49 149.86 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -7031,9 +7095,9 @@
 			)
 			(justify left)
 		)
-		(uuid "72dc5599-97b8-4b3b-b62f-dac17122130c")
+		(uuid "7d2368f5-eb2d-4223-89c1-bfbea2b669cd")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 254.8684 157.48 0)
+			(at 245.8575 149.86 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7200,22 +7264,22 @@
 	)
 	(global_label "Pyros_DrogueODB"
 		(shape input)
-		(at 237.49 160.02 0)
+		(at 163.83 152.4 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left)
+			(justify right)
 		)
 		(uuid "a91aae56-a295-4ea8-b895-d7072e16d103")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 257.106 160.02 0)
+			(at 144.214 152.4 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
+				(justify right)
 				(hide yes)
 			)
 		)
@@ -7466,22 +7530,22 @@
 	)
 	(global_label "Pyros_Bluetooth"
 		(shape input)
-		(at 237.49 162.56 0)
+		(at 163.83 154.94 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left)
+			(justify right)
 		)
 		(uuid "fad1e84a-dfc0-4781-9447-4d84d6c7a02a")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 255.7149 162.56 0)
+			(at 145.6051 154.94 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
+				(justify right)
 				(hide yes)
 			)
 		)
