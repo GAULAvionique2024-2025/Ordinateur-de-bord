@@ -6863,7 +6863,7 @@
 		)
 		(uuid "5a2713c5-cd64-416c-8b9f-d8d740e7f1b4")
 	)
-	(text "VOLTAGE DIVIDER RATIO IS 0.7874"
+	(text "VOLTAGE DIVIDER RATIO IS 0.8929"
 		(exclude_from_sim no)
 		(at 35.56 143.51 0)
 		(effects
@@ -8410,7 +8410,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "27k 1%"
+		(property "Value" "12k 1%"
 			(at 38.1 139.7 90)
 			(effects
 				(font
