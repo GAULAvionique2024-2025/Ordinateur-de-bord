@@ -1,4 +1,4 @@
-24213555414051056
+24220561305245359
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -1252,6 +1252,13 @@ tactile switch kmr2
 0
 5
 3
+Button_Switch_SMD
+SW_Push_1P1T_NO_6x6mm_H9.5mm
+tactile push button, 6x6mm e.g. PTS645xx series, height=9.5mm
+tact sw push 6mm smd
+0
+4
+2
 Button_Switch_SMD
 SW_Push_1P1T_NO_CK_KMR2
 CK components KMR2 tactile switch http://www.ckswitches.com/media/1479/kmr2.pdf
@@ -65239,6 +65246,20 @@ Yellow 5381 Series LED
 0
 2
 2
+Library
+IND_LQH3NPN3R3MMEL
+
+
+0
+2
+2
+Library
+XTAL_TSX-3225_26.0000MF09Z-AC0
+
+
+0
+4
+4
 Module
 A20_OLINUXINO_LIME2
 A20 Olinuxino LIME2, 1.2GHz, 512-1024MB RAM, Micro-SD, NAND or eMMC, 1000Mbit Ethernet
@@ -68012,9 +68033,9 @@ Integrated Circuit
 144
 144
 ODB
-RFM22_433-S2
-
-
+RFM22B-433-S2
+Low Power Long Range Transceiver Module SMD-16 (https://www.hoperf.com/data/upload/portal/20181127/5bfcbea20e9ef.pdf)
+LoRa Low Power Long Range Transceiver Module
 0
 16
 16
@@ -71921,6 +71942,13 @@ Package_DFN_QFN
 DFN-8-1EP_2x2mm_P0.45mm_EP0.64x1.37mm
 DFN, 8 Pin (https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/ltc-legacy-dfn/dfn_8_05-08-1719.pdf), generated with kicad-footprint-generator ipc_noLead_generator.py
 DFN NoLead
+0
+11
+9
+Package_DFN_QFN
+DFN-8-1EP_2x2mm_P0.45mm_EP0.64x1.38mm
+DC8 Package 8-Lead Plastic DFN (2mm x 2mm) (see Linear Technology DFN_8_05-08-1719.pdf)
+DFN 0.45
 0
 11
 9
