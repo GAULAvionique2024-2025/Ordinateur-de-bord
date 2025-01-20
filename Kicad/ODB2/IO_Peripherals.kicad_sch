@@ -4611,7 +4611,7 @@
 	)
 	(wire
 		(pts
-			(xy 91.44 97.79) (xy 95.25 97.79)
+			(xy 83.82 97.79) (xy 87.63 97.79)
 		)
 		(stroke
 			(width 0)
@@ -4681,7 +4681,7 @@
 	)
 	(wire
 		(pts
-			(xy 91.44 92.71) (xy 95.25 92.71)
+			(xy 83.82 92.71) (xy 87.63 92.71)
 		)
 		(stroke
 			(width 0)
@@ -4781,7 +4781,7 @@
 	)
 	(wire
 		(pts
-			(xy 95.25 100.33) (xy 72.39 100.33)
+			(xy 87.63 100.33) (xy 64.77 100.33)
 		)
 		(stroke
 			(width 0)
@@ -4821,7 +4821,7 @@
 	)
 	(wire
 		(pts
-			(xy 72.39 95.25) (xy 95.25 95.25)
+			(xy 64.77 95.25) (xy 87.63 95.25)
 		)
 		(stroke
 			(width 0)
@@ -4881,7 +4881,7 @@
 	)
 	(wire
 		(pts
-			(xy 72.39 88.9) (xy 72.39 95.25)
+			(xy 64.77 88.9) (xy 64.77 95.25)
 		)
 		(stroke
 			(width 0)
@@ -4901,7 +4901,7 @@
 	)
 	(wire
 		(pts
-			(xy 72.39 100.33) (xy 72.39 102.87)
+			(xy 64.77 100.33) (xy 64.77 102.87)
 		)
 		(stroke
 			(width 0)
@@ -4921,7 +4921,7 @@
 	)
 	(wire
 		(pts
-			(xy 91.44 90.17) (xy 95.25 90.17)
+			(xy 83.82 90.17) (xy 87.63 90.17)
 		)
 		(stroke
 			(width 0)
@@ -5353,7 +5353,7 @@
 	)
 	(rectangle
 		(start 13.97 80.01)
-		(end 67.31 106.68)
+		(end 58.42 106.68)
 		(stroke
 			(width 0)
 			(type dash)
@@ -5388,8 +5388,8 @@
 		(uuid b5c9ea59-b9d4-4a5b-8ee9-e7724a645f08)
 	)
 	(rectangle
-		(start 68.58 80.01)
-		(end 110.49 106.68)
+		(start 60.96 80.01)
+		(end 102.87 106.68)
 		(stroke
 			(width 0)
 			(type dash)
@@ -5519,18 +5519,6 @@
 		)
 		(uuid "a7024b3c-c69f-436b-8b03-de0bc60b857d")
 	)
-	(text "Data USB + connecté"
-		(exclude_from_sim no)
-		(at 65.024 42.672 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-				(thickness 0.254)
-				(bold yes)
-			)
-		)
-		(uuid "e3de6252-fd63-41af-a2c5-525cb21407eb")
-	)
 	(text "Standard SPI D0"
 		(exclude_from_sim no)
 		(at 182.372 83.82 0)
@@ -5543,7 +5531,7 @@
 	)
 	(text "RFD900x Connector"
 		(exclude_from_sim no)
-		(at 78.74 81.788 0)
+		(at 71.12 81.788 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5623,7 +5611,7 @@
 	)
 	(global_label "UART6_RFD_RX"
 		(shape input)
-		(at 91.44 90.17 180)
+		(at 83.82 90.17 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -5633,7 +5621,7 @@
 		)
 		(uuid "1ca96cff-c692-43f8-b7ad-f5ae6b28a138")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 74.5453 90.17 0)
+			(at 66.9253 90.17 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5868,7 +5856,7 @@
 	)
 	(global_label "UART6_RFD_TX"
 		(shape input)
-		(at 91.44 92.71 180)
+		(at 83.82 92.71 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -5878,7 +5866,7 @@
 		)
 		(uuid "9ae28e39-fa3b-40de-9c26-10310dd56b9e")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 74.8477 92.71 0)
+			(at 67.2277 92.71 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5912,7 +5900,7 @@
 	)
 	(global_label "UART6_RFD_RTS"
 		(shape input)
-		(at 91.44 97.79 180)
+		(at 83.82 97.79 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -5922,7 +5910,7 @@
 		)
 		(uuid "aa6921af-88c7-4a21-9a8c-bfb887682dd1")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 73.5777 97.79 0)
+			(at 65.9577 97.79 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6983,7 +6971,7 @@
 	)
 	(symbol
 		(lib_id "Connector:Conn_01x05_Socket")
-		(at 100.33 95.25 0)
+		(at 92.71 95.25 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -6991,7 +6979,7 @@
 		(dnp no)
 		(uuid "421aeeef-cd4c-40db-ae4a-f4dc37151fa1")
 		(property "Reference" "SW_J2"
-			(at 101.6 93.9799 0)
+			(at 93.98 93.9799 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7001,7 +6989,7 @@
 			)
 		)
 		(property "Value" "RFD_Conn_01x05_Socket"
-			(at 86.106 86.868 0)
+			(at 78.486 86.868 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7010,7 +6998,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 100.33 95.25 0)
+			(at 92.71 95.25 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7019,7 +7007,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 100.33 95.25 0)
+			(at 92.71 95.25 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7028,7 +7016,7 @@
 			)
 		)
 		(property "Description" "Generic connector, single row, 01x05, script generated"
-			(at 100.33 95.25 0)
+			(at 92.71 95.25 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8587,7 +8575,7 @@
 	)
 	(symbol
 		(lib_id "power:+5V")
-		(at 72.39 88.9 0)
+		(at 64.77 88.9 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -8596,7 +8584,7 @@
 		(fields_autoplaced yes)
 		(uuid "d0c0e0be-e4ad-4d8d-b081-0af1495b27da")
 		(property "Reference" "#PWR070"
-			(at 72.39 92.71 0)
+			(at 64.77 92.71 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8605,7 +8593,7 @@
 			)
 		)
 		(property "Value" "+5V"
-			(at 72.39 83.82 0)
+			(at 64.77 83.82 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8613,7 +8601,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 72.39 88.9 0)
+			(at 64.77 88.9 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8622,7 +8610,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 72.39 88.9 0)
+			(at 64.77 88.9 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8631,7 +8619,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+5V\""
-			(at 72.39 88.9 0)
+			(at 64.77 88.9 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8787,7 +8775,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 72.39 102.87 0)
+		(at 64.77 102.87 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -8796,7 +8784,7 @@
 		(fields_autoplaced yes)
 		(uuid "f2495438-d54e-435e-b58c-9bcbc1635631")
 		(property "Reference" "#PWR071"
-			(at 72.39 109.22 0)
+			(at 64.77 109.22 0)
 			(effects
 				(font
 					(size 1 1)
@@ -8805,7 +8793,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 72.39 107.95 0)
+			(at 64.77 107.95 0)
 			(effects
 				(font
 					(size 1 1)
@@ -8814,7 +8802,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 72.39 102.87 0)
+			(at 64.77 102.87 0)
 			(effects
 				(font
 					(size 1 1)
@@ -8823,7 +8811,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 72.39 102.87 0)
+			(at 64.77 102.87 0)
 			(effects
 				(font
 					(size 1 1)
@@ -8832,7 +8820,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 72.39 102.87 0)
+			(at 64.77 102.87 0)
 			(effects
 				(font
 					(size 1.27 1.27)
