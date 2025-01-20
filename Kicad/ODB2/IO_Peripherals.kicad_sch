@@ -6803,7 +6803,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_PinHeader_2.00mm:PinHeader_1x05_P2.00mm_Vertical"
 			(at 92.71 95.25 0)
 			(effects
 				(font
@@ -7977,7 +7977,7 @@
 				)
 			)
 		)
-		(property "Value" "10R"
+		(property "Value" "1k5"
 			(at 139.7 54.102 90)
 			(effects
 				(font
@@ -8328,7 +8328,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_PinHeader_2.00mm:PinHeader_1x05_P2.00mm_Vertical"
 			(at 45.72 95.25 0)
 			(effects
 				(font

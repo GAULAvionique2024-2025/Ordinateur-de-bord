@@ -1,4 +1,4 @@
-24224035921548244
+24220588985566285
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -1252,13 +1252,6 @@ tactile switch kmr2
 0
 5
 3
-Button_Switch_SMD
-SW_Push_1P1T_NO_6x6mm_H9.5mm
-tactile push button, 6x6mm e.g. PTS645xx series, height=9.5mm
-tact sw push 6mm smd
-0
-4
-2
 Button_Switch_SMD
 SW_Push_1P1T_NO_CK_KMR2
 CK components KMR2 tactile switch http://www.ckswitches.com/media/1479/kmr2.pdf
@@ -71956,13 +71949,6 @@ Package_DFN_QFN
 DFN-8-1EP_2x2mm_P0.45mm_EP0.64x1.37mm
 DFN, 8 Pin (https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/ltc-legacy-dfn/dfn_8_05-08-1719.pdf), generated with kicad-footprint-generator ipc_noLead_generator.py
 DFN NoLead
-0
-11
-9
-Package_DFN_QFN
-DFN-8-1EP_2x2mm_P0.45mm_EP0.64x1.38mm
-DC8 Package 8-Lead Plastic DFN (2mm x 2mm) (see Linear Technology DFN_8_05-08-1719.pdf)
-DFN 0.45
 0
 11
 9
