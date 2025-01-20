@@ -4461,16 +4461,6 @@
 	)
 	(wire
 		(pts
-			(xy 17.78 67.31) (xy 17.78 69.85)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "0a41a845-4652-48d0-a817-345c84207557")
-	)
-	(wire
-		(pts
 			(xy 34.29 90.17) (xy 40.64 90.17)
 		)
 		(stroke
@@ -4641,16 +4631,6 @@
 	)
 	(wire
 		(pts
-			(xy 30.48 69.85) (xy 26.67 69.85)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "4682180d-ed2f-4243-926b-8897710739d4")
-	)
-	(wire
-		(pts
 			(xy 140.97 36.83) (xy 144.78 36.83)
 		)
 		(stroke
@@ -4758,16 +4738,6 @@
 			(type default)
 		)
 		(uuid "61ebf6dc-c613-4dd5-b6f5-9709c775494e")
-	)
-	(wire
-		(pts
-			(xy 17.78 69.85) (xy 19.05 69.85)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "654f97fe-1952-43e4-9d3b-9951d2d439b8")
 	)
 	(wire
 		(pts
@@ -5485,16 +5455,6 @@
 		)
 		(uuid "7f575d5a-c6bf-4cf1-93ba-6ad2d3f150b0")
 	)
-	(text "A voir si need pull up sur le data+ (errata maybe ?)"
-		(exclude_from_sim no)
-		(at 41.656 76.962 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "9161d442-b1bf-4374-a438-88e9b3a66b89")
-	)
 	(text "P/N 1050170001"
 		(exclude_from_sim no)
 		(at 86.106 24.13 0)
@@ -5627,28 +5587,6 @@
 					(size 1.27 1.27)
 				)
 				(justify right)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "USBData+"
-		(shape input)
-		(at 30.48 69.85 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "27aea1b8-b18e-4795-8839-ee08ab65b664")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 43.1413 69.85 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
 				(hide yes)
 			)
 		)
@@ -6230,73 +6168,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:R")
-		(at 22.86 69.85 270)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "0a599e17-d5a9-4181-b6bb-553ba67215be")
-		(property "Reference" "USB_R1"
-			(at 24.13 72.39 90)
-			(effects
-				(font
-					(size 1 1)
-				)
-			)
-		)
-		(property "Value" "1k5"
-			(at 24.13 67.31 90)
-			(effects
-				(font
-					(size 1 1)
-				)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
-			(at 22.86 68.072 90)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 22.86 69.85 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 22.86 69.85 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "318b9e20-fb0d-46f4-a986-10ac103ae2b6")
-		)
-		(pin "2"
-			(uuid "c31bfd4f-279f-4e56-9d6b-c7c84e0bf312")
-		)
-		(instances
-			(project "ODB2"
-				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/93865dc8-71fa-4dc6-90ce-f5a9779dfd41"
-					(reference "USB_R1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "power:+3V3")
 		(at 238.76 95.25 0)
 		(unit 1)
@@ -6490,71 +6361,6 @@
 			(project ""
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/93865dc8-71fa-4dc6-90ce-f5a9779dfd41"
 					(reference "#PWR076")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:+3V3")
-		(at 17.78 67.31 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "12e654e7-335d-4be8-9bfa-5b1181eef726")
-		(property "Reference" "#PWR0105"
-			(at 17.78 71.12 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+3V3"
-			(at 17.78 63.5 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 17.78 67.31 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 17.78 67.31 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 17.78 67.31 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "e334840b-a695-4908-add4-2a4054447aac")
-		)
-		(instances
-			(project "ODB2"
-				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/93865dc8-71fa-4dc6-90ce-f5a9779dfd41"
-					(reference "#PWR0105")
 					(unit 1)
 				)
 			)
