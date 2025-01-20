@@ -6001,7 +6001,7 @@
 				)
 			)
 		)
-		(property "Value" "R"
+		(property "Value" "10R"
 			(at 0 1.17 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -20997,22 +20997,6 @@
 		(layers "F.Cu" "B.Cu")
 		(net 1)
 		(uuid "f322c0ed-562e-486c-bbf3-de55fa08abcd")
-	)
-	(segment
-		(start 179.775351 111.980279)
-		(end 182.306803 111.980279)
-		(width 0.5)
-		(layer "B.Cu")
-		(net 1)
-		(uuid "22fd44bb-0407-43da-8b9b-c8963fcf9f5e")
-	)
-	(segment
-		(start 179.742085 111.947013)
-		(end 179.775351 111.980279)
-		(width 0.5)
-		(layer "B.Cu")
-		(net 1)
-		(uuid "e1954c3c-466f-4686-b5b8-fcf2cc2b16c8")
 	)
 	(segment
 		(start 144.834957 106.771352)
