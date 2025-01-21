@@ -5547,7 +5547,7 @@
 			)
 		)
 	)
-	(global_label "SPI2_RFM_CS"
+	(global_label "SPI1_RFM_CS"
 		(shape input)
 		(at 193.04 109.22 180)
 		(fields_autoplaced yes)
@@ -5636,28 +5636,6 @@
 			)
 		)
 	)
-	(global_label "SPI2_ICM_RFM_MISO"
-		(shape input)
-		(at 193.04 101.6 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "48318949-388c-43f1-9ca6-936e8ea2915f")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 171.1258 101.6 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-				(hide yes)
-			)
-		)
-	)
 	(global_label "SYS_SWCLK"
 		(shape input)
 		(at 34.29 92.71 180)
@@ -5681,9 +5659,9 @@
 			)
 		)
 	)
-	(global_label "SPI2_ICM_RFM_SCLK"
+	(global_label "SPI1_ICM_RFM_MISO"
 		(shape input)
-		(at 193.04 106.68 180)
+		(at 193.04 101.6 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -5691,9 +5669,9 @@
 			)
 			(justify right)
 		)
-		(uuid "80affab0-5e88-4df9-bb16-3a20340d8e90")
+		(uuid "649613f7-5163-45c4-be3a-b17b78143f43")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 170.9444 106.68 0)
+			(at 171.1258 101.6 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5747,28 +5725,6 @@
 			)
 		)
 	)
-	(global_label "SPI2_ICM_RFM_MOSI"
-		(shape input)
-		(at 193.04 104.14 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "999ea965-e9d6-4a52-a4d2-eadc1055e636")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 171.1258 104.14 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-				(hide yes)
-			)
-		)
-	)
 	(global_label "SYS_SWO"
 		(shape input)
 		(at 34.29 97.79 180)
@@ -5814,6 +5770,28 @@
 			)
 		)
 	)
+	(global_label "SPI1_ICM_RFM_MOSI"
+		(shape input)
+		(at 193.04 104.14 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "a08ff3c0-30ea-4a78-9305-6199fda6385f")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 171.1258 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
 	(global_label "USBData+"
 		(shape input)
 		(at 83.82 59.69 0)
@@ -5849,6 +5827,28 @@
 		(uuid "aa6921af-88c7-4a21-9a8c-bfb887682dd1")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 65.9577 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "SPI1_ICM_RFM_SCLK"
+		(shape input)
+		(at 193.04 106.68 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "ad706655-3321-4f86-955b-b6372f90a3d0")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 170.9444 106.68 0)
 			(effects
 				(font
 					(size 1.27 1.27)
