@@ -7238,7 +7238,7 @@
 			)
 		)
 	)
-	(global_label "IO_RLED"
+	(global_label "IO_CriticalLED"
 		(shape input)
 		(at 165.1 165.1 180)
 		(fields_autoplaced yes)
@@ -7250,7 +7250,7 @@
 		)
 		(uuid "96bcd121-6ff8-44c8-8caf-420c36a9c910")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 154.4948 165.1 0)
+			(at 148.8705 165.1 0)
 			(effects
 				(font
 					(size 1.27 1.27)
