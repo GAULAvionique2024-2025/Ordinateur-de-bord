@@ -5323,6 +5323,16 @@
 	)
 	(wire
 		(pts
+			(xy 231.14 137.16) (xy 238.76 137.16)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5bd77f32-d73c-419f-bdb7-c4cfe1134d7f")
+	)
+	(wire
+		(pts
 			(xy 231.14 121.92) (xy 237.49 121.92)
 		)
 		(stroke
@@ -6840,6 +6850,28 @@
 			)
 		)
 	)
+	(global_label "6v6Enable"
+		(shape input)
+		(at 238.76 137.16 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "23ffb275-283c-4d8b-95f9-6765305e0e18")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 251.4816 137.16 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+	)
 	(global_label "SPI5_Mem_MISO"
 		(shape input)
 		(at 165.1 182.88 180)
@@ -7127,7 +7159,7 @@
 			)
 		)
 	)
-	(global_label "6v_An"
+	(global_label "6v6_An"
 		(shape input)
 		(at 237.49 149.86 0)
 		(fields_autoplaced yes)
@@ -7139,7 +7171,7 @@
 		)
 		(uuid "7d2368f5-eb2d-4223-89c1-bfbea2b669cd")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 245.8575 149.86 0)
+			(at 247.067 149.86 0)
 			(effects
 				(font
 					(size 1.27 1.27)
