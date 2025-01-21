@@ -4803,7 +4803,7 @@
 	)
 	(wire
 		(pts
-			(xy 231.14 200.66) (xy 238.76 200.66)
+			(xy 231.14 200.66) (xy 237.49 200.66)
 		)
 		(stroke
 			(width 0)
@@ -5323,6 +5323,16 @@
 	)
 	(wire
 		(pts
+			(xy 231.14 121.92) (xy 237.49 121.92)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5c665780-4c85-4e74-aee5-a887a7badb18")
+	)
+	(wire
+		(pts
 			(xy 388.62 41.91) (xy 388.62 43.18)
 		)
 		(stroke
@@ -5353,7 +5363,7 @@
 	)
 	(wire
 		(pts
-			(xy 231.14 198.12) (xy 238.76 198.12)
+			(xy 231.14 198.12) (xy 237.49 198.12)
 		)
 		(stroke
 			(width 0)
@@ -6343,16 +6353,6 @@
 	)
 	(wire
 		(pts
-			(xy 231.14 129.54) (xy 237.49 129.54)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "ed6e61e1-59b8-4c29-9784-69472128c842")
-	)
-	(wire
-		(pts
 			(xy 300.99 101.6) (xy 316.23 101.6)
 		)
 		(stroke
@@ -6666,7 +6666,7 @@
 	)
 	(global_label "UART2_BT_RX"
 		(shape input)
-		(at 238.76 200.66 0)
+		(at 237.49 200.66 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -6676,7 +6676,7 @@
 		)
 		(uuid "02cfa051-b44b-4aca-9b43-0a6b86842906")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 254.2637 200.66 0)
+			(at 252.9937 200.66 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7306,7 +7306,7 @@
 	)
 	(global_label "UART2_BT_TX"
 		(shape input)
-		(at 238.76 198.12 0)
+		(at 237.49 198.12 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -7316,7 +7316,7 @@
 		)
 		(uuid "ae09b65c-2886-4c15-8d04-b6c43392cf7e")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 253.9613 198.12 0)
+			(at 252.6913 198.12 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7394,7 +7394,7 @@
 	)
 	(global_label "SPI2_RFM_CS"
 		(shape input)
-		(at 237.49 129.54 0)
+		(at 237.49 121.92 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -7404,7 +7404,7 @@
 		)
 		(uuid "c73f93ab-ac53-45ec-ab9e-38c981e62132")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 252.9937 129.54 0)
+			(at 252.9937 121.92 0)
 			(effects
 				(font
 					(size 1.27 1.27)
