@@ -4468,6 +4468,12 @@
 		(uuid "00fc3b21-a1a1-4b69-a142-dff861657a0e")
 	)
 	(junction
+		(at 374.65 88.9)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "04884a1d-a844-4ff3-af6d-20f55b1e7026")
+	)
+	(junction
 		(at 387.35 134.62)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -4580,6 +4586,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "7dd23ec9-b41c-4b72-99d8-7da66985d03f")
+	)
+	(junction
+		(at 374.65 101.6)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "8eda2447-1b96-474e-84af-04708b43bff2")
 	)
 	(junction
 		(at 374.65 66.04)
@@ -5241,6 +5253,16 @@
 	)
 	(wire
 		(pts
+			(xy 374.65 101.6) (xy 389.89 101.6)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "501ec8e4-c1fa-4884-81d9-9b5e14de31c2")
+	)
+	(wire
+		(pts
 			(xy 213.36 44.45) (xy 210.82 44.45)
 		)
 		(stroke
@@ -5408,6 +5430,16 @@
 			(type default)
 		)
 		(uuid "62031373-e293-4d84-b4a3-fee7447d666b")
+	)
+	(wire
+		(pts
+			(xy 389.89 99.06) (xy 389.89 101.6)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "63b56570-c615-4c6a-8add-9fc1cd87f6a7")
 	)
 	(wire
 		(pts
@@ -5921,6 +5953,16 @@
 	)
 	(wire
 		(pts
+			(xy 389.89 88.9) (xy 389.89 91.44)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a9a839f0-3341-4d63-9612-afa106becb5b")
+	)
+	(wire
+		(pts
 			(xy 163.83 154.94) (xy 170.18 154.94)
 		)
 		(stroke
@@ -5938,6 +5980,16 @@
 			(type default)
 		)
 		(uuid "ac2a90a0-9ad6-460a-831c-e16d7458814e")
+	)
+	(wire
+		(pts
+			(xy 374.65 88.9) (xy 389.89 88.9)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "afeeb72f-e97e-407e-9888-6fdc7f8da63c")
 	)
 	(wire
 		(pts
@@ -7216,7 +7268,7 @@
 			)
 		)
 	)
-	(global_label "PH0"
+	(global_label "PH1"
 		(shape input)
 		(at 163.83 78.74 180)
 		(fields_autoplaced yes)
@@ -8019,6 +8071,75 @@
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78"
 					(reference "Decouple_C16")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 389.89 95.25 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "12ea3fee-3fd7-4e52-b0b6-46daa7be94fa")
+		(property "Reference" "Decouple_C17"
+			(at 390.398 92.964 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "100nF"
+			(at 390.652 97.536 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+			(at 390.8552 99.06 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 389.89 95.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 389.89 95.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "a305fd8b-e85f-47c0-8d9b-7e31baf0c834")
+		)
+		(pin "2"
+			(uuid "21858e92-5711-4d94-9739-d7c8758d9f0e")
+		)
+		(instances
+			(project "ODB2"
+				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78"
+					(reference "Decouple_C17")
 					(unit 1)
 				)
 			)
@@ -11312,7 +11433,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10uF"
+		(property "Value" "100nF"
 			(at 301.752 97.536 0)
 			(effects
 				(font
