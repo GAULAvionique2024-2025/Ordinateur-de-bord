@@ -5346,7 +5346,7 @@
 		(uuid 92f4a6a2-c657-4a37-9c1d-ae3d51d1f349)
 	)
 	(rectangle
-		(start 172.72 87.63)
+		(start 170.18 87.63)
 		(end 274.32 135.89)
 		(stroke
 			(width 0)
@@ -5431,7 +5431,7 @@
 	)
 	(text "Beacon"
 		(exclude_from_sim no)
-		(at 173.482 90.424 0)
+		(at 170.688 90.424 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5636,7 +5636,7 @@
 			)
 		)
 	)
-	(global_label "SPI2_RFM_MISO"
+	(global_label "SPI2_ICM_RFM_MISO"
 		(shape input)
 		(at 193.04 101.6 180)
 		(fields_autoplaced yes)
@@ -5648,7 +5648,7 @@
 		)
 		(uuid "48318949-388c-43f1-9ca6-936e8ea2915f")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 175.4196 101.6 0)
+			(at 171.1258 101.6 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5681,7 +5681,7 @@
 			)
 		)
 	)
-	(global_label "SPI2_RFM_SCLK"
+	(global_label "SPI2_ICM_RFM_SCLK"
 		(shape input)
 		(at 193.04 106.68 180)
 		(fields_autoplaced yes)
@@ -5693,7 +5693,7 @@
 		)
 		(uuid "80affab0-5e88-4df9-bb16-3a20340d8e90")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 175.2382 106.68 0)
+			(at 170.9444 106.68 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5747,7 +5747,7 @@
 			)
 		)
 	)
-	(global_label "SPI2_RFM_MOSI"
+	(global_label "SPI2_ICM_RFM_MOSI"
 		(shape input)
 		(at 193.04 104.14 180)
 		(fields_autoplaced yes)
@@ -5759,7 +5759,7 @@
 		)
 		(uuid "999ea965-e9d6-4a52-a4d2-eadc1055e636")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 175.4196 104.14 0)
+			(at 171.1258 104.14 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8733,8 +8733,8 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "RFM23BP-433-S2"
-			(at 215.138 95.758 0)
+		(property "Value" "RFM22B-433-S2"
+			(at 214.884 95.758 0)
 			(effects
 				(font
 					(size 1.27 1.27)
