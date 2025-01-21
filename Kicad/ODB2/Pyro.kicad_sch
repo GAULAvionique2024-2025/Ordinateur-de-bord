@@ -4329,7 +4329,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "0bbe8082-3bd1-4d37-86a7-2a6e6b4e6382")
-		(property "Reference" "Pyros_NPN2"
+		(property "Reference" "Pyros_NPN?"
 			(at 58.928 96.012 0)
 			(effects
 				(font
@@ -4387,6 +4387,12 @@
 			(uuid "29fe2359-ce32-4618-9019-6ee2b7640d16")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "Pyros_NPN?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_NPN2")
@@ -4404,7 +4410,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "0ccf09bc-49d0-4414-bbf2-e4c9b04a2e3f")
-		(property "Reference" "Pyros_LED1"
+		(property "Reference" "Pyros_LED?"
 			(at 218.694 134.366 0)
 			(effects
 				(font
@@ -4454,6 +4460,12 @@
 			(uuid "71ecfa3f-959a-409a-ab31-d48570f78e28")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "Pyros_LED?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_LED1")
@@ -4472,7 +4484,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "16ca8b3e-af51-4727-9e83-e40aba452119")
-		(property "Reference" "Pyros_PNP1"
+		(property "Reference" "Pyros_PNP?"
 			(at 73.406 41.402 0)
 			(effects
 				(font
@@ -4530,6 +4542,12 @@
 			(uuid "efcc5e14-3951-4a80-b130-7545d36bb98c")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "Pyros_PNP?")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_PNP1")
@@ -4547,7 +4565,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "1799db5d-dd45-4cd6-9587-ebaccd1d3ea2")
-		(property "Reference" "Pyros_R6"
+		(property "Reference" "Pyros_R?"
 			(at 41.91 92.71 90)
 			(effects
 				(font
@@ -4597,6 +4615,12 @@
 			(uuid "20521285-00e9-4a90-a633-d47d73083190")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "Pyros_R?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_R6")
@@ -4614,7 +4638,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "20c1961e-84cb-406a-b543-f644c0449708")
-		(property "Reference" "Pyros_R13"
+		(property "Reference" "Pyros_R?"
 			(at 171.45 109.728 0)
 			(effects
 				(font
@@ -4664,6 +4688,12 @@
 			(uuid "80436fda-1dae-4929-bd1b-2c08b6ffc8a4")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "Pyros_R?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_R13")
@@ -4681,7 +4711,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "23a2d81f-4482-40d8-af37-eea7fdf96b1b")
-		(property "Reference" "Pyros_MOSFET1"
+		(property "Reference" "Pyros_MOSFET?"
 			(at 89.662 98.806 0)
 			(effects
 				(font
@@ -4745,6 +4775,12 @@
 			(uuid "acdc09b0-b67a-4f36-8abc-8e04591055b8")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "Pyros_MOSFET?")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_MOSFET1")
@@ -4763,7 +4799,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "26be1859-9397-4eb2-a9db-a0253eeb9746")
-		(property "Reference" "Pyros_R20"
+		(property "Reference" "Pyros_R?"
 			(at 58.42 52.324 90)
 			(effects
 				(font
@@ -4813,6 +4849,12 @@
 			(uuid "694497a8-df78-402e-ac41-5af11ce65e90")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "Pyros_R?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_R20")
@@ -4830,7 +4872,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "2819dfb8-1200-4b4f-849d-23aa4b181571")
-		(property "Reference" "Pyros_R12"
+		(property "Reference" "Pyros_R?"
 			(at 155.956 72.136 0)
 			(effects
 				(font
@@ -4880,6 +4922,12 @@
 			(uuid "95487b22-3631-41d1-987e-6b9b69b308d1")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "Pyros_R?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_R12")
@@ -4897,7 +4945,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "28c42c8d-637e-49c2-aa71-89fd283dcfd8")
-		(property "Reference" "#PWR0115"
+		(property "Reference" "#PWR?"
 			(at 181.61 96.52 0)
 			(effects
 				(font
@@ -4945,6 +4993,12 @@
 			(uuid "9765ff18-ad79-4094-8131-64061036caee")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "#PWR?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "#PWR0115")
@@ -4962,7 +5016,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "2d8740e7-ddff-44f7-92f0-2af4c99da83f")
-		(property "Reference" "Pyros_R4"
+		(property "Reference" "Pyros_R?"
 			(at 48.768 72.136 0)
 			(effects
 				(font
@@ -5012,6 +5066,12 @@
 			(uuid "242ed29c-dfc3-4a9b-8511-47994699af4e")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "Pyros_R?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_R4")
@@ -5029,7 +5089,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "35a23b98-7d6a-4fad-b525-d7499914aa58")
-		(property "Reference" "#PWR096"
+		(property "Reference" "#PWR?"
 			(at 165.1 95.25 0)
 			(effects
 				(font
@@ -5077,6 +5137,12 @@
 			(uuid "f4077e94-4a9b-4e6d-be99-6fbdd390fdb5")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "#PWR?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "#PWR096")
@@ -5095,7 +5161,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "3868c524-7d89-48bd-b280-6ff1d8397025")
-		(property "Reference" "#PWR031"
+		(property "Reference" "#PWR?"
 			(at 57.15 119.38 0)
 			(effects
 				(font
@@ -5143,6 +5209,12 @@
 			(uuid "61065f8d-757b-4d2e-a866-cb27a32feae5")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "#PWR?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "#PWR031")
@@ -5160,7 +5232,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "3ccaab1c-cf11-4fe8-b1d8-c8b7e7426219")
-		(property "Reference" "#PWR0121"
+		(property "Reference" "#PWR?"
 			(at 160.02 57.15 0)
 			(effects
 				(font
@@ -5208,6 +5280,12 @@
 			(uuid "211fffb8-54d1-4b23-9408-50106a729d2f")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "#PWR?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "#PWR0121")
@@ -5226,7 +5304,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "3dfcf2ac-418c-42ea-bdb1-eeb3c9a90fc3")
-		(property "Reference" "Pyros_R21"
+		(property "Reference" "Pyros_R?"
 			(at 166.37 52.324 90)
 			(effects
 				(font
@@ -5276,6 +5354,12 @@
 			(uuid "3c1fce3f-fb5c-48ef-bf0b-c24a579c393d")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "Pyros_R?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_R21")
@@ -5293,7 +5377,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "4136b890-a2e9-435a-b9aa-6967c4981937")
-		(property "Reference" "#PWR0120"
+		(property "Reference" "#PWR?"
 			(at 175.26 80.01 0)
 			(effects
 				(font
@@ -5342,6 +5426,12 @@
 			(uuid "176f6f5d-237f-4812-85b8-13e37226c785")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "#PWR?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "#PWR0120")
@@ -5359,7 +5449,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "4240dbaf-0dbc-4d0e-9f5f-ca3b712fee75")
-		(property "Reference" "Pyros_R5"
+		(property "Reference" "Pyros_R?"
 			(at 67.818 82.804 0)
 			(effects
 				(font
@@ -5409,6 +5499,12 @@
 			(uuid "fd7f608c-3f4c-4dfd-a274-0ec598882b1f")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "Pyros_R?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_R5")
@@ -5427,7 +5523,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "42980a25-a46f-47c1-b93f-09bf18af7917")
-		(property "Reference" "#PWR085"
+		(property "Reference" "#PWR?"
 			(at 48.26 115.57 0)
 			(effects
 				(font
@@ -5475,6 +5571,12 @@
 			(uuid "33036e20-dbbd-4c1c-ad44-6920f1b9e417")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "#PWR?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "#PWR085")
@@ -5492,7 +5594,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "4ade7043-9bd3-42ef-b9c4-7239fb625f5f")
-		(property "Reference" "#PWR0114"
+		(property "Reference" "#PWR?"
 			(at 179.07 33.02 0)
 			(effects
 				(font
@@ -5540,6 +5642,12 @@
 			(uuid "acba54b4-2280-4e35-8744-1bf89cff53cc")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "#PWR?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "#PWR0114")
@@ -5557,7 +5665,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "4d803e56-e960-4eb5-87fd-5933549a4bc3")
-		(property "Reference" "#PWR082"
+		(property "Reference" "#PWR?"
 			(at 67.31 80.01 0)
 			(effects
 				(font
@@ -5606,6 +5714,12 @@
 			(uuid "3357b008-1809-429f-9805-2989580dcb93")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "#PWR?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "#PWR082")
@@ -5623,7 +5737,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "5192d44f-2f5f-4a90-9774-05f0c30d1103")
-		(property "Reference" "#PWR0116"
+		(property "Reference" "#PWR?"
 			(at 193.04 58.42 0)
 			(effects
 				(font
@@ -5671,6 +5785,12 @@
 			(uuid "4722b7f6-5032-4e8a-8529-55e37a331cfb")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "#PWR?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "#PWR0116")
@@ -5688,7 +5808,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "526c467d-394c-4431-9b5a-52e9d6534f70")
-		(property "Reference" "Pyros_MOSFET2"
+		(property "Reference" "Pyros_MOSFET?"
 			(at 197.612 98.806 0)
 			(effects
 				(font
@@ -5752,6 +5872,12 @@
 			(uuid "2a62f6e1-9b03-463c-8111-efd5e7a4ee42")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "Pyros_MOSFET?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_MOSFET2")
@@ -5769,7 +5895,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "52ad2c21-d959-4418-bf2e-5e4983faa443")
-		(property "Reference" "Pyros_R7"
+		(property "Reference" "Pyros_R?"
 			(at 42.164 105.664 0)
 			(effects
 				(font
@@ -5819,6 +5945,12 @@
 			(uuid "ab90a9cd-03d9-4d55-85e9-6609e6a3c066")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "Pyros_R?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_R7")
@@ -5837,7 +5969,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "56af0d0c-ae8e-431b-890b-9b48a2594bb9")
-		(property "Reference" "U11"
+		(property "Reference" "U?"
 			(at 53.848 60.706 0)
 			(effects
 				(font
@@ -5902,6 +6034,12 @@
 			(uuid "1a7da41b-9ba2-4b85-8670-27885bb7ffe8")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "U?")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "U11")
@@ -5920,7 +6058,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "5a5e2be9-ac0b-454e-a37e-a030d3c6ccf8")
-		(property "Reference" "#PWR083"
+		(property "Reference" "#PWR?"
 			(at 73.66 157.48 0)
 			(effects
 				(font
@@ -5968,6 +6106,12 @@
 			(uuid "cd4dad3f-afb6-4278-96d1-ebe8ff5345a6")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "#PWR?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "#PWR083")
@@ -5986,7 +6130,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "6749cb2a-aa8b-43cf-a798-6d4619f0f192")
-		(property "Reference" "U13"
+		(property "Reference" "U?"
 			(at 161.798 60.706 0)
 			(effects
 				(font
@@ -6051,6 +6195,12 @@
 			(uuid "7621678b-4d7f-45f7-999a-0677142b13f2")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "U?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "U13")
@@ -6068,7 +6218,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "6a4c9d86-574c-43a7-aa2e-31b3392bc690")
-		(property "Reference" "Pyros_LED4"
+		(property "Reference" "Pyros_LED?"
 			(at 221.234 148.336 0)
 			(effects
 				(font
@@ -6118,6 +6268,12 @@
 			(uuid "443a7c55-7246-49fe-b105-c554324390e8")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "Pyros_LED?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_LED4")
@@ -6135,7 +6291,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "6bbe3543-0581-4b9f-a4a3-3ab1e233d0f0")
-		(property "Reference" "#PWR090"
+		(property "Reference" "#PWR?"
 			(at 67.31 60.96 0)
 			(effects
 				(font
@@ -6183,6 +6339,12 @@
 			(uuid "8923f670-1c37-4bdc-9b53-9fc317f6f03e")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "#PWR?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "#PWR090")
@@ -6200,7 +6362,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "71acfa3b-c83e-430d-aaf6-c511365230fd")
-		(property "Reference" "Pyros_C1"
+		(property "Reference" "Pyros_C?"
 			(at 71.374 135.89 90)
 			(effects
 				(font
@@ -6250,6 +6412,12 @@
 			(uuid "afbd3334-fa71-4eac-abf5-7ddfbf9b2692")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "Pyros_C?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_C1")
@@ -6267,7 +6435,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "71f56030-6239-4119-b405-8cdf42a9e521")
-		(property "Reference" "Pyros_R18"
+		(property "Reference" "Pyros_R?"
 			(at 186.69 53.594 90)
 			(effects
 				(font
@@ -6317,6 +6485,12 @@
 			(uuid "9b0cd1c8-3949-4c04-b0a5-7d7b8a0ea922")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "Pyros_R?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_R18")
@@ -6335,7 +6509,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "76e265ce-eedb-4dab-a805-40832d9adfda")
-		(property "Reference" "#PWR095"
+		(property "Reference" "#PWR?"
 			(at 156.21 115.57 0)
 			(effects
 				(font
@@ -6383,6 +6557,12 @@
 			(uuid "09147cdf-2fd6-471e-9869-e507a2141f84")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "#PWR?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "#PWR095")
@@ -6400,7 +6580,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "78f00033-1599-4a76-a51a-a5cebc7af957")
-		(property "Reference" "#PWR079"
+		(property "Reference" "#PWR?"
 			(at 157.48 140.97 0)
 			(effects
 				(font
@@ -6448,6 +6628,12 @@
 			(uuid "9481c42a-48aa-4219-a9f9-9eb454c293f1")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "#PWR?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "#PWR079")
@@ -6465,7 +6651,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "86866918-ceed-48b4-bd80-aefe35117364")
-		(property "Reference" "#PWR0118"
+		(property "Reference" "#PWR?"
 			(at 99.06 170.18 0)
 			(effects
 				(font
@@ -6513,6 +6699,12 @@
 			(uuid "4cddd25d-baca-4afa-9f1c-dac91376d7dd")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "#PWR?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "#PWR0118")
@@ -6530,7 +6722,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "8955fb80-f3a5-4949-8d7a-f8b8d0e7dcf7")
-		(property "Reference" "Pyros_R9"
+		(property "Reference" "Pyros_R?"
 			(at 149.86 92.71 90)
 			(effects
 				(font
@@ -6580,6 +6772,12 @@
 			(uuid "58c3985f-4bc9-4961-87d5-b24483e1663e")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "Pyros_R?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_R9")
@@ -6597,7 +6795,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "91fdbc46-5954-4373-880d-25bfa583cf0e")
-		(property "Reference" "Pyros_R11"
+		(property "Reference" "Pyros_R?"
 			(at 161.29 40.894 90)
 			(effects
 				(font
@@ -6647,6 +6845,12 @@
 			(uuid "3add0b00-a76b-488e-8841-88f72f4386b7")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "Pyros_R?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_R11")
@@ -6665,7 +6869,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "94b063c1-4d96-460b-906e-ef734e71be2b")
-		(property "Reference" "#PWR078"
+		(property "Reference" "#PWR?"
 			(at 222.25 146.05 0)
 			(effects
 				(font
@@ -6713,6 +6917,12 @@
 			(uuid "995192c3-5c8b-4913-86ac-e68e9d99f9ba")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "#PWR?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "#PWR078")
@@ -6730,7 +6940,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "95ea0909-e3ed-4043-9969-4eff4cdcb5cc")
-		(property "Reference" "#PWR084"
+		(property "Reference" "#PWR?"
 			(at 63.5 142.24 0)
 			(effects
 				(font
@@ -6778,6 +6988,12 @@
 			(uuid "226c9c0b-f879-4f31-8ea3-ecdb92fdb045")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "#PWR?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "#PWR084")
@@ -6795,7 +7011,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "9ada0f3e-c865-4ef1-abdd-25b1ad146445")
-		(property "Reference" "Pyros_R15"
+		(property "Reference" "Pyros_R?"
 			(at 175.768 84.074 0)
 			(effects
 				(font
@@ -6845,6 +7061,12 @@
 			(uuid "38512fda-a306-4531-b33f-7566f4faa5b2")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "Pyros_R?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_R15")
@@ -6863,7 +7085,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "9e9552a9-708e-48c0-99e8-082da02ecf5f")
-		(property "Reference" "#PWR088"
+		(property "Reference" "#PWR?"
 			(at 86.36 118.11 0)
 			(effects
 				(font
@@ -6911,6 +7133,12 @@
 			(uuid "416c137f-2025-4d99-8d87-21a1d6d0ed2c")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "#PWR?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "#PWR088")
@@ -6928,7 +7156,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "9fe2b3ee-23d4-4836-a068-40a2329ff30a")
-		(property "Reference" "Pyros_R8"
+		(property "Reference" "Pyros_R?"
 			(at 63.5 109.728 0)
 			(effects
 				(font
@@ -6978,6 +7206,12 @@
 			(uuid "a50df6ea-d5ef-4180-8734-584dde714968")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "Pyros_R?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_R8")
@@ -6995,7 +7229,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "b0657a6e-97d9-4dff-871c-4831079e8054")
-		(property "Reference" "#PWR086"
+		(property "Reference" "#PWR?"
 			(at 73.66 95.25 0)
 			(effects
 				(font
@@ -7043,6 +7277,12 @@
 			(uuid "6cb01125-a31b-4389-b298-77a6658ce44c")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "#PWR?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "#PWR086")
@@ -7060,7 +7300,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "b6fd4802-a74c-4444-a2df-23352b761d29")
-		(property "Reference" "Pyros_R10"
+		(property "Reference" "Pyros_R?"
 			(at 149.606 105.664 0)
 			(effects
 				(font
@@ -7110,6 +7350,12 @@
 			(uuid "3b804897-5fdd-4bfb-915f-dbda6df64f7a")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "Pyros_R?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_R10")
@@ -7127,7 +7373,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "bb530f72-8ea5-423e-b297-7be92932b26b")
-		(property "Reference" "#PWR080"
+		(property "Reference" "#PWR?"
 			(at 85.09 58.42 0)
 			(effects
 				(font
@@ -7175,6 +7421,12 @@
 			(uuid "fbf17d2f-7cfe-415f-b7a3-7f40699e7604")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "#PWR?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "#PWR080")
@@ -7192,7 +7444,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "bff40ce9-aa32-4e8f-b1f3-750d556c5419")
-		(property "Reference" "Pyros_R1"
+		(property "Reference" "Pyros_R?"
 			(at 53.34 40.894 90)
 			(effects
 				(font
@@ -7242,6 +7494,12 @@
 			(uuid "91d34118-bb99-4073-b44d-5ab445d4733a")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "Pyros_R?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_R1")
@@ -7259,7 +7517,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "c468688d-b83e-4ce2-bc07-394fb7338969")
-		(property "Reference" "#PWR0105"
+		(property "Reference" "#PWR?"
 			(at 52.07 57.15 0)
 			(effects
 				(font
@@ -7307,6 +7565,12 @@
 			(uuid "1db6a179-fba7-4311-ac86-2205c8be1c89")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "#PWR?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "#PWR0105")
@@ -7325,7 +7589,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "c495951c-c4e2-46db-92c6-5b35705355d4")
-		(property "Reference" "#PWR098"
+		(property "Reference" "#PWR?"
 			(at 266.7 146.05 0)
 			(effects
 				(font
@@ -7373,6 +7637,12 @@
 			(uuid "6d70f9e1-ce1a-41f4-a4ed-f581700d6b3d")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "#PWR?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "#PWR098")
@@ -7391,7 +7661,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "c7e8afd7-4804-4336-bba9-5a964ef3fc56")
-		(property "Reference" "Pyros_PNP2"
+		(property "Reference" "Pyros_PNP?"
 			(at 181.356 41.402 0)
 			(effects
 				(font
@@ -7449,6 +7719,12 @@
 			(uuid "7050dc4b-d112-4894-aa78-413f9fc52572")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "Pyros_PNP?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_PNP2")
@@ -7466,7 +7742,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "c85f2ebc-d91b-4c4a-8207-f00be8b1aecc")
-		(property "Reference" "Pyros_XNOR1"
+		(property "Reference" "Pyros_XNOR?"
 			(at 46.99 133.096 0)
 			(effects
 				(font
@@ -7646,6 +7922,12 @@
 			(uuid "467532c8-a5d2-498b-98b7-7f61c2060997")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "Pyros_XNOR?")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_XNOR1")
@@ -7663,7 +7945,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "c8ba80cf-06d2-4d01-95b5-306456c89d8b")
-		(property "Reference" "#PWR087"
+		(property "Reference" "#PWR?"
 			(at 71.12 33.02 0)
 			(effects
 				(font
@@ -7711,6 +7993,12 @@
 			(uuid "185b340a-4ffe-497d-b97f-3c72564d1b2f")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "#PWR?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "#PWR087")
@@ -7729,7 +8017,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "ceab94d4-3970-4129-90b5-bc00f64a15f8")
-		(property "Reference" "#PWR0119"
+		(property "Reference" "#PWR?"
 			(at 224.79 160.02 0)
 			(effects
 				(font
@@ -7777,6 +8065,12 @@
 			(uuid "e714ca01-ee4a-42dd-8be6-4581f49cf61d")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "#PWR?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "#PWR0119")
@@ -7795,7 +8089,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "cfad7640-92c2-4495-a5ce-da0afd5a5b56")
-		(property "Reference" "Pyros_J1"
+		(property "Reference" "Pyros_J?"
 			(at 203.2 63.4999 0)
 			(effects
 				(font
@@ -7813,7 +8107,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_Wire:SolderWire-2.5sqmm_1x02_P8.8mm_D2.4mm_OD4.4mm"
+		(property "Footprint" "TerminalBlock_RND:TerminalBlock_RND_205-00012_1x02_P5.00mm_Horizontal"
 			(at 200.66 63.5 0)
 			(effects
 				(font
@@ -7847,6 +8141,12 @@
 			(uuid "7da4a7b5-cef9-4667-b30e-62203f62da1e")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "Pyros_J?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_J1")
@@ -7864,7 +8164,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "d254be05-9f59-4ea5-bbf0-42e185c34e10")
-		(property "Reference" "Pyros_R3"
+		(property "Reference" "Pyros_R?"
 			(at 78.74 53.594 90)
 			(effects
 				(font
@@ -7914,6 +8214,12 @@
 			(uuid "fe83f151-d4cf-4a77-a207-d3da2ca7d8ec")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "Pyros_R?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_R3")
@@ -7931,7 +8237,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "d57651f0-c804-4f70-b932-f333f4195b94")
-		(property "Reference" "Pyros_NPN1"
+		(property "Reference" "Pyros_NPN?"
 			(at 166.878 96.012 0)
 			(effects
 				(font
@@ -7989,6 +8295,12 @@
 			(uuid "3ed734ac-f855-44d2-a856-157b861987f5")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "Pyros_NPN?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_NPN1")
@@ -8006,7 +8318,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "d69b5f83-0219-482a-83a6-69eb79d265d2")
-		(property "Reference" "#PWR081"
+		(property "Reference" "#PWR?"
 			(at 57.15 95.25 0)
 			(effects
 				(font
@@ -8054,6 +8366,12 @@
 			(uuid "450938bf-224b-46d2-ae26-e45084f57dea")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "#PWR?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "#PWR081")
@@ -8071,7 +8389,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "dd12ae27-1f99-4f68-8c84-51aa3e56b9ee")
-		(property "Reference" "Pyros_R19"
+		(property "Reference" "Pyros_R?"
 			(at 209.55 147.32 90)
 			(effects
 				(font
@@ -8121,6 +8439,12 @@
 			(uuid "2aa03542-8ecc-4946-81f1-5f83e7a4c346")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "Pyros_R?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_R19")
@@ -8139,7 +8463,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "e0eb8946-6bd0-4fb2-aa7e-677d836669f1")
-		(property "Reference" "U12"
+		(property "Reference" "U?"
 			(at 127 127 0)
 			(effects
 				(font
@@ -8227,6 +8551,12 @@
 			(uuid "56125554-1724-4d5a-a3be-bd16ce550374")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "U?")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "U12")
@@ -8244,7 +8574,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "e396bf68-0960-4b09-830f-f740867b910c")
-		(property "Reference" "Pyros_R14"
+		(property "Reference" "Pyros_R?"
 			(at 162.56 34.036 0)
 			(effects
 				(font
@@ -8294,6 +8624,12 @@
 			(uuid "73e64cff-016b-4549-8202-35f672b8d699")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "Pyros_R?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_R14")
@@ -8311,7 +8647,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "e54795fd-8501-4232-aa1f-e4ccf2ba6115")
-		(property "Reference" "Pyros_R17"
+		(property "Reference" "Pyros_R?"
 			(at 251.46 133.35 90)
 			(effects
 				(font
@@ -8361,6 +8697,12 @@
 			(uuid "bfde6c6b-140c-4a87-bd73-8ffd8f16f356")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "Pyros_R?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_R17")
@@ -8379,7 +8721,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "e5e0722f-7919-468d-b906-310100b6db10")
-		(property "Reference" "#PWR097"
+		(property "Reference" "#PWR?"
 			(at 165.1 119.38 0)
 			(effects
 				(font
@@ -8427,6 +8769,12 @@
 			(uuid "1bf0223a-8a72-4e6b-b60f-c39ed328a24f")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "#PWR?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "#PWR097")
@@ -8444,7 +8792,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "e78d78b2-bce5-44b6-9351-2b18767c2257")
-		(property "Reference" "#PWR0122"
+		(property "Reference" "#PWR?"
 			(at 175.26 60.96 0)
 			(effects
 				(font
@@ -8492,6 +8840,12 @@
 			(uuid "2a997e5b-274f-4c5e-8db8-862cd35c3130")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "#PWR?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "#PWR0122")
@@ -8509,7 +8863,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "eda4c8b6-d5ee-455f-ac4a-ac665af6fe21")
-		(property "Reference" "Pyros_R16"
+		(property "Reference" "Pyros_R?"
 			(at 207.01 133.35 90)
 			(effects
 				(font
@@ -8559,6 +8913,12 @@
 			(uuid "57c344bf-cf03-4fbf-9b0c-02e621d9fce8")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "Pyros_R?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_R16")
@@ -8576,7 +8936,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "f1fe6bbb-0172-4ad7-8b8f-b575aace6c4f")
-		(property "Reference" "Pyros_LED2"
+		(property "Reference" "Pyros_LED?"
 			(at 263.144 134.366 0)
 			(effects
 				(font
@@ -8626,6 +8986,12 @@
 			(uuid "f2e9ec7b-77c9-4d54-b54c-91c69ffbc217")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "Pyros_LED?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_LED2")
@@ -8644,7 +9010,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "f62c305b-a698-4c00-8d59-25898798a2ea")
-		(property "Reference" "Pyros_J6"
+		(property "Reference" "Pyros_J?"
 			(at 95.25 63.4999 0)
 			(effects
 				(font
@@ -8662,7 +9028,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_Wire:SolderWire-2.5sqmm_1x02_P8.8mm_D2.4mm_OD4.4mm"
+		(property "Footprint" "TerminalBlock_RND:TerminalBlock_RND_205-00012_1x02_P5.00mm_Horizontal"
 			(at 92.71 63.5 0)
 			(effects
 				(font
@@ -8696,6 +9062,12 @@
 			(uuid "d33104cb-e0a5-472e-ae9e-f8b70465cbd5")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "Pyros_J?")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_J6")
@@ -8714,7 +9086,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "f8b3c163-01f5-4201-95d3-70edddc77319")
-		(property "Reference" "#PWR0117"
+		(property "Reference" "#PWR?"
 			(at 194.31 118.11 0)
 			(effects
 				(font
@@ -8762,6 +9134,12 @@
 			(uuid "a82139db-6e9b-4f16-bd62-d36a9fd07c0c")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "#PWR?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "#PWR0117")
@@ -8779,7 +9157,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "fe81eb25-8037-4f05-bf77-8fc2496a5e8f")
-		(property "Reference" "Pyros_C2"
+		(property "Reference" "Pyros_C?"
 			(at 128.27 166.37 90)
 			(effects
 				(font
@@ -8829,6 +9207,12 @@
 			(uuid "1836ca93-28c5-4018-aaf4-bac5cc3cc432")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "Pyros_C?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_C2")
@@ -8846,7 +9230,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "ff88c45c-be12-4631-9c5e-6175b8b101bc")
-		(property "Reference" "Pyros_R2"
+		(property "Reference" "Pyros_R?"
 			(at 54.61 34.036 0)
 			(effects
 				(font
@@ -8896,12 +9280,23 @@
 			(uuid "819270dc-5d3e-4450-b5b1-7b6eaded45e6")
 		)
 		(instances
+			(project "Pyro"
+				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
+					(reference "Pyros_R?")
+					(unit 1)
+				)
+			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_R2")
 					(unit 1)
 				)
 			)
+		)
+	)
+	(sheet_instances
+		(path "/"
+			(page "1")
 		)
 	)
 )
