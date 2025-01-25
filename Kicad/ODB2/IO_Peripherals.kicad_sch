@@ -5306,7 +5306,6 @@
 	)
 	(label "RFM_ANT"
 		(at 207.01 102.87 180)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5314,6 +5313,17 @@
 			(justify right bottom)
 		)
 		(uuid "cfd3296f-3707-4166-a3b1-f334ccaa9031")
+		(property "Impedance" "50ohm"
+			(at 206.756 99.314 0)
+			(show_name yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+					(italic yes)
+				)
+				(justify right)
+			)
+		)
 	)
 	(global_label "Buzzer_PWM"
 		(shape input)
@@ -5926,28 +5936,6 @@
 		(uuid "0b31675b-5ba6-4feb-8eaf-2e2f99acbd4f")
 		(property "50 ohm" "50 ohm"
 			(at 55.372 69.342 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-					(italic yes)
-				)
-				(justify left)
-			)
-		)
-	)
-	(netclass_flag ""
-		(length 2.54)
-		(shape round)
-		(at 198.12 102.87 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "1ca70f5e-ab12-4091-a38d-b6605c512ed9")
-		(property "50 ohm" "50 ohm"
-			(at 195.834 98.552 0)
 			(effects
 				(font
 					(size 1.27 1.27)
