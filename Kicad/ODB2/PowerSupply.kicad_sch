@@ -6780,7 +6780,20 @@
 		)
 		(uuid "13d30b30-2994-4602-9482-26f466d34103")
 	)
-	(text "3v7 Input"
+	(text "(A VERIFIER LIPO 3V DECHARGE MINIMAL)"
+		(exclude_from_sim no)
+		(at 87.122 73.66 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.254)
+				(bold yes)
+			)
+			(justify left bottom)
+		)
+		(uuid "1ae7b825-4109-4858-ae74-6714ff6a48a7")
+	)
+	(text "4v2 Input"
 		(exclude_from_sim no)
 		(at 15.748 124.968 0)
 		(effects
@@ -6839,7 +6852,31 @@
 		)
 		(uuid "454f0c56-d42e-4a13-ab40-be7445190599")
 	)
-	(text "BATT USE IS A 1S LIPO (3.7V)"
+	(text "Vérifier fusible"
+		(exclude_from_sim no)
+		(at 60.96 154.94 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.254)
+				(bold yes)
+			)
+		)
+		(uuid "4f343df3-f18c-434c-a638-6ca489b7ced8")
+	)
+	(text "Vérifier cette condensateurs de découplages ->"
+		(exclude_from_sim no)
+		(at 217.424 56.134 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.254)
+				(bold yes)
+			)
+		)
+		(uuid "52350155-523a-46a9-a98d-d531505b47ac")
+	)
+	(text "BATT USE IS A 1S LIPO (4.2V)"
 		(exclude_from_sim no)
 		(at 16.256 161.798 0)
 		(effects
@@ -6850,7 +6887,7 @@
 		)
 		(uuid "53cdac11-6710-42f5-9af4-f72969dbd374")
 	)
-	(text "6V ISOLATION"
+	(text "7v4 ISOLATION"
 		(exclude_from_sim no)
 		(at 173.99 17.78 0)
 		(effects
@@ -6863,7 +6900,7 @@
 		)
 		(uuid "5a2713c5-cd64-416c-8b9f-d8d740e7f1b4")
 	)
-	(text "VOLTAGE DIVIDER RATIO IS 0.8929"
+	(text "VOLTAGE DIVIDER RATIO IS 0.7874"
 		(exclude_from_sim no)
 		(at 35.56 143.51 0)
 		(effects
@@ -6922,6 +6959,17 @@
 		)
 		(uuid "a7887f0b-89b3-4457-8cd5-d4aed9c5cd45")
 	)
+	(text "Ratio 0.4460"
+		(exclude_from_sim no)
+		(at 175.768 70.612 0)
+		(effects
+			(font
+				(size 1 1)
+			)
+			(justify left bottom)
+		)
+		(uuid "acdb525a-41ef-47a1-9dab-1663b187971c")
+	)
 	(text "A regarder si pas mieux polyfuse\n"
 		(exclude_from_sim no)
 		(at 266.446 17.018 0)
@@ -6932,7 +6980,19 @@
 		)
 		(uuid "aeebf985-bc0d-4853-a4bd-b36adc9cf1d7")
 	)
-	(text "BATT USE IS A 2S LiFe (7.2v)"
+	(text "Vérifier cette resistance ->"
+		(exclude_from_sim no)
+		(at 198.882 37.084 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.254)
+				(bold yes)
+			)
+		)
+		(uuid "b50f3827-f2b1-4b26-9c6f-b6f02920c1ca")
+	)
+	(text "BATT USE IS A 2S LiFe (8.4V)"
 		(exclude_from_sim no)
 		(at 173.99 20.32 0)
 		(effects
@@ -6968,7 +7028,20 @@
 		)
 		(uuid "ed9477e0-8146-427b-bce1-5c6c77b0a51d")
 	)
-	(global_label "3v7_An"
+	(text "BATT MAX CHARGE 4.2V"
+		(exclude_from_sim no)
+		(at 173.99 21.844 0)
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.125)
+				(color 255 0 0 1)
+			)
+			(justify left bottom)
+		)
+		(uuid "fe0afc98-5aa7-4807-be73-309a46fc1b8a")
+	)
+	(global_label "4v2_An"
 		(shape input)
 		(at 30.48 147.32 180)
 		(fields_autoplaced yes)
@@ -6990,7 +7063,7 @@
 			)
 		)
 	)
-	(global_label "6v6Enable"
+	(global_label "7v4Enable"
 		(shape input)
 		(at 187.96 76.2 180)
 		(fields_autoplaced yes)
@@ -7012,7 +7085,7 @@
 			)
 		)
 	)
-	(global_label "6v6_An"
+	(global_label "7v4_An"
 		(shape input)
 		(at 185.42 38.1 180)
 		(fields_autoplaced yes)
@@ -7034,7 +7107,7 @@
 			)
 		)
 	)
-	(global_label "6v6Enable"
+	(global_label "7v4Enable"
 		(shape input)
 		(at 191.77 53.34 180)
 		(fields_autoplaced yes)
@@ -7134,7 +7207,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "0882972e-6bbc-40d0-939c-0b4aae45b1e9")
-		(property "Reference" "6V6_C1"
+		(property "Reference" "7v4_C1"
 			(at 240.03 46.99 0)
 			(effects
 				(font
@@ -7188,7 +7261,7 @@
 		(instances
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/a0dfa29e-ccca-4096-8481-c7e33c67aac5"
-					(reference "6V6_C1")
+					(reference "7v4_C1")
 					(unit 1)
 				)
 			)
@@ -7469,7 +7542,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "20d13424-c601-4823-9a66-3e5e045ad3c1")
-		(property "Reference" "Batt6V6_R1"
+		(property "Reference" "Batt7v4_R1"
 			(at 260.35 60.96 90)
 			(effects
 				(font
@@ -7523,7 +7596,7 @@
 		(instances
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/a0dfa29e-ccca-4096-8481-c7e33c67aac5"
-					(reference "Batt6V6_R1")
+					(reference "Batt7v4_R1")
 					(unit 1)
 				)
 			)
@@ -8176,7 +8249,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "3cc8fc83-0d5d-4f85-94c4-06b3ae8bc1c7")
-		(property "Reference" "R1"
+		(property "Reference" "4v2_R3"
 			(at 102.87 149.86 0)
 			(effects
 				(font
@@ -8230,7 +8303,7 @@
 		(instances
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/a0dfa29e-ccca-4096-8481-c7e33c67aac5"
-					(reference "R1")
+					(reference "4v2_R3")
 					(unit 1)
 				)
 			)
@@ -8245,7 +8318,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "3ec4096d-101d-49e7-9654-031ddb1f075b")
-		(property "Reference" "3v7_R2"
+		(property "Reference" "4v2_R2"
 			(at 38.1 134.62 90)
 			(effects
 				(font
@@ -8254,7 +8327,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "12k 1%"
+		(property "Value" "27k 1%"
 			(at 38.1 139.7 90)
 			(effects
 				(font
@@ -8299,7 +8372,7 @@
 		(instances
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/a0dfa29e-ccca-4096-8481-c7e33c67aac5"
-					(reference "3v7_R2")
+					(reference "4v2_R2")
 					(unit 1)
 				)
 			)
@@ -8323,7 +8396,7 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "3v7"
+		(property "Value" "4v2"
 			(at 59.69 127 0)
 			(effects
 				(font
@@ -8715,7 +8788,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "584fe0e5-4398-4fce-80fa-7a67f1a23dd2")
-		(property "Reference" "Batt6V6_R2"
+		(property "Reference" "Batt7v4_R2"
 			(at 267.97 60.96 90)
 			(effects
 				(font
@@ -8769,7 +8842,7 @@
 		(instances
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/a0dfa29e-ccca-4096-8481-c7e33c67aac5"
-					(reference "Batt6V6_R2")
+					(reference "Batt7v4_R2")
 					(unit 1)
 				)
 			)
@@ -8784,7 +8857,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "5aac9366-461f-43b1-a780-74d40e2fb7db")
-		(property "Reference" "6V6_C3"
+		(property "Reference" "7v4_C3"
 			(at 255.27 46.99 0)
 			(effects
 				(font
@@ -8838,7 +8911,7 @@
 		(instances
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/a0dfa29e-ccca-4096-8481-c7e33c67aac5"
-					(reference "6V6_C3")
+					(reference "7v4_C3")
 					(unit 1)
 				)
 			)
@@ -8931,7 +9004,7 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "6C6"
+		(property "Value" "7C4"
 			(at 241.3 22.86 0)
 			(effects
 				(font
@@ -9132,7 +9205,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Batt6V6"
+		(property "Value" "Batt7V4"
 			(at 275.59 33.02 0)
 			(effects
 				(font
@@ -9289,7 +9362,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "6783e8ac-3d16-4a5e-9b9e-35b5edbcb853")
-		(property "Reference" "6V_R4"
+		(property "Reference" "7v4_R4"
 			(at 201.93 59.69 0)
 			(effects
 				(font
@@ -9343,7 +9416,7 @@
 		(instances
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/a0dfa29e-ccca-4096-8481-c7e33c67aac5"
-					(reference "6V_R4")
+					(reference "7v4_R4")
 					(unit 1)
 				)
 			)
@@ -9358,7 +9431,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "6ebce91b-ca54-454d-8509-1fd3ba338ef4")
-		(property "Reference" "6V6_R1"
+		(property "Reference" "7v4_R1"
 			(at 190.5 27.94 90)
 			(effects
 				(font
@@ -9412,7 +9485,7 @@
 		(instances
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/a0dfa29e-ccca-4096-8481-c7e33c67aac5"
-					(reference "6V6_R1")
+					(reference "7v4_R1")
 					(unit 1)
 				)
 			)
@@ -9428,7 +9501,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "75cc4c08-3d3e-428e-8c06-805c93164c3b")
-		(property "Reference" "Q1"
+		(property "Reference" "7v4_NPN1"
 			(at 217.17 52.07 0)
 			(effects
 				(font
@@ -9488,7 +9561,7 @@
 		(instances
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/a0dfa29e-ccca-4096-8481-c7e33c67aac5"
-					(reference "Q1")
+					(reference "7v4_NPN1")
 					(unit 1)
 				)
 			)
@@ -10039,7 +10112,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "83409a50-e9da-449b-bd84-c3286144b14b")
-		(property "Reference" "6V6_C2"
+		(property "Reference" "7v4_C2"
 			(at 247.65 46.99 0)
 			(effects
 				(font
@@ -10093,7 +10166,7 @@
 		(instances
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/a0dfa29e-ccca-4096-8481-c7e33c67aac5"
-					(reference "6V6_C2")
+					(reference "7v4_C2")
 					(unit 1)
 				)
 			)
@@ -10108,7 +10181,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "8446ae65-b83b-47d8-af79-8617838b0efd")
-		(property "Reference" "Led6V6_Enable"
+		(property "Reference" "LED_7v4Enable"
 			(at 208.28 72.39 0)
 			(effects
 				(font
@@ -10160,7 +10233,7 @@
 		(instances
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/a0dfa29e-ccca-4096-8481-c7e33c67aac5"
-					(reference "Led6V6_Enable")
+					(reference "LED_7v4Enable")
 					(unit 1)
 				)
 			)
@@ -10389,7 +10462,7 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "+6V6"
+		(property "Value" "+7V4"
 			(at 247.65 17.78 0)
 			(effects
 				(font
@@ -10646,7 +10719,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "988f0509-7636-4f9b-9ec9-1e0a70444762")
-		(property "Reference" "6V6_R2"
+		(property "Reference" "7v4_R2"
 			(at 205.74 27.94 90)
 			(effects
 				(font
@@ -10655,7 +10728,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "120k 1%"
+		(property "Value" "124k 1%"
 			(at 205.74 33.02 90)
 			(effects
 				(font
@@ -10700,7 +10773,7 @@
 		(instances
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/a0dfa29e-ccca-4096-8481-c7e33c67aac5"
-					(reference "6V6_R2")
+					(reference "7v4_R2")
 					(unit 1)
 				)
 			)
@@ -10781,7 +10854,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "9de8ba53-1933-4dc0-a005-6c4f8122458e")
-		(property "Reference" "D2"
+		(property "Reference" "7v4_D2"
 			(at 265.43 46.99 90)
 			(effects
 				(font
@@ -10835,7 +10908,7 @@
 		(instances
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/a0dfa29e-ccca-4096-8481-c7e33c67aac5"
-					(reference "D2")
+					(reference "7v4_D2")
 					(unit 1)
 				)
 			)
@@ -10850,7 +10923,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "9ea10f3c-8f58-4552-9b00-670fb99c68ff")
-		(property "Reference" "C1"
+		(property "Reference" "4v2_C1"
 			(at 91.44 139.7 0)
 			(effects
 				(font
@@ -10904,7 +10977,7 @@
 		(instances
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/a0dfa29e-ccca-4096-8481-c7e33c67aac5"
-					(reference "C1")
+					(reference "4v2_C1")
 					(unit 1)
 				)
 			)
@@ -11183,7 +11256,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "a93f6894-801b-47fc-afd0-1aee5f18e58c")
-		(property "Reference" "6V6_C4"
+		(property "Reference" "7v4_C4"
 			(at 189.484 39.37 0)
 			(effects
 				(font
@@ -11237,7 +11310,7 @@
 		(instances
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/a0dfa29e-ccca-4096-8481-c7e33c67aac5"
-					(reference "6V6_C4")
+					(reference "7v4_C4")
 					(unit 1)
 				)
 			)
@@ -11252,7 +11325,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "aa768153-64cd-4925-95ff-37087bc59be7")
-		(property "Reference" "6V6_R8"
+		(property "Reference" "7v4_R8"
 			(at 198.374 73.66 90)
 			(effects
 				(font
@@ -11306,7 +11379,7 @@
 		(instances
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/a0dfa29e-ccca-4096-8481-c7e33c67aac5"
-					(reference "6V6_R8")
+					(reference "7v4_R8")
 					(unit 1)
 				)
 			)
@@ -11390,7 +11463,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "b4c0fc2e-4bb6-4735-97bc-b3316b4ab9ef")
-		(property "Reference" "Batt6V6_L1"
+		(property "Reference" "Batt7v4_L1"
 			(at 280.67 55.626 0)
 			(effects
 				(font
@@ -11442,7 +11515,7 @@
 		(instances
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/a0dfa29e-ccca-4096-8481-c7e33c67aac5"
-					(reference "Batt6V6_L1")
+					(reference "Batt7v4_L1")
 					(unit 1)
 				)
 			)
@@ -11526,7 +11599,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "ba24ba4c-d852-48aa-b409-9a22355bcea5")
-		(property "Reference" "6V6_R3"
+		(property "Reference" "7v4_R3"
 			(at 200.914 51.054 90)
 			(effects
 				(font
@@ -11580,7 +11653,7 @@
 		(instances
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/a0dfa29e-ccca-4096-8481-c7e33c67aac5"
-					(reference "6V6_R3")
+					(reference "7v4_R3")
 					(unit 1)
 				)
 			)
@@ -11805,7 +11878,7 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "+6V6"
+		(property "Value" "+7V4"
 			(at 233.68 49.53 0)
 			(effects
 				(font
@@ -12002,7 +12075,7 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "+6V0"
+		(property "Value" "+7V4"
 			(at 262.89 39.37 0)
 			(effects
 				(font
@@ -12329,8 +12402,8 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "d4985e2f-2372-499a-ac28-a5a5cb9bfb0e")
-		(property "Reference" "Q2"
-			(at 232.41 40.64 0)
+		(property "Reference" "7v4_MOSFET1"
+			(at 224.79 27.178 0)
 			(effects
 				(font
 					(size 1 1)
@@ -12339,7 +12412,7 @@
 			)
 		)
 		(property "Value" "IRFR5505TRPBF"
-			(at 220.98 28.448 0)
+			(at 224.028 28.702 0)
 			(effects
 				(font
 					(size 1 1)
@@ -12388,7 +12461,7 @@
 		(instances
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/a0dfa29e-ccca-4096-8481-c7e33c67aac5"
-					(reference "Q2")
+					(reference "7v4_MOSFET1")
 					(unit 1)
 				)
 			)
@@ -12413,7 +12486,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Batt3v7"
+		(property "Value" "Batt4v2"
 			(at 77.47 139.7 0)
 			(effects
 				(font
@@ -12540,7 +12613,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "da13717d-a6ea-4932-8f06-a46f6e06a08e")
-		(property "Reference" "6V6_R5"
+		(property "Reference" "7v4_R5"
 			(at 215.9 35.56 0)
 			(effects
 				(font
@@ -12594,7 +12667,7 @@
 		(instances
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/a0dfa29e-ccca-4096-8481-c7e33c67aac5"
-					(reference "6V6_R5")
+					(reference "7v4_R5")
 					(unit 1)
 				)
 			)
@@ -12618,7 +12691,7 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "3v7"
+		(property "Value" "4v2"
 			(at 90.17 125.73 0)
 			(effects
 				(font
@@ -13048,7 +13121,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "e90710e9-f689-49f8-a8ba-381d0c45c961")
-		(property "Reference" "3v7_R1"
+		(property "Reference" "4v2_R1"
 			(at 25.4 134.62 90)
 			(effects
 				(font
@@ -13102,7 +13175,7 @@
 		(instances
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/a0dfa29e-ccca-4096-8481-c7e33c67aac5"
-					(reference "3v7_R1")
+					(reference "4v2_R1")
 					(unit 1)
 				)
 			)

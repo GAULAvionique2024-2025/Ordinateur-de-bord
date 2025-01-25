@@ -6752,7 +6752,7 @@
 			)
 		)
 	)
-	(global_label "6v6Enable"
+	(global_label "7v4Enable"
 		(shape input)
 		(at 165.1 160.02 180)
 		(fields_autoplaced yes)
@@ -6770,6 +6770,28 @@
 					(size 1.27 1.27)
 				)
 				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "4v2_An"
+		(shape input)
+		(at 237.49 147.32 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "0fadc0ac-4efa-4d41-950b-1cac3429ca29")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 247.067 147.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
 				(hide yes)
 			)
 		)
@@ -7017,28 +7039,6 @@
 			)
 		)
 	)
-	(global_label "3v7_An"
-		(shape input)
-		(at 237.49 147.32 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "6b2b7df8-1789-4fab-ac2e-b2b5f044907d")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 247.067 147.32 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-	)
 	(global_label "SPI1_ICM_CS"
 		(shape input)
 		(at 237.49 66.04 0)
@@ -7127,7 +7127,7 @@
 			)
 		)
 	)
-	(global_label "6v6_An"
+	(global_label "7v4_An"
 		(shape input)
 		(at 237.49 149.86 0)
 		(fields_autoplaced yes)
