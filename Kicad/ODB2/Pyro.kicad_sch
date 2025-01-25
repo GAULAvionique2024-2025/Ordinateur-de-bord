@@ -4051,7 +4051,7 @@
 		)
 		(uuid "c1555917-efba-45c2-9b27-aaf193fa9f76")
 	)
-	(text "Test Main = ~Pyros_Test x MainODB\nTest Drogue = ~Pyros_Test x DrogueODB\nFeu Main = (6vEnable x Bluetooth) x MainODB\nFeu Drogue = (6vEnable x Bluetooth) x DrogueODB\noù (6vEnable x Bluetooth) = 1 != ~Pyros_Test = 1 -> XNOR"
+	(text "Test Main = ~Pyros_Test x MainODB\nTest Drogue = ~Pyros_Test x DrogueODB\nFeu Main = (7v4Enable x Bluetooth) x MainODB\nFeu Drogue = (7v4Enable x Bluetooth) x DrogueODB\noù (7v4Enable x Bluetooth) = 1 != ~Pyros_Test = 1 -> XNOR"
 		(exclude_from_sim no)
 		(at 16.002 159.258 0)
 		(effects
@@ -4916,7 +4916,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "251f84d0-4b63-44b0-a5fc-712c0003eec9")
-		(property "Reference" "Pyros_AMP"
+		(property "Reference" "Pyros_AMP1"
 			(at 100.584 106.172 90)
 			(effects
 				(font
@@ -4934,7 +4934,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_SO:SOIC-8-1EP_3.9x4.9mm_P1.27mm_EP2.41x3.81mm"
 			(at 105.41 106.68 0)
 			(effects
 				(font
@@ -4988,7 +4988,7 @@
 		(instances
 			(project ""
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
-					(reference "Pyros_AMP")
+					(reference "Pyros_AMP1")
 					(unit 3)
 				)
 			)
@@ -6730,7 +6730,7 @@
 		(dnp no)
 		(uuid "9ada0f3e-c865-4ef1-abdd-25b1ad146445")
 		(property "Reference" "Pyros_R?"
-			(at 175.768 80.264 0)
+			(at 175.006 80.264 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6947,7 +6947,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "a5b715b0-e52b-4a1f-9a12-4d12df7a901b")
-		(property "Reference" "#PWR077"
+		(property "Reference" "#PWR0105"
 			(at 85.09 58.42 0)
 			(effects
 				(font
@@ -6997,7 +6997,7 @@
 		(instances
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
-					(reference "#PWR077")
+					(reference "#PWR0105")
 					(unit 1)
 				)
 			)
@@ -7230,7 +7230,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "c014b8d9-5d9f-4bf8-b1bc-67f7641462f9")
-		(property "Reference" "Pyros_AMP"
+		(property "Reference" "Pyros_AMP1"
 			(at 168.656 59.69 0)
 			(effects
 				(font
@@ -7246,7 +7246,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_SO:SOIC-8-1EP_3.9x4.9mm_P1.27mm_EP2.41x3.81mm"
 			(at 172.72 66.04 0)
 			(effects
 				(font
@@ -7300,7 +7300,7 @@
 		(instances
 			(project ""
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
-					(reference "Pyros_AMP")
+					(reference "Pyros_AMP1")
 					(unit 1)
 				)
 			)
@@ -8593,7 +8593,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "edc34336-84d3-4614-9543-d4c1bcdf5aa7")
-		(property "Reference" "Pyros_AMP"
+		(property "Reference" "Pyros_AMP1"
 			(at 62.23 58.928 0)
 			(effects
 				(font
@@ -8609,7 +8609,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_SO:SOIC-8-1EP_3.9x4.9mm_P1.27mm_EP2.41x3.81mm"
 			(at 64.77 66.04 0)
 			(effects
 				(font
@@ -8663,7 +8663,7 @@
 		(instances
 			(project ""
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
-					(reference "Pyros_AMP")
+					(reference "Pyros_AMP1")
 					(unit 2)
 				)
 			)
