@@ -4242,7 +4242,7 @@
 	)
 	(wire
 		(pts
-			(xy 82.55 64.77) (xy 83.82 64.77)
+			(xy 82.55 64.77) (xy 87.63 64.77)
 		)
 		(stroke
 			(width 0)
@@ -4282,7 +4282,7 @@
 	)
 	(wire
 		(pts
-			(xy 82.55 59.69) (xy 83.82 59.69)
+			(xy 82.55 59.69) (xy 87.63 59.69)
 		)
 		(stroke
 			(width 0)
@@ -4622,7 +4622,7 @@
 	)
 	(wire
 		(pts
-			(xy 60.96 59.69) (xy 62.23 59.69)
+			(xy 57.15 59.69) (xy 62.23 59.69)
 		)
 		(stroke
 			(width 0)
@@ -5032,7 +5032,7 @@
 	)
 	(wire
 		(pts
-			(xy 60.96 64.77) (xy 62.23 64.77)
+			(xy 57.15 64.77) (xy 62.23 64.77)
 		)
 		(stroke
 			(width 0)
@@ -5585,7 +5585,7 @@
 	)
 	(global_label "USBData+"
 		(shape input)
-		(at 83.82 59.69 0)
+		(at 87.63 59.69 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -5595,7 +5595,7 @@
 		)
 		(uuid "a37d3280-55a8-4b63-a47b-b173010ca8e1")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 96.4813 59.69 0)
+			(at 100.2913 59.69 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5673,7 +5673,7 @@
 	)
 	(global_label "USBData-"
 		(shape input)
-		(at 60.96 59.69 180)
+		(at 57.15 59.69 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -5683,7 +5683,7 @@
 		)
 		(uuid "c92944bb-80ec-4eb1-ac17-33b11daf8859")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 48.2987 59.69 0)
+			(at 44.4887 59.69 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5693,7 +5693,7 @@
 			)
 		)
 	)
-	(global_label "SPI5_Mem_CLK"
+	(global_label "SPI5_Mem_SCLK"
 		(shape input)
 		(at 191.77 67.31 180)
 		(fields_autoplaced yes)
@@ -5705,7 +5705,7 @@
 		)
 		(uuid "c9a2fbb7-b54a-405a-bc06-7421d265c1f0")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 174.7544 67.31 0)
+			(at 173.5449 67.31 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5717,7 +5717,7 @@
 	)
 	(global_label "USBDataC+"
 		(shape input)
-		(at 83.82 64.77 0)
+		(at 87.63 64.77 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -5727,7 +5727,7 @@
 		)
 		(uuid "ca40b1ff-a298-44df-8f46-a011b086eb3b")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 97.7513 64.77 0)
+			(at 101.5613 64.77 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5761,7 +5761,7 @@
 	)
 	(global_label "USBDataC-"
 		(shape input)
-		(at 60.96 64.77 180)
+		(at 57.15 64.77 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -5771,7 +5771,7 @@
 		)
 		(uuid "d49fe50f-65d8-4e16-894d-608aca83e587")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 47.0287 64.77 0)
+			(at 43.2187 64.77 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5894,6 +5894,50 @@
 	(netclass_flag ""
 		(length 2.54)
 		(shape round)
+		(at 86.36 64.77 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "07022d0e-b713-4990-ae5a-deb6d56af5d7")
+		(property "50 ohm" "50 ohm"
+			(at 83.058 69.342 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+					(italic yes)
+				)
+				(justify left)
+			)
+		)
+	)
+	(netclass_flag ""
+		(length 2.54)
+		(shape round)
+		(at 58.42 64.77 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "0b31675b-5ba6-4feb-8eaf-2e2f99acbd4f")
+		(property "50 ohm" "50 ohm"
+			(at 55.372 69.342 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+					(italic yes)
+				)
+				(justify left)
+			)
+		)
+	)
+	(netclass_flag ""
+		(length 2.54)
+		(shape round)
 		(at 198.12 102.87 0)
 		(effects
 			(font
@@ -5904,6 +5948,50 @@
 		(uuid "1ca70f5e-ab12-4091-a38d-b6605c512ed9")
 		(property "50 ohm" "50 ohm"
 			(at 195.834 98.552 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+					(italic yes)
+				)
+				(justify left)
+			)
+		)
+	)
+	(netclass_flag ""
+		(length 2.54)
+		(shape round)
+		(at 58.42 59.69 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "eca2e1d2-4532-4611-85fb-c05857d10956")
+		(property "50 ohm" "50 ohm"
+			(at 56.134 55.372 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+					(italic yes)
+				)
+				(justify left)
+			)
+		)
+	)
+	(netclass_flag ""
+		(length 2.54)
+		(shape round)
+		(at 86.36 59.69 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "ffd94829-5f98-43d5-8407-c6fae7e9b035")
+		(property "50 ohm" "50 ohm"
+			(at 84.074 55.372 0)
 			(effects
 				(font
 					(size 1.27 1.27)
