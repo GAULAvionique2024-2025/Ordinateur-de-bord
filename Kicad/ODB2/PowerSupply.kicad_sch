@@ -4583,6 +4583,12 @@
 		(uuid "741f5e95-233b-4c4c-bcc3-5397bd4bd59a")
 	)
 	(junction
+		(at 34.29 144.78)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "75701014-c1ff-4077-8329-ae9db7e8cb35")
+	)
+	(junction
 		(at 241.3 30.48)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -4986,6 +4992,16 @@
 	)
 	(wire
 		(pts
+			(xy 34.29 154.94) (xy 34.29 156.21)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "28f44a71-bc6b-421f-b67b-f4ca3b4eae1f")
+	)
+	(wire
+		(pts
 			(xy 92.71 52.07) (xy 92.71 63.5)
 		)
 		(stroke
@@ -5373,16 +5389,6 @@
 			(type default)
 		)
 		(uuid "5d2d971b-043f-478f-b474-33f21c1209fc")
-	)
-	(wire
-		(pts
-			(xy 30.48 147.32) (xy 34.29 147.32)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "5d6c66cd-4827-4b34-99fb-9e9a93a9a0d6")
 	)
 	(wire
 		(pts
@@ -5783,6 +5789,16 @@
 			(type default)
 		)
 		(uuid "946d5670-e496-4bc1-b0ca-449979e2654d")
+	)
+	(wire
+		(pts
+			(xy 34.29 144.78) (xy 34.29 137.16)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "94a9d14a-ecc5-4782-b5df-4d5c47e08cca")
 	)
 	(wire
 		(pts
@@ -6226,7 +6242,7 @@
 	)
 	(wire
 		(pts
-			(xy 34.29 147.32) (xy 34.29 137.16)
+			(xy 34.29 147.32) (xy 34.29 144.78)
 		)
 		(stroke
 			(width 0)
@@ -6413,6 +6429,16 @@
 			(type default)
 		)
 		(uuid "d5922b14-a58c-4214-800c-386576d26c1d")
+	)
+	(wire
+		(pts
+			(xy 30.48 144.78) (xy 34.29 144.78)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d6228d15-0f73-4169-b4c9-2156df52e80b")
 	)
 	(wire
 		(pts
@@ -7043,7 +7069,7 @@
 	)
 	(global_label "4v2_An"
 		(shape input)
-		(at 30.48 147.32 180)
+		(at 30.48 144.78 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -7053,7 +7079,7 @@
 		)
 		(uuid "1c557b2d-421e-4c88-a813-d1ebfbf79dba")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 20.903 147.32 0)
+			(at 20.903 144.78 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7193,6 +7219,75 @@
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/a0dfa29e-ccca-4096-8481-c7e33c67aac5"
 					(reference "3v3_R1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 34.29 151.13 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "0447b89a-0042-4eaf-9740-b47bc37656fd")
+		(property "Reference" "4v2_C2"
+			(at 35.56 148.59 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "100nf"
+			(at 34.29 153.67 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+			(at 35.2552 154.94 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 34.29 151.13 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 34.29 151.13 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "77f14f10-3a88-4ad3-9d2f-d2933fa0b189")
+		)
+		(pin "2"
+			(uuid "f1c437ed-edeb-4ec2-a8f7-f17b71d1d5f5")
+		)
+		(instances
+			(project "ODB2"
+				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/a0dfa29e-ccca-4096-8481-c7e33c67aac5"
+					(reference "4v2_C2")
 					(unit 1)
 				)
 			)
@@ -7597,6 +7692,73 @@
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/a0dfa29e-ccca-4096-8481-c7e33c67aac5"
 					(reference "Batt7v4_R1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 34.29 156.21 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "220350f0-83bd-4974-9a8e-8b6e731c7952")
+		(property "Reference" "#PWR077"
+			(at 34.29 162.56 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 34.29 161.29 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+			)
+		)
+		(property "Footprint" ""
+			(at 34.29 156.21 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 34.29 156.21 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 34.29 156.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "479a723a-2558-42ce-bb4e-89f8b013fef7")
+		)
+		(instances
+			(project "ODB2"
+				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/a0dfa29e-ccca-4096-8481-c7e33c67aac5"
+					(reference "#PWR077")
 					(unit 1)
 				)
 			)
@@ -8327,7 +8489,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "27k 1%"
+		(property "Value" "36k 1%"
 			(at 38.1 139.7 90)
 			(effects
 				(font
@@ -11200,7 +11362,7 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "3v7"
+		(property "Value" "VCC"
 			(at 31.75 27.94 0)
 			(effects
 				(font
