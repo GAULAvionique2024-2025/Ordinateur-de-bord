@@ -6760,7 +6760,7 @@
 		)
 		(uuid cf192c6e-2b53-443b-a3c4-ed918231c311)
 	)
-	(text "Under voltage protection set at 2.1v"
+	(text "Under voltage protection set at 3.27V"
 		(exclude_from_sim no)
 		(at 16.51 85.09 0)
 		(effects
@@ -6805,19 +6805,6 @@
 			(justify left bottom)
 		)
 		(uuid "13d30b30-2994-4602-9482-26f466d34103")
-	)
-	(text "(A VERIFIER LIPO 3V DECHARGE MINIMAL)"
-		(exclude_from_sim no)
-		(at 87.122 73.66 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-				(thickness 0.254)
-				(bold yes)
-			)
-			(justify left bottom)
-		)
-		(uuid "1ae7b825-4109-4858-ae74-6714ff6a48a7")
 	)
 	(text "4v2 Input"
 		(exclude_from_sim no)
@@ -6902,6 +6889,18 @@
 		)
 		(uuid "5a2713c5-cd64-416c-8b9f-d8d740e7f1b4")
 	)
+	(text "Max ADC 3.231V"
+		(exclude_from_sim no)
+		(at 17.526 148.082 0)
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.125)
+			)
+			(justify left bottom)
+		)
+		(uuid "856ab3d4-214d-4f84-979a-ea9e2a6d20a6")
+	)
 	(text "!!!!!WARNING!!!!!!"
 		(exclude_from_sim no)
 		(at 207.01 20.32 0)
@@ -6926,7 +6925,7 @@
 		)
 		(uuid "a1e4b509-368d-4e4b-9348-092f9f88c607")
 	)
-	(text "SWITCHING POWER SUPLY 3v3"
+	(text "SWITCHING POWER SUPPLY 3v3"
 		(exclude_from_sim no)
 		(at 15.24 24.13 0)
 		(effects
@@ -6949,18 +6948,6 @@
 			(justify left bottom)
 		)
 		(uuid "a7887f0b-89b3-4457-8cd5-d4aed9c5cd45")
-	)
-	(text "Vérifier cette resistance ->"
-		(exclude_from_sim no)
-		(at 198.882 37.084 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-				(thickness 0.254)
-				(bold yes)
-			)
-		)
-		(uuid "b50f3827-f2b1-4b26-9c6f-b6f02920c1ca")
 	)
 	(text "BATT USE IS A 2S LiFe (8.4V)"
 		(exclude_from_sim no)
@@ -6986,6 +6973,18 @@
 			)
 		)
 		(uuid "cdabb4ce-f001-4d8a-a04f-7c39c6cc6f01")
+	)
+	(text "Ratio 0.7692"
+		(exclude_from_sim no)
+		(at 36.322 143.51 0)
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.125)
+			)
+			(justify left bottom)
+		)
+		(uuid "eb07091e-2689-4129-96d3-a4101a04ecf9")
 	)
 	(text "VOLTAGE DIVIDER RATIO IS 0.641"
 		(exclude_from_sim no)
@@ -7117,7 +7116,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1.87M 1%"
+		(property "Value" "3M 1%"
 			(at 20.32 41.91 0)
 			(effects
 				(font
@@ -7525,7 +7524,7 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "3v3"
+		(property "Value" "+3V3"
 			(at 90.17 27.94 0)
 			(effects
 				(font
@@ -7718,7 +7717,7 @@
 		(dnp no)
 		(uuid "2489454a-fc11-4200-8917-63e26155fb7b")
 		(property "Reference" "3v3_C2"
-			(at 29.21 59.69 0)
+			(at 30.48 59.944 0)
 			(effects
 				(font
 					(size 1 1)
@@ -7727,7 +7726,7 @@
 			)
 		)
 		(property "Value" "100nf"
-			(at 30.48 64.77 0)
+			(at 30.988 64.77 0)
 			(effects
 				(font
 					(size 1 1)
@@ -8433,7 +8432,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "36k 1%"
+		(property "Value" "30k 1%"
 			(at 38.1 139.7 90)
 			(effects
 				(font
@@ -8502,7 +8501,7 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "4v2"
+		(property "Value" "+3V7"
 			(at 49.53 129.54 0)
 			(effects
 				(font
@@ -8838,7 +8837,7 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "5V"
+		(property "Value" "+5V"
 			(at 52.07 90.17 0)
 			(effects
 				(font
@@ -9110,7 +9109,7 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "7C4"
+		(property "Value" "+7C4"
 			(at 241.3 22.86 0)
 			(effects
 				(font
@@ -10029,7 +10028,7 @@
 			)
 		)
 		(property "Value" "+1V8"
-			(at 89.662 169.164 0)
+			(at 90.17 170.18 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10151,7 +10150,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "81382f53-e7e0-4f6d-9f4b-b166d423eea6")
-		(property "Reference" "Led3V1"
+		(property "Reference" "3v3_LED1"
 			(at 64.77 77.47 0)
 			(effects
 				(font
@@ -10203,7 +10202,7 @@
 		(instances
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/a0dfa29e-ccca-4096-8481-c7e33c67aac5"
-					(reference "Led3V1")
+					(reference "3v3_LED1")
 					(unit 1)
 				)
 			)
@@ -10287,7 +10286,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "8446ae65-b83b-47d8-af79-8617838b0efd")
-		(property "Reference" "LED_7v4Enable"
+		(property "Reference" "LED_7v4Enable1"
 			(at 208.28 72.39 0)
 			(effects
 				(font
@@ -10339,7 +10338,7 @@
 		(instances
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/a0dfa29e-ccca-4096-8481-c7e33c67aac5"
-					(reference "LED_7v4Enable")
+					(reference "LED_7v4Enable1")
 					(unit 1)
 				)
 			)
@@ -10633,7 +10632,7 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "3v3"
+		(property "Value" "+3V3"
 			(at 45.72 73.66 0)
 			(effects
 				(font
@@ -10903,7 +10902,7 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "3v3"
+		(property "Value" "+3V3"
 			(at 45.72 27.94 0)
 			(effects
 				(font
@@ -11108,7 +11107,7 @@
 			)
 		)
 		(property "Value" "+3V3"
-			(at 21.336 167.894 0)
+			(at 21.59 167.894 0)
 			(effects
 				(font
 					(size 1 1)
@@ -12116,7 +12115,7 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "+6V0"
+		(property "Value" "+7V4"
 			(at 19.05 95.25 0)
 			(effects
 				(font
@@ -12797,7 +12796,7 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "4v2"
+		(property "Value" "+3V7"
 			(at 90.17 125.73 0)
 			(effects
 				(font
