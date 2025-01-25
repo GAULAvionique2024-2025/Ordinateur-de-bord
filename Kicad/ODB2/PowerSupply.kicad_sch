@@ -6760,7 +6760,7 @@
 		)
 		(uuid cf192c6e-2b53-443b-a3c4-ed918231c311)
 	)
-	(text "Under voltage protection set at 2.1V"
+	(text "Under voltage protection set at 3.5V"
 		(exclude_from_sim no)
 		(at 16.51 85.09 0)
 		(effects
@@ -7129,7 +7129,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1.87M 1%"
+		(property "Value" "560k 1%"
 			(at 20.32 41.91 0)
 			(effects
 				(font
@@ -7730,7 +7730,7 @@
 		(dnp no)
 		(uuid "2489454a-fc11-4200-8917-63e26155fb7b")
 		(property "Reference" "3v3_C2"
-			(at 29.21 59.69 0)
+			(at 30.48 59.944 0)
 			(effects
 				(font
 					(size 1 1)
@@ -7739,7 +7739,7 @@
 			)
 		)
 		(property "Value" "100nf"
-			(at 30.48 64.77 0)
+			(at 30.988 64.77 0)
 			(effects
 				(font
 					(size 1 1)
