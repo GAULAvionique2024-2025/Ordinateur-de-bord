@@ -164,7 +164,7 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOF, PYROS_MainODB_Pin|PYROS_DrogueODB_Pin|PYROS_Bluetooth_Pin|nPYROS_Test_Pin
-                          |Enable6v6_Pin|CriticalLED_Pin, GPIO_PIN_RESET);
+                          |Enable7v4_Pin|CriticalLEDEnable_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOC, RFM_SDN_Pin|RFM_NIRQ_Pin, GPIO_PIN_RESET);
@@ -189,9 +189,9 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_Init(MEM_MISO_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PYROS_MainODB_Pin PYROS_DrogueODB_Pin PYROS_Bluetooth_Pin nPYROS_Test_Pin
-                           Enable6v6_Pin CriticalLED_Pin */
+                           Enable7v4_Pin CriticalLEDEnable_Pin */
   GPIO_InitStruct.Pin = PYROS_MainODB_Pin|PYROS_DrogueODB_Pin|PYROS_Bluetooth_Pin|nPYROS_Test_Pin
-                          |Enable6v6_Pin|CriticalLED_Pin;
+                          |Enable7v4_Pin|CriticalLEDEnable_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -204,8 +204,8 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : AN_3v7_Pin AN_6v6_Pin PYROS_MainADC_Pin PYROS_DrogueADC_Pin */
-  GPIO_InitStruct.Pin = AN_3v7_Pin|AN_6v6_Pin|PYROS_MainADC_Pin|PYROS_DrogueADC_Pin;
+  /*Configure GPIO pins : AN_3v7_Pin AN_7v4_Pin PYROS_MainADC_Pin PYROS_DrogueADC_Pin */
+  GPIO_InitStruct.Pin = AN_3v7_Pin|AN_7v4_Pin|PYROS_MainADC_Pin|PYROS_DrogueADC_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);

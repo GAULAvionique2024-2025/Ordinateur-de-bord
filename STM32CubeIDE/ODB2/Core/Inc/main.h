@@ -71,8 +71,8 @@ void Error_Handler(void);
 #define RFM_NIRQ_GPIO_Port GPIOC
 #define AN_3v7_Pin GPIO_PIN_2
 #define AN_3v7_GPIO_Port GPIOC
-#define AN_6v6_Pin GPIO_PIN_3
-#define AN_6v6_GPIO_Port GPIOC
+#define AN_7v4_Pin GPIO_PIN_3
+#define AN_7v4_GPIO_Port GPIOC
 #define ICM_INT_Pin GPIO_PIN_3
 #define ICM_INT_GPIO_Port GPIOA
 #define ICM_CS_Pin GPIO_PIN_4
@@ -95,10 +95,10 @@ void Error_Handler(void);
 #define PYROS_Bluetooth_GPIO_Port GPIOF
 #define nPYROS_Test_Pin GPIO_PIN_12
 #define nPYROS_Test_GPIO_Port GPIOF
-#define Enable6v6_Pin GPIO_PIN_13
-#define Enable6v6_GPIO_Port GPIOF
-#define CriticalLED_Pin GPIO_PIN_15
-#define CriticalLED_GPIO_Port GPIOF
+#define Enable7v4_Pin GPIO_PIN_13
+#define Enable7v4_GPIO_Port GPIOF
+#define CriticalLEDEnable_Pin GPIO_PIN_15
+#define CriticalLEDEnable_GPIO_Port GPIOF
 #define BUZZER_PWM_Pin GPIO_PIN_9
 #define BUZZER_PWM_GPIO_Port GPIOE
 #define BARO_SCK_Pin GPIO_PIN_12

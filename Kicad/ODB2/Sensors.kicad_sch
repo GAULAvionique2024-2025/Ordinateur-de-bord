@@ -4934,7 +4934,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "07d3938d-fb21-4f27-abd9-c412cebc633a")
-		(property "Reference" "LED_BT1"
+		(property "Reference" "BT_LED1"
 			(at 222.504 55.88 0)
 			(effects
 				(font
@@ -4944,7 +4944,7 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "LED1_B"
+		(property "Value" "BLUE"
 			(at 222.504 54.864 0)
 			(effects
 				(font
@@ -4989,7 +4989,7 @@
 		(instances
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/eac5f07f-d6a3-4c95-b286-7cebf46e30db"
-					(reference "LED_BT1")
+					(reference "BT_LED1")
 					(unit 1)
 				)
 			)

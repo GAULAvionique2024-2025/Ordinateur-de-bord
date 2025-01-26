@@ -4535,7 +4535,7 @@
 				)
 			)
 		)
-		(property "Value" "Green"
+		(property "Value" "GREEN"
 			(at 216.916 136.652 0)
 			(effects
 				(font
@@ -4602,7 +4602,7 @@
 		(dnp no)
 		(uuid "16ca8b3e-af51-4727-9e83-e40aba452119")
 		(property "Reference" "Pyros_PNP?"
-			(at 73.406 41.402 0)
+			(at 73.152 42.164 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4611,7 +4611,7 @@
 			)
 		)
 		(property "Value" "BC857"
-			(at 73.406 38.862 0)
+			(at 73.152 44.45 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4813,7 +4813,7 @@
 			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
-					(reference "Pyros_R13")
+					(reference "Pyros_R16")
 					(unit 1)
 				)
 			)
@@ -5885,7 +5885,7 @@
 				)
 			)
 		)
-		(property "Value" "Green"
+		(property "Value" "GREEN"
 			(at 219.456 150.622 0)
 			(effects
 				(font
@@ -6081,7 +6081,7 @@
 			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
-					(reference "Pyros_R18")
+					(reference "Pyros_R11")
 					(unit 1)
 				)
 			)
@@ -6433,7 +6433,7 @@
 			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
-					(reference "Pyros_R9")
+					(reference "Pyros_R14")
 					(unit 1)
 				)
 			)
@@ -6571,7 +6571,7 @@
 			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
-					(reference "Pyros_R11")
+					(reference "Pyros_R9")
 					(unit 1)
 				)
 			)
@@ -6787,7 +6787,7 @@
 			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
-					(reference "Pyros_R15")
+					(reference "Pyros_R13")
 					(unit 1)
 				)
 			)
@@ -7141,7 +7141,7 @@
 			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
-					(reference "Pyros_R10")
+					(reference "Pyros_R15")
 					(unit 1)
 				)
 			)
@@ -7398,7 +7398,7 @@
 			)
 		)
 		(property "Value" "BC857"
-			(at 181.356 38.862 0)
+			(at 181.356 43.688 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7825,7 +7825,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Screw_Terminal_01x02"
+		(property "Value" "Pyro_Drogue"
 			(at 203.2 66.0399 0)
 			(effects
 				(font
@@ -7876,7 +7876,7 @@
 			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
-					(reference "Pyros_J1")
+					(reference "Pyros_J2")
 					(unit 1)
 				)
 			)
@@ -8286,7 +8286,7 @@
 			)
 			(project ""
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
-					(reference "U12")
+					(reference "Pyros_AND1")
 					(unit 1)
 				)
 			)
@@ -8302,7 +8302,7 @@
 		(dnp no)
 		(uuid "e396bf68-0960-4b09-830f-f740867b910c")
 		(property "Reference" "Pyros_R?"
-			(at 162.56 34.036 0)
+			(at 161.544 34.29 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8359,7 +8359,7 @@
 			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
-					(reference "Pyros_R14")
+					(reference "Pyros_R10")
 					(unit 1)
 				)
 			)
@@ -8432,7 +8432,7 @@
 			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
-					(reference "Pyros_R17")
+					(reference "Pyros_R18")
 					(unit 1)
 				)
 			)
@@ -8577,7 +8577,7 @@
 			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
-					(reference "Pyros_R16")
+					(reference "Pyros_R17")
 					(unit 1)
 				)
 			)
@@ -8686,7 +8686,7 @@
 				)
 			)
 		)
-		(property "Value" "Green"
+		(property "Value" "GREEN"
 			(at 261.366 136.652 0)
 			(effects
 				(font
@@ -8761,7 +8761,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Screw_Terminal_01x02"
+		(property "Value" "Pyro_Main"
 			(at 95.25 66.0399 0)
 			(effects
 				(font
@@ -8812,7 +8812,7 @@
 			)
 			(project ""
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
-					(reference "Pyros_J6")
+					(reference "Pyros_J1")
 					(unit 1)
 				)
 			)
