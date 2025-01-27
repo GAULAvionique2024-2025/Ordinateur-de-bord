@@ -1960,7 +1960,7 @@
 		(descr "SOT, 3 Pin (https://www.jedec.org/system/files/docs/to-236h.pdf variant AB), generated with kicad-footprint-generator ipc_gullwing_generator.py")
 		(tags "SOT TO_SOT_SMD")
 		(property "Reference" "BUZ_NPN1"
-			(at -3.033518 -0.324165 360)
+			(at -3.033518 -0.324165 0)
 			(layer "F.SilkS")
 			(uuid "f7ecd550-32ce-43f8-9ee0-2a2ee4eebe32")
 			(effects
@@ -5951,7 +5951,7 @@
 		(descr "Resistor SMD 0805 (2012 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
 		(tags "resistor")
 		(property "Reference" "BUZ_R2"
-			(at 1.080549 -1.836934 360)
+			(at 1.080549 -1.836934 0)
 			(layer "F.SilkS")
 			(uuid "a389ed3a-5474-4934-aecc-7369e5ee29bf")
 			(effects
@@ -5962,7 +5962,7 @@
 			)
 		)
 		(property "Value" "1k5"
-			(at 0 1.65 360)
+			(at 0 1.65 0)
 			(layer "F.Fab")
 			(uuid "464b0a77-7d7b-4fcd-82ea-ac49a1daa8e6")
 			(effects
@@ -6117,7 +6117,7 @@
 			(uuid "2dae2417-0dbf-43a2-89a1-1b42083b7702")
 		)
 		(fp_text user "${REFERENCE}"
-			(at 0 0 360)
+			(at 0 0 0)
 			(layer "F.Fab")
 			(uuid "b5496432-a877-4fd2-ac51-fe49c2ad5adf")
 			(effects
@@ -9229,7 +9229,7 @@
 			(uuid "b4d931eb-aad8-4933-b1dc-0c354b0e6a45")
 		)
 		(fp_text user "${REFERENCE}"
-			(at 0 4 360)
+			(at 0 4 0)
 			(layer "F.Fab")
 			(uuid "51d7805b-b064-497c-8fe2-ada8e6684d2f")
 			(effects
@@ -19108,7 +19108,7 @@
 		(descr "Resistor SMD 0805 (2012 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
 		(tags "resistor")
 		(property "Reference" "CLED_R1"
-			(at 0 -1.65 360)
+			(at 0 -1.65 0)
 			(layer "F.SilkS")
 			(uuid "e483fb5e-48ba-469c-8fcc-8853f54e72cc")
 			(effects
@@ -19119,7 +19119,7 @@
 			)
 		)
 		(property "Value" "1k5"
-			(at 0 1.65 360)
+			(at 0 1.65 0)
 			(layer "F.Fab")
 			(uuid "165517c5-aea1-4cf5-9713-eb682abfd1a4")
 			(effects
@@ -19274,7 +19274,7 @@
 			(uuid "4d912e7c-eda7-4578-b88b-0fb35e408f21")
 		)
 		(fp_text user "${REFERENCE}"
-			(at 0 0 360)
+			(at 0 0 0)
 			(layer "F.Fab")
 			(uuid "b866cf4e-7d01-4cfc-9039-ad5ddf28884d")
 			(effects
@@ -21039,7 +21039,7 @@
 		(descr "SOIC, 8 Pin (https://www.analog.com/media/en/technical-documentation/data-sheets/ada4898-1_4898-2.pdf#page=29), generated with kicad-footprint-generator ipc_gullwing_generator.py")
 		(tags "SOIC SO")
 		(property "Reference" "Pyros_AMP1"
-			(at 0 -3.4 360)
+			(at 0 -3.4 0)
 			(layer "F.SilkS")
 			(uuid "f34ae7cc-5b67-4d92-9f42-cf7634f4aecd")
 			(effects
@@ -21050,7 +21050,7 @@
 			)
 		)
 		(property "Value" "TLV2372"
-			(at 0 3.4 360)
+			(at 0 3.4 0)
 			(layer "F.Fab")
 			(uuid "2745ad05-38c7-4d32-94e1-2fcfebf4c2b2")
 			(effects
@@ -21061,7 +21061,7 @@
 			)
 		)
 		(property "Footprint" "Package_SO:SOIC-8-1EP_3.9x4.9mm_P1.27mm_EP2.41x3.81mm"
-			(at 0 0 360)
+			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "92b8cd22-603b-493d-b3d9-5738a9809a84")
@@ -21073,7 +21073,7 @@
 			)
 		)
 		(property "Datasheet" "http://www.ti.com/lit/ds/symlink/tlv2375.pdf"
-			(at 0 0 360)
+			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "d0d3e219-f952-42af-87f0-86432bc0dd19")
@@ -21085,7 +21085,7 @@
 			)
 		)
 		(property "Description" "Dual Rail-to-Rail Input/Output Operational Amplifier, DIP-8/SOIC-8/VSSOP-8"
-			(at 0 0 360)
+			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "fcb0fd37-818c-4fa7-be60-97143255d76b")
@@ -21244,7 +21244,7 @@
 			(uuid "cc9bd37e-bd68-4a9b-a283-2c799ef2c879")
 		)
 		(fp_text user "${REFERENCE}"
-			(at 0 0 360)
+			(at 0 0 0)
 			(layer "F.Fab")
 			(uuid "af7aa7e5-6428-4e6f-adaf-ea951c394870")
 			(effects
@@ -27291,7 +27291,7 @@
 		(descr "Soldered wire connection, for 2 times 2.5 mm² wires, reinforced insulation, conductor diameter 2.4mm, outer diameter 4.4mm, size source Multi-Contact FLEXI-xV 2.5 (https://ec.staubli.com/AcroFiles/Catalogues/TM_Cab-Main-11014119_(en)_hi.pdf), bend radius 3 times outer diameter, generated with kicad-footprint-generator")
 		(tags "connector wire 2.5sqmm")
 		(property "Reference" "7v4_J1"
-			(at 4.4 -3.4 360)
+			(at 4.4 -3.4 0)
 			(layer "F.SilkS")
 			(uuid "f8f35071-dc7d-42a9-a45d-6e77ebfa0041")
 			(effects
@@ -27302,7 +27302,7 @@
 			)
 		)
 		(property "Value" "Batt7v4"
-			(at 4.4 3.4 360)
+			(at 4.4 3.4 0)
 			(layer "F.Fab")
 			(uuid "38e31001-5c72-4dfe-a6d7-cba1afd41d72")
 			(effects
@@ -27459,7 +27459,7 @@
 			(uuid "a26eaa5c-58ce-4f3c-86c4-c93783b7b782")
 		)
 		(fp_text user "${REFERENCE}"
-			(at 4.4 0 360)
+			(at 4.4 0 0)
 			(layer "F.Fab")
 			(uuid "c4f074e4-1a8c-4a31-ad61-4709556ae0ea")
 			(effects
@@ -31034,7 +31034,7 @@
 		(descr "Resistor SMD 0805 (2012 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
 		(tags "resistor")
 		(property "Reference" "BUZ_R1"
-			(at 0 -1.65 360)
+			(at 0 -1.65 0)
 			(layer "F.SilkS")
 			(uuid "d573f79d-019c-4c50-9efd-79f6943e91eb")
 			(effects
@@ -31045,7 +31045,7 @@
 			)
 		)
 		(property "Value" "1k5"
-			(at 0 1.65 360)
+			(at 0 1.65 0)
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "d81a652e-6d71-471f-b879-a1d62d36b43f")
@@ -31201,7 +31201,7 @@
 			(uuid "a6e25b09-9e43-4097-8238-23a7d142b727")
 		)
 		(fp_text user "${REFERENCE}"
-			(at 0 0 360)
+			(at 0 0 0)
 			(layer "F.Fab")
 			(uuid "98718445-63ee-4b9b-b9b9-505fa5bab6c8")
 			(effects
@@ -32608,7 +32608,7 @@
 		(descr "Capacitor SMD 0805 (2012 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf, https://docs.google.com/spreadsheets/d/1BsfQQcO9C6DZCsRaXUlFlo91Tg2WpOkGARC1WS5S8t0/edit?usp=sharing), generated with kicad-footprint-generator")
 		(tags "capacitor")
 		(property "Reference" "Beacon_C1"
-			(at -1.69286 -1.890961 360)
+			(at -1.69286 -1.890961 0)
 			(layer "F.SilkS")
 			(uuid "8f6c0a81-715c-4aa0-9c35-35550c03a0be")
 			(effects
@@ -32619,7 +32619,7 @@
 			)
 		)
 		(property "Value" "10uF"
-			(at 0 1.68 360)
+			(at 0 1.68 0)
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "1205f66e-ad3f-4069-b683-5142f5689e37")
@@ -32775,7 +32775,7 @@
 			(uuid "9d9975cd-764b-4ead-bd86-4fc40723904a")
 		)
 		(fp_text user "${REFERENCE}"
-			(at 0 0 360)
+			(at 0 0 0)
 			(layer "F.Fab")
 			(uuid "f08eade1-1ba8-4701-a5fb-964160c5cbbc")
 			(effects
@@ -34916,7 +34916,7 @@
 		(descr "LED SMD 0805 (2012 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: https://docs.google.com/spreadsheets/d/1BsfQQcO9C6DZCsRaXUlFlo91Tg2WpOkGARC1WS5S8t0/edit?usp=sharing), generated with kicad-footprint-generator")
 		(tags "LED")
 		(property "Reference" "CLED_LED1"
-			(at 0 -1.65 360)
+			(at 0 -1.65 0)
 			(layer "F.SilkS")
 			(uuid "2d426f06-0e18-486b-9a94-5b2755728335")
 			(effects
@@ -34927,7 +34927,7 @@
 			)
 		)
 		(property "Value" "RED"
-			(at 0 1.65 360)
+			(at 0 1.65 0)
 			(layer "F.Fab")
 			(uuid "58cfaf79-3ffe-4dac-9edf-8e01806f9a8e")
 			(effects
@@ -35102,7 +35102,7 @@
 			(uuid "c55e7eff-9999-4a8e-bf79-b4f98fbe2650")
 		)
 		(fp_text user "${REFERENCE}"
-			(at 0 0 360)
+			(at 0 0 0)
 			(layer "F.Fab")
 			(uuid "f6769a48-7b34-4477-b9ba-aaccbd808c82")
 			(effects
@@ -42903,5 +42903,48 @@
 		(layer "F.Cu")
 		(net 1)
 		(uuid "469e6a92-fe76-4ead-8fa3-78239253a4b2")
+	)
+	(zone
+		(net 2)
+		(net_name "GND")
+		(layer "In1.Cu")
+		(uuid "f6370adc-d0f6-4863-92b8-db035ca8483c")
+		(hatch edge 0.5)
+		(connect_pads
+			(clearance 0.5)
+		)
+		(min_thickness 0.25)
+		(filled_areas_thickness no)
+		(fill
+			(thermal_gap 0.5)
+			(thermal_bridge_width 0.5)
+		)
+		(polygon
+			(pts
+				(xy -2.5 -2.5) (xy 122.75 -2.5) (xy 123 63.5) (xy -2.25 63)
+			)
+		)
+	)
+	(zone
+		(net 2)
+		(net_name "GND")
+		(layer "In4.Cu")
+		(uuid "d166252c-4b97-4627-b257-19606ea19b9e")
+		(hatch edge 0.5)
+		(priority 1)
+		(connect_pads
+			(clearance 0.5)
+		)
+		(min_thickness 0.25)
+		(filled_areas_thickness no)
+		(fill
+			(thermal_gap 0.5)
+			(thermal_bridge_width 0.5)
+		)
+		(polygon
+			(pts
+				(xy -2.5 -2.5) (xy 122.75 -2.5) (xy 123 63.5) (xy -2.25 63)
+			)
+		)
 	)
 )
