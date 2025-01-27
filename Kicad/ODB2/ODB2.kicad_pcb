@@ -3,13 +3,17 @@
 	(generator "pcbnew")
 	(generator_version "8.0")
 	(general
-		(thickness 1.6)
+		(thickness 1.511)
 		(legacy_teardrops no)
 	)
 	(paper "A4")
 	(layers
-		(0 "F.Cu" signal)
-		(31 "B.Cu" signal)
+		(0 "F.Cu" signal "Top_Signal")
+		(1 "In1.Cu" power "GND1")
+		(2 "In2.Cu" signal "Inner_Signal")
+		(3 "In3.Cu" power "Power_Plane")
+		(4 "In4.Cu" power "GND2")
+		(31 "B.Cu" signal "Bottom_Signal")
 		(32 "B.Adhes" user "B.Adhesive")
 		(33 "F.Adhes" user "F.Adhesive")
 		(34 "B.Paste" user)
@@ -39,6 +43,89 @@
 		(58 "User.9" user)
 	)
 	(setup
+		(stackup
+			(layer "F.SilkS"
+				(type "Top Silk Screen")
+			)
+			(layer "F.Paste"
+				(type "Top Solder Paste")
+			)
+			(layer "F.Mask"
+				(type "Top Solder Mask")
+				(thickness 0.01)
+			)
+			(layer "F.Cu"
+				(type "copper")
+				(thickness 0.0175)
+			)
+			(layer "dielectric 1"
+				(type "prepreg")
+				(thickness 0.13)
+				(material "FR4")
+				(epsilon_r 4.5)
+				(loss_tangent 0.02)
+			)
+			(layer "In1.Cu"
+				(type "copper")
+				(thickness 0.035)
+			)
+			(layer "dielectric 2"
+				(type "core")
+				(thickness 0.43)
+				(material "FR4")
+				(epsilon_r 4.5)
+				(loss_tangent 0.02)
+			)
+			(layer "In2.Cu"
+				(type "copper")
+				(thickness 0.035)
+			)
+			(layer "dielectric 3"
+				(type "prepreg")
+				(thickness 0.196)
+				(material "FR4")
+				(epsilon_r 4.5)
+				(loss_tangent 0.02)
+			)
+			(layer "In3.Cu"
+				(type "copper")
+				(thickness 0.035)
+			)
+			(layer "dielectric 4"
+				(type "core")
+				(thickness 0.43)
+				(material "FR4")
+				(epsilon_r 4.5)
+				(loss_tangent 0.02)
+			)
+			(layer "In4.Cu"
+				(type "copper")
+				(thickness 0.035)
+			)
+			(layer "dielectric 5"
+				(type "prepreg")
+				(thickness 0.13)
+				(material "FR4")
+				(epsilon_r 4.5)
+				(loss_tangent 0.02)
+			)
+			(layer "B.Cu"
+				(type "copper")
+				(thickness 0.0175)
+			)
+			(layer "B.Mask"
+				(type "Bottom Solder Mask")
+				(thickness 0.01)
+			)
+			(layer "B.Paste"
+				(type "Bottom Solder Paste")
+			)
+			(layer "B.SilkS"
+				(type "Bottom Silk Screen")
+			)
+			(copper_finish "None")
+			(dielectric_constraints no)
+		)
 		(pad_to_mask_clearance 0)
 		(allow_soldermask_bridges_in_footprints no)
 		(pcbplotparams
@@ -329,119 +416,6 @@
 	(net 247 "unconnected-(USB_Bus1-Shield-Pad6)_6")
 	(net 248 "unconnected-(USB_Bus1-Shield-Pad6)_7")
 	(net 249 "Net-(Crystal_C2-Pad1)")
-	(footprint "MountingHole:MountingHole_4.3mm_M4"
-		(layer "F.Cu")
-		(uuid "0530e1a3-cacb-4cd7-a959-f3258a35820b")
-		(at 208.28 69.54)
-		(descr "Mounting Hole 4.3mm, no annular, M4")
-		(tags "mounting hole 4.3mm no annular m4")
-		(property "Reference" "H4"
-			(at 0 -5.3 0)
-			(layer "F.SilkS")
-			(uuid "503c6e54-e78f-42ce-ae0c-4d16f5685625")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Value" "MountingHole"
-			(at 0 5.3 0)
-			(layer "F.Fab")
-			(uuid "bc187710-aa35-4ae2-a543-fee37e67c573")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Footprint" "MountingHole:MountingHole_4.3mm_M4"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "6be27222-369c-426c-b3e0-d55d852d3cde")
-			(effects
-				(font
-					(size 1.27 1.27)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "d9adb7ae-a78c-41dd-9a2f-5f8bc6236e66")
-			(effects
-				(font
-					(size 1.27 1.27)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Description" "Mounting Hole without connection"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "a0b02309-6af2-40d4-b050-5d03ad3b4a9b")
-			(effects
-				(font
-					(size 1.27 1.27)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property ki_fp_filters "MountingHole*")
-		(path "/4ffc6bbd-05c5-43b1-a9de-b24bc82cb865")
-		(sheetname "Racine")
-		(sheetfile "ODB2.kicad_sch")
-		(attr exclude_from_pos_files exclude_from_bom)
-		(fp_circle
-			(center 0 0)
-			(end 4.3 0)
-			(stroke
-				(width 0.15)
-				(type solid)
-			)
-			(fill none)
-			(layer "Cmts.User")
-			(uuid "2bf6ba4b-deff-4ec1-9bf4-89d0e119230f")
-		)
-		(fp_circle
-			(center 0 0)
-			(end 4.55 0)
-			(stroke
-				(width 0.05)
-				(type solid)
-			)
-			(fill none)
-			(layer "F.CrtYd")
-			(uuid "4f88f339-4aff-4584-9f81-73b387372b38")
-		)
-		(fp_text user "${REFERENCE}"
-			(at 0 0 0)
-			(layer "F.Fab")
-			(uuid "79fa3358-c389-411c-8375-5cc0ae7d37c5")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(pad "" np_thru_hole circle
-			(at 0 0)
-			(size 4.3 4.3)
-			(drill 4.3)
-			(layers "*.Cu" "*.Mask")
-			(uuid "d830d3f4-f1a1-42a1-bd30-ad4b9949cf6a")
-		)
-	)
 	(footprint "Resistor_SMD:R_0805_2012Metric"
 		(layer "F.Cu")
 		(uuid "0774c1bf-a80f-4552-aecd-090e38087bc1")
@@ -655,119 +629,6 @@
 			)
 		)
 	)
-	(footprint "MountingHole:MountingHole_4.3mm_M4"
-		(layer "F.Cu")
-		(uuid "09d6492e-935c-453d-a9a3-03a575f464ec")
-		(at 103.52 114.3)
-		(descr "Mounting Hole 4.3mm, no annular, M4")
-		(tags "mounting hole 4.3mm no annular m4")
-		(property "Reference" "H1"
-			(at 0 -5.3 0)
-			(layer "F.SilkS")
-			(uuid "2f600a48-f272-4dfa-b04f-fe9c847de525")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Value" "MountingHole"
-			(at 0 5.3 0)
-			(layer "F.Fab")
-			(uuid "0c0f8b7f-d587-4eeb-bb7e-7cced85bceb2")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Footprint" "MountingHole:MountingHole_4.3mm_M4"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "14d0de2f-f511-4a3a-9d0b-0af5452fa32a")
-			(effects
-				(font
-					(size 1.27 1.27)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "30212060-e98d-4b2a-a186-ddce6b6a2cc9")
-			(effects
-				(font
-					(size 1.27 1.27)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Description" "Mounting Hole without connection"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "4e9eaf85-7aa9-4b93-8810-fb4679fe4793")
-			(effects
-				(font
-					(size 1.27 1.27)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property ki_fp_filters "MountingHole*")
-		(path "/493e1025-20c4-4e70-a3ac-6a625e4ce8f9")
-		(sheetname "Racine")
-		(sheetfile "ODB2.kicad_sch")
-		(attr exclude_from_pos_files exclude_from_bom)
-		(fp_circle
-			(center 0 0)
-			(end 4.3 0)
-			(stroke
-				(width 0.15)
-				(type solid)
-			)
-			(fill none)
-			(layer "Cmts.User")
-			(uuid "02f58ef3-558c-4e46-9be6-161cb742ac77")
-		)
-		(fp_circle
-			(center 0 0)
-			(end 4.55 0)
-			(stroke
-				(width 0.05)
-				(type solid)
-			)
-			(fill none)
-			(layer "F.CrtYd")
-			(uuid "2cbf6698-8885-4bce-8bc6-62a098549e57")
-		)
-		(fp_text user "${REFERENCE}"
-			(at 0 0 0)
-			(layer "F.Fab")
-			(uuid "a9a73f6d-6dc3-4ad2-81a6-1d0e9aa9a94e")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(pad "" np_thru_hole circle
-			(at 0 0)
-			(size 4.3 4.3)
-			(drill 4.3)
-			(layers "*.Cu" "*.Mask")
-			(uuid "a7fce831-bca3-49ea-8c04-467c0170a289")
-		)
-	)
 	(footprint "Jumper:SolderJumper-2_P1.3mm_Bridged_RoundedPad1.0x1.5mm"
 		(layer "F.Cu")
 		(uuid "0aa302a5-6e32-4f03-9917-6f097d292cad")
@@ -775,7 +636,7 @@
 		(descr "SMD Solder Jumper, 1x1.5mm, rounded Pads, 0.3mm gap, bridged with 1 copper strip")
 		(tags "net tie solder jumper bridged")
 		(property "Reference" "Boot_JP1"
-			(at 0 -1.8 360)
+			(at 0 -1.8 0)
 			(layer "F.SilkS")
 			(uuid "b8bacf1a-dfb8-4d61-a2c4-0b068ed552ab")
 			(effects
@@ -786,7 +647,7 @@
 			)
 		)
 		(property "Value" "SolderJumper_2_Open"
-			(at 0 1.9 360)
+			(at 0 1.9 0)
 			(layer "F.Fab")
 			(uuid "802f0e26-236d-495b-a3b1-e4fe39b1f371")
 			(effects
@@ -1883,7 +1744,7 @@
 			)
 		)
 		(property "Value" "MMBT3904"
-			(at 0 2.4 360)
+			(at 0 2.4 0)
 			(layer "F.Fab")
 			(uuid "42a87cce-599d-410f-ac2c-6029eb8351c1")
 			(effects
@@ -2080,7 +1941,7 @@
 			(uuid "61166433-edb3-41ca-94c1-9109e9b358ee")
 		)
 		(fp_text user "${REFERENCE}"
-			(at 0 0 360)
+			(at 0 0 0)
 			(layer "F.Fab")
 			(uuid "e15e553e-62d8-4c7f-9080-2494b1528a0f")
 			(effects
@@ -2800,7 +2661,7 @@
 		(descr "Capacitor SMD 0805 (2012 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf, https://docs.google.com/spreadsheets/d/1BsfQQcO9C6DZCsRaXUlFlo91Tg2WpOkGARC1WS5S8t0/edit?usp=sharing), generated with kicad-footprint-generator")
 		(tags "capacitor")
 		(property "Reference" "Crystal_C2"
-			(at 0.127756 -1.731796 360)
+			(at 0.127756 -1.731796 0)
 			(layer "F.SilkS")
 			(uuid "241c07ba-0889-494d-aa82-23cffd197adb")
 			(effects
@@ -2811,7 +2672,7 @@
 			)
 		)
 		(property "Value" "8pF"
-			(at 0 1.68 360)
+			(at 0 1.68 0)
 			(layer "F.Fab")
 			(uuid "cf583dcd-81e5-4e51-a5e6-b2ba61b0928f")
 			(effects
@@ -2966,7 +2827,7 @@
 			(uuid "3861490a-fac3-48b4-b172-d9d97ad6f54a")
 		)
 		(fp_text user "${REFERENCE}"
-			(at 0 0 360)
+			(at 0 0 0)
 			(layer "F.Fab")
 			(uuid "9a49617b-716d-45e0-855d-3e0249646f9d")
 			(effects
@@ -7775,119 +7636,6 @@
 			)
 		)
 	)
-	(footprint "MountingHole:MountingHole_4.3mm_M4"
-		(layer "F.Cu")
-		(uuid "2e7a0d9a-2d04-48fd-a301-81a301acde3e")
-		(at 208.28 114.3)
-		(descr "Mounting Hole 4.3mm, no annular, M4")
-		(tags "mounting hole 4.3mm no annular m4")
-		(property "Reference" "H2"
-			(at 0 -5.3 0)
-			(layer "F.SilkS")
-			(uuid "5349d6a9-ff49-4571-a88b-3473cf0f53bc")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Value" "MountingHole"
-			(at 0 5.3 0)
-			(layer "F.Fab")
-			(uuid "8347b332-7289-416d-9dfb-41fa41590bcf")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Footprint" "MountingHole:MountingHole_4.3mm_M4"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "f5881ea7-c70a-4276-9824-810b3d767271")
-			(effects
-				(font
-					(size 1.27 1.27)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "6ec7ff14-eea0-4589-8b9c-8e97b68f0a74")
-			(effects
-				(font
-					(size 1.27 1.27)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Description" "Mounting Hole without connection"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "287e9780-69cf-4870-9873-baffae7c825f")
-			(effects
-				(font
-					(size 1.27 1.27)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property ki_fp_filters "MountingHole*")
-		(path "/aa06056d-5f25-4cd5-9c59-353aa35eda88")
-		(sheetname "Racine")
-		(sheetfile "ODB2.kicad_sch")
-		(attr exclude_from_pos_files exclude_from_bom)
-		(fp_circle
-			(center 0 0)
-			(end 4.3 0)
-			(stroke
-				(width 0.15)
-				(type solid)
-			)
-			(fill none)
-			(layer "Cmts.User")
-			(uuid "7b395ea2-d955-4b70-bcf5-99cba28802b2")
-		)
-		(fp_circle
-			(center 0 0)
-			(end 4.55 0)
-			(stroke
-				(width 0.05)
-				(type solid)
-			)
-			(fill none)
-			(layer "F.CrtYd")
-			(uuid "1d28985a-9c15-49b0-b342-d10bdfa1c357")
-		)
-		(fp_text user "${REFERENCE}"
-			(at 0 0 0)
-			(layer "F.Fab")
-			(uuid "797d8cef-5e51-46c8-9a73-c557cad24202")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(pad "" np_thru_hole circle
-			(at 0 0)
-			(size 4.3 4.3)
-			(drill 4.3)
-			(layers "*.Cu" "*.Mask")
-			(uuid "e92a013b-c06a-43a8-a392-d3a35bf1688d")
-		)
-	)
 	(footprint "Resistor_SMD:R_0805_2012Metric"
 		(layer "F.Cu")
 		(uuid "2e92aa46-44d5-4c41-a0ea-936a20266cac")
@@ -8108,7 +7856,7 @@
 		(descr "Power MOSFET package, TDSON-8-1, 5.15x5.9mm (https://www.infineon.com/cms/en/product/packages/PG-TDSON/PG-TDSON-8-1/)")
 		(tags "tdson ")
 		(property "Reference" "Pyros_MOSFET2"
-			(at 0 -3.5 360)
+			(at 0 -3.5 0)
 			(layer "F.SilkS")
 			(uuid "6b2e411f-01cf-43cb-8f86-e18c8eeb6804")
 			(effects
@@ -8119,7 +7867,7 @@
 			)
 		)
 		(property "Value" "CSD17310Q5A"
-			(at 0 3.5 360)
+			(at 0 3.5 0)
 			(layer "F.Fab")
 			(uuid "24b8bd7c-d6bf-4d28-928c-5814e67a9526")
 			(effects
@@ -8296,7 +8044,7 @@
 			(uuid "e28fc852-6e48-4841-8c6a-8c4950c8523a")
 		)
 		(fp_text user "${REFERENCE}"
-			(at 0 0 360)
+			(at 0 0 0)
 			(layer "F.Fab")
 			(uuid "bd134a2a-e4e1-4b7e-bf8a-f284166e6bbb")
 			(effects
@@ -10721,7 +10469,7 @@
 		(descr "Capacitor SMD 0805 (2012 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf, https://docs.google.com/spreadsheets/d/1BsfQQcO9C6DZCsRaXUlFlo91Tg2WpOkGARC1WS5S8t0/edit?usp=sharing), generated with kicad-footprint-generator")
 		(tags "capacitor")
 		(property "Reference" "Decouple_C4"
-			(at 0 -1.68 360)
+			(at 0 -1.68 0)
 			(layer "F.SilkS")
 			(uuid "65c8c618-ac1c-49b8-831c-50901baebf79")
 			(effects
@@ -10732,7 +10480,7 @@
 			)
 		)
 		(property "Value" "100nF"
-			(at 0 1.68 360)
+			(at 0 1.68 0)
 			(layer "F.Fab")
 			(uuid "d593b44f-0e43-49c8-add8-2dd2856041e6")
 			(effects
@@ -10887,7 +10635,7 @@
 			(uuid "4ab56530-37ef-4076-9d51-b0715da088f1")
 		)
 		(fp_text user "${REFERENCE}"
-			(at 0 0 360)
+			(at 0 0 0)
 			(layer "F.Fab")
 			(uuid "6b4d0a2d-cf06-4295-9388-aab26255c561")
 			(effects
@@ -10925,6 +10673,119 @@
 			(rotate
 				(xyz 0 0 0)
 			)
+		)
+	)
+	(footprint "MountingHole:MountingHole_4.3mm_M4"
+		(layer "F.Cu")
+		(uuid "40271a4c-dcac-4052-a4de-153aaf9ab420")
+		(at 6 6)
+		(descr "Mounting Hole 4.3mm, no annular, M4")
+		(tags "mounting hole 4.3mm no annular m4")
+		(property "Reference" "H1"
+			(at 0 -5.3 0)
+			(layer "F.SilkS")
+			(uuid "8b1c9c2c-e3e3-4bbf-9f1d-f0d9504d4ebc")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Value" "MountingHole"
+			(at 0 5.3 0)
+			(layer "F.Fab")
+			(uuid "f599f28c-17e6-4701-8dc4-311ebc4f68e0")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Footprint" "MountingHole:MountingHole_4.3mm_M4"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "9575b33b-e838-4296-8d75-0f614f260f4f")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "38594a5d-333d-49ca-b3a8-26d3f094fea7")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Description" "Mounting Hole without connection"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "0fee7709-ec64-440f-9465-ec230bb94254")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property ki_fp_filters "MountingHole*")
+		(path "/493e1025-20c4-4e70-a3ac-6a625e4ce8f9")
+		(sheetname "Racine")
+		(sheetfile "ODB2.kicad_sch")
+		(attr exclude_from_pos_files exclude_from_bom)
+		(fp_circle
+			(center 0 0)
+			(end 4.3 0)
+			(stroke
+				(width 0.15)
+				(type solid)
+			)
+			(fill none)
+			(layer "Cmts.User")
+			(uuid "cea70023-f9d5-42a7-a6e3-b2e725d01866")
+		)
+		(fp_circle
+			(center 0 0)
+			(end 4.55 0)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(fill none)
+			(layer "F.CrtYd")
+			(uuid "b45ad3cd-4a44-45a9-8dc8-a83077cd8e78")
+		)
+		(fp_text user "${REFERENCE}"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(uuid "9878b0a0-77e7-4f1f-9c26-81319ce736f0")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(pad "" np_thru_hole circle
+			(at 0 0)
+			(size 4.3 4.3)
+			(drill 4.3)
+			(layers "*.Cu" "*.Mask")
+			(uuid "41586896-36bd-422d-966b-99fc9cb7cc0a")
 		)
 	)
 	(footprint "Package_TO_SOT_SMD:SOT-23"
@@ -12656,7 +12517,7 @@
 		(descr "LED SMD 0805 (2012 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: https://docs.google.com/spreadsheets/d/1BsfQQcO9C6DZCsRaXUlFlo91Tg2WpOkGARC1WS5S8t0/edit?usp=sharing), generated with kicad-footprint-generator")
 		(tags "LED")
 		(property "Reference" "5v_LED1"
-			(at 0.116292 1.818374 360)
+			(at 0.116292 1.818374 0)
 			(layer "F.SilkS")
 			(uuid "9ac8d723-9328-450f-bc92-1259b0d0941a")
 			(effects
@@ -12667,7 +12528,7 @@
 			)
 		)
 		(property "Value" "GREEN"
-			(at 0 1.65 360)
+			(at 0 1.65 0)
 			(layer "F.Fab")
 			(uuid "67501ca1-6ac4-45a0-847a-2b6ad89fd5d0")
 			(effects
@@ -12842,7 +12703,7 @@
 			(uuid "282d213c-64ef-4e88-9e2f-5397c5d5dd42")
 		)
 		(fp_text user "${REFERENCE}"
-			(at 0 0 360)
+			(at 0 0 0)
 			(layer "F.Fab")
 			(uuid "56bc470a-5620-4446-b809-26ff14f35a58")
 			(effects
@@ -13958,7 +13819,7 @@
 		(descr "Resistor SMD 0805 (2012 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
 		(tags "resistor")
 		(property "Reference" "Coupling_FB1"
-			(at -0.401336 2.176654 360)
+			(at -0.401336 2.176654 0)
 			(layer "F.SilkS")
 			(uuid "7f971a4a-1788-4821-816d-d76a2f32aa51")
 			(effects
@@ -13969,7 +13830,7 @@
 			)
 		)
 		(property "Value" "120R"
-			(at 0 1.65 360)
+			(at 0 1.65 0)
 			(layer "F.Fab")
 			(uuid "9c68c8b6-40f3-48a2-88d2-203e31429810")
 			(effects
@@ -14124,7 +13985,7 @@
 			(uuid "edff874f-3600-470d-871d-5c1832b31242")
 		)
 		(fp_text user "${REFERENCE}"
-			(at 0 0 360)
+			(at 0 0 0)
 			(layer "F.Fab")
 			(uuid "02007f4f-2200-4f52-b6ac-3fd24421f120")
 			(effects
@@ -16318,7 +16179,7 @@
 		(descr "Capacitor SMD 0805 (2012 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf, https://docs.google.com/spreadsheets/d/1BsfQQcO9C6DZCsRaXUlFlo91Tg2WpOkGARC1WS5S8t0/edit?usp=sharing), generated with kicad-footprint-generator")
 		(tags "capacitor")
 		(property "Reference" "Crystal_C1"
-			(at -0.021292 1.824064 360)
+			(at -0.021292 1.824064 0)
 			(layer "F.SilkS")
 			(uuid "4a4c741e-073d-42aa-9e71-de27dd37586c")
 			(effects
@@ -16329,7 +16190,7 @@
 			)
 		)
 		(property "Value" "8pF"
-			(at 0 1.68 360)
+			(at 0 1.68 0)
 			(layer "F.Fab")
 			(uuid "5aff79f4-9b3a-4f34-a360-9baa96544719")
 			(effects
@@ -16484,7 +16345,7 @@
 			(uuid "f3dc9b45-71ed-4744-bc82-a0756614bb0b")
 		)
 		(fp_text user "${REFERENCE}"
-			(at 0 0 360)
+			(at 0 0 0)
 			(layer "F.Fab")
 			(uuid "1d18f1b3-86e8-45a0-b954-b6fe4eb0c545")
 			(effects
@@ -17988,7 +17849,7 @@
 			(uuid "d772ab97-1a0f-4cd0-9eef-7c21c9c6baf5")
 		)
 		(fp_text user "${REFERENCE}"
-			(at 0 0 360)
+			(at 0 0 0)
 			(layer "F.Fab")
 			(uuid "382d42ef-972b-4142-bec7-c021ff1b28d1")
 			(effects
@@ -18312,7 +18173,7 @@
 		(descr "Capacitor SMD 0805 (2012 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf, https://docs.google.com/spreadsheets/d/1BsfQQcO9C6DZCsRaXUlFlo91Tg2WpOkGARC1WS5S8t0/edit?usp=sharing), generated with kicad-footprint-generator")
 		(tags "capacitor")
 		(property "Reference" "Decouple_C10"
-			(at 0 -1.68 360)
+			(at 0 -1.68 0)
 			(layer "F.SilkS")
 			(uuid "a67bda5f-2322-4159-9077-125e4c977f6e")
 			(effects
@@ -18323,7 +18184,7 @@
 			)
 		)
 		(property "Value" "100nF"
-			(at 0 1.68 360)
+			(at 0 1.68 0)
 			(layer "F.Fab")
 			(uuid "2abebbf9-778d-44bb-9820-49fc03c81007")
 			(effects
@@ -18478,7 +18339,7 @@
 			(uuid "a7295241-0bf6-41a9-b847-7e3ccab1c4b9")
 		)
 		(fp_text user "${REFERENCE}"
-			(at 0 0 360)
+			(at 0 0 0)
 			(layer "F.Fab")
 			(uuid "ab0bdde5-29ca-4425-a840-10bbf677675d")
 			(effects
@@ -22363,7 +22224,7 @@
 		(descr "TO-263/D2PAK/DDPAK SMD package, http://www.infineon.com/cms/en/product/packages/PG-TO263/PG-TO263-3-1/")
 		(tags "D2PAK DDPAK TO-263 D2PAK-3 TO-263-3 SOT-404")
 		(property "Reference" "5v_REG1"
-			(at 0 -6.65 360)
+			(at 0 -6.65 0)
 			(layer "F.SilkS")
 			(uuid "977eaa17-b6fc-487d-9a53-8d4d49adb696")
 			(effects
@@ -22374,7 +22235,7 @@
 			)
 		)
 		(property "Value" "LM1085-5.0"
-			(at 0 6.65 360)
+			(at 0 6.65 0)
 			(layer "F.Fab")
 			(uuid "51ee437b-7574-4734-898f-36b3a704979b")
 			(effects
@@ -22691,7 +22552,7 @@
 			(uuid "fd92ae1b-a5b7-488b-9ca1-0cd5c61ca058")
 		)
 		(fp_text user "${REFERENCE}"
-			(at 0 0 360)
+			(at 0 0 0)
 			(layer "F.Fab")
 			(uuid "c3f216c7-618d-42f0-b741-5ca18e66fb76")
 			(effects
@@ -22791,6 +22652,119 @@
 			(rotate
 				(xyz 0 0 0)
 			)
+		)
+	)
+	(footprint "MountingHole:MountingHole_4.3mm_M4"
+		(layer "F.Cu")
+		(uuid "7f7c7c71-3e1c-48ba-807e-a71f52a92597")
+		(at 6 74)
+		(descr "Mounting Hole 4.3mm, no annular, M4")
+		(tags "mounting hole 4.3mm no annular m4")
+		(property "Reference" "H4"
+			(at 0 -5.3 0)
+			(layer "F.SilkS")
+			(uuid "80a4507a-4105-4a7c-b1ab-d144e6ca3e19")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Value" "MountingHole"
+			(at 0 5.3 0)
+			(layer "F.Fab")
+			(uuid "f004e2e1-1d4c-4941-97df-289aeb7f8947")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Footprint" "MountingHole:MountingHole_4.3mm_M4"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "5b0e93a0-3894-4489-8b73-d6c773dac829")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "4533fa84-ce18-4db5-b53d-16efc4bb5987")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Description" "Mounting Hole without connection"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "c18ab16b-810b-4758-a6d8-99bade125005")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property ki_fp_filters "MountingHole*")
+		(path "/4ffc6bbd-05c5-43b1-a9de-b24bc82cb865")
+		(sheetname "Racine")
+		(sheetfile "ODB2.kicad_sch")
+		(attr exclude_from_pos_files exclude_from_bom)
+		(fp_circle
+			(center 0 0)
+			(end 4.3 0)
+			(stroke
+				(width 0.15)
+				(type solid)
+			)
+			(fill none)
+			(layer "Cmts.User")
+			(uuid "66923e67-4530-49c2-bb67-e6f07bf8cea7")
+		)
+		(fp_circle
+			(center 0 0)
+			(end 4.55 0)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(fill none)
+			(layer "F.CrtYd")
+			(uuid "3d44927b-fe8a-496a-a0a0-85050fd8a60d")
+		)
+		(fp_text user "${REFERENCE}"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(uuid "b3e56a98-9533-49e1-b21b-389461c3aea9")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(pad "" np_thru_hole circle
+			(at 0 0)
+			(size 4.3 4.3)
+			(drill 4.3)
+			(layers "*.Cu" "*.Mask")
+			(uuid "eb600d8a-8253-49e1-8b98-7707b1ddc9d4")
 		)
 	)
 	(footprint "Capacitor_SMD:C_0805_2012Metric"
@@ -23994,7 +23968,7 @@
 		(descr "Resistor SMD 0805 (2012 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
 		(tags "resistor")
 		(property "Reference" "5v_R3"
-			(at 0.380223 4.670188 360)
+			(at 0.380223 4.670188 0)
 			(layer "F.SilkS")
 			(uuid "af2884a6-3dd5-4165-87f5-b7bee29abdcd")
 			(effects
@@ -24005,7 +23979,7 @@
 			)
 		)
 		(property "Value" "100k 1%"
-			(at 0 1.65 360)
+			(at 0 1.65 0)
 			(layer "F.Fab")
 			(uuid "3a969133-6e24-4576-be2d-09a65261aafe")
 			(effects
@@ -24160,7 +24134,7 @@
 			(uuid "aea75a84-7684-44b6-b28b-9d6972a0160a")
 		)
 		(fp_text user "${REFERENCE}"
-			(at 0 0 360)
+			(at 0 0 0)
 			(layer "F.Fab")
 			(uuid "f340730e-7185-43b7-8664-2f0dbef9ab44")
 			(effects
@@ -24207,7 +24181,7 @@
 		(descr "Power MOSFET package, TDSON-8-1, 5.15x5.9mm (https://www.infineon.com/cms/en/product/packages/PG-TDSON/PG-TDSON-8-1/)")
 		(tags "tdson ")
 		(property "Reference" "Pyros_MOSFET1"
-			(at 0 -3.5 360)
+			(at 0 -3.5 0)
 			(layer "F.SilkS")
 			(uuid "d0b0e359-3f08-4163-baf2-cbfa55a106de")
 			(effects
@@ -24218,7 +24192,7 @@
 			)
 		)
 		(property "Value" "CSD17310Q5A"
-			(at 0 3.5 360)
+			(at 0 3.5 0)
 			(layer "F.Fab")
 			(uuid "ae2dfe97-5b14-45a3-8a93-8e71ea753601")
 			(effects
@@ -24395,7 +24369,7 @@
 			(uuid "0415ba37-0b06-4733-becc-c88169cf798c")
 		)
 		(fp_text user "${REFERENCE}"
-			(at 0 0 360)
+			(at 0 0 0)
 			(layer "F.Fab")
 			(uuid "43d243be-78ce-4c01-aaaf-273dc02214e4")
 			(effects
@@ -28061,7 +28035,7 @@
 		(descr "Resistor SMD 0805 (2012 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
 		(tags "resistor")
 		(property "Reference" "GPS_R1"
-			(at -1.030023 1.799164 360)
+			(at -1.030023 1.799164 0)
 			(layer "F.SilkS")
 			(uuid "c287f5a9-548c-42a6-a00f-2eb7cf89cdd1")
 			(effects
@@ -28072,7 +28046,7 @@
 			)
 		)
 		(property "Value" "10R"
-			(at 0 1.65 360)
+			(at 0 1.65 0)
 			(layer "F.Fab")
 			(uuid "082c6394-39ec-475d-8578-14cdf9d1b2bc")
 			(effects
@@ -28227,7 +28201,7 @@
 			(uuid "7da8c3a0-fb75-4e1a-93f6-c2bac2f769fb")
 		)
 		(fp_text user "${REFERENCE}"
-			(at 0 0 360)
+			(at 0 0 0)
 			(layer "F.Fab")
 			(uuid "efcb6493-a06b-4f62-b4b3-1a1e1bb8a216")
 			(effects
@@ -31798,7 +31772,7 @@
 		(descr "Capacitor SMD 0805 (2012 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf, https://docs.google.com/spreadsheets/d/1BsfQQcO9C6DZCsRaXUlFlo91Tg2WpOkGARC1WS5S8t0/edit?usp=sharing), generated with kicad-footprint-generator")
 		(tags "capacitor")
 		(property "Reference" "Decouple_C9"
-			(at -0.081429 -2.800607 360)
+			(at -0.081429 -2.800607 0)
 			(layer "F.SilkS")
 			(uuid "4411636b-4c70-4b8a-894e-23bd0da03ad3")
 			(effects
@@ -31809,7 +31783,7 @@
 			)
 		)
 		(property "Value" "100nF"
-			(at 0 1.68 360)
+			(at 0 1.68 0)
 			(layer "F.Fab")
 			(uuid "e91300ae-2b2c-435c-bf06-b1005479fd77")
 			(effects
@@ -31964,7 +31938,7 @@
 			(uuid "8b63888f-80ef-479d-8b94-6806d6c21cca")
 		)
 		(fp_text user "${REFERENCE}"
-			(at 0 0 360)
+			(at 0 0 0)
 			(layer "F.Fab")
 			(uuid "950c7d52-aa5e-47f4-b2d7-86af4f4f5e14")
 			(effects
@@ -33347,7 +33321,7 @@
 		(descr "Resistor SMD 0805 (2012 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
 		(tags "resistor")
 		(property "Reference" "Crystal_R1"
-			(at -2.07615 -1.885228 360)
+			(at -2.07615 -1.885228 0)
 			(layer "F.SilkS")
 			(uuid "2d76c465-e359-4aaf-8f75-336a0bdd9647")
 			(effects
@@ -33358,7 +33332,7 @@
 			)
 		)
 		(property "Value" "0R"
-			(at 0 1.65 360)
+			(at 0 1.65 0)
 			(layer "F.Fab")
 			(uuid "aef75329-00b8-46d3-aeba-f7addf0ae9da")
 			(effects
@@ -33513,7 +33487,7 @@
 			(uuid "b2fc2872-d90a-4548-b80e-8c468fa26874")
 		)
 		(fp_text user "${REFERENCE}"
-			(at 0 0 360)
+			(at 0 0 0)
 			(layer "F.Fab")
 			(uuid "422b2752-e931-4cff-8724-bd5d32730417")
 			(effects
@@ -34312,7 +34286,7 @@
 		(descr "Capacitor SMD 0805 (2012 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf, https://docs.google.com/spreadsheets/d/1BsfQQcO9C6DZCsRaXUlFlo91Tg2WpOkGARC1WS5S8t0/edit?usp=sharing), generated with kicad-footprint-generator")
 		(tags "capacitor")
 		(property "Reference" "Decouple_C13"
-			(at 2.790339 1.680097 360)
+			(at 2.790339 1.680097 0)
 			(layer "F.SilkS")
 			(uuid "74f53659-a7b6-42f7-814d-6603d1012a26")
 			(effects
@@ -34323,7 +34297,7 @@
 			)
 		)
 		(property "Value" "100nF"
-			(at 0 1.68 360)
+			(at 0 1.68 0)
 			(layer "F.Fab")
 			(uuid "76b87510-1862-40a0-bc52-fa210041f978")
 			(effects
@@ -34478,7 +34452,7 @@
 			(uuid "77e120bd-de0a-44eb-b985-46583ea85aa5")
 		)
 		(fp_text user "${REFERENCE}"
-			(at 0 0 360)
+			(at 0 0 0)
 			(layer "F.Fab")
 			(uuid "fad6bb8f-8dc7-42ec-a11f-1a1b3b3e99a1")
 			(effects
@@ -35246,6 +35220,119 @@
 			)
 		)
 	)
+	(footprint "MountingHole:MountingHole_4.3mm_M4"
+		(layer "F.Cu")
+		(uuid "cdd72ed1-71b3-4759-995c-f9e4a4d0b5d6")
+		(at 114 6)
+		(descr "Mounting Hole 4.3mm, no annular, M4")
+		(tags "mounting hole 4.3mm no annular m4")
+		(property "Reference" "H2"
+			(at 0 -5.3 0)
+			(layer "F.SilkS")
+			(uuid "02cc2a00-7bcb-4b85-b0a0-a1f24a36eebe")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Value" "MountingHole"
+			(at 0 5.3 0)
+			(layer "F.Fab")
+			(uuid "889a9181-3bbb-4e21-b960-72722260a7aa")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Footprint" "MountingHole:MountingHole_4.3mm_M4"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "6df1ca96-2dea-4d59-8430-90d67c42b9ff")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "811c1660-e42b-4918-a044-9c3f4fb268af")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Description" "Mounting Hole without connection"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "917aaa0e-30ae-4fb9-98cd-5b6ee9131999")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property ki_fp_filters "MountingHole*")
+		(path "/aa06056d-5f25-4cd5-9c59-353aa35eda88")
+		(sheetname "Racine")
+		(sheetfile "ODB2.kicad_sch")
+		(attr exclude_from_pos_files exclude_from_bom)
+		(fp_circle
+			(center 0 0)
+			(end 4.3 0)
+			(stroke
+				(width 0.15)
+				(type solid)
+			)
+			(fill none)
+			(layer "Cmts.User")
+			(uuid "8d445998-fcfc-4fd5-b069-e7a57a318f76")
+		)
+		(fp_circle
+			(center 0 0)
+			(end 4.55 0)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(fill none)
+			(layer "F.CrtYd")
+			(uuid "589f0018-ae0b-4191-aa33-e6baae8651ac")
+		)
+		(fp_text user "${REFERENCE}"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(uuid "4fbc876e-915a-4891-a66a-d4305c29d04b")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(pad "" np_thru_hole circle
+			(at 0 0)
+			(size 4.3 4.3)
+			(drill 4.3)
+			(layers "*.Cu" "*.Mask")
+			(uuid "e9791674-e571-4736-87e8-2096d026b772")
+		)
+	)
 	(footprint "LED_SMD:LED_0805_2012Metric"
 		(layer "F.Cu")
 		(uuid "cee7b722-41de-4ab7-b77c-0c15046802d2")
@@ -35915,7 +36002,7 @@
 		(descr "Resistor SMD 0805 (2012 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
 		(tags "resistor")
 		(property "Reference" "5v_R2"
-			(at 0.388821 4.646401 360)
+			(at 0.388821 4.646401 0)
 			(layer "F.SilkS")
 			(uuid "b7f5710a-ebc3-47e9-8002-593a85058663")
 			(effects
@@ -35926,7 +36013,7 @@
 			)
 		)
 		(property "Value" "56k 1%"
-			(at 0 1.65 360)
+			(at 0 1.65 0)
 			(layer "F.Fab")
 			(uuid "ea2125e9-9b46-4761-9d70-9f99949001df")
 			(effects
@@ -36081,7 +36168,7 @@
 			(uuid "8fca907f-146a-4e8d-872b-6a15b8aac574")
 		)
 		(fp_text user "${REFERENCE}"
-			(at 0 0 360)
+			(at 0 0 0)
 			(layer "F.Fab")
 			(uuid "6698b916-847d-4671-a880-e60a93ce8663")
 			(effects
@@ -36622,7 +36709,7 @@
 		(descr "Capacitor SMD 0805 (2012 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf, https://docs.google.com/spreadsheets/d/1BsfQQcO9C6DZCsRaXUlFlo91Tg2WpOkGARC1WS5S8t0/edit?usp=sharing), generated with kicad-footprint-generator")
 		(tags "capacitor")
 		(property "Reference" "Decouple_C5"
-			(at 1.880949 3.232766 360)
+			(at 1.880949 3.232766 0)
 			(layer "F.SilkS")
 			(uuid "7d032c34-e589-4c8c-af0f-f17844491e1e")
 			(effects
@@ -36633,7 +36720,7 @@
 			)
 		)
 		(property "Value" "100nF"
-			(at 0 1.68 360)
+			(at 0 1.68 0)
 			(layer "F.Fab")
 			(uuid "9ff8317a-a5ff-4127-b2e3-459bba96eda1")
 			(effects
@@ -36788,7 +36875,7 @@
 			(uuid "2fd202d8-3656-405c-99ee-b894725b7a81")
 		)
 		(fp_text user "${REFERENCE}"
-			(at 0 0 360)
+			(at 0 0 0)
 			(layer "F.Fab")
 			(uuid "bd022126-3c99-4488-bf18-ba0aea061367")
 			(effects
@@ -40175,119 +40262,6 @@
 			)
 		)
 	)
-	(footprint "MountingHole:MountingHole_4.3mm_M4"
-		(layer "F.Cu")
-		(uuid "e90fd175-e785-45ba-9f89-1bcbc25f9cfd")
-		(at 103.52 69.54)
-		(descr "Mounting Hole 4.3mm, no annular, M4")
-		(tags "mounting hole 4.3mm no annular m4")
-		(property "Reference" "H3"
-			(at 0 -5.3 0)
-			(layer "F.SilkS")
-			(uuid "810c72bd-ba73-4832-876c-0ac50773fa20")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Value" "MountingHole"
-			(at 0 5.3 0)
-			(layer "F.Fab")
-			(uuid "c712fc86-74a3-4acf-9899-aedbe786d152")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Footprint" "MountingHole:MountingHole_4.3mm_M4"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "5aaf726e-56f2-4a22-9bc4-17ecf6600568")
-			(effects
-				(font
-					(size 1.27 1.27)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "33991368-bddc-4b46-a534-6b6ebbe790be")
-			(effects
-				(font
-					(size 1.27 1.27)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Description" "Mounting Hole without connection"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "b59f8c08-06cf-4ecd-acb9-4bf8dab9732d")
-			(effects
-				(font
-					(size 1.27 1.27)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property ki_fp_filters "MountingHole*")
-		(path "/a8e76fd5-e8bf-4782-ab62-46988d41071e")
-		(sheetname "Racine")
-		(sheetfile "ODB2.kicad_sch")
-		(attr exclude_from_pos_files exclude_from_bom)
-		(fp_circle
-			(center 0 0)
-			(end 4.3 0)
-			(stroke
-				(width 0.15)
-				(type solid)
-			)
-			(fill none)
-			(layer "Cmts.User")
-			(uuid "5800170c-b8ca-4e35-b537-a8caaf33af36")
-		)
-		(fp_circle
-			(center 0 0)
-			(end 4.55 0)
-			(stroke
-				(width 0.05)
-				(type solid)
-			)
-			(fill none)
-			(layer "F.CrtYd")
-			(uuid "4dfcdd2f-697e-4760-af75-409b008d39f8")
-		)
-		(fp_text user "${REFERENCE}"
-			(at 0 0 0)
-			(layer "F.Fab")
-			(uuid "04e98969-e441-4407-ab23-fe71d479e7e6")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(pad "" np_thru_hole circle
-			(at 0 0)
-			(size 4.3 4.3)
-			(drill 4.3)
-			(layers "*.Cu" "*.Mask")
-			(uuid "65c9bb2c-1f43-49f6-a23b-6fe7d1a3bf5c")
-		)
-	)
 	(footprint "Resistor_SMD:R_0805_2012Metric"
 		(layer "F.Cu")
 		(uuid "ed2793ba-2bdc-4ca9-ae5a-3283521574a4")
@@ -43054,6 +43028,119 @@
 			)
 		)
 	)
+	(footprint "MountingHole:MountingHole_4.3mm_M4"
+		(layer "F.Cu")
+		(uuid "f9fff2da-919b-49d8-ab9d-f5c7b38516b2")
+		(at 114 74)
+		(descr "Mounting Hole 4.3mm, no annular, M4")
+		(tags "mounting hole 4.3mm no annular m4")
+		(property "Reference" "H3"
+			(at 0 -5.3 0)
+			(layer "F.SilkS")
+			(uuid "56b2165f-4270-4e57-aa10-527d2b29b589")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Value" "MountingHole"
+			(at 0 5.3 0)
+			(layer "F.Fab")
+			(uuid "0a4aefbe-79e1-44bd-b08f-52ff7e91ef96")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Footprint" "MountingHole:MountingHole_4.3mm_M4"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "89be9faf-1ee5-4830-a8a7-a024dc12a603")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "855f5d3c-40fc-4366-a8fe-e8e4161bd45d")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Description" "Mounting Hole without connection"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "2668fa42-3dba-466b-9845-013f2751af08")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property ki_fp_filters "MountingHole*")
+		(path "/a8e76fd5-e8bf-4782-ab62-46988d41071e")
+		(sheetname "Racine")
+		(sheetfile "ODB2.kicad_sch")
+		(attr exclude_from_pos_files exclude_from_bom)
+		(fp_circle
+			(center 0 0)
+			(end 4.3 0)
+			(stroke
+				(width 0.15)
+				(type solid)
+			)
+			(fill none)
+			(layer "Cmts.User")
+			(uuid "ceb9025d-5ac9-4aa9-a30a-421fac514ef0")
+		)
+		(fp_circle
+			(center 0 0)
+			(end 4.55 0)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(fill none)
+			(layer "F.CrtYd")
+			(uuid "a8d3365e-d790-4c53-b72c-abd9d1cc777b")
+		)
+		(fp_text user "${REFERENCE}"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(uuid "cf8ccaf5-3078-47a1-9301-10ec8b9127e2")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(pad "" np_thru_hole circle
+			(at 0 0)
+			(size 4.3 4.3)
+			(drill 4.3)
+			(layers "*.Cu" "*.Mask")
+			(uuid "c9447865-3472-4fe4-aa2b-724940fa7d90")
+		)
+	)
 	(footprint "Resistor_SMD:R_0805_2012Metric"
 		(layer "F.Cu")
 		(uuid "fcd06415-d9ec-4be0-bd8d-739032deb414")
@@ -43277,16 +43364,89 @@
 		(layer "F.SilkS")
 		(uuid "87ee4c8d-2bfe-4ba8-98a5-781aea6fa242")
 	)
-	(gr_rect
-		(start 95.9 61.92)
-		(end 215.9 121.92)
+	(gr_arc
+		(start 115 0)
+		(mid 118.535534 1.464466)
+		(end 120 5)
 		(stroke
 			(width 0.05)
 			(type default)
 		)
-		(fill none)
 		(layer "Edge.Cuts")
-		(uuid "b58e8587-9504-47b0-9d0d-26fe675cc77b")
+		(uuid "1b7152f3-8ce8-45ff-945b-3677f0b261c6")
+	)
+	(gr_arc
+		(start 120 75)
+		(mid 118.535534 78.535534)
+		(end 115 80)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "Edge.Cuts")
+		(uuid "2d052bfb-3598-4d6f-b833-4a33e695682f")
+	)
+	(gr_line
+		(start 120 5)
+		(end 120 75)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "Edge.Cuts")
+		(uuid "990f873e-acd7-4aff-ab7e-5d139fb17531")
+	)
+	(gr_line
+		(start 115 80)
+		(end 5 80)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "Edge.Cuts")
+		(uuid "b1726195-4af0-4f99-9203-5f89caba63ce")
+	)
+	(gr_line
+		(start 5 0)
+		(end 115 0)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "Edge.Cuts")
+		(uuid "d7676284-d14b-43e4-8729-908bc90480af")
+	)
+	(gr_arc
+		(start 0 5)
+		(mid 1.464466 1.464466)
+		(end 5 0)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "Edge.Cuts")
+		(uuid "dea49a98-32b9-437c-9e18-0f215d9214ca")
+	)
+	(gr_arc
+		(start 5 80)
+		(mid 1.464466 78.535534)
+		(end 0 75)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "Edge.Cuts")
+		(uuid "df0868b9-0647-42ed-bcbb-648335d4ec58")
+	)
+	(gr_line
+		(start 0 75)
+		(end 0 5)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "Edge.Cuts")
+		(uuid "e26d5175-e9aa-49dc-8b6b-d2f41a3aa175")
 	)
 	(segment
 		(start 357.891872 4.109793)
@@ -43295,5 +43455,48 @@
 		(layer "F.Cu")
 		(net 1)
 		(uuid "469e6a92-fe76-4ead-8fa3-78239253a4b2")
+	)
+	(zone
+		(net 2)
+		(net_name "GND")
+		(layer "In1.Cu")
+		(uuid "979b6b63-8d25-4285-b7f2-006baad7aec8")
+		(hatch edge 0.5)
+		(connect_pads
+			(clearance 0.5)
+		)
+		(min_thickness 0.25)
+		(filled_areas_thickness no)
+		(fill
+			(thermal_gap 0.5)
+			(thermal_bridge_width 0.5)
+		)
+		(polygon
+			(pts
+				(xy -5 -5) (xy 125.5 -5) (xy 125 84.5) (xy -4.5 84.5)
+			)
+		)
+	)
+	(zone
+		(net 2)
+		(net_name "GND")
+		(layer "In4.Cu")
+		(uuid "a70cd5ad-5af3-4947-9e89-2d377dc71a92")
+		(hatch edge 0.5)
+		(priority 1)
+		(connect_pads
+			(clearance 0.5)
+		)
+		(min_thickness 0.25)
+		(filled_areas_thickness no)
+		(fill
+			(thermal_gap 0.5)
+			(thermal_bridge_width 0.5)
+		)
+		(polygon
+			(pts
+				(xy -4.5 84.5) (xy 125 84.5) (xy 125.5 -5) (xy -5 -5)
+			)
+		)
 	)
 )
