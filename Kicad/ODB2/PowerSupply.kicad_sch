@@ -12993,7 +12993,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "e3a25fa8-e0e2-4ef4-b394-02b18e397192")
-		(property "Reference" "3v3_PWRSwitch"
+		(property "Reference" "3v3_PWRSwitch1"
 			(at 66.04 31.75 0)
 			(effects
 				(font
@@ -13144,7 +13144,7 @@
 		(instances
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/a0dfa29e-ccca-4096-8481-c7e33c67aac5"
-					(reference "3v3_PWRSwitch")
+					(reference "3v3_PWRSwitch1")
 					(unit 1)
 				)
 			)
