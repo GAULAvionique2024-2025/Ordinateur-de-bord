@@ -3216,12 +3216,6 @@
 		(uuid "991af214-3e66-4e7c-a41d-fda023fc064d")
 	)
 	(junction
-		(at 213.36 69.85)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "9f5e6c1e-e2da-4e94-8547-ccd4c3d7eb6a")
-	)
-	(junction
 		(at 115.57 104.14)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -3747,7 +3741,7 @@
 	)
 	(wire
 		(pts
-			(xy 223.52 69.85) (xy 226.06 69.85)
+			(xy 213.36 69.85) (xy 215.9 69.85)
 		)
 		(stroke
 			(width 0)
@@ -4017,16 +4011,6 @@
 	)
 	(wire
 		(pts
-			(xy 213.36 69.85) (xy 213.36 71.12)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "a18293f9-5a56-48b2-8c17-2b416a3f7e8a")
-	)
-	(wire
-		(pts
 			(xy 213.36 58.42) (xy 213.36 62.23)
 		)
 		(stroke
@@ -4044,16 +4028,6 @@
 			(type default)
 		)
 		(uuid "a49a2c0f-0aca-40e0-9411-31c913e92778")
-	)
-	(wire
-		(pts
-			(xy 213.36 69.85) (xy 215.9 69.85)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "a599dac6-3f3a-4d6a-b8d3-7b1fccfe29aa")
 	)
 	(wire
 		(pts
@@ -4307,7 +4281,7 @@
 	)
 	(wire
 		(pts
-			(xy 226.06 69.85) (xy 226.06 67.31)
+			(xy 215.9 69.85) (xy 215.9 67.31)
 		)
 		(stroke
 			(width 0)
@@ -5331,75 +5305,6 @@
 	)
 	(symbol
 		(lib_id "Device:R")
-		(at 219.71 69.85 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "5c4114c3-76c2-49a9-a3b5-394faa42736e")
-		(property "Reference" "BT_R3"
-			(at 217.17 67.31 90)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(justify right)
-			)
-		)
-		(property "Value" "1k5"
-			(at 217.17 72.39 90)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(justify right)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
-			(at 219.71 71.628 90)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 219.71 69.85 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 219.71 69.85 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "75dacb6c-9bca-4cd4-9917-f364a04b9a4c")
-		)
-		(pin "2"
-			(uuid "ac7fc4d8-1fc8-430a-a0cf-52c36a92dc4a")
-		)
-		(instances
-			(project "ODB2"
-				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/eac5f07f-d6a3-4c95-b286-7cebf46e30db"
-					(reference "BT_R3")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R")
 		(at 110.49 44.45 270)
 		(unit 1)
 		(exclude_from_sim no)
@@ -6116,73 +6021,6 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 213.36 71.12 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "9a31ffd2-8695-4101-95a3-75d712e4cfa8")
-		(property "Reference" "#PWR064"
-			(at 213.36 77.47 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 213.36 76.2 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(hide yes)
-			)
-		)
-		(property "Footprint" ""
-			(at 213.36 71.12 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 213.36 71.12 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 213.36 71.12 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "cc90553d-8603-4c8c-8558-9a5fd7a88166")
-		)
-		(instances
-			(project "ODB2"
-				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/eac5f07f-d6a3-4c95-b286-7cebf46e30db"
-					(reference "#PWR064")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
 		(at 115.57 92.71 0)
 		(unit 1)
 		(exclude_from_sim no)
@@ -6874,7 +6712,7 @@
 	)
 	(symbol
 		(lib_id "power:+3V3")
-		(at 226.06 67.31 0)
+		(at 215.9 67.31 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -6882,7 +6720,7 @@
 		(dnp no)
 		(uuid "d270263c-65ef-4cbd-a5c3-970c9ccd13e2")
 		(property "Reference" "#PWR065"
-			(at 226.06 71.12 0)
+			(at 215.9 71.12 0)
 			(effects
 				(font
 					(size 1 1)
@@ -6891,7 +6729,7 @@
 			)
 		)
 		(property "Value" "+3V3"
-			(at 226.06 63.5 0)
+			(at 215.9 63.5 0)
 			(effects
 				(font
 					(size 1 1)
@@ -6899,7 +6737,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 226.06 67.31 0)
+			(at 215.9 67.31 0)
 			(effects
 				(font
 					(size 1 1)
@@ -6908,7 +6746,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 226.06 67.31 0)
+			(at 215.9 67.31 0)
 			(effects
 				(font
 					(size 1 1)
@@ -6917,7 +6755,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 226.06 67.31 0)
+			(at 215.9 67.31 0)
 			(effects
 				(font
 					(size 1.27 1.27)

@@ -4752,10 +4752,6 @@
 		(uuid "14147cf8-db12-4678-970b-520317649db7")
 	)
 	(no_connect
-		(at 231.14 157.48)
-		(uuid "14478ea5-7eb0-4d83-b0b5-bda368844316")
-	)
-	(no_connect
 		(at 231.14 109.22)
 		(uuid "17369f89-d025-4b43-910b-e33d15c43b4b")
 	)
@@ -4772,20 +4768,12 @@
 		(uuid "22bd023a-6e9a-42e9-b370-7eb2b79f6475")
 	)
 	(no_connect
-		(at 170.18 114.3)
-		(uuid "241447a7-ea39-4d85-b70d-437bfecc23ca")
-	)
-	(no_connect
 		(at 170.18 162.56)
 		(uuid "258ecc9e-d0e5-4bdc-b456-bf147507c2ea")
 	)
 	(no_connect
 		(at 231.14 134.62)
 		(uuid "2a5d0297-0a4e-4ec4-8e8f-666ad793bc4c")
-	)
-	(no_connect
-		(at 231.14 160.02)
-		(uuid "2b2232e3-b161-439b-989d-a9b784fd6d42")
 	)
 	(no_connect
 		(at 170.18 185.42)
@@ -5955,6 +5943,16 @@
 	)
 	(wire
 		(pts
+			(xy 165.1 114.3) (xy 170.18 114.3)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "89b1ae83-505c-444b-ba79-ed47dc7812e1")
+	)
+	(wire
+		(pts
 			(xy 165.1 60.96) (xy 170.18 60.96)
 		)
 		(stroke
@@ -6425,6 +6423,16 @@
 	)
 	(wire
 		(pts
+			(xy 231.14 157.48) (xy 237.49 157.48)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c743b798-8633-41fa-bde5-5ac1d0309053")
+	)
+	(wire
+		(pts
 			(xy 331.47 68.58) (xy 331.47 66.04)
 		)
 		(stroke
@@ -6542,6 +6550,16 @@
 			(type default)
 		)
 		(uuid "d4412263-a817-4c4c-afa2-69796217c9db")
+	)
+	(wire
+		(pts
+			(xy 231.14 160.02) (xy 237.49 160.02)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d5950f05-0a62-4680-b71a-7986e48dac11")
 	)
 	(wire
 		(pts
@@ -7008,6 +7026,28 @@
 			)
 		)
 	)
+	(global_label "UART6_RFD_RTS"
+		(shape input)
+		(at 165.1 114.3 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "0424246f-b5a7-431a-bf62-c4a7b53025b0")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 147.2377 114.3 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
 	(global_label "PH0"
 		(shape input)
 		(at 165.1 76.2 180)
@@ -7118,6 +7158,28 @@
 			)
 		)
 	)
+	(global_label "UART6_RFD_TX"
+		(shape input)
+		(at 237.49 157.48 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "11fe5726-f099-49c6-9c40-7f363ea63354")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 254.0823 157.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+	)
 	(global_label "SPI1_ICM_RFM_MOSI"
 		(shape input)
 		(at 237.49 73.66 0)
@@ -7180,6 +7242,28 @@
 					(size 1.27 1.27)
 				)
 				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "UART6_RFD_RX"
+		(shape input)
+		(at 237.49 160.02 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "2bde3549-fbbd-4e1d-86bf-55463798242e")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 254.3847 160.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
 				(hide yes)
 			)
 		)
