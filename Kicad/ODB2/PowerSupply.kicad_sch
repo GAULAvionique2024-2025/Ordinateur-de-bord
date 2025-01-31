@@ -3141,126 +3141,6 @@
 				)
 			)
 		)
-		(symbol "power:+12C"
-			(power)
-			(pin_names
-				(offset 0)
-			)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(property "Reference" "#PWR"
-				(at 0 -3.81 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Value" "+12C"
-				(at 0 3.81 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" ""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Datasheet" ""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Description" "Power symbol creates a global label with name \"+12C\""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_keywords" "global power"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(symbol "+12C_0_1"
-				(polyline
-					(pts
-						(xy -0.762 1.27) (xy 0 2.54)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0 0) (xy 0 2.54)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0 2.54) (xy 0.762 1.27)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-			)
-			(symbol "+12C_1_1"
-				(pin power_in line
-					(at 0 0 90)
-					(length 0) hide
-					(name "+12C"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-		)
 		(symbol "power:+12P"
 			(power)
 			(pin_names
@@ -4599,12 +4479,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "75701014-c1ff-4077-8329-ae9db7e8cb35")
-	)
-	(junction
-		(at 238.76 27.94)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "770fb228-2071-449c-9564-4ddb058a8048")
 	)
 	(junction
 		(at 88.9 63.5)
@@ -6000,16 +5874,6 @@
 	)
 	(wire
 		(pts
-			(xy 238.76 24.13) (xy 238.76 27.94)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "aa2e003d-503a-4112-be7a-cbf6ef7b3152")
-	)
-	(wire
-		(pts
 			(xy 259.08 73.66) (xy 259.08 71.12)
 		)
 		(stroke
@@ -6117,16 +5981,6 @@
 			(type default)
 		)
 		(uuid "b4d5fd0d-e184-4129-afa0-4317d415db5c")
-	)
-	(wire
-		(pts
-			(xy 238.76 27.94) (xy 245.11 27.94)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "b5139807-2719-40f8-824f-3837fb7a7864")
 	)
 	(wire
 		(pts
@@ -6260,7 +6114,7 @@
 	)
 	(wire
 		(pts
-			(xy 237.49 27.94) (xy 238.76 27.94)
+			(xy 237.49 27.94) (xy 245.11 27.94)
 		)
 		(stroke
 			(width 0)
@@ -9007,71 +8861,6 @@
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/a0dfa29e-ccca-4096-8481-c7e33c67aac5"
 					(reference "7v4_C3")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:+12C")
-		(at 238.76 24.13 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "5badd401-e5c9-42d6-b3ff-d2f42ca76033")
-		(property "Reference" "#PWR028"
-			(at 238.76 27.94 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+7C4"
-			(at 238.76 20.32 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 238.76 24.13 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 238.76 24.13 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 238.76 24.13 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "42517dbd-041d-4153-b8ff-7c9b12d30897")
-		)
-		(instances
-			(project "ODB2"
-				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/a0dfa29e-ccca-4096-8481-c7e33c67aac5"
-					(reference "#PWR028")
 					(unit 1)
 				)
 			)
