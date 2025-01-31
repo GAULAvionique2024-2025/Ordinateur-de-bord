@@ -161,6 +161,7 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
   __HAL_RCC_GPIOD_CLK_ENABLE();
+  __HAL_RCC_GPIOG_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOF, PYROS_MainODB_Pin|PYROS_DrogueODB_Pin|PYROS_Bluetooth_Pin|nPYROS_Test_Pin
@@ -239,6 +240,14 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(BUZZER_PWM_GPIO_Port, &GPIO_InitStruct);
 
+  /*Configure GPIO pins : RFD_TX_Pin RFD_RX_Pin */
+  GPIO_InitStruct.Pin = RFD_TX_Pin|RFD_RX_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+  GPIO_InitStruct.Alternate = GPIO_AF8_USART6;
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
   /*Configure GPIO pins : GPS_TX_Pin GPS_RX_Pin */
   GPIO_InitStruct.Pin = GPS_TX_Pin|GPS_RX_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
@@ -262,6 +271,14 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
   GPIO_InitStruct.Alternate = GPIO_AF7_USART2;
   HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : RFD_RTS_Pin */
+  GPIO_InitStruct.Pin = RFD_RTS_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+  GPIO_InitStruct.Alternate = GPIO_AF8_USART6;
+  HAL_GPIO_Init(RFD_RTS_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : RFM_CS_Pin */
   GPIO_InitStruct.Pin = RFM_CS_Pin;
