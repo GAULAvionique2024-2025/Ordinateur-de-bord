@@ -170,7 +170,7 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOF, nPYROS_Test_Pin|PYROS_Bluetooth_Pin|PYROS_MainODB_Pin|PYROS_DrogueODB_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, RFM_CS_Pin|ICM_INT_Pin|CriticalLEDEnable_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, RFM_CS_Pin|ICM_INT_Pin|ICM_CS_Pin|CriticalLEDEnable_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : BARO_CS_Pin BARO_SCK_Pin BARO_MISO_Pin BARO_MOSI_Pin */
   GPIO_InitStruct.Pin = BARO_CS_Pin|BARO_SCK_Pin|BARO_MISO_Pin|BARO_MOSI_Pin;
@@ -208,15 +208,15 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : RFM_CS_Pin ICM_INT_Pin CriticalLEDEnable_Pin */
-  GPIO_InitStruct.Pin = RFM_CS_Pin|ICM_INT_Pin|CriticalLEDEnable_Pin;
+  /*Configure GPIO pins : RFM_CS_Pin ICM_INT_Pin ICM_CS_Pin CriticalLEDEnable_Pin */
+  GPIO_InitStruct.Pin = RFM_CS_Pin|ICM_INT_Pin|ICM_CS_Pin|CriticalLEDEnable_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : ICM_CS_Pin ICM_RFM_SCK_Pin ICM_RFM_MISO_Pin ICM_RFM_MOSI_Pin */
-  GPIO_InitStruct.Pin = ICM_CS_Pin|ICM_RFM_SCK_Pin|ICM_RFM_MISO_Pin|ICM_RFM_MOSI_Pin;
+  /*Configure GPIO pins : ICM_RFM_SCK_Pin ICM_RFM_MISO_Pin ICM_RFM_MOSI_Pin */
+  GPIO_InitStruct.Pin = ICM_RFM_SCK_Pin|ICM_RFM_MISO_Pin|ICM_RFM_MOSI_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
