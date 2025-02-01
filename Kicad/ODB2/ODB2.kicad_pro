@@ -457,7 +457,16 @@
     "meta": {
       "version": 3
     },
-    "net_colors": null,
+    "net_colors": {
+      "+1V8": "rgb(119, 255, 119)",
+      "+3.3VA": "rgb(255, 0, 228)",
+      "+3V3": "rgb(247, 255, 101)",
+      "+3V7": "rgb(255, 179, 80)",
+      "+5V": "rgb(0, 255, 7)",
+      "+7V4": "rgb(255, 0, 0)",
+      "GND": "rgb(87, 87, 87)",
+      "Net-(7v4_JP1-A)": "rgb(255, 2, 0)"
+    },
     "netclass_assignments": null,
     "netclass_patterns": []
   },
