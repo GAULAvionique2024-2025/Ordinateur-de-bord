@@ -155,22 +155,22 @@ static void MX_GPIO_Init(void)
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOE_CLK_ENABLE();
+  __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOF_CLK_ENABLE();
   __HAL_RCC_GPIOH_CLK_ENABLE();
-  __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
   __HAL_RCC_GPIOD_CLK_ENABLE();
+  __HAL_RCC_GPIOG_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOF, PYROS_MainODB_Pin|PYROS_DrogueODB_Pin|PYROS_Bluetooth_Pin|nPYROS_Test_Pin
-                          |Enable7v4_Pin|CriticalLEDEnable_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOC, Enable7v4_Pin|RFM_SDN_Pin|RFM_NIRQ_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, RFM_SDN_Pin|RFM_NIRQ_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOF, nPYROS_Test_Pin|PYROS_Bluetooth_Pin|PYROS_MainODB_Pin|PYROS_DrogueODB_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(ICM_INT_GPIO_Port, ICM_INT_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, RFM_CS_Pin|ICM_INT_Pin|ICM_CS_Pin|CriticalLEDEnable_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : BARO_CS_Pin BARO_SCK_Pin BARO_MISO_Pin BARO_MOSI_Pin */
   GPIO_InitStruct.Pin = BARO_CS_Pin|BARO_SCK_Pin|BARO_MISO_Pin|BARO_MOSI_Pin;
@@ -188,21 +188,19 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Alternate = GPIO_AF6_SPI5;
   HAL_GPIO_Init(MEM_MISO_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PYROS_MainODB_Pin PYROS_DrogueODB_Pin PYROS_Bluetooth_Pin nPYROS_Test_Pin
-                           Enable7v4_Pin CriticalLEDEnable_Pin */
-  GPIO_InitStruct.Pin = PYROS_MainODB_Pin|PYROS_DrogueODB_Pin|PYROS_Bluetooth_Pin|nPYROS_Test_Pin
-                          |Enable7v4_Pin|CriticalLEDEnable_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : RFM_SDN_Pin RFM_NIRQ_Pin */
-  GPIO_InitStruct.Pin = RFM_SDN_Pin|RFM_NIRQ_Pin;
+  /*Configure GPIO pins : Enable7v4_Pin RFM_SDN_Pin RFM_NIRQ_Pin */
+  GPIO_InitStruct.Pin = Enable7v4_Pin|RFM_SDN_Pin|RFM_NIRQ_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : nPYROS_Test_Pin PYROS_Bluetooth_Pin PYROS_MainODB_Pin PYROS_DrogueODB_Pin */
+  GPIO_InitStruct.Pin = nPYROS_Test_Pin|PYROS_Bluetooth_Pin|PYROS_MainODB_Pin|PYROS_DrogueODB_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
 
   /*Configure GPIO pins : AN_3v7_Pin AN_7v4_Pin PYROS_MainADC_Pin PYROS_DrogueADC_Pin */
   GPIO_InitStruct.Pin = AN_3v7_Pin|AN_7v4_Pin|PYROS_MainADC_Pin|PYROS_DrogueADC_Pin;
@@ -210,15 +208,15 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : ICM_INT_Pin */
-  GPIO_InitStruct.Pin = ICM_INT_Pin;
+  /*Configure GPIO pins : RFM_CS_Pin ICM_INT_Pin ICM_CS_Pin CriticalLEDEnable_Pin */
+  GPIO_InitStruct.Pin = RFM_CS_Pin|ICM_INT_Pin|ICM_CS_Pin|CriticalLEDEnable_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(ICM_INT_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : ICM_CS_Pin ICM_RFM_SCK_Pin ICM_RFM_MISO_Pin ICM_RFM_MOSI_Pin */
-  GPIO_InitStruct.Pin = ICM_CS_Pin|ICM_RFM_SCK_Pin|ICM_RFM_MISO_Pin|ICM_RFM_MOSI_Pin;
+  /*Configure GPIO pins : ICM_RFM_SCK_Pin ICM_RFM_MISO_Pin ICM_RFM_MOSI_Pin */
+  GPIO_InitStruct.Pin = ICM_RFM_SCK_Pin|ICM_RFM_MISO_Pin|ICM_RFM_MOSI_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
@@ -238,6 +236,14 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(BUZZER_PWM_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : RFD_TX_Pin RFD_RX_Pin */
+  GPIO_InitStruct.Pin = RFD_TX_Pin|RFD_RX_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+  GPIO_InitStruct.Alternate = GPIO_AF8_USART6;
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
   /*Configure GPIO pins : GPS_TX_Pin GPS_RX_Pin */
   GPIO_InitStruct.Pin = GPS_TX_Pin|GPS_RX_Pin;
@@ -263,13 +269,13 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Alternate = GPIO_AF7_USART2;
   HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : RFM_CS_Pin */
-  GPIO_InitStruct.Pin = RFM_CS_Pin;
+  /*Configure GPIO pin : RFD_RTS_Pin */
+  GPIO_InitStruct.Pin = RFD_RTS_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-  GPIO_InitStruct.Alternate = GPIO_AF5_SPI2;
-  HAL_GPIO_Init(RFM_CS_GPIO_Port, &GPIO_InitStruct);
+  GPIO_InitStruct.Alternate = GPIO_AF8_USART6;
+  HAL_GPIO_Init(RFD_RTS_GPIO_Port, &GPIO_InitStruct);
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 /* USER CODE END MX_GPIO_Init_2 */

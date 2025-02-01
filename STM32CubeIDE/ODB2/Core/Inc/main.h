@@ -61,6 +61,12 @@ void Error_Handler(void);
 #define BARO_CS_GPIO_Port GPIOE
 #define MEM_MISO_Pin GPIO_PIN_5
 #define MEM_MISO_GPIO_Port GPIOE
+#define Enable7v4_Pin GPIO_PIN_14
+#define Enable7v4_GPIO_Port GPIOC
+#define nPYROS_Test_Pin GPIO_PIN_2
+#define nPYROS_Test_GPIO_Port GPIOF
+#define PYROS_Bluetooth_Pin GPIO_PIN_3
+#define PYROS_Bluetooth_GPIO_Port GPIOF
 #define PYROS_MainODB_Pin GPIO_PIN_9
 #define PYROS_MainODB_GPIO_Port GPIOF
 #define PYROS_DrogueODB_Pin GPIO_PIN_10
@@ -73,6 +79,8 @@ void Error_Handler(void);
 #define AN_3v7_GPIO_Port GPIOC
 #define AN_7v4_Pin GPIO_PIN_3
 #define AN_7v4_GPIO_Port GPIOC
+#define RFM_CS_Pin GPIO_PIN_2
+#define RFM_CS_GPIO_Port GPIOA
 #define ICM_INT_Pin GPIO_PIN_3
 #define ICM_INT_GPIO_Port GPIOA
 #define ICM_CS_Pin GPIO_PIN_4
@@ -91,14 +99,6 @@ void Error_Handler(void);
 #define MEM_SCLK_GPIO_Port GPIOB
 #define MEM_CS_Pin GPIO_PIN_1
 #define MEM_CS_GPIO_Port GPIOB
-#define PYROS_Bluetooth_Pin GPIO_PIN_11
-#define PYROS_Bluetooth_GPIO_Port GPIOF
-#define nPYROS_Test_Pin GPIO_PIN_12
-#define nPYROS_Test_GPIO_Port GPIOF
-#define Enable7v4_Pin GPIO_PIN_13
-#define Enable7v4_GPIO_Port GPIOF
-#define CriticalLEDEnable_Pin GPIO_PIN_15
-#define CriticalLEDEnable_GPIO_Port GPIOF
 #define BUZZER_PWM_Pin GPIO_PIN_9
 #define BUZZER_PWM_GPIO_Port GPIOE
 #define BARO_SCK_Pin GPIO_PIN_12
@@ -107,6 +107,12 @@ void Error_Handler(void);
 #define BARO_MISO_GPIO_Port GPIOE
 #define BARO_MOSI_Pin GPIO_PIN_14
 #define BARO_MOSI_GPIO_Port GPIOE
+#define RFD_TX_Pin GPIO_PIN_6
+#define RFD_TX_GPIO_Port GPIOC
+#define RFD_RX_Pin GPIO_PIN_7
+#define RFD_RX_GPIO_Port GPIOC
+#define CriticalLEDEnable_Pin GPIO_PIN_8
+#define CriticalLEDEnable_GPIO_Port GPIOA
 #define GPS_TX_Pin GPIO_PIN_9
 #define GPS_TX_GPIO_Port GPIOA
 #define GPS_RX_Pin GPIO_PIN_10
@@ -123,10 +129,12 @@ void Error_Handler(void);
 #define BT_TX_GPIO_Port GPIOD
 #define BT_RX_Pin GPIO_PIN_6
 #define BT_RX_GPIO_Port GPIOD
+#define RFD_RTS_Pin GPIO_PIN_12
+#define RFD_RTS_GPIO_Port GPIOG
+#define SYS_SWO_Pin GPIO_PIN_3
+#define SYS_SWO_GPIO_Port GPIOB
 #define MEM_MOSI_Pin GPIO_PIN_8
 #define MEM_MOSI_GPIO_Port GPIOB
-#define RFM_CS_Pin GPIO_PIN_9
-#define RFM_CS_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 
