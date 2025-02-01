@@ -323,7 +323,7 @@
 	(net 154 "RFM_SDN")
 	(net 155 "unconnected-(U1-PB14-Pad75)")
 	(net 156 "unconnected-(U1-PC13-Pad7)")
-	(net 157 "unconnected-(U1-PA2-Pad36)")
+	(net 157 "unconnected-(U1-PB9-Pad140)")
 	(net 158 "unconnected-(U1-PG6-Pad91)")
 	(net 159 "unconnected-(U1-PD9-Pad78)")
 	(net 160 "unconnected-(U1-PF14-Pad54)")
@@ -415,28 +415,29 @@
 	(footprint "TestPoint:TestPoint_Pad_D1.0mm"
 		(layer "F.Cu")
 		(uuid "03d47d39-21b4-4fbf-bb1f-2523e19502d4")
-		(at -28.5 49.35)
+		(at 14.351 31.877)
 		(descr "SMD pad as test Point, diameter 1.0mm")
 		(tags "test point SMD pad")
 		(property "Reference" "TP16"
 			(at 0 -1.448 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "493cfcc0-9947-4b22-825f-a918c6333280")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
-		(property "Value" "TestPoint"
+		(property "Value" "D_ADC"
 			(at 0 1.55 0)
-			(layer "F.Fab")
+			(layer "F.SilkS")
 			(uuid "2f0f3bca-380b-4be5-8912-5d328645c986")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
@@ -530,28 +531,29 @@
 	(footprint "TestPoint:TestPoint_Pad_D1.0mm"
 		(layer "F.Cu")
 		(uuid "075d440c-e9bc-4d82-8e7f-962442bd097e")
-		(at -25.45 49.35)
+		(at 34.163 37.465)
 		(descr "SMD pad as test Point, diameter 1.0mm")
 		(tags "test point SMD pad")
 		(property "Reference" "TP23"
 			(at 0 -1.448 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "fd51fcfe-6c57-4d5f-99b6-ab6963f553f6")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
-		(property "Value" "TestPoint"
+		(property "Value" "BT"
 			(at 0 1.55 0)
-			(layer "F.Fab")
+			(layer "F.SilkS")
 			(uuid "7d36b035-32a6-41f2-afb3-6272b646fc22")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
@@ -651,6 +653,7 @@
 		(property "Reference" "Pyros_R6"
 			(at 0 -1.43 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "4859f78c-6f15-4dc9-850d-2de3f46ddf48")
 			(effects
 				(font
@@ -662,6 +665,7 @@
 		(property "Value" "1k5"
 			(at 0 1.43 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "f6ecae6f-4857-4290-9b21-a058e5de7531")
 			(effects
 				(font
@@ -864,6 +868,7 @@
 		(property "Reference" "7v4_C3"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "3978484e-9339-4ccf-8f8a-f8c449706595")
 			(effects
 				(font
@@ -875,6 +880,7 @@
 		(property "Value" "100nf"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "b063e385-9d38-49e5-9ada-5bb371a0c3d7")
 			(effects
 				(font
@@ -1077,6 +1083,7 @@
 			(at -0.088692 -4.213163 90)
 			(unlocked yes)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "617bf1f3-e318-4472-ae88-9461cd3cf43c")
 			(effects
 				(font
@@ -1678,6 +1685,7 @@
 		(property "Reference" "BUZ_NPN1"
 			(at -3.033518 -0.324165 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "f7ecd550-32ce-43f8-9ee0-2a2ee4eebe32")
 			(effects
 				(font
@@ -1689,6 +1697,7 @@
 		(property "Value" "MMBT3904"
 			(at 0 2.4 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "42a87cce-599d-410f-ac2c-6029eb8351c1")
 			(effects
 				(font
@@ -1939,28 +1948,29 @@
 	(footprint "TestPoint:TestPoint_Pad_D1.0mm"
 		(layer "F.Cu")
 		(uuid "0f9c97dd-3a78-4eef-9e1f-173a56f044ac")
-		(at 77.343 26.924)
+		(at 75.565 26.289)
 		(descr "SMD pad as test Point, diameter 1.0mm")
 		(tags "test point SMD pad")
 		(property "Reference" "TP7"
 			(at 0 -1.448 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "d089fbe5-8b5b-4a9e-b0c8-f73ffb3eb3aa")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
-		(property "Value" "TestPoint"
+		(property "Value" "TX"
 			(at 0 1.55 0)
 			(layer "F.Fab")
 			(uuid "c8b315d1-0361-4723-9e5a-f2f0a083da51")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
@@ -2060,6 +2070,7 @@
 		(property "Reference" "BT_LED1"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "7a778521-1504-4593-9209-1b280631bf23")
 			(effects
 				(font
@@ -2071,6 +2082,7 @@
 		(property "Value" "BLUE"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "348789d1-5297-47f3-8803-c634bd3aed53")
 			(effects
 				(font
@@ -2295,6 +2307,7 @@
 		(property "Reference" "Pyros_R17"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "635a416b-65a8-4d8a-a6b7-2ab173699f17")
 			(effects
 				(font
@@ -2306,6 +2319,7 @@
 		(property "Value" "1k5"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "17360933-e994-49f1-a1bf-328bc77f0507")
 			(effects
 				(font
@@ -2508,6 +2522,7 @@
 		(property "Reference" "Crystal_C2"
 			(at 0 -1.43 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "b7ef9263-faee-4188-80ed-0e0561d4661f")
 			(effects
 				(font
@@ -2519,6 +2534,7 @@
 		(property "Value" "8pF"
 			(at 0 1.43 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "17f8462c-ae87-4f74-8995-36352bb641c0")
 			(effects
 				(font
@@ -2721,6 +2737,7 @@
 		(property "Reference" "D3"
 			(at -3.50795 -0.014342 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "914ec801-d220-445f-b070-a8a39a19f756")
 			(effects
 				(font
@@ -2732,6 +2749,7 @@
 		(property "Value" "BUZ_D_Schottky"
 			(at 0 2.1 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "b5051086-5315-4259-8a52-604786d11ecc")
 			(effects
 				(font
@@ -3016,6 +3034,7 @@
 		(property "Reference" "Decouple_C14"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "ef544fb3-d266-410f-9939-200cd7b6ecc8")
 			(effects
 				(font
@@ -3027,6 +3046,7 @@
 		(property "Value" "10uF"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "d8487325-ccac-4ad2-86a3-5087bdaebf53")
 			(effects
 				(font
@@ -3229,6 +3249,7 @@
 		(property "Reference" "U1"
 			(at 0 -12.35 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "8c0e5ddc-8bb3-4d4b-96d8-87487a7cb1e0")
 			(effects
 				(font
@@ -3240,6 +3261,7 @@
 		(property "Value" "STM32F412ZGTx"
 			(at 0 12.35 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "16ed49fe-8441-4469-b43d-af3be2c0d8ca")
 			(effects
 				(font
@@ -4037,9 +4059,9 @@
 			(size 1.475 0.3)
 			(layers "F.Cu" "F.Paste" "F.Mask")
 			(roundrect_rratio 0.25)
-			(net 157 "unconnected-(U1-PA2-Pad36)")
+			(net 120 "SPI1_RFM_CS")
 			(pinfunction "PA2")
-			(pintype "bidirectional+no_connect")
+			(pintype "bidirectional")
 			(uuid "8d83face-cd56-40fd-8c8a-98804f00e5ee")
 		)
 		(pad "37" smd roundrect
@@ -5077,9 +5099,9 @@
 			(size 0.3 1.475)
 			(layers "F.Cu" "F.Paste" "F.Mask")
 			(roundrect_rratio 0.25)
-			(net 120 "SPI1_RFM_CS")
+			(net 157 "unconnected-(U1-PB9-Pad140)")
 			(pinfunction "PB9")
-			(pintype "bidirectional")
+			(pintype "bidirectional+no_connect")
 			(uuid "2846b9ca-a5f0-4561-b1ed-b4043e804328")
 		)
 		(pad "141" smd roundrect
@@ -5143,6 +5165,7 @@
 		(property "Reference" "USB_FB1"
 			(at 0 -1.55 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "8fd3b3eb-a2d9-4797-bca0-572a8bf31988")
 			(effects
 				(font
@@ -5154,6 +5177,7 @@
 		(property "Value" "120R"
 			(at 0 1.55 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "9443b2ea-8263-4e19-b024-8635fbdb6b1e")
 			(effects
 				(font
@@ -5350,12 +5374,13 @@
 	(footprint "TestPoint:TestPoint_Pad_D1.0mm"
 		(layer "F.Cu")
 		(uuid "1d222e16-0f1f-4dd1-8c1b-d4581e7df86a")
-		(at -31.55 61.55)
+		(at 65.024 55.626)
 		(descr "SMD pad as test Point, diameter 1.0mm")
 		(tags "test point SMD pad")
 		(property "Reference" "TP13"
 			(at 0 -1.448 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "ac25e800-dd5c-490c-b065-d3039ac0396d")
 			(effects
 				(font
@@ -5364,14 +5389,14 @@
 				)
 			)
 		)
-		(property "Value" "TestPoint"
+		(property "Value" "3v7_An"
 			(at 0 1.55 0)
 			(layer "F.Fab")
 			(uuid "6c2a043b-c4c3-4f68-963e-77e385260cd0")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
@@ -5471,6 +5496,7 @@
 		(property "Reference" "7v4_L1"
 			(at 0 -3.68 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "e8879964-28d1-4f84-a10f-5abc73f820fd")
 			(effects
 				(font
@@ -5482,6 +5508,7 @@
 		(property "Value" "2920L700/12MR"
 			(at 0 3.68 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "c1082bbc-1097-418e-a0c6-2f3e7caf3b84")
 			(effects
 				(font
@@ -5680,28 +5707,29 @@
 	(footprint "TestPoint:TestPoint_Pad_D1.0mm"
 		(layer "F.Cu")
 		(uuid "220d992d-5606-46bc-922d-1ea12332dd39")
-		(at -25.45 55.45)
+		(at 30.48 34.29)
 		(descr "SMD pad as test Point, diameter 1.0mm")
 		(tags "test point SMD pad")
 		(property "Reference" "TP25"
 			(at 0 -1.448 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "ef9b97a4-0a6c-496e-bc0c-e3d97589b2d3")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
-		(property "Value" "TestPoint"
+		(property "Value" "M_ODB"
 			(at 0 1.55 0)
-			(layer "F.Fab")
+			(layer "F.SilkS")
 			(uuid "522ce64c-d878-4f59-8f71-4614aa01648a")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
@@ -5801,6 +5829,7 @@
 		(property "Reference" "3v3_C1"
 			(at 0 -1.43 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "8b88ecdc-a5f0-4835-8886-54cda487bba7")
 			(effects
 				(font
@@ -5812,6 +5841,7 @@
 		(property "Value" "10uf"
 			(at 0 1.43 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "04a6e9ac-5be6-4554-a714-b1642b788789")
 			(effects
 				(font
@@ -6014,6 +6044,7 @@
 		(property "Reference" "BUZ_R2"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "387cd556-d192-4da1-bac2-6118d2706b76")
 			(effects
 				(font
@@ -6025,6 +6056,7 @@
 		(property "Value" "1k5"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "284beeea-6edb-4573-a026-d1d03e5cac71")
 			(effects
 				(font
@@ -6221,28 +6253,29 @@
 	(footprint "TestPoint:TestPoint_Pad_D1.0mm"
 		(layer "F.Cu")
 		(uuid "274399eb-01a9-400f-89e5-34da18f65371")
-		(at -22.4 49.35)
+		(at 61.595 57.404)
 		(descr "SMD pad as test Point, diameter 1.0mm")
 		(tags "test point SMD pad")
 		(property "Reference" "TP30"
 			(at 0 -1.448 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "cd38fe5b-90e6-4bf6-9b4c-f8b1cd17aacd")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
-		(property "Value" "TestPoint"
+		(property "Value" "MOSI"
 			(at 0 1.55 0)
 			(layer "F.Fab")
 			(uuid "13b82af0-9a7a-4256-9177-85c741e5a8f3")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
@@ -6342,6 +6375,7 @@
 		(property "Reference" "7v4_R4"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "ec8c7ba0-778a-4f2f-8b23-b9422bb5b40e")
 			(effects
 				(font
@@ -6353,6 +6387,7 @@
 		(property "Value" "10k"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "4ce26320-88a0-47e9-b6b5-1bcb3f2343af")
 			(effects
 				(font
@@ -6555,6 +6590,7 @@
 		(property "Reference" "Decouple_C3"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "681ce381-8f0a-4f91-962a-da12e449ed1b")
 			(effects
 				(font
@@ -6566,6 +6602,7 @@
 		(property "Value" "100nF"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "9865300b-8c1c-4fba-ba50-d2b610449b03")
 			(effects
 				(font
@@ -6768,6 +6805,7 @@
 		(property "Reference" "Decouple_C17"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "c159af30-18e2-4777-88f0-c5d30e65b230")
 			(effects
 				(font
@@ -6779,6 +6817,7 @@
 		(property "Value" "100nF"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "ff99b27c-4352-42da-9ddd-8990f6e6673a")
 			(effects
 				(font
@@ -6981,6 +7020,7 @@
 		(property "Reference" "MEM_R1"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "eb506cf6-1e92-414a-98e9-19579cfb3eed")
 			(effects
 				(font
@@ -6992,6 +7032,7 @@
 		(property "Value" "1k5"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "a70c478f-5511-4b43-811f-0ee6906b11d2")
 			(effects
 				(font
@@ -7194,6 +7235,7 @@
 		(property "Reference" "1v8_R1"
 			(at 0 -1.43 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "a04be704-abb8-47ec-a995-df7f2869bd16")
 			(effects
 				(font
@@ -7205,6 +7247,7 @@
 		(property "Value" "12.2k"
 			(at 0 1.43 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "fc18ad0e-577e-4d71-9bcf-60e9242a4ddf")
 			(effects
 				(font
@@ -7407,6 +7450,7 @@
 		(property "Reference" "Pyros_R1"
 			(at 0 -1.43 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "ad1eef3d-8b31-4157-9ff1-da4935ca6c9d")
 			(effects
 				(font
@@ -7418,6 +7462,7 @@
 		(property "Value" "1k5"
 			(at 0 1.43 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "29e37c3f-25c0-4ce0-a230-cfe8cea25cca")
 			(effects
 				(font
@@ -7614,28 +7659,29 @@
 	(footprint "TestPoint:TestPoint_Pad_D1.0mm"
 		(layer "F.Cu")
 		(uuid "2de6e8a7-adf1-4bd5-890e-d7836bfb8f3f")
-		(at -34.6 61.55)
+		(at 21.844 60.706)
 		(descr "SMD pad as test Point, diameter 1.0mm")
 		(tags "test point SMD pad")
 		(property "Reference" "TP6"
 			(at 0 -1.448 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "c8156699-8d0e-471c-a0ac-8f86c14475ea")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
-		(property "Value" "TestPoint"
+		(property "Value" "MOSI"
 			(at 0 1.55 0)
 			(layer "F.Fab")
 			(uuid "b46e6459-f18b-4db4-9c81-d87200856797")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
@@ -7735,6 +7781,7 @@
 		(property "Reference" "GPS_L1"
 			(at 0 -1.5 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "34ee0ac0-9051-4c45-a136-2e2229033b4e")
 			(effects
 				(font
@@ -7746,6 +7793,7 @@
 		(property "Value" "100nH"
 			(at 0 1.55 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "bb27e1bf-d47a-47e3-b9a1-a0b57ba6b1ea")
 			(effects
 				(font
@@ -7950,6 +7998,7 @@
 		(property "Reference" "1v8_R2"
 			(at 0 -1.43 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "a2a270fd-eebd-4b57-bbf0-150d980daf6c")
 			(effects
 				(font
@@ -7961,6 +8010,7 @@
 		(property "Value" "10k"
 			(at 0 1.43 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "ce836b2c-d92f-40fd-b254-bf2a5c54774d")
 			(effects
 				(font
@@ -8157,28 +8207,29 @@
 	(footprint "TestPoint:TestPoint_Pad_D1.0mm"
 		(layer "F.Cu")
 		(uuid "2ee0f946-590b-45bc-95c0-77f673495080")
-		(at -34.6 58.5)
+		(at 21.844 57.658)
 		(descr "SMD pad as test Point, diameter 1.0mm")
 		(tags "test point SMD pad")
 		(property "Reference" "TP5"
 			(at 0 -1.448 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "ac49da46-8b82-4832-9a92-5ed944549fb1")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
-		(property "Value" "TestPoint"
+		(property "Value" "MISO"
 			(at 0 1.55 0)
 			(layer "F.Fab")
 			(uuid "02ce6c08-4c5b-4310-ab76-f3730c6fc107")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
@@ -8278,6 +8329,7 @@
 		(property "Reference" "Pyros_MOSFET2"
 			(at 0 -3.5 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "6b2e411f-01cf-43cb-8f86-e18c8eeb6804")
 			(effects
 				(font
@@ -8289,6 +8341,7 @@
 		(property "Value" "CSD17310Q5A"
 			(at 0 3.5 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "24b8bd7c-d6bf-4d28-928c-5814e67a9526")
 			(effects
 				(font
@@ -8646,6 +8699,7 @@
 		(property "Reference" "LED_7v4Enable1"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "4510c2bd-23eb-4f9d-9035-85841c7dbdca")
 			(effects
 				(font
@@ -8657,6 +8711,7 @@
 		(property "Value" "GREEN"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "80263699-bc62-4cf8-a012-f48a7501793f")
 			(effects
 				(font
@@ -8881,6 +8936,7 @@
 		(property "Reference" "BT_R1"
 			(at 0 -3 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "38b79312-e2ba-49e6-a8fa-314bf432b9a3")
 			(effects
 				(font
@@ -8892,6 +8948,7 @@
 		(property "Value" "10k"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "45b9135d-8031-454f-b622-90b97a135347")
 			(effects
 				(font
@@ -9094,6 +9151,7 @@
 		(property "Reference" "3v3_C4"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "343b6217-845e-4a64-8c0d-325eceeddf90")
 			(effects
 				(font
@@ -9105,6 +9163,7 @@
 		(property "Value" "100nf"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "679f64ba-82ee-4cf3-bad5-209bf1bf9216")
 			(effects
 				(font
@@ -9307,6 +9366,7 @@
 		(property "Reference" "SW_J1"
 			(at 0 -2.06 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "6cfa4b59-d9aa-4f34-8f19-82ede982b5e1")
 			(effects
 				(font
@@ -9318,6 +9378,7 @@
 		(property "Value" "SYS_Conn_01x05_Socket"
 			(at 0 10.06 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "c13926be-5e66-4112-8586-0db8201e0b0d")
 			(effects
 				(font
@@ -9607,6 +9668,7 @@
 		(property "Reference" "J5"
 			(at 0 -4.75 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "178223ad-c8e0-458c-8119-be9fcb938f71")
 			(effects
 				(font
@@ -9618,6 +9680,7 @@
 		(property "Value" "RFM_Conn_Coaxial"
 			(at 0 5 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "0c0da4f1-3912-475a-869f-7d4bddf35b5c")
 			(effects
 				(font
@@ -9888,6 +9951,7 @@
 		(property "Reference" "3v7_R1"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "fdcce43b-9197-465a-a42c-f27ecf75f51d")
 			(effects
 				(font
@@ -9899,6 +9963,7 @@
 		(property "Value" "100k 1%"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "ac9eedc1-6248-4276-b694-0d2a64327517")
 			(effects
 				(font
@@ -10101,6 +10166,7 @@
 		(property "Reference" "Boot_R2"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "3025a1a6-0ee9-4707-b1fe-1cd0a476f519")
 			(effects
 				(font
@@ -10112,6 +10178,7 @@
 		(property "Value" "10k"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "a4c055a0-9fb2-4bec-80f3-d5a0f5638c5e")
 			(effects
 				(font
@@ -10314,6 +10381,7 @@
 		(property "Reference" "5v_C2"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "8e0d5e52-b68f-4d2b-b3dd-7b84416876d2")
 			(effects
 				(font
@@ -10325,6 +10393,7 @@
 		(property "Value" "100nf"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "2c2b4773-6474-49d5-a9f4-46479d34edaa")
 			(effects
 				(font
@@ -10521,28 +10590,29 @@
 	(footprint "TestPoint:TestPoint_Pad_D1.0mm"
 		(layer "F.Cu")
 		(uuid "3b0abf3d-b82b-49ee-a4d7-ee3dcb5c3033")
-		(at -28.5 64.6)
+		(at 12.192 18.034)
 		(descr "SMD pad as test Point, diameter 1.0mm")
 		(tags "test point SMD pad")
 		(property "Reference" "TP21"
 			(at 0 -1.448 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "45b6abbd-b67c-44fc-ba02-b28d1bb834df")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
-		(property "Value" "TestPoint"
+		(property "Value" "7v4"
 			(at 0 1.55 0)
 			(layer "F.Fab")
 			(uuid "6f0baa9c-1e52-4fa7-b0ee-816ceedb99b4")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
@@ -10636,12 +10706,13 @@
 	(footprint "TestPoint:TestPoint_Pad_D1.0mm"
 		(layer "F.Cu")
 		(uuid "3b4bf76a-1f59-4781-8281-39a34f6885c9")
-		(at -31.55 55.45)
+		(at 42.037 68.834)
 		(descr "SMD pad as test Point, diameter 1.0mm")
 		(tags "test point SMD pad")
 		(property "Reference" "TP11"
 			(at 0 -1.448 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "a31609c8-e2e7-43dc-9502-b68c665a04c4")
 			(effects
 				(font
@@ -10650,14 +10721,14 @@
 				)
 			)
 		)
-		(property "Value" "TestPoint"
+		(property "Value" "MOSI"
 			(at 0 1.55 0)
 			(layer "F.Fab")
 			(uuid "62daf57c-eaab-43c3-9df0-8e6803181e3e")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
@@ -10751,28 +10822,29 @@
 	(footprint "TestPoint:TestPoint_Pad_D1.0mm"
 		(layer "F.Cu")
 		(uuid "3c6d20c0-12a7-4b64-9bc1-4288b382ded2")
-		(at -28.5 46.3)
+		(at 11.303 30.353)
 		(descr "SMD pad as test Point, diameter 1.0mm")
 		(tags "test point SMD pad")
 		(property "Reference" "TP15"
 			(at 0 -1.448 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "873146af-4776-47c6-a966-5a651406c75b")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
-		(property "Value" "TestPoint"
+		(property "Value" "M_ADC"
 			(at 0 1.55 0)
-			(layer "F.Fab")
+			(layer "F.SilkS")
 			(uuid "74a67175-0ba0-456a-b836-0c35305f5738")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
@@ -11236,6 +11308,7 @@
 		(property "Reference" "Decouple_C4"
 			(at 0 -1.43 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "d6211f98-9ce3-4dbd-bf61-f822213c9c6c")
 			(effects
 				(font
@@ -11247,6 +11320,7 @@
 		(property "Value" "100nF"
 			(at 0 1.43 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "22bd0f60-fde1-43be-b618-ff757a4d0002")
 			(effects
 				(font
@@ -11449,6 +11523,7 @@
 		(property "Reference" "H1"
 			(at 0 -4 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "8b1c9c2c-e3e3-4bbf-9f1d-f0d9504d4ebc")
 			(effects
 				(font
@@ -11460,6 +11535,7 @@
 		(property "Value" "MountingHole"
 			(at 0 5.3 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "f599f28c-17e6-4701-8dc4-311ebc4f68e0")
 			(effects
 				(font
@@ -11562,6 +11638,7 @@
 		(property "Reference" "Pyros_NPN1"
 			(at 0 -2.4 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "dd6e14b8-5894-49f7-948c-41bc33778abc")
 			(effects
 				(font
@@ -11573,6 +11650,7 @@
 		(property "Value" "MMBT3904"
 			(at 0 2.4 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "afa7d889-a130-40ef-9507-59ef38b596f8")
 			(effects
 				(font
@@ -11829,6 +11907,7 @@
 		(property "Reference" "ICM_C2"
 			(at 0 -1.43 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "a36c23f9-778d-4fd1-81c7-8f1d2fe93cf1")
 			(effects
 				(font
@@ -11840,6 +11919,7 @@
 		(property "Value" "100nF"
 			(at 0 1.43 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "679bf18f-c7be-4bcd-9122-b93aa16507cf")
 			(effects
 				(font
@@ -12042,6 +12122,7 @@
 		(property "Reference" "7v4_R3"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "e91d7969-d94f-4034-9cc0-c8c1d7d14ec1")
 			(effects
 				(font
@@ -12053,6 +12134,7 @@
 		(property "Value" "1k5"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "07f4de30-c2d9-45ec-b711-e0eb1a4b346d")
 			(effects
 				(font
@@ -12255,6 +12337,7 @@
 		(property "Reference" "7v4_C2"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "c26c8fd8-70aa-4fa3-8a54-6e27d531db03")
 			(effects
 				(font
@@ -12266,6 +12349,7 @@
 		(property "Value" "33uf"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "0fff53e4-b0be-4426-8187-b84319dd171f")
 			(effects
 				(font
@@ -12467,6 +12551,7 @@
 		(property "Reference" "E1"
 			(at -0.635 14.605 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "bd0462c1-7056-46d3-a571-70f78e78aead")
 			(effects
 				(font
@@ -12478,6 +12563,7 @@
 		(property "Value" "HM-10"
 			(at 0 0 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "4b1e6b9f-db5c-4257-9ff2-3d547c3e44bc")
 			(effects
 				(font
@@ -13284,6 +13370,7 @@
 		(property "Reference" "5v_LED1"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "b2e1833b-5997-482b-b4d5-74e1b03282bd")
 			(effects
 				(font
@@ -13295,6 +13382,7 @@
 		(property "Value" "GREEN"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "50bfdfcd-0d49-4237-9639-26b71a48021c")
 			(effects
 				(font
@@ -13519,6 +13607,7 @@
 		(property "Reference" "Pyros_PNP2"
 			(at 0 -2.4 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "fad0c475-83f6-4409-9fd5-5be1d1a0ffef")
 			(effects
 				(font
@@ -13530,6 +13619,7 @@
 		(property "Value" "BC857"
 			(at 0 2.4 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "b9570c24-86e1-431a-b121-6283ce5371f2")
 			(effects
 				(font
@@ -13786,6 +13876,7 @@
 		(property "Reference" "Pyros_AND1"
 			(at 0 -5.28 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "c60ea253-15f0-47b8-9088-28498967bdce")
 			(effects
 				(font
@@ -13797,6 +13888,7 @@
 		(property "Value" "SN74HC08DR"
 			(at 0 5.28 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "02a51f1f-b7f3-4503-bbac-480d62d3fe1b")
 			(effects
 				(font
@@ -14160,6 +14252,7 @@
 		(property "Reference" "7v4_R8"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "63c2a608-05af-475a-b552-c6c3cfcd1401")
 			(effects
 				(font
@@ -14171,6 +14264,7 @@
 		(property "Value" "1k"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "f60057a5-42da-491c-b3ae-3bee0cd63572")
 			(effects
 				(font
@@ -14373,6 +14467,7 @@
 		(property "Reference" "Pyros_R5"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "c8f1fbc8-be12-451e-995b-8beb29e8300b")
 			(effects
 				(font
@@ -14384,6 +14479,7 @@
 		(property "Value" "10k"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "0df92c35-912a-4f2d-bbf0-dc48388963ad")
 			(effects
 				(font
@@ -14586,6 +14682,7 @@
 		(property "Reference" "Coupling_FB1"
 			(at -0.401336 2.176654 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "7f971a4a-1788-4821-816d-d76a2f32aa51")
 			(effects
 				(font
@@ -14597,6 +14694,7 @@
 		(property "Value" "120R"
 			(at 0 1.65 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "9c68c8b6-40f3-48a2-88d2-203e31429810")
 			(effects
 				(font
@@ -14799,6 +14897,7 @@
 		(property "Reference" "1v8_C4"
 			(at 0 -1.43 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "33b681d4-890e-4a64-9bf4-549217d0f18e")
 			(effects
 				(font
@@ -14810,6 +14909,7 @@
 		(property "Value" "10uf"
 			(at 0 1.43 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "659bbbc9-1abf-423e-bc9e-51744ad8c864")
 			(effects
 				(font
@@ -15012,6 +15112,7 @@
 		(property "Reference" "Pyros_R14"
 			(at 0 -1.43 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "4bb90ac6-0843-4589-95b2-f184839a102a")
 			(effects
 				(font
@@ -15023,6 +15124,7 @@
 		(property "Value" "1k5"
 			(at 0 1.43 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "f1ba031a-6faf-43f4-a17f-a492e808a4c1")
 			(effects
 				(font
@@ -15225,6 +15327,7 @@
 		(property "Reference" "3v3_C2"
 			(at 0 -1.43 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "c2f2c027-59d6-466f-9f7e-9f2ff22b0ee8")
 			(effects
 				(font
@@ -15236,6 +15339,7 @@
 		(property "Value" "100nf"
 			(at 0 1.43 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "c23e787f-20ff-4b5c-b2b7-212afb67abfa")
 			(effects
 				(font
@@ -15438,6 +15542,7 @@
 		(property "Reference" "BT_C1"
 			(at 0 -1.43 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "b8a90fda-6ae7-41bd-9c1f-51cc353270b0")
 			(effects
 				(font
@@ -15449,6 +15554,7 @@
 		(property "Value" "10uF"
 			(at 0 1.43 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "4229685d-e0db-4f48-bab5-b31a85581608")
 			(effects
 				(font
@@ -15651,6 +15757,7 @@
 		(property "Reference" "RST_C1"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "0b3e1653-5358-4019-ba80-61affa9011b9")
 			(effects
 				(font
@@ -15662,6 +15769,7 @@
 		(property "Value" "100nF"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "84a31ae3-194d-4e6a-bcf9-cfd91656a77e")
 			(effects
 				(font
@@ -15864,6 +15972,7 @@
 		(property "Reference" "7v4_C1"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "cb4c4620-e4c0-4675-982c-5b89b8dc28c8")
 			(effects
 				(font
@@ -15875,6 +15984,7 @@
 		(property "Value" "10uf"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "699d3ee4-8ecd-4e6a-971b-dd42f60eed0a")
 			(effects
 				(font
@@ -16077,6 +16187,7 @@
 		(property "Reference" "GPS_C1"
 			(at 0 -1.43 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "db3f23bf-c215-48a2-a898-f32e31464ed4")
 			(effects
 				(font
@@ -16088,6 +16199,7 @@
 		(property "Value" "100nf"
 			(at 0 1.43 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "a735afb6-5e5f-4bf3-abe1-d10330db646c")
 			(effects
 				(font
@@ -16288,6 +16400,7 @@
 		(property "Reference" "Crystal_Y1"
 			(at -0.226285 2.989833 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "e90c8286-0da2-4941-ab78-a6c5ef18a31a")
 			(effects
 				(font
@@ -16299,6 +16412,7 @@
 		(property "Value" "26MHz"
 			(at 17.425 2.885 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "00eea304-eebc-4656-83bc-877c788db7cd")
 			(effects
 				(font
@@ -16520,6 +16634,7 @@
 		(property "Reference" "5v_C3"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "6259c2ab-35f3-4ab5-b1fc-57e3dac45033")
 			(effects
 				(font
@@ -16531,6 +16646,7 @@
 		(property "Value" "10uf"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "b6a052c2-e3ff-4fc1-bd96-3baf1b18b8e5")
 			(effects
 				(font
@@ -16727,28 +16843,29 @@
 	(footprint "TestPoint:TestPoint_Pad_D1.0mm"
 		(layer "F.Cu")
 		(uuid "603acb3d-b579-4135-b17e-2fc7ab52d6a9")
-		(at -22.4 46.3)
+		(at 54.483 9.271)
 		(descr "SMD pad as test Point, diameter 1.0mm")
 		(tags "test point SMD pad")
 		(property "Reference" "TP29"
 			(at 0 -1.448 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "9589d5ff-41be-4339-a15c-8150494ccc76")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
-		(property "Value" "TestPoint"
+		(property "Value" "TX"
 			(at 0 1.55 0)
 			(layer "F.Fab")
 			(uuid "e78f371f-d448-485d-bcb1-af0f54b1cde3")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
@@ -16848,6 +16965,7 @@
 		(property "Reference" "MEM_C1"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "4223ae06-2c85-4159-90b5-a08cc0841f38")
 			(effects
 				(font
@@ -16859,6 +16977,7 @@
 		(property "Value" "10uF"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "ed06aa80-2e9a-4fe4-bb3d-399b392fdc1e")
 			(effects
 				(font
@@ -17061,6 +17180,7 @@
 		(property "Reference" "Crystal_C1"
 			(at 0 -1.43 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "9a10d823-cd38-4e24-a658-61e7e3cdb124")
 			(effects
 				(font
@@ -17072,6 +17192,7 @@
 		(property "Value" "8pF"
 			(at 0 1.43 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "31dd6c38-429f-4d6d-a86e-68f58c588c1f")
 			(effects
 				(font
@@ -17274,6 +17395,7 @@
 		(property "Reference" "Pyros_LED4"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "eb49c46a-216f-4ff5-a786-67f0ba224b64")
 			(effects
 				(font
@@ -17285,6 +17407,7 @@
 		(property "Value" "GREEN"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "0ffca746-37c7-4357-8185-0acbe254370d")
 			(effects
 				(font
@@ -17509,6 +17632,7 @@
 		(property "Reference" "3v3_R1"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "6fff9512-a830-4659-8e57-12c1e00d9e5a")
 			(effects
 				(font
@@ -17520,6 +17644,7 @@
 		(property "Value" "3M 1%"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "e39e8df0-28de-46ad-b469-5bfdb6bfa498")
 			(effects
 				(font
@@ -17722,6 +17847,7 @@
 		(property "Reference" "Pyros_J1"
 			(at 2.5 -5.16 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "b2bbd194-4b04-4cfd-9773-0ecd93d114fa")
 			(effects
 				(font
@@ -17733,6 +17859,7 @@
 		(property "Value" "Pyro_Main"
 			(at 2.5 4.56 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "c7caaddf-9ac3-4e0c-b69c-d61fc007c650")
 			(effects
 				(font
@@ -18261,6 +18388,7 @@
 			(at -0.081041 -6.159131 180)
 			(unlocked yes)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "19d49dd4-9736-4d5c-b08c-38e2862ce275")
 			(effects
 				(font
@@ -18273,6 +18401,7 @@
 			(at 0 0.1724 180)
 			(unlocked yes)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "3a2501df-3ead-422b-a98e-61d7704fd7b6")
 			(effects
 				(font
@@ -18533,6 +18662,7 @@
 		(property "Reference" "USB_Connector1"
 			(at 2.47743 -2.028709 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "d0413135-acad-4e79-a231-84737f78c260")
 			(effects
 				(font
@@ -18544,6 +18674,7 @@
 		(property "Value" "USBLC6-2P6"
 			(at 0 1.75 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "44427f04-718b-4f17-9be6-ded9f481ee28")
 			(effects
 				(font
@@ -18820,6 +18951,7 @@
 		(property "Reference" "3v3_LED1"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "f0fcb25e-01b6-4b19-b2ff-b919e9ac69b2")
 			(effects
 				(font
@@ -18831,6 +18963,7 @@
 		(property "Value" "GREEN"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "a6a5c421-8d63-428a-a833-f90d7f979cd8")
 			(effects
 				(font
@@ -19055,6 +19188,7 @@
 		(property "Reference" "Decouple_C10"
 			(at 0 -1.43 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "e63505fa-51a8-48d4-8c9d-81f3e1e14899")
 			(effects
 				(font
@@ -19066,6 +19200,7 @@
 		(property "Value" "100nF"
 			(at 0 1.43 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "93d2d1db-9505-486e-86bc-03a63da1fc93")
 			(effects
 				(font
@@ -19268,6 +19403,7 @@
 		(property "Reference" "Pyros_NPN2"
 			(at 0 -2.4 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "d3d9bb48-adfd-4828-a50c-57df9359cc88")
 			(effects
 				(font
@@ -19279,6 +19415,7 @@
 		(property "Value" "MMBT3904"
 			(at 0 2.4 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "d28f657e-c4f0-42b6-9ce6-34143c217ec8")
 			(effects
 				(font
@@ -19533,6 +19670,7 @@
 		(property "Reference" "U10"
 			(at -1.44 -4.045 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "e182857b-2975-4b15-8755-6c5edd53d432")
 			(effects
 				(font
@@ -19544,6 +19682,7 @@
 		(property "Value" "W25Q512JVEIQ"
 			(at 8.085 4.115 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "580f9028-0b91-45dc-b1ff-221cb1e8b3f5")
 			(effects
 				(font
@@ -19975,6 +20114,7 @@
 		(property "Reference" "CLED_R1"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "2b380e5c-50ae-4695-a179-03aa8bf69969")
 			(effects
 				(font
@@ -19986,6 +20126,7 @@
 		(property "Value" "1k5"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "007464c8-a1cb-4eb4-a9da-f9ba92d626f9")
 			(effects
 				(font
@@ -20188,6 +20329,7 @@
 		(property "Reference" "1v8_C1"
 			(at 0 -1.43 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "e97397c7-80b8-456a-8f3e-6a50a2ec4116")
 			(effects
 				(font
@@ -20199,6 +20341,7 @@
 		(property "Value" "10uf"
 			(at 0 1.43 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "b99ca093-be16-4afe-ab54-5aae581924e2")
 			(effects
 				(font
@@ -20401,6 +20544,7 @@
 		(property "Reference" "Batt7v4_L1"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "cac4f847-6171-4542-a7f7-6282f5c4a00a")
 			(effects
 				(font
@@ -20412,6 +20556,7 @@
 		(property "Value" "GREEN"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "a6d1cff8-070f-4ac5-8c60-6ab3014f9e81")
 			(effects
 				(font
@@ -20630,7 +20775,7 @@
 	(footprint "TestPoint:TestPoint_Pad_D1.0mm"
 		(layer "F.Cu")
 		(uuid "6fbe45f7-8dcd-442e-a5d9-eea190ea3bbb")
-		(at -31.55 52.4)
+		(at 62.611 28.956)
 		(descr "SMD pad as test Point, diameter 1.0mm")
 		(tags "test point SMD pad")
 		(property "Reference" "TP10"
@@ -20639,19 +20784,19 @@
 			(uuid "c2bc712e-60d6-44e0-8442-f7cfdd914fc8")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
-		(property "Value" "TestPoint"
+		(property "Value" "SWCLK"
 			(at 0 1.55 0)
 			(layer "F.Fab")
 			(uuid "f304d058-9b58-44f4-9ee2-308b5566e19d")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
@@ -20751,6 +20896,7 @@
 		(property "Reference" "7v4_R1"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "90575d53-d70e-4167-90fc-8f33e7b3bb94")
 			(effects
 				(font
@@ -20762,6 +20908,7 @@
 		(property "Value" "100k 1%"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "481f3b84-3631-4c66-8167-668975131214")
 			(effects
 				(font
@@ -20964,6 +21111,7 @@
 		(property "Reference" "Decouple_C15"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "e2c98efb-7847-440b-bfb0-c6c1691b57fe")
 			(effects
 				(font
@@ -20975,6 +21123,7 @@
 		(property "Value" "10nF"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "2e472134-e0b6-4b47-aa6d-d3b8bfac8663")
 			(effects
 				(font
@@ -21177,6 +21326,7 @@
 		(property "Reference" "7v4_C4"
 			(at 0 -1.43 180)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "5b4f9a37-2c71-4a72-b8e8-f8ad783a23b5")
 			(effects
 				(font
@@ -21188,6 +21338,7 @@
 		(property "Value" "100nf"
 			(at 0 1.43 180)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "393f47c1-9aa8-4488-a707-f764b9a3b7c4")
 			(effects
 				(font
@@ -21393,8 +21544,8 @@
 			(uuid "3e8468fe-7fbf-421f-9462-dd81160ba0c6")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
@@ -21505,6 +21656,7 @@
 		(property "Reference" "3v7_J1"
 			(at 1.25 -4.4 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "1be2035d-1277-4a12-9084-b13dc3aebeff")
 			(effects
 				(font
@@ -21516,6 +21668,7 @@
 		(property "Value" "Batt4v2"
 			(at 1.25 4.4 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "1aed8573-ed40-4e79-aaf6-474989852a6e")
 			(effects
 				(font
@@ -21923,6 +22076,7 @@
 		(property "Reference" "BT_R2"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "cf423d2e-97c1-45e6-a708-4daccdc0e4c4")
 			(effects
 				(font
@@ -21934,6 +22088,7 @@
 		(property "Value" "1k5"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "af72cf2f-61be-4fbd-82ed-eb848d5613fa")
 			(effects
 				(font
@@ -22136,6 +22291,7 @@
 		(property "Reference" "Pyros_AMP1"
 			(at 0 -3.4 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "f34ae7cc-5b67-4d92-9f42-cf7634f4aecd")
 			(effects
 				(font
@@ -22147,6 +22303,7 @@
 		(property "Value" "TLV2372"
 			(at 0 3.4 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "2745ad05-38c7-4d32-94e1-2fcfebf4c2b2")
 			(effects
 				(font
@@ -22484,6 +22641,7 @@
 		(property "Reference" "Pyros_R10"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "347c82f2-2f24-4106-aea7-4299819afd9c")
 			(effects
 				(font
@@ -22495,6 +22653,7 @@
 		(property "Value" "10k"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "16b45843-2321-4b9a-9ddf-eb937b3c54ce")
 			(effects
 				(font
@@ -22697,6 +22856,7 @@
 		(property "Reference" "Decouple_C2"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "55f9e889-9b5d-41ed-9020-099599c8c5eb")
 			(effects
 				(font
@@ -22708,6 +22868,7 @@
 		(property "Value" "100nF"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "c943dbac-3600-45b2-8456-dccab2434871")
 			(effects
 				(font
@@ -22910,6 +23071,7 @@
 		(property "Reference" "3v7_R3"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "7047739c-4bc2-41f0-acb1-15a61d6bef12")
 			(effects
 				(font
@@ -22921,6 +23083,7 @@
 		(property "Value" "100k"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "4bc0d16b-b745-4662-8dc7-b0fb89fb3d0b")
 			(effects
 				(font
@@ -23123,6 +23286,7 @@
 		(property "Reference" "Pyros_R18"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "ee28d3af-8b3f-447e-a45d-8df03d73bfdf")
 			(effects
 				(font
@@ -23134,6 +23298,7 @@
 		(property "Value" "1k5"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "d8d40a75-c60f-480f-8b9a-0183663a66d0")
 			(effects
 				(font
@@ -23336,6 +23501,7 @@
 		(property "Reference" "5v_REG1"
 			(at 0 -6.65 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "977eaa17-b6fc-487d-9a53-8d4d49adb696")
 			(effects
 				(font
@@ -23347,6 +23513,7 @@
 		(property "Value" "LM1085-5.0"
 			(at 0 6.65 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "51ee437b-7574-4734-898f-36b3a704979b")
 			(effects
 				(font
@@ -23773,6 +23940,7 @@
 		(property "Reference" "H4"
 			(at 0 -5.3 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "80a4507a-4105-4a7c-b1ab-d144e6ca3e19")
 			(effects
 				(font
@@ -23784,6 +23952,7 @@
 		(property "Value" "MountingHole"
 			(at 0 5.3 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "f004e2e1-1d4c-4941-97df-289aeb7f8947")
 			(effects
 				(font
@@ -23886,6 +24055,7 @@
 		(property "Reference" "Decouple_C7"
 			(at 0 -1.43 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "0522f924-94d0-44e4-a1e8-cc7a5126b56d")
 			(effects
 				(font
@@ -23897,6 +24067,7 @@
 		(property "Value" "100nF"
 			(at 0 1.43 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "62b8c9a1-29aa-4afb-b0be-af09e59e8b9e")
 			(effects
 				(font
@@ -24093,28 +24264,29 @@
 	(footprint "TestPoint:TestPoint_Pad_D1.0mm"
 		(layer "F.Cu")
 		(uuid "823d7c7f-07b6-4a5b-8703-4681203c9815")
-		(at -28.5 52.4)
+		(at 49.022 13.462)
 		(descr "SMD pad as test Point, diameter 1.0mm")
 		(tags "test point SMD pad")
 		(property "Reference" "TP17"
 			(at 0 -1.448 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "41ce2f48-e663-47c6-a712-e0b7647ab5ba")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
-		(property "Value" "TestPoint"
+		(property "Value" "TX"
 			(at 0 1.55 0)
 			(layer "F.Fab")
 			(uuid "e31c2ada-36ca-4a49-aa2c-812a13715217")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
@@ -24214,6 +24386,7 @@
 		(property "Reference" "3v7_FUZE1"
 			(at 0 -2.28 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "82112c91-aba6-48e9-aea3-e10ecc95e6d9")
 			(effects
 				(font
@@ -24225,6 +24398,7 @@
 		(property "Value" "0ZCH0075AF2E (750ma)"
 			(at 0 2.28 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "a237eee5-fb52-492f-b3ac-a769fea67ee1")
 			(effects
 				(font
@@ -24425,6 +24599,7 @@
 		(property "Reference" "Pyros_XNOR1"
 			(at 0.762 -1.4064 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "b478dddc-55a3-4107-932e-fe280a377509")
 			(effects
 				(font
@@ -24436,6 +24611,7 @@
 		(property "Value" "74LV1T87GXH"
 			(at 4.4196 1.3436 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "a6d69619-37d8-4657-9388-bb1e99df3e69")
 			(effects
 				(font
@@ -24982,6 +25158,7 @@
 		(property "Reference" "1v8_C3"
 			(at 0 -1.43 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "5cb5bf74-3b4a-4d63-b001-a706bfcd18ef")
 			(effects
 				(font
@@ -24993,6 +25170,7 @@
 		(property "Value" "100nf"
 			(at 0 1.43 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "9bdcd934-881c-4ce6-b37d-2d7758d6ac38")
 			(effects
 				(font
@@ -25195,6 +25373,7 @@
 		(property "Reference" "Pyros_MOSFET1"
 			(at 0 -3.5 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "d0b0e359-3f08-4163-baf2-cbfa55a106de")
 			(effects
 				(font
@@ -25206,6 +25385,7 @@
 		(property "Value" "CSD17310Q5A"
 			(at 0 3.5 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "ae2dfe97-5b14-45a3-8a93-8e71ea753601")
 			(effects
 				(font
@@ -25257,7 +25437,7 @@
 		(path "/8ab7427e-7183-4caa-ac8a-08b0bd412372/23a2d81f-4482-40d8-af37-eea7fdf96b1b")
 		(sheetname "Pyro")
 		(sheetfile "Pyro.kicad_sch")
-		(attr smd)
+		(attr smd exclude_from_pos_files)
 		(fp_line
 			(start 3.06 -2.685)
 			(end -2.62 -2.685)
@@ -25563,6 +25743,7 @@
 		(property "Reference" "Pyros_R2"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "87da2adc-f0c6-473d-9bcb-a94c7b575f46")
 			(effects
 				(font
@@ -25574,6 +25755,7 @@
 		(property "Value" "10k"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "c895a8c1-b905-4ce4-9d59-0422cb6e4264")
 			(effects
 				(font
@@ -25776,6 +25958,7 @@
 		(property "Reference" "Decouple_C11"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "b232ff6b-9bc2-4b6f-8a1a-a6e62832a6b5")
 			(effects
 				(font
@@ -25787,6 +25970,7 @@
 		(property "Value" "100nF"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "c80dc57d-b8e5-4944-abe7-0a9abba79892")
 			(effects
 				(font
@@ -25989,6 +26173,7 @@
 		(property "Reference" "USB_D1"
 			(at 0.0125 -2.51 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "007a1de3-2503-4cac-bf83-6c8d26cf43bb")
 			(effects
 				(font
@@ -26000,6 +26185,7 @@
 		(property "Value" "B260A-13-F"
 			(at 0 2.1 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "d042353e-111d-42f8-bdf5-343049ed10ed")
 			(effects
 				(font
@@ -26284,6 +26470,7 @@
 		(property "Reference" "Pyros_R9"
 			(at 0 -1.43 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "38e0e4e9-585e-401a-a2cb-f3a18f614b5e")
 			(effects
 				(font
@@ -26295,6 +26482,7 @@
 		(property "Value" "1k5"
 			(at 0 1.43 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "b978e37e-b8c9-4997-a9b7-e5259cc4f088")
 			(effects
 				(font
@@ -26497,6 +26685,7 @@
 		(property "Reference" "Decouple_C6"
 			(at 0 -1.43 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "13cdd778-0665-45fa-bd8c-9bff23875bb0")
 			(effects
 				(font
@@ -26508,6 +26697,7 @@
 		(property "Value" "100nF"
 			(at 0 1.43 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "844db43d-90a4-48a9-80bd-124951b04204")
 			(effects
 				(font
@@ -26710,6 +26900,7 @@
 		(property "Reference" "Pyros_R4"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "f4d2cae7-d396-48c8-b9f5-898f88aeb8f2")
 			(effects
 				(font
@@ -26721,6 +26912,7 @@
 		(property "Value" "390k ±1%"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "703ce149-7f1d-432c-8dd3-be5e847c976a")
 			(effects
 				(font
@@ -26921,8 +27113,9 @@
 		(descr "Resistor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
 		(tags "resistor")
 		(property "Reference" "Pyros_R3"
-			(at 0 -1.43 -90)
+			(at 0 -1.43 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "e2975e64-1dd0-41fb-93a0-62a9ca69f48d")
 			(effects
 				(font
@@ -26932,8 +27125,9 @@
 			)
 		)
 		(property "Value" "68R ±1%"
-			(at 0 1.43 -90)
+			(at 0 1.43 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "0beb0010-d387-4adf-b19c-3a32b76418ca")
 			(effects
 				(font
@@ -27087,7 +27281,7 @@
 			(uuid "d7f225e6-b8ea-4d6c-9164-20174b8ba4a7")
 		)
 		(fp_text user "${REFERENCE}"
-			(at 0 0 -90)
+			(at 0 0 90)
 			(layer "F.Fab")
 			(uuid "35f03422-fa6d-4116-8b98-1d9e2fb6cc52")
 			(effects
@@ -27136,6 +27330,7 @@
 		(property "Reference" "Decouple_C12"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "d0b944a7-4430-482a-8d1b-031b66b938b4")
 			(effects
 				(font
@@ -27147,6 +27342,7 @@
 		(property "Value" "100nF"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "39382792-1f3b-494d-8237-e4d0c07db571")
 			(effects
 				(font
@@ -27343,28 +27539,29 @@
 	(footprint "TestPoint:TestPoint_Pad_D1.0mm"
 		(layer "F.Cu")
 		(uuid "9432a7e7-0e7e-4763-804f-54265ceeee8c")
-		(at -25.45 52.4)
+		(at 34.163 34.29)
 		(descr "SMD pad as test Point, diameter 1.0mm")
 		(tags "test point SMD pad")
 		(property "Reference" "TP24"
 			(at 0 -1.448 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "d8111a51-3432-420a-adb2-a596444ade94")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
-		(property "Value" "TestPoint"
+		(property "Value" "D_ODB"
 			(at 0 1.55 0)
-			(layer "F.Fab")
+			(layer "F.SilkS")
 			(uuid "fe2ec54e-9295-4554-bdfd-bbf841be8f66")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
@@ -27458,28 +27655,29 @@
 	(footprint "TestPoint:TestPoint_Pad_D1.0mm"
 		(layer "F.Cu")
 		(uuid "95f002f3-9386-40b8-985b-7e636e2fa1cb")
-		(at -31.55 64.6)
+		(at 15.748 5.461)
 		(descr "SMD pad as test Point, diameter 1.0mm")
 		(tags "test point SMD pad")
 		(property "Reference" "TP14"
 			(at 0 -1.448 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "a2a417f0-e39c-4549-8155-02d0b60efb29")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
-		(property "Value" "TestPoint"
+		(property "Value" "7v4_An"
 			(at 0 1.55 0)
 			(layer "F.Fab")
 			(uuid "21b2f758-4b14-48b8-8d1e-6896187a12ee")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
@@ -27573,28 +27771,29 @@
 	(footprint "TestPoint:TestPoint_Pad_D1.0mm"
 		(layer "F.Cu")
 		(uuid "960da03b-2768-499e-bdb8-d30552b1ee3e")
-		(at -28.5 58.5)
+		(at 44.958 68.834)
 		(descr "SMD pad as test Point, diameter 1.0mm")
 		(tags "test point SMD pad")
 		(property "Reference" "TP19"
 			(at 0 -1.448 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "51246c14-a53b-41f7-a3d4-cbf007cb37d0")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
-		(property "Value" "TestPoint"
+		(property "Value" "MISO"
 			(at 0 1.55 0)
 			(layer "F.Fab")
 			(uuid "0c5e7d4a-3c18-4cb8-b8ce-62c7fb7db75c")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
@@ -27694,6 +27893,7 @@
 		(property "Reference" "BT_C2"
 			(at 0 -1.43 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "cdee590e-47ef-4833-b804-b2e01865f530")
 			(effects
 				(font
@@ -27705,6 +27905,7 @@
 		(property "Value" "100nF"
 			(at 0 1.43 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "80886588-5a32-4556-8383-68b75dd5cd7c")
 			(effects
 				(font
@@ -27905,8 +28106,9 @@
 		(descr "Resistor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
 		(tags "resistor")
 		(property "Reference" "Pyros_R11"
-			(at 0 -1.43 -90)
+			(at 0 -1.43 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "0a5ab6c5-4157-42f5-a3de-5d615f72205f")
 			(effects
 				(font
@@ -27916,8 +28118,9 @@
 			)
 		)
 		(property "Value" "68R ±1%"
-			(at 0 1.43 -90)
+			(at 0 1.43 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "63634fc2-4ea5-4e26-9887-bf1f9be2ca05")
 			(effects
 				(font
@@ -28071,7 +28274,7 @@
 			(uuid "608e2f32-f4b5-471e-9ebf-8f87196b7998")
 		)
 		(fp_text user "${REFERENCE}"
-			(at 0 0 -90)
+			(at 0 0 90)
 			(layer "F.Fab")
 			(uuid "03f84ca8-2a09-4d10-b2ea-349e7b35adf0")
 			(effects
@@ -28120,6 +28323,7 @@
 		(property "Reference" "Pyros_R13"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "aa2a7f77-ffa3-4a4e-a4a3-0f2bcf4ad2c0")
 			(effects
 				(font
@@ -28131,6 +28335,7 @@
 		(property "Value" "10k"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "0d8a61a7-8edb-40b0-a878-ee6f46108e80")
 			(effects
 				(font
@@ -28333,6 +28538,7 @@
 		(property "Reference" "USB_C2"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "93ca54f8-18a8-46e0-9693-923691f49378")
 			(effects
 				(font
@@ -28344,6 +28550,7 @@
 		(property "Value" "1uf"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "3e297ad1-5a77-4ae6-b196-d345a5bf7b9a")
 			(effects
 				(font
@@ -28546,6 +28753,7 @@
 		(property "Reference" "Batt7v4_R1"
 			(at 0 -1.43 180)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "40d7356d-53d2-4f2b-a44f-bf4eda4623d0")
 			(effects
 				(font
@@ -28557,6 +28765,7 @@
 		(property "Value" "68 1%"
 			(at 0 1.43 180)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "39e33051-1d44-4c85-93ed-31f6be54fb4f")
 			(effects
 				(font
@@ -28981,6 +29190,7 @@
 		(property "Reference" "Pyros_R15"
 			(at 0 -1.43 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "b62f7bd2-2f9e-4d27-8f0d-115b5a50ee0b")
 			(effects
 				(font
@@ -28992,6 +29202,7 @@
 		(property "Value" "10k"
 			(at 0 1.43 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "efcd339f-031f-4979-bab6-8367b6e3361d")
 			(effects
 				(font
@@ -29194,6 +29405,7 @@
 		(property "Reference" "GPS_R1"
 			(at 0 -1.43 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "1e8676c6-8516-4470-809a-506cfbcf9d5e")
 			(effects
 				(font
@@ -29205,6 +29417,7 @@
 		(property "Value" "10R"
 			(at 0 1.43 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "31de815b-a015-40a0-a958-7cc0f1806871")
 			(effects
 				(font
@@ -29407,6 +29620,7 @@
 		(property "Reference" "5v_C1"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "8090bef1-cc89-47c1-a309-29ce73ce5b3e")
 			(effects
 				(font
@@ -29418,6 +29632,7 @@
 		(property "Value" "10uf"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "6cea0fd4-0185-40f0-bc4d-2f9a7ec7b033")
 			(effects
 				(font
@@ -29620,6 +29835,7 @@
 			(at 0 0 -90)
 			(unlocked yes)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "37df5b5f-a70a-426a-af8a-990673fef905")
 			(effects
 				(font
@@ -29632,6 +29848,7 @@
 			(at 0 0 -90)
 			(unlocked yes)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "927f7cad-3dc4-4dcc-8233-e5f3fdb3b09e")
 			(effects
 				(font
@@ -30186,6 +30403,7 @@
 		(property "Reference" "Pyros_PNP1"
 			(at 0 -2.4 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "481521a9-1319-4c11-9e37-e6f015e0cb4d")
 			(effects
 				(font
@@ -30197,6 +30415,7 @@
 		(property "Value" "BC857"
 			(at 0 2.4 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "09e24fa6-a033-4468-9e1b-fbfdfcddd72a")
 			(effects
 				(font
@@ -30447,28 +30666,29 @@
 	(footprint "TestPoint:TestPoint_Pad_D1.0mm"
 		(layer "F.Cu")
 		(uuid "a502e20a-196f-463b-a313-1482c7f7b47f")
-		(at -31.55 49.35)
+		(at 66.294 28.956)
 		(descr "SMD pad as test Point, diameter 1.0mm")
 		(tags "test point SMD pad")
 		(property "Reference" "TP9"
 			(at 0 -1.448 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "fe9920a2-d9af-419e-b3d7-9d48e1d016b5")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
-		(property "Value" "TestPoint"
+		(property "Value" "SWDIO"
 			(at 0 1.55 0)
 			(layer "F.Fab")
 			(uuid "d510303a-9401-45e3-ab78-fb35d849d478")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
@@ -30562,28 +30782,29 @@
 	(footprint "TestPoint:TestPoint_Pad_D1.0mm"
 		(layer "F.Cu")
 		(uuid "a89c05e5-bb25-44d7-b1cd-c3719656dbfe")
-		(at -31.55 58.5)
+		(at 12.954 65.659)
 		(descr "SMD pad as test Point, diameter 1.0mm")
 		(tags "test point SMD pad")
 		(property "Reference" "TP12"
 			(at 0 -1.448 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "9b0e3e45-291d-4218-a654-e961cb813c6f")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
-		(property "Value" "TestPoint"
+		(property "Value" "CS"
 			(at 0 1.55 0)
 			(layer "F.Fab")
 			(uuid "3d048864-418c-44b3-8a0d-ee5f2adde207")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
@@ -30677,28 +30898,29 @@
 	(footprint "TestPoint:TestPoint_Pad_D1.0mm"
 		(layer "F.Cu")
 		(uuid "a91ce67d-74ec-4df8-8499-4dafacd84cab")
-		(at -28.5 61.55)
+		(at 51.689 54.991)
 		(descr "SMD pad as test Point, diameter 1.0mm")
 		(tags "test point SMD pad")
 		(property "Reference" "TP20"
 			(at 0 -1.448 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "8e36768f-7fe8-465b-bf51-9fbe35434923")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
-		(property "Value" "TestPoint"
+		(property "Value" "CS"
 			(at 0 1.55 0)
 			(layer "F.Fab")
 			(uuid "d51a031d-fc0d-4957-81a1-4b5d0366c001")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
@@ -30798,6 +31020,7 @@
 		(property "Reference" "Decouple_C1"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "5ff68080-7138-4fa4-95d9-0e69a0d8205f")
 			(effects
 				(font
@@ -30809,6 +31032,7 @@
 		(property "Value" "10uF"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "87d63cb7-8b7d-4d35-9da0-3ba62960be3c")
 			(effects
 				(font
@@ -31011,6 +31235,7 @@
 		(property "Reference" "Pyros_LED1"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "42e89e39-6f30-42e2-8746-c24457f25741")
 			(effects
 				(font
@@ -31022,6 +31247,7 @@
 		(property "Value" "GREEN"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "d3dee06d-33bf-4fa8-9b7f-bcba842457b2")
 			(effects
 				(font
@@ -31246,6 +31472,7 @@
 		(property "Reference" "Batt7v4_R2"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "52619658-8971-481e-8110-db0f0d971a72")
 			(effects
 				(font
@@ -31257,6 +31484,7 @@
 		(property "Value" "68 1%"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "924ebe6e-29c5-47d4-887a-66213526556d")
 			(effects
 				(font
@@ -31459,6 +31687,7 @@
 		(property "Reference" "SW_J2"
 			(at 0 -2.06 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "7b041be4-44d2-4b92-a21c-3cf54f5d4754")
 			(effects
 				(font
@@ -31470,6 +31699,7 @@
 		(property "Value" "RFD_Conn_01x05_Socket"
 			(at 0 10.06 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "301b1400-119c-4928-8d32-81e85204a398")
 			(effects
 				(font
@@ -31759,6 +31989,7 @@
 		(property "Reference" "7v4_R2"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "25d4653e-46ee-423e-aabe-29b3e109ab15")
 			(effects
 				(font
@@ -31770,6 +32001,7 @@
 		(property "Value" "64k 1%"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "d368555e-5f29-42a9-ade8-cb72894a6f7e")
 			(effects
 				(font
@@ -31972,6 +32204,7 @@
 		(property "Reference" "USB_Bus1"
 			(at 0 -3.1125 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "19d73308-41b9-4f70-958c-de2d5192cb8b")
 			(effects
 				(font
@@ -31983,6 +32216,7 @@
 		(property "Value" "USB_B_Micro"
 			(at 0.3 4.3375 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "6bd2416b-c81d-441d-96fd-476680a27b50")
 			(effects
 				(font
@@ -32423,6 +32657,7 @@
 		(property "Reference" "ICM_C1"
 			(at 0 -1.43 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "2b8f5ea8-709a-4c51-8235-65861cb465bc")
 			(effects
 				(font
@@ -32434,6 +32669,7 @@
 		(property "Value" "100nF"
 			(at 0 1.43 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "cfb0c112-a96f-4db9-ae68-f2a95feb093d")
 			(effects
 				(font
@@ -32636,6 +32872,7 @@
 		(property "Reference" "1v8_C2"
 			(at 0 -1.43 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "20eec537-59f8-4881-a205-4c03ebb7752a")
 			(effects
 				(font
@@ -32647,6 +32884,7 @@
 		(property "Value" "100nf"
 			(at 0 1.43 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "efcffedb-533b-441c-8be1-898e081e17d4")
 			(effects
 				(font
@@ -32847,8 +33085,9 @@
 		(descr "Resistor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
 		(tags "resistor")
 		(property "Reference" "BUZ_R1"
-			(at 0 -1.43 -90)
+			(at 0 -1.43 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "dc7e196d-3d3e-48b3-8f4d-f6570c72012e")
 			(effects
 				(font
@@ -32858,8 +33097,9 @@
 			)
 		)
 		(property "Value" "1k5"
-			(at 0 1.43 -90)
+			(at 0 1.43 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "85a1b854-bbba-4b60-b059-472b9d1aa486")
 			(effects
 				(font
@@ -33013,7 +33253,7 @@
 			(uuid "4bb23bf6-0ea3-4ff8-b5e8-5caf1660b788")
 		)
 		(fp_text user "${REFERENCE}"
-			(at 0 0 -90)
+			(at 0 0 90)
 			(layer "F.Fab")
 			(uuid "cb621235-3090-4bce-a8b5-ca77a0d5c6ce")
 			(effects
@@ -33062,6 +33302,7 @@
 		(property "Reference" "Pyros_R12"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "c3cf9f9c-d15f-42c7-ab83-8b7a688c6443")
 			(effects
 				(font
@@ -33073,6 +33314,7 @@
 		(property "Value" "390k ±1%"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "9097bc3b-6ebb-4612-8a3d-1fecb8a08d2c")
 			(effects
 				(font
@@ -33269,28 +33511,29 @@
 	(footprint "TestPoint:TestPoint_Pad_D1.0mm"
 		(layer "F.Cu")
 		(uuid "b90e28c7-8e30-4bd7-88c2-e00eeb1f80c5")
-		(at -25.45 58.5)
+		(at 51.689 58.039)
 		(descr "SMD pad as test Point, diameter 1.0mm")
 		(tags "test point SMD pad")
 		(property "Reference" "TP26"
 			(at 0 -1.448 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "cb5c5035-0305-480a-98f0-29000f74d7ff")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
-		(property "Value" "TestPoint"
+		(property "Value" "CLK"
 			(at 0 1.55 0)
 			(layer "F.Fab")
 			(uuid "569f94c9-5d36-4b6e-8d78-5a05ed4b8f57")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
@@ -33390,6 +33633,7 @@
 		(property "Reference" "Decouple_C9"
 			(at 0 -1.43 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "1b16fe3a-ed7d-4a9a-80a4-07dee817489c")
 			(effects
 				(font
@@ -33401,6 +33645,7 @@
 		(property "Value" "100nF"
 			(at 0 1.43 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "ca22dbde-dc51-41a7-bd1b-38c41fc5f4f6")
 			(effects
 				(font
@@ -33603,6 +33848,7 @@
 		(property "Reference" "Decouple_C16"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "ae26cad3-d7f4-4740-bdd7-7b89d4f71b25")
 			(effects
 				(font
@@ -33614,6 +33860,7 @@
 		(property "Value" "10nF"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "0aafdd54-f1f9-4fea-9f2a-b32fc75d6a40")
 			(effects
 				(font
@@ -33816,6 +34063,7 @@
 		(property "Reference" "Batt7v4_D2"
 			(at 0 -2 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "e6d3ec45-dca5-44a0-84d2-68436bfc0fad")
 			(effects
 				(font
@@ -33827,6 +34075,7 @@
 		(property "Value" "MMSZ4678-TP"
 			(at 0 2.1 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "04d85d95-1fef-43a9-a5e0-5c77426805dc")
 			(effects
 				(font
@@ -34111,6 +34360,7 @@
 		(property "Reference" "5v_C4"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "b2f5bb1c-dd52-4628-8d51-bad272d0fee6")
 			(effects
 				(font
@@ -34122,6 +34372,7 @@
 		(property "Value" "100nf"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "727bc966-bd6b-4676-88a5-35734f58e665")
 			(effects
 				(font
@@ -34324,6 +34575,7 @@
 		(property "Reference" "VCAP_C1"
 			(at 0 -1.43 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "465469ba-93c9-44b2-8c83-030f2d553956")
 			(effects
 				(font
@@ -34335,6 +34587,7 @@
 		(property "Value" "4.7uF"
 			(at 0 1.43 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "ad0176a3-dac2-4b74-92d6-5792de95870f")
 			(effects
 				(font
@@ -34531,28 +34784,29 @@
 	(footprint "TestPoint:TestPoint_Pad_D1.0mm"
 		(layer "F.Cu")
 		(uuid "bd090b8d-231e-48da-a26b-721bb0f064f2")
-		(at 74.93 26.924)
+		(at 72.644 26.289)
 		(descr "SMD pad as test Point, diameter 1.0mm")
 		(tags "test point SMD pad")
 		(property "Reference" "TP8"
 			(at 0 -1.448 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "ae2d81d2-a3cd-4e74-a7da-79976f481e79")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
-		(property "Value" "TestPoint"
+		(property "Value" "RX"
 			(at 0 1.55 0)
 			(layer "F.Fab")
 			(uuid "0ed6e9f1-19b0-464d-9847-21b57c79e3ad")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
@@ -34652,6 +34906,7 @@
 		(property "Reference" "Pyros_R19"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "af906eab-1585-4014-906c-a21d8dbdca80")
 			(effects
 				(font
@@ -34663,6 +34918,7 @@
 		(property "Value" "1k5"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "5a58256b-55f3-4f89-9ba3-c75b5c017d62")
 			(effects
 				(font
@@ -34865,6 +35121,7 @@
 		(property "Reference" "Beacon_C1"
 			(at 0 -1.43 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "8a58f000-40d8-4c09-a08b-844b6450d728")
 			(effects
 				(font
@@ -34876,6 +35133,7 @@
 		(property "Value" "10uF"
 			(at 0 1.43 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "27624e1b-c81e-48ce-b517-af7e78bc82ba")
 			(effects
 				(font
@@ -35076,6 +35334,7 @@
 		(property "Reference" "3v3_L1"
 			(at 0.395 -2.635 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "bf18979a-0c00-49c4-b542-7d390d3945c3")
 			(effects
 				(font
@@ -35087,6 +35346,7 @@
 		(property "Value" "3.3uH"
 			(at 4.483433 0.24591 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "f64a8cb2-fa5b-4f59-88f5-2621ecfc3180")
 			(effects
 				(font
@@ -35266,6 +35526,7 @@
 		(property "Reference" "Crystal_R1"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "b67d28a0-0f8d-4f52-9736-b6196a612012")
 			(effects
 				(font
@@ -35277,6 +35538,7 @@
 		(property "Value" "0R"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "d5af0386-b690-4e99-9579-88009e59c34d")
 			(effects
 				(font
@@ -35479,6 +35741,7 @@
 		(property "Reference" "3v3_C3"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "7850bf17-732e-4c47-8b8b-08facab49a58")
 			(effects
 				(font
@@ -35490,6 +35753,7 @@
 		(property "Value" "33uf"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "5b9e02e2-b592-47b8-8e7a-4799a2c756e0")
 			(effects
 				(font
@@ -35692,6 +35956,7 @@
 		(property "Reference" "Pyros_J2"
 			(at 2.5 -5.16 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "ca557c84-7b7c-4009-a843-edc1c54ce245")
 			(effects
 				(font
@@ -35703,6 +35968,7 @@
 		(property "Value" "Pyro_Drogue"
 			(at 2.5 4.56 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "0d41ddbf-64d3-42a1-986a-24eea2d39295")
 			(effects
 				(font
@@ -36225,28 +36491,29 @@
 	(footprint "TestPoint:TestPoint_Pad_D1.0mm"
 		(layer "F.Cu")
 		(uuid "ca9560e7-4b5a-4105-8a60-4ef810972fea")
-		(at -34.6 55.45)
+		(at 25.908 57.658)
 		(descr "SMD pad as test Point, diameter 1.0mm")
 		(tags "test point SMD pad")
 		(property "Reference" "TP4"
 			(at 0 -1.448 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "98663481-a7cb-4eba-bc0e-87f69ac21f88")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
-		(property "Value" "TestPoint"
+		(property "Value" "CLK"
 			(at 0 1.55 0)
 			(layer "F.Fab")
 			(uuid "6d862a0d-18eb-4394-a5d0-e446145abdeb")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
@@ -36346,6 +36613,7 @@
 		(property "Reference" "Decouple_C13"
 			(at 0 -1.43 180)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "b8de28fd-0b58-47c0-bd99-00bd2399c8a2")
 			(effects
 				(font
@@ -36357,6 +36625,7 @@
 		(property "Value" "100nF"
 			(at 0 1.43 180)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "49e78e85-c4bf-4e14-886c-3930bf7ad658")
 			(effects
 				(font
@@ -36559,6 +36828,7 @@
 		(property "Reference" "3v7_MOSFET1"
 			(at 0 -2.4 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "34e29e88-d5ab-4fb4-8af2-fc69bc537ad2")
 			(effects
 				(font
@@ -36570,6 +36840,7 @@
 		(property "Value" "PJA3411_R1_00001"
 			(at 0 2.4 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "012c1edf-1ac2-4c2b-8546-2a4c8da9f843")
 			(effects
 				(font
@@ -36861,6 +37132,7 @@
 		(property "Reference" "USB_C1"
 			(at 0 -1.43 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "94ac35ee-6d12-4f48-8a4a-ef29213d5304")
 			(effects
 				(font
@@ -36872,6 +37144,7 @@
 		(property "Value" "100nf"
 			(at 0 1.43 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "968b30bf-65c5-4d3c-8843-6aa225c93423")
 			(effects
 				(font
@@ -37074,6 +37347,7 @@
 		(property "Reference" "3v7_C1"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "843c2c75-588f-474d-87b3-b1a9c3130788")
 			(effects
 				(font
@@ -37085,6 +37359,7 @@
 		(property "Value" "10uf"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "0a604790-4812-429f-b6ac-22a530757148")
 			(effects
 				(font
@@ -37281,28 +37556,29 @@
 	(footprint "TestPoint:TestPoint_Pad_D1.0mm"
 		(layer "F.Cu")
 		(uuid "cd612c61-c976-41e0-a091-b689ecf37f8c")
-		(at -25.45 46.3)
+		(at 36.957 36.703)
 		(descr "SMD pad as test Point, diameter 1.0mm")
 		(tags "test point SMD pad")
 		(property "Reference" "TP22"
 			(at 0 -1.448 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "af2905f0-4ebd-4102-ae3d-219632bf4f72")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
-		(property "Value" "TestPoint"
+		(property "Value" "~Test"
 			(at 0 1.55 0)
-			(layer "F.Fab")
+			(layer "F.SilkS")
 			(uuid "0416655a-bd5b-4cae-8741-35ff3c277a09")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
@@ -37402,6 +37678,7 @@
 		(property "Reference" "H2"
 			(at 0 -5.3 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "02cc2a00-7bcb-4b85-b0a0-a1f24a36eebe")
 			(effects
 				(font
@@ -37413,6 +37690,7 @@
 		(property "Value" "MountingHole"
 			(at 0 5.3 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "889a9181-3bbb-4e21-b960-72722260a7aa")
 			(effects
 				(font
@@ -37515,6 +37793,7 @@
 		(property "Reference" "CLED_LED1"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "eb4d9a58-9e67-4622-ad2b-9fa79d438801")
 			(effects
 				(font
@@ -37526,6 +37805,7 @@
 		(property "Value" "RED"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "32700dd9-0efa-40c7-9b03-911a78f968c8")
 			(effects
 				(font
@@ -37744,12 +38024,13 @@
 	(footprint "TestPoint:TestPoint_Pad_D1.0mm"
 		(layer "F.Cu")
 		(uuid "d1ac0359-68da-4fd8-82e8-dd6780919b79")
-		(at -28.5 55.45)
+		(at 49.022 7.366)
 		(descr "SMD pad as test Point, diameter 1.0mm")
 		(tags "test point SMD pad")
 		(property "Reference" "TP18"
 			(at 0 -1.448 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "a6da7666-7ed7-4d22-a2a8-e6a6107f1616")
 			(effects
 				(font
@@ -37758,14 +38039,14 @@
 				)
 			)
 		)
-		(property "Value" "TestPoint"
+		(property "Value" "RTS"
 			(at 0 1.55 0)
 			(layer "F.Fab")
 			(uuid "e6e0f08c-1c6f-437d-804c-23fdc6ccf74b")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
@@ -37865,6 +38146,7 @@
 		(property "Reference" "3v3_R2"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "af183fb7-4dfa-4135-8f3f-8466051c3c4c")
 			(effects
 				(font
@@ -37876,6 +38158,7 @@
 		(property "Value" "249k 1%"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "13d10f76-a73d-4e98-8642-328414ec3bb4")
 			(effects
 				(font
@@ -38078,6 +38361,7 @@
 		(property "Reference" "Baro_C1"
 			(at 0.112632 -1.779581 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "2f5c6627-bc38-4368-aed5-12d4bedd624b")
 			(effects
 				(font
@@ -38292,6 +38576,7 @@
 		(property "Reference" "Pyros_C2"
 			(at 0 -1.43 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "2f995cdf-f754-4ad5-90fe-e6704c5bee2d")
 			(effects
 				(font
@@ -38303,6 +38588,7 @@
 		(property "Value" "100nF"
 			(at 0 1.43 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "00574f42-591e-41b7-a912-ecedf0682ef5")
 			(effects
 				(font
@@ -38505,6 +38791,7 @@
 		(property "Reference" "J4"
 			(at 0 -4.75 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "718009eb-2f7d-4044-bebe-a620b20cefcd")
 			(effects
 				(font
@@ -38516,6 +38803,7 @@
 		(property "Value" "RF2-04A-T-00-50-G"
 			(at 0 5 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "2d0b6595-a8a8-4a23-a454-2fb90efbef00")
 			(effects
 				(font
@@ -38786,6 +39074,7 @@
 		(property "Reference" "Decouple_C5"
 			(at 0 -1.43 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "bb62c4cd-3c02-42e3-bb2b-b52bb5e93f35")
 			(effects
 				(font
@@ -38797,6 +39086,7 @@
 		(property "Value" "100nF"
 			(at 0 1.43 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "314baece-adce-4690-8e6a-d5ae6acfd958")
 			(effects
 				(font
@@ -38999,6 +39289,7 @@
 		(property "Reference" "Pyros_R8"
 			(at 0 -1.43 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "45e4f3b6-373e-47a2-9ef6-f07f4e940dd3")
 			(effects
 				(font
@@ -39010,6 +39301,7 @@
 		(property "Value" "10k"
 			(at 0 1.43 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "b78b7a62-1b76-4ea8-b010-11ed3d7e8f0f")
 			(effects
 				(font
@@ -39212,6 +39504,7 @@
 		(property "Reference" "Pyros_C1"
 			(at 0 -1.43 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "37951c81-fa69-4198-b33b-241c3f1c90de")
 			(effects
 				(font
@@ -39223,6 +39516,7 @@
 		(property "Value" "100nF"
 			(at 0 1.43 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "59454c76-9674-41e1-be11-22db02ce4d27")
 			(effects
 				(font
@@ -39425,6 +39719,7 @@
 		(property "Reference" "3v3_PWRSwitch1"
 			(at 0 -2.9 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "d4a670cc-e0ef-4c1d-bd02-008b7c27551b")
 			(effects
 				(font
@@ -39436,6 +39731,7 @@
 		(property "Value" "TPS61201DRCR"
 			(at 0 3 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "332667f9-896f-46a6-a56e-8458f05a9f97")
 			(effects
 				(font
@@ -39957,12 +40253,13 @@
 	(footprint "Package_DFN_QFN:DFN-8-1EP_3x3mm_P0.65mm_EP1.55x2.4mm"
 		(layer "F.Cu")
 		(uuid "da4b8f2c-d24b-4236-9c14-3c21982a9af5")
-		(at 28.9052 51.181 90)
+		(at 28.956 51.054 90)
 		(descr "8-Lead Plastic Dual Flat, No Lead Package (MF) - 3x3x0.9 mm Body [DFN] (see Microchip Packaging Specification 00000049BS.pdf)")
 		(tags "DFN 0.65")
 		(property "Reference" "1v8_REG1"
 			(at 0 -2.55 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "64295b95-ee1b-4e3b-bfff-8a38717a51e2")
 			(effects
 				(font
@@ -39974,6 +40271,7 @@
 		(property "Value" "MCP1727-1802xMF"
 			(at 0 2.55 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "98949fbc-867a-4e60-9b1f-bf27bad812f8")
 			(effects
 				(font
@@ -40369,28 +40667,29 @@
 	(footprint "TestPoint:TestPoint_Pad_D1.0mm"
 		(layer "F.Cu")
 		(uuid "daaf1d75-2409-4888-8194-926a26f3ad30")
-		(at -25.45 64.6)
+		(at 49.022 10.414)
 		(descr "SMD pad as test Point, diameter 1.0mm")
 		(tags "test point SMD pad")
 		(property "Reference" "TP28"
 			(at 0 -1.448 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "4c6c1600-3112-4d60-add5-47557ca64df4")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
-		(property "Value" "TestPoint"
+		(property "Value" "RX"
 			(at 0 1.55 0)
 			(layer "F.Fab")
 			(uuid "f3eaf611-c47e-4b1f-a6ed-3e55240b9018")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
@@ -40490,6 +40789,7 @@
 		(property "Reference" "Boot_R1"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "1fab3925-8091-4a72-83ee-f69654c660e1")
 			(effects
 				(font
@@ -40501,6 +40801,7 @@
 		(property "Value" "1k5"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "39fdd794-f24c-4507-b63d-451b7235049c")
 			(effects
 				(font
@@ -40703,6 +41004,7 @@
 		(property "Reference" "3v7_C2"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "b9e14dd4-757c-462f-a0cc-e3242d01a3ed")
 			(effects
 				(font
@@ -40714,6 +41016,7 @@
 		(property "Value" "100nf"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "a0523da8-be6e-415e-a25d-2b419ebcb5e2")
 			(effects
 				(font
@@ -40916,6 +41219,7 @@
 		(property "Reference" "USB_C3"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "af37f72a-da50-44e1-a2e7-3fbc90568d27")
 			(effects
 				(font
@@ -40927,6 +41231,7 @@
 		(property "Value" "10uf"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "62ef186a-b3a6-488b-83a5-64b8a1cde292")
 			(effects
 				(font
@@ -41129,6 +41434,7 @@
 		(property "Reference" "RST_R1"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "c89096fc-3695-4b3a-a435-4b5e60127d2c")
 			(effects
 				(font
@@ -41140,6 +41446,7 @@
 		(property "Value" "10k"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "0f77478f-470a-4847-9068-7ecceb15be75")
 			(effects
 				(font
@@ -41342,6 +41649,7 @@
 		(property "Reference" "Decouple_C8"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "1c02ffe1-3f46-45dc-93f5-95a3b06ec05c")
 			(effects
 				(font
@@ -41353,6 +41661,7 @@
 		(property "Value" "100nF"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "0761c6d3-0d17-4621-9fb3-629b87a8e475")
 			(effects
 				(font
@@ -41555,6 +41864,7 @@
 		(property "Reference" "Pyros_LED2"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "ff320253-0f38-4ec9-807e-bc94c4c69b64")
 			(effects
 				(font
@@ -41566,6 +41876,7 @@
 		(property "Value" "GREEN"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "21dfb180-a29f-490d-b6fd-fbf674d93562")
 			(effects
 				(font
@@ -41790,6 +42101,7 @@
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "a4cf50ba-48d9-4de9-b383-18bee66cc115")
 			(effects
 				(font
@@ -41802,6 +42114,7 @@
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "abd07a7d-3ac7-4f55-baa9-d00f0247e7c5")
 			(effects
 				(font
@@ -42248,6 +42561,7 @@
 		(property "Reference" "5v_R1"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "6ee58db8-0eab-49a8-854c-8e7690fcd91d")
 			(effects
 				(font
@@ -42259,6 +42573,7 @@
 		(property "Value" "1k5"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "91529b90-3c6c-4664-91c2-3bb2a69631f9")
 			(effects
 				(font
@@ -42455,28 +42770,29 @@
 	(footprint "TestPoint:TestPoint_Pad_D1.0mm"
 		(layer "F.Cu")
 		(uuid "e9af2fc9-5493-4b25-8491-74e9c8d19cec")
-		(at -22.4 52.4)
+		(at 54.483 6.223)
 		(descr "SMD pad as test Point, diameter 1.0mm")
 		(tags "test point SMD pad")
 		(property "Reference" "TP31"
 			(at 0 -1.448 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "4e2073e8-8991-4330-9a23-da54dfb61f41")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
-		(property "Value" "TestPoint"
+		(property "Value" "RX"
 			(at 0 1.55 0)
 			(layer "F.Fab")
 			(uuid "52f5feef-ccf0-4291-b88a-2a63d080e01c")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
@@ -42576,6 +42892,7 @@
 		(property "Reference" "3v7_R2"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "af36ee96-373a-4d25-a70f-6869db79e24f")
 			(effects
 				(font
@@ -42587,6 +42904,7 @@
 		(property "Value" "30k 1%"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "e45a51b0-6543-464b-b32a-03d5e5a5f09c")
 			(effects
 				(font
@@ -42789,6 +43107,7 @@
 		(property "Reference" "3v3_R3"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "f3eef437-f5a8-4388-90d2-1c3e02c64409")
 			(effects
 				(font
@@ -42800,6 +43119,7 @@
 		(property "Value" "1k5"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "48aa51da-c284-4ff5-9cfd-132280d1c492")
 			(effects
 				(font
@@ -43002,6 +43322,7 @@
 		(property "Reference" "7v4_R5"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "1920571c-3585-43e3-bcce-f85f89f48fd2")
 			(effects
 				(font
@@ -43013,6 +43334,7 @@
 		(property "Value" "10k"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "b3f87447-9301-4538-a250-3ab27d348e32")
 			(effects
 				(font
@@ -43215,6 +43537,7 @@
 		(property "Reference" "7v4_NPN1"
 			(at 0 -2.4 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "4c28aed0-ce5b-4109-9e1c-b641657c171b")
 			(effects
 				(font
@@ -43226,6 +43549,7 @@
 		(property "Value" "MMBT3904"
 			(at 0 2.4 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "f8201b4d-44c6-4524-8c0a-f4f0b7b694a5")
 			(effects
 				(font
@@ -43476,28 +43800,29 @@
 	(footprint "TestPoint:TestPoint_Pad_D1.0mm"
 		(layer "F.Cu")
 		(uuid "f38052e5-29dd-4a94-bdbe-4dd2c1ae98e7")
-		(at -34.6 52.4)
+		(at 25.908 54.61)
 		(descr "SMD pad as test Point, diameter 1.0mm")
 		(tags "test point SMD pad")
 		(property "Reference" "TP3"
 			(at 0 -1.448 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "68e97e61-6b83-4012-ac02-d017452addef")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
-		(property "Value" "TestPoint"
+		(property "Value" "CS"
 			(at 0 1.55 0)
 			(layer "F.Fab")
 			(uuid "2ab0e191-990c-40a9-b7d4-7b2a69a1e12e")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
@@ -43597,6 +43922,7 @@
 		(property "Reference" "VCAP_C2"
 			(at 0 -1.43 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "0e1eca5d-0028-4bf6-bf4c-5dd5a6333669")
 			(effects
 				(font
@@ -43608,6 +43934,7 @@
 		(property "Value" "4.7uF"
 			(at 0 1.43 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "911be819-4122-4dad-bc22-4481c3922d8d")
 			(effects
 				(font
@@ -43810,6 +44137,7 @@
 		(property "Reference" "Pyros_R16"
 			(at 0 -1.43 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "a3e5f6c8-ba90-45f3-ac70-2c7e68f6816e")
 			(effects
 				(font
@@ -43821,6 +44149,7 @@
 		(property "Value" "10k"
 			(at 0 1.43 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "fb64e574-0396-494f-9d42-52060a7caebd")
 			(effects
 				(font
@@ -44017,12 +44346,13 @@
 	(footprint "ODB:ICM-L"
 		(layer "F.Cu")
 		(uuid "f87efc77-3137-4088-b6a9-c9e79e41a7e1")
-		(at 24.4602 50.6984 180)
+		(at 24.638 51.054 180)
 		(tags "ICM-20948 ")
 		(property "Reference" "U6"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "50edc9b6-badb-49f2-acc1-55d4c991b805")
 			(effects
 				(font
@@ -44035,6 +44365,7 @@
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "70ad0a85-b74f-4927-ae20-e2e4ddd61487")
 			(effects
 				(font
@@ -45358,29 +45689,6 @@
 			(layer "F.Fab")
 			(uuid "4c6f96a0-c27a-4e74-b521-0383974faf5c")
 		)
-		(fp_text user "*"
-			(at -2.3844 -1.2 0)
-			(layer "F.SilkS")
-			(uuid "09ee9437-7e3e-4d3a-ab44-6d85ab2c33f3")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(fp_text user "*"
-			(at -2.3844 -1.2 180)
-			(unlocked yes)
-			(layer "F.SilkS")
-			(uuid "b76cf9d3-03e4-4294-a81a-9f27676796e2")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 		(fp_text user "${REFERENCE}"
 			(at 0 0 180)
 			(unlocked yes)
@@ -45656,7 +45964,7 @@
 			)
 			(polygon
 				(pts
-					(xy 25.2603 51.4985) (xy 23.6601 51.4985) (xy 23.6601 49.8983) (xy 25.2603 49.8983)
+					(xy 25.4381 51.8541) (xy 23.8379 51.8541) (xy 23.8379 50.2539) (xy 25.4381 50.2539)
 				)
 			)
 		)
@@ -45670,6 +45978,7 @@
 		(property "Reference" "H3"
 			(at 0 0 -90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "56b2165f-4270-4e57-aa10-527d2b29b589")
 			(effects
 				(font
@@ -45681,6 +45990,7 @@
 		(property "Value" "MountingHole"
 			(at 0 5.3 0)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "0a4aefbe-79e1-44bd-b08f-52ff7e91ef96")
 			(effects
 				(font
@@ -45777,28 +46087,29 @@
 	(footprint "TestPoint:TestPoint_Pad_D1.0mm"
 		(layer "F.Cu")
 		(uuid "fc05db68-1dff-49a7-a419-001bb2551f64")
-		(at -25.45 61.55)
+		(at 61.595 54.356)
 		(descr "SMD pad as test Point, diameter 1.0mm")
 		(tags "test point SMD pad")
 		(property "Reference" "TP27"
 			(at 0 -1.448 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "f7159226-ba23-41ae-842f-73c5040d6b10")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
-		(property "Value" "TestPoint"
+		(property "Value" "MISO"
 			(at 0 1.55 0)
 			(layer "F.Fab")
 			(uuid "2e8b277d-9f26-4918-bce1-8b1092f87686")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
@@ -45898,6 +46209,7 @@
 		(property "Reference" "Pyros_R7"
 			(at 0 -1.43 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "fa90cd18-14b5-47ca-8ec9-7aae37192452")
 			(effects
 				(font
@@ -45909,6 +46221,7 @@
 		(property "Value" "10k"
 			(at 0 1.43 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "1980963b-06ff-486e-8d00-b887fed19383")
 			(effects
 				(font
@@ -46105,28 +46418,29 @@
 	(footprint "TestPoint:TestPoint_Pad_D1.0mm"
 		(layer "F.Cu")
 		(uuid "ff7c35ea-3216-46b1-a6c1-5a25a4e0aa48")
-		(at -34.6 49.35)
+		(at 23.749 54.61)
 		(descr "SMD pad as test Point, diameter 1.0mm")
 		(tags "test point SMD pad")
 		(property "Reference" "TP2"
 			(at 0 -1.448 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "bc920b27-d808-4177-b970-330b5514f721")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
-		(property "Value" "TestPoint"
+		(property "Value" "INT"
 			(at 0 1.55 0)
 			(layer "F.Fab")
 			(uuid "fbe4d4e4-44af-4011-9849-ef8989d15f33")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.762 0.762)
+					(thickness 0.127)
 				)
 			)
 		)
@@ -46920,93 +47234,45 @@
 		)
 	)
 	(zone
-		(net 14)
-		(net_name "VDD")
-		(layer "F.Cu")
-		(uuid "a049fbf1-1638-450e-95c7-a1ded8bd2837")
+		(net 2)
+		(net_name "GND")
+		(layer "In1.Cu")
+		(uuid "5f4dfe86-01a2-406d-83b2-9ac454fc2b50")
 		(hatch edge 0.5)
 		(connect_pads
 			(clearance 0.5)
 		)
 		(min_thickness 0.25)
 		(filled_areas_thickness no)
-		(fill yes
-			(thermal_gap 0.5)
-			(thermal_bridge_width 0.5)
-		)
-		(polygon
-			(pts
-				(xy 54.991 65.024) (xy 58.293 65.405) (xy 61.849 67.691) (xy 61.849 69.469) (xy 57.277 69.342) (xy 57.15 67.691)
-				(xy 54.737 67.691)
-			)
-		)
-		(filled_polygon
-			(layer "F.Cu")
-			(pts
-				(xy 58.264389 65.401698) (xy 58.317227 65.420574) (xy 61.792055 67.654392) (xy 61.837802 67.707201)
-				(xy 61.849 67.758697) (xy 61.849 69.341507) (xy 61.829315 69.408546) (xy 61.776511 69.454301) (xy 61.721557 69.465459)
-				(xy 61.492214 69.459089) (xy 61.425747 69.437551) (xy 61.381476 69.383497) (xy 61.373456 69.314089)
-				(xy 61.3962 69.263137) (xy 61.395782 69.262879) (xy 61.397713 69.259747) (xy 61.398395 69.258221)
-				(xy 61.399577 69.256726) (xy 61.488542 69.112492) (xy 61.488547 69.112481) (xy 61.541855 68.951606)
-				(xy 61.551999 68.852322) (xy 61.552 68.852309) (xy 61.552 68.829) (xy 60.326 68.829) (xy 60.258961 68.809315)
-				(xy 60.213206 68.756511) (xy 60.202 68.705) (xy 60.202 68.329) (xy 60.702 68.329) (xy 61.551999 68.329)
-				(xy 61.551999 68.305692) (xy 61.551998 68.305677) (xy 61.541855 68.206392) (xy 61.488547 68.045518)
-				(xy 61.488542 68.045507) (xy 61.399575 67.901271) (xy 61.399572 67.901267) (xy 61.279732 67.781427)
-				(xy 61.279728 67.781424) (xy 61.135492 67.692457) (xy 61.135481 67.692452) (xy 60.974606 67.639144)
-				(xy 60.875322 67.629) (xy 60.702 67.629) (xy 60.702 68.329) (xy 60.202 68.329) (xy 60.202 67.629)
-				(xy 60.028693 67.629) (xy 60.028676 67.629001) (xy 59.929392 67.639144) (xy 59.768518 67.692452)
-				(xy 59.768507 67.692457) (xy 59.624271 67.781424) (xy 59.624267 67.781427) (xy 59.504427 67.901267)
-				(xy 59.504424 67.901271) (xy 59.415457 68.045507) (xy 59.415452 68.045518) (xy 59.366194 68.19417)
-				(xy 59.326421 68.251615) (xy 59.261905 68.278438) (xy 59.19313 68.266123) (xy 59.14193 68.21858)
-				(xy 59.130782 68.19417) (xy 59.077547 68.033518) (xy 59.077542 68.033507) (xy 58.988575 67.889271)
-				(xy 58.988572 67.889267) (xy 58.868732 67.769427) (xy 58.868728 67.769424) (xy 58.724492 67.680457)
-				(xy 58.724481 67.680452) (xy 58.563606 67.627144) (xy 58.464322 67.617) (xy 58.416 67.617) (xy 58.416 68.693)
-				(xy 58.396315 68.760039) (xy 58.343511 68.805794) (xy 58.292 68.817) (xy 58.04 68.817) (xy 57.972961 68.797315)
-				(xy 57.927206 68.744511) (xy 57.916 68.693) (xy 57.916 67.617) (xy 57.915999 67.616999) (xy 57.867693 67.617)
-				(xy 57.867675 67.617001) (xy 57.768392 67.627144) (xy 57.607518 67.680452) (xy 57.607507 67.680457)
-				(xy 57.463271 67.769424) (xy 57.368616 67.864079) (xy 57.307292 67.897563) (xy 57.237601 67.892579)
-				(xy 57.181668 67.850707) (xy 57.1573 67.785908) (xy 57.15 67.691) (xy 57.149999 67.691) (xy 56.699328 67.691)
-				(xy 56.632289 67.671315) (xy 56.586534 67.618511) (xy 56.57659 67.549353) (xy 56.605615 67.485797)
-				(xy 56.611647 67.479319) (xy 56.712885 67.37808) (xy 56.801091 67.235077) (xy 56.801093 67.235072)
-				(xy 56.853942 67.075583) (xy 56.863999 66.97715) (xy 56.864 66.977137) (xy 56.864 66.798) (xy 55.8005 66.798)
-				(xy 55.733461 66.778315) (xy 55.687706 66.725511) (xy 55.6765 66.674) (xy 55.6765 66.298) (xy 56.1765 66.298)
-				(xy 56.863999 66.298) (xy 56.863999 66.118864) (xy 56.863998 66.118847) (xy 56.853943 66.020416)
-				(xy 56.801093 65.860927) (xy 56.801091 65.860922) (xy 56.712885 65.717919) (xy 56.59408 65.599114)
-				(xy 56.451077 65.510908) (xy 56.451072 65.510906) (xy 56.291583 65.458057) (xy 56.19315 65.448)
-				(xy 56.1765 65.448) (xy 56.1765 66.298) (xy 55.6765 66.298) (xy 55.6765 65.447999) (xy 55.659856 65.448)
-				(xy 55.561415 65.458057) (xy 55.401927 65.510906) (xy 55.401922 65.510908) (xy 55.258919 65.599114)
-				(xy 55.146072 65.711962) (xy 55.084749 65.745447) (xy 55.015057 65.740463) (xy 54.959124 65.698591)
-				(xy 54.934707 65.633127) (xy 54.93495 65.612525) (xy 54.979007 65.149926) (xy 55.004958 65.085054)
-				(xy 55.061862 65.044512) (xy 55.116659 65.038499)
-			)
-		)
-	)
-	(zone
-		(net 0)
-		(net_name "")
-		(layer "Edge.Cuts")
-		(uuid "89b1e140-4631-4ab3-b44e-db7e3c4e1641")
-		(hatch edge 0.5)
-		(connect_pads
-			(clearance 0)
-		)
-		(min_thickness 0.25)
-		(filled_areas_thickness no)
-		(keepout
-			(tracks not_allowed)
-			(vias not_allowed)
-			(pads not_allowed)
-			(copperpour allowed)
-			(footprints allowed)
-		)
 		(fill
 			(thermal_gap 0.5)
 			(thermal_bridge_width 0.5)
 		)
 		(polygon
 			(pts
-				(xy 55.372 65.278) (xy 57.404 66.675) (xy 61.468 69.977) (xy 57.658 69.469) (xy 56.896 67.818) (xy 54.991 67.818)
-				(xy 55.118 65.278)
+				(xy -1.524 -0.508) (xy 85.598 -0.762) (xy 84.582 77.597) (xy -1.143 76.962)
+			)
+		)
+	)
+	(zone
+		(net 2)
+		(net_name "GND")
+		(layer "In4.Cu")
+		(uuid "99cc2db1-a65b-49b1-88b6-70910bdb8f50")
+		(hatch edge 0.5)
+		(priority 1)
+		(connect_pads
+			(clearance 0.5)
+		)
+		(min_thickness 0.25)
+		(filled_areas_thickness no)
+		(fill
+			(thermal_gap 0.5)
+			(thermal_bridge_width 0.5)
+		)
+		(polygon
+			(pts
+				(xy -1.524 -0.508) (xy 85.598 -0.762) (xy 84.582 77.597) (xy -1.143 76.962)
 			)
 		)
 	)
