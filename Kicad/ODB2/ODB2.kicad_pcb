@@ -5141,7 +5141,7 @@
 		(descr "Inductor SMD 0805 (2012 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: IPC-SM-782 page 80, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
 		(tags "inductor")
 		(property "Reference" "USB_FB1"
-			(at 0 -1.55 360)
+			(at 0 -1.55 0)
 			(layer "F.SilkS")
 			(uuid "8fd3b3eb-a2d9-4797-bca0-572a8bf31988")
 			(effects
@@ -5152,7 +5152,7 @@
 			)
 		)
 		(property "Value" "120R"
-			(at 0 1.55 360)
+			(at 0 1.55 0)
 			(layer "F.Fab")
 			(uuid "9443b2ea-8263-4e19-b024-8635fbdb6b1e")
 			(effects
@@ -5307,7 +5307,7 @@
 			(uuid "617c4c9b-7a42-4606-9a14-0563d877838e")
 		)
 		(fp_text user "${REFERENCE}"
-			(at 0 0 360)
+			(at 0 0 0)
 			(layer "F.Fab")
 			(uuid "8e2ceb3c-7b47-437a-b8f2-dade76245272")
 			(effects
@@ -9305,7 +9305,7 @@
 		(descr "Through hole straight pin header, 1x05, 2.00mm pitch, single row")
 		(tags "Through hole pin header THT 1x05 2.00mm single row")
 		(property "Reference" "SW_J1"
-			(at 0 -2.06 360)
+			(at 0 -2.06 0)
 			(layer "F.SilkS")
 			(uuid "6cfa4b59-d9aa-4f34-8f19-82ede982b5e1")
 			(effects
@@ -9316,7 +9316,7 @@
 			)
 		)
 		(property "Value" "SYS_Conn_01x05_Socket"
-			(at 0 10.06 360)
+			(at 0 10.06 0)
 			(layer "F.Fab")
 			(uuid "c13926be-5e66-4112-8586-0db8201e0b0d")
 			(effects
