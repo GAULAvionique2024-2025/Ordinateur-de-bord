@@ -51,7 +51,13 @@
           "min_clearance": 0.5
         }
       },
-      "diff_pair_dimensions": [],
+      "diff_pair_dimensions": [
+        {
+          "gap": 0.0,
+          "via_gap": 0.0,
+          "width": 0.0
+        }
+      ],
       "drc_exclusions": [],
       "meta": {
         "version": 2
@@ -110,7 +116,7 @@
       },
       "rules": {
         "max_error": 0.005,
-        "min_clearance": 0.0,
+        "min_clearance": 0.381,
         "min_connection": 0.0,
         "min_copper_edge_clearance": 0.5,
         "min_hole_clearance": 0.25,
@@ -122,7 +128,7 @@
         "min_text_height": 0.8,
         "min_text_thickness": 0.08,
         "min_through_hole_diameter": 0.3,
-        "min_track_width": 0.0,
+        "min_track_width": 0.0762,
         "min_via_annular_width": 0.1,
         "min_via_diameter": 0.5,
         "solder_mask_to_copper_clearance": 0.0,
@@ -171,7 +177,11 @@
           "td_width_to_size_filter_ratio": 0.9
         }
       ],
-      "track_widths": [],
+      "track_widths": [
+        0.0,
+        0.23114,
+        0.254
+      ],
       "tuning_pattern_settings": {
         "diff_pair_defaults": {
           "corner_radius_percentage": 80,
@@ -198,7 +208,12 @@
           "spacing": 0.6
         }
       },
-      "via_dimensions": [],
+      "via_dimensions": [
+        {
+          "diameter": 0.0,
+          "drill": 0.0
+        }
+      ],
       "zones_allow_external_fillets": false
     },
     "ipc2581": {
@@ -458,14 +473,13 @@
       "version": 3
     },
     "net_colors": {
-      "+1V8": "rgb(119, 255, 119)",
-      "+3.3VA": "rgb(255, 0, 228)",
-      "+3V3": "rgb(247, 255, 101)",
-      "+3V7": "rgb(255, 179, 80)",
-      "+5V": "rgb(0, 255, 7)",
-      "+7V4": "rgb(255, 0, 0)",
-      "GND": "rgb(87, 87, 87)",
-      "Net-(7v4_JP1-A)": "rgb(255, 2, 0)"
+      "+1V8": "rgb(179, 96, 255)",
+      "+3.3VA": "rgb(255, 138, 70)",
+      "+3V3": "rgb(255, 245, 94)",
+      "+3V7": "rgb(107, 255, 188)",
+      "+5V": "rgb(255, 53, 74)",
+      "+7V4": "rgb(13, 129, 255)",
+      "GND": "rgb(112, 112, 112)"
     },
     "netclass_assignments": null,
     "netclass_patterns": []
