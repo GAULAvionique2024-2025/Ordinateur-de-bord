@@ -4992,6 +4992,10 @@
 		(uuid "906697f8-a34b-47be-a81c-9a6e070b0f5b")
 	)
 	(no_connect
+		(at 231.14 154.94)
+		(uuid "9482c1a8-3869-4afb-853a-f16282f773bb")
+	)
+	(no_connect
 		(at 231.14 210.82)
 		(uuid "95a3edb9-29ea-4567-8951-60222ad98fed")
 	)
@@ -5290,16 +5294,6 @@
 			(type default)
 		)
 		(uuid "1595b50b-be47-4578-ab63-756046654dea")
-	)
-	(wire
-		(pts
-			(xy 237.49 154.94) (xy 231.14 154.94)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "15decf0c-813a-4812-8e4a-26570754d23f")
 	)
 	(wire
 		(pts
@@ -5710,16 +5704,6 @@
 			(type default)
 		)
 		(uuid "46e5b195-f721-4c50-9f12-8b721ca114ed")
-	)
-	(wire
-		(pts
-			(xy 381 248.92) (xy 383.54 248.92)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "4901850a-b2b5-42c5-aa4e-eb39de8386c4")
 	)
 	(wire
 		(pts
@@ -8147,28 +8131,6 @@
 			)
 		)
 	)
-	(global_label "Pyros_DrogueADC"
-		(shape input)
-		(at 237.49 154.94 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "61c95428-3668-4c89-99df-6ee6e281ba0f")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 256.8641 154.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-	)
 	(global_label "SPI5_Mem_CS"
 		(shape input)
 		(at 237.49 101.6 0)
@@ -8584,28 +8546,6 @@
 					(size 1.27 1.27)
 				)
 				(justify right)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "Pyros_DrogueADC"
-		(shape input)
-		(at 383.54 248.92 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "aaae75c2-bcf3-4508-8ebd-68b9434efaae")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 402.9141 248.92 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
 				(hide yes)
 			)
 		)
@@ -13068,71 +13008,6 @@
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78"
 					(reference "H2")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 381 248.92 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "acff4065-ab9b-41dd-b9d0-c29d5b01c2ef")
-		(property "Reference" "TP16"
-			(at 374.142 248.92 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "TestPoint"
-			(at 377.698 246.38 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
-			(at 381 243.84 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 381 243.84 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "test point"
-			(at 381 248.92 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "70db3530-75ef-4d47-9aaa-8a5b1875445d")
-		)
-		(instances
-			(project "ODB2"
-				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78"
-					(reference "TP16")
 					(unit 1)
 				)
 			)
