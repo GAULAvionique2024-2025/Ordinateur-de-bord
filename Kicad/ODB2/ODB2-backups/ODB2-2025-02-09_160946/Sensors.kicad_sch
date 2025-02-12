@@ -4748,22 +4748,22 @@
 	)
 	(global_label "SPI1_ICM_RFM_MOSI"
 		(shape input)
-		(at 114.3 74.93 180)
+		(at 114.3 74.93 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right)
+			(justify left)
 		)
 		(uuid "f9ebee87-6c13-46cc-bdba-f56c4b021c73")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 92.3858 74.93 0)
+			(at 136.2142 74.93 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify right)
+				(justify left)
 				(hide yes)
 			)
 		)
