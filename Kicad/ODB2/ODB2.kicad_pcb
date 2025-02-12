@@ -723,7 +723,7 @@
 		(descr "SMD Solder Jumper, 1x1.5mm, rounded Pads, 0.3mm gap, bridged with 1 copper strip")
 		(tags "net tie solder jumper bridged")
 		(property "Reference" "Boot_JP1"
-			(at 0 -1.8 360)
+			(at 0 -1.8 0)
 			(layer "F.SilkS")
 			(uuid "b8bacf1a-dfb8-4d61-a2c4-0b068ed552ab")
 			(effects
@@ -734,7 +734,7 @@
 			)
 		)
 		(property "Value" "SolderJumper_2_Open"
-			(at 0 1.9 360)
+			(at 0 1.9 0)
 			(layer "F.Fab")
 			(uuid "802f0e26-236d-495b-a3b1-e4fe39b1f371")
 			(effects
@@ -1989,7 +1989,7 @@
 	(footprint "LED_SMD:LED_0603_1608Metric"
 		(layer "F.Cu")
 		(uuid "105160b9-5c11-4f7a-823d-c6eb291ba0fa")
-		(at 78.9941 14.3256 180)
+		(at 79.0194 14.3256 180)
 		(descr "LED SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: http://www.tortai-tech.com/upload/download/2011102023233369053.pdf), generated with kicad-footprint-generator")
 		(tags "LED")
 		(property "Reference" "BT_LED1"
@@ -2226,7 +2226,7 @@
 	(footprint "Resistor_SMD:R_0603_1608Metric"
 		(layer "F.Cu")
 		(uuid "118a7fbe-457e-4ec7-b030-25a9eb40b436")
-		(at 75.7683 21.336 180)
+		(at 75.7682 21.336 180)
 		(descr "Resistor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
 		(tags "resistor")
 		(property "Reference" "Pyros_R17"
@@ -9686,7 +9686,7 @@
 	(footprint "LED_SMD:LED_0603_1608Metric"
 		(layer "F.Cu")
 		(uuid "319bd0d6-04f5-43fe-b2a7-d279ab463488")
-		(at 79.0195 16.0782 180)
+		(at 79.0194 16.0782 180)
 		(descr "LED SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: http://www.tortai-tech.com/upload/download/2011102023233369053.pdf), generated with kicad-footprint-generator")
 		(tags "LED")
 		(property "Reference" "LED_7v4Enable1"
@@ -14542,7 +14542,7 @@
 	(footprint "LED_SMD:LED_0603_1608Metric"
 		(layer "F.Cu")
 		(uuid "4cf08a9f-62c3-4dd7-b758-a717353db00c")
-		(at 78.9941 12.573 180)
+		(at 79.0194 12.573 180)
 		(descr "LED SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: http://www.tortai-tech.com/upload/download/2011102023233369053.pdf), generated with kicad-footprint-generator")
 		(tags "LED")
 		(property "Reference" "5v_LED1"
@@ -15155,7 +15155,7 @@
 	(footprint "Resistor_SMD:R_0603_1608Metric"
 		(layer "F.Cu")
 		(uuid "508bda47-05c1-43ec-ba41-97aa2eb465c1")
-		(at 75.7683 16.087)
+		(at 75.7682 16.0782)
 		(descr "Resistor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
 		(tags "resistor")
 		(property "Reference" "7v4_R8"
@@ -18083,7 +18083,7 @@
 	(footprint "LED_SMD:LED_0603_1608Metric"
 		(layer "F.Cu")
 		(uuid "669ff093-0bab-4e7c-b2bd-f64916a70b92")
-		(at 79.0195 17.8308 180)
+		(at 79.0194 17.8308 180)
 		(descr "LED SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: http://www.tortai-tech.com/upload/download/2011102023233369053.pdf), generated with kicad-footprint-generator")
 		(tags "LED")
 		(property "Reference" "Pyros_LED4"
@@ -20802,7 +20802,7 @@
 	(footprint "Resistor_SMD:R_0603_1608Metric"
 		(layer "F.Cu")
 		(uuid "6d9d1e6e-4e4a-440f-aa83-cafb949214ad")
-		(at 75.7683 23.0886 180)
+		(at 75.7682 23.0886 180)
 		(descr "Resistor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
 		(tags "resistor")
 		(property "Reference" "CLED_R1"
@@ -22316,7 +22316,7 @@
 	(footprint "Resistor_SMD:R_0603_1608Metric"
 		(layer "F.Cu")
 		(uuid "7344d3e2-7947-44c9-98f7-4db8730d0562")
-		(at 75.7683 14.337)
+		(at 75.7682 14.3256)
 		(descr "Resistor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
 		(tags "resistor")
 		(property "Reference" "BT_R2"
@@ -22961,7 +22961,7 @@
 	(footprint "Resistor_SMD:R_0603_1608Metric"
 		(layer "F.Cu")
 		(uuid "79bc3f35-de28-4520-8d99-8460c1eaea39")
-		(at 75.7683 19.587 180)
+		(at 75.7682 19.5834 180)
 		(descr "Resistor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
 		(tags "resistor")
 		(property "Reference" "Pyros_R18"
@@ -30069,7 +30069,7 @@
 	(footprint "LED_SMD:LED_0603_1608Metric"
 		(layer "F.Cu")
 		(uuid "ae3f2b83-3cc9-40a6-b234-3e2780c64683")
-		(at 79.0195 21.336 180)
+		(at 79.0194 21.336 180)
 		(descr "LED SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: http://www.tortai-tech.com/upload/download/2011102023233369053.pdf), generated with kicad-footprint-generator")
 		(tags "LED")
 		(property "Reference" "Pyros_LED1"
@@ -33443,7 +33443,7 @@
 	(footprint "Resistor_SMD:R_0603_1608Metric"
 		(layer "F.Cu")
 		(uuid "c33d6ea8-3271-40dd-ba6d-5978daac0c8e")
-		(at 75.7683 17.837 180)
+		(at 75.7682 17.8308 180)
 		(descr "Resistor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
 		(tags "resistor")
 		(property "Reference" "Pyros_R19"
@@ -36330,7 +36330,7 @@
 	(footprint "LED_SMD:LED_0603_1608Metric"
 		(layer "F.Cu")
 		(uuid "cee7b722-41de-4ab7-b77c-0c15046802d2")
-		(at 79.0195 23.0886 180)
+		(at 79.0194 23.0886 180)
 		(descr "LED SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: http://www.tortai-tech.com/upload/download/2011102023233369053.pdf), generated with kicad-footprint-generator")
 		(tags "LED")
 		(property "Reference" "CLED_LED1"
@@ -40638,7 +40638,7 @@
 	(footprint "LED_SMD:LED_0603_1608Metric"
 		(layer "F.Cu")
 		(uuid "e1c87abe-be99-41ba-a37a-b2ec24f1d18a")
-		(at 79.0195 19.5834 180)
+		(at 79.0194 19.5834 180)
 		(descr "LED SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: http://www.tortai-tech.com/upload/download/2011102023233369053.pdf), generated with kicad-footprint-generator")
 		(tags "LED")
 		(property "Reference" "Pyros_LED2"
@@ -41335,7 +41335,7 @@
 	(footprint "Resistor_SMD:R_0603_1608Metric"
 		(layer "F.Cu")
 		(uuid "e58b76ac-8579-4880-94fa-3dfcbb32c551")
-		(at 75.7683 12.573)
+		(at 75.7682 12.573)
 		(descr "Resistor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
 		(tags "resistor")
 		(property "Reference" "5v_R1"
@@ -51628,6 +51628,14 @@
 		(uuid "12250f65-30e4-4e3e-ab43-a646ebc75176")
 	)
 	(segment
+		(start 73.58985 16.1036)
+		(end 74.84775 16.1036)
+		(width 0.254)
+		(layer "F.Cu")
+		(net 23)
+		(uuid "13ea5f3c-4316-4847-beb7-81bca9e12337")
+	)
+	(segment
 		(start 38.270001 35.237599)
 		(end 38.0492 35.4584)
 		(width 0.254)
@@ -51682,6 +51690,14 @@
 		(layers "F.Cu" "B.Cu")
 		(net 23)
 		(uuid "1a453980-2ecc-46d5-a75f-773165036e89")
+	)
+	(via
+		(at 73.58985 16.1036)
+		(size 0.6)
+		(drill 0.3)
+		(layers "F.Cu" "B.Cu")
+		(net 23)
+		(uuid "7152d3f2-c161-4524-80a4-4f25f4ba7ef0")
 	)
 	(via
 		(at 38.0492 35.4584)
@@ -53076,6 +53092,14 @@
 		(uuid "246d3499-b277-460a-ae60-4a0e81c7d2e5")
 	)
 	(segment
+		(start 73.58985 17.8308)
+		(end 74.84775 17.8308)
+		(width 0.254)
+		(layer "F.Cu")
+		(net 80)
+		(uuid "29b4dbe0-c414-4fad-9e4c-e02dc5a00483")
+	)
+	(segment
 		(start 36.9788 37.0804)
 		(end 37.636 37.7376)
 		(width 0.254)
@@ -53170,6 +53194,14 @@
 		(layer "F.Cu")
 		(net 80)
 		(uuid "e5b48d1e-0657-43b0-93b8-1e2100a98d96")
+	)
+	(via
+		(at 73.58985 17.8308)
+		(size 0.6)
+		(drill 0.3)
+		(layers "F.Cu" "B.Cu")
+		(net 80)
+		(uuid "bf812947-02de-4aa4-9336-76f5dc163f05")
 	)
 	(segment
 		(start 36.003 30.988)
@@ -53364,6 +53396,22 @@
 		(uuid "009d28c4-0480-4bf5-85dd-34db9af5cd97")
 	)
 	(segment
+		(start 73.58985 19.6088)
+		(end 74.84775 19.6088)
+		(width 0.254)
+		(layer "F.Cu")
+		(net 84)
+		(uuid "0c3a5221-e375-4c4d-afcb-ce4aadbcc716")
+	)
+	(segment
+		(start 20.2692 28.956)
+		(end 19.97787 28.956)
+		(width 0.2)
+		(layer "F.Cu")
+		(net 84)
+		(uuid "1d741d8c-84a5-4742-883d-40fd5ef00228")
+	)
+	(segment
 		(start 32.322877 31.539776)
 		(end 33.066501 32.2834)
 		(width 0.254)
@@ -53404,6 +53452,14 @@
 		(uuid "9f485616-c54d-47ca-895b-caf060839c33")
 	)
 	(segment
+		(start 19.97787 28.956)
+		(end 19.62227 29.3116)
+		(width 0.2)
+		(layer "F.Cu")
+		(net 84)
+		(uuid "a1b0f8f9-9c0b-47f2-ac19-2e2247d6d641")
+	)
+	(segment
 		(start 20.32 29.0068)
 		(end 21.5392 29.0068)
 		(width 0.254)
@@ -53436,6 +53492,14 @@
 		(uuid "d2f6590a-b8a4-4c79-bc87-68a1069cd7f0")
 	)
 	(segment
+		(start 20.32 29.0068)
+		(end 20.2692 28.956)
+		(width 0.2)
+		(layer "F.Cu")
+		(net 84)
+		(uuid "dabb443b-919d-4bd0-abd3-c192b6711b89")
+	)
+	(segment
 		(start 24.003 24.828)
 		(end 22.3356 26.4954)
 		(width 0.254)
@@ -53458,6 +53522,70 @@
 		(layer "F.Cu")
 		(net 84)
 		(uuid "febda6b3-ce7d-4cee-957a-f9726b2c2b70")
+	)
+	(via
+		(at 19.62227 29.3116)
+		(size 0.6)
+		(drill 0.3)
+		(layers "F.Cu" "B.Cu")
+		(net 84)
+		(uuid "7e091327-cb67-40e7-8edc-cea219e45299")
+	)
+	(via
+		(at 73.58985 19.6088)
+		(size 0.6)
+		(drill 0.3)
+		(layers "F.Cu" "B.Cu")
+		(net 84)
+		(uuid "9eccea12-9bd3-4e74-806a-6e04b24557c5")
+	)
+	(segment
+		(start 23.830968 13.7938)
+		(end 49.4538 13.7938)
+		(width 0.2)
+		(layer "B.Cu")
+		(net 84)
+		(uuid "23ede473-92da-4fb2-a71b-8c6f8b6fe3ad")
+	)
+	(segment
+		(start 49.4538 13.7938)
+		(end 55.2688 19.6088)
+		(width 0.2)
+		(layer "B.Cu")
+		(net 84)
+		(uuid "38d7b1a6-140c-4412-a843-2bc57618d020")
+	)
+	(segment
+		(start 15.4448 25.13413)
+		(end 15.4448 22.179968)
+		(width 0.2)
+		(layer "B.Cu")
+		(net 84)
+		(uuid "45f2efdc-f3a5-403b-99f3-c681cf54ef50")
+	)
+	(segment
+		(start 19.62227 29.3116)
+		(end 15.4448 25.13413)
+		(width 0.2)
+		(layer "B.Cu")
+		(net 84)
+		(uuid "6cf07d04-adc7-41ed-8017-5580cbfcd3a3")
+	)
+	(segment
+		(start 15.4448 22.179968)
+		(end 23.830968 13.7938)
+		(width 0.2)
+		(layer "B.Cu")
+		(net 84)
+		(uuid "8b11267a-0a0d-4784-8813-7559460d2893")
+	)
+	(segment
+		(start 55.2688 19.6088)
+		(end 73.58985 19.6088)
+		(width 0.2)
+		(layer "B.Cu")
+		(net 84)
+		(uuid "ad01642d-9831-463f-a7bd-ffc72dc34121")
 	)
 	(segment
 		(start 28.47975 29.779001)
