@@ -4992,10 +4992,6 @@
 		(uuid "906697f8-a34b-47be-a81c-9a6e070b0f5b")
 	)
 	(no_connect
-		(at 231.14 154.94)
-		(uuid "9482c1a8-3869-4afb-853a-f16282f773bb")
-	)
-	(no_connect
 		(at 231.14 210.82)
 		(uuid "95a3edb9-29ea-4567-8951-60222ad98fed")
 	)
@@ -5034,6 +5030,10 @@
 	(no_connect
 		(at 231.14 215.9)
 		(uuid "ae28a98a-84da-4996-872a-949103b42602")
+	)
+	(no_connect
+		(at 231.14 147.32)
+		(uuid "b4590649-3abe-4525-8075-2f0fe3f4ad27")
 	)
 	(no_connect
 		(at 231.14 218.44)
@@ -5897,16 +5897,6 @@
 	)
 	(wire
 		(pts
-			(xy 231.14 147.32) (xy 237.49 147.32)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "5e134cc1-15d7-443d-bc60-30ed94504f81")
-	)
-	(wire
-		(pts
 			(xy 231.14 198.12) (xy 237.49 198.12)
 		)
 		(stroke
@@ -6034,6 +6024,16 @@
 			(type default)
 		)
 		(uuid "6ea05b0c-08ea-4268-8c4a-a9e76ef39193")
+	)
+	(wire
+		(pts
+			(xy 231.14 154.94) (xy 237.49 154.94)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6f6c9bbc-3083-4805-8ec6-a63dc7308cf8")
 	)
 	(wire
 		(pts
@@ -7670,7 +7670,7 @@
 	)
 	(global_label "3v7_An"
 		(shape input)
-		(at 237.49 147.32 0)
+		(at 237.49 154.94 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -7680,7 +7680,7 @@
 		)
 		(uuid "0fadc0ac-4efa-4d41-950b-1cac3429ca29")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 247.067 147.32 0)
+			(at 247.067 154.94 0)
 			(effects
 				(font
 					(size 1.27 1.27)
