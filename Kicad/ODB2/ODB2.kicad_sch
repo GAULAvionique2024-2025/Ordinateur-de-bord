@@ -7470,7 +7470,7 @@
 			)
 		)
 	)
-	(global_label "Pyros_MainADC"
+	(global_label "Pyros_ADC"
 		(shape input)
 		(at 237.49 152.4 0)
 		(fields_autoplaced yes)
@@ -7482,7 +7482,7 @@
 		)
 		(uuid "017de29f-11cc-47f2-a3c4-4bcdfc2e66c3")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 254.6265 152.4 0)
+			(at 250.2723 152.4 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8704,7 +8704,7 @@
 			)
 		)
 	)
-	(global_label "Pyros_MainADC"
+	(global_label "Pyros_ADC"
 		(shape input)
 		(at 383.54 246.38 0)
 		(fields_autoplaced yes)
@@ -8716,7 +8716,7 @@
 		)
 		(uuid "be001077-c8ac-4344-8bd9-3da46c6d96b4")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 400.6765 246.38 0)
+			(at 396.3223 246.38 0)
 			(effects
 				(font
 					(size 1.27 1.27)
