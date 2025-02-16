@@ -75,8 +75,6 @@ void Error_Handler(void);
 #define RFM_SDN_GPIO_Port GPIOC
 #define RFM_NIRQ_Pin GPIO_PIN_1
 #define RFM_NIRQ_GPIO_Port GPIOC
-#define AN_3v7_Pin GPIO_PIN_2
-#define AN_3v7_GPIO_Port GPIOC
 #define AN_7v4_Pin GPIO_PIN_3
 #define AN_7v4_GPIO_Port GPIOC
 #define RFM_CS_Pin GPIO_PIN_2
@@ -91,10 +89,10 @@ void Error_Handler(void);
 #define ICM_RFM_MISO_GPIO_Port GPIOA
 #define ICM_RFM_MOSI_Pin GPIO_PIN_7
 #define ICM_RFM_MOSI_GPIO_Port GPIOA
-#define PYROS_MainADC_Pin GPIO_PIN_4
-#define PYROS_MainADC_GPIO_Port GPIOC
-#define PYROS_DrogueADC_Pin GPIO_PIN_5
-#define PYROS_DrogueADC_GPIO_Port GPIOC
+#define PYROS_ADC_Pin GPIO_PIN_4
+#define PYROS_ADC_GPIO_Port GPIOC
+#define AN_3v7_Pin GPIO_PIN_5
+#define AN_3v7_GPIO_Port GPIOC
 #define MEM_SCLK_Pin GPIO_PIN_0
 #define MEM_SCLK_GPIO_Port GPIOB
 #define MEM_CS_Pin GPIO_PIN_1
