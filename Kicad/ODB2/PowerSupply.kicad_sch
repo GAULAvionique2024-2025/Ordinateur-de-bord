@@ -4894,16 +4894,6 @@
 	)
 	(wire
 		(pts
-			(xy 49.53 151.13) (xy 52.07 151.13)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "2f4faeb3-43ce-42f6-8600-703d5b255044")
-	)
-	(wire
-		(pts
 			(xy 201.93 54.61) (xy 201.93 50.8)
 		)
 		(stroke
@@ -4911,16 +4901,6 @@
 			(type default)
 		)
 		(uuid "327a7fc6-c4b6-4a4f-b159-df96c093ad53")
-	)
-	(wire
-		(pts
-			(xy 49.53 137.16) (xy 49.53 151.13)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "332830fa-4b2c-47f3-8029-7def967f22d0")
 	)
 	(wire
 		(pts
@@ -5351,16 +5331,6 @@
 			(type default)
 		)
 		(uuid "6abaf19c-f23e-4f0b-a621-b4b94c6334ba")
-	)
-	(wire
-		(pts
-			(xy 69.85 151.13) (xy 69.85 154.94)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "6b3b9cbf-0d02-4e2e-a11e-06fc1fa1ac34")
 	)
 	(wire
 		(pts
@@ -6254,16 +6224,6 @@
 	)
 	(wire
 		(pts
-			(xy 59.69 151.13) (xy 60.96 151.13)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "d041a247-ea6b-47f6-9bf3-c76e83f31a35")
-	)
-	(wire
-		(pts
 			(xy 57.15 102.87) (xy 57.15 104.14)
 		)
 		(stroke
@@ -6361,16 +6321,6 @@
 			(type default)
 		)
 		(uuid "da92be31-de71-4b6d-9f1d-2942030d289d")
-	)
-	(wire
-		(pts
-			(xy 68.58 151.13) (xy 69.85 151.13)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "dab30043-2ada-4a9b-9c31-62d099d3918b")
 	)
 	(wire
 		(pts
@@ -7738,73 +7688,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:LED")
-		(at 64.77 151.13 180)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "252e5713-62aa-4baf-8b6c-9408e558e304")
-		(property "Reference" "3v7_LED1"
-			(at 62.738 147.574 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-			)
-		)
-		(property "Value" "GREEN"
-			(at 63.5 153.67 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-			)
-		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
-			(at 64.77 151.13 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 64.77 151.13 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 64.77 151.13 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "b496d3e3-95d1-45b7-9cf8-420ff44b6377")
-		)
-		(pin "2"
-			(uuid "f898da9d-e1b0-449c-a27b-978c347fff21")
-		)
-		(instances
-			(project "ODB2"
-				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/a0dfa29e-ccca-4096-8481-c7e33c67aac5"
-					(reference "3v7_LED1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:R")
 		(at 62.23 95.25 90)
 		(unit 1)
@@ -8985,73 +8868,6 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 69.85 154.94 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "5d4228af-7846-4f6c-b11a-5d79066a406f")
-		(property "Reference" "#PWR082"
-			(at 69.85 161.29 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 69.85 160.02 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(hide yes)
-			)
-		)
-		(property "Footprint" ""
-			(at 69.85 154.94 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 69.85 154.94 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 69.85 154.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "291219b4-c593-499a-86c5-14a17d6a3ef5")
-		)
-		(instances
-			(project "ODB2"
-				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/a0dfa29e-ccca-4096-8481-c7e33c67aac5"
-					(reference "#PWR082")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
 		(at 19.05 67.31 0)
 		(unit 1)
 		(exclude_from_sim no)
@@ -9416,73 +9232,6 @@
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/a0dfa29e-ccca-4096-8481-c7e33c67aac5"
 					(reference "7v4_R4")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R")
-		(at 55.88 151.13 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "6be903ac-ed0c-42b3-a79c-169cbbc36049")
-		(property "Reference" "3v7_R4"
-			(at 55.88 146.05 90)
-			(effects
-				(font
-					(size 1 1)
-				)
-			)
-		)
-		(property "Value" "1k5"
-			(at 55.88 148.59 90)
-			(effects
-				(font
-					(size 1 1)
-				)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-			(at 55.88 152.908 90)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 55.88 151.13 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 55.88 151.13 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "8f18c774-14b2-4b84-be73-0a9277a2d9c9")
-		)
-		(pin "2"
-			(uuid "6d6a7645-2ef8-48ff-9f7c-baed810c2476")
-		)
-		(instances
-			(project "ODB2"
-				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/a0dfa29e-ccca-4096-8481-c7e33c67aac5"
-					(reference "3v7_R4")
 					(unit 1)
 				)
 			)
