@@ -4880,10 +4880,6 @@
 		(uuid "258ecc9e-d0e5-4bdc-b456-bf147507c2ea")
 	)
 	(no_connect
-		(at 231.14 134.62)
-		(uuid "2a5d0297-0a4e-4ec4-8e8f-666ad793bc4c")
-	)
-	(no_connect
 		(at 170.18 185.42)
 		(uuid "2b253b92-7ff0-4f7e-8c88-3570133352a6")
 	)
@@ -5597,6 +5593,16 @@
 	)
 	(wire
 		(pts
+			(xy 381 248.92) (xy 383.54 248.92)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3c68919d-eeab-46ba-8083-bcdbcbd5b1f1")
+	)
+	(wire
+		(pts
 			(xy 190.5 44.45) (xy 187.96 44.45)
 		)
 		(stroke
@@ -6214,6 +6220,16 @@
 			(type default)
 		)
 		(uuid "88e4b13b-6d65-4e40-acae-3ebb7ffe6282")
+	)
+	(wire
+		(pts
+			(xy 231.14 134.62) (xy 237.49 134.62)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8978f8bc-b94f-4189-9da9-d699e5ffefbc")
 	)
 	(wire
 		(pts
@@ -7888,6 +7904,28 @@
 			)
 		)
 	)
+	(global_label "IO_Camera"
+		(shape input)
+		(at 383.54 248.92 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "302b001f-22d5-4175-b5f2-69d5fc2cd3f0")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 396.5642 248.92 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+	)
 	(global_label "BOOT0"
 		(shape input)
 		(at 165.1 60.96 180)
@@ -8078,6 +8116,28 @@
 		(uuid "5748c64f-ab0c-4d17-bebf-41c0e2d511df")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 397.2294 233.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "IO_Camera"
+		(shape input)
+		(at 237.49 134.62 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "5c93633d-954e-45db-80e9-18a372444332")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 250.5142 134.62 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9821,6 +9881,71 @@
 			(project ""
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78"
 					(reference "#PWR045")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 381 248.92 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "1818204f-d8d6-4f34-9100-3f6b6e59fbd8")
+		(property "Reference" "TP16"
+			(at 374.142 248.92 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "TestPoint"
+			(at 377.698 246.38 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
+			(at 381 243.84 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 381 243.84 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "test point"
+			(at 381 248.92 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "a10363fa-b642-4ccb-aa75-a55c76a85e0a")
+		)
+		(instances
+			(project "ODB2"
+				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78"
+					(reference "TP16")
 					(unit 1)
 				)
 			)

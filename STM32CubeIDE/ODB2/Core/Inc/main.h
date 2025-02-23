@@ -105,6 +105,8 @@ void Error_Handler(void);
 #define BARO_MISO_GPIO_Port GPIOE
 #define BARO_MOSI_Pin GPIO_PIN_14
 #define BARO_MOSI_GPIO_Port GPIOE
+#define IO_Camera_Pin GPIO_PIN_14
+#define IO_Camera_GPIO_Port GPIOB
 #define RFD_TX_Pin GPIO_PIN_6
 #define RFD_TX_GPIO_Port GPIOC
 #define RFD_RX_Pin GPIO_PIN_7

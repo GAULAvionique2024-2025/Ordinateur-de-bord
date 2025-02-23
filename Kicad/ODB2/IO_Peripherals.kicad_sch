@@ -250,6 +250,126 @@
 				)
 			)
 		)
+		(symbol "Connector:Conn_01x01_Socket"
+			(pin_names
+				(offset 1.016) hide)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "J"
+				(at 0 2.54 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "Conn_01x01_Socket"
+				(at 0 -2.54 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Generic connector, single row, 01x01, script generated"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_locked" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "connector"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "Connector*:*_1x??_*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "Conn_01x01_Socket_1_1"
+				(polyline
+					(pts
+						(xy -1.27 0) (xy -0.508 0)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(arc
+					(start 0 0.508)
+					(mid -0.5058 0)
+					(end 0 -0.508)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin passive line
+					(at -5.08 0 0)
+					(length 3.81)
+					(name "Pin_1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+		)
 		(symbol "Connector:Conn_01x05_Socket"
 			(pin_names
 				(offset 1.016) hide)
@@ -4792,6 +4912,16 @@
 	)
 	(wire
 		(pts
+			(xy 121.92 74.93) (xy 127 74.93)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b3382bd2-60aa-4908-9520-65cabd6154fd")
+	)
+	(wire
+		(pts
 			(xy 144.78 43.18) (xy 144.78 35.56)
 		)
 		(stroke
@@ -5101,6 +5231,18 @@
 		(uuid "ff28596f-2715-4bdb-94d1-c042ae0cadff")
 	)
 	(rectangle
+		(start 105.41 63.5)
+		(end 135.89 78.74)
+		(stroke
+			(width 0)
+			(type dash)
+		)
+		(fill
+			(type none)
+		)
+		(uuid 1b40eeed-d143-40ca-8049-72de68a82f7f)
+	)
+	(rectangle
 		(start 105.41 21.59)
 		(end 171.45 62.23)
 		(stroke
@@ -5270,6 +5412,18 @@
 		)
 		(uuid "a7024b3c-c69f-436b-8b03-de0bc60b857d")
 	)
+	(text "Camera Connector"
+		(exclude_from_sim no)
+		(at 115.062 65.532 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.254)
+				(bold yes)
+			)
+		)
+		(uuid "d369bb70-c7f7-4cb2-8496-7ab9903811ac")
+	)
 	(text "Standard SPI D0"
 		(exclude_from_sim no)
 		(at 182.372 60.96 0)
@@ -5282,7 +5436,7 @@
 	)
 	(text "RFD900x Connector"
 		(exclude_from_sim no)
-		(at 71.12 81.788 0)
+		(at 69.85 82.042 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5339,6 +5493,28 @@
 		(uuid "036b7932-5c2b-4f58-b2a0-509844a9e84d")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 116.3344 46.99 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "IO_Camera"
+		(shape input)
+		(at 121.92 74.93 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "0e4c7c99-c3a2-4a1b-a766-d071be4aaf4b")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 108.8958 74.93 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6384,6 +6560,73 @@
 			(project ""
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/93865dc8-71fa-4dc6-90ce-f5a9779dfd41"
 					(reference "#PWR075")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:Conn_01x01_Socket")
+		(at 132.08 74.93 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "2f206a67-2fe1-4cb2-a6fe-bd678649a375")
+		(property "Reference" "J1"
+			(at 133.35 73.6599 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Value" "Cam_Conn_01x01_Socket"
+			(at 109.22 69.85 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Connector_PinHeader_2.00mm:PinHeader_1x01_P2.00mm_Vertical"
+			(at 132.08 74.93 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 132.08 74.93 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Generic connector, single row, 01x01, script generated"
+			(at 132.08 74.93 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "d194de73-b313-4b61-9a6a-ceb83dfb127f")
+		)
+		(instances
+			(project ""
+				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/93865dc8-71fa-4dc6-90ce-f5a9779dfd41"
+					(reference "J1")
 					(unit 1)
 				)
 			)
