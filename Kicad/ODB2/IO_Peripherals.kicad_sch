@@ -4574,6 +4574,16 @@
 	)
 	(wire
 		(pts
+			(xy 120.65 85.09) (xy 125.73 85.09)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3b8648f0-357c-42cc-a6c9-69fd4cc7cbee")
+	)
+	(wire
+		(pts
 			(xy 31.75 48.26) (xy 39.37 48.26)
 		)
 		(stroke
@@ -4704,6 +4714,26 @@
 	)
 	(wire
 		(pts
+			(xy 124.46 87.63) (xy 124.46 88.9)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5f268743-071c-4a40-93f2-4c6d06c7a9fb")
+	)
+	(wire
+		(pts
+			(xy 125.73 87.63) (xy 124.46 87.63)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "60216b33-8c16-4f87-ad36-e6124a3e7520")
+	)
+	(wire
+		(pts
 			(xy 31.75 33.02) (xy 31.75 39.37)
 		)
 		(stroke
@@ -4754,7 +4784,7 @@
 	)
 	(wire
 		(pts
-			(xy 124.46 76.2) (xy 123.19 76.2)
+			(xy 125.73 76.2) (xy 124.46 76.2)
 		)
 		(stroke
 			(width 0)
@@ -4774,7 +4804,7 @@
 	)
 	(wire
 		(pts
-			(xy 123.19 76.2) (xy 123.19 77.47)
+			(xy 124.46 76.2) (xy 124.46 77.47)
 		)
 		(stroke
 			(width 0)
@@ -4974,7 +5004,7 @@
 	)
 	(wire
 		(pts
-			(xy 119.38 73.66) (xy 124.46 73.66)
+			(xy 120.65 73.66) (xy 125.73 73.66)
 		)
 		(stroke
 			(width 0)
@@ -5294,7 +5324,7 @@
 	)
 	(rectangle
 		(start 105.41 63.5)
-		(end 135.89 83.82)
+		(end 135.89 100.33)
 		(stroke
 			(width 0)
 			(type dash)
@@ -5564,9 +5594,9 @@
 			)
 		)
 	)
-	(global_label "IO_Camera"
+	(global_label "IO_Camera1"
 		(shape input)
-		(at 119.38 73.66 180)
+		(at 120.65 73.66 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -5576,7 +5606,7 @@
 		)
 		(uuid "0e4c7c99-c3a2-4a1b-a766-d071be4aaf4b")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 106.3558 73.66 0)
+			(at 106.4163 73.66 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5671,6 +5701,28 @@
 					(size 1.27 1.27)
 				)
 				(justify left)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "IO_Camera2"
+		(shape input)
+		(at 120.65 85.09 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "572383fb-5f61-4071-916e-9f8994a91ae3")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 106.4163 85.09 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
 				(hide yes)
 			)
 		)
@@ -7469,7 +7521,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 123.19 77.47 0)
+		(at 124.46 77.47 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -7478,7 +7530,7 @@
 		(fields_autoplaced yes)
 		(uuid "5eadf5ec-2186-48df-8fcd-e863f340eee9")
 		(property "Reference" "#PWR082"
-			(at 123.19 83.82 0)
+			(at 124.46 83.82 0)
 			(effects
 				(font
 					(size 1 1)
@@ -7487,7 +7539,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 123.19 82.55 0)
+			(at 124.46 82.55 0)
 			(effects
 				(font
 					(size 1 1)
@@ -7496,7 +7548,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 123.19 77.47 0)
+			(at 124.46 77.47 0)
 			(effects
 				(font
 					(size 1 1)
@@ -7505,7 +7557,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 123.19 77.47 0)
+			(at 124.46 77.47 0)
 			(effects
 				(font
 					(size 1 1)
@@ -7514,7 +7566,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 123.19 77.47 0)
+			(at 124.46 77.47 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8226,6 +8278,76 @@
 		)
 	)
 	(symbol
+		(lib_id "Connector:Conn_01x02_Socket")
+		(at 130.81 85.09 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "a359e3be-f601-41de-a127-35da2da66fac")
+		(property "Reference" "J2"
+			(at 132.08 85.0899 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Value" "Cam2_Conn_01x02_Socket"
+			(at 107.95 81.788 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Connector_PinHeader_2.00mm:PinHeader_1x02_P2.00mm_Vertical"
+			(at 130.81 85.09 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 130.81 85.09 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Generic connector, single row, 01x02, script generated"
+			(at 130.81 85.09 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "c55fb537-7079-485b-b62f-6818834bc970")
+		)
+		(pin "2"
+			(uuid "a96ba795-6d08-439b-922d-b38e818238dd")
+		)
+		(instances
+			(project "ODB2"
+				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/93865dc8-71fa-4dc6-90ce-f5a9779dfd41"
+					(reference "J2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:GND")
 		(at 223.52 99.06 0)
 		(unit 1)
@@ -8497,6 +8619,73 @@
 		)
 	)
 	(symbol
+		(lib_id "power:GND")
+		(at 124.46 88.9 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "cd67df2e-ddcf-4f12-9d46-9febdc1b9e0b")
+		(property "Reference" "#PWR093"
+			(at 124.46 95.25 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 124.46 93.98 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+			)
+		)
+		(property "Footprint" ""
+			(at 124.46 88.9 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 124.46 88.9 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 124.46 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "03c846c2-c1c4-41d4-8184-66c3eff2f371")
+		)
+		(instances
+			(project "ODB2"
+				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/93865dc8-71fa-4dc6-90ce-f5a9779dfd41"
+					(reference "#PWR093")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Connector:Conn_01x05_Socket")
 		(at 45.72 95.25 0)
 		(unit 1)
@@ -8754,7 +8943,7 @@
 	)
 	(symbol
 		(lib_id "Connector:Conn_01x02_Socket")
-		(at 129.54 73.66 0)
+		(at 130.81 73.66 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -8762,7 +8951,7 @@
 		(dnp no)
 		(uuid "d9dc4420-aeef-4f21-bd68-47d7702e826c")
 		(property "Reference" "J1"
-			(at 130.81 73.6599 0)
+			(at 132.08 73.6599 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8771,8 +8960,8 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "Cam_Conn_01x02_Socket"
-			(at 110.744 70.358 0)
+		(property "Value" "Cam1_Conn_01x02_Socket"
+			(at 107.95 70.358 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8781,7 +8970,7 @@
 			)
 		)
 		(property "Footprint" "Connector_PinHeader_2.00mm:PinHeader_1x02_P2.00mm_Vertical"
-			(at 129.54 73.66 0)
+			(at 130.81 73.66 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8790,7 +8979,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 129.54 73.66 0)
+			(at 130.81 73.66 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8799,7 +8988,7 @@
 			)
 		)
 		(property "Description" "Generic connector, single row, 01x02, script generated"
-			(at 129.54 73.66 0)
+			(at 130.81 73.66 0)
 			(effects
 				(font
 					(size 1.27 1.27)
