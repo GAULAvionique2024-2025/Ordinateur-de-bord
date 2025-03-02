@@ -228,7 +228,7 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOA, RFM_CS_Pin|ICM_INT_Pin|ICM_CS_Pin|CriticalLEDEnable_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(IO_Camera_GPIO_Port, IO_Camera_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, IO_Camera2_Pin|IO_Camera1_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : BARO_CS_Pin BARO_SCK_Pin BARO_MISO_Pin BARO_MOSI_Pin */
   GPIO_InitStruct.Pin = BARO_CS_Pin|BARO_SCK_Pin|BARO_MISO_Pin|BARO_MOSI_Pin;
@@ -295,12 +295,12 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(BUZZER_PWM_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : IO_Camera_Pin */
-  GPIO_InitStruct.Pin = IO_Camera_Pin;
+  /*Configure GPIO pins : IO_Camera2_Pin IO_Camera1_Pin */
+  GPIO_InitStruct.Pin = IO_Camera2_Pin|IO_Camera1_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(IO_Camera_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /*Configure GPIO pins : RFD_TX_Pin RFD_RX_Pin */
   GPIO_InitStruct.Pin = RFD_TX_Pin|RFD_RX_Pin;
