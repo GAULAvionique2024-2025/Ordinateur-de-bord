@@ -6680,7 +6680,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.digikey.ca/en/products/detail/vishay-dale/ILSB0805ERR10K/2575081"
 			(at 0 0 -90)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -6842,7 +6842,7 @@
 			(pintype "passive")
 			(uuid "9b7d0669-02ff-476b-ade1-e2fbee7e8385")
 		)
-		(model "${KICAD8_3DMODEL_DIR}/Inductor_SMD.3dshapes/L_0805_2012Metric.wrl"
+		(model "C:/Users/gagno/OneDrive/Documents/Github/Ordinateur-de-bord/Kicad/Symbols/ILSB0805ERR10K/IND_VISHAY_ILSB0805_A_VIS.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -8296,7 +8296,7 @@
 		(path "/93865dc8-71fa-4dc6-90ce-f5a9779dfd41/cf83f9b3-4d88-4630-9d77-9f3be5f401c1")
 		(sheetname "IO_Peripherals")
 		(sheetfile "IO_Peripherals.kicad_sch")
-		(attr through_hole exclude_from_pos_files exclude_from_bom dnp)
+		(attr through_hole exclude_from_pos_files)
 		(fp_line
 			(start -1.06 -1.06)
 			(end 0 -1.06)
@@ -8598,7 +8598,7 @@
 		(path "/93865dc8-71fa-4dc6-90ce-f5a9779dfd41/68fe8ca6-2cc6-43f8-b5ee-86023fdbee79")
 		(sheetname "IO_Peripherals")
 		(sheetfile "IO_Peripherals.kicad_sch")
-		(attr through_hole exclude_from_pos_files exclude_from_bom dnp)
+		(attr through_hole exclude_from_pos_files)
 		(fp_line
 			(start -3.68 -1.8)
 			(end -3.68 1.8)
@@ -10725,7 +10725,7 @@
 		(path "/93865dc8-71fa-4dc6-90ce-f5a9779dfd41/d2569707-5349-4510-b068-a162f85be8b0")
 		(sheetname "IO_Peripherals")
 		(sheetfile "IO_Peripherals.kicad_sch")
-		(attr smd exclude_from_pos_files exclude_from_bom dnp)
+		(attr smd exclude_from_pos_files)
 		(fp_line
 			(start -7.19 7.47)
 			(end 9.01 7.47)
@@ -12016,7 +12016,7 @@
 		(path "/eac5f07f-d6a3-4c95-b286-7cebf46e30db/89b08215-710e-4572-a74d-fc8db840de08")
 		(sheetname "Sensors")
 		(sheetfile "Sensors.kicad_sch")
-		(attr smd exclude_from_pos_files exclude_from_bom dnp)
+		(attr smd exclude_from_pos_files)
 		(fp_line
 			(start -7.25 -7.1)
 			(end 5.75 -7.1)
@@ -16487,7 +16487,7 @@
 		(path "/8ab7427e-7183-4caa-ac8a-08b0bd412372/f62c305b-a698-4c00-8d59-25898798a2ea")
 		(sheetname "Pyro")
 		(sheetfile "Pyro.kicad_sch")
-		(attr through_hole exclude_from_pos_files exclude_from_bom dnp)
+		(attr through_hole exclude_from_pos_files)
 		(fp_line
 			(start 7.56 -4.16)
 			(end 7.56 3.561)
@@ -29532,7 +29532,7 @@
 		(path "/93865dc8-71fa-4dc6-90ce-f5a9779dfd41/421aeeef-cd4c-40db-ae4a-f4dc37151fa1")
 		(sheetname "IO_Peripherals")
 		(sheetfile "IO_Peripherals.kicad_sch")
-		(attr through_hole exclude_from_pos_files exclude_from_bom dnp)
+		(attr through_hole exclude_from_pos_files)
 		(fp_line
 			(start 1.06 1)
 			(end 1.06 9.06)
@@ -33721,7 +33721,7 @@
 		(path "/8ab7427e-7183-4caa-ac8a-08b0bd412372/cfad7640-92c2-4495-a5ce-da0afd5a5b56")
 		(sheetname "Pyro")
 		(sheetfile "Pyro.kicad_sch")
-		(attr through_hole exclude_from_pos_files exclude_from_bom dnp)
+		(attr through_hole exclude_from_pos_files)
 		(fp_line
 			(start 7.56 -4.16)
 			(end 7.56 3.561)
@@ -36794,7 +36794,7 @@
 		(path "/eac5f07f-d6a3-4c95-b286-7cebf46e30db/dfb1d1b7-122a-495a-8a44-3dff002599cf")
 		(sheetname "Sensors")
 		(sheetfile "Sensors.kicad_sch")
-		(attr through_hole exclude_from_pos_files exclude_from_bom dnp)
+		(attr through_hole exclude_from_pos_files)
 		(fp_line
 			(start -1.8 -3.68)
 			(end 1.8 -3.68)
