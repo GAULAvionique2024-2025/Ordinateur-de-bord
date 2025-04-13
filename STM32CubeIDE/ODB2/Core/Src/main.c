@@ -566,9 +566,6 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, IO_Camera2_Pin|IO_Camera1_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(RFD_RTS_GPIO_Port, RFD_RTS_Pin, GPIO_PIN_RESET);
-
   /*Configure GPIO pin : BARO_CS_Pin */
   GPIO_InitStruct.Pin = BARO_CS_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
@@ -619,9 +616,8 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pin : RFD_RTS_Pin */
   GPIO_InitStruct.Pin = RFD_RTS_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(RFD_RTS_GPIO_Port, &GPIO_InitStruct);
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
