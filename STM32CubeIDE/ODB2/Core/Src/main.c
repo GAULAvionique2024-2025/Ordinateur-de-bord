@@ -555,10 +555,10 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOF, PYROS_Bluetooth_Pin|PYROS_MainODB_Pin|PYROS_DrogueODB_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, RFM_CS_Pin|ICM_CS_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(GPIOA, RFM_CS_Pin|CriticalLEDEnable_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, ICM_INT_Pin|CriticalLEDEnable_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(ICM_CS_GPIO_Port, ICM_CS_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(MEM_CS_GPIO_Port, MEM_CS_Pin, GPIO_PIN_SET);
@@ -593,12 +593,18 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(RFM_NIRQ_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : RFM_CS_Pin ICM_INT_Pin ICM_CS_Pin */
-  GPIO_InitStruct.Pin = RFM_CS_Pin|ICM_INT_Pin|ICM_CS_Pin;
+  /*Configure GPIO pins : RFM_CS_Pin ICM_CS_Pin */
+  GPIO_InitStruct.Pin = RFM_CS_Pin|ICM_CS_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : ICM_INT_Pin */
+  GPIO_InitStruct.Pin = ICM_INT_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(ICM_INT_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pins : MEM_CS_Pin IO_Camera2_Pin IO_Camera1_Pin */
   GPIO_InitStruct.Pin = MEM_CS_Pin|IO_Camera2_Pin|IO_Camera1_Pin;
