@@ -1,0 +1,10 @@
+22:06:07 **** Incremental Build of configuration Debug for project ODB2 ****
+make -j12 all 
+arm-none-eabi-size  ODB2.elf 
+   text	   data	    bss	    dec	    hex	filename
+  37940	    268	   9332	  47540	   b9b4	ODB2.elf
+Finished building: default.size.stdout
+ 
+
+22:06:07 Build Finished. 0 errors, 0 warnings. (took 524ms)
+
