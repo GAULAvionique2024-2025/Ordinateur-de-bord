@@ -716,29 +716,16 @@
 			)
 		)
 	)
-	(footprint "Jumper:SolderJumper-2_P1.3mm_Bridged_RoundedPad1.0x1.5mm"
+	(footprint "Jumper:SolderJumper-2_P1.3mm_Open_TrianglePad1.0x1.5mm"
 		(layer "F.Cu")
 		(uuid "0aa302a5-6e32-4f03-9917-6f097d292cad")
 		(at 45.212 24.8666 180)
-		(descr "SMD Solder Jumper, 1x1.5mm, rounded Pads, 0.3mm gap, bridged with 1 copper strip")
-		(tags "net tie solder jumper bridged")
+		(descr "SMD Solder Jumper, 1x1.5mm Triangular Pads, 0.3mm gap, open")
+		(tags "solder jumper open")
 		(property "Reference" "Boot_JP1"
-			(at 0 -1.8 0)
+			(at 0 -1.8 180)
 			(layer "F.SilkS")
-			(hide yes)
-			(uuid "b8bacf1a-dfb8-4d61-a2c4-0b068ed552ab")
-			(effects
-				(font
-					(size 0.762 0.762)
-					(thickness 0.127)
-				)
-			)
-		)
-		(property "Value" "SolderJumper_2_Open"
-			(at 0 1.9 0)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "802f0e26-236d-495b-a3b1-e4fe39b1f371")
+			(uuid "4dbfe930-dbfb-468a-98e9-b135cb1253e5")
 			(effects
 				(font
 					(size 1 1)
@@ -746,12 +733,23 @@
 				)
 			)
 		)
-		(property "Footprint" "Jumper:SolderJumper-2_P1.3mm_Bridged_RoundedPad1.0x1.5mm"
+		(property "Value" "SolderJumper_2_Open"
+			(at 0 1.9 180)
+			(layer "F.Fab")
+			(uuid "30f75663-824c-4fed-97e6-d0ddeae0982b")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Footprint" "Jumper:SolderJumper-2_P1.3mm_Open_TrianglePad1.0x1.5mm"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "58aba076-ca97-4cbf-b1b4-b0ed75b7e43d")
+			(uuid "aab56952-8501-490e-85b3-2003fab6253d")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -764,7 +762,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "c878ec3b-341d-42d2-82df-64fbd26d2c74")
+			(uuid "c12505bb-fc3c-4feb-a4cc-4fb0cfd65c37")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -777,7 +775,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "97266c34-7dfd-497f-bd87-f67fb47f8b47")
+			(uuid "dbb6dfe7-87a2-4fb5-b57a-7e4f6371ee5a")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -791,102 +789,45 @@
 		(sheetfile "ODB2.kicad_sch")
 		(zone_connect 1)
 		(attr exclude_from_pos_files exclude_from_bom)
-		(net_tie_pad_groups "1, 2")
-		(fp_poly
-			(pts
-				(xy 0.25 -0.3) (xy -0.25 -0.3) (xy -0.25 0.3) (xy 0.25 0.3)
-			)
+		(fp_line
+			(start 1.4 1)
+			(end -1.4 1)
 			(stroke
-				(width 0)
+				(width 0.12)
 				(type solid)
 			)
-			(fill solid)
-			(layer "F.Cu")
-			(uuid "7a3dfed0-9843-40b1-b2c3-31c942a94392")
+			(layer "F.SilkS")
+			(uuid "5265e2cf-9758-4cd2-9324-6db00ce9775f")
 		)
 		(fp_line
-			(start 1.4 -0.3)
-			(end 1.4 0.3)
+			(start 1.4 -1)
+			(end 1.4 1)
 			(stroke
 				(width 0.12)
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "439645be-fac8-4bad-b770-b58d7b8a0ce4")
+			(uuid "3852f0a2-130f-45ae-84a4-8d6ae0951632")
 		)
 		(fp_line
-			(start 0.7 1)
-			(end -0.7 1)
+			(start -1.4 1)
+			(end -1.4 -1)
 			(stroke
 				(width 0.12)
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "aacfc0c8-824c-4ffd-b941-151731c1a926")
+			(uuid "2193af7a-2197-44f5-9cb6-f143267a5b0f")
 		)
 		(fp_line
-			(start -0.7 -1)
-			(end 0.7 -1)
+			(start -1.4 -1)
+			(end 1.4 -1)
 			(stroke
 				(width 0.12)
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "59b63864-aee5-401e-8533-c4a87331b546")
-		)
-		(fp_line
-			(start -1.4 0.3)
-			(end -1.4 -0.3)
-			(stroke
-				(width 0.12)
-				(type solid)
-			)
-			(layer "F.SilkS")
-			(uuid "e0dcbffc-1524-4bfc-a345-a6c3954186e6")
-		)
-		(fp_arc
-			(start 1.4 0.3)
-			(mid 1.194975 0.794975)
-			(end 0.7 1)
-			(stroke
-				(width 0.12)
-				(type solid)
-			)
-			(layer "F.SilkS")
-			(uuid "491e210d-710a-45e3-a461-e5b76f870008")
-		)
-		(fp_arc
-			(start 0.7 -1)
-			(mid 1.194975 -0.794975)
-			(end 1.4 -0.3)
-			(stroke
-				(width 0.12)
-				(type solid)
-			)
-			(layer "F.SilkS")
-			(uuid "35b222f6-812c-4ba6-971c-0c0b997fb5fc")
-		)
-		(fp_arc
-			(start -0.7 1)
-			(mid -1.194975 0.794975)
-			(end -1.4 0.3)
-			(stroke
-				(width 0.12)
-				(type solid)
-			)
-			(layer "F.SilkS")
-			(uuid "dae1825f-2d8b-4a13-9e5a-d4139c6111fa")
-		)
-		(fp_arc
-			(start -1.4 -0.3)
-			(mid -1.194975 -0.794975)
-			(end -0.7 -1)
-			(stroke
-				(width 0.12)
-				(type solid)
-			)
-			(layer "F.SilkS")
-			(uuid "52ebe657-f4d4-47e2-af16-e7c01192fdd1")
+			(uuid "64bb54db-b678-4934-9953-2005c004a88f")
 		)
 		(fp_line
 			(start 1.65 1.25)
@@ -896,7 +837,7 @@
 				(type solid)
 			)
 			(layer "F.CrtYd")
-			(uuid "e8502783-32a9-4918-baef-8ab7f2081bbf")
+			(uuid "2c65a8f2-860f-42f0-a297-9faa22a5893d")
 		)
 		(fp_line
 			(start 1.65 1.25)
@@ -906,7 +847,7 @@
 				(type solid)
 			)
 			(layer "F.CrtYd")
-			(uuid "0e3515f9-93ef-4458-b36a-d8222e06893b")
+			(uuid "aa8114fc-215c-439c-bd01-712f6264cbca")
 		)
 		(fp_line
 			(start -1.65 -1.25)
@@ -916,7 +857,7 @@
 				(type solid)
 			)
 			(layer "F.CrtYd")
-			(uuid "3bb9b2de-ccbe-4999-8acb-f303efe86631")
+			(uuid "8df0e968-1649-448b-92fb-c3f1f8664b09")
 		)
 		(fp_line
 			(start -1.65 -1.25)
@@ -926,11 +867,11 @@
 				(type solid)
 			)
 			(layer "F.CrtYd")
-			(uuid "fecfead8-2f55-447d-830d-8a0d7033ffbc")
+			(uuid "4588753a-6f8e-407a-94ef-5a3408ce0be7")
 		)
 		(pad "1" smd custom
-			(at -0.65 0 180)
-			(size 1 0.5)
+			(at -0.725 0 180)
+			(size 0.3 0.3)
 			(layers "F.Cu" "F.Mask")
 			(net 1 "+3V3")
 			(pinfunction "A")
@@ -942,31 +883,19 @@
 				(anchor rect)
 			)
 			(primitives
-				(gr_circle
-					(center 0 0.25)
-					(end 0.5 0.25)
-					(width 0)
-					(fill yes)
-				)
-				(gr_circle
-					(center 0 -0.25)
-					(end 0.5 -0.25)
-					(width 0)
-					(fill yes)
-				)
 				(gr_poly
 					(pts
-						(xy 0.5 0.75) (xy 0 0.75) (xy 0 -0.75) (xy 0.5 -0.75)
+						(xy 1 0) (xy 0.5 0.75) (xy -0.5 0.75) (xy -0.5 -0.75) (xy 0.5 -0.75)
 					)
 					(width 0)
 					(fill yes)
 				)
 			)
-			(uuid "e491ad51-1023-40d6-a5ab-74c5660e9328")
+			(uuid "6575765f-86ed-4d63-9a62-9fcd755a5413")
 		)
 		(pad "2" smd custom
-			(at 0.65 0 180)
-			(size 1 0.5)
+			(at 0.725 0 180)
+			(size 0.3 0.3)
 			(layers "F.Cu" "F.Mask")
 			(net 26 "Net-(Boot_JP1-B)")
 			(pinfunction "B")
@@ -978,27 +907,15 @@
 				(anchor rect)
 			)
 			(primitives
-				(gr_circle
-					(center 0 0.25)
-					(end 0.5 0.25)
-					(width 0)
-					(fill yes)
-				)
-				(gr_circle
-					(center 0 -0.25)
-					(end 0.5 -0.25)
-					(width 0)
-					(fill yes)
-				)
 				(gr_poly
 					(pts
-						(xy 0 0.75) (xy -0.5 0.75) (xy -0.5 -0.75) (xy 0 -0.75)
+						(xy 0.5 0.75) (xy -0.65 0.75) (xy -0.15 0) (xy -0.65 -0.75) (xy 0.5 -0.75)
 					)
 					(width 0)
 					(fill yes)
 				)
 			)
-			(uuid "28496da9-3bad-454d-a651-d27889e33663")
+			(uuid "c1ef044b-1d0b-416d-9e5f-6556335a65ca")
 		)
 	)
 	(footprint "TestPoint:TestPoint_Pad_D1.0mm"
