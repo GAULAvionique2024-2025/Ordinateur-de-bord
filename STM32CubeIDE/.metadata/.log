@@ -31,3 +31,18 @@ Command-line arguments:  -os win32 -ws win32 -arch x86_64 -data C:\Users\gagno\O
 
 !ENTRY org.eclipse.cdt.core 1 0 2025-04-13 22:03:31.191
 !MESSAGE Indexed 'ODB2' (37 sources, 103 headers) in 4.19 sec: 9,063 declarations; 63,789 references; 0 unresolved inclusions; 1 syntax errors; 2 unresolved names (0.0027%)
+!SESSION 2025-04-14 23:49:02.551 -----------------------------------------------
+eclipse.buildId=Version 1.18.0
+java.version=21.0.3
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=fr_CA
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2025-04-14 23:49:08.876
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2025-04-14 23:49:08.878
+!MESSAGE Log4j2 initialized with config file C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2025-04-14 23:49:21.107
+!MESSAGE Started RMI Server, listening on port 41337
