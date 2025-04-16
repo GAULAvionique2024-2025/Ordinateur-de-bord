@@ -476,14 +476,16 @@ Discarded input sections
                 0x00000000      0x150 ./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o
  .text.SPI_InitPeriph
                 0x00000000       0x70 ./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o
- .text.SPI_Transmit
-                0x00000000       0x44 ./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o
- .debug_info    0x00000000      0x43c ./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o
- .debug_abbrev  0x00000000      0x124 ./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o
+ .text.SPI_TX   0x00000000       0x82 ./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o
+ .text.SPI_RX   0x00000000       0x84 ./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o
+ .text.SPI_TransmitReceive
+                0x00000000       0xbc ./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o
+ .debug_info    0x00000000      0x56a ./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o
+ .debug_abbrev  0x00000000      0x187 ./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o
  .debug_aranges
-                0x00000000       0x30 ./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o
+                0x00000000       0x40 ./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o
  .debug_rnglists
-                0x00000000       0x20 ./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o
+                0x00000000       0x2f ./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o
  .debug_macro   0x00000000      0x24e ./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o
  .debug_macro   0x00000000      0xad8 ./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o
  .debug_macro   0x00000000       0x2e ./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o
@@ -534,11 +536,11 @@ Discarded input sections
  .debug_macro   0x00000000      0x149 ./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o
  .debug_macro   0x00000000       0xb0 ./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o
  .debug_macro   0x00000000       0x94 ./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o
- .debug_macro   0x00000000       0x3a ./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o
- .debug_line    0x00000000      0x92b ./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o
- .debug_str     0x00000000    0xca8bb ./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o
+ .debug_macro   0x00000000       0x40 ./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o
+ .debug_line    0x00000000      0xa3d ./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o
+ .debug_str     0x00000000    0xca92f ./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o
  .comment       0x00000000       0x44 ./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o
- .debug_frame   0x00000000       0x80 ./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o
+ .debug_frame   0x00000000       0xcc ./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o
  .ARM.attributes
                 0x00000000       0x34 ./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o
  .group         0x00000000        0xc ./Core/Src/GAUL_Drivers/Low_Level/UART_driver.o

@@ -107,7 +107,7 @@ int8_t SPI_TransmitReceive(SPI_TypeDef *SPIx, uint8_t *pTxData, uint8_t *pRxData
     }
 
     while (SPIx->SR & SPI_SR_BSY) {
-        if ((HAL_GetTick() - startTick) >= timeout) {
+        if ((HAL_GetTick() - startTick) >= Timeout) {
             return -1; // Timeout
         }
     }

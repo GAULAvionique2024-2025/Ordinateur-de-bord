@@ -42,7 +42,7 @@ void SPI_InitPeriph(SPI_TypeDef *SPIx, unsigned short baudrate) {
 	SPIx->CR1 |= SPI_CR1_SPE;	// SPI Enable
 }
 
-int8_t SPI_TX(SPI_TypeDef *SPIx, uint8_t *data, size_t size) {
+int SPI_TX(SPI_TypeDef *SPIx, uint8_t *data, int size) {
     uint32_t timeout = TIMEOUT;
     while (size--) {
         while (!(SPIx->SR & SPI_SR_TXE)) {
@@ -63,7 +63,7 @@ int8_t SPI_TX(SPI_TypeDef *SPIx, uint8_t *data, size_t size) {
     return 0;
 }
 
-int8_t SPI_RX(SPI_TypeDef *SPIx, uint8_t *data, size_t size) {
+int SPI_RX(SPI_TypeDef *SPIx, uint8_t *data, int size) {
     uint32_t timeout = TIMEOUT;
     while (size--) {
         while (!(SPIx->SR & SPI_SR_TXE)) {
@@ -85,32 +85,9 @@ int8_t SPI_RX(SPI_TypeDef *SPIx, uint8_t *data, size_t size) {
 }
 
 //TODO: add interrupt + circular buffer
-// Full-Duplex SPI
-int8_t SPI_TransmitReceive(SPI_TypeDef *SPIx, uint8_t *pTxData, uint8_t *pRxData, size_t size, uint32_t timeout) {
-    uint32_t startTick = HAL_GetTick();
-    for (uint16_t i = 0; i < size; i++) {
-        while (!(SPIx->SR & SPI_SR_TXE)) {
-            if ((HAL_GetTick() - startTick) >= timeout) {
-                return -1; // Timeout
-            }
-        }
-
-        *(volatile uint8_t *)&SPIx->DR = pTxData[i];
-
-        while (!(SPIx->SR & SPI_SR_RXNE)) {
-            if ((HAL_GetTick() - startTick) >= timeout) {
-                return -1; // Timeout
-            }
-        }
-
-        pRxData[i] = *(volatile uint8_t *)&SPIx->DR;
-    }
-
-    while (SPIx->SR & SPI_SR_BSY) {
-        if ((HAL_GetTick() - startTick) >= timeout) {
-            return -1; // Timeout
-        }
-    }
-
-    return 0;
+void SPI_TransmitReceive(uint8_t* data, size_t size) {
+	while(size--) {
+		SPI5->DR = *data++;
+		while(!(SPI5->SR & SPI_SR_TXE)) {}
+	}
 }
