@@ -8,7 +8,6 @@ void TIM_Enable(TIM_TypeDef *TIMx) {
 	} else return;
 }
 
-// GPIO_IinitPeriph(PWM pin -> analog !!!)
 void PWM_InitPeriph(TIM_TypeDef *TIMx, uint16_t prescaler, uint16_t arr, uint16_t canal) {
 	if (TIMx != TIM1 && TIMx != TIM8) return;					// Protection
 	if ((TIMx == TIM1 && (canal != 1 && canal != 2)) ||
