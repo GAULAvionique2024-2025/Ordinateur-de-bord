@@ -88,11 +88,9 @@ int8_t SPI_RX(SPI_TypeDef *SPIx, uint8_t *data, size_t size) {
 // Full-Duplex SPI
 int8_t SPI_TransmitReceive(SPI_TypeDef *SPIx, uint8_t *pTxData, uint8_t *pRxData, size_t size, uint32_t timeout) {
     uint32_t startTick = HAL_GetTick();
-    uint32_t elapsed;
     for (uint16_t i = 0; i < size; i++) {
         while (!(SPIx->SR & SPI_SR_TXE)) {
-            elapsed = HAL_GetTick() - startTick;
-            if (elapsed >= timeout) {
+            if ((HAL_GetTick() - startTick) >= timeout) {
                 return -1; // Timeout
             }
         }
@@ -100,8 +98,7 @@ int8_t SPI_TransmitReceive(SPI_TypeDef *SPIx, uint8_t *pTxData, uint8_t *pRxData
         *(volatile uint8_t *)&SPIx->DR = pTxData[i];
 
         while (!(SPIx->SR & SPI_SR_RXNE)) {
-            elapsed = HAL_GetTick() - startTick;
-            if (elapsed >= timeout) {
+            if ((HAL_GetTick() - startTick) >= timeout) {
                 return -1; // Timeout
             }
         }
@@ -110,8 +107,7 @@ int8_t SPI_TransmitReceive(SPI_TypeDef *SPIx, uint8_t *pTxData, uint8_t *pRxData
     }
 
     while (SPIx->SR & SPI_SR_BSY) {
-        elapsed = HAL_GetTick() - startTick;
-        if (elapsed >= timeout) {
+        if ((HAL_GetTick() - startTick) >= timeout) {
             return -1; // Timeout
         }
     }
