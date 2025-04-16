@@ -1,0 +1,14 @@
+#ifndef INC_GAUL_DRIVERS_COMMUNICATIONS_UART_DRIVER_H_
+#define INC_GAUL_DRIVERS_COMMUNICATIONS_UART_DRIVER_H_
+
+#include "stm32f4xx_hal.h"
+
+void USART_Init(USART_TypeDef *USARTx, uint16_t baudrate);
+
+uint8_t UART_TX(USART_TypeDef *UARTx, uint8_t *data, uint16_t size);
+uint8_t UART_RX(USART_TypeDef *UARTx, uint8_t *data);
+
+uint8_t UART5_Is_Empty(void);
+
+
+#endif /* INC_GAUL_DRIVERS_COMMUNICATIONS_UART_DRIVER_H_*/

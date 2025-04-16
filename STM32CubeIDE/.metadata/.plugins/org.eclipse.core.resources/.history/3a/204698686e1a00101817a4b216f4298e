@@ -1,0 +1,17 @@
+/*
+ * pwm.h
+ *
+ *  Created on: 3 oct. 2024
+ *      Author: Etienne
+ */
+
+#ifndef PWM_H_
+#define PWM_H_
+
+#include "stm32f4xx.h"
+
+void PWM_Init(void);
+void PWM_SetDutyCycle(uint16_t duty);
+void PWM_SetFrequency(uint32_t freq);
+
+#endif /* PWM_H_ */

@@ -19,7 +19,6 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "usb_device.h"
-#include "GAUL_Drivers/Communications/GPIO_driver.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -106,7 +105,6 @@ int main(void)
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
-  /*
   MX_GPIO_Init();
   MX_ADC1_Init();
   MX_USB_DEVICE_Init();
@@ -117,10 +115,8 @@ int main(void)
   MX_USART2_UART_Init();
   MX_USART6_UART_Init();
   MX_TIM1_Init();
-  */
   /* USER CODE BEGIN 2 */
-  GPIO_Init(GPIOA, 8, OUT, O_GP_PP);
-  GPIO_WritePin(GPIOA, 8, HIGH);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */

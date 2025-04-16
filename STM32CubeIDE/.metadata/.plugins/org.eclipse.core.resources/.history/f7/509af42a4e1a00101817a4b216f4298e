@@ -1,0 +1,27 @@
+/*
+ * spi.c
+ *
+ *  Created on: 30 oct. 2024
+ *      Author: Etienne
+ */
+
+//#include "spi.h"
+
+void SPI_Config() {
+	LCD_InitGPIO();
+	RCC->APB2ENR |= RCC_APB2ENR_SPI5EN;
+
+	SPI5->CR1 |= SPI_CR1_MSTR; //Master configuration
+	SPI5->CR1 |= SPI_CR1_SSI;
+	SPI5->CR1 |= SPI_CR1_SSM;
+	SPI5->CR1 |= SPI_CR1_SPE; //SPI Enable
+}
+
+void SPI_Transmit(uint8_t* data, uint32_t size) {
+
+	while(size--) {
+		SPI5->DR = *data++;
+
+		while(!(SPI5->SR & SPI_SR_TXE)) {}
+	}
+}

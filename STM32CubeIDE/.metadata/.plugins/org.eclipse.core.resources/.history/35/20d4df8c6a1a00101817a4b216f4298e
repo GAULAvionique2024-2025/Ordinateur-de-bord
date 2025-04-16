@@ -1,0 +1,52 @@
+#include "GAUL_Drivers/Communications/ADC_driver.h"
+#include "GAUL_Drivers/Communications/GPIO_driver.h"
+
+
+void Enable_ADC_Clock(ADC_TypeDef *ADCx) {
+
+	if(ADCx == ADC1) {
+		RCC->APB2ENR |= RCC_APB2ENR_ADC1EN;
+	} else if(ADCx == ADC2) {
+		RCC->APB2ENR |= RCC_APB2ENR_ADC2EN;
+	} else if(ADCx == ADC3) {
+		RCC->APB2ENR |= RCC_APB2ENR_ADC3EN;
+	} else return;
+}
+
+
+void ADC_InitPeriph(ADC_TypeDef *ADCx, unsigned short resolution, unsigned short channel) {
+
+	Enable_ADC_Clock(ADCx);
+
+	ADCx->CR1 |= ADC_CR1_EOCIE; // Interruption EOC
+	ADCx->CR1 |= (resolution << 24); // Set resolution
+	ADCx->CR2 &= ~ADC_CR2_DMA; // Disable DMA
+	ADCx->CR2 &= ~ADC_CR2_ALIGN; // Set alignment
+	ADCx->CR2 &= ~ADC_CR2_CONT; // Set continuous conversion
+
+	ADCx->SQR3 |= channel;
+
+	ADCx->CR2 |= ADC_CR2_ADON; // Enable ADC
+}
+
+void ADC_StartConversion(ADC_TypeDef *ADCx) {
+	ADCx->CR2 |= ADC_CR2_SWSTART; // Start ADC conversion
+}
+
+uint16_t ADC_ReadValue() {
+	return ADC_value;
+}
+
+void ADC_IRQHandler() {
+	//Check EOC of each ADC
+
+	if(ADC1->SR & 0b10) {
+		ADC_value = ADC1->DR;
+	}
+	if(ADC2->SR & 0b10) {
+		ADC_value = ADC2->DR;
+	}
+	if(ADC3->SR & 0b10) {
+		ADC_value = ADC3->DR;
+	}
+}

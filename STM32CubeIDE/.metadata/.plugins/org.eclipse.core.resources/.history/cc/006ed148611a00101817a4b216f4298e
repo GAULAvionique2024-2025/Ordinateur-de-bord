@@ -1,0 +1,9 @@
+#ifndef INC_GAUL_DRIVERS_COMMUNICATIONS_SPI_DRIVER_H_
+#define INC_GAUL_DRIVERS_COMMUNICATIONS_SPI_DRIVER_H_
+
+#include "stm32f4xx_hal.h"
+
+void SPI_Init(void);
+void SPI_TransmitReceive(SPIuint8_t *data, uint16_t size);
+
+#endif /* INC_GAUL_DRIVERS_COMMUNICATIONS_SPI_DRIVER_H_ */

@@ -1,0 +1,27 @@
+#include <GAUL_Drivers/Low_Level/ADC_driver.h>
+#include <GAUL_Drivers/Low_Level/GPIO_driver.h>
+
+
+void ADC_InitPeriph(ADC_TypeDef *ADCx, unsigned short channel) {
+	RCC->APB2ENR |= RCC_APB2ENR_ADC1EN;		// Enable clock
+	ADCx->CR1 |= ADC_CR1_EOCIE; 			// Interruption EOC
+	ADCx->CR1 |= ADC_CR1_RES; 				// Set resolution (16bits)
+	ADCx->CR2 &= ~ADC_CR2_ALIGN; 			// Set alignment
+	ADCx->CR2 &= ~ADC_CR2_CONT; 			// Set continuous conversion
+	ADCx->SQR3 |= channel;
+	ADCx->CR2 |= ADC_CR2_ADON; // Enable ADC
+}
+
+void ADC_StartConversion(ADC_TypeDef *ADCx) {
+	ADCx->CR2 |= ADC_CR2_SWSTART; // Start ADC conversion
+}
+
+//TODO: add interrupt / timeout
+uint16_t ADC_ReadValue(ADC_TypeDef *ADCx) {
+	/*
+	if(ADCx->SR & ADC_SR_EOC) {
+
+	}
+	*/
+	return ADCx->DR;
+}

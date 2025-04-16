@@ -1,0 +1,47 @@
+#include <GAUL_Drivers/Communications/UART_driver.h>
+
+
+void USART_Init() {
+
+	RCC->APB1ENR |= RCC_APB1ENR_UART5EN;
+	UART5->BRR |= (0x9 << 4); // Baudrate divider
+	UART5->BRR |= 0xC; // Baudrate mantisse
+	UART5->CR3 &= ~USART_CR3_DMAR; // DMA Disable
+	UART5->CR3 &= ~USART_CR3_DMAT;
+	UART5->CR1 |= USART_CR1_M; // 9 bits transmission (8 pour data et 1 pour parit�)
+	UART5->CR1 &= ~USART_CR1_PS; // Even paraity
+	UART5->CR1 |= USART_CR1_PCE; // Enable parity
+	UART5->CR1 |= USART_CR1_RXNEIE; // RX interrupt
+	UART5->CR2 &= ~(USART_CR2_STOP_0 | USART_CR2_STOP_1); // 1 stop bit
+	NVIC->ISER[1] |= (1 << 21); // Interruption NVIC
+	UART5->CR1 |= USART_CR1_RE; // RX Enable
+	UART5->CR1 |= USART_CR1_TE; // TX Enable
+	UART5->CR1 |= USART_CR1_UE;
+}
+
+uint8_t USART_TX(USART_TypeDef *USARTx, uint8_t *data, uint16_t size) {
+
+	while(size--) {
+		//uint8_t t_data = *data;
+		UART5->DR = *data++;
+
+		// If not transmit buffer is empty or If not transmit complete
+		while (!(UART5->SR & USART_SR_TC)) {}
+	}
+
+	return 1; // transfert complete
+}
+
+uint8_t USART_RX(USART_TypeDef *USARTx, uint8_t *data) {
+
+	if(read_head != write_head) {
+		*character = fifo[read_head];
+		read_head ++;
+
+		if(read_head > 1023) {
+			read_head = 0;
+		}
+		return 1;
+	}
+	return 0;
+}

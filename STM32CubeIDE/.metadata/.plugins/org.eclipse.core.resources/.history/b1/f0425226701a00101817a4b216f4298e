@@ -1,0 +1,23 @@
+#include "GAUL_Drivers/Low_Level/PWM_driver.h"
+
+void PWM_InitPeriph(TIM_TypeDef *TIMx, uint16_t duty) {
+
+    RCC->APB1ENR |= RCC_APB1ENR_TIM2EN;						// Activer horloge Timer 2
+    TIM2->PSC = 2;                       					// Prescaler pour une fr�quence de base
+    TIM2->ARR = 499;                        				// Auto-reload pour d�finir la p�riode du PWM
+    TIM2->CCMR1 |= TIM_CCMR1_OC1M_1 | TIM_CCMR1_OC1M_2;     // Mode PWM 1 sur le canal 1
+    TIM2->CCER |= TIM_CCER_CC1E;          					// Activer la sortie sur le canal 1
+    TIM2->CR1 |= TIM_CR1_CEN;             					// D�marrer le Timer 2
+}
+
+void PWM_SetDutyCycle(TIM_TypeDef *TIMx, uint16_t duty) {
+
+	TIM->CCR1 = (duty * (TIM->ARR + 1)) / 100; // Calcul du CCR pour ajuster le duty cycle
+}
+
+void PWM_SetFrequency(TIM_TypeDef *TIMx, uint32_t freq) {
+	//TODO: check SystemCoreClock | oscillator
+    uint32_t timer_clock = SystemCoreClock / 2;  // Fr�quence du Timer (APB1)
+    uint32_t newArr = (timer_clock / (freq * (TIM->PSC + 1))) - 1;  // Calcul du ARR
+    TIM->ARR = newArr;
+}

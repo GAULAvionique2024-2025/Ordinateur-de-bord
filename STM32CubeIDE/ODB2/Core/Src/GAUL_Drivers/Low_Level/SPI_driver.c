@@ -1,0 +1,51 @@
+#include <GAUL_Drivers/Low_Level/GPIO_driver.h>
+#include <GAUL_Drivers/Low_Level/SPI_driver.h>
+
+
+void SPI_Enable(SPI_TypeDef *SPIx) {
+	// CS -> OUT
+    if (SPIx == SPI1) {
+        RCC->APB2ENR |= RCC_APB2ENR_SPI1EN;
+        GPIO_InitPeriph(GPIOA, 5, ALT, AF5);		// CLK (A5)
+        GPIO_InitPeriph(GPIOA, 6, ALT, AF5);		// MISO (A6)
+        GPIO_InitPeriph(GPIOA, 7, ALT, AF5);		// MOSI (A7)
+    } else if (SPIx == SPI2) {
+        RCC->APB1ENR |= RCC_APB1ENR_SPI2EN;
+        GPIO_InitPeriph(GPIOA, 5, ALT, AF5);		// CLK (B10)
+        GPIO_InitPeriph(GPIOA, 6, ALT, AF5);		// MISO (B15)
+        GPIO_InitPeriph(GPIOA, 7, ALT, AF5);		// MOSI (C2)
+    } else if (SPIx == SPI3) {
+    	RCC->APB1ENR |= RCC_APB1ENR_SPI3EN;
+        GPIO_InitPeriph(GPIOA, 5, ALT, AF7);		// CLK (B12)
+        GPIO_InitPeriph(GPIOA, 6, ALT, AF6);		// MISO (C11)
+        GPIO_InitPeriph(GPIOA, 7, ALT, AF6);		// MOSI (C12)
+    } else if (SPIx == SPI4) {
+        RCC->APB2ENR |= RCC_APB2ENR_SPI4EN;
+        GPIO_InitPeriph(GPIOA, 5, ALT, AF5);		// CLK (E12)
+        GPIO_InitPeriph(GPIOA, 6, ALT, AF5);		// MISO (E13)
+        GPIO_InitPeriph(GPIOA, 7, ALT, AF5);		// MOSI (E14)
+    } else if (SPIx == SPI5) {
+        RCC->APB2ENR |= RCC_APB2ENR_SPI5EN;
+        GPIO_InitPeriph(GPIOA, 5, ALT, AF6);		// CLK (B0)
+        GPIO_InitPeriph(GPIOA, 6, ALT, AF6);		// MISO (E5)
+        GPIO_InitPeriph(GPIOA, 7, ALT, AF6);		// MOSI (B8)
+    } else return;
+}
+
+void SPI_InitPeriph(SPI_TypeDef *SPIx, unsigned short baudrate) {
+	if(SPIx == SPI2 || SPIx == SPI3) return; // Protection
+	SPI_Enable(SPIx);
+	SPIx->CR1 |= SPI_CR1_MSTR;	// Master mode
+	SPIx->CR1 &= ~SPI_CR1_BR; 	// Clear baudrate
+	SPIx->CR1 |= baudrate; 		// Baudrate
+	SPIx->CR1 |= SPI_CR1_SSI | SPI_CR1_SSM;
+	SPIx->CR1 |= SPI_CR1_SPE;	// SPI Enable
+}
+
+//TODO: add interrupt + circular buffer
+void SPI_Transmit(uint8_t* data, size_t size) {
+	while(size--) {
+		SPI5->DR = *data++;
+		while(!(SPI5->SR & SPI_SR_TXE)) {}
+	}
+}

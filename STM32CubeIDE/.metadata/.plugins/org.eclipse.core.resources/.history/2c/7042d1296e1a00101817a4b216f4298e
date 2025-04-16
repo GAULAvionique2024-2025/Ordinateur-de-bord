@@ -1,0 +1,60 @@
+/*
+ * delai.c
+ *
+ *  Created on: 10 sept. 2024
+ *      Author: Samuel Gagnon et Etienne Bernier
+ */
+
+#include "delai.h"
+
+static unsigned int systick_old_ms = 0;
+static unsigned int systick_current_ms = 0;
+
+
+/*
+Description:
+	This function initialize the SYSTICK's clock with parameters push into the function.
+Input:
+    GPIO_TypeDef *SYSTICK: a pointer to an struct of SYSTICK's clock
+    unsigned short clk_type: a macro define the SysTick's clock use is external or internal
+    unsigned short frequency: a unsigned int to set SysTick's clock frequency (Hz)
+Output:
+	There is no return value
+*/
+void SysTick_Init(unsigned short clk_type, unsigned int frequency) {
+
+	if(clk_type == SYSCLK_EXTERN) {
+		SysTick->CTRL &= ~SysTick_CTRL_CLKSOURCE_Msk;	// CLKSOURCE
+		SysTick->LOAD = SYSCLK_FREQUENCY_EXTERN / frequency;
+	} else if(clk_type == SYSCLK_INTERN) {
+		SysTick->CTRL |= SysTick_CTRL_CLKSOURCE_Msk;	// CLKSOURCE
+		SysTick->LOAD = SYSCLK_FREQUENCY_INTERN / frequency;
+	} else return;
+
+	SysTick->VAL = 0; // Reset SysTick's Counter
+	SysTick->CTRL |= SysTick_CTRL_TICKINT_Msk;	// INT
+	SysTick->CTRL |= SysTick_CTRL_ENABLE_Msk;	// Start SysTick CLK
+}
+
+unsigned int SysTick_ReadCurrentMillis() {
+	return systick_current_ms;
+}
+
+void SysTick_Blocking_Delay(unsigned int p_delay) {
+	systick_old_ms = systick_current_ms;
+	while(systick_current_ms - systick_old_ms <= p_delay) {}
+}
+
+/*
+Description:
+	This function handle SysTick interruption and what to do if interrupt is detected by the Cortex-M4.
+Input:
+    There is no input value
+Output:
+	There is no return value
+*/
+void SysTick_Handler(void)
+{
+/*  TimingDelay_Increment(); */
+	systick_current_ms ++;
+}

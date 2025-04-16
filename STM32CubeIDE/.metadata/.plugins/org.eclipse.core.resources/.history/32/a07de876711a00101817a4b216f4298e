@@ -1,0 +1,45 @@
+#include "GAUL_Drivers/Low_Level/PWM_driver.h"
+
+void TIM_Enable(TIM_TypeDef *TIMx) {
+	if (TIMx == TIM1) {
+		RCC->APB2ENR |= RCC_APB2ENR_TIM1EN;
+	} else if (TIMx == TIM2) {
+		RCC->APB1ENR |= RCC_APB1ENR_TIM2EN;
+	} else if (TIMx == TIM3) {
+		RCC->APB1ENR |= RCC_APB1ENR_TIM3EN;
+	} else if (TIMx == TIM4) {
+		RCC->APB1ENR |= RCC_APB1ENR_TIM4EN;
+	} else if (TIMx == TIM5) {
+		RCC->APB1ENR |= RCC_APB1ENR_TIM5EN;
+	} else if (TIMx == TIM9) {
+		RCC->APB2ENR |= RCC_APB2ENR_TIM9EN;
+	} else if (TIMx == TIM10) {
+		RCC->APB2ENR |= RCC_APB2ENR_TIM10EN;
+	} else if (TIMx == TIM11) {
+		RCC->APB2ENR |= RCC_APB2ENR_TIM11EN;
+	} else {
+		return; // Timer non supporté ou non reconnu
+	}
+}
+
+void PWM_InitPeriph(TIM_TypeDef *TIMx, uint16_t prescaler, uint16_t arr) {
+
+    RCC->APB1ENR |= RCC_APB1ENR_TIM2EN;						// Activer horloge Timer 2
+    TIMx->PSC = 2;                       					// Prescaler pour une fr�quence de base
+    TIMx->ARR = 499;                        				// Auto-reload pour d�finir la p�riode du PWM
+    TIMx->CCMR1 |= TIM_CCMR1_OC1M_1 | TIM_CCMR1_OC1M_2;     // Mode PWM 1 sur le canal 1
+    TIMx->CCER |= TIM_CCER_CC1E;          					// Activer la sortie sur le canal 1
+    TIMx->CR1 |= TIM_CR1_CEN;             					// D�marrer le Timer 2
+}
+
+void PWM_SetDutyCycle(TIM_TypeDef *TIMx, uint16_t duty) {
+
+	TIMx->CCR1 = (duty * (TIMx->ARR + 1)) / 100; // CCR (duty cycle)
+}
+
+void PWM_SetFrequency(TIM_TypeDef *TIMx, uint32_t freq) {
+	//TODO: check SystemCoreClock | oscillator
+    uint32_t timeClock = SystemCoreClock / 2;  // Fr�quence du Timer (APB1)
+    uint32_t newArr = (timer_clock / (freq * (TIMx->PSC + 1))) - 1;  // ARR
+    TIMx->ARR = newArr;
+}

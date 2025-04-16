@@ -5,13 +5,28 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../Core/Src/GAUL_Drivers/Communications/GPIO_driver.c 
+../Core/Src/GAUL_Drivers/Communications/ADC_driver.c \
+../Core/Src/GAUL_Drivers/Communications/GPIO_driver.c \
+../Core/Src/GAUL_Drivers/Communications/SPI_driver.c \
+../Core/Src/GAUL_Drivers/Communications/UART_driver.c \
+../Core/Src/GAUL_Drivers/Communications/delai.c \
+../Core/Src/GAUL_Drivers/Communications/pwm.c 
 
 OBJS += \
-./Core/Src/GAUL_Drivers/Communications/GPIO_driver.o 
+./Core/Src/GAUL_Drivers/Communications/ADC_driver.o \
+./Core/Src/GAUL_Drivers/Communications/GPIO_driver.o \
+./Core/Src/GAUL_Drivers/Communications/SPI_driver.o \
+./Core/Src/GAUL_Drivers/Communications/UART_driver.o \
+./Core/Src/GAUL_Drivers/Communications/delai.o \
+./Core/Src/GAUL_Drivers/Communications/pwm.o 
 
 C_DEPS += \
-./Core/Src/GAUL_Drivers/Communications/GPIO_driver.d 
+./Core/Src/GAUL_Drivers/Communications/ADC_driver.d \
+./Core/Src/GAUL_Drivers/Communications/GPIO_driver.d \
+./Core/Src/GAUL_Drivers/Communications/SPI_driver.d \
+./Core/Src/GAUL_Drivers/Communications/UART_driver.d \
+./Core/Src/GAUL_Drivers/Communications/delai.d \
+./Core/Src/GAUL_Drivers/Communications/pwm.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
@@ -21,7 +36,7 @@ Core/Src/GAUL_Drivers/Communications/%.o Core/Src/GAUL_Drivers/Communications/%.
 clean: clean-Core-2f-Src-2f-GAUL_Drivers-2f-Communications
 
 clean-Core-2f-Src-2f-GAUL_Drivers-2f-Communications:
-	-$(RM) ./Core/Src/GAUL_Drivers/Communications/GPIO_driver.cyclo ./Core/Src/GAUL_Drivers/Communications/GPIO_driver.d ./Core/Src/GAUL_Drivers/Communications/GPIO_driver.o ./Core/Src/GAUL_Drivers/Communications/GPIO_driver.su
+	-$(RM) ./Core/Src/GAUL_Drivers/Communications/ADC_driver.cyclo ./Core/Src/GAUL_Drivers/Communications/ADC_driver.d ./Core/Src/GAUL_Drivers/Communications/ADC_driver.o ./Core/Src/GAUL_Drivers/Communications/ADC_driver.su ./Core/Src/GAUL_Drivers/Communications/GPIO_driver.cyclo ./Core/Src/GAUL_Drivers/Communications/GPIO_driver.d ./Core/Src/GAUL_Drivers/Communications/GPIO_driver.o ./Core/Src/GAUL_Drivers/Communications/GPIO_driver.su ./Core/Src/GAUL_Drivers/Communications/SPI_driver.cyclo ./Core/Src/GAUL_Drivers/Communications/SPI_driver.d ./Core/Src/GAUL_Drivers/Communications/SPI_driver.o ./Core/Src/GAUL_Drivers/Communications/SPI_driver.su ./Core/Src/GAUL_Drivers/Communications/UART_driver.cyclo ./Core/Src/GAUL_Drivers/Communications/UART_driver.d ./Core/Src/GAUL_Drivers/Communications/UART_driver.o ./Core/Src/GAUL_Drivers/Communications/UART_driver.su ./Core/Src/GAUL_Drivers/Communications/delai.cyclo ./Core/Src/GAUL_Drivers/Communications/delai.d ./Core/Src/GAUL_Drivers/Communications/delai.o ./Core/Src/GAUL_Drivers/Communications/delai.su ./Core/Src/GAUL_Drivers/Communications/pwm.cyclo ./Core/Src/GAUL_Drivers/Communications/pwm.d ./Core/Src/GAUL_Drivers/Communications/pwm.o ./Core/Src/GAUL_Drivers/Communications/pwm.su
 
 .PHONY: clean-Core-2f-Src-2f-GAUL_Drivers-2f-Communications
 
