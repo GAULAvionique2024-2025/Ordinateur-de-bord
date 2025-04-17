@@ -22,7 +22,7 @@ uint16_t ADC_ReadValue(ADC_TypeDef *ADCx) {
     while (!(ADCx->SR & ADC_SR_EOC) && timeout--) {}
 
     if (timeout == 0) {
-        return 0xFFFF;
+        return 0xFFFF; // Conventionnellement utilisée comme erreur
     }
 
     return (uint16_t)(ADCx->DR);

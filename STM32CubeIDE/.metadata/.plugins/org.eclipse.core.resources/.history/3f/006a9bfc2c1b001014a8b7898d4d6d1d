@@ -19,11 +19,15 @@ void ADC_StartConversion(ADC_TypeDef *ADCx) {
 //TODO: add interrupt / timeout
 uint16_t ADC_ReadValue(ADC_TypeDef *ADCx) {
     uint32_t timeout = ADC_TIMEOUT;
-    while (!(ADCx->SR & ADC_SR_EOC) && timeout--) {}
-
-    if (timeout == 0) {
-        return 0xFFFF;
+    while (!(ADCx->SR & ADC_SR_EOC) && timeout--) {
+    	return -1;
     }
 
+    if (timeout == 0) {
+        // Timeout atteint — retourner une valeur spéciale ou gérer une erreur
+        return 0xFFFF; // Conventionnellement utilisée comme erreur
+    }
+
+    // Lecture et retour de la valeur convertie
     return (uint16_t)(ADCx->DR);
 }
