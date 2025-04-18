@@ -38,8 +38,6 @@ void SPI_Enable(SPI_TypeDef *SPIx) {
         GPIO_InitPeriph(GPIOB, 0, ALT, AF6);		// CLK (B0)
         GPIO_InitPeriph(GPIOE, 5, ALT, AF6);		// MISO (E5)
         GPIO_InitPeriph(GPIOB, 8, ALT, AF6);		// MOSI (B8)
-
-        GPIO_WritePin(GPIOB, 1, HIGH);
     } else return;
 }
 

@@ -116,14 +116,14 @@ Discarded input sections
  .text.ADC_StartConversion
                 0x00000000       0x20 ./Core/Src/GAUL_Drivers/Low_Level/ADC_driver.o
  .text.ADC_ReadValue
-                0x00000000       0x1a ./Core/Src/GAUL_Drivers/Low_Level/ADC_driver.o
- .debug_info    0x00000000      0x3df ./Core/Src/GAUL_Drivers/Low_Level/ADC_driver.o
- .debug_abbrev  0x00000000      0x139 ./Core/Src/GAUL_Drivers/Low_Level/ADC_driver.o
+                0x00000000       0x44 ./Core/Src/GAUL_Drivers/Low_Level/ADC_driver.o
+ .debug_info    0x00000000      0x3ee ./Core/Src/GAUL_Drivers/Low_Level/ADC_driver.o
+ .debug_abbrev  0x00000000      0x14a ./Core/Src/GAUL_Drivers/Low_Level/ADC_driver.o
  .debug_aranges
                 0x00000000       0x30 ./Core/Src/GAUL_Drivers/Low_Level/ADC_driver.o
  .debug_rnglists
                 0x00000000       0x1f ./Core/Src/GAUL_Drivers/Low_Level/ADC_driver.o
- .debug_macro   0x00000000      0x24f ./Core/Src/GAUL_Drivers/Low_Level/ADC_driver.o
+ .debug_macro   0x00000000      0x255 ./Core/Src/GAUL_Drivers/Low_Level/ADC_driver.o
  .debug_macro   0x00000000      0xad8 ./Core/Src/GAUL_Drivers/Low_Level/ADC_driver.o
  .debug_macro   0x00000000       0x2e ./Core/Src/GAUL_Drivers/Low_Level/ADC_driver.o
  .debug_macro   0x00000000       0x28 ./Core/Src/GAUL_Drivers/Low_Level/ADC_driver.o
@@ -173,8 +173,8 @@ Discarded input sections
  .debug_macro   0x00000000      0x149 ./Core/Src/GAUL_Drivers/Low_Level/ADC_driver.o
  .debug_macro   0x00000000       0xb0 ./Core/Src/GAUL_Drivers/Low_Level/ADC_driver.o
  .debug_macro   0x00000000       0x94 ./Core/Src/GAUL_Drivers/Low_Level/ADC_driver.o
- .debug_line    0x00000000      0x8b8 ./Core/Src/GAUL_Drivers/Low_Level/ADC_driver.o
- .debug_str     0x00000000    0xca7de ./Core/Src/GAUL_Drivers/Low_Level/ADC_driver.o
+ .debug_line    0x00000000      0x8de ./Core/Src/GAUL_Drivers/Low_Level/ADC_driver.o
+ .debug_str     0x00000000    0xca7f3 ./Core/Src/GAUL_Drivers/Low_Level/ADC_driver.o
  .comment       0x00000000       0x44 ./Core/Src/GAUL_Drivers/Low_Level/ADC_driver.o
  .debug_frame   0x00000000       0x88 ./Core/Src/GAUL_Drivers/Low_Level/ADC_driver.o
  .ARM.attributes
@@ -473,15 +473,15 @@ Discarded input sections
  .data          0x00000000        0x0 ./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o
  .bss           0x00000000        0x0 ./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o
  .text.SPI_Enable
-                0x00000000      0x150 ./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o
+                0x00000000      0x1b4 ./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o
  .text.SPI_InitPeriph
                 0x00000000       0x70 ./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o
  .text.SPI_TX   0x00000000       0x82 ./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o
  .text.SPI_RX   0x00000000       0x84 ./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o
  .text.SPI_TransmitReceive
-                0x00000000       0xbc ./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o
- .debug_info    0x00000000      0x56a ./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o
- .debug_abbrev  0x00000000      0x187 ./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o
+                0x00000000       0xc8 ./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o
+ .debug_info    0x00000000      0x58f ./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o
+ .debug_abbrev  0x00000000      0x189 ./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o
  .debug_aranges
                 0x00000000       0x40 ./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o
  .debug_rnglists
@@ -537,8 +537,8 @@ Discarded input sections
  .debug_macro   0x00000000       0xb0 ./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o
  .debug_macro   0x00000000       0x94 ./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o
  .debug_macro   0x00000000       0x40 ./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o
- .debug_line    0x00000000      0xa3d ./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o
- .debug_str     0x00000000    0xca92f ./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o
+ .debug_line    0x00000000      0xa39 ./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o
+ .debug_str     0x00000000    0xca945 ./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o
  .comment       0x00000000       0x44 ./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o
  .debug_frame   0x00000000       0xcc ./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o
  .ARM.attributes

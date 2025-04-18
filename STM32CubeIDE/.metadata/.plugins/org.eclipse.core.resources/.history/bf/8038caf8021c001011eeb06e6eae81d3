@@ -34,12 +34,10 @@ void SPI_Enable(SPI_TypeDef *SPIx) {
         GPIO_WritePin(GPIOE, 4, HIGH);
     } else if (SPIx == SPI5) {
         RCC->APB2ENR |= RCC_APB2ENR_SPI5EN;
-        GPIO_InitPeriph(GPIOB, 1, OUT, O_PP);		// CS MEM (B1)
+        GPIO_InitPeriph(GPIOE, 4, OUT, O_PP);		// CS MEM (B1)
         GPIO_InitPeriph(GPIOB, 0, ALT, AF6);		// CLK (B0)
         GPIO_InitPeriph(GPIOE, 5, ALT, AF6);		// MISO (E5)
         GPIO_InitPeriph(GPIOB, 8, ALT, AF6);		// MOSI (B8)
-
-        GPIO_WritePin(GPIOB, 1, HIGH);
     } else return;
 }
 

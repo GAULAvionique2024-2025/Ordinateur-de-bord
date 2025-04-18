@@ -5,8 +5,6 @@
 #include "stm32f4xx.h"
 
 
-#define TIMEOUT 1000  // Max iterations (Not in ms !!!)
-
 void ADC_InitPeriph(ADC_TypeDef *ADCx, unsigned short channel);
 void ADC_StartConversion(ADC_TypeDef *ADCx);
 uint16_t ADC_ReadValue(ADC_TypeDef *ADCx);

@@ -26,20 +26,15 @@ void SPI_Enable(SPI_TypeDef *SPIx) {
         GPIO_InitPeriph(GPIOC, 12, ALT, AF6);		// MOSI (C12)
     } else if (SPIx == SPI4) {
         RCC->APB2ENR |= RCC_APB2ENR_SPI4EN;
-        GPIO_InitPeriph(GPIOE, 4, OUT, O_PP);		// CS BARO (E4)
+        GPIO_InitPeriph(GPIOE, 2, OUT, O_PP);		// CS
         GPIO_InitPeriph(GPIOE, 12, ALT, AF5);		// CLK (E12)
         GPIO_InitPeriph(GPIOE, 13, ALT, AF5);		// MISO (E13)
         GPIO_InitPeriph(GPIOE, 14, ALT, AF5);		// MOSI (E14)
-
-        GPIO_WritePin(GPIOE, 4, HIGH);
     } else if (SPIx == SPI5) {
         RCC->APB2ENR |= RCC_APB2ENR_SPI5EN;
-        GPIO_InitPeriph(GPIOB, 1, OUT, O_PP);		// CS MEM (B1)
         GPIO_InitPeriph(GPIOB, 0, ALT, AF6);		// CLK (B0)
         GPIO_InitPeriph(GPIOE, 5, ALT, AF6);		// MISO (E5)
         GPIO_InitPeriph(GPIOB, 8, ALT, AF6);		// MOSI (B8)
-
-        GPIO_WritePin(GPIOB, 1, HIGH);
     } else return;
 }
 

@@ -16,13 +16,13 @@ void ADC_StartConversion(ADC_TypeDef *ADCx) {
 	ADCx->CR2 |= ADC_CR2_SWSTART; // Start ADC conversion
 }
 
-//TODO: add interrupt
+//TODO: add interrupt / timeout
 uint16_t ADC_ReadValue(ADC_TypeDef *ADCx) {
-    uint32_t timeout = TIMEOUT;
-    while (!(ADCx->SR & ADC_SR_EOC) && timeout--) {
-    	if (timeout == 0) {
-			return 0xFFFF;
-		}
+    uint32_t timeout = ADC_TIMEOUT;
+    while (!(ADCx->SR & ADC_SR_EOC) && timeout--) {}
+
+    if (timeout == 0) {
+        return 0xFFFF;
     }
 
     return (uint16_t)(ADCx->DR);
