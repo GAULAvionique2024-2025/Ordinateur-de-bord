@@ -3,6 +3,7 @@
 "./Core/Src/GAUL_Drivers/Low_Level/PWM_driver.o"
 "./Core/Src/GAUL_Drivers/Low_Level/SPI_driver.o"
 "./Core/Src/GAUL_Drivers/Low_Level/UART_driver.o"
+"./Core/Src/GAUL_Drivers/util.o"
 "./Core/Src/main.o"
 "./Core/Src/stm32f4xx_hal_msp.o"
 "./Core/Src/stm32f4xx_it.o"

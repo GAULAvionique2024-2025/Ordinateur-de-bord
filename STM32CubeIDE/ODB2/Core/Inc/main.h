@@ -31,7 +31,7 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "GAUL_Drivers/structs.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
