@@ -125,7 +125,7 @@ int main(void)
   {
     /* USER CODE END WHILE */
 	  printt("Hello World");
-	  HAL_Delay(1000);
+	  HAL_Delay(200);
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
