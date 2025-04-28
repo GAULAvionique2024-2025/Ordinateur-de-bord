@@ -22,7 +22,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "GAUL_Drivers/util.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -54,7 +54,7 @@ UART_HandleTypeDef huart2;
 UART_HandleTypeDef huart6;
 
 /* USER CODE BEGIN PV */
-
+RunTimer run_timer;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -116,7 +116,7 @@ int main(void)
   MX_USART6_UART_Init();
   MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
-
+  RunTimerInit(&run_timer);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -124,7 +124,8 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-
+	  printt("Hello World");
+	  HAL_Delay(200);
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
