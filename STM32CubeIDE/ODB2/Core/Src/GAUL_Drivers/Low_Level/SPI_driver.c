@@ -42,13 +42,12 @@ void SPI_Enable(SPI_TypeDef *SPIx) {
     } else return;
 }
 
-void SPI_InitPeriph(SPI_TypeDef *SPIx, unsigned short baudrate) {
+void SPI_InitPeriph(SPI_TypeDef *SPIx) {
 	if(SPIx == SPI2 || SPIx == SPI3) return; // Protection
 	SPI_Enable(SPIx);
 	SPIx->CR1 |= SPI_CR1_MSTR;	// Master mode
-	SPIx->CR1 &= ~SPI_CR1_BR; 	// Clear baudrate
-	SPIx->CR1 |= baudrate; 		// Baudrate
-	SPIx->CR1 |= SPI_CR1_SSI | SPI_CR1_SSM;
+	SPIx->CR1 |= SPI_CR1_SSI;
+	SPIx->CR1 |= SPI_CR1_SSI;
 	SPIx->CR1 |= SPI_CR1_SPE;	// SPI Enable
 }
 

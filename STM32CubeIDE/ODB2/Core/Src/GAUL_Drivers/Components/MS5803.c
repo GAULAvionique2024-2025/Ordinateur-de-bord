@@ -10,18 +10,18 @@ static void CS_Deselect(MS5803 *dev) {
     GPIO_WritePin(dev->cs_port, dev->cs_pin, HIGH);
 }
 
-static void MS5803_SendCommand(MS5803 *dev, uint8_t MS5803) {
+static void MS5803_SendCommand(MS5803 *dev, uint8_t cmd) {
     CS_Select(dev);
-    SPI_TX(dev->SPIx, &MS5803, 1);
+    SPI_TX(dev->SPIx, &cmd, 1);
     CS_Deselect(dev);
 }
 
 static uint32_t MS5803_ReadADC(MS5803 *dev) {
-    uint8_t MS5803 = MS5803_ADC_READ;
+    uint8_t cmd = MS5803_ADC_READ;
     uint8_t rx_buf[3] = {0};
 
     CS_Select(dev);
-    SPI_TX(dev->SPIx, &MS5803, 1);
+    SPI_TX(dev->SPIx, &cmd, 1);
     SPI_RX(dev->SPIx, rx_buf, 3);
     CS_Deselect(dev);
 
@@ -29,11 +29,11 @@ static uint32_t MS5803_ReadADC(MS5803 *dev) {
 }
 
 static uint16_t MS5803_ReadPROM(MS5803 *dev, uint8_t coef) {
-    uint8_t MS5803 = MS5803_PROM_READ + (coef * 2);
+    uint8_t cmd = MS5803_PROM_READ + (coef * 2);
     uint8_t rx_buf[2] = {0};
 
     CS_Select(dev);
-    SPI_TX(dev->SPIx, &MS5803, 1);
+    SPI_TX(dev->SPIx, &cmd, 1);
     SPI_RX(dev->SPIx, rx_buf, 2);
     CS_Deselect(dev);
 
@@ -48,9 +48,9 @@ int8_t MS5803_Init(MS5803 *dev, float pressureRef) {
         dev->calibration_values[i] = MS5803_ReadPROM(dev, i);
     }
     if(pressureRef == 0) {
+    	MS5803_ReadTemperaturePressure(dev);
     	dev->pressure_ref = dev->pressure_Pa;
     } else {
-    	MS5803_ReadTemperaturePressure(dev);
     	dev->pressure_ref = pressureRef;
     }
     if(dev->pressure_ref == 0) return -1;
@@ -71,12 +71,12 @@ void MS5803_ReadTemperaturePressure(MS5803 *dev) {
 
     // Convert D1 (Pression)
     MS5803_SendCommand(dev, MS5803_CONVERT_D1);
-    HAL_Delay(3);
+    HAL_Delay(5);
     D1 = MS5803_ReadADC(dev);
 
     // Convert D2 (temp)
     MS5803_SendCommand(dev, MS5803_CONVERT_D2);
-    HAL_Delay(3);
+    HAL_Delay(5);
     D2 = MS5803_ReadADC(dev);
 
     dTReference = (int32_t)D2 - ((int32_t)dev->calibration_values[5] << 8);
