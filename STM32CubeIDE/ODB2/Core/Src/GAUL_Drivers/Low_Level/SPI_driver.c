@@ -3,7 +3,6 @@
 
 
 void SPI_Enable(SPI_TypeDef *SPIx) {
-	// CS -> OUT
     if (SPIx == SPI1) {
         RCC->APB2ENR |= RCC_APB2ENR_SPI1EN;
         GPIO_InitPeriph(GPIOA, 2, OUT, O_PP);		// CS RFM (A2)

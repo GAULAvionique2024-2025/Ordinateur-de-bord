@@ -22,6 +22,7 @@ C_DEPS :=
 
 # Every subdirectory with source files must be described here
 SUBDIRS := \
+Core/Src/GAUL_Drivers/Components \
 Core/Src/GAUL_Drivers/Low_Level \
 Core/Src \
 Core/Startup \

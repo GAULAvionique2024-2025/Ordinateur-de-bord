@@ -1,0 +1,8 @@
+../Core/Src/GAUL_Drivers/Components/MS5803.c:5:13:CS_Select	16	static
+../Core/Src/GAUL_Drivers/Components/MS5803.c:9:13:CS_Deselect	16	static
+../Core/Src/GAUL_Drivers/Components/MS5803.c:13:13:MS5803_SendCommand	16	static
+../Core/Src/GAUL_Drivers/Components/MS5803.c:19:17:MS5803_ReadADC	24	static
+../Core/Src/GAUL_Drivers/Components/MS5803.c:31:17:MS5803_ReadPROM	24	static
+../Core/Src/GAUL_Drivers/Components/MS5803.c:44:8:MS5803_Init	32	static
+../Core/Src/GAUL_Drivers/Components/MS5803.c:64:6:MS5803_ReadTemperaturePressure	280	static
+../Core/Src/GAUL_Drivers/Components/MS5803.c:116:7:MS5803_PressureToAltitude	16	static
