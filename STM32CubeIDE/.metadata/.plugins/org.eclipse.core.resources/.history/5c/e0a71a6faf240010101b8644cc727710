@@ -11,7 +11,7 @@ static void CS_Deselect(MS5803 *dev) {
 
 static void MS5803_SendCommand(MS5803 *dev, uint8_t cmd) {
     CS_Select(dev);
-    SPI_MOSI(dev->SPIx, &cmd, 1);
+    SPI_TX(dev->SPIx, &cmd, 1);
     CS_Deselect(dev);
 }
 

@@ -54,7 +54,7 @@ void SPI_InitPeriph(SPI_TypeDef *SPIx, unsigned short baudrate) {
 	SPIx->CR1 |= SPI_CR1_SPE;						// SPI Enable
 }
 
-int8_t SPI_MOSI(SPI_TypeDef *SPIx, uint8_t *data, size_t size) {
+int8_t SPI_TX(SPI_TypeDef *SPIx, uint8_t *data, size_t size) {
     uint32_t timeout = TIMEOUT;
     while (size--) {
         while (!(SPIx->SR & SPI_SR_TXE)) {
@@ -75,7 +75,7 @@ int8_t SPI_MOSI(SPI_TypeDef *SPIx, uint8_t *data, size_t size) {
     return 0;
 }
 
-int8_t SPI_MISO(SPI_TypeDef *SPIx, uint8_t *data, size_t size) {
+int8_t SPI_RX(SPI_TypeDef *SPIx, uint8_t *data, size_t size) {
     uint32_t timeout = TIMEOUT;
     while (size--) {
         while (!(SPIx->SR & SPI_SR_TXE)) {
