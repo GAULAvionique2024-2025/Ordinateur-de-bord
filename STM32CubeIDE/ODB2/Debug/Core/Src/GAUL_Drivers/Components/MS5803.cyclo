@@ -1,8 +1,8 @@
-../Core/Src/GAUL_Drivers/Components/MS5803.c:5:13:CS_Select	1
-../Core/Src/GAUL_Drivers/Components/MS5803.c:9:13:CS_Deselect	1
-../Core/Src/GAUL_Drivers/Components/MS5803.c:13:13:MS5803_SendCommand	1
-../Core/Src/GAUL_Drivers/Components/MS5803.c:19:17:MS5803_ReadADC	1
+../Core/Src/GAUL_Drivers/Components/MS5803.c:4:13:CS_Select	1
+../Core/Src/GAUL_Drivers/Components/MS5803.c:8:13:CS_Deselect	1
+../Core/Src/GAUL_Drivers/Components/MS5803.c:12:13:MS5803_SendCommand	1
+../Core/Src/GAUL_Drivers/Components/MS5803.c:18:17:MS5803_ReadADC	1
 ../Core/Src/GAUL_Drivers/Components/MS5803.c:31:17:MS5803_ReadPROM	1
-../Core/Src/GAUL_Drivers/Components/MS5803.c:44:8:MS5803_Init	4
-../Core/Src/GAUL_Drivers/Components/MS5803.c:64:6:MS5803_ReadTemperaturePressure	7
-../Core/Src/GAUL_Drivers/Components/MS5803.c:116:7:MS5803_PressureToAltitude	1
+../Core/Src/GAUL_Drivers/Components/MS5803.c:45:8:MS5803_Init	4
+../Core/Src/GAUL_Drivers/Components/MS5803.c:66:6:MS5803_ReadTemperaturePressure	7
+../Core/Src/GAUL_Drivers/Components/MS5803.c:118:7:MS5803_PressureToAltitude	1

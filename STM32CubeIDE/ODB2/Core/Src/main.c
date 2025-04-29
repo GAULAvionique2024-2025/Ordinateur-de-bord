@@ -114,6 +114,9 @@ int main(void)
   /* USER CODE BEGIN 2 */
   RunTimerInit(&run_timer);
   SPI_InitPeriph(SPI4, SPI_BAUDRATE_DIV64);
+  ms5803.SPIx = SPI4;
+  ms5803.cs_port = GPIOE;
+  ms5803.cs_pin = 4;
   if(MS5803_Init(&ms5803, 0) == -1) printt("MS5803_Init Error");
   /* USER CODE END 2 */
 

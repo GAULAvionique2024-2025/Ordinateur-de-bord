@@ -50,10 +50,16 @@ void PWM_InitPeriph(TIM_TypeDef *TIMx, uint16_t prescaler, uint16_t arr, uint16_
     TIMx->CR1 |= TIM_CR1_CEN;	// Timer start
 }
 
-void PWM_SetDutyCycle(TIM_TypeDef *TIMx, uint16_t duty) {
-	if (duty > 100) duty = 100; 		// Protection
-	uint32_t arr = TIMx->ARR + 1;		// ARR
-	TIMx->CCR1 = (duty * arr) / 100; 	// CCR (duty cycle)
+void PWM_SetDutyCycle(TIM_TypeDef *TIMx, uint16_t canal, uint16_t duty) {
+	if (duty > 100) duty = 100;
+	uint32_t arr = TIMx->ARR + 1;
+	switch (canal) {
+		case 1: TIMx->CCR1 = (duty * arr) / 100; break;
+		case 2: TIMx->CCR2 = (duty * arr) / 100; break;
+		case 3: TIMx->CCR3 = (duty * arr) / 100; break;
+		case 4: TIMx->CCR4 = (duty * arr) / 100; break;
+		default: break; // Protection
+	}
 }
 
 void PWM_SetFrequency(TIM_TypeDef *TIMx, uint32_t freq) {

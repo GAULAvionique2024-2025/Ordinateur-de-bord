@@ -1,6 +1,5 @@
 #include "GAUL_Drivers/Components/MS5803.h"
 
-
 // Utils
 static void CS_Select(MS5803 *dev) {
     GPIO_WritePin(dev->cs_port, dev->cs_pin, LOW);
@@ -21,8 +20,9 @@ static uint32_t MS5803_ReadADC(MS5803 *dev) {
     uint8_t rx_buf[3] = {0};
 
     CS_Select(dev);
-    SPI_TX(dev->SPIx, &cmd, 1);
-    SPI_RX(dev->SPIx, rx_buf, 3);
+    //SPI_TX(dev->SPIx, &cmd, 1);
+    //SPI_RX(dev->SPIx, rx_buf, 3);
+    SPI_TransmitReceive(dev->SPIx, &cmd, rx_buf, 3, TIMEOUT);
     CS_Deselect(dev);
 
     return (rx_buf[0] << 16) | (rx_buf[1] << 8) | rx_buf[2];
@@ -33,8 +33,9 @@ static uint16_t MS5803_ReadPROM(MS5803 *dev, uint8_t coef) {
     uint8_t rx_buf[2] = {0};
 
     CS_Select(dev);
-    SPI_TX(dev->SPIx, &cmd, 1);
-    SPI_RX(dev->SPIx, rx_buf, 2);
+    //SPI_TX(dev->SPIx, &cmd, 1);
+    //SPI_RX(dev->SPIx, rx_buf, 2);
+    SPI_TransmitReceive(dev->SPIx, &cmd, rx_buf, 2, TIMEOUT);
     CS_Deselect(dev);
 
     return (rx_buf[0] << 8) | rx_buf[1];
@@ -46,6 +47,7 @@ int8_t MS5803_Init(MS5803 *dev, float pressureRef) {
     HAL_Delay(5); // 2.8ms min
     for(uint8_t i = 0; i < 8; i++) {
         dev->calibration_values[i] = MS5803_ReadPROM(dev, i);
+        //if(dev->calibration_values[i] == 0) return -1;
     }
     if(pressureRef == 0) {
     	MS5803_ReadTemperaturePressure(dev);
