@@ -113,7 +113,7 @@ int main(void)
   MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
   RunTimerInit(&run_timer);
-  SPI_InitPeriph(SPI4, SPI_BAUDRATE_DIV64);
+  SPI_InitPeriph(SPI4);
   if(MS5803_Init(&ms5803, 0) == -1) printt("MS5803_Init Error");
   /* USER CODE END 2 */
 

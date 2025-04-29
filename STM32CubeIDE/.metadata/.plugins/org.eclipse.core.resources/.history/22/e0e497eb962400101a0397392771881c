@@ -49,7 +49,7 @@ void SPI_InitPeriph(SPI_TypeDef *SPIx, unsigned short baudrate) {
 	SPIx->CR1 |= SPI_CR1_SSI;
 	SPIx->CR1 |= SPI_CR1_SSM;
 	SPIx->CR1 &= ~SPI_CR1_BR;        				// Clear baudrate
-	SPIx->CR1 |= baudrate;            				// Set baudrate
+	SPIx->CR1 |= SPI_BAUDRATE_DIV64;            	// Set baudrate
 	SPIx->CR1 &= ~(SPI_CR1_CPOL | SPI_CR1_CPHA); 	// Mode 0
 	SPIx->CR1 |= SPI_CR1_SPE;						// SPI Enable
 }

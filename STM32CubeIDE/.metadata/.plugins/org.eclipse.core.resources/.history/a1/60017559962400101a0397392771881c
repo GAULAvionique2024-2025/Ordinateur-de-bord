@@ -34,7 +34,7 @@ void GPIO_InitPeriph(GPIO_TypeDef *GPIOx, unsigned short pin, unsigned short dir
 		unsigned short pinIndex = (pin < 8) ? pin : pin - 8;
 		unsigned short index = (pin < 8) ? 0 : 1;
 		GPIOx->AFR[index] &= ~(0xF << (pinIndex * 4)); 	// Clear
-		GPIOx->AFR[index] |= (opt << (pinIndex * 4));   // Set alternate function
+		GPIOx->AFR[index] |= (opt << (pinIndex * 4));   // Set Alternate
 	}
 }
 
