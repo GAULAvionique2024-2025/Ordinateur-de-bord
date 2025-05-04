@@ -1,5 +1,5 @@
 ../Core/Src/GAUL_Drivers/Low_Level/SPI_driver.c:5:6:SPI_Enable	6
 ../Core/Src/GAUL_Drivers/Low_Level/SPI_driver.c:45:6:SPI_InitPeriph	3
-../Core/Src/GAUL_Drivers/Low_Level/SPI_driver.c:57:8:SPI_TX	6
-../Core/Src/GAUL_Drivers/Low_Level/SPI_driver.c:78:8:SPI_RX	6
+../Core/Src/GAUL_Drivers/Low_Level/SPI_driver.c:57:8:SPI_MOSI	6
+../Core/Src/GAUL_Drivers/Low_Level/SPI_driver.c:78:8:SPI_MISO	6
 ../Core/Src/GAUL_Drivers/Low_Level/SPI_driver.c:101:8:SPI_TransmitReceive	8

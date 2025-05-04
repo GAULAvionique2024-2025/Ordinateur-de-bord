@@ -1,5 +1,5 @@
 ../Core/Src/GAUL_Drivers/Low_Level/SPI_driver.c:5:6:SPI_Enable	16	static
 ../Core/Src/GAUL_Drivers/Low_Level/SPI_driver.c:45:6:SPI_InitPeriph	16	static
-../Core/Src/GAUL_Drivers/Low_Level/SPI_driver.c:57:8:SPI_TX	32	static
-../Core/Src/GAUL_Drivers/Low_Level/SPI_driver.c:78:8:SPI_RX	32	static
+../Core/Src/GAUL_Drivers/Low_Level/SPI_driver.c:57:8:SPI_MOSI	32	static
+../Core/Src/GAUL_Drivers/Low_Level/SPI_driver.c:78:8:SPI_MISO	32	static
 ../Core/Src/GAUL_Drivers/Low_Level/SPI_driver.c:101:8:SPI_TransmitReceive	40	static
