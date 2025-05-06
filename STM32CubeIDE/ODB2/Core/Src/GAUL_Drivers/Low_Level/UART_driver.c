@@ -2,7 +2,7 @@
 #include <GAUL_Drivers/Low_Level/USART_driver.h>
 
 
-void USART_Enable(USART_TypeDef *USARTx) {
+void USART_Enable_Clock(USART_TypeDef *USARTx) {
 	if (USARTx == USART1) {
 		RCC->APB2ENR |= RCC_APB2ENR_USART1EN;	// Enable USART1 clock
 		GPIO_InitPeriph(GPIOA, 9, ALT, AF7); 	// TX (A9)
@@ -11,10 +11,6 @@ void USART_Enable(USART_TypeDef *USARTx) {
 		RCC->APB1ENR |= RCC_APB1ENR_USART2EN; 	// Enable USART2 clock
 		GPIO_InitPeriph(GPIOD, 5, ALT, AF7); 	// TX (D5)
 		GPIO_InitPeriph(GPIOD, 6, ALT, AF7); 	// RX (D6)
-	} else if (USARTx == USART3) {
-		RCC->APB1ENR |= RCC_APB1ENR_USART3EN; 	// Enable USART3 clock
-		GPIO_InitPeriph(GPIOB, 10, ALT, AF7); 	// TX (B10)
-		GPIO_InitPeriph(GPIOB, 11, ALT, AF7); 	// RX (B11)
 	} else if (USARTx == USART6) {
 		RCC->APB2ENR |= RCC_APB2ENR_USART6EN; 	// Enable USART6 clock
 		GPIO_InitPeriph(GPIOC, 6, ALT, AF8); 	// TX (C6)
@@ -23,8 +19,7 @@ void USART_Enable(USART_TypeDef *USARTx) {
 }
 
 void USART_InitPeriph(USART_TypeDef *USARTx, unsigned long baudrate) {
-	if(USARTx == USART3) return; // Protection
-	USART_Enable(USARTx);
+	USART_Enable_Clock(USARTx);
 	USARTx->BRR = baudrate; 			// Baudrate
 	USARTx->CR1 &= ~USART_CR1_M; 		// 8 bits
 	USARTx->CR1 &= ~USART_CR1_PCE; 		// Disable parity

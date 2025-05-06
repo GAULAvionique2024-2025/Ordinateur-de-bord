@@ -2,7 +2,7 @@
 #include <GAUL_Drivers/Low_Level/SPI_driver.h>
 
 
-void SPI_Enable(SPI_TypeDef *SPIx) {
+void SPI_Enable_Clock(SPI_TypeDef *SPIx) {
     if (SPIx == SPI1) {
         RCC->APB2ENR |= RCC_APB2ENR_SPI1EN;
         GPIO_InitPeriph(GPIOA, 2, OUT, O_PP);		// CS RFM (A2)
@@ -13,16 +13,6 @@ void SPI_Enable(SPI_TypeDef *SPIx) {
 
         GPIO_WritePin(GPIOA, 2, HIGH);
         GPIO_WritePin(GPIOA, 4, HIGH);
-    } else if (SPIx == SPI2) {
-        RCC->APB1ENR |= RCC_APB1ENR_SPI2EN;
-        GPIO_InitPeriph(GPIOB, 10, ALT, AF5);		// CLK (B10)
-        GPIO_InitPeriph(GPIOB, 15, ALT, AF5);		// MISO (B15)
-        GPIO_InitPeriph(GPIOC, 2, ALT, AF5);		// MOSI (C2)
-    } else if (SPIx == SPI3) {
-    	RCC->APB1ENR |= RCC_APB1ENR_SPI3EN;
-        GPIO_InitPeriph(GPIOB, 12, ALT, AF7);		// CLK (B12)
-        GPIO_InitPeriph(GPIOC, 11, ALT, AF6);		// MISO (C11)
-        GPIO_InitPeriph(GPIOC, 12, ALT, AF6);		// MOSI (C12)
     } else if (SPIx == SPI4) {
         RCC->APB2ENR |= RCC_APB2ENR_SPI4EN;
         GPIO_InitPeriph(GPIOE, 4, OUT, O_PP);		// CS BARO (E4)
@@ -43,14 +33,14 @@ void SPI_Enable(SPI_TypeDef *SPIx) {
 }
 
 void SPI_InitPeriph(SPI_TypeDef *SPIx, unsigned short baudrate) {
-	if(SPIx == SPI2 || SPIx == SPI3) return; // Protection
-	SPI_Enable(SPIx);
+	SPI_Enable_Clock(SPIx);
 	SPIx->CR1 |= SPI_CR1_MSTR;						// Master mode
-	SPIx->CR1 |= SPI_CR1_SSI;
 	SPIx->CR1 |= SPI_CR1_SSM;
+	SPIx->CR1 |= SPI_CR1_SSI;
 	SPIx->CR1 &= ~SPI_CR1_BR;        				// Clear baudrate
 	SPIx->CR1 |= baudrate;            				// Set baudrate
 	SPIx->CR1 &= ~(SPI_CR1_CPOL | SPI_CR1_CPHA); 	// Mode 0
+	SPIx->CR1 &= ~SPI_CR1_DFF;
 	SPIx->CR1 |= SPI_CR1_SPE;						// SPI Enable
 }
 

@@ -10,7 +10,7 @@ void GPIO_Enable_Clock(GPIO_TypeDef *port) {
     } else if (port == GPIOD) {
         RCC->AHB1ENR |= RCC_AHB1ENR_GPIODEN; // Activate PORTD
     } else if (port == GPIOE) {
-        RCC->AHB1ENR |= RCC_AHB1ENR_GPIOEEN; // Activate PORTE
+    	RCC->AHB1ENR |= RCC_AHB1ENR_GPIOEEN; // Activate PORTE
     } else if (port == GPIOF) {
         RCC->AHB1ENR |= RCC_AHB1ENR_GPIOFEN; // Activate PORTF
     } else if (port == GPIOG) {
