@@ -1503,154 +1503,6 @@
 				)
 			)
 		)
-		(symbol "Device:FerriteBead_Small"
-			(pin_numbers hide)
-			(pin_names
-				(offset 0)
-			)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(property "Reference" "FB"
-				(at 1.905 1.27 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify left)
-				)
-			)
-			(property "Value" "FerriteBead_Small"
-				(at 1.905 -1.27 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify left)
-				)
-			)
-			(property "Footprint" ""
-				(at -1.778 0 90)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Datasheet" "~"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Description" "Ferrite bead, small symbol"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_keywords" "L ferrite bead inductor filter"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_fp_filters" "Inductor_* L_* *Ferrite*"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(symbol "FerriteBead_Small_0_1"
-				(polyline
-					(pts
-						(xy 0 -1.27) (xy 0 -0.7874)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0 0.889) (xy 0 1.2954)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy -1.8288 0.2794) (xy -1.1176 1.4986) (xy 1.8288 -0.2032) (xy 1.1176 -1.4224) (xy -1.8288 0.2794)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-			)
-			(symbol "FerriteBead_Small_1_1"
-				(pin passive line
-					(at 0 2.54 270)
-					(length 1.27)
-					(name "~"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 0 -2.54 90)
-					(length 1.27)
-					(name "~"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-		)
 		(symbol "Device:LED"
 			(pin_numbers hide)
 			(pin_names
@@ -2124,6 +1976,377 @@
 						)
 					)
 					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+		)
+		(symbol "ODB2:2508051217Y6"
+			(pin_names
+				(offset 0.254)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "L"
+				(at 6.985 5.08 0)
+				(effects
+					(font
+						(size 1.524 1.524)
+					)
+				)
+			)
+			(property "Value" "2508051217Y6"
+				(at 6.985 -2.54 0)
+				(effects
+					(font
+						(size 1.524 1.524)
+					)
+				)
+			)
+			(property "Footprint" "IND_25_0805_FRT"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+						(italic yes)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "2508051217Y6"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+						(italic yes)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_locked" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "2508051217Y6"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "IND_25_0805_FRT IND_25_0805_FRT-M IND_25_0805_FRT-L"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "2508051217Y6_1_1"
+				(polyline
+					(pts
+						(xy 2.54 0) (xy 2.54 1.27)
+					)
+					(stroke
+						(width 0.2032)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 5.08 0) (xy 5.08 1.27)
+					)
+					(stroke
+						(width 0.2032)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 7.62 0) (xy 7.62 1.27)
+					)
+					(stroke
+						(width 0.2032)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 10.16 0) (xy 10.16 1.27)
+					)
+					(stroke
+						(width 0.2032)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 12.7 0) (xy 12.7 1.27)
+					)
+					(stroke
+						(width 0.2032)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(arc
+					(start 5.08 1.27)
+					(mid 3.81 2.5344)
+					(end 2.54 1.27)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(arc
+					(start 7.62 1.27)
+					(mid 6.35 2.5344)
+					(end 5.08 1.27)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(arc
+					(start 10.16 1.27)
+					(mid 8.89 2.5344)
+					(end 7.62 1.27)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(arc
+					(start 12.7 1.27)
+					(mid 11.43 2.5344)
+					(end 10.16 1.27)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin unspecified line
+					(at 15.24 0 180)
+					(length 2.54)
+					(name "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin unspecified line
+					(at 0 0 0)
+					(length 2.54)
+					(name "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(symbol "2508051217Y6_1_2"
+				(arc
+					(start -1.27 5.08)
+					(mid -2.5344 3.81)
+					(end -1.27 2.54)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(arc
+					(start -1.27 7.62)
+					(mid -2.5344 6.35)
+					(end -1.27 5.08)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(arc
+					(start -1.27 10.16)
+					(mid -2.5344 8.89)
+					(end -1.27 7.62)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(arc
+					(start -1.27 12.7)
+					(mid -2.5344 11.43)
+					(end -1.27 10.16)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 2.54) (xy -1.27 2.54)
+					)
+					(stroke
+						(width 0.2032)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 5.08) (xy -1.27 5.08)
+					)
+					(stroke
+						(width 0.2032)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 7.62) (xy -1.27 7.62)
+					)
+					(stroke
+						(width 0.2032)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 10.16) (xy -1.27 10.16)
+					)
+					(stroke
+						(width 0.2032)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 12.7) (xy -1.27 12.7)
+					)
+					(stroke
+						(width 0.2032)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin unspecified line
+					(at 0 15.24 270)
+					(length 2.54)
+					(name "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin unspecified line
+					(at 0 0 90)
+					(length 2.54)
+					(name "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -4305,7 +4528,7 @@
 		(uuid "4f91b63d-d3bf-4e37-94fd-f0cd65644d6e")
 	)
 	(junction
-		(at 39.37 48.26)
+		(at 49.53 48.26)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "9a81b223-7513-46fe-93d6-477a1c7e2a43")
@@ -4335,13 +4558,13 @@
 		(uuid "d7f7eaab-fb0b-4e54-9dda-0b0a33d7915b")
 	)
 	(junction
-		(at 39.37 33.02)
+		(at 49.53 33.02)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "e48cc9ac-8df2-49ca-81e3-d6203f865782")
 	)
 	(junction
-		(at 46.99 33.02)
+		(at 57.15 33.02)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "eddb0f55-38f1-4e9c-9080-1610b4aaba06")
@@ -4394,7 +4617,7 @@
 	)
 	(wire
 		(pts
-			(xy 46.99 39.37) (xy 46.99 33.02)
+			(xy 57.15 39.37) (xy 57.15 33.02)
 		)
 		(stroke
 			(width 0)
@@ -4434,7 +4657,7 @@
 	)
 	(wire
 		(pts
-			(xy 46.99 46.99) (xy 46.99 48.26)
+			(xy 57.15 46.99) (xy 57.15 48.26)
 		)
 		(stroke
 			(width 0)
@@ -4584,7 +4807,7 @@
 	)
 	(wire
 		(pts
-			(xy 31.75 48.26) (xy 39.37 48.26)
+			(xy 31.75 48.26) (xy 49.53 48.26)
 		)
 		(stroke
 			(width 0)
@@ -4824,7 +5047,7 @@
 	)
 	(wire
 		(pts
-			(xy 38.1 33.02) (xy 39.37 33.02)
+			(xy 48.26 33.02) (xy 49.53 33.02)
 		)
 		(stroke
 			(width 0)
@@ -4924,7 +5147,7 @@
 	)
 	(wire
 		(pts
-			(xy 39.37 46.99) (xy 39.37 48.26)
+			(xy 49.53 46.99) (xy 49.53 48.26)
 		)
 		(stroke
 			(width 0)
@@ -4954,7 +5177,7 @@
 	)
 	(wire
 		(pts
-			(xy 39.37 39.37) (xy 39.37 33.02)
+			(xy 49.53 39.37) (xy 49.53 33.02)
 		)
 		(stroke
 			(width 0)
@@ -5054,7 +5277,7 @@
 	)
 	(wire
 		(pts
-			(xy 46.99 33.02) (xy 52.07 33.02)
+			(xy 57.15 33.02) (xy 59.69 33.02)
 		)
 		(stroke
 			(width 0)
@@ -5174,7 +5397,7 @@
 	)
 	(wire
 		(pts
-			(xy 39.37 33.02) (xy 46.99 33.02)
+			(xy 49.53 33.02) (xy 57.15 33.02)
 		)
 		(stroke
 			(width 0)
@@ -5264,7 +5487,7 @@
 	)
 	(wire
 		(pts
-			(xy 39.37 48.26) (xy 46.99 48.26)
+			(xy 49.53 48.26) (xy 57.15 48.26)
 		)
 		(stroke
 			(width 0)
@@ -6039,7 +6262,7 @@
 	)
 	(global_label "USBVBus"
 		(shape input)
-		(at 52.07 33.02 0)
+		(at 59.69 33.02 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -6049,7 +6272,7 @@
 		)
 		(uuid "d030b04a-730e-4d63-9458-b37cdad10e29")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 63.4009 33.02 0)
+			(at 71.0209 33.02 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6916,7 +7139,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.00mm:PinHeader_1x05_P2.00mm_Vertical"
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x05_P2.54mm_Vertical"
 			(at 92.71 95.25 0)
 			(effects
 				(font
@@ -7101,7 +7324,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 39.37 43.18 180)
+		(at 49.53 43.18 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -7109,7 +7332,7 @@
 		(dnp no)
 		(uuid "50839362-d5ef-47c6-b889-2b13719b3d46")
 		(property "Reference" "USB_C2"
-			(at 35.56 40.64 0)
+			(at 45.72 40.64 0)
 			(effects
 				(font
 					(size 1 1)
@@ -7117,7 +7340,7 @@
 			)
 		)
 		(property "Value" "1uf"
-			(at 41.91 45.72 0)
+			(at 52.07 45.72 0)
 			(effects
 				(font
 					(size 1 1)
@@ -7125,7 +7348,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-			(at 38.4048 39.37 0)
+			(at 48.5648 39.37 0)
 			(effects
 				(font
 					(size 1 1)
@@ -7134,7 +7357,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 39.37 43.18 0)
+			(at 49.53 43.18 0)
 			(effects
 				(font
 					(size 1 1)
@@ -7143,7 +7366,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 39.37 43.18 0)
+			(at 49.53 43.18 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8075,73 +8298,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:FerriteBead_Small")
-		(at 35.56 33.02 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "9be885c3-a436-4d6a-899e-bc6557dbfa38")
-		(property "Reference" "USB_FB1"
-			(at 37.084 27.94 90)
-			(effects
-				(font
-					(size 1 1)
-				)
-			)
-		)
-		(property "Value" "120R"
-			(at 35.814 29.718 90)
-			(effects
-				(font
-					(size 1 1)
-				)
-			)
-		)
-		(property "Footprint" "Inductor_SMD:L_0805_2012Metric"
-			(at 35.56 34.798 90)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 35.56 33.02 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 35.56 33.02 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "d7140ab6-7bab-413b-9d68-0b50e20318f2")
-		)
-		(pin "2"
-			(uuid "ef54f346-b5c0-4e0f-893c-04d44aa769c4")
-		)
-		(instances
-			(project "ODB2"
-				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/93865dc8-71fa-4dc6-90ce-f5a9779dfd41"
-					(reference "USB_FB1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:R")
 		(at 139.7 46.99 270)
 		(unit 1)
@@ -8305,7 +8461,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.00mm:PinHeader_1x02_P2.00mm_Vertical"
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical"
 			(at 130.81 85.09 0)
 			(effects
 				(font
@@ -8553,7 +8709,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 46.99 43.18 180)
+		(at 57.15 43.18 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -8561,7 +8717,7 @@
 		(dnp no)
 		(uuid "b8ef2df8-95e0-44f5-9574-92062dbdbad3")
 		(property "Reference" "USB_C3"
-			(at 43.18 40.64 0)
+			(at 53.34 40.64 0)
 			(effects
 				(font
 					(size 1 1)
@@ -8569,7 +8725,7 @@
 			)
 		)
 		(property "Value" "10uf"
-			(at 49.53 45.72 0)
+			(at 59.69 45.72 0)
 			(effects
 				(font
 					(size 1 1)
@@ -8577,7 +8733,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-			(at 46.0248 39.37 0)
+			(at 56.1848 39.37 0)
 			(effects
 				(font
 					(size 1 1)
@@ -8586,7 +8742,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 46.99 43.18 0)
+			(at 57.15 43.18 0)
 			(effects
 				(font
 					(size 1 1)
@@ -8595,7 +8751,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 46.99 43.18 0)
+			(at 57.15 43.18 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8613,6 +8769,75 @@
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/93865dc8-71fa-4dc6-90ce-f5a9779dfd41"
 					(reference "USB_C3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ODB2:2508051217Y6")
+		(at 33.02 33.02 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "b9cdd816-6c96-48f9-b40b-7a633c2000a6")
+		(property "Reference" "USB_FB1"
+			(at 40.64 27.178 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+		(property "Value" "120R"
+			(at 40.64 28.956 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+		(property "Footprint" "IND_25_0805_FRT"
+			(at 33.02 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+					(italic yes)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "2508051217Y6"
+			(at 33.02 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+					(italic yes)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 33.02 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "6cc6e3d5-cb6c-4b25-bdc8-279676d40959")
+		)
+		(pin "1"
+			(uuid "f930e9de-0eb7-4cab-9853-0da0582bc066")
+		)
+		(instances
+			(project ""
+				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/93865dc8-71fa-4dc6-90ce-f5a9779dfd41"
+					(reference "USB_FB1")
 					(unit 1)
 				)
 			)
@@ -8713,7 +8938,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.00mm:PinHeader_1x05_P2.00mm_Vertical"
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x05_P2.54mm_Vertical"
 			(at 45.72 95.25 0)
 			(effects
 				(font
@@ -8969,7 +9194,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.00mm:PinHeader_1x02_P2.00mm_Vertical"
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical"
 			(at 130.81 73.66 0)
 			(effects
 				(font
