@@ -42,7 +42,8 @@ static uint16_t MS5803_ReadPROM(MS5803 *dev, uint8_t coef) {
 }
 
 // Functions
-int8_t MS5803_Init(MS5803 *dev, float pressureRef) {
+int8_t MS5803_Init(SPI_TypeDef *SPIx, MS5803 *dev, float pressureRef) {
+	dev->SPIx = SPIx;
     MS5803_SendCommand(dev, MS5803_RESET);
     HAL_Delay(5); // 2.8ms min
     for(uint8_t i = 0; i < 8; i++) {

@@ -3,6 +3,6 @@
 ../Core/Src/GAUL_Drivers/Components/MS5803.c:12:13:MS5803_SendCommand	24	static
 ../Core/Src/GAUL_Drivers/Components/MS5803.c:18:17:MS5803_ReadADC	32	static
 ../Core/Src/GAUL_Drivers/Components/MS5803.c:31:17:MS5803_ReadPROM	32	static
-../Core/Src/GAUL_Drivers/Components/MS5803.c:45:8:MS5803_Init	32	static
-../Core/Src/GAUL_Drivers/Components/MS5803.c:66:6:MS5803_ReadTemperaturePressure	280	static
-../Core/Src/GAUL_Drivers/Components/MS5803.c:118:7:MS5803_PressureToAltitude	16	static
+../Core/Src/GAUL_Drivers/Components/MS5803.c:45:8:MS5803_Init	40	static
+../Core/Src/GAUL_Drivers/Components/MS5803.c:67:6:MS5803_ReadTemperaturePressure	280	static
+../Core/Src/GAUL_Drivers/Components/MS5803.c:119:7:MS5803_PressureToAltitude	16	static

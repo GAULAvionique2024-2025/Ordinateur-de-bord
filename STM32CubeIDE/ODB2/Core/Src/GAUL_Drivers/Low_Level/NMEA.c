@@ -34,17 +34,11 @@ int8_t NMEA_ValidateRMC(const char *nmea_sentence) {
  * @retval NMEA_ERROR ERROR
  */
 int8_t NMEA_ParseRMC(GPS_Data *gps_data, const char *nmea_sentence) {
-
-    if (!nmea_sentence || !gps_data) {
-        return NMEA_ERROR; // Error, NULL sentence or structure
-    }
-
+    if (!nmea_sentence || !gps_data) return NMEA_ERROR; // Error, NULL sentence or structure
     // Copy because strtok messes the string by replacing delimiter with \0
     // and causes HardFault when called on literal string nmea_sentence
     char *copy = strndup(nmea_sentence, NMEA_MAX_RMC_LENGTH);
-    if (!copy) {
-        return NMEA_ERROR; // Error while duplicating string
-    }
+    if (!copy) return NMEA_ERROR; // Error while duplicating string
 
     uint8_t tok_idx = 0; // Current field index
     char *token;
@@ -83,9 +77,7 @@ int8_t NMEA_ParseRMC(GPS_Data *gps_data, const char *nmea_sentence) {
                 gps_data->fix = 1; // GPS Fix
             } else if (token[0] == 'V') {
                 gps_data->fix = 0; // No GPS Fix
-            } else {
-                return NMEA_ERROR; // Error with sentence
-            }
+            } else return NMEA_ERROR; // Error with sentence
 
             if (gps_data->fix == 0) {
                 gps_data->latitude = 0;
@@ -114,9 +106,7 @@ int8_t NMEA_ParseRMC(GPS_Data *gps_data, const char *nmea_sentence) {
                 sign = 1;
             } else if (token[0] == 'S') {
                 sign = -1;
-            } else {
-                return NMEA_ERROR; // Error with sentence
-            }
+            } else return NMEA_ERROR; // Error with sentence
 
             gps_data->latitude *= sign; // Change the sign of latitude depending on indicator
 
@@ -142,9 +132,7 @@ int8_t NMEA_ParseRMC(GPS_Data *gps_data, const char *nmea_sentence) {
                 sign = 1;
             } else if (token[0] == 'W') {
                 sign = -1;
-            } else {
-                return NMEA_ERROR; // Error with sentence
-            }
+            } else return NMEA_ERROR; // Error with sentence
 
             gps_data->longitude *= sign;
         }

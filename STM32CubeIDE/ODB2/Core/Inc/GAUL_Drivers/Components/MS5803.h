@@ -40,7 +40,7 @@ typedef struct {
     float 			temp_C;
 } MS5803;
 
-int8_t MS5803_Init(MS5803 *dev, float pressureRef);
+int8_t MS5803_Init(SPI_TypeDef *SPIx, MS5803 *dev, float pressureRef);
 void MS5803_ReadTemperaturePressure(MS5803 *dev);
 float MS5803_PressureToAltitude(float pressure);
 

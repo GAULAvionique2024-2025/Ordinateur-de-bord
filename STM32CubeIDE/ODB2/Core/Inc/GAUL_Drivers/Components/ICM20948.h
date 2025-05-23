@@ -53,7 +53,7 @@ typedef struct {
 	float 			angleY;
 } ICM20948;
 
-int8_t ICM20948_Init(ICM20948 *dev);
+int8_t ICM20948_Init(SPI_TypeDef *SPIx, ICM20948 *dev);
 void ICM20948_ReadData(ICM20948 *dev);
 int8_t ICM20948_Data_Ready(ICM20948 *dev);
 

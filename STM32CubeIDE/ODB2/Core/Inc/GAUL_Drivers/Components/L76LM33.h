@@ -13,23 +13,21 @@
 #define L76LM33_EMPTY_BUFF -2
 
 typedef struct {
-    uint8_t state; // 1: OK, 0: Error with GNSS module
-    UART_HandleTypeDef *UARTx; // Pointer to the GNSS module UART handler
-    uint8_t received_byte; // Received char/byte from UART
-    ring_buffer_t UART_Buffer; // Ring buffer to store UART data from GNSS module
-    char UART_Buffer_arr[L76LM33_BUFFER_SIZES]; // UART buffer array for ring buffer
-    uint8_t new_line_flag; // 1: line available in UART buffer, 0: line not available in UART buffer
-    char NMEA_Buffer[L76LM33_BUFFER_SIZES]; // Buffer to store NMEA sentence
-    GPS_Data gps_data; // Struct to store parsed NMEA data
+	UART_HandleTypeDef 	*UARTx; // Pointer to the GNSS module UART handler
+    uint8_t 			state; // 1: OK, 0: Error with GNSS module
+    uint8_t 			received_byte; // Received char/byte from UART
+    ring_buffer_t 		uart_buffer; // Ring buffer to store UART data from GNSS module
+    char 				uart_buffer_char[L76LM33_BUFFER_SIZES]; // UART buffer array for ring buffer
+    uint8_t 			newline_flag; // 1: line available in UART buffer, 0: line not available in UART buffer
+    char 				nmea_buffer[L76LM33_BUFFER_SIZES]; // Buffer to store NMEA sentence
+    GPS_Data 			gps_data; // Struct to store parsed NMEA data
 } L76LM33;
 
-int8_t L76LM33_Init(UART_HandleTypeDef *UARTx, L76LM33 *L76_data);
+int8_t L76LM33_Init(UART_HandleTypeDef *UARTx, L76LM33 *dev);
 
-void L76LM33_RxCallback(UART_HandleTypeDef *UARTx, L76LM33 *L76_data);
+int8_t L76LM33_Read(L76LM33 *dev);
+int8_t L76LM33_Read_Sentence(L76LM33 *dev);
 
-int8_t L76LM33_Read(L76LM33 *L76_data);
-int8_t L76LM33_Read_Sentence(L76LM33 *L76_data);
-
-int8_t L76LM33_Send_Command(L76LM33 *L76_data, char command[], uint8_t size);
+void L76LM33_RxCallback(UART_HandleTypeDef *UARTx, L76LM33 *dev);
 
 #endif /* INC_GAUL_DRIVERS_COMPONENTS_L76LM33_H_ */

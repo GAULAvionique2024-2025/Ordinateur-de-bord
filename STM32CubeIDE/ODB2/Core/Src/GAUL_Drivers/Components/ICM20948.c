@@ -33,7 +33,8 @@ static void ICM20948_SelectBank(ICM20948 *dev, uint8_t bank) {
 	HAL_Delay(5);
 }
 
-int8_t ICM20948_Init(ICM20948 *dev){
+int8_t ICM20948_Init(SPI_TypeDef *SPIx, ICM20948 *dev){
+	dev->SPIx = SPIx;
     dev->accResult = 0.0f;
     dev->temperatureC = 0.0f;
     uint8_t rxData;

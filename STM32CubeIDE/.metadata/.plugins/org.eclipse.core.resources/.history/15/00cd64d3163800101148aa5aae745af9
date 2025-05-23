@@ -1,0 +1,35 @@
+#ifndef INC_GAUL_DRIVERS_COMPONENTS_L76LM33_H_
+#define INC_GAUL_DRIVERS_COMPONENTS_L76LM33_H_
+
+#include "stm32f4xx.h"
+#include <GAUL_Drivers/Low_Level/RingBuffer.h>
+#include "GAUL_Drivers/Low_Level/NMEA.h"
+
+#define L76LM33_BUFFER_SIZES 256  // NMEA sentence is around 80 char max, has to be a power of two.
+#define L76LM33_UART_TIMEOUT 500 // For UART transmit
+
+#define L76LM33_OK 0
+#define L76LM33_ERROR -1
+#define L76LM33_EMPTY_BUFF -2
+
+typedef struct {
+	UART_HandleTypeDef 	*UARTx; // Pointer to the GNSS module UART handler
+    uint8_t 			state; // 1: OK, 0: Error with GNSS module
+    uint8_t 			received_byte; // Received char/byte from UART
+    ring_buffer_t 		uart_buffer; // Ring buffer to store UART data from GNSS module
+    char 				uart_buffer_char[L76LM33_BUFFER_SIZES]; // UART buffer array for ring buffer
+    uint8_t 			newline_flag; // 1: line available in UART buffer, 0: line not available in UART buffer
+    char 				nmea_buffer[L76LM33_BUFFER_SIZES]; // Buffer to store NMEA sentence
+    GPS_Data 			gps_data; // Struct to store parsed NMEA data
+} L76LM33;
+
+int8_t L76LM33_Init(UART_HandleTypeDef *UARTx, L76LM33 *dev);
+
+void L76LM33_RxCallback(UART_HandleTypeDef *UARTx, L76LM33 *dev);
+
+int8_t L76LM33_Read(L76LM33 *dev);
+int8_t L76LM33_Read_Sentence(L76LM33 *dev);
+
+int8_t L76LM33_Send_Command(L76LM33 *dev, char command[], uint8_t size);
+
+#endif /* INC_GAUL_DRIVERS_COMPONENTS_L76LM33_H_ */

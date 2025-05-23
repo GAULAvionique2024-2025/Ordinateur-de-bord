@@ -12,15 +12,15 @@
 typedef struct {
     uint8_t hours;      // Hours when GPS fix acquired (two digits)
     uint8_t minutes;    // Minutes when GPS fix acquired (two digits)
-    float seconds;      // Seconds when GPS fix acquired
+    float 	seconds;      // Seconds when GPS fix acquired
 } time_t;
 
 typedef struct {
-    time_t time;		// Time when GPS fix acquired
-    uint32_t time_raw;
-    uint8_t fix;		// 1: GPS Fix, 0: No GPS Fix
-    float latitude;     // Latitude in Decimal Degrees
-    float longitude;    // Longitude in Decimal Degrees
+    time_t 		time;		// Time when GPS fix acquired
+    uint32_t 	time_raw;
+    uint8_t 	fix;		// 1: GPS Fix, 0: No GPS Fix
+    float 		latitude;     // Latitude in Decimal Degrees
+    float 		longitude;    // Longitude in Decimal Degrees
 } GPS_Data;
 
 int8_t NMEA_ValidateRMC(const char *nmea_sentence);
