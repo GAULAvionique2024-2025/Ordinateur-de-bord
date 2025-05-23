@@ -49,7 +49,8 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Core/Inc/GAUL_Drivers/Low_Level/GPIO_driver.h \
  ../Core/Inc/GAUL_Drivers/Low_Level/SPI_driver.h \
  ../Core/Inc/GAUL_Drivers/Low_Level/USART_driver.h \
- ../Core/Inc/GAUL_Drivers/Components/MS5803.h
+ ../Core/Inc/GAUL_Drivers/Components/MS5803.h \
+ ../Core/Inc/GAUL_Drivers/Components/ICM20948.h
 ../Core/Inc/main.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
 ../Core/Inc/stm32f4xx_hal_conf.h:
@@ -104,3 +105,4 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Core/Inc/GAUL_Drivers/Low_Level/SPI_driver.h:
 ../Core/Inc/GAUL_Drivers/Low_Level/USART_driver.h:
 ../Core/Inc/GAUL_Drivers/Components/MS5803.h:
+../Core/Inc/GAUL_Drivers/Components/ICM20948.h:

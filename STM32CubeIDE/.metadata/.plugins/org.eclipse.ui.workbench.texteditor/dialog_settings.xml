@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<item key="hasShownOverlayPopupBefore" value="true"/>
-	<item key="replaceBarOpen" value="false"/>
+	<item key="replaceBarOpen" value="true"/>
 	<list key="searchhistory">
+		<item value="20602"/>
 		<item value="AFR"/>
 		<item value="AFRL"/>
 		<item value="GPIOH"/>
@@ -14,5 +15,8 @@
 		<item value="APB2ENR"/>
 		<item value="AEN"/>
 		<item value="RCC_APB2ENR"/>
+	</list>
+	<list key="replacehistory">
+		<item value="20948"/>
 	</list>
 </section>

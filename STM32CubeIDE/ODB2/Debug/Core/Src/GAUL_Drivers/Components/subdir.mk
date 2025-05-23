@@ -5,16 +5,19 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../Core/Src/GAUL_Drivers/Components/ICM20948.c \
 ../Core/Src/GAUL_Drivers/Components/L76LM33.c \
 ../Core/Src/GAUL_Drivers/Components/MS5803.c \
 ../Core/Src/GAUL_Drivers/Components/RFD900.c 
 
 OBJS += \
+./Core/Src/GAUL_Drivers/Components/ICM20948.o \
 ./Core/Src/GAUL_Drivers/Components/L76LM33.o \
 ./Core/Src/GAUL_Drivers/Components/MS5803.o \
 ./Core/Src/GAUL_Drivers/Components/RFD900.o 
 
 C_DEPS += \
+./Core/Src/GAUL_Drivers/Components/ICM20948.d \
 ./Core/Src/GAUL_Drivers/Components/L76LM33.d \
 ./Core/Src/GAUL_Drivers/Components/MS5803.d \
 ./Core/Src/GAUL_Drivers/Components/RFD900.d 
@@ -27,7 +30,7 @@ Core/Src/GAUL_Drivers/Components/%.o Core/Src/GAUL_Drivers/Components/%.su Core/
 clean: clean-Core-2f-Src-2f-GAUL_Drivers-2f-Components
 
 clean-Core-2f-Src-2f-GAUL_Drivers-2f-Components:
-	-$(RM) ./Core/Src/GAUL_Drivers/Components/L76LM33.cyclo ./Core/Src/GAUL_Drivers/Components/L76LM33.d ./Core/Src/GAUL_Drivers/Components/L76LM33.o ./Core/Src/GAUL_Drivers/Components/L76LM33.su ./Core/Src/GAUL_Drivers/Components/MS5803.cyclo ./Core/Src/GAUL_Drivers/Components/MS5803.d ./Core/Src/GAUL_Drivers/Components/MS5803.o ./Core/Src/GAUL_Drivers/Components/MS5803.su ./Core/Src/GAUL_Drivers/Components/RFD900.cyclo ./Core/Src/GAUL_Drivers/Components/RFD900.d ./Core/Src/GAUL_Drivers/Components/RFD900.o ./Core/Src/GAUL_Drivers/Components/RFD900.su
+	-$(RM) ./Core/Src/GAUL_Drivers/Components/ICM20948.cyclo ./Core/Src/GAUL_Drivers/Components/ICM20948.d ./Core/Src/GAUL_Drivers/Components/ICM20948.o ./Core/Src/GAUL_Drivers/Components/ICM20948.su ./Core/Src/GAUL_Drivers/Components/L76LM33.cyclo ./Core/Src/GAUL_Drivers/Components/L76LM33.d ./Core/Src/GAUL_Drivers/Components/L76LM33.o ./Core/Src/GAUL_Drivers/Components/L76LM33.su ./Core/Src/GAUL_Drivers/Components/MS5803.cyclo ./Core/Src/GAUL_Drivers/Components/MS5803.d ./Core/Src/GAUL_Drivers/Components/MS5803.o ./Core/Src/GAUL_Drivers/Components/MS5803.su ./Core/Src/GAUL_Drivers/Components/RFD900.cyclo ./Core/Src/GAUL_Drivers/Components/RFD900.d ./Core/Src/GAUL_Drivers/Components/RFD900.o ./Core/Src/GAUL_Drivers/Components/RFD900.su
 
 .PHONY: clean-Core-2f-Src-2f-GAUL_Drivers-2f-Components
 

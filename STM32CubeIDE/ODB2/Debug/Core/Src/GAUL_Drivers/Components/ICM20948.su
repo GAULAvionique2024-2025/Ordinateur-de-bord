@@ -1,0 +1,7 @@
+../Core/Src/GAUL_Drivers/Components/ICM20948.c:3:13:ICM20948_Write	16	static
+../Core/Src/GAUL_Drivers/Components/ICM20948.c:12:13:ICM20948_Read	24	static
+../Core/Src/GAUL_Drivers/Components/ICM20948.c:21:16:to_int16	16	static
+../Core/Src/GAUL_Drivers/Components/ICM20948.c:25:13:ICM20948_SelectBank	24	static
+../Core/Src/GAUL_Drivers/Components/ICM20948.c:36:8:ICM20948_Init	72	static
+../Core/Src/GAUL_Drivers/Components/ICM20948.c:88:6:ICM20948_ReadData	56	static
+../Core/Src/GAUL_Drivers/Components/ICM20948.c:117:8:ICM20948_Data_Ready	16	static

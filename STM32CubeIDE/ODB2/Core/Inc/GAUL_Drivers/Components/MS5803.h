@@ -1,9 +1,10 @@
 #ifndef INC_GAUL_DRIVERS_COMPONENTS_MS5803_H_
 #define INC_GAUL_DRIVERS_COMPONENTS_MS5803_H_
 
+
+#include "stm32f4xx.h"
 #include <GAUL_Drivers/Low_Level/GPIO_driver.h>
 #include "GAUL_Drivers/Low_Level/SPI_driver.h"
-#include "stm32f4xx.h"
 
 #include <stdint.h>
 #include <stdio.h>

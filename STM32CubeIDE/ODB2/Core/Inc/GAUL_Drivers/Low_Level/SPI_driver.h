@@ -4,14 +4,14 @@
 #include "stm32f4xx.h"
 
 
-#define SPI_BAUDRATE_DIV2    (0b000 << 3) // 50 MHz
-#define SPI_BAUDRATE_DIV4    (0b001 << 3) // 25 MHz
-#define SPI_BAUDRATE_DIV8    (0b010 << 3) // 12.5 MHz
-#define SPI_BAUDRATE_DIV16   (0b011 << 3) // 6.25 MHz
-#define SPI_BAUDRATE_DIV32   (0b100 << 3) // 3.125 MHz
-#define SPI_BAUDRATE_DIV64   (0b101 << 3) // 1.56 MHz
-#define SPI_BAUDRATE_DIV128  (0b110 << 3) // 781 kHz
-#define SPI_BAUDRATE_DIV256  (0b111 << 3) // 391 kHz
+#define SPI_BAUDRATE_48    (0b000 << 3) // 48 MHz
+#define SPI_BAUDRATE_24    (0b001 << 3) // 24 MHz
+#define SPI_BAUDRATE_12    (0b010 << 3) // 12 MHz
+#define SPI_BAUDRATE_6   (0b011 << 3) // 6 MHz
+#define SPI_BAUDRATE_3   (0b100 << 3) // 3 MHz
+#define SPI_BAUDRATE_1_5   (0b101 << 3) // 1.5 MHz
+#define SPI_BAUDRATE_0_750  (0b110 << 3) // 750 kHz
+#define SPI_BAUDRATE_0_375  (0b111 << 3) // 375 kHz
 
 #define TIMEOUT 1000  // Max iterations (Not in ms !!!)
 

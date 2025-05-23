@@ -1,7 +1,6 @@
 Core/Src/GAUL_Drivers/Components/L76LM33.o: \
  ../Core/Src/GAUL_Drivers/Components/L76LM33.c \
  ../Core/Inc/GAUL_Drivers/Components/L76LM33.h \
- ../Core/Inc/GAUL_Drivers/Low_Level/RingBuffer.h \
  ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h \
  ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f412zx.h \
  ../Drivers/CMSIS/Include/core_cm4.h \
@@ -36,9 +35,9 @@ Core/Src/GAUL_Drivers/Components/L76LM33.o: \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h \
+ ../Core/Inc/GAUL_Drivers/Low_Level/RingBuffer.h \
  ../Core/Inc/GAUL_Drivers/Low_Level/NMEA.h
 ../Core/Inc/GAUL_Drivers/Components/L76LM33.h:
-../Core/Inc/GAUL_Drivers/Low_Level/RingBuffer.h:
 ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h:
 ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f412zx.h:
 ../Drivers/CMSIS/Include/core_cm4.h:
@@ -73,4 +72,5 @@ Core/Src/GAUL_Drivers/Components/L76LM33.o: \
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h:
+../Core/Inc/GAUL_Drivers/Low_Level/RingBuffer.h:
 ../Core/Inc/GAUL_Drivers/Low_Level/NMEA.h:

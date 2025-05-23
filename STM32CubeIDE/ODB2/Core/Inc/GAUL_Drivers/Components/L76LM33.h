@@ -1,8 +1,8 @@
 #ifndef INC_GAUL_DRIVERS_COMPONENTS_L76LM33_H_
 #define INC_GAUL_DRIVERS_COMPONENTS_L76LM33_H_
 
-#include <GAUL_Drivers/Low_Level/RingBuffer.h>
 #include "stm32f4xx.h"
+#include <GAUL_Drivers/Low_Level/RingBuffer.h>
 #include "GAUL_Drivers/Low_Level/NMEA.h"
 
 #define L76LM33_BUFFER_SIZES 256  // NMEA sentence is around 80 char max, has to be a power of two.

@@ -20,12 +20,16 @@ void GPIO_Enable_Clock(GPIO_TypeDef *port) {
     } else return;
 }
 
-void GPIO_InitPeriph(GPIO_TypeDef *GPIOx, unsigned short pin, unsigned short dir, unsigned short opt) {
+void GPIO_InitPeriph(GPIO_TypeDef *GPIOx, unsigned short pin, unsigned short dir, unsigned short opt, unsigned short speed) {
 	GPIO_Enable_Clock(GPIOx);
 
     // Pin configuration
     GPIOx->MODER &= ~(0xF << (pin * 2));	// Clear
 	GPIOx->MODER |= (dir << (pin * 2));		// Set direction (mode)
+	// Speed
+	GPIOx->OSPEEDR &= ~(0x3 << (pin * 2));	// Clear
+	GPIOx->OSPEEDR |= (speed << (pin * 2));	// Set speed
+
 	if(dir == OUT) {
 		GPIOx->OTYPER &= ~(1 << pin);		// Clear
 		GPIOx->OTYPER |= (opt << pin); 		// Set option direction
@@ -38,7 +42,7 @@ void GPIO_InitPeriph(GPIO_TypeDef *GPIOx, unsigned short pin, unsigned short dir
 	}
 }
 
-int GPIO_ReadPin(GPIO_TypeDef *GPIOx, unsigned short pin) {
+int8_t GPIO_ReadPin(GPIO_TypeDef *GPIOx, unsigned short pin) {
     return (GPIOx->IDR & (1 << pin)) >> pin;
 }
 

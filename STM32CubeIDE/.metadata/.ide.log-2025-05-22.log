@@ -1,0 +1,80 @@
+2025-05-23 09:53:48,614 [INFO] WebApp:194 - Connection lost
+2025-05-23 09:53:49,152 [INFO] WebApp:191 - Connection restablished
+2025-05-23 09:58:59,733 [INFO] WebApp:194 - Connection lost
+2025-05-23 09:59:03,647 [INFO] WebApp:191 - Connection restablished
+2025-05-23 09:59:07,622 [INFO] WebApp:194 - Connection lost
+2025-05-23 09:59:07,788 [INFO] WebApp:191 - Connection restablished
+2025-05-23 10:11:53,385 [INFO] UtilMem:75 - End SaveConfig() Used Memory: 808996256 Bytes (1073741824)
+2025-05-23 10:11:56,389 [INFO] UtilMem:75 - End SaveConfig() Used Memory: 835996064 Bytes (1073741824)
+2025-05-23 10:12:00,861 [INFO] UtilMem:75 - End SaveConfig() Used Memory: 929030232 Bytes (1073741824)
+2025-05-23 10:12:01,411 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: SPI
+2025-05-23 10:12:01,411 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: SPI
+2025-05-23 10:12:01,412 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: SPI
+2025-05-23 10:12:01,412 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: TIM1_8
+2025-05-23 10:12:01,412 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: USB_DEVICE
+2025-05-23 10:12:01,412 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: SYS
+2025-05-23 10:12:01,412 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: ADC
+2025-05-23 10:12:01,412 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: RCC
+2025-05-23 10:12:01,412 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: USB_OTG_FS
+2025-05-23 10:12:01,413 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: NVIC
+2025-05-23 10:12:01,413 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: USART
+2025-05-23 10:12:01,413 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: USART
+2025-05-23 10:12:01,413 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: USART
+2025-05-23 10:12:01,414 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: GPIO
+2025-05-23 10:12:01,415 [INFO] CodeGenerator:882 - code generatio: config db path: C:\ST\STM32CubeIDE_1.15.0\STM32CubeIDE\plugins\com.st.stm32cube.common.mx_6.14.0.202502271554\\db\
+2025-05-23 10:12:01,473 [WARN] IP:2250 - DEVICE_SERIAL0_CDC_FS not found: check if there is a RefParameter without a condition.
+2025-05-23 10:12:01,474 [WARN] IP:2250 - DEVICE_SERIAL1_CDC_FS not found: check if there is a RefParameter without a condition.
+2025-05-23 10:12:01,474 [WARN] IP:2250 - DEVICE_SERIAL2_CDC_FS not found: check if there is a RefParameter without a condition.
+2025-05-23 10:12:01,618 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\MXTmpFiles\license.tmp_save
+2025-05-23 10:12:01,877 [INFO] CodeEngine:287 - Generated code: C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\MXTmpFiles\license.tmp
+2025-05-23 10:12:01,988 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\MXTmpFiles\gpio.tmp_save
+2025-05-23 10:12:02,120 [INFO] CodeEngine:287 - Generated code: C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\MXTmpFiles\gpio.tmp
+2025-05-23 10:12:02,282 [WARN] IPConfigManager:3174 - Warning: the RefConfig PWREx_EnableUSBVoltageDetector is not available in your config.xml file
+2025-05-23 10:12:02,304 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\MXTmpFiles\usb_otg_fs_vars.tmp_save
+2025-05-23 10:12:02,426 [INFO] CodeEngine:287 - Generated code: C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\MXTmpFiles\usb_otg_fs_vars.tmp
+2025-05-23 10:12:02,432 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\MXTmpFiles\usb_otg_fs_inc.tmp_save
+2025-05-23 10:12:02,525 [INFO] CodeEngine:287 - Generated code: C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\MXTmpFiles\usb_otg_fs_inc.tmp
+2025-05-23 10:12:02,539 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\MXTmpFiles\usb_otg_fs_HalInit.tmp_save
+2025-05-23 10:12:02,689 [INFO] CodeEngine:287 - Generated code: C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\MXTmpFiles\usb_otg_fs_HalInit.tmp
+2025-05-23 10:12:02,695 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\MXTmpFiles\usb_otg_fs_Msp.tmp_save
+2025-05-23 10:12:02,805 [INFO] CodeEngine:287 - Generated code: C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\MXTmpFiles\usb_otg_fs_Msp.tmp
+2025-05-23 10:12:03,817 [INFO] Middleware:1452 - No code input for Bsp Dependency
+2025-05-23 10:12:03,865 [INFO] Middleware:1452 - No code input for Bsp Dependency
+2025-05-23 10:12:03,893 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\USB_DEVICE\App\usb_device.c_save
+2025-05-23 10:12:04,019 [INFO] CodeEngine:287 - Generated code: C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\USB_DEVICE\App\usb_device.c
+2025-05-23 10:12:04,036 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\USB_DEVICE\App\usb_device.h_save
+2025-05-23 10:12:04,165 [INFO] CodeEngine:287 - Generated code: C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\USB_DEVICE\App\usb_device.h
+2025-05-23 10:12:04,181 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\USB_DEVICE\Target\usbd_conf.h_save
+2025-05-23 10:12:04,284 [INFO] CodeEngine:287 - Generated code: C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\USB_DEVICE\Target\usbd_conf.h
+2025-05-23 10:12:04,301 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\USB_DEVICE\Target\usbd_conf.c_save
+2025-05-23 10:12:04,480 [INFO] CodeEngine:287 - Generated code: C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\USB_DEVICE\Target\usbd_conf.c
+2025-05-23 10:12:04,500 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\USB_DEVICE\App\usbd_desc.h_save
+2025-05-23 10:12:04,598 [INFO] CodeEngine:287 - Generated code: C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\USB_DEVICE\App\usbd_desc.h
+2025-05-23 10:12:04,611 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\USB_DEVICE\App\usbd_desc.c_save
+2025-05-23 10:12:04,697 [INFO] CodeEngine:287 - Generated code: C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\USB_DEVICE\App\usbd_desc.c
+2025-05-23 10:12:04,713 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\USB_DEVICE\App\usbd_cdc_if.h_save
+2025-05-23 10:12:04,788 [INFO] CodeEngine:287 - Generated code: C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\USB_DEVICE\App\usbd_cdc_if.h
+2025-05-23 10:12:04,802 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\USB_DEVICE\App\usbd_cdc_if.c_save
+2025-05-23 10:12:04,872 [INFO] CodeEngine:287 - Generated code: C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\USB_DEVICE\App\usbd_cdc_if.c
+2025-05-23 10:12:04,896 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\Core\Src\stm32f4xx_it.c_save
+2025-05-23 10:12:05,121 [INFO] CodeEngine:287 - Generated code: C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\Core\Src\stm32f4xx_it.c
+2025-05-23 10:12:05,135 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\Core\Inc\stm32f4xx_it.h_save
+2025-05-23 10:12:05,200 [INFO] CodeEngine:287 - Generated code: C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\Core\Inc\stm32f4xx_it.h
+2025-05-23 10:12:05,229 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\Core\Src\stm32f4xx_hal_msp.c_save
+2025-05-23 10:12:05,369 [INFO] CodeEngine:287 - Generated code: C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\Core\Src\stm32f4xx_hal_msp.c
+2025-05-23 10:12:05,382 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\MXTmpFiles\system.tmp_save
+2025-05-23 10:12:05,446 [INFO] CodeEngine:287 - Generated code: C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\MXTmpFiles\system.tmp
+2025-05-23 10:12:05,469 [INFO] CodeEngine:319 - oldGeneratedFile, C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\Core\Inc\stm32f4xx_hal_conf.h_save
+2025-05-23 10:12:05,552 [INFO] CodeEngine:343 - Generated code: C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\Core\Inc\stm32f4xx_hal_conf.h
+2025-05-23 10:12:05,607 [WARN] IPConfigManager:3747 - IP not found : TIM
+2025-05-23 10:12:05,614 [WARN] CodeGenerator:4198 - IP not found : null
+2025-05-23 10:12:05,627 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\Core\Inc\main.h_save
+2025-05-23 10:12:05,711 [INFO] CodeEngine:287 - Generated code: C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\Core\Inc\main.h
+2025-05-23 10:12:05,725 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\Core\Src\main.c_save
+2025-05-23 10:12:05,866 [INFO] CodeEngine:287 - Generated code: C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\Core\Src\main.c
+2025-05-23 10:12:06,540 [INFO] ProjectBuilder:3324 - Time for Copy HAL[1] : 444mS.
+2025-05-23 10:12:06,552 [INFO] ProjectBuilder:4912 - Project Generator version: 4.6.0-B36
+2025-05-23 10:12:06,649 [INFO] ConfigFileManager:1590 - The Die is : DIE441
+2025-05-23 10:12:08,879 [INFO] ProjectBuilder:5191 - Time for Generating toolchain IDE Files: 2327mS.
+2025-05-23 10:12:08,880 [INFO] ProjectBuilder:3181 - Time for Copy CMSIS : 1mS.
+2025-05-23 10:12:08,897 [INFO] ProjectBuilder:3181 - Time for Copy CMSIS : 0mS.

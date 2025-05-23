@@ -1,0 +1,115 @@
+#include "GAUL_Drivers/Components/ICM20948.h"
+
+static void ICM20948_Write(ICM20948 *dev, uint8_t reg, uint8_t val) {
+	dev->cs_port->BSRR = (uint32_t)dev->cs_pin << 16;
+	SPI_MOSI(dev->SPIx, &reg, 1);
+	SPI_MOSI(dev->SPIx, &val, 1);
+	dev->cs_port->BSRR = dev->cs_pin;
+	HAL_Delay(5);
+}
+
+static void ICM20948_Read(ICM20948 *dev, uint8_t reg, uint8_t *rx, uint8_t len) {
+	reg |= 0x80;
+	dev->cs_port->BSRR = (uint32_t)dev->cs_pin << 16;
+	SPI_MOSI(dev->SPIx, &reg, 1);
+	SPI_MISO(dev->SPIx, rx, len);
+	dev->cs_port->BSRR = dev->cs_pin;
+}
+
+// Utils (mettre dans utils.h)
+static int16_t to_int16(uint8_t high, uint8_t low) {
+	return (int16_t)((high << 8) | low);
+}
+
+static void ICM20948_SelectBank(ICM20948 *dev, uint8_t bank) {
+	dev->cs_port->BSRR = (uint32_t)dev->cs_pin << 16; // CS LOW
+	uint8_t tx[2] = {
+			ICM20948_REG_BANK_SEL & 0x7F,
+			bank
+	};
+	SPI_MOSI(dev->SPIx, tx, 2);
+	dev->cs_port->BSRR = dev->cs_pin; // CS HIGH
+
+	HAL_Delay(5);
+}
+
+int8_t ICM20948_Init(ICM20948 *dev){
+    dev->accResult = 0.0f;
+    dev->temperatureC = 0.0f;
+    uint8_t rxData;
+    uint8_t configBank0[] = {
+    		ICM20948_REG_PWR_MGMT_1, 			0x01, 10,
+			ICM20948_REG_PWR_MGMT_2, 			0x00, 10,
+			ICM20948_REG_USER_CTRL, 			0x10, 5,
+			ICM20948_REG_INT_PIN_CFG, 			0x28, 5
+    };
+    uint8_t configBank2[] = {
+    		ICM20948_REG_GYRO_SMPLRT_DIV, 		0x00, 5,
+			ICM20948_REG_GYRO_CONFIG_1, 		0x2F, 5,
+			ICM20948_REG_ACCEL_SMPLRT_DIV_1,	0x00, 5,
+			ICM20948_REG_ACCEL_SMPLRT_DIV_2,	0x00, 5,
+			ICM20948_REG_ACCEL_CONFIG,			0x2F, 5,
+			ICM20948_REG_TEMP_CONFIG,			0x05, 5
+	};
+
+	GPIO_InitPeriph(dev->cs_port, dev->cs_pin, OUT, O_PP); // CS
+    GPIO_WritePin(dev->cs_port, dev->cs_pin, HIGH);
+    GPIO_InitPeriph(dev->int_port, dev->int_pin, IN, O_PP); // INT
+
+    // Reset ICM20948
+    ICM20948_Write(dev, ICM20948_REG_PWR_MGMT_1, 0x80);
+	HAL_Delay(100);
+	ICM20948_Read(dev, ICM20948_REG_WHO_AM_I, &rxData, 1);
+	if(rxData != ICM20948_VAL_WHO_AM_I) return -1; // Error
+
+	// Configuration
+	// Bank0
+    ICM20948_SelectBank(dev, ICM20948_VAL_USER_BANK_0);
+    for(uint8_t i = 0; i < sizeof(configArray); i += 2)
+	{
+		ICM20948_Write(dev, configArray[i], configArray[i+1]);
+		ICM20948_Read(dev, configArray[i], &rxData, 1);
+		if (rxData != configArray[i+1])
+			return 1;
+	}
+	// Bank2
+    ICM20948_SelectBank(dev, ICM20948_VAL_USER_BANK_2);
+
+
+    ICM20948_SelectBank(dev, ICM20948_VAL_USER_BANK_0);
+
+    return 0; // Ok
+}
+
+void ICM20948_ReadData(ICM20948 *dev) {
+	uint8_t buf[14];
+	ICM20948_Read(dev, ICM20948_REG_ACCEL_XOUT_H, buf, 14); // Include all raw data (8.18 - 8.31)
+
+	int16_t ax = to_int16(buf[0], buf[1]);
+	int16_t ay = to_int16(buf[2], buf[3]);
+	int16_t az = to_int16(buf[4], buf[5]);
+	int16_t temp = to_int16(buf[6], buf[7]);
+	int16_t gx = to_int16(buf[8], buf[9]);
+	int16_t gy = to_int16(buf[10], buf[11]);
+	int16_t gz = to_int16(buf[12], buf[13]);
+
+	dev->accX = ax / ACCEL_SENS_2G;
+	dev->accY = ay / ACCEL_SENS_2G;
+	dev->accZ = az / ACCEL_SENS_2G;
+	dev->gyroX = gx / GYRO_SENS_250;
+	dev->gyroY = gy / GYRO_SENS_250;
+	dev->gyroZ = gz / GYRO_SENS_250;
+	dev->temperatureC = ((float)temp - 21.0f) / 333.87f + 21.0f;
+
+	dev->accResult = sqrtf(dev->accX * dev->accX + dev->accY * dev->accY + dev->accZ * dev->accZ);
+	dev->angle_pitch_acc = atan2f(dev->accY, sqrtf(dev->accX * dev->accX + dev->accZ * dev->accZ)) * 180.0f / PI;
+	dev->angle_roll_acc = atan2f(-dev->accX, dev->accZ) * 180.0f / PI;
+
+	dev->angleX = dev->angle_pitch_acc;
+	dev->angleY = dev->angle_roll_acc;
+}
+
+
+int8_t ICM20602_Data_Ready(ICM20948 *dev) {
+    return GPIO_ReadPin(dev->int_port, dev->int_pin);
+}

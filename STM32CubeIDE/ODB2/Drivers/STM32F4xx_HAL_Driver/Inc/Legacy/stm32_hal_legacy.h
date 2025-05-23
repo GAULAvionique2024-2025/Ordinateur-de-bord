@@ -778,23 +778,23 @@ extern "C" {
 
 #if defined(STM32L0) || defined(STM32L4) || defined(STM32F4) || defined(STM32F2) || defined(STM32F7) || \
     defined(STM32G4) || defined(STM32H7) || defined(STM32WB) || defined(STM32U5)
-#define  GPIO_SPEED_LOW                           GPIO_SPEED_FREQ_LOW
-#define  GPIO_SPEED_MEDIUM                        GPIO_SPEED_FREQ_MEDIUM
-#define  GPIO_SPEED_FAST                          GPIO_SPEED_FREQ_HIGH
-#define  GPIO_SPEED_HIGH                          GPIO_SPEED_FREQ_VERY_HIGH
+#define  S_LOW                           GPIO_SPEED_FREQ_LOW
+#define  S_MEDIUM                        GPIO_SPEED_FREQ_MEDIUM
+#define  S_FAST                          GPIO_SPEED_FREQ_HIGH
+#define  GPIO_SPEED_3                          GPIO_SPEED_FREQ_VERY_HIGH
 #endif /* STM32L0 || STM32L4 || STM32F4 || STM32F2 || STM32F7 || STM32G4 || STM32H7 || STM32WB || STM32U5*/
 
 #if defined(STM32L1)
 #define  GPIO_SPEED_VERY_LOW    GPIO_SPEED_FREQ_LOW
-#define  GPIO_SPEED_LOW         GPIO_SPEED_FREQ_MEDIUM
-#define  GPIO_SPEED_MEDIUM      GPIO_SPEED_FREQ_HIGH
-#define  GPIO_SPEED_HIGH        GPIO_SPEED_FREQ_VERY_HIGH
+#define  S_LOW         GPIO_SPEED_FREQ_MEDIUM
+#define  S_MEDIUM      GPIO_SPEED_FREQ_HIGH
+#define  GPIO_SPEED_3        GPIO_SPEED_FREQ_VERY_HIGH
 #endif /* STM32L1 */
 
 #if defined(STM32F0) || defined(STM32F3) || defined(STM32F1)
-#define  GPIO_SPEED_LOW    GPIO_SPEED_FREQ_LOW
-#define  GPIO_SPEED_MEDIUM GPIO_SPEED_FREQ_MEDIUM
-#define  GPIO_SPEED_HIGH   GPIO_SPEED_FREQ_HIGH
+#define  S_LOW    GPIO_SPEED_FREQ_LOW
+#define  S_MEDIUM GPIO_SPEED_FREQ_MEDIUM
+#define  GPIO_SPEED_3   GPIO_SPEED_FREQ_HIGH
 #endif /* STM32F0 || STM32F3 || STM32F1 */
 
 #define GPIO_AF6_DFSDM                            GPIO_AF6_DFSDM1

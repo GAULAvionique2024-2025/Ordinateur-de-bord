@@ -1,7 +1,91 @@
-20:02:26 **** Incremental Build of configuration Debug for project ODB2 ****
+12:50:05 **** Incremental Build of configuration Debug for project ODB2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/ICM20948.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/ICM20948.d" -MT"Core/Src/GAUL_Drivers/Components/ICM20948.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/ICM20948.o"
+In file included from ../Core/Inc/GAUL_Drivers/Components/ICM20948.h:9,
+                 from ../Core/Src/GAUL_Drivers/Components/ICM20948.c:1:
+../Core/Inc/GAUL_Drivers/Low_Level/GPIO_driver.h:40: warning: "GPIO_SPEED_3" redefined
+   40 | #define GPIO_SPEED_3    0x3
+      | 
+In file included from ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h:30,
+                 from ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h:27,
+                 from ../Core/Inc/stm32f4xx_hal_conf.h:275,
+                 from ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:29,
+                 from ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h:287,
+                 from ../Core/Inc/GAUL_Drivers/Components/ICM20948.h:5:
+../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h:784: note: this is the location of the previous definition
+  784 | #define  GPIO_SPEED_3                          GPIO_SPEED_FREQ_VERY_HIGH
+      | 
+arm-none-eabi-gcc -o "ODB2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\STM32F412ZGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ODB2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: ODB2.elf
+ 
+arm-none-eabi-size  ODB2.elf 
+arm-none-eabi-objdump -h -S ODB2.elf  > "ODB2.list"
+   text	   data	    bss	    dec	    hex	filename
+  42860	    360	   9488	  52708	   cde4	ODB2.elf
+Finished building: default.size.stdout
+ 
+Finished building: ODB2.list
+ 
+13:00:10 **** Incremental Build of configuration Debug for project ODB2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/ICM20948.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/ICM20948.d" -MT"Core/Src/GAUL_Drivers/Components/ICM20948.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/ICM20948.o"
+In file included from ../Core/Inc/GAUL_Drivers/Components/ICM20948.h:9,
+                 from ../Core/Src/GAUL_Drivers/Components/ICM20948.c:1:
+../Core/Inc/GAUL_Drivers/Low_Level/GPIO_driver.h:40: warning: "GPIO_SPEED_3" redefined
+   40 | #define GPIO_SPEED_3    0x3
+      | 
+In file included from ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h:30,
+                 from ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h:27,
+                 from ../Core/Inc/stm32f4xx_hal_conf.h:275,
+                 from ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:29,
+                 from ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h:287,
+                 from ../Core/Inc/GAUL_Drivers/Components/ICM20948.h:5:
+../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h:784: note: this is the location of the previous definition
+  784 | #define  GPIO_SPEED_3                          GPIO_SPEED_FREQ_VERY_HIGH
+      | 
+arm-none-eabi-gcc -o "ODB2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\STM32F412ZGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ODB2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: ODB2.elf
+ 
+arm-none-eabi-size  ODB2.elf 
+arm-none-eabi-objdump -h -S ODB2.elf  > "ODB2.list"
+   text	   data	    bss	    dec	    hex	filename
+  42848	    360	   9488	  52696	   cdd8	ODB2.elf
+Finished building: default.size.stdout
+ 
+Finished building: ODB2.list
+ 
+13:00:17 **** Incremental Build of configuration Debug for project ODB2 ****
 make -j12 all 
 arm-none-eabi-size  ODB2.elf 
    text	   data	    bss	    dec	    hex	filename
-  39284	    268	   9084	  48636	   bdfc	ODB2.elf
+  42848	    360	   9488	  52696	   cdd8	ODB2.elf
 Finished building: default.size.stdout
+ 
+13:02:27 **** Incremental Build of configuration Debug for project ODB2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/ICM20948.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/ICM20948.d" -MT"Core/Src/GAUL_Drivers/Components/ICM20948.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/ICM20948.o"
+In file included from ../Core/Inc/GAUL_Drivers/Components/ICM20948.h:9,
+                 from ../Core/Src/GAUL_Drivers/Components/ICM20948.c:1:
+../Core/Inc/GAUL_Drivers/Low_Level/GPIO_driver.h:40: warning: "GPIO_SPEED_3" redefined
+   40 | #define GPIO_SPEED_3    0x3
+      | 
+In file included from ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h:30,
+                 from ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h:27,
+                 from ../Core/Inc/stm32f4xx_hal_conf.h:275,
+                 from ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:29,
+                 from ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h:287,
+                 from ../Core/Inc/GAUL_Drivers/Components/ICM20948.h:5:
+../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h:784: note: this is the location of the previous definition
+  784 | #define  GPIO_SPEED_3                          GPIO_SPEED_FREQ_VERY_HIGH
+      | 
+arm-none-eabi-gcc -o "ODB2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\STM32F412ZGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ODB2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: ODB2.elf
+ 
+arm-none-eabi-size  ODB2.elf 
+arm-none-eabi-objdump -h -S ODB2.elf  > "ODB2.list"
+   text	   data	    bss	    dec	    hex	filename
+  42860	    360	   9488	  52708	   cde4	ODB2.elf
+Finished building: default.size.stdout
+ 
+Finished building: ODB2.list
  
