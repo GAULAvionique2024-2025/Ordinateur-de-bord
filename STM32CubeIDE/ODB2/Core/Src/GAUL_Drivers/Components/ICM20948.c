@@ -1,4 +1,5 @@
 #include "GAUL_Drivers/Components/ICM20948.h"
+#include "GAUL_Drivers/util.h"
 
 static void ICM20948_Write(ICM20948 *dev, uint8_t reg, uint8_t val) {
 	reg &= 0x7F;
@@ -9,11 +10,11 @@ static void ICM20948_Write(ICM20948 *dev, uint8_t reg, uint8_t val) {
 	HAL_Delay(5);
 }
 
-static void ICM20948_Read(ICM20948 *dev, uint8_t reg, uint8_t *rx, uint8_t len) {
+static void ICM20948_Read(ICM20948 *dev, uint8_t reg, uint8_t *rxData, uint8_t len) {
 	reg |= 0x80;
 	GPIO_WritePin(dev->cs_port, dev->cs_pin, LOW);
 	SPI_MOSI(dev->SPIx, &reg, 1);
-	SPI_MISO(dev->SPIx, rx, len);
+	SPI_MISO(dev->SPIx, rxData, len);
 	GPIO_WritePin(dev->cs_port, dev->cs_pin, HIGH);
 }
 

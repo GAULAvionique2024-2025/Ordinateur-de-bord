@@ -123,15 +123,22 @@ int main(void)
   MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
   RunTimerInit(&run_timer);
-  L76LM33_Init(&huart1, &l76lm33);
+  SPI_InitPeriph(SPI1, SPI_BAUDRATE_3);
+  icm20948.cs_port = GPIOA;
+  icm20948.cs_pin = 4;
+  icm20948.int_port = GPIOA;
+  icm20948.int_pin = 3;
+  ICM20948_Init(SPI1, &icm20948);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  L76LM33_Read(&l76lm33);
-	  printf("TRAME: %s", l76lm33.nmea_buffer);
+	  ICM20948_ReadData(&icm20948);
+	  printt("ACC: %f | %f | %f", icm20948.accX, icm20948.accY, icm20948.accZ);
+	  printt("GYRO: %f | %f | %f", icm20948.gyroX, icm20948.gyroY, icm20948.gyroZ);
+	  //HAL_Delay(2000);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
