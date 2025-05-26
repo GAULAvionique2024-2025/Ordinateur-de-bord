@@ -7576,12 +7576,12 @@
 		)
 		(uuid "047760e9-58ae-48b7-8b84-bb896c721d8f")
 	)
-	(text "C=2(Cfabricant-Ctrace)=2(9pF-5pF)=8pF"
+	(text "C_load = (C1 x C2)/(C1 + C2) + C_tray = 12pF"
 		(exclude_from_sim no)
-		(at 355.854 156.718 0)
+		(at 355.6 156.972 0)
 		(effects
 			(font
-				(size 1.5 1.5)
+				(size 1.143 1.143)
 			)
 			(justify left)
 		)
@@ -11612,7 +11612,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "8pF"
+		(property "Value" "15pF"
 			(at 365.252 145.796 0)
 			(effects
 				(font
@@ -12148,7 +12148,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "8pF"
+		(property "Value" "15pF"
 			(at 391.922 148.336 0)
 			(effects
 				(font
