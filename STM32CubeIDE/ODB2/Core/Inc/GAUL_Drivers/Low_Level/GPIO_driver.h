@@ -6,14 +6,19 @@
 #include "stm32f4xx_ll_exti.h"
 
 // Directions
-#define IN 0       // Input
+#define IN 	0       // Input
 #define OUT 1      // Output mode
 #define ALT 2	   // Alternate function mode
-#define AN 3	   // Analog mode
+#define AN 	3	   // Analog mode
 
 // Direction options for output
 #define O_PP 0  // Push-pull output
 #define O_OD 1  // Open-drain output
+
+// Direction options for input
+#define I_NPP 0  // No pull-up/down
+#define I_PU  1  // Pull-up
+#define I_PD  2  // Pull-down
 
 // Direction options for alternate fonctions
 #define AF0  0b0000
@@ -34,10 +39,10 @@
 #define AF15 0b1111
 
 // GPIO Speed
-#define GPIO_SPEED_0	0x0
-#define GPIO_SPEED_1	0x1
-#define GPIO_SPEED_2	0x2
-#define GPIO_SPEED_3	0x3
+#define GPIO_SPEED_0 0x0
+#define GPIO_SPEED_1 0x1
+#define GPIO_SPEED_2 0x2
+#define GPIO_SPEED_3 0x3
 
 // State definition
 #define LOW  0

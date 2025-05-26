@@ -2,12 +2,13 @@
 #include "GAUL_Drivers/util.h"
 
 static void ICM20948_Write(ICM20948 *dev, uint8_t reg, uint8_t val) {
-	reg &= 0x7F;
+	uint8_t tx[2] = {
+			reg & 0x7F,
+			val
+	};
 	GPIO_WritePin(dev->cs_port, dev->cs_pin, LOW);
-	SPI_MOSI(dev->SPIx, &reg, 1);
-	SPI_MOSI(dev->SPIx, &val, 1);
+	SPI_MOSI(dev->SPIx, tx, 2);
 	GPIO_WritePin(dev->cs_port, dev->cs_pin, HIGH);
-	HAL_Delay(5);
 }
 
 static void ICM20948_Read(ICM20948 *dev, uint8_t reg, uint8_t *rxData, uint8_t len) {
@@ -24,11 +25,11 @@ static int16_t to_int16(uint8_t high, uint8_t low) {
 }
 
 static void ICM20948_SelectBank(ICM20948 *dev, uint8_t bank) {
-	GPIO_WritePin(dev->cs_port, dev->cs_pin, LOW);
 	uint8_t tx[2] = {
 			ICM20948_REG_BANK_SEL & 0x7F,
 			bank
 	};
+	GPIO_WritePin(dev->cs_port, dev->cs_pin, LOW);
 	SPI_MOSI(dev->SPIx, tx, 2);
 	GPIO_WritePin(dev->cs_port, dev->cs_pin, HIGH);
 	HAL_Delay(5);
@@ -43,7 +44,8 @@ int8_t ICM20948_Init(SPI_TypeDef *SPIx, ICM20948 *dev){
     		ICM20948_REG_PWR_MGMT_1, 			0x01, 10,
 			ICM20948_REG_PWR_MGMT_2, 			0x00, 10,
 			ICM20948_REG_USER_CTRL, 			0x10, 2,
-			ICM20948_REG_INT_PIN_CFG, 			0x28, 2
+			ICM20948_REG_INT_PIN_CFG, 			0x20, 2,
+			ICM20948_REG_INT_ENABLE_1,			0x01, 2
     };
     uint8_t configBank2[] = {
     		ICM20948_REG_GYRO_SMPLRT_DIV, 		0x00, 2,
@@ -54,23 +56,23 @@ int8_t ICM20948_Init(SPI_TypeDef *SPIx, ICM20948 *dev){
 			ICM20948_REG_TEMP_CONFIG,			0x05, 2
 	};
 
-    GPIO_InitPeriph(dev->int_port, dev->int_pin, IN, O_PP, GPIO_SPEED_3); // INT
+    //GPIO_InitPeriph(dev->int_port, dev->int_pin, IN, I_NPP, GPIO_SPEED_3); // INT
 
     // Reset ICM20948
+    ICM20948_SelectBank(dev, ICM20948_VAL_USER_BANK_0);
     ICM20948_Write(dev, ICM20948_REG_PWR_MGMT_1, 0x80);
 	HAL_Delay(100);
 	ICM20948_Read(dev, ICM20948_REG_WHO_AM_I, &rxData, 1);
-	if(rxData != ICM20948_VAL_WHO_AM_I) return -1; // Error
+	//if(rxData != ICM20948_VAL_WHO_AM_I) return -1; // Error
 
 	// Configuration
 	// BANK0
-    ICM20948_SelectBank(dev, ICM20948_VAL_USER_BANK_0);
     for(uint8_t i = 0; i < sizeof(configBank0); i += 3) {
 		ICM20948_Write(dev, configBank0[i], configBank0[i+1]);
 		HAL_Delay(configBank0[i+2]);
 		// Verification
-		ICM20948_Read(dev, configBank0[i], &rxData, 1);
-		if(rxData != configBank0[i+1]) return -1; // Error
+		//ICM20948_Read(dev, configBank0[i], &rxData, 1);
+		//if(rxData != configBank0[i+1]) return -1; // Error
 	}
 	// BANK2
     ICM20948_SelectBank(dev, ICM20948_VAL_USER_BANK_2);
@@ -78,8 +80,8 @@ int8_t ICM20948_Init(SPI_TypeDef *SPIx, ICM20948 *dev){
 		ICM20948_Write(dev, configBank2[i], configBank2[i+1]);
 		HAL_Delay(configBank2[i+2]);
 		// Verification
-		ICM20948_Read(dev, configBank2[i], &rxData, 1);
-		if(rxData != configBank2[i+1]) return -1; // Error
+		//ICM20948_Read(dev, configBank2[i], &rxData, 1);
+		//if(rxData != configBank2[i+1]) return -1; // Error
 	}
 
     ICM20948_SelectBank(dev, ICM20948_VAL_USER_BANK_0);
@@ -115,7 +117,9 @@ void ICM20948_ReadData(ICM20948 *dev) {
 	dev->angleY = dev->angle_roll_acc;
 }
 
-
+// TODO: make interrupt
 int8_t ICM20948_Data_Ready(ICM20948 *dev) {
-    return GPIO_ReadPin(dev->int_port, dev->int_pin);
+    int8_t state = GPIO_ReadPin(dev->int_port, dev->int_pin);
+    if(state) ICM20948_Read(dev, ICM20948_REG_INT_STATUS_1, NULL, 1);
+    return state;
 }

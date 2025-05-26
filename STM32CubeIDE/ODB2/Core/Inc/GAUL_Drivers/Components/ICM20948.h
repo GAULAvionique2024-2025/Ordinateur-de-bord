@@ -18,6 +18,8 @@
 #define ICM20948_REG_PWR_MGMT_1            	0x06
 #define ICM20948_REG_PWR_MGMT_2            	0x07
 #define ICM20948_REG_INT_PIN_CFG			0x0F
+#define ICM20948_REG_INT_ENABLE_1			0x11
+#define ICM20948_REG_INT_STATUS_1			0x1A
 #define ICM20948_REG_ACCEL_XOUT_H          	0x2D
 // BANK 1 (self test)
 //BANK 2

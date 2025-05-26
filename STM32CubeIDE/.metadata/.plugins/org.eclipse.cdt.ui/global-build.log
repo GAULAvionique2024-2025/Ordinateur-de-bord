@@ -1,60 +1,35 @@
-13:01:34 **** Incremental Build of configuration Debug for project ODB2 ****
+02:18:26 **** Incremental Build of configuration Debug for project ODB2 ****
 make -j12 all 
-arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/ICM20948.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/ICM20948.d" -MT"Core/Src/GAUL_Drivers/Components/ICM20948.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/ICM20948.o"
-../Core/Src/GAUL_Drivers/Components/ICM20948.c: In function 'ICM20948_Init':
-../Core/Src/GAUL_Drivers/Components/ICM20948.c:62:51: warning: passing argument 3 of 'ICM20948_Read' makes pointer from integer without a cast [-Wint-conversion]
-   62 |         ICM20948_Read(dev, ICM20948_REG_WHO_AM_I, rxData, 4);
-      |                                                   ^~~~~~
-      |                                                   |
-      |                                                   uint8_t {aka unsigned char}
-../Core/Src/GAUL_Drivers/Components/ICM20948.c:13:64: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'uint8_t' {aka 'unsigned char'}
-   13 | static void ICM20948_Read(ICM20948 *dev, uint8_t reg, uint8_t *rxData, uint8_t len) {
-      |                                                       ~~~~~~~~~^~~~~~
+arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Low_Level/GPIO_driver.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Low_Level/GPIO_driver.d" -MT"Core/Src/GAUL_Drivers/Low_Level/GPIO_driver.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Low_Level/GPIO_driver.o"
 arm-none-eabi-gcc -o "ODB2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\STM32F412ZGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ODB2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: ODB2.elf
  
 arm-none-eabi-size  ODB2.elf 
 arm-none-eabi-objdump -h -S ODB2.elf  > "ODB2.list"
    text	   data	    bss	    dec	    hex	filename
-  50788	    360	  10048	  61196	   ef0c	ODB2.elf
+  50748	    360	  10048	  61156	   eee4	ODB2.elf
 Finished building: default.size.stdout
  
 Finished building: ODB2.list
  
-13:02:00 **** Incremental Build of configuration Debug for project ODB2 ****
+02:18:34 **** Incremental Build of configuration Debug for project ODB2 ****
 make -j12 all 
-arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/ICM20948.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/ICM20948.d" -MT"Core/Src/GAUL_Drivers/Components/ICM20948.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/ICM20948.o"
-../Core/Src/GAUL_Drivers/Components/ICM20948.c: In function 'ICM20948_Init':
-../Core/Src/GAUL_Drivers/Components/ICM20948.c:62:51: warning: passing argument 3 of 'ICM20948_Read' makes pointer from integer without a cast [-Wint-conversion]
-   62 |         ICM20948_Read(dev, ICM20948_REG_WHO_AM_I, rxData, 1);
-      |                                                   ^~~~~~
-      |                                                   |
-      |                                                   uint8_t {aka unsigned char}
-../Core/Src/GAUL_Drivers/Components/ICM20948.c:13:64: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'uint8_t' {aka 'unsigned char'}
-   13 | static void ICM20948_Read(ICM20948 *dev, uint8_t reg, uint8_t *rxData, uint8_t len) {
-      |                                                       ~~~~~~~~~^~~~~~
-arm-none-eabi-gcc -o "ODB2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\STM32F412ZGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ODB2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: ODB2.elf
- 
 arm-none-eabi-size  ODB2.elf 
-arm-none-eabi-objdump -h -S ODB2.elf  > "ODB2.list"
    text	   data	    bss	    dec	    hex	filename
-  50788	    360	  10048	  61196	   ef0c	ODB2.elf
+  50748	    360	  10048	  61156	   eee4	ODB2.elf
 Finished building: default.size.stdout
  
-Finished building: ODB2.list
- 
-13:02:12 **** Incremental Build of configuration Debug for project ODB2 ****
+02:22:56 **** Incremental Build of configuration Debug for project ODB2 ****
 make -j12 all 
-arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/ICM20948.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/ICM20948.d" -MT"Core/Src/GAUL_Drivers/Components/ICM20948.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/ICM20948.o"
-arm-none-eabi-gcc -o "ODB2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\STM32F412ZGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ODB2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: ODB2.elf
- 
 arm-none-eabi-size  ODB2.elf 
-arm-none-eabi-objdump -h -S ODB2.elf  > "ODB2.list"
    text	   data	    bss	    dec	    hex	filename
-  50784	    360	  10048	  61192	   ef08	ODB2.elf
+  50748	    360	  10048	  61156	   eee4	ODB2.elf
 Finished building: default.size.stdout
  
-Finished building: ODB2.list
+02:24:46 **** Incremental Build of configuration Debug for project ODB2 ****
+make -j12 all 
+arm-none-eabi-size  ODB2.elf 
+   text	   data	    bss	    dec	    hex	filename
+  50748	    360	  10048	  61156	   eee4	ODB2.elf
+Finished building: default.size.stdout
  
