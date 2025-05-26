@@ -447,7 +447,9 @@
   },
   "libraries": {
     "pinned_footprint_libs": [],
-    "pinned_symbol_libs": []
+    "pinned_symbol_libs": [
+      "ODB2"
+    ]
   },
   "meta": {
     "filename": "ODB2.kicad_pro",
