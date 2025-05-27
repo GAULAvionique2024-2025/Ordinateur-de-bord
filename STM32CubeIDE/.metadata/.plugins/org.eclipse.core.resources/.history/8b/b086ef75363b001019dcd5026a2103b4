@@ -1,0 +1,51 @@
+#include "GAUL_Drivers/Components/RFM22B.h"
+#include "math.h"
+
+#define XTAL_FREQ 30000000UL // 30 MHz crystal
+
+void RFM22B_Write(uint8_t addr, uint8_t value) {
+    uint8_t buffer[2] = { addr | 0x80, value };
+    RFM22B_CS_LOW();
+    HAL_SPI_Transmit(&hspi1, buffer, 2, HAL_MAX_DELAY);
+    RFM22B_CS_HIGH();
+}
+
+uint8_t RFM22B_Read(uint8_t addr) {
+    uint8_t tx = addr & 0x7F, rx = 0;
+    RFM22B_CS_LOW();
+    HAL_SPI_Transmit(&hspi1, &tx, 1, HAL_MAX_DELAY);
+    HAL_SPI_Receive(&hspi1, &rx, 1, HAL_MAX_DELAY);
+    RFM22B_CS_HIGH();
+    return rx;
+}
+
+void RFM22B_SetFrequency(uint32_t freq_hz) {
+    uint8_t fbsel = (freq_hz / 10000000UL) - 24;
+    uint8_t hbsel = (freq_hz >= 480000000UL) ? 1 : 0;
+    uint32_t carrier = ((freq_hz / 10000UL) * 64000UL) / (10 * (24 + fbsel + hbsel));
+
+    uint8_t fc_hi = (carrier >> 8) & 0xFF;
+    uint8_t fc_lo = carrier & 0xFF;
+
+    // Fréquence de base
+    RFM22B_Write(0x75, (hbsel << 5) | fbsel);
+    RFM22B_Write(0x76, fc_hi);
+    RFM22B_Write(0x77, fc_lo);
+}
+
+void RFM22B_Init(uint32_t freq_hz) {
+    HAL_Delay(100);
+
+    RFM22B_Write(0x07, 0x80);
+    HAL_Delay(10);
+
+    // Configuration
+    RFM22B_Write(0x06, 0x00); // TX modulation disable
+    RFM22B_Write(0x09, 0x7F); // VCO, LDO
+    RFM22B_Write(0x0A, 0x05); // FIFO reset
+    RFM22B_Write(0x0B, 0x12); // GPIO0 TX state
+    RFM22B_Write(0x6D, 0x07); //  +13 dBm
+    RFM22B_SetFrequency(freq_hz); // Set frequency
+
+    RFM22B_Write(0x07, 0x01); // Mode ready (crystal on)
+}

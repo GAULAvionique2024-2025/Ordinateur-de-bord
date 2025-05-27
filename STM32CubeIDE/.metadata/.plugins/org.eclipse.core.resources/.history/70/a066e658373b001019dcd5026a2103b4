@@ -1,0 +1,21 @@
+#include "GAUL_Drivers/Components/RFM22B.h"
+#include "math.h"
+
+#define XTAL_FREQ 30000000UL // 30 MHz crystal
+
+void RFM22B_Init(SPI_TypeDef *SPIx, RFM22B *dev, uint32_t freq_hz) {
+    HAL_Delay(100);
+
+    RFM22B_Write(0x07, 0x80);
+    HAL_Delay(10);
+
+    // Configuration
+    RFM22B_Write(0x06, 0x00); // TX modulation disable
+    RFM22B_Write(0x09, 0x7F); // VCO, LDO
+    RFM22B_Write(0x0A, 0x05); // FIFO reset
+    RFM22B_Write(0x0B, 0x12); // GPIO0 TX state
+    RFM22B_Write(0x6D, 0x07); //  +13 dBm
+    RFM22B_SetFrequency(freq_hz); // Set frequency
+
+    RFM22B_Write(0x07, 0x01); // Mode ready (crystal on)
+}

@@ -1,0 +1,65 @@
+#ifndef INC_GAUL_DRIVERS_COMPONENTS_RFM22B_H_
+#define INC_GAUL_DRIVERS_COMPONENTS_RFM22B_H_
+
+#include "stm32f4xx.h"
+#include "math.h"
+#include "GAUL_Drivers/Low_Level/SPI_driver.h"
+#include "GAUL_Drivers/Low_Level/GPIO_driver.h"
+
+#define XTAL_FREQ 30000000UL // 30 MHz crystal (à vérifier HSI 16MHz)
+
+// Modes de fonctionnement
+#define REG_OP_MODE                  0x07
+#define MODE_READY                   0x01
+#define MODE_TX                      0x09
+#define MODE_RX                      0x05
+
+// FIFO
+#define REG_FIFO_ACCESS              0x7F
+#define REG_FIFO_RESET               0x08
+#define FIFO_RESET_TX                0x03
+#define FIFO_RESET_RX                0x02
+
+// Longueur de paquet
+#define REG_PACKET_LENGTH            0x3E
+
+// Statuts et interruptions
+#define REG_INTERRUPT_STATUS1        0x03
+#define IRQ_PACKET_SENT              (1 << 2)
+#define IRQ_VALID_PACKET_RECEIVED    (1 << 1)
+
+// Fréquence
+#define REG_FREQ_BAND_SELECT         0x75
+#define REG_CARRIER_FREQ_1           0x76
+#define REG_CARRIER_FREQ_0           0x77
+
+// Synchronisation
+#define REG_SYNC_WORD_1              0x34
+#define REG_SYNC_WORD_2              0x35
+#define REG_PREAMBLE_SYNC_CONFIG     0x30
+#define REG_HEADER_CONTROL           0x33
+
+// Contrôle de données
+#define REG_DATA_ACCESS_CONTROL      0x32
+
+// Puissance TX
+#define REG_TX_POWER                 0x6D
+
+typedef struct {
+	SPI_TypeDef		*SPIx;
+	GPIO_TypeDef 	*cs_port;
+	uint8_t      	cs_pin;
+
+	uint8_t      	int_pin;
+	GPIO_TypeDef 	*int_port;
+
+	uint32_t		frequency;
+	uint8_t			*data;
+} RFM22B;
+
+void RFM22B_Init(SPI_TypeDef *SPIx, RFM22B *dev, uint32_t freq_hz);
+void RFM22B_Transmit(RFM22B *dev, uint8_t *data, uint8_t len);
+uint8_t RFM22B_Receive(RFM22B *dev);
+
+
+#endif /* INC_GAUL_DRIVERS_COMPONENTS_RFM22B_H_ */

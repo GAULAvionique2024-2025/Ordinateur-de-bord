@@ -1,6 +1,16 @@
-02:18:26 **** Incremental Build of configuration Debug for project ODB2 ****
+17:00:30 **** Incremental Build of configuration Debug for project ODB2 ****
 make -j12 all 
-arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Low_Level/GPIO_driver.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Low_Level/GPIO_driver.d" -MT"Core/Src/GAUL_Drivers/Low_Level/GPIO_driver.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Low_Level/GPIO_driver.o"
+arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: In function 'RFM22B_SetFrequency':
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:31:28: error: 'XTAL_FREQ' undeclared (first use in this function)
+   31 |     uint32_t denominator = XTAL_FREQ * (24 + fbsel + hbsel);
+      |                            ^~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:31:28: note: each undeclared identifier is reported only once for each function it appears in
+make: *** [Core/Src/GAUL_Drivers/Components/subdir.mk:31: Core/Src/GAUL_Drivers/Components/RFM22B.o] Error 1
+"make -j12 all" terminated with exit code 2. Build might be incomplete.
+17:00:34 **** Incremental Build of configuration Debug for project ODB2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
 arm-none-eabi-gcc -o "ODB2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\STM32F412ZGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ODB2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: ODB2.elf
  
@@ -12,24 +22,140 @@ Finished building: default.size.stdout
  
 Finished building: ODB2.list
  
-02:18:34 **** Incremental Build of configuration Debug for project ODB2 ****
+17:02:02 **** Incremental Build of configuration Debug for project ODB2 ****
 make -j12 all 
+arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+arm-none-eabi-gcc -o "ODB2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\STM32F412ZGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ODB2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: ODB2.elf
+ 
 arm-none-eabi-size  ODB2.elf 
+arm-none-eabi-objdump -h -S ODB2.elf  > "ODB2.list"
    text	   data	    bss	    dec	    hex	filename
   50748	    360	  10048	  61156	   eee4	ODB2.elf
 Finished building: default.size.stdout
  
-02:22:56 **** Incremental Build of configuration Debug for project ODB2 ****
+Finished building: ODB2.list
+ 
+17:04:07 **** Incremental Build of configuration Debug for project ODB2 ****
 make -j12 all 
+arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+arm-none-eabi-gcc -o "ODB2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\STM32F412ZGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ODB2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: ODB2.elf
+ 
 arm-none-eabi-size  ODB2.elf 
+arm-none-eabi-objdump -h -S ODB2.elf  > "ODB2.list"
    text	   data	    bss	    dec	    hex	filename
   50748	    360	  10048	  61156	   eee4	ODB2.elf
 Finished building: default.size.stdout
  
-02:24:46 **** Incremental Build of configuration Debug for project ODB2 ****
+Finished building: ODB2.list
+ 
+17:04:32 **** Incremental Build of configuration Debug for project ODB2 ****
 make -j12 all 
+arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+arm-none-eabi-gcc -o "ODB2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\STM32F412ZGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ODB2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: ODB2.elf
+ 
 arm-none-eabi-size  ODB2.elf 
+arm-none-eabi-objdump -h -S ODB2.elf  > "ODB2.list"
    text	   data	    bss	    dec	    hex	filename
   50748	    360	  10048	  61156	   eee4	ODB2.elf
 Finished building: default.size.stdout
+ 
+Finished building: ODB2.list
+ 
+17:05:11 **** Incremental Build of configuration Debug for project ODB2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+arm-none-eabi-gcc -o "ODB2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\STM32F412ZGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ODB2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: ODB2.elf
+ 
+arm-none-eabi-size  ODB2.elf 
+arm-none-eabi-objdump -h -S ODB2.elf  > "ODB2.list"
+   text	   data	    bss	    dec	    hex	filename
+  50748	    360	  10048	  61156	   eee4	ODB2.elf
+Finished building: default.size.stdout
+ 
+Finished building: ODB2.list
+ 
+17:25:46 **** Incremental Build of configuration Debug for project ODB2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+arm-none-eabi-gcc -o "ODB2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\STM32F412ZGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ODB2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: ODB2.elf
+ 
+arm-none-eabi-size  ODB2.elf 
+arm-none-eabi-objdump -h -S ODB2.elf  > "ODB2.list"
+   text	   data	    bss	    dec	    hex	filename
+  50748	    360	  10048	  61156	   eee4	ODB2.elf
+Finished building: default.size.stdout
+ 
+Finished building: ODB2.list
+ 
+17:32:59 **** Incremental Build of configuration Debug for project ODB2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: In function 'RFM22B_Init':
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:46:47: error: 'RFM22B_REG_RESET' undeclared (first use in this function); did you mean 'RFM22B_VAL_RESET'?
+   46 |         RFM22B_Write(dev, RFM22B_REG_OP_MODE, RFM22B_REG_RESET); // Reset
+      |                                               ^~~~~~~~~~~~~~~~
+      |                                               RFM22B_VAL_RESET
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:46:47: note: each undeclared identifier is reported only once for each function it appears in
+make: *** [Core/Src/GAUL_Drivers/Components/subdir.mk:31: Core/Src/GAUL_Drivers/Components/RFM22B.o] Error 1
+"make -j12 all" terminated with exit code 2. Build might be incomplete.
+17:33:20 **** Incremental Build of configuration Debug for project ODB2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+arm-none-eabi-gcc -o "ODB2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\STM32F412ZGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ODB2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: ODB2.elf
+ 
+arm-none-eabi-size  ODB2.elf 
+arm-none-eabi-objdump -h -S ODB2.elf  > "ODB2.list"
+   text	   data	    bss	    dec	    hex	filename
+  50748	    360	  10048	  61156	   eee4	ODB2.elf
+Finished building: default.size.stdout
+ 
+Finished building: ODB2.list
+ 
+17:38:28 **** Incremental Build of configuration Debug for project ODB2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+arm-none-eabi-gcc -o "ODB2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\STM32F412ZGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ODB2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: ODB2.elf
+ 
+arm-none-eabi-size  ODB2.elf 
+arm-none-eabi-objdump -h -S ODB2.elf  > "ODB2.list"
+   text	   data	    bss	    dec	    hex	filename
+  50748	    360	  10048	  61156	   eee4	ODB2.elf
+Finished building: default.size.stdout
+ 
+Finished building: ODB2.list
+ 
+17:39:04 **** Incremental Build of configuration Debug for project ODB2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+arm-none-eabi-gcc -o "ODB2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\STM32F412ZGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ODB2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: ODB2.elf
+ 
+arm-none-eabi-size  ODB2.elf 
+arm-none-eabi-objdump -h -S ODB2.elf  > "ODB2.list"
+   text	   data	    bss	    dec	    hex	filename
+  50748	    360	  10048	  61156	   eee4	ODB2.elf
+Finished building: default.size.stdout
+ 
+Finished building: ODB2.list
+ 
+17:46:56 **** Incremental Build of configuration Debug for project ODB2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+arm-none-eabi-gcc -o "ODB2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\STM32F412ZGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ODB2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: ODB2.elf
+ 
+arm-none-eabi-size  ODB2.elf 
+arm-none-eabi-objdump -h -S ODB2.elf  > "ODB2.list"
+   text	   data	    bss	    dec	    hex	filename
+  50748	    360	  10048	  61156	   eee4	ODB2.elf
+Finished building: default.size.stdout
+ 
+Finished building: ODB2.list
  

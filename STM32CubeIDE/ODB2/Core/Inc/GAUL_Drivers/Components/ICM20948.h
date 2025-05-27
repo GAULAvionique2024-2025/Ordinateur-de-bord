@@ -4,9 +4,9 @@
 
 #include "stm32f4xx.h"
 #include "math.h"
-#include "GAUL_Drivers/Components/ICM20948.h"
 #include "GAUL_Drivers/Low_Level/SPI_driver.h"
 #include "GAUL_Drivers/Low_Level/GPIO_driver.h"
+#include "GAUL_Drivers/util.h"
 
 #define ICM20948_REG_BANK_SEL              	0x7F
 #define ICM20948_VAL_USER_BANK_0            0x00

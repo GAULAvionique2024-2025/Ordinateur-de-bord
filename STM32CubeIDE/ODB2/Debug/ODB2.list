@@ -35,17 +35,17 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  15 .debug_rnglists 000012f1  00000000  00000000  00031708  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_macro  00028d85  00000000  00000000  000329f9  2**0
+ 16 .debug_macro  00028e11  00000000  00000000  000329f9  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   00022192  00000000  00000000  0005b77e  2**0
+ 17 .debug_line   00022192  00000000  00000000  0005b80a  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    000e4d90  00000000  00000000  0007d910  2**0
+ 18 .debug_str    000e4d90  00000000  00000000  0007d99c  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000043  00000000  00000000  001626a0  2**0
+ 19 .comment      00000043  00000000  00000000  0016272c  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  0000708c  00000000  00000000  001626e4  2**2
+ 20 .debug_frame  0000708c  00000000  00000000  00162770  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 21 .debug_line_str 0000007c  00000000  00000000  00169770  2**0
+ 21 .debug_line_str 0000007c  00000000  00000000  001697fc  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -735,7 +735,6 @@ Disassembly of section .text:
 
 08000954 <ICM20948_Write>:
 #include "GAUL_Drivers/Components/ICM20948.h"
-#include "GAUL_Drivers/util.h"
 
 static void ICM20948_Write(ICM20948 *dev, uint8_t reg, uint8_t val) {
  8000954:	b580      	push	{r7, lr}

@@ -1,5 +1,4 @@
 #include "GAUL_Drivers/Components/ICM20948.h"
-#include "GAUL_Drivers/util.h"
 
 static void ICM20948_Write(ICM20948 *dev, uint8_t reg, uint8_t val) {
 	uint8_t tx[2] = {
