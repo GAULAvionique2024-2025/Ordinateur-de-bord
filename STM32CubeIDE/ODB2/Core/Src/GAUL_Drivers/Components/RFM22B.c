@@ -1,101 +1,180 @@
-#include "GAUL_Drivers/Components/RFM22B.h"
-
-
-static void RFM22B_Write(RFM22B *dev, uint8_t addr, uint8_t value) {
-    uint8_t buffer[2] = {
-    			addr | 0x80,
-				value
-    };
-    GPIO_WritePin(dev->cs_port, dev->cs_pin, LOW);
-	SPI_MOSI(dev->SPIx, buffer, 2);
-	GPIO_WritePin(dev->cs_port, dev->cs_pin, HIGH);
-}
-
-static uint8_t RFM22B_Read(RFM22B *dev, uint8_t addr) {
-    uint8_t tx = addr & 0x7F;
-    uint8_t	rx = 0;
-    GPIO_WritePin(dev->cs_port, dev->cs_pin, LOW);
-	SPI_MOSI(dev->SPIx, &tx, 1);
-	SPI_MISO(dev->SPIx, &rx, 1);
-	GPIO_WritePin(dev->cs_port, dev->cs_pin, HIGH);
-	return rx;
-}
-
-void RFM22B_SetFrequency(RFM22B *dev, uint32_t freq_hz) {
-    uint8_t hbsel = (freq_hz >= 480000000UL) ? 1 : 0;
-
-    uint8_t fbsel = (freq_hz / 10000000UL) - 24;
-
-    uint64_t numerator = (uint64_t)freq_hz * 64000UL;
-    uint32_t denominator = RFM22B_XTAL_FREQ * (24 + fbsel + hbsel);
-    uint16_t fc = (uint16_t)(numerator / denominator); // fc = ((f_tx * 64000) / (RFM22B_XTAL_FREQ * (24 + fbsel + hbsel)))
-
-    uint8_t fc_hi = (fc >> 8) & 0xFF;
-    uint8_t fc_lo = fc & 0xFF;
-
-    RFM22B_Write(dev, RFM22B_REG_FREQ_BAND_SELECT, (hbsel << 5) | fbsel);	// Frequency Band Select
-    RFM22B_Write(dev, RFM22B_REG_CARRIER_FREQ_1, fc_hi);                	// Nominal Carrier Frequency 1
-    RFM22B_Write(dev, RFM22B_REG_CARRIER_FREQ_0, fc_lo);                	// Nominal Carrier Frequency 0
-}
-
-
-void RFM22B_Init(SPI_TypeDef *SPIx, RFM22B *dev, uint32_t freq_hz) {
-	dev->SPIx = SPIx;
-	dev->frequency = freq_hz;
-
-	RFM22B_Write(dev, RFM22B_REG_OP_MODE, RFM22B_VAL_RESET); // Reset
-    HAL_Delay(10);
-    // Configuration
-    RFM22B_Write(dev, RFM22B_REG_MODULATION_CONTROL1, 0x2C); 			// FSK, no manchester, no whitening
-    RFM22B_Write(dev, RFM22B_REG_CRYSTAL_OSC_LOAD_CAP, 0x7F); 			// VCO, LDO
-    RFM22B_Write(dev, RFM22B_REG_FIFO_RESET, RFM22B_VAL_FIFO_RESET_TX); // FIFO reset
-    RFM22B_Write(dev, RFM22B_REG_GPIO0_CONFIG, 0x12); 					// GPIO0 TX state
-    RFM22B_Write(dev, RFM22B_REG_TX_POWER, 0x07); 						// +13 dBm
-    RFM22B_Write(dev, RFM22B_REG_PREAMBLE_SYNC_CONFIG, 0x21); 			// Preamble=4, sync=2 (0x21 = 00100001)
-    RFM22B_Write(dev, RFM22B_REG_SYNC_WORD_1, 0x2D); 					// Sync Word 1
-    RFM22B_Write(dev, RFM22B_REG_SYNC_WORD_2, 0xD4);					// Sync Word 2
-    RFM22B_Write(dev, RFM22B_REG_HEADER_CONTROL, 0x02); 				// Header OFF, Sync Word Detection ON
-    RFM22B_SetFrequency(dev, freq_hz);									// Set frequency
-
-    RFM22B_Write(dev, RFM22B_REG_OP_MODE, RFM22B_VAL_MODE_READY); 		// Ready Mode
-}
-
-void RFM22B_Transmit(RFM22B *dev, uint8_t *data, uint8_t len) {
-    RFM22B_Write(dev, RFM22B_REG_OP_MODE, RFM22B_VAL_MODE_READY); // Ready Mode
-
-    RFM22B_Write(dev, RFM22B_REG_FIFO_RESET, RFM22B_VAL_FIFO_RESET_TX); // Reset TX FIFO
-    HAL_Delay(1);
-    RFM22B_Write(dev, RFM22B_REG_FIFO_RESET, 0x00);
-
-    RFM22B_Write(dev, RFM22B_REG_PACKET_LENGTH, len); // Packet length
-    for (uint8_t i = 0; i < len; i++) {
-        RFM22B_Write(dev, RFM22B_REG_FIFO_ACCESS, data[i]);
-    }
-    RFM22B_Write(dev, RFM22B_REG_OP_MODE, RFM22B_VAL_MODE_TX); // TX Mode
-    while (!(RFM22B_Read(dev, RFM22B_REG_INTERRUPT_STATUS1) & RFM22B_VAL_IRQ_PACKET_SENT)); // Wait checksum
-
-    RFM22B_Write(dev, RFM22B_REG_OP_MODE, RFM22B_VAL_MODE_READY);// Ready Mode
-}
-
 /*
-uint8_t RFM22B_Receive(RFM22B *dev) {
-	RFM22B_Write(dev, RFM22B_REG_OP_MODE, RFM22B_VAL_MODE_READY);
+ * RFM22.c
+ *
+ *  Created on: Apr 15, 2025
+ *      Author: victo
+ */
 
-	RFM22B_Write(dev, RFM22B_REG_FIFO_RESET, RFM22B_VAL_FIFO_RESET_RX); // Reset FIFO RX
-	HAL_Delay(1);
-	RFM22B_Write(dev, RFM22B_REG_FIFO_RESET, 0x00);
+#include "Gaul_drivers/Components/RFM22B.h"
+#include <math.h>
 
-	RFM22B_Write(dev, RFM22B_REG_OP_MODE, RFM22B_VAL_MODE_RX); // RX mode
-	while (!(RFM22B_Read(dev, RFM22B_REG_INTERRUPT_STATUS1) & RFM22B_VAL_IRQ_VALID_PACKET_RECEIVED)); // Wait for checksum
+// config GFSK, 2.4kbs, 20kHz freq dev, 50kHz channel step, CRC off, no header
+RFM22_configs rfm22_confs ={
+		.registers = 		 {0x1C, 0x1D, 0x20, 0x21, 0x22, 0x23, 0x24, 0x25, 0x2A, 0x2C, 0x2D, 0x2E, 0x30, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x3A, 0x3B, 0x3C, 0x3D, 0x3E, 0x3F, 0x40, 0x41, 0x42, 0x43, 0x44, 0x45, 0x46, 0x6E, 0x6F, 0x70, 0x71, 0x72, 0x75, 0x76, 0x77, 0x79},
+		.register_settings = {0x27, 0x40, 0xA1, 0x20, 0x4E, 0xA5, 0x00, 0x28, 0x1D, 0x2A, 0x08, 0x2A, 0x88, 0x00, 0x02, 0x08, 0x22, 0x2D, 0xD4, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x04, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x13, 0xA9, 0x2C, 0x23, 0x10, 0x53, 0x4B, 0x00, 0x05}
+};
 
-	uint8_t len = RFM22B_Read(dev, RFM22B_REG_RECEIVED_PACKET_LEN); // Length received
-	for (uint8_t i = 0; i < len; i++) {
-		dev->data[i] = RFM22B_Read(dev, RFM22B_REG_FIFO_ACCESS);
+
+uint8_t RFM22_init(RFM22 *dev, RFM22_configs *confs)
+{
+	//reset RFM
+	HAL_GPIO_WritePin(dev->snd_port, dev->snd_pin, 1);
+	HAL_Delay(100);
+	HAL_GPIO_WritePin(dev->snd_port, dev->snd_pin, 0);
+	HAL_Delay(100);
+
+	//première lecture port SPI
+	uint8_t rx_buffer[] = {0, 0};
+	RFM22_SPI_read(dev, RH_RF22_REG_00_DEVICE_TYPE, rx_buffer, 1);
+	if (rx_buffer[0] != 8) return 0; //connection non établie
+	//wait for chip ready
+
+	do {
+		RFM22_SPI_read(dev, RH_RF22_REG_04_INTERRUPT_STATUS2, rx_buffer, 1);
+	}
+	while (!((rx_buffer[0] & RH_RF22_ICHIPRDY) >> 1)); //check for ichiprdy
+
+
+	uint8_t tx_buffer[4] = {0};
+	// lire registres interrupt
+	RFM22_SPI_read(dev, RH_RF22_REG_03_INTERRUPT_STATUS1, rx_buffer, 2);
+	// désactiver GPIO
+	RFM22_SPI_write(dev, RH_RF22_REG_0B_GPIO_CONFIGURATION0, tx_buffer, 4);
+	// mettre en mode standby
+	RFM22_SPI_write(dev, RH_RF22_REG_07_OPERATING_MODE1, tx_buffer, 2);
+	// active toutes interruptions
+	tx_buffer[0] = 0xFF;
+	tx_buffer[1] = 0xFF;
+	RFM22_SPI_write(dev, RH_RF22_REG_05_INTERRUPT_ENABLE1, tx_buffer, 2);
+
+	//set thresholds registres
+	tx_buffer[0] = 56; // à un packet d'overflow
+	tx_buffer[1] = 0;
+	tx_buffer[2] = 56;
+	RFM22_SPI_write(dev, RH_RF22_REG_7C_TX_FIFO_CONTROL1, tx_buffer, 3);
+
+	// écrit toutes les valeurs dans les registres
+	for (int i=0; i<sizeof(confs->registers); i++)
+	{
+		tx_buffer[0] = (confs->register_settings)[i];
+		RFM22_SPI_write(dev, (confs->registers)[i], tx_buffer, 1);
 	}
 
-	RFM22B_Write(dev, RFM22B_REG_OP_MODE, RFM22B_VAL_MODE_READY); // Ready Mode
 
-	return len;
+	return 1;
 }
-*/
 
+
+//transmet les bits dans tx_buffer et retourne en mode standby
+uint8_t RFM22_transmit(RFM22 *dev, uint8_t *tx_buffer, uint8_t lenght)
+{
+	if (lenght > 64)
+	{
+		return 0; // pas assez de place dans FIFO
+	}
+	uint8_t ptr[] = {0};
+	RFM22_SPI_read(dev, RH_RF22_REG_07_OPERATING_MODE1, ptr, 1);
+	if (ptr[0] & RH_RF22_TXON)
+	{
+		return 0; // already transmitting
+	}
+
+
+	// send dans la FIFO et set longueur packet
+	RFM22_SPI_write(dev, RH_RF22_REG_7F_FIFO_ACCESS, tx_buffer, lenght);
+	ptr[0] = lenght;
+	RFM22_SPI_write(dev, RH_RF22_REG_3E_PACKET_LENGTH, ptr, 1);
+
+	// mode tx
+	ptr[0] = RH_RF22_TXON;
+	RFM22_SPI_write(dev, RH_RF22_REG_07_OPERATING_MODE1, ptr, 1);
+
+	return 1;
+}
+
+// commence à écouter pour des packets. Retourne en mode standy une fois qu'un packet est reçu
+uint8_t RFM22_rx_mode(RFM22 *dev)
+{
+	// enable ipvalid interrupt
+	// mode rx
+	uint8_t reg_value = RH_RF22_RXON;
+	uint8_t *reg_set = &reg_value;
+	RFM22_SPI_write(dev, RH_RF22_REG_07_OPERATING_MODE1, reg_set, 1);
+	return 1;
+}
+
+
+uint8_t RFM22_standby(RFM22 *dev)
+{
+
+	uint8_t reg_value = 0;
+	uint8_t *reg_set = &reg_value;
+	RFM22_SPI_write(dev, RH_RF22_REG_07_OPERATING_MODE1, reg_set, 1);
+	return 1;
+}
+
+
+// retourn nbr d'octets disponnibles
+uint8_t RFM22_available(RFM22 *dev)
+{
+	uint8_t lenght;
+	uint8_t *ptr = &lenght;
+	RFM22_SPI_read(dev, RH_RF22_REG_4B_RECEIVED_PACKET_LENGTH, ptr, 1);
+	return lenght;
+}
+
+
+uint8_t RFM22_get_RSSI(RFM22 *dev)
+{
+	uint8_t rssi;
+	uint8_t *ptr = &rssi;
+	RFM22_SPI_read(dev, RH_RF22_REG_26_RSSI, ptr, 1);
+	return rssi;
+}
+
+
+void RFM22_clr_tx_FIFO(RFM22 *dev)
+{
+	uint8_t reg_value = RH_RF22_FFCLRTX;
+	uint8_t *reg_set = &reg_value;
+	RFM22_SPI_write(dev, RH_RF22_REG_08_OPERATING_MODE2, reg_set, 1);
+}
+
+
+void RFM22_clr_rx_FIFO(RFM22 *dev)
+{
+	uint8_t reg_value = RH_RF22_FFCLRRX;
+	uint8_t *reg_set = &reg_value;
+	RFM22_SPI_write(dev, RH_RF22_REG_08_OPERATING_MODE2, reg_set, 1);
+}
+
+
+void RFM22_read_rx(RFM22 *dev, uint8_t *rx_data, uint8_t size)
+{
+	RFM22_SPI_read(dev, RH_RF22_REG_7F_FIFO_ACCESS, rx_data, size);
+}
+
+
+void RFM22_channel(RFM22 *dev, uint8_t channel)
+{
+	RFM22_SPI_write(dev, RH_RF22_REG_79_FREQUENCY_HOPPING_CHANNEL_SELECT, &channel, 1);
+}
+
+
+void RFM22_SPI_write(RFM22 *dev, uint8_t addr, uint8_t *tx_buffer, uint8_t size)
+{
+	uint8_t write_addr = 0x80 | addr;
+	HAL_GPIO_WritePin(dev->cs_port, dev->cs_pin, 0);
+	HAL_SPI_Transmit(dev->SPIx, &write_addr, 1, HAL_MAX_DELAY);
+	HAL_SPI_Transmit(dev->SPIx, tx_buffer, size, HAL_MAX_DELAY);
+	HAL_GPIO_WritePin(dev->cs_port, dev->cs_pin, 1);
+}
+
+
+void RFM22_SPI_read(RFM22 *dev, uint8_t addr, uint8_t *rx_buffer, uint8_t size)
+{
+	HAL_GPIO_WritePin(dev->cs_port, dev->cs_pin, 0);
+	HAL_SPI_TransmitReceive(dev->SPIx, &addr, rx_buffer, 1, HAL_MAX_DELAY);
+	HAL_SPI_TransmitReceive(dev->SPIx, rx_buffer, rx_buffer, size, HAL_MAX_DELAY); //vérifier qu'envoyer le rx buffer ok
+	HAL_GPIO_WritePin(dev->cs_port, dev->cs_pin, 1);
+}
