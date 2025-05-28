@@ -53,7 +53,8 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Core/Inc/GAUL_Drivers/Components/ICM20948.h \
  ../Core/Inc/GAUL_Drivers/Components/L76LM33.h \
  ../Core/Inc/GAUL_Drivers/Low_Level/RingBuffer.h \
- ../Core/Inc/GAUL_Drivers/Low_Level/NMEA.h
+ ../Core/Inc/GAUL_Drivers/Low_Level/NMEA.h \
+ ../Core/Inc/GAUL_Drivers/Components/RFM22B.h
 ../Core/Inc/main.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
 ../Core/Inc/stm32f4xx_hal_conf.h:
@@ -112,3 +113,4 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Core/Inc/GAUL_Drivers/Components/L76LM33.h:
 ../Core/Inc/GAUL_Drivers/Low_Level/RingBuffer.h:
 ../Core/Inc/GAUL_Drivers/Low_Level/NMEA.h:
+../Core/Inc/GAUL_Drivers/Components/RFM22B.h:

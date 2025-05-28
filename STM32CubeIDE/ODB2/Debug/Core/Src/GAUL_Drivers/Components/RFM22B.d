@@ -35,10 +35,10 @@ Core/Src/GAUL_Drivers/Components/RFM22B.o: \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h \
- ../Core/Inc/GAUL_Drivers/Low_Level/SPI_driver.h \
  ../Core/Inc/GAUL_Drivers/Low_Level/GPIO_driver.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_gpio.h \
- ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_exti.h
+ ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_exti.h \
+ ../Core/Inc/GAUL_Drivers/Low_Level/SPI_driver.h
 ../Core/Inc/GAUL_Drivers/Components/RFM22B.h:
 ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h:
 ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f412zx.h:
@@ -74,7 +74,7 @@ Core/Src/GAUL_Drivers/Components/RFM22B.o: \
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h:
-../Core/Inc/GAUL_Drivers/Low_Level/SPI_driver.h:
 ../Core/Inc/GAUL_Drivers/Low_Level/GPIO_driver.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_gpio.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_exti.h:
+../Core/Inc/GAUL_Drivers/Low_Level/SPI_driver.h:

@@ -1,16 +1,350 @@
-17:00:30 **** Incremental Build of configuration Debug for project ODB2 ****
+18:36:17 **** Incremental Build of configuration Debug for project ODB2 ****
 make -j12 all 
 arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
-../Core/Src/GAUL_Drivers/Components/RFM22B.c: In function 'RFM22B_SetFrequency':
-../Core/Src/GAUL_Drivers/Components/RFM22B.c:31:28: error: 'XTAL_FREQ' undeclared (first use in this function)
-   31 |     uint32_t denominator = XTAL_FREQ * (24 + fbsel + hbsel);
-      |                            ^~~~~~~~~
-../Core/Src/GAUL_Drivers/Components/RFM22B.c:31:28: note: each undeclared identifier is reported only once for each function it appears in
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: In function 'RFM22B_SPI_write':
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:20:9: warning: implicit declaration of function 'HAL_SPI_Transmit'; did you mean 'HAL_UART_Transmit'? [-Wimplicit-function-declaration]
+   20 |         HAL_SPI_Transmit(dev->SPIx, &write_addr, 1, HAL_MAX_DELAY);
+      |         ^~~~~~~~~~~~~~~~
+      |         HAL_UART_Transmit
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: In function 'RFM22B_SPI_read':
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:27:9: warning: implicit declaration of function 'HAL_SPI_TransmitReceive'; did you mean 'SPI_TransmitReceive'? [-Wimplicit-function-declaration]
+   27 |         HAL_SPI_TransmitReceive(dev->SPIx, &addr, rx_buffer, 1, HAL_MAX_DELAY);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~
+      |         SPI_TransmitReceive
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: At top level:
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:38:16: warning: 'RFM22B_SetStandbyMode' defined but not used [-Wunused-function]
+   38 | static uint8_t RFM22B_SetStandbyMode(RFM22B *dev) {
+      |                ^~~~~~~~~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:32:13: warning: 'RFM22B_ClearTX' defined but not used [-Wunused-function]
+   32 | static void RFM22B_ClearTX(RFM22B *dev) {
+      |             ^~~~~~~~~~~~~~
+arm-none-eabi-gcc -o "ODB2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\STM32F412ZGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ODB2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: ODB2.elf
+ 
+arm-none-eabi-size  ODB2.elf 
+arm-none-eabi-objdump -h -S ODB2.elf  > "ODB2.list"
+   text	   data	    bss	    dec	    hex	filename
+  50748	    360	  10048	  61156	   eee4	ODB2.elf
+Finished building: default.size.stdout
+ 
+Finished building: ODB2.list
+ 
+18:36:23 **** Incremental Build of configuration Debug for project ODB2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: In function 'RFM22B_SPI_write':
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:20:9: warning: implicit declaration of function 'HAL_SPI_Transmit'; did you mean 'HAL_UART_Transmit'? [-Wimplicit-function-declaration]
+   20 |         HAL_SPI_Transmit(dev->SPIx, &write_addr, 1, HAL_MAX_DELAY);
+      |         ^~~~~~~~~~~~~~~~
+      |         HAL_UART_Transmit
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: In function 'RFM22B_SPI_read':
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:27:9: warning: implicit declaration of function 'HAL_SPI_TransmitReceive'; did you mean 'SPI_TransmitReceive'? [-Wimplicit-function-declaration]
+   27 |         HAL_SPI_TransmitReceive(dev->SPIx, &addr, rx_buffer, 1, HAL_MAX_DELAY);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~
+      |         SPI_TransmitReceive
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: At top level:
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:38:16: warning: 'RFM22B_SetStandbyMode' defined but not used [-Wunused-function]
+   38 | static uint8_t RFM22B_SetStandbyMode(RFM22B *dev) {
+      |                ^~~~~~~~~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:32:13: warning: 'RFM22B_ClearTX' defined but not used [-Wunused-function]
+   32 | static void RFM22B_ClearTX(RFM22B *dev) {
+      |             ^~~~~~~~~~~~~~
+arm-none-eabi-gcc -o "ODB2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\STM32F412ZGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ODB2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: ODB2.elf
+ 
+arm-none-eabi-size  ODB2.elf 
+arm-none-eabi-objdump -h -S ODB2.elf  > "ODB2.list"
+   text	   data	    bss	    dec	    hex	filename
+  50748	    360	  10048	  61156	   eee4	ODB2.elf
+Finished building: default.size.stdout
+ 
+Finished building: ODB2.list
+ 
+18:43:14 **** Incremental Build of configuration Debug for project ODB2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: In function 'RFM22B_Write':
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:20:9: warning: implicit declaration of function 'SPI_MISD'; did you mean 'SPI_MISO'? [-Wimplicit-function-declaration]
+   20 |         SPI_MISD(dev->SPIx, &write_addr, 1);
+      |         ^~~~~~~~
+      |         SPI_MISO
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: In function 'RFM22B_ClearTX':
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:35:9: warning: implicit declaration of function 'RFM22B_SPI_write'; did you mean 'RFM22B_Write'? [-Wimplicit-function-declaration]
+   35 |         RFM22B_SPI_write(dev, RH_RF22_REG_08_OPERATING_MODE2, reg_set, 1);
+      |         ^~~~~~~~~~~~~~~~
+      |         RFM22B_Write
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: In function 'RFM22B_Init':
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:56:9: warning: implicit declaration of function 'RFM22B_SPI_read'; did you mean 'RFM22B_Read'? [-Wimplicit-function-declaration]
+   56 |         RFM22B_SPI_read(dev, RH_RF22_REG_00_DEVICE_TYPE, rx_buffer, 1);
+      |         ^~~~~~~~~~~~~~~
+      |         RFM22B_Read
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: At top level:
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:38:16: warning: 'RFM22B_SetStandbyMode' defined but not used [-Wunused-function]
+   38 | static uint8_t RFM22B_SetStandbyMode(RFM22B *dev) {
+      |                ^~~~~~~~~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:32:13: warning: 'RFM22B_ClearTX' defined but not used [-Wunused-function]
+   32 | static void RFM22B_ClearTX(RFM22B *dev) {
+      |             ^~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:25:13: warning: 'RFM22B_Read' defined but not used [-Wunused-function]
+   25 | static void RFM22B_Read(RFM22B *dev, uint8_t addr, uint8_t *rx_buffer, uint8_t size) {
+      |             ^~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:17:13: warning: 'RFM22B_Write' defined but not used [-Wunused-function]
+   17 | static void RFM22B_Write(RFM22B *dev, uint8_t addr, uint8_t *tx_buffer, uint8_t size) {
+      |             ^~~~~~~~~~~~
+arm-none-eabi-gcc -o "ODB2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\STM32F412ZGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ODB2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: ODB2.elf
+ 
+arm-none-eabi-size  ODB2.elf 
+arm-none-eabi-objdump -h -S ODB2.elf  > "ODB2.list"
+   text	   data	    bss	    dec	    hex	filename
+  50748	    360	  10048	  61156	   eee4	ODB2.elf
+Finished building: default.size.stdout
+ 
+Finished building: ODB2.list
+ 
+18:44:46 **** Incremental Build of configuration Debug for project ODB2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: In function 'RFM22B_Write':
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:20:9: warning: implicit declaration of function 'SPI_MISD'; did you mean 'SPI_MISO'? [-Wimplicit-function-declaration]
+   20 |         SPI_MISD(dev->SPIx, &write_addr, 1);
+      |         ^~~~~~~~
+      |         SPI_MISO
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: In function 'RFM22B_Channel':
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:131:9: warning: implicit declaration of function 'RFM22B_SPI_write'; did you mean 'RFM22B_Write'? [-Wimplicit-function-declaration]
+  131 |         RFM22B_SPI_write(dev, RH_RF22_REG_79_FREQUENCY_HOPPING_CHANNEL_SELECT, &channel, 1);
+      |         ^~~~~~~~~~~~~~~~
+      |         RFM22B_Write
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: At top level:
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:38:16: warning: 'RFM22B_SetStandbyMode' defined but not used [-Wunused-function]
+   38 | static uint8_t RFM22B_SetStandbyMode(RFM22B *dev) {
+      |                ^~~~~~~~~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:32:13: warning: 'RFM22B_ClearTX' defined but not used [-Wunused-function]
+   32 | static void RFM22B_ClearTX(RFM22B *dev) {
+      |             ^~~~~~~~~~~~~~
+arm-none-eabi-gcc -o "ODB2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\STM32F412ZGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ODB2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: ODB2.elf
+ 
+arm-none-eabi-size  ODB2.elf 
+arm-none-eabi-objdump -h -S ODB2.elf  > "ODB2.list"
+   text	   data	    bss	    dec	    hex	filename
+  50748	    360	  10048	  61156	   eee4	ODB2.elf
+Finished building: default.size.stdout
+ 
+Finished building: ODB2.list
+ 
+18:44:52 **** Incremental Build of configuration Debug for project ODB2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: In function 'RFM22B_Write':
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:20:9: warning: implicit declaration of function 'SPI_MISD'; did you mean 'SPI_MISO'? [-Wimplicit-function-declaration]
+   20 |         SPI_MISD(dev->SPIx, &write_addr, 1);
+      |         ^~~~~~~~
+      |         SPI_MISO
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: At top level:
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:38:16: warning: 'RFM22B_SetStandbyMode' defined but not used [-Wunused-function]
+   38 | static uint8_t RFM22B_SetStandbyMode(RFM22B *dev) {
+      |                ^~~~~~~~~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:32:13: warning: 'RFM22B_ClearTX' defined but not used [-Wunused-function]
+   32 | static void RFM22B_ClearTX(RFM22B *dev) {
+      |             ^~~~~~~~~~~~~~
+arm-none-eabi-gcc -o "ODB2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\STM32F412ZGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ODB2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: ODB2.elf
+ 
+arm-none-eabi-size  ODB2.elf 
+arm-none-eabi-objdump -h -S ODB2.elf  > "ODB2.list"
+   text	   data	    bss	    dec	    hex	filename
+  50748	    360	  10048	  61156	   eee4	ODB2.elf
+Finished building: default.size.stdout
+ 
+Finished building: ODB2.list
+ 
+18:46:15 **** Incremental Build of configuration Debug for project ODB2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: In function 'RFM22B_Write':
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:20:9: warning: implicit declaration of function 'SPI_MISD'; did you mean 'SPI_MISO'? [-Wimplicit-function-declaration]
+   20 |         SPI_MISD(dev->SPIx, &write_addr, 1);
+      |         ^~~~~~~~
+      |         SPI_MISO
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: At top level:
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:46:9: error: conflicting types for 'RFM22B_Init'; have 'uint8_t(SPI_TypeDef *, RFM22B *, RFM22B_Configs *)' {aka 'unsigned char(SPI_TypeDef *, RFM22B *, RFM22B_Configs *)'}
+   46 | uint8_t RFM22B_Init(SPI_TypeDef *SPIx, RFM22B *dev, RFM22B_Configs *confs) {
+      |         ^~~~~~~~~~~
+In file included from ../Core/Src/GAUL_Drivers/Components/RFM22B.c:8:
+../Core/Inc/GAUL_Drivers/Components/RFM22B.h:378:8: note: previous declaration of 'RFM22B_Init' with type 'int8_t(SPI_TypeDef *, RFM22B *, RFM22B_Configs *)' {aka 'signed char(SPI_TypeDef *, RFM22B *, RFM22B_Configs *)'}
+  378 | int8_t RFM22B_Init(SPI_TypeDef *SPIx, RFM22B *dev, RFM22B_Configs *confs);
+      |        ^~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:96:9: error: conflicting types for 'RFM22B_Transmit'; have 'uint8_t(RFM22B *, uint8_t *, uint8_t)' {aka 'unsigned char(RFM22B *, unsigned char *, unsigned char)'}
+   96 | uint8_t RFM22B_Transmit(RFM22B *dev, uint8_t *tx_buffer, uint8_t lenght) {
+      |         ^~~~~~~~~~~~~~~
+../Core/Inc/GAUL_Drivers/Components/RFM22B.h:379:8: note: previous declaration of 'RFM22B_Transmit' with type 'int8_t(RFM22B *, uint8_t *, uint8_t)' {aka 'signed char(RFM22B *, unsigned char *, unsigned char)'}
+  379 | int8_t RFM22B_Transmit(RFM22B *dev, uint8_t *tx_buffer, uint8_t lenght);
+      |        ^~~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:38:16: warning: 'RFM22B_SetStandbyMode' defined but not used [-Wunused-function]
+   38 | static uint8_t RFM22B_SetStandbyMode(RFM22B *dev) {
+      |                ^~~~~~~~~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:32:13: warning: 'RFM22B_ClearTX' defined but not used [-Wunused-function]
+   32 | static void RFM22B_ClearTX(RFM22B *dev) {
+      |             ^~~~~~~~~~~~~~
 make: *** [Core/Src/GAUL_Drivers/Components/subdir.mk:31: Core/Src/GAUL_Drivers/Components/RFM22B.o] Error 1
 "make -j12 all" terminated with exit code 2. Build might be incomplete.
-17:00:34 **** Incremental Build of configuration Debug for project ODB2 ****
+18:46:35 **** Incremental Build of configuration Debug for project ODB2 ****
 make -j12 all 
 arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: In function 'RFM22B_Write':
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:20:9: warning: implicit declaration of function 'SPI_MISD'; did you mean 'SPI_MISO'? [-Wimplicit-function-declaration]
+   20 |         SPI_MISD(dev->SPIx, &write_addr, 1);
+      |         ^~~~~~~~
+      |         SPI_MISO
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: At top level:
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:46:9: error: conflicting types for 'RFM22B_Init'; have 'uint8_t(SPI_TypeDef *, RFM22B *, RFM22B_Configs *)' {aka 'unsigned char(SPI_TypeDef *, RFM22B *, RFM22B_Configs *)'}
+   46 | uint8_t RFM22B_Init(SPI_TypeDef *SPIx, RFM22B *dev, RFM22B_Configs *confs) {
+      |         ^~~~~~~~~~~
+In file included from ../Core/Src/GAUL_Drivers/Components/RFM22B.c:8:
+../Core/Inc/GAUL_Drivers/Components/RFM22B.h:378:8: note: previous declaration of 'RFM22B_Init' with type 'int8_t(SPI_TypeDef *, RFM22B *, RFM22B_Configs *)' {aka 'signed char(SPI_TypeDef *, RFM22B *, RFM22B_Configs *)'}
+  378 | int8_t RFM22B_Init(SPI_TypeDef *SPIx, RFM22B *dev, RFM22B_Configs *confs);
+      |        ^~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:96:9: error: conflicting types for 'RFM22B_Transmit'; have 'uint8_t(RFM22B *, uint8_t *, uint8_t)' {aka 'unsigned char(RFM22B *, unsigned char *, unsigned char)'}
+   96 | uint8_t RFM22B_Transmit(RFM22B *dev, uint8_t *tx_buffer, uint8_t lenght) {
+      |         ^~~~~~~~~~~~~~~
+../Core/Inc/GAUL_Drivers/Components/RFM22B.h:379:8: note: previous declaration of 'RFM22B_Transmit' with type 'int8_t(RFM22B *, uint8_t *, uint8_t)' {aka 'signed char(RFM22B *, unsigned char *, unsigned char)'}
+  379 | int8_t RFM22B_Transmit(RFM22B *dev, uint8_t *tx_buffer, uint8_t lenght);
+      |        ^~~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:38:16: warning: 'RFM22B_SetStandbyMode' defined but not used [-Wunused-function]
+   38 | static uint8_t RFM22B_SetStandbyMode(RFM22B *dev) {
+      |                ^~~~~~~~~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:32:13: warning: 'RFM22B_ClearTX' defined but not used [-Wunused-function]
+   32 | static void RFM22B_ClearTX(RFM22B *dev) {
+      |             ^~~~~~~~~~~~~~
+make: *** [Core/Src/GAUL_Drivers/Components/subdir.mk:31: Core/Src/GAUL_Drivers/Components/RFM22B.o] Error 1
+"make -j12 all" terminated with exit code 2. Build might be incomplete.
+18:46:45 **** Incremental Build of configuration Debug for project ODB2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:46:9: error: conflicting types for 'RFM22B_Init'; have 'uint8_t(SPI_TypeDef *, RFM22B *, RFM22B_Configs *)' {aka 'unsigned char(SPI_TypeDef *, RFM22B *, RFM22B_Configs *)'}
+   46 | uint8_t RFM22B_Init(SPI_TypeDef *SPIx, RFM22B *dev, RFM22B_Configs *confs) {
+      |         ^~~~~~~~~~~
+In file included from ../Core/Src/GAUL_Drivers/Components/RFM22B.c:8:
+../Core/Inc/GAUL_Drivers/Components/RFM22B.h:378:8: note: previous declaration of 'RFM22B_Init' with type 'int8_t(SPI_TypeDef *, RFM22B *, RFM22B_Configs *)' {aka 'signed char(SPI_TypeDef *, RFM22B *, RFM22B_Configs *)'}
+  378 | int8_t RFM22B_Init(SPI_TypeDef *SPIx, RFM22B *dev, RFM22B_Configs *confs);
+      |        ^~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:96:9: error: conflicting types for 'RFM22B_Transmit'; have 'uint8_t(RFM22B *, uint8_t *, uint8_t)' {aka 'unsigned char(RFM22B *, unsigned char *, unsigned char)'}
+   96 | uint8_t RFM22B_Transmit(RFM22B *dev, uint8_t *tx_buffer, uint8_t lenght) {
+      |         ^~~~~~~~~~~~~~~
+../Core/Inc/GAUL_Drivers/Components/RFM22B.h:379:8: note: previous declaration of 'RFM22B_Transmit' with type 'int8_t(RFM22B *, uint8_t *, uint8_t)' {aka 'signed char(RFM22B *, unsigned char *, unsigned char)'}
+  379 | int8_t RFM22B_Transmit(RFM22B *dev, uint8_t *tx_buffer, uint8_t lenght);
+      |        ^~~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:38:16: warning: 'RFM22B_SetStandbyMode' defined but not used [-Wunused-function]
+   38 | static uint8_t RFM22B_SetStandbyMode(RFM22B *dev) {
+      |                ^~~~~~~~~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:32:13: warning: 'RFM22B_ClearTX' defined but not used [-Wunused-function]
+   32 | static void RFM22B_ClearTX(RFM22B *dev) {
+      |             ^~~~~~~~~~~~~~
+make: *** [Core/Src/GAUL_Drivers/Components/subdir.mk:31: Core/Src/GAUL_Drivers/Components/RFM22B.o] Error 1
+"make -j12 all" terminated with exit code 2. Build might be incomplete.
+18:48:03 **** Incremental Build of configuration Debug for project ODB2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:103:8: error: conflicting types for 'RFM22B_Transmit'; have 'int8_t(RFM22B *, uint8_t *, uint8_t)' {aka 'signed char(RFM22B *, unsigned char *, unsigned char)'}
+  103 | int8_t RFM22B_Transmit(RFM22B *dev, uint8_t *tx_buffer, uint8_t lenght) {
+      |        ^~~~~~~~~~~~~~~
+In file included from ../Core/Src/GAUL_Drivers/Components/RFM22B.c:8:
+../Core/Inc/GAUL_Drivers/Components/RFM22B.h:379:9: note: previous declaration of 'RFM22B_Transmit' with type 'uint8_t(RFM22B *, uint8_t *, uint8_t)' {aka 'unsigned char(RFM22B *, unsigned char *, unsigned char)'}
+  379 | uint8_t RFM22B_Transmit(RFM22B *dev, uint8_t *tx_buffer, uint8_t lenght);
+      |         ^~~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:46:16: warning: 'RFM22B_Available' defined but not used [-Wunused-function]
+   46 | static uint8_t RFM22B_Available(RFM22B *dev) {
+      |                ^~~~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:38:16: warning: 'RFM22B_SetStandbyMode' defined but not used [-Wunused-function]
+   38 | static uint8_t RFM22B_SetStandbyMode(RFM22B *dev) {
+      |                ^~~~~~~~~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:32:13: warning: 'RFM22B_ClearTX' defined but not used [-Wunused-function]
+   32 | static void RFM22B_ClearTX(RFM22B *dev) {
+      |             ^~~~~~~~~~~~~~
+make: *** [Core/Src/GAUL_Drivers/Components/subdir.mk:31: Core/Src/GAUL_Drivers/Components/RFM22B.o] Error 1
+"make -j12 all" terminated with exit code 2. Build might be incomplete.
+18:49:27 **** Incremental Build of configuration Debug for project ODB2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:102:8: error: conflicting types for 'RFM22B_Transmit'; have 'int8_t(RFM22B *, uint8_t *, uint8_t)' {aka 'signed char(RFM22B *, unsigned char *, unsigned char)'}
+  102 | int8_t RFM22B_Transmit(RFM22B *dev, uint8_t *tx_buffer, uint8_t lenght) {
+      |        ^~~~~~~~~~~~~~~
+In file included from ../Core/Src/GAUL_Drivers/Components/RFM22B.c:8:
+../Core/Inc/GAUL_Drivers/Components/RFM22B.h:379:9: note: previous declaration of 'RFM22B_Transmit' with type 'uint8_t(RFM22B *, uint8_t *, uint8_t)' {aka 'unsigned char(RFM22B *, unsigned char *, unsigned char)'}
+  379 | uint8_t RFM22B_Transmit(RFM22B *dev, uint8_t *tx_buffer, uint8_t lenght);
+      |         ^~~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:46:16: warning: 'RFM22B_Available' defined but not used [-Wunused-function]
+   46 | static uint8_t RFM22B_Available(RFM22B *dev) {
+      |                ^~~~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:38:16: warning: 'RFM22B_SetStandbyMode' defined but not used [-Wunused-function]
+   38 | static uint8_t RFM22B_SetStandbyMode(RFM22B *dev) {
+      |                ^~~~~~~~~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:32:13: warning: 'RFM22B_ClearTX' defined but not used [-Wunused-function]
+   32 | static void RFM22B_ClearTX(RFM22B *dev) {
+      |             ^~~~~~~~~~~~~~
+make: *** [Core/Src/GAUL_Drivers/Components/subdir.mk:31: Core/Src/GAUL_Drivers/Components/RFM22B.o] Error 1
+"make -j12 all" terminated with exit code 2. Build might be incomplete.
+18:49:49 **** Incremental Build of configuration Debug for project ODB2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:102:8: error: conflicting types for 'RFM22B_Transmit'; have 'int8_t(RFM22B *, uint8_t *, uint8_t)' {aka 'signed char(RFM22B *, unsigned char *, unsigned char)'}
+  102 | int8_t RFM22B_Transmit(RFM22B *dev, uint8_t *tx_buffer, uint8_t len) {
+      |        ^~~~~~~~~~~~~~~
+In file included from ../Core/Src/GAUL_Drivers/Components/RFM22B.c:8:
+../Core/Inc/GAUL_Drivers/Components/RFM22B.h:379:9: note: previous declaration of 'RFM22B_Transmit' with type 'uint8_t(RFM22B *, uint8_t *, uint8_t)' {aka 'unsigned char(RFM22B *, unsigned char *, unsigned char)'}
+  379 | uint8_t RFM22B_Transmit(RFM22B *dev, uint8_t *tx_buffer, uint8_t lenght);
+      |         ^~~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: In function 'RFM22B_Transmit':
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:103:13: error: 'lenght' undeclared (first use in this function)
+  103 |         if (lenght > 64) return 0; // pas assez de place dans FIFO
+      |             ^~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:103:13: note: each undeclared identifier is reported only once for each function it appears in
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: At top level:
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:46:16: warning: 'RFM22B_Available' defined but not used [-Wunused-function]
+   46 | static uint8_t RFM22B_Available(RFM22B *dev) {
+      |                ^~~~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:38:16: warning: 'RFM22B_SetStandbyMode' defined but not used [-Wunused-function]
+   38 | static uint8_t RFM22B_SetStandbyMode(RFM22B *dev) {
+      |                ^~~~~~~~~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:32:13: warning: 'RFM22B_ClearTX' defined but not used [-Wunused-function]
+   32 | static void RFM22B_ClearTX(RFM22B *dev) {
+      |             ^~~~~~~~~~~~~~
+make: *** [Core/Src/GAUL_Drivers/Components/subdir.mk:31: Core/Src/GAUL_Drivers/Components/RFM22B.o] Error 1
+"make -j12 all" terminated with exit code 2. Build might be incomplete.
+18:49:53 **** Incremental Build of configuration Debug for project ODB2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:102:8: error: conflicting types for 'RFM22B_Transmit'; have 'int8_t(RFM22B *, uint8_t *, uint8_t)' {aka 'signed char(RFM22B *, unsigned char *, unsigned char)'}
+  102 | int8_t RFM22B_Transmit(RFM22B *dev, uint8_t *tx_buffer, uint8_t len) {
+      |        ^~~~~~~~~~~~~~~
+In file included from ../Core/Src/GAUL_Drivers/Components/RFM22B.c:8:
+../Core/Inc/GAUL_Drivers/Components/RFM22B.h:379:9: note: previous declaration of 'RFM22B_Transmit' with type 'uint8_t(RFM22B *, uint8_t *, uint8_t)' {aka 'unsigned char(RFM22B *, unsigned char *, unsigned char)'}
+  379 | uint8_t RFM22B_Transmit(RFM22B *dev, uint8_t *tx_buffer, uint8_t lenght);
+      |         ^~~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:46:16: warning: 'RFM22B_Available' defined but not used [-Wunused-function]
+   46 | static uint8_t RFM22B_Available(RFM22B *dev) {
+      |                ^~~~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:38:16: warning: 'RFM22B_SetStandbyMode' defined but not used [-Wunused-function]
+   38 | static uint8_t RFM22B_SetStandbyMode(RFM22B *dev) {
+      |                ^~~~~~~~~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:32:13: warning: 'RFM22B_ClearTX' defined but not used [-Wunused-function]
+   32 | static void RFM22B_ClearTX(RFM22B *dev) {
+      |             ^~~~~~~~~~~~~~
+make: *** [Core/Src/GAUL_Drivers/Components/subdir.mk:31: Core/Src/GAUL_Drivers/Components/RFM22B.o] Error 1
+"make -j12 all" terminated with exit code 2. Build might be incomplete.
+18:50:15 **** Incremental Build of configuration Debug for project ODB2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:46:16: warning: 'RFM22B_Available' defined but not used [-Wunused-function]
+   46 | static uint8_t RFM22B_Available(RFM22B *dev) {
+      |                ^~~~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:38:16: warning: 'RFM22B_SetStandbyMode' defined but not used [-Wunused-function]
+   38 | static uint8_t RFM22B_SetStandbyMode(RFM22B *dev) {
+      |                ^~~~~~~~~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:32:13: warning: 'RFM22B_ClearTX' defined but not used [-Wunused-function]
+   32 | static void RFM22B_ClearTX(RFM22B *dev) {
+      |             ^~~~~~~~~~~~~~
 arm-none-eabi-gcc -o "ODB2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\STM32F412ZGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ODB2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: ODB2.elf
  
@@ -22,139 +356,705 @@ Finished building: default.size.stdout
  
 Finished building: ODB2.list
  
-17:02:02 **** Incremental Build of configuration Debug for project ODB2 ****
+21:27:49 **** Incremental Build of configuration Debug for project ODB2 ****
 make -j12 all 
 arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:46:16: warning: 'RFM22B_Available' defined but not used [-Wunused-function]
+   46 | static uint8_t RFM22B_Available(RFM22B *dev) {
+      |                ^~~~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:38:16: warning: 'RFM22B_SetStandbyMode' defined but not used [-Wunused-function]
+   38 | static uint8_t RFM22B_SetStandbyMode(RFM22B *dev) {
+      |                ^~~~~~~~~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:32:13: warning: 'RFM22B_ClearTX' defined but not used [-Wunused-function]
+   32 | static void RFM22B_ClearTX(RFM22B *dev) {
+      |             ^~~~~~~~~~~~~~
 arm-none-eabi-gcc -o "ODB2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\STM32F412ZGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ODB2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: ODB2.elf
  
 arm-none-eabi-size  ODB2.elf 
 arm-none-eabi-objdump -h -S ODB2.elf  > "ODB2.list"
    text	   data	    bss	    dec	    hex	filename
-  50748	    360	  10048	  61156	   eee4	ODB2.elf
+  43600	    268	   9740	  53608	   d168	ODB2.elf
 Finished building: default.size.stdout
  
 Finished building: ODB2.list
  
-17:04:07 **** Incremental Build of configuration Debug for project ODB2 ****
+21:42:13 **** Incremental Build of configuration Debug for project ODB2 ****
 make -j12 all 
 arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+In file included from ../Core/Src/GAUL_Drivers/Components/RFM22B.c:8:
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: In function 'RFM22B_ClearTX':
+../Core/Inc/GAUL_Drivers/Components/RFM22B.h:206:52: warning: initialization of 'uint8_t *' {aka 'unsigned char *'} from 'int' makes pointer from integer without a cast [-Wint-conversion]
+  206 | #define RH_RF22_FFCLRTX                            0x01
+      |                                                    ^~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:33:29: note: in expansion of macro 'RH_RF22_FFCLRTX'
+   33 |         uint8_t *regValue = RH_RF22_FFCLRTX;
+      |                             ^~~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: In function 'RFM22B_SetStandbyMode':
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:42:25: error: 'reg' undeclared (first use in this function)
+   42 |         if(read_byte == reg) return -1;
+      |                         ^~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:42:25: note: each undeclared identifier is reported only once for each function it appears in
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: At top level:
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:47:16: warning: 'RFM22B_Available' defined but not used [-Wunused-function]
+   47 | static uint8_t RFM22B_Available(RFM22B *dev) {
+      |                ^~~~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:32:13: warning: 'RFM22B_ClearTX' defined but not used [-Wunused-function]
+   32 | static void RFM22B_ClearTX(RFM22B *dev) {
+      |             ^~~~~~~~~~~~~~
+make: *** [Core/Src/GAUL_Drivers/Components/subdir.mk:31: Core/Src/GAUL_Drivers/Components/RFM22B.o] Error 1
+"make -j12 all" terminated with exit code 2. Build might be incomplete.
+21:42:35 **** Incremental Build of configuration Debug for project ODB2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: In function 'RFM22B_SetStandbyMode':
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:42:25: error: 'reg' undeclared (first use in this function)
+   42 |         if(read_byte == reg) return -1;
+      |                         ^~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:42:25: note: each undeclared identifier is reported only once for each function it appears in
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: At top level:
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:47:16: warning: 'RFM22B_Available' defined but not used [-Wunused-function]
+   47 | static uint8_t RFM22B_Available(RFM22B *dev) {
+      |                ^~~~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:32:13: warning: 'RFM22B_ClearTX' defined but not used [-Wunused-function]
+   32 | static void RFM22B_ClearTX(RFM22B *dev) {
+      |             ^~~~~~~~~~~~~~
+make: *** [Core/Src/GAUL_Drivers/Components/subdir.mk:31: Core/Src/GAUL_Drivers/Components/RFM22B.o] Error 1
+"make -j12 all" terminated with exit code 2. Build might be incomplete.
+21:44:01 **** Incremental Build of configuration Debug for project ODB2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: In function 'RFM22B_Write':
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:18:17: error: 'addr' redeclared as different kind of symbol
+   18 |         uint8_t addr = 0x80 | addr;
+      |                 ^~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:17:47: note: previous definition of 'addr' with type 'uint8_t' {aka 'unsigned char'}
+   17 | static void RFM22B_Write(RFM22B *dev, uint8_t addr, uint8_t *tx_buffer, uint8_t size) {
+      |                                       ~~~~~~~~^~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: At top level:
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:47:16: warning: 'RFM22B_Available' defined but not used [-Wunused-function]
+   47 | static uint8_t RFM22B_Available(RFM22B *dev) {
+      |                ^~~~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:32:13: warning: 'RFM22B_ClearTX' defined but not used [-Wunused-function]
+   32 | static void RFM22B_ClearTX(RFM22B *dev) {
+      |             ^~~~~~~~~~~~~~
+make: *** [Core/Src/GAUL_Drivers/Components/subdir.mk:31: Core/Src/GAUL_Drivers/Components/RFM22B.o] Error 1
+"make -j12 all" terminated with exit code 2. Build might be incomplete.
+21:44:19 **** Incremental Build of configuration Debug for project ODB2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:47:16: warning: 'RFM22B_Available' defined but not used [-Wunused-function]
+   47 | static uint8_t RFM22B_Available(RFM22B *dev) {
+      |                ^~~~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:32:13: warning: 'RFM22B_ClearTX' defined but not used [-Wunused-function]
+   32 | static void RFM22B_ClearTX(RFM22B *dev) {
+      |             ^~~~~~~~~~~~~~
 arm-none-eabi-gcc -o "ODB2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\STM32F412ZGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ODB2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: ODB2.elf
  
 arm-none-eabi-size  ODB2.elf 
 arm-none-eabi-objdump -h -S ODB2.elf  > "ODB2.list"
    text	   data	    bss	    dec	    hex	filename
-  50748	    360	  10048	  61156	   eee4	ODB2.elf
+  43600	    268	   9740	  53608	   d168	ODB2.elf
 Finished building: default.size.stdout
  
 Finished building: ODB2.list
  
-17:04:32 **** Incremental Build of configuration Debug for project ODB2 ****
+21:45:41 **** Incremental Build of configuration Debug for project ODB2 ****
 make -j12 all 
 arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: In function 'RFM22B_Available':
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:50:16: warning: returning 'uint8_t *' {aka 'unsigned char *'} from a function with return type 'uint8_t' {aka 'unsigned char'} makes integer from pointer without a cast [-Wint-conversion]
+   50 |         return reg;
+      |                ^~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: At top level:
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:47:16: warning: 'RFM22B_Available' defined but not used [-Wunused-function]
+   47 | static uint8_t RFM22B_Available(RFM22B *dev) {
+      |                ^~~~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:32:13: warning: 'RFM22B_ClearTX' defined but not used [-Wunused-function]
+   32 | static void RFM22B_ClearTX(RFM22B *dev) {
+      |             ^~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: In function 'RFM22B_Available':
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:49:9: warning: 'reg' is used uninitialized [-Wuninitialized]
+   49 |         RFM22B_Read(dev, RH_RF22_REG_4B_RECEIVED_PACKET_LENGTH, reg, 1);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:48:18: note: 'reg' was declared here
+   48 |         uint8_t *reg;
+      |                  ^~~
 arm-none-eabi-gcc -o "ODB2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\STM32F412ZGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ODB2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: ODB2.elf
  
 arm-none-eabi-size  ODB2.elf 
 arm-none-eabi-objdump -h -S ODB2.elf  > "ODB2.list"
    text	   data	    bss	    dec	    hex	filename
-  50748	    360	  10048	  61156	   eee4	ODB2.elf
+  43600	    268	   9740	  53608	   d168	ODB2.elf
 Finished building: default.size.stdout
  
 Finished building: ODB2.list
  
-17:05:11 **** Incremental Build of configuration Debug for project ODB2 ****
+21:45:50 **** Incremental Build of configuration Debug for project ODB2 ****
 make -j12 all 
 arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: In function 'RFM22B_Available':
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:50:16: warning: returning 'uint8_t *' {aka 'unsigned char *'} from a function with return type 'uint8_t' {aka 'unsigned char'} makes integer from pointer without a cast [-Wint-conversion]
+   50 |         return reg;
+      |                ^~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: At top level:
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:47:16: warning: 'RFM22B_Available' defined but not used [-Wunused-function]
+   47 | static uint8_t RFM22B_Available(RFM22B *dev) {
+      |                ^~~~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:32:13: warning: 'RFM22B_ClearTX' defined but not used [-Wunused-function]
+   32 | static void RFM22B_ClearTX(RFM22B *dev) {
+      |             ^~~~~~~~~~~~~~
 arm-none-eabi-gcc -o "ODB2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\STM32F412ZGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ODB2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: ODB2.elf
  
 arm-none-eabi-size  ODB2.elf 
 arm-none-eabi-objdump -h -S ODB2.elf  > "ODB2.list"
    text	   data	    bss	    dec	    hex	filename
-  50748	    360	  10048	  61156	   eee4	ODB2.elf
+  43600	    268	   9740	  53608	   d168	ODB2.elf
 Finished building: default.size.stdout
  
 Finished building: ODB2.list
  
-17:25:46 **** Incremental Build of configuration Debug for project ODB2 ****
+21:46:00 **** Incremental Build of configuration Debug for project ODB2 ****
 make -j12 all 
 arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: In function 'RFM22B_Available':
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:50:16: warning: returning 'uint8_t **' {aka 'unsigned char **'} from a function with return type 'uint8_t' {aka 'unsigned char'} makes integer from pointer without a cast [-Wint-conversion]
+   50 |         return &reg;
+      |                ^~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: At top level:
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:47:16: warning: 'RFM22B_Available' defined but not used [-Wunused-function]
+   47 | static uint8_t RFM22B_Available(RFM22B *dev) {
+      |                ^~~~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:32:13: warning: 'RFM22B_ClearTX' defined but not used [-Wunused-function]
+   32 | static void RFM22B_ClearTX(RFM22B *dev) {
+      |             ^~~~~~~~~~~~~~
 arm-none-eabi-gcc -o "ODB2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\STM32F412ZGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ODB2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: ODB2.elf
  
 arm-none-eabi-size  ODB2.elf 
 arm-none-eabi-objdump -h -S ODB2.elf  > "ODB2.list"
    text	   data	    bss	    dec	    hex	filename
-  50748	    360	  10048	  61156	   eee4	ODB2.elf
+  43600	    268	   9740	  53608	   d168	ODB2.elf
 Finished building: default.size.stdout
  
 Finished building: ODB2.list
  
-17:32:59 **** Incremental Build of configuration Debug for project ODB2 ****
+21:46:08 **** Incremental Build of configuration Debug for project ODB2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: In function 'RFM22B_Available':
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:50:16: warning: returning 'uint8_t *' {aka 'unsigned char *'} from a function with return type 'uint8_t' {aka 'unsigned char'} makes integer from pointer without a cast [-Wint-conversion]
+   50 |         return reg;
+      |                ^~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: At top level:
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:47:16: warning: 'RFM22B_Available' defined but not used [-Wunused-function]
+   47 | static uint8_t RFM22B_Available(RFM22B *dev) {
+      |                ^~~~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:32:13: warning: 'RFM22B_ClearTX' defined but not used [-Wunused-function]
+   32 | static void RFM22B_ClearTX(RFM22B *dev) {
+      |             ^~~~~~~~~~~~~~
+arm-none-eabi-gcc -o "ODB2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\STM32F412ZGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ODB2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: ODB2.elf
+ 
+arm-none-eabi-size  ODB2.elf 
+arm-none-eabi-objdump -h -S ODB2.elf  > "ODB2.list"
+   text	   data	    bss	    dec	    hex	filename
+  43600	    268	   9740	  53608	   d168	ODB2.elf
+Finished building: default.size.stdout
+ 
+Finished building: ODB2.list
+ 
+21:46:39 **** Incremental Build of configuration Debug for project ODB2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:47:16: warning: 'RFM22B_Available' defined but not used [-Wunused-function]
+   47 | static uint8_t RFM22B_Available(RFM22B *dev) {
+      |                ^~~~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:32:13: warning: 'RFM22B_ClearTX' defined but not used [-Wunused-function]
+   32 | static void RFM22B_ClearTX(RFM22B *dev) {
+      |             ^~~~~~~~~~~~~~
+arm-none-eabi-gcc -o "ODB2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\STM32F412ZGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ODB2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: ODB2.elf
+ 
+arm-none-eabi-size  ODB2.elf 
+arm-none-eabi-objdump -h -S ODB2.elf  > "ODB2.list"
+   text	   data	    bss	    dec	    hex	filename
+  43600	    268	   9740	  53608	   d168	ODB2.elf
+Finished building: default.size.stdout
+ 
+Finished building: ODB2.list
+ 
+21:49:51 **** Incremental Build of configuration Debug for project ODB2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:38:16: warning: 'RFM22B_Available' defined but not used [-Wunused-function]
+   38 | static uint8_t RFM22B_Available(RFM22B *dev) {
+      |                ^~~~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:32:13: warning: 'RFM22B_ClearTX' defined but not used [-Wunused-function]
+   32 | static void RFM22B_ClearTX(RFM22B *dev) {
+      |             ^~~~~~~~~~~~~~
+arm-none-eabi-gcc -o "ODB2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\STM32F412ZGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ODB2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: ODB2.elf
+ 
+arm-none-eabi-size  ODB2.elf 
+arm-none-eabi-objdump -h -S ODB2.elf  > "ODB2.list"
+   text	   data	    bss	    dec	    hex	filename
+  43600	    268	   9740	  53608	   d168	ODB2.elf
+Finished building: default.size.stdout
+ 
+Finished building: ODB2.list
+ 
+21:56:19 **** Incremental Build of configuration Debug for project ODB2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: In function 'RFM22B_Read':
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:27:36: warning: passing argument 3 of 'SPI_MOSI' makes integer from pointer without a cast [-Wint-conversion]
+   27 |         SPI_MOSI(dev->SPIx, &addr, rx_buffer, 1);
+      |                                    ^~~~~~~~~
+      |                                    |
+      |                                    uint8_t * {aka unsigned char *}
+In file included from ../Core/Inc/GAUL_Drivers/Components/RFM22B.h:8,
+                 from ../Core/Src/GAUL_Drivers/Components/RFM22B.c:8:
+../Core/Inc/GAUL_Drivers/Low_Level/SPI_driver.h:21:58: note: expected 'size_t' {aka 'unsigned int'} but argument is of type 'uint8_t *' {aka 'unsigned char *'}
+   21 | int8_t SPI_MOSI(SPI_TypeDef *SPIx, uint8_t *data, size_t size);
+      |                                                   ~~~~~~~^~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:27:9: error: too many arguments to function 'SPI_MOSI'
+   27 |         SPI_MOSI(dev->SPIx, &addr, rx_buffer, 1);
+      |         ^~~~~~~~
+../Core/Inc/GAUL_Drivers/Low_Level/SPI_driver.h:21:8: note: declared here
+   21 | int8_t SPI_MOSI(SPI_TypeDef *SPIx, uint8_t *data, size_t size);
+      |        ^~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:28:40: warning: passing argument 3 of 'SPI_MISO' makes integer from pointer without a cast [-Wint-conversion]
+   28 |         SPI_MISO(dev->SPIx, rx_buffer, rx_buffer, size); //vérifier qu'envoyer le rx buffer ok
+      |                                        ^~~~~~~~~
+      |                                        |
+      |                                        uint8_t * {aka unsigned char *}
+../Core/Inc/GAUL_Drivers/Low_Level/SPI_driver.h:22:58: note: expected 'size_t' {aka 'unsigned int'} but argument is of type 'uint8_t *' {aka 'unsigned char *'}
+   22 | int8_t SPI_MISO(SPI_TypeDef *SPIx, uint8_t *data, size_t size);
+      |                                                   ~~~~~~~^~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:28:9: error: too many arguments to function 'SPI_MISO'
+   28 |         SPI_MISO(dev->SPIx, rx_buffer, rx_buffer, size); //vérifier qu'envoyer le rx buffer ok
+      |         ^~~~~~~~
+../Core/Inc/GAUL_Drivers/Low_Level/SPI_driver.h:22:8: note: declared here
+   22 | int8_t SPI_MISO(SPI_TypeDef *SPIx, uint8_t *data, size_t size);
+      |        ^~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: At top level:
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:38:16: warning: 'RFM22B_Available' defined but not used [-Wunused-function]
+   38 | static uint8_t RFM22B_Available(RFM22B *dev) {
+      |                ^~~~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:32:13: warning: 'RFM22B_ClearTX' defined but not used [-Wunused-function]
+   32 | static void RFM22B_ClearTX(RFM22B *dev) {
+      |             ^~~~~~~~~~~~~~
+make: *** [Core/Src/GAUL_Drivers/Components/subdir.mk:31: Core/Src/GAUL_Drivers/Components/RFM22B.o] Error 1
+"make -j12 all" terminated with exit code 2. Build might be incomplete.
+21:56:49 **** Incremental Build of configuration Debug for project ODB2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: In function 'RFM22B_Read':
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:27:36: warning: passing argument 3 of 'SPI_MOSI' makes integer from pointer without a cast [-Wint-conversion]
+   27 |         SPI_MOSI(dev->SPIx, &addr, rx_buffer);
+      |                                    ^~~~~~~~~
+      |                                    |
+      |                                    uint8_t * {aka unsigned char *}
+In file included from ../Core/Inc/GAUL_Drivers/Components/RFM22B.h:8,
+                 from ../Core/Src/GAUL_Drivers/Components/RFM22B.c:8:
+../Core/Inc/GAUL_Drivers/Low_Level/SPI_driver.h:21:58: note: expected 'size_t' {aka 'unsigned int'} but argument is of type 'uint8_t *' {aka 'unsigned char *'}
+   21 | int8_t SPI_MOSI(SPI_TypeDef *SPIx, uint8_t *data, size_t size);
+      |                                                   ~~~~~~~^~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: At top level:
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:38:16: warning: 'RFM22B_Available' defined but not used [-Wunused-function]
+   38 | static uint8_t RFM22B_Available(RFM22B *dev) {
+      |                ^~~~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:32:13: warning: 'RFM22B_ClearTX' defined but not used [-Wunused-function]
+   32 | static void RFM22B_ClearTX(RFM22B *dev) {
+      |             ^~~~~~~~~~~~~~
+arm-none-eabi-gcc -o "ODB2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\STM32F412ZGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ODB2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: ODB2.elf
+ 
+arm-none-eabi-size  ODB2.elf 
+arm-none-eabi-objdump -h -S ODB2.elf  > "ODB2.list"
+   text	   data	    bss	    dec	    hex	filename
+  43600	    268	   9740	  53608	   d168	ODB2.elf
+Finished building: default.size.stdout
+ 
+Finished building: ODB2.list
+ 
+22:03:38 **** Incremental Build of configuration Debug for project ODB2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: In function 'RFM22B_Read':
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:28:29: error: 'rx_buffer' undeclared (first use in this function)
+   28 |         SPI_MISO(dev->SPIx, rx_buffer, size); //vérifier qu'envoyer le rx buffer ok
+      |                             ^~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:28:29: note: each undeclared identifier is reported only once for each function it appears in
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: At top level:
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:38:16: warning: 'RFM22B_Available' defined but not used [-Wunused-function]
+   38 | static uint8_t RFM22B_Available(RFM22B *dev) {
+      |                ^~~~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:32:13: warning: 'RFM22B_ClearTX' defined but not used [-Wunused-function]
+   32 | static void RFM22B_ClearTX(RFM22B *dev) {
+      |             ^~~~~~~~~~~~~~
+make: *** [Core/Src/GAUL_Drivers/Components/subdir.mk:31: Core/Src/GAUL_Drivers/Components/RFM22B.o] Error 1
+"make -j12 all" terminated with exit code 2. Build might be incomplete.
+22:03:54 **** Incremental Build of configuration Debug for project ODB2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:38:16: warning: 'RFM22B_Available' defined but not used [-Wunused-function]
+   38 | static uint8_t RFM22B_Available(RFM22B *dev) {
+      |                ^~~~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:32:13: warning: 'RFM22B_ClearTX' defined but not used [-Wunused-function]
+   32 | static void RFM22B_ClearTX(RFM22B *dev) {
+      |             ^~~~~~~~~~~~~~
+arm-none-eabi-gcc -o "ODB2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\STM32F412ZGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ODB2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: ODB2.elf
+ 
+arm-none-eabi-size  ODB2.elf 
+arm-none-eabi-objdump -h -S ODB2.elf  > "ODB2.list"
+   text	   data	    bss	    dec	    hex	filename
+  43600	    268	   9740	  53608	   d168	ODB2.elf
+Finished building: default.size.stdout
+ 
+Finished building: ODB2.list
+ 
+22:04:32 **** Incremental Build of configuration Debug for project ODB2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:38:16: warning: 'RFM22B_Available' defined but not used [-Wunused-function]
+   38 | static uint8_t RFM22B_Available(RFM22B *dev) {
+      |                ^~~~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:32:13: warning: 'RFM22B_ClearTX' defined but not used [-Wunused-function]
+   32 | static void RFM22B_ClearTX(RFM22B *dev) {
+      |             ^~~~~~~~~~~~~~
+arm-none-eabi-gcc -o "ODB2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\STM32F412ZGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ODB2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: ODB2.elf
+ 
+arm-none-eabi-size  ODB2.elf 
+arm-none-eabi-objdump -h -S ODB2.elf  > "ODB2.list"
+   text	   data	    bss	    dec	    hex	filename
+  43600	    268	   9740	  53608	   d168	ODB2.elf
+Finished building: default.size.stdout
+ 
+Finished building: ODB2.list
+ 
+22:08:28 **** Incremental Build of configuration Debug for project ODB2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:39:16: warning: 'RFM22B_Available' defined but not used [-Wunused-function]
+   39 | static uint8_t RFM22B_Available(RFM22B *dev) {
+      |                ^~~~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:33:13: warning: 'RFM22B_ClearTX' defined but not used [-Wunused-function]
+   33 | static void RFM22B_ClearTX(RFM22B *dev) {
+      |             ^~~~~~~~~~~~~~
+arm-none-eabi-gcc -o "ODB2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\STM32F412ZGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ODB2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: ODB2.elf
+ 
+arm-none-eabi-size  ODB2.elf 
+arm-none-eabi-objdump -h -S ODB2.elf  > "ODB2.list"
+   text	   data	    bss	    dec	    hex	filename
+  43600	    268	   9740	  53608	   d168	ODB2.elf
+Finished building: default.size.stdout
+ 
+Finished building: ODB2.list
+ 
+22:08:46 **** Incremental Build of configuration Debug for project ODB2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: In function 'RFM22B_Read':
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:28:30: error: 'readAddr' undeclared (first use in this function)
+   28 |         SPI_MOSI(dev->SPIx, &readAddr, 1);
+      |                              ^~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:28:30: note: each undeclared identifier is reported only once for each function it appears in
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: At top level:
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:39:16: warning: 'RFM22B_Available' defined but not used [-Wunused-function]
+   39 | static uint8_t RFM22B_Available(RFM22B *dev) {
+      |                ^~~~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:33:13: warning: 'RFM22B_ClearTX' defined but not used [-Wunused-function]
+   33 | static void RFM22B_ClearTX(RFM22B *dev) {
+      |             ^~~~~~~~~~~~~~
+make: *** [Core/Src/GAUL_Drivers/Components/subdir.mk:31: Core/Src/GAUL_Drivers/Components/RFM22B.o] Error 1
+"make -j12 all" terminated with exit code 2. Build might be incomplete.
+22:09:02 **** Incremental Build of configuration Debug for project ODB2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: In function 'RFM22B_Write':
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:18:22: error: expected '=', ',', ';', 'asm' or '__attribute__' before '|=' token
+   18 |         uint8_t addr |= 0x80;
+      |                      ^~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:18:22: error: expected expression before '|=' token
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:20:30: error: 'writeAddr' undeclared (first use in this function)
+   20 |         SPI_MISO(dev->SPIx, &writeAddr, 1);
+      |                              ^~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:20:30: note: each undeclared identifier is reported only once for each function it appears in
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: At top level:
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:39:16: warning: 'RFM22B_Available' defined but not used [-Wunused-function]
+   39 | static uint8_t RFM22B_Available(RFM22B *dev) {
+      |                ^~~~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:33:13: warning: 'RFM22B_ClearTX' defined but not used [-Wunused-function]
+   33 | static void RFM22B_ClearTX(RFM22B *dev) {
+      |             ^~~~~~~~~~~~~~
+make: *** [Core/Src/GAUL_Drivers/Components/subdir.mk:31: Core/Src/GAUL_Drivers/Components/RFM22B.o] Error 1
+"make -j12 all" terminated with exit code 2. Build might be incomplete.
+22:09:58 **** Incremental Build of configuration Debug for project ODB2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:39:16: warning: 'RFM22B_Available' defined but not used [-Wunused-function]
+   39 | static uint8_t RFM22B_Available(RFM22B *dev) {
+      |                ^~~~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:33:13: warning: 'RFM22B_ClearTX' defined but not used [-Wunused-function]
+   33 | static void RFM22B_ClearTX(RFM22B *dev) {
+      |             ^~~~~~~~~~~~~~
+arm-none-eabi-gcc -o "ODB2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\STM32F412ZGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ODB2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: ODB2.elf
+ 
+arm-none-eabi-size  ODB2.elf 
+arm-none-eabi-objdump -h -S ODB2.elf  > "ODB2.list"
+   text	   data	    bss	    dec	    hex	filename
+  43600	    268	   9740	  53608	   d168	ODB2.elf
+Finished building: default.size.stdout
+ 
+Finished building: ODB2.list
+ 
+22:25:07 **** Incremental Build of configuration Debug for project ODB2 ****
 make -j12 all 
 arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
 ../Core/Src/GAUL_Drivers/Components/RFM22B.c: In function 'RFM22B_Init':
-../Core/Src/GAUL_Drivers/Components/RFM22B.c:46:47: error: 'RFM22B_REG_RESET' undeclared (first use in this function); did you mean 'RFM22B_VAL_RESET'?
-   46 |         RFM22B_Write(dev, RFM22B_REG_OP_MODE, RFM22B_REG_RESET); // Reset
-      |                                               ^~~~~~~~~~~~~~~~
-      |                                               RFM22B_VAL_RESET
-../Core/Src/GAUL_Drivers/Components/RFM22B.c:46:47: note: each undeclared identifier is reported only once for each function it appears in
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:69:68: warning: passing argument 3 of 'RFM22B_Read' makes pointer from integer without a cast [-Wint-conversion]
+   69 |                 RFM22B_Read(dev, RH_RF22_REG_04_INTERRUPT_STATUS2, val, 1);
+      |                                                                    ^~~
+      |                                                                    |
+      |                                                                    uint8_t {aka unsigned char}
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:25:61: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'uint8_t' {aka 'unsigned char'}
+   25 | static void RFM22B_Read(RFM22B *dev, uint8_t addr, uint8_t *rxData, uint8_t size) {
+      |                                                    ~~~~~~~~~^~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:80:31: error: expected expression before 'RFM22B'
+   80 |         RFM22B_SetStandbyMode(RFM22B *dev);
+      |                               ^~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: At top level:
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:39:16: warning: 'RFM22B_Available' defined but not used [-Wunused-function]
+   39 | static uint8_t RFM22B_Available(RFM22B *dev) {
+      |                ^~~~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:33:13: warning: 'RFM22B_ClearTX' defined but not used [-Wunused-function]
+   33 | static void RFM22B_ClearTX(RFM22B *dev) {
+      |             ^~~~~~~~~~~~~~
 make: *** [Core/Src/GAUL_Drivers/Components/subdir.mk:31: Core/Src/GAUL_Drivers/Components/RFM22B.o] Error 1
 "make -j12 all" terminated with exit code 2. Build might be incomplete.
-17:33:20 **** Incremental Build of configuration Debug for project ODB2 ****
+22:25:35 **** Incremental Build of configuration Debug for project ODB2 ****
 make -j12 all 
 arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: In function 'RFM22B_Init':
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:69:68: warning: passing argument 3 of 'RFM22B_Read' makes pointer from integer without a cast [-Wint-conversion]
+   69 |                 RFM22B_Read(dev, RH_RF22_REG_04_INTERRUPT_STATUS2, val, 1);
+      |                                                                    ^~~
+      |                                                                    |
+      |                                                                    uint8_t {aka unsigned char}
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:25:61: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'uint8_t' {aka 'unsigned char'}
+   25 | static void RFM22B_Read(RFM22B *dev, uint8_t addr, uint8_t *rxData, uint8_t size) {
+      |                                                    ~~~~~~~~~^~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: At top level:
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:39:16: warning: 'RFM22B_Available' defined but not used [-Wunused-function]
+   39 | static uint8_t RFM22B_Available(RFM22B *dev) {
+      |                ^~~~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:33:13: warning: 'RFM22B_ClearTX' defined but not used [-Wunused-function]
+   33 | static void RFM22B_ClearTX(RFM22B *dev) {
+      |             ^~~~~~~~~~~~~~
 arm-none-eabi-gcc -o "ODB2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\STM32F412ZGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ODB2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: ODB2.elf
  
 arm-none-eabi-size  ODB2.elf 
 arm-none-eabi-objdump -h -S ODB2.elf  > "ODB2.list"
    text	   data	    bss	    dec	    hex	filename
-  50748	    360	  10048	  61156	   eee4	ODB2.elf
+  43600	    268	   9740	  53608	   d168	ODB2.elf
 Finished building: default.size.stdout
  
 Finished building: ODB2.list
  
-17:38:28 **** Incremental Build of configuration Debug for project ODB2 ****
+22:25:47 **** Incremental Build of configuration Debug for project ODB2 ****
 make -j12 all 
 arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:39:16: warning: 'RFM22B_Available' defined but not used [-Wunused-function]
+   39 | static uint8_t RFM22B_Available(RFM22B *dev) {
+      |                ^~~~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:33:13: warning: 'RFM22B_ClearTX' defined but not used [-Wunused-function]
+   33 | static void RFM22B_ClearTX(RFM22B *dev) {
+      |             ^~~~~~~~~~~~~~
 arm-none-eabi-gcc -o "ODB2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\STM32F412ZGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ODB2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: ODB2.elf
  
 arm-none-eabi-size  ODB2.elf 
 arm-none-eabi-objdump -h -S ODB2.elf  > "ODB2.list"
    text	   data	    bss	    dec	    hex	filename
-  50748	    360	  10048	  61156	   eee4	ODB2.elf
+  43600	    268	   9740	  53608	   d168	ODB2.elf
 Finished building: default.size.stdout
  
 Finished building: ODB2.list
  
-17:39:04 **** Incremental Build of configuration Debug for project ODB2 ****
+22:29:41 **** Incremental Build of configuration Debug for project ODB2 ****
 make -j12 all 
 arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:33:13: warning: 'RFM22B_ClearTX' defined but not used [-Wunused-function]
+   33 | static void RFM22B_ClearTX(RFM22B *dev) {
+      |             ^~~~~~~~~~~~~~
 arm-none-eabi-gcc -o "ODB2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\STM32F412ZGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ODB2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: ODB2.elf
  
 arm-none-eabi-size  ODB2.elf 
 arm-none-eabi-objdump -h -S ODB2.elf  > "ODB2.list"
    text	   data	    bss	    dec	    hex	filename
-  50748	    360	  10048	  61156	   eee4	ODB2.elf
+  43600	    268	   9740	  53608	   d168	ODB2.elf
 Finished building: default.size.stdout
  
 Finished building: ODB2.list
  
-17:46:56 **** Incremental Build of configuration Debug for project ODB2 ****
+22:29:56 **** Incremental Build of configuration Debug for project ODB2 ****
 make -j12 all 
 arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:33:13: warning: 'RFM22B_ClearTX' defined but not used [-Wunused-function]
+   33 | static void RFM22B_ClearTX(RFM22B *dev) {
+      |             ^~~~~~~~~~~~~~
 arm-none-eabi-gcc -o "ODB2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\STM32F412ZGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ODB2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: ODB2.elf
  
 arm-none-eabi-size  ODB2.elf 
 arm-none-eabi-objdump -h -S ODB2.elf  > "ODB2.list"
    text	   data	    bss	    dec	    hex	filename
-  50748	    360	  10048	  61156	   eee4	ODB2.elf
+  43600	    268	   9740	  53608	   d168	ODB2.elf
+Finished building: default.size.stdout
+ 
+Finished building: ODB2.list
+ 
+22:30:20 **** Incremental Build of configuration Debug for project ODB2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:33:13: warning: 'RFM22B_ClearTX' defined but not used [-Wunused-function]
+   33 | static void RFM22B_ClearTX(RFM22B *dev) {
+      |             ^~~~~~~~~~~~~~
+arm-none-eabi-gcc -o "ODB2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\STM32F412ZGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ODB2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: ODB2.elf
+ 
+arm-none-eabi-size  ODB2.elf 
+arm-none-eabi-objdump -h -S ODB2.elf  > "ODB2.list"
+   text	   data	    bss	    dec	    hex	filename
+  43600	    268	   9740	  53608	   d168	ODB2.elf
+Finished building: default.size.stdout
+ 
+Finished building: ODB2.list
+ 
+22:33:14 **** Incremental Build of configuration Debug for project ODB2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: In function 'RFM22B_SetStandbyMode':
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:43:50: error: expected expression before ';' token
+   43 |         if(value == reg) return RFM22B_ERR_CONFIG;
+      |                                                  ^
+In file included from ../Core/Src/GAUL_Drivers/Components/RFM22B.c:8:
+../Core/Inc/GAUL_Drivers/Components/RFM22B.h:360:29: warning: left-hand operand of comma expression has no effect [-Wunused-value]
+  360 | #define RFM22B_ERR_CONFIG -2,
+      |                             ^
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:43:33: note: in expansion of macro 'RFM22B_ERR_CONFIG'
+   43 |         if(value == reg) return RFM22B_ERR_CONFIG;
+      |                                 ^~~~~~~~~~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: At top level:
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:33:13: warning: 'RFM22B_ClearTX' defined but not used [-Wunused-function]
+   33 | static void RFM22B_ClearTX(RFM22B *dev) {
+      |             ^~~~~~~~~~~~~~
+make: *** [Core/Src/GAUL_Drivers/Components/subdir.mk:31: Core/Src/GAUL_Drivers/Components/RFM22B.o] Error 1
+make: *** Waiting for unfinished jobs....
+"make -j12 all" terminated with exit code 2. Build might be incomplete.
+22:33:50 **** Incremental Build of configuration Debug for project ODB2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:33:13: warning: 'RFM22B_ClearTX' defined but not used [-Wunused-function]
+   33 | static void RFM22B_ClearTX(RFM22B *dev) {
+      |             ^~~~~~~~~~~~~~
+arm-none-eabi-gcc -o "ODB2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\STM32F412ZGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ODB2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: ODB2.elf
+ 
+arm-none-eabi-size  ODB2.elf 
+arm-none-eabi-objdump -h -S ODB2.elf  > "ODB2.list"
+   text	   data	    bss	    dec	    hex	filename
+  43600	    268	   9740	  53608	   d168	ODB2.elf
+Finished building: default.size.stdout
+ 
+Finished building: ODB2.list
+ 
+22:34:02 **** Incremental Build of configuration Debug for project ODB2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: In function 'RFM22B_SetStandbyMode':
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:44:25: error: expected expression before ';' token
+   44 |         return RFM22B_OK; // OK
+      |                         ^
+In file included from ../Core/Src/GAUL_Drivers/Components/RFM22B.c:8:
+../Core/Inc/GAUL_Drivers/Components/RFM22B.h:358:20: warning: left-hand operand of comma expression has no effect [-Wunused-value]
+  358 | #define RFM22B_OK 0,
+      |                    ^
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:44:16: note: in expansion of macro 'RFM22B_OK'
+   44 |         return RFM22B_OK; // OK
+      |                ^~~~~~~~~
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:45:1: warning: control reaches end of non-void function [-Wreturn-type]
+   45 | }
+      | ^
+../Core/Src/GAUL_Drivers/Components/RFM22B.c: At top level:
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:33:13: warning: 'RFM22B_ClearTX' defined but not used [-Wunused-function]
+   33 | static void RFM22B_ClearTX(RFM22B *dev) {
+      |             ^~~~~~~~~~~~~~
+make: *** [Core/Src/GAUL_Drivers/Components/subdir.mk:31: Core/Src/GAUL_Drivers/Components/RFM22B.o] Error 1
+"make -j12 all" terminated with exit code 2. Build might be incomplete.
+22:34:10 **** Incremental Build of configuration Debug for project ODB2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:33:13: warning: 'RFM22B_ClearTX' defined but not used [-Wunused-function]
+   33 | static void RFM22B_ClearTX(RFM22B *dev) {
+      |             ^~~~~~~~~~~~~~
+arm-none-eabi-gcc -o "ODB2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\STM32F412ZGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ODB2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: ODB2.elf
+ 
+arm-none-eabi-size  ODB2.elf 
+arm-none-eabi-objdump -h -S ODB2.elf  > "ODB2.list"
+   text	   data	    bss	    dec	    hex	filename
+  43600	    268	   9740	  53608	   d168	ODB2.elf
+Finished building: default.size.stdout
+ 
+Finished building: ODB2.list
+ 
+22:36:35 **** Incremental Build of configuration Debug for project ODB2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:33:13: warning: 'RFM22B_ClearTX' defined but not used [-Wunused-function]
+   33 | static void RFM22B_ClearTX(RFM22B *dev) {
+      |             ^~~~~~~~~~~~~~
+arm-none-eabi-gcc -o "ODB2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\STM32F412ZGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ODB2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: ODB2.elf
+ 
+arm-none-eabi-size  ODB2.elf 
+arm-none-eabi-objdump -h -S ODB2.elf  > "ODB2.list"
+   text	   data	    bss	    dec	    hex	filename
+  43600	    268	   9740	  53608	   d168	ODB2.elf
+Finished building: default.size.stdout
+ 
+Finished building: ODB2.list
+ 
+22:44:45 **** Incremental Build of configuration Debug for project ODB2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/Components/RFM22B.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/Components/RFM22B.d" -MT"Core/Src/GAUL_Drivers/Components/RFM22B.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/GAUL_Drivers/Components/RFM22B.o"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F412Zx -DUSE_FULL_LL_DRIVER -c -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "ODB2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\gagno\OneDrive\Documents\GitHub\Ordinateur-de-bord\STM32CubeIDE\ODB2\STM32F412ZGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ODB2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: ODB2.elf
+ 
+arm-none-eabi-size  ODB2.elf 
+arm-none-eabi-objdump -h -S ODB2.elf  > "ODB2.list"
+   text	   data	    bss	    dec	    hex	filename
+  43600	    268	   9740	  53608	   d168	ODB2.elf
 Finished building: default.size.stdout
  
 Finished building: ODB2.list
