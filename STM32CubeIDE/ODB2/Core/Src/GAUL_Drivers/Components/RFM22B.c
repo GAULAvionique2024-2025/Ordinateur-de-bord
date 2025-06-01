@@ -44,7 +44,7 @@ static uint8_t RFM22B_SetStandbyMode(RFM22B *dev) {
 	return RFM22B_OK;
 }
 
-void RFM22B_SetChannel(RFM22B *dev, uint8_t channel) {
+static void RFM22B_SetChannel(RFM22B *dev, uint8_t channel) {
 	RFM22B_Write(dev, RH_RF22_REG_79_FREQUENCY_HOPPING_CHANNEL_SELECT, &channel, 1);
 }
 
@@ -96,10 +96,9 @@ int8_t RFM22B_Init(SPI_TypeDef *SPIx, RFM22B *dev, RFM22B_Configs *confs, uint8_
 int8_t RFM22B_Transmit(RFM22B *dev, uint8_t *txData, uint8_t len) {
 	if (txData == NULL || len > 64) return RFM22B_ERR_LIMIT;
 
-	RFM22B_ClearTX(dev);
-
 	uint8_t mode = 0;
 	RFM22B_Read(dev, RH_RF22_REG_07_OPERATING_MODE1, &mode, 1);
+
 	if (mode & RH_RF22_TXON) return RFM22B_ERR_BUSY; // already transmitting
 	// send dans la FIFO et set longueur packet
 	RFM22B_Write(dev, RH_RF22_REG_7F_FIFO_ACCESS, txData, len);
@@ -110,6 +109,8 @@ int8_t RFM22B_Transmit(RFM22B *dev, uint8_t *txData, uint8_t len) {
 	// mode tx
 	uint8_t txMode = RH_RF22_TXON;
 	RFM22B_Write(dev, RH_RF22_REG_07_OPERATING_MODE1, &txMode, 1);
+
+	RFM22B_ClearTX(dev);
 
 	return RFM22B_OK;
 }

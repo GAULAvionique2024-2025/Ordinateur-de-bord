@@ -125,7 +125,7 @@ int main(void)
   MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
   RunTimerInit(&run_timer);
-  SPI_InitPeriph(SPI1, SPI_BAUDRATE_3);
+  SPI_InitPeriph(rfm22b.SPIx, SPI_BAUDRATE_3);
   rfm22b.cs_port = GPIOA;
   rfm22b.cs_pin = 2;
   rfm22b.int_port = GPIOC;
@@ -140,7 +140,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-	  RFM22B_Transmit();
+
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

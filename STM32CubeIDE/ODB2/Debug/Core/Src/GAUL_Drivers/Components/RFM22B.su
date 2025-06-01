@@ -2,6 +2,6 @@
 ../Core/Src/GAUL_Drivers/Components/RFM22B.c:25:13:RFM22B_Read	24	static
 ../Core/Src/GAUL_Drivers/Components/RFM22B.c:33:13:RFM22B_ClearTX	24	static
 ../Core/Src/GAUL_Drivers/Components/RFM22B.c:38:16:RFM22B_SetStandbyMode	24	static
-../Core/Src/GAUL_Drivers/Components/RFM22B.c:47:6:RFM22B_SetChannel	16	static
+../Core/Src/GAUL_Drivers/Components/RFM22B.c:47:13:RFM22B_SetChannel	16	static
 ../Core/Src/GAUL_Drivers/Components/RFM22B.c:52:8:RFM22B_Init	48	static
 ../Core/Src/GAUL_Drivers/Components/RFM22B.c:96:8:RFM22B_Transmit	32	static
