@@ -44,12 +44,8 @@ static uint8_t RFM22B_SetStandbyMode(RFM22B *dev) {
 	return RFM22B_OK;
 }
 
-void RFM22B_SetChannel(RFM22B *dev, uint8_t channel) {
-	RFM22B_Write(dev, RH_RF22_REG_79_FREQUENCY_HOPPING_CHANNEL_SELECT, &channel, 1);
-}
 
-
-int8_t RFM22B_Init(SPI_TypeDef *SPIx, RFM22B *dev, RFM22B_Configs *confs, uint8_t channel) {
+int8_t RFM22B_Init(SPI_TypeDef *SPIx, RFM22B *dev, RFM22B_Configs *confs) {
 	dev->SPIx = SPIx;
 	// Reset RFM
 	GPIO_WritePin(dev->snd_port, dev->snd_pin, HIGH);
@@ -87,8 +83,6 @@ int8_t RFM22B_Init(SPI_TypeDef *SPIx, RFM22B *dev, RFM22B_Configs *confs, uint8_
 		RFM22B_Write(dev, confs->registers[i], &setting, 1);
 	}
 
-	RFM22B_SetChannel(dev, channel);
-
 	return RFM22B_OK;
 }
 
@@ -112,4 +106,8 @@ int8_t RFM22B_Transmit(RFM22B *dev, uint8_t *txData, uint8_t len) {
 	RFM22B_Write(dev, RH_RF22_REG_07_OPERATING_MODE1, &txMode, 1);
 
 	return RFM22B_OK;
+}
+
+void RFM22B_SetChannel(RFM22B *dev, uint8_t channel) {
+	RFM22B_Write(dev, RH_RF22_REG_79_FREQUENCY_HOPPING_CHANNEL_SELECT, &channel, 1);
 }

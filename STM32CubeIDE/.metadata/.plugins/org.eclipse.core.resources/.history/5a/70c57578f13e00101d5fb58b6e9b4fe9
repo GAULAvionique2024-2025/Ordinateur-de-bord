@@ -383,6 +383,7 @@ extern RFM22B_Configs rfm22_confs; // config GFSK, 2.4kbs, 20kHz freq dev, 50kHz
 
 int8_t RFM22B_Init(SPI_TypeDef *SPIx, RFM22B *dev, RFM22B_Configs *confs, uint8_t channel);
 int8_t RFM22B_Transmit(RFM22B *dev, uint8_t *tx_buffer, uint8_t len);
+void RFM22B_SetChannel(RFM22B *dev, uint8_t channel);
 
 
 #endif /* INC_GAUL_DRIVERS_RFM22_H_ */

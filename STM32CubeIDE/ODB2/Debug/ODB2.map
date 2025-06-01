@@ -768,14 +768,14 @@ Discarded input sections
                 0x00000000       0x22 ./Core/Src/GAUL_Drivers/Components/RFM22B.o
  .text.RFM22B_SetStandbyMode
                 0x00000000       0x3e ./Core/Src/GAUL_Drivers/Components/RFM22B.o
- .rodata        0x00000000        0x3 ./Core/Src/GAUL_Drivers/Components/RFM22B.o
- .text.RFM22B_Init
-                0x00000000      0x124 ./Core/Src/GAUL_Drivers/Components/RFM22B.o
- .text.RFM22B_Transmit
-                0x00000000       0x82 ./Core/Src/GAUL_Drivers/Components/RFM22B.o
  .text.RFM22B_SetChannel
                 0x00000000       0x20 ./Core/Src/GAUL_Drivers/Components/RFM22B.o
- .debug_info    0x00000000      0x60b ./Core/Src/GAUL_Drivers/Components/RFM22B.o
+ .rodata        0x00000000        0x3 ./Core/Src/GAUL_Drivers/Components/RFM22B.o
+ .text.RFM22B_Init
+                0x00000000      0x130 ./Core/Src/GAUL_Drivers/Components/RFM22B.o
+ .text.RFM22B_Transmit
+                0x00000000       0x82 ./Core/Src/GAUL_Drivers/Components/RFM22B.o
+ .debug_info    0x00000000      0x619 ./Core/Src/GAUL_Drivers/Components/RFM22B.o
  .debug_abbrev  0x00000000      0x1d2 ./Core/Src/GAUL_Drivers/Components/RFM22B.o
  .debug_aranges
                 0x00000000       0x50 ./Core/Src/GAUL_Drivers/Components/RFM22B.o
@@ -846,7 +846,7 @@ Discarded input sections
  .debug_macro   0x00000000       0xbe ./Core/Src/GAUL_Drivers/Components/RFM22B.o
  .debug_macro   0x00000000       0x40 ./Core/Src/GAUL_Drivers/Components/RFM22B.o
  .debug_macro   0x00000000      0x7e6 ./Core/Src/GAUL_Drivers/Components/RFM22B.o
- .debug_line    0x00000000      0xb29 ./Core/Src/GAUL_Drivers/Components/RFM22B.o
+ .debug_line    0x00000000      0xb2b ./Core/Src/GAUL_Drivers/Components/RFM22B.o
  .debug_str     0x00000000    0xcf2d8 ./Core/Src/GAUL_Drivers/Components/RFM22B.o
  .comment       0x00000000       0x44 ./Core/Src/GAUL_Drivers/Components/RFM22B.o
  .debug_frame   0x00000000      0x10c ./Core/Src/GAUL_Drivers/Components/RFM22B.o
