@@ -5,28 +5,28 @@
 void SPI_Enable_Clock(SPI_TypeDef *SPIx) {
     if (SPIx == SPI1) {
         RCC->APB2ENR |= RCC_APB2ENR_SPI1EN;
-        GPIO_InitPeriph(GPIOA, 2, OUT, O_PP, GPIO_SPEED_3);		// CS RFM (A2)
-        GPIO_InitPeriph(GPIOA, 4, OUT, O_PP, GPIO_SPEED_3);		// CS ICM (A4)
-        GPIO_InitPeriph(GPIOA, 5, ALT, AF5, GPIO_SPEED_3);		// CLK (A5)
-        GPIO_InitPeriph(GPIOA, 6, ALT, AF5, GPIO_SPEED_3);		// MISO (A6)
-        GPIO_InitPeriph(GPIOA, 7, ALT, AF5, GPIO_SPEED_3);		// MOSI (A7)
+        GPIO_InitPeriph(GPIOA, 2, OUT, IO_NPP, O_PP, GPIO_SPEED_3);		// CS RFM (A2)
+        GPIO_InitPeriph(GPIOA, 4, OUT, IO_NPP, O_PP, GPIO_SPEED_3);		// CS ICM (A4)
+        GPIO_InitPeriph(GPIOA, 5, ALT, IO_NPP, AF5, GPIO_SPEED_3);		// CLK (A5)
+        GPIO_InitPeriph(GPIOA, 6, ALT, IO_PU, AF5, GPIO_SPEED_3);		// MISO (A6)
+        GPIO_InitPeriph(GPIOA, 7, ALT, IO_NPP, AF5, GPIO_SPEED_3);		// MOSI (A7)
 
         GPIO_WritePin(GPIOA, 2, HIGH);
         GPIO_WritePin(GPIOA, 4, HIGH);
     } else if (SPIx == SPI4) {
         RCC->APB2ENR |= RCC_APB2ENR_SPI4EN;
-        GPIO_InitPeriph(GPIOE, 4, OUT, O_PP, GPIO_SPEED_3);		// CS BARO (E4)
-        GPIO_InitPeriph(GPIOE, 12, ALT, AF5, GPIO_SPEED_3);		// CLK (E12)
-        GPIO_InitPeriph(GPIOE, 13, ALT, AF5, GPIO_SPEED_3);		// MISO (E13)
-        GPIO_InitPeriph(GPIOE, 14, ALT, AF5, GPIO_SPEED_3);		// MOSI (E14)
+        GPIO_InitPeriph(GPIOE, 4, OUT, IO_NPP, O_PP, GPIO_SPEED_3);		// CS BARO (E4)
+        GPIO_InitPeriph(GPIOE, 12, ALT, IO_NPP, AF5, GPIO_SPEED_3);		// CLK (E12)
+        GPIO_InitPeriph(GPIOE, 13, ALT, IO_PU, AF5, GPIO_SPEED_3);		// MISO (E13)
+        GPIO_InitPeriph(GPIOE, 14, ALT, IO_NPP, AF5, GPIO_SPEED_3);		// MOSI (E14)
 
         GPIO_WritePin(GPIOE, 4, HIGH);
     } else if (SPIx == SPI5) {
         RCC->APB2ENR |= RCC_APB2ENR_SPI5EN;
-        GPIO_InitPeriph(GPIOB, 1, OUT, O_PP, GPIO_SPEED_3);		// CS MEM (B1)
-        GPIO_InitPeriph(GPIOB, 0, ALT, AF6, GPIO_SPEED_3);		// CLK (B0)
-        GPIO_InitPeriph(GPIOE, 5, ALT, AF6, GPIO_SPEED_3);		// MISO (E5)
-        GPIO_InitPeriph(GPIOB, 8, ALT, AF6, GPIO_SPEED_3);		// MOSI (B8)
+        GPIO_InitPeriph(GPIOB, 1, OUT, IO_NPP, O_PP, GPIO_SPEED_3);		// CS MEM (B1)
+        GPIO_InitPeriph(GPIOB, 0, ALT, IO_NPP, AF6, GPIO_SPEED_3);		// CLK (B0)
+        GPIO_InitPeriph(GPIOE, 5, ALT, IO_PU, AF6, GPIO_SPEED_3);		// MISO (E5)
+        GPIO_InitPeriph(GPIOB, 8, ALT, IO_NPP, AF6, GPIO_SPEED_3);		// MOSI (B8)
 
         GPIO_WritePin(GPIOB, 1, HIGH);
     } else return;

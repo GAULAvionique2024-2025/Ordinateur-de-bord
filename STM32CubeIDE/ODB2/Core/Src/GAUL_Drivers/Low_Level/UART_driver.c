@@ -5,16 +5,16 @@
 void USART_Enable_Clock(USART_TypeDef *USARTx) {
 	if (USARTx == USART1) {
 		RCC->APB2ENR |= RCC_APB2ENR_USART1EN;	// Enable USART1 clock
-		GPIO_InitPeriph(GPIOA, 9, ALT, AF7, GPIO_SPEED_0); 	// TX (A9)
-		GPIO_InitPeriph(GPIOA, 10, ALT, AF7, GPIO_SPEED_0); 	// RX (A10)
+		GPIO_InitPeriph(GPIOA, 9, ALT, IO_NPP, AF7, GPIO_SPEED_0); 	// TX (A9)
+		GPIO_InitPeriph(GPIOA, 10, ALT, IO_NPP, AF7, GPIO_SPEED_0); // RX (A10)
 	} else if (USARTx == USART2) {
 		RCC->APB1ENR |= RCC_APB1ENR_USART2EN; 	// Enable USART2 clock
-		GPIO_InitPeriph(GPIOD, 5, ALT, AF7, GPIO_SPEED_0); 	// TX (D5)
-		GPIO_InitPeriph(GPIOD, 6, ALT, AF7, GPIO_SPEED_0); 	// RX (D6)
+		GPIO_InitPeriph(GPIOD, 5, ALT, IO_NPP, AF7, GPIO_SPEED_0); 	// TX (D5)
+		GPIO_InitPeriph(GPIOD, 6, ALT, IO_NPP, AF7, GPIO_SPEED_0); 	// RX (D6)
 	} else if (USARTx == USART6) {
 		RCC->APB2ENR |= RCC_APB2ENR_USART6EN; 	// Enable USART6 clock
-		GPIO_InitPeriph(GPIOC, 6, ALT, AF8, GPIO_SPEED_0); 	// TX (C6)
-		GPIO_InitPeriph(GPIOC, 7, ALT, AF8, GPIO_SPEED_0); 	// RX (C7)
+		GPIO_InitPeriph(GPIOC, 6, ALT, IO_NPP, AF8, GPIO_SPEED_0); 	// TX (C6)
+		GPIO_InitPeriph(GPIOC, 7, ALT, IO_NPP, AF8, GPIO_SPEED_0); 	// RX (C7)
 	} else return;
 }
 

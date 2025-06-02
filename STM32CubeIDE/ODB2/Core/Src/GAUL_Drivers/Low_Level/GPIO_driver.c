@@ -20,7 +20,7 @@ void GPIO_Enable_Clock(GPIO_TypeDef *port) {
     } else return;
 }
 
-void GPIO_InitPeriph(GPIO_TypeDef *GPIOx, unsigned short pin, unsigned short dir, unsigned short opt, unsigned short speed) {
+void GPIO_InitPeriph(GPIO_TypeDef *GPIOx, unsigned short pin, unsigned short dir, unsigned short type, unsigned short opt, unsigned short speed) {
 	if(pin > 15) return;
 	GPIO_Enable_Clock(GPIOx);
 
@@ -34,11 +34,12 @@ void GPIO_InitPeriph(GPIO_TypeDef *GPIOx, unsigned short pin, unsigned short dir
 	if(dir == OUT) {
 		GPIOx->OTYPER &= ~(1 << pin);		 // Clear
 		GPIOx->OTYPER |= (opt << pin); 		 // Set option direction
-		GPIOx->PUPDR &= ~(0x3 << (pin * 2)); // No Pull
+		GPIOx->PUPDR &= ~(0x3 << (pin * 2));
+		GPIOx->PUPDR |= (type << (pin * 2));
 	}
 	if(dir == IN) {
 		GPIOx->PUPDR &= ~(0x3 << (pin * 2));
-		GPIOx->PUPDR |= (opt << (pin * 2));
+		GPIOx->PUPDR |= (type << (pin * 2));
 	}
 	if(dir == ALT) {
 		GPIOx->PUPDR &= ~(0x3 << (pin * 2)); 			// No Pull

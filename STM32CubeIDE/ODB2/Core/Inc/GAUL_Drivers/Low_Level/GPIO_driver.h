@@ -11,16 +11,16 @@
 #define ALT 2	   // Alternate function mode
 #define AN 	3	   // Analog mode
 
-// Direction options for output
+// Output type
 #define O_PP 0  // Push-pull output
 #define O_OD 1  // Open-drain output
 
-// Direction options for input
-#define I_NPP 0  // No pull-up/down
-#define I_PU  1  // Pull-up
-#define I_PD  2  // Pull-down
+// Options for input/output
+#define IO_NPP 0  // No pull-up/down
+#define IO_PU  1  // Pull-up
+#define IO_PD  2  // Pull-down
 
-// Direction options for alternate fonctions
+// Options for alternate fonctions
 #define AF0  0b0000
 #define AF1  0b0001
 #define AF2  0b0010
@@ -48,7 +48,7 @@
 #define LOW  0
 #define HIGH 1
 
-void GPIO_InitPeriph(GPIO_TypeDef *GPIOx, unsigned short pin, unsigned short dir, unsigned short opt, unsigned short speed);
+void GPIO_InitPeriph(GPIO_TypeDef *GPIOx, unsigned short pin, unsigned short dir, unsigned short type, unsigned short opt, unsigned short speed);
 int8_t GPIO_ReadPin(GPIO_TypeDef *GPIOx, unsigned short pin);
 void GPIO_WritePin(GPIO_TypeDef *GPIOx, unsigned short pin, unsigned short state);
 void GPIO_Toggle(GPIO_TypeDef *GPIOx, unsigned short pin);
