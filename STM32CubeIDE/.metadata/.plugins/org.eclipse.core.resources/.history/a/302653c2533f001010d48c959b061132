@@ -141,6 +141,8 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  GPIO_InitPeriph(GPIOA, 8, O_PP, IO_NPP, GPIO_SPEED_3);
+  GPIO_WritePin(GPIOA, 8, HIGH);
   while (1)
   {
 	  GPIO_WritePin(GPIOA, GPIO_PIN_2, LOW);

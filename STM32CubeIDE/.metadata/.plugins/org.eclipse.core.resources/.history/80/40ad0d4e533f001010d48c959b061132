@@ -23,10 +23,10 @@ void SPI_Enable_Clock(SPI_TypeDef *SPIx) {
         GPIO_WritePin(GPIOE, 4, HIGH);
     } else if (SPIx == SPI5) {
         RCC->APB2ENR |= RCC_APB2ENR_SPI5EN;
-        GPIO_InitPeriph(GPIOB, 1, OUT, O_PP, IO_NPP, GPIO_SPEED_3);		// CS MEM (B1)
-        GPIO_InitPeriph(GPIOB, 0, ALT, AF6, IO_NPP, GPIO_SPEED_3);		// CLK (B0)
-        GPIO_InitPeriph(GPIOE, 5, ALT, AF6, IO_PU, GPIO_SPEED_3);		// MISO (E5)
-        GPIO_InitPeriph(GPIOB, 8, ALT, AF6, IO_NPP, GPIO_SPEED_3);		// MOSI (B8)
+        GPIO_InitPeriph(GPIOB, 1, OUT, O_PP, GPIO_SPEED_3);		// CS MEM (B1)
+        GPIO_InitPeriph(GPIOB, 0, ALT, AF6, GPIO_SPEED_3);		// CLK (B0)
+        GPIO_InitPeriph(GPIOE, 5, ALT, AF6, GPIO_SPEED_3);		// MISO (E5)
+        GPIO_InitPeriph(GPIOB, 8, ALT, AF6, GPIO_SPEED_3);		// MOSI (B8)
 
         GPIO_WritePin(GPIOB, 1, HIGH);
     } else return;

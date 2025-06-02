@@ -15,7 +15,7 @@
 #define O_PP 0  // Push-pull output
 #define O_OD 1  // Open-drain output
 
-#define I_NA 0	// NA
+#define I_NQ 0;
 
 // Options for input/output
 #define IO_NPP 0  // No pull-up/down
