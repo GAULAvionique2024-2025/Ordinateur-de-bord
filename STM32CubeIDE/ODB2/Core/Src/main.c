@@ -143,9 +143,9 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  GPIO_WritePin(GPIOA, GPIO_PIN_2, LOW);
+	  GPIO_WritePin(GPIOA, 2, LOW);
 	  HAL_Delay(1000);
-	  GPIO_WritePin(GPIOA, GPIO_PIN_2, HIGH);
+	  GPIO_WritePin(GPIOA, 2, HIGH);
 	  HAL_Delay(1000);
     /* USER CODE END WHILE */
 

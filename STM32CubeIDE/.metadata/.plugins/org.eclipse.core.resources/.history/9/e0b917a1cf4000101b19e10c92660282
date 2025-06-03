@@ -29,6 +29,7 @@
 #include "GAUL_Drivers/Components/MS5803.h"
 #include "GAUL_Drivers/Components/ICM20948.h"
 #include "GAUL_Drivers/Components/L76LM33.h"
+#include "GAUL_Drivers/Components/RFM22B.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -61,6 +62,7 @@ MS5803 ms5803;
 ICM20948 icm20948;
 GPS_Data gps_data;
 L76LM33 l76lm33;
+RFM22B rfm22b;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -123,22 +125,28 @@ int main(void)
   MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
   RunTimerInit(&run_timer);
-  SPI_InitPeriph(SPI1, SPI_BAUDRATE_3);
-  icm20948.cs_port = GPIOA;
-  icm20948.cs_pin = 4;
-  icm20948.int_port = GPIOA;
-  icm20948.int_pin = 3;
-  ICM20948_Init(&hspi1, &icm20948);
+  /*
+  rfm22b.SPIx = SPI1;
+  rfm22b.cs_port = GPIOA;
+  rfm22b.cs_pin = 2;
+  rfm22b.int_port = GPIOC;
+  rfm22b.int_pin = 1;
+  rfm22b.snd_port = GPIOC;
+  rfm22b.snd_pin = 0;
+  SPI_InitPeriph(SPI1, SPI_BAUDRATE_4);
+  RFM22B_Init(SPI1, &rfm22b, &rfm22_confs, 0);
+  uint8_t dataToSend[8] = {0x00};
+  */
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  ICM20948_ReadData(&icm20948);
-	  printt("ACC: %f | %f | %f", icm20948.accX, icm20948.accY, icm20948.accZ);
-	  printt("GYRO: %f | %f | %f", icm20948.gyroX, icm20948.gyroY, icm20948.gyroZ);
-	  //HAL_Delay(2000);
+	  GPIO_WritePin(GPIOA, GPIO_PIN_2, LOW);
+	  HAL_Delay(1000);
+	  GPIO_WritePin(GPIOA, GPIO_PIN_2, HIGH);
+	  HAL_Delay(1000);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -283,7 +291,7 @@ static void MX_SPI1_Init(void)
   GPIO_InitStruct.Mode = LL_GPIO_MODE_ALTERNATE;
   GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_HIGH;
   GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
-  GPIO_InitStruct.Pull = LL_GPIO_PULL_DOWN;
+  GPIO_InitStruct.Pull = LL_GPIO_PULL_UP;
   GPIO_InitStruct.Alternate = LL_GPIO_AF_5;
   LL_GPIO_Init(ICM_RFM_MISO_GPIO_Port, &GPIO_InitStruct);
 
@@ -334,13 +342,21 @@ static void MX_SPI4_Init(void)
   PE13   ------> SPI4_MISO
   PE14   ------> SPI4_MOSI
   */
-  GPIO_InitStruct.Pin = BARO_SCK_Pin|BARO_MISO_Pin|BARO_MOSI_Pin;
+  GPIO_InitStruct.Pin = BARO_SCK_Pin|BARO_MOSI_Pin;
   GPIO_InitStruct.Mode = LL_GPIO_MODE_ALTERNATE;
   GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_HIGH;
   GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
   GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
   GPIO_InitStruct.Alternate = LL_GPIO_AF_5;
   LL_GPIO_Init(GPIOE, &GPIO_InitStruct);
+
+  GPIO_InitStruct.Pin = BARO_MISO_Pin;
+  GPIO_InitStruct.Mode = LL_GPIO_MODE_ALTERNATE;
+  GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_HIGH;
+  GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
+  GPIO_InitStruct.Pull = LL_GPIO_PULL_UP;
+  GPIO_InitStruct.Alternate = LL_GPIO_AF_5;
+  LL_GPIO_Init(BARO_MISO_GPIO_Port, &GPIO_InitStruct);
 
   /* USER CODE BEGIN SPI4_Init 1 */
 
@@ -394,7 +410,7 @@ static void MX_SPI5_Init(void)
   GPIO_InitStruct.Mode = LL_GPIO_MODE_ALTERNATE;
   GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_HIGH;
   GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
-  GPIO_InitStruct.Pull = LL_GPIO_PULL_DOWN;
+  GPIO_InitStruct.Pull = LL_GPIO_PULL_UP;
   GPIO_InitStruct.Alternate = LL_GPIO_AF_6;
   LL_GPIO_Init(MEM_MISO_GPIO_Port, &GPIO_InitStruct);
 
@@ -631,7 +647,7 @@ static void MX_GPIO_Init(void)
   LL_GPIO_SetOutputPin(nPYROS_Test_GPIO_Port, nPYROS_Test_Pin);
 
   /**/
-  LL_GPIO_SetOutputPin(ICM_CS_GPIO_Port, ICM_CS_Pin);
+  LL_GPIO_SetOutputPin(GPIOA, RFM_CS_Pin|ICM_CS_Pin);
 
   /**/
   LL_GPIO_SetOutputPin(MEM_CS_GPIO_Port, MEM_CS_Pin);
@@ -643,10 +659,10 @@ static void MX_GPIO_Init(void)
   LL_GPIO_ResetOutputPin(GPIOF, PYROS_Bluetooth_Pin|PYROS_MainODB_Pin|PYROS_DrogueODB_Pin);
 
   /**/
-  LL_GPIO_ResetOutputPin(GPIOA, RFM_CS_Pin|CriticalLEDEnable_Pin);
+  LL_GPIO_ResetOutputPin(GPIOB, IO_Camera2_Pin|IO_Camera1_Pin);
 
   /**/
-  LL_GPIO_ResetOutputPin(GPIOB, IO_Camera2_Pin|IO_Camera1_Pin);
+  LL_GPIO_ResetOutputPin(CriticalLEDEnable_GPIO_Port, CriticalLEDEnable_Pin);
 
   /**/
   GPIO_InitStruct.Pin = BARO_CS_Pin;
