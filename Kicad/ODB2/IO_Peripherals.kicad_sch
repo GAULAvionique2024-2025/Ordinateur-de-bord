@@ -4953,6 +4953,12 @@
 		(uuid "4402e8a4-6735-4efb-aa9c-ffae9358bfb5")
 	)
 	(junction
+		(at 251.46 96.52)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "4e794ae0-1ddf-471b-8b95-d855ddaab30d")
+	)
+	(junction
 		(at 248.92 36.83)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -4981,12 +4987,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "be247308-a6bd-4b36-aaec-a73030d563ae")
-	)
-	(junction
-		(at 250.19 96.52)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "d7f7eaab-fb0b-4e54-9dda-0b0a33d7915b")
 	)
 	(junction
 		(at 49.53 33.02)
@@ -5168,7 +5168,7 @@
 	)
 	(wire
 		(pts
-			(xy 248.92 96.52) (xy 250.19 96.52)
+			(xy 248.92 96.52) (xy 251.46 96.52)
 		)
 		(stroke
 			(width 0)
@@ -5278,7 +5278,7 @@
 	)
 	(wire
 		(pts
-			(xy 250.19 96.52) (xy 250.19 97.79)
+			(xy 251.46 96.52) (xy 251.46 97.79)
 		)
 		(stroke
 			(width 0)
@@ -5348,7 +5348,7 @@
 	)
 	(wire
 		(pts
-			(xy 248.92 78.74) (xy 250.19 78.74)
+			(xy 248.92 78.74) (xy 251.46 78.74)
 		)
 		(stroke
 			(width 0)
@@ -5768,7 +5768,7 @@
 	)
 	(wire
 		(pts
-			(xy 250.19 78.74) (xy 250.19 96.52)
+			(xy 251.46 78.74) (xy 251.46 96.52)
 		)
 		(stroke
 			(width 0)
@@ -6270,7 +6270,7 @@
 			)
 		)
 	)
-	(global_label "SPI1_RFM_CS"
+	(global_label "SPI2_RFM_CS"
 		(shape input)
 		(at 254 86.36 0)
 		(fields_autoplaced yes)
@@ -6404,7 +6404,7 @@
 			)
 		)
 	)
-	(global_label "SPI1_ICM_RFM_MISO"
+	(global_label "SPI2_RFM_MISO"
 		(shape input)
 		(at 254 93.98 0)
 		(fields_autoplaced yes)
@@ -6416,7 +6416,7 @@
 		)
 		(uuid "649613f7-5163-45c4-be3a-b17b78143f43")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 275.9142 93.98 0)
+			(at 271.6204 93.98 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6515,7 +6515,7 @@
 			)
 		)
 	)
-	(global_label "SPI1_ICM_RFM_MOSI"
+	(global_label "SPI2_RFM_MOSI"
 		(shape input)
 		(at 254 91.44 0)
 		(fields_autoplaced yes)
@@ -6527,7 +6527,7 @@
 		)
 		(uuid "a08ff3c0-30ea-4a78-9305-6199fda6385f")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 275.9142 91.44 0)
+			(at 271.6204 91.44 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6581,7 +6581,7 @@
 			)
 		)
 	)
-	(global_label "SPI1_ICM_RFM_SCLK"
+	(global_label "SPI2_RFM_SCLK"
 		(shape input)
 		(at 254 88.9 0)
 		(fields_autoplaced yes)
@@ -6593,7 +6593,7 @@
 		)
 		(uuid "ad706655-3321-4f86-955b-b6372f90a3d0")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 276.0956 88.9 0)
+			(at 271.8018 88.9 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7216,7 +7216,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 250.19 97.79 0)
+		(at 251.46 97.79 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -7225,7 +7225,7 @@
 		(fields_autoplaced yes)
 		(uuid "1a0d665d-ea82-428e-83e4-dcbd8d30aae6")
 		(property "Reference" "#PWR067"
-			(at 250.19 104.14 0)
+			(at 251.46 104.14 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7234,7 +7234,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 250.19 102.87 0)
+			(at 251.46 102.87 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7243,7 +7243,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 250.19 97.79 0)
+			(at 251.46 97.79 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7252,7 +7252,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 250.19 97.79 0)
+			(at 251.46 97.79 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7261,7 +7261,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 250.19 97.79 0)
+			(at 251.46 97.79 0)
 			(effects
 				(font
 					(size 1.27 1.27)
