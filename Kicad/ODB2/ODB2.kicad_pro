@@ -485,7 +485,8 @@
       "+3V7": "rgb(107, 255, 188)",
       "+5V": "rgb(255, 53, 74)",
       "+7V4": "rgb(13, 129, 255)",
-      "GND": "rgb(112, 112, 112)"
+      "GND": "rgb(112, 112, 112)",
+      "Net-(7v4_LED2-A)": "rgb(179, 96, 255)"
     },
     "netclass_assignments": null,
     "netclass_patterns": []
