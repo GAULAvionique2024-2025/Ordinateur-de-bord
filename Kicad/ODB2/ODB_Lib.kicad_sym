@@ -2360,7 +2360,7 @@
 			)
 		)
 	)
-	(symbol "ICM-20948"
+	(symbol "ICM-42670-P"
 		(pin_names
 			(offset 0.254)
 		)
@@ -2368,24 +2368,23 @@
 		(in_bom yes)
 		(on_board yes)
 		(property "Reference" "U"
-			(at 28.956 -5.842 0)
-			(effects
-				(font
-					(size 1.524 1.524)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "ICM-20948"
-			(at 27.94 3.048 0)
+			(at 0 16.002 0)
 			(effects
 				(font
 					(size 1.524 1.524)
 				)
 			)
 		)
-		(property "Footprint" "QFN24_3X3X0P9_IVS"
-			(at 27.432 -0.508 0)
+		(property "Value" "ICM-42670-P"
+			(at 0 13.462 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Footprint" "LGA14_2.5X3X0.76_IVS"
+			(at -45.974 12.7 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2394,8 +2393,8 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "ICM-20948"
-			(at 28.956 -3.048 0)
+		(property "Datasheet" "ICM-42670-P"
+			(at -50.292 14.732 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2405,7 +2404,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 0 0 0)
+			(at -29.21 6.35 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2421,7 +2420,7 @@
 				)
 			)
 		)
-		(property "ki_keywords" "ICM-20948"
+		(property "ki_keywords" "ICM-42670-P"
 			(at 0 0 0)
 			(effects
 				(font
@@ -2430,7 +2429,7 @@
 				(hide yes)
 			)
 		)
-		(property "ki_fp_filters" "QFN24_3X3X0P9_IVS QFN24_3X3X0P9_IVS-M QFN24_3X3X0P9_IVS-L"
+		(property "ki_fp_filters" "LGA14_2.5X3X0.76_IVS LGA14_2.5X3X0.76_IVS-M LGA14_2.5X3X0.76_IVS-L"
 			(at 0 0 0)
 			(effects
 				(font
@@ -2439,10 +2438,10 @@
 				(hide yes)
 			)
 		)
-		(symbol "ICM-20948_1_1"
+		(symbol "ICM-42670-P_0_1"
 			(polyline
 				(pts
-					(xy 7.62 -33.02) (xy 48.26 -33.02)
+					(xy -21.59 -13.97) (xy 21.59 -13.97)
 				)
 				(stroke
 					(width 0.127)
@@ -2454,7 +2453,7 @@
 			)
 			(polyline
 				(pts
-					(xy 7.62 5.08) (xy 7.62 -33.02)
+					(xy -21.59 11.43) (xy -21.59 -13.97)
 				)
 				(stroke
 					(width 0.127)
@@ -2466,7 +2465,7 @@
 			)
 			(polyline
 				(pts
-					(xy 48.26 -33.02) (xy 48.26 5.08)
+					(xy 21.59 -13.97) (xy 21.59 11.43)
 				)
 				(stroke
 					(width 0.127)
@@ -2478,7 +2477,7 @@
 			)
 			(polyline
 				(pts
-					(xy 48.26 5.08) (xy 7.62 5.08)
+					(xy 21.59 11.43) (xy -21.59 11.43)
 				)
 				(stroke
 					(width 0.127)
@@ -2488,10 +2487,10 @@
 					(type none)
 				)
 			)
-			(pin no_connect line
-				(at 0 0 0)
+			(pin bidirectional line
+				(at -29.21 6.35 0)
 				(length 7.62)
-				(name "NC"
+				(name "AP_SDO/AP_AD0"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -2506,10 +2505,10 @@
 					)
 				)
 			)
-			(pin output line
-				(at 0 -22.86 0)
+			(pin no_connect line
+				(at 29.21 -3.81 180)
 				(length 7.62)
-				(name "REGOUT"
+				(name "RESV"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -2524,10 +2523,10 @@
 					)
 				)
 			)
-			(pin input line
-				(at 0 -25.4 0)
+			(pin no_connect line
+				(at 29.21 -1.27 180)
 				(length 7.62)
-				(name "FSYNC"
+				(name "RESV"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -2542,10 +2541,10 @@
 					)
 				)
 			)
-			(pin output line
-				(at 0 -27.94 0)
+			(pin input line
+				(at 29.21 1.27 180)
 				(length 7.62)
-				(name "INT1"
+				(name "AP_CS"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -2560,10 +2559,10 @@
 					)
 				)
 			)
-			(pin power_in line
-				(at 55.88 -27.94 180)
+			(pin bidirectional line
+				(at 29.21 3.81 180)
 				(length 7.62)
-				(name "VDD"
+				(name "AP_SCL/AP_SCLK"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -2578,10 +2577,10 @@
 					)
 				)
 			)
-			(pin no_connect line
-				(at 55.88 -25.4 180)
+			(pin bidirectional line
+				(at 29.21 6.35 180)
 				(length 7.62)
-				(name "NC"
+				(name "AP_SDA/AP_SDIO/AP_SDI"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -2597,99 +2596,9 @@
 				)
 			)
 			(pin no_connect line
-				(at 55.88 -22.86 180)
-				(length 7.62)
-				(name "NC"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "15"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin no_connect line
-				(at 55.88 -20.32 180)
-				(length 7.62)
-				(name "NC"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "16"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin no_connect line
-				(at 55.88 -17.78 180)
-				(length 7.62)
-				(name "NC"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "17"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin power_out line
-				(at 55.88 -15.24 180)
-				(length 7.62)
-				(name "GND"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "18"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin no_connect line
-				(at 55.88 -12.7 180)
+				(at -29.21 3.81 0)
 				(length 7.62)
 				(name "RESV"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "19"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin no_connect line
-				(at 0 -2.54 0)
-				(length 7.62)
-				(name "NC"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -2704,100 +2613,10 @@
 					)
 				)
 			)
-			(pin power_out line
-				(at 55.88 -10.16 180)
-				(length 7.62)
-				(name "RESV_GND"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "20"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin unspecified line
-				(at 55.88 -7.62 180)
-				(length 7.62)
-				(name "AUX_DA"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "21"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin input line
-				(at 55.88 -5.08 180)
-				(length 7.62)
-				(name "nCS"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "22"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin input line
-				(at 55.88 -2.54 180)
-				(length 7.62)
-				(name "SCL/SCLK"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "23"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin input line
-				(at 55.88 0 180)
-				(length 7.62)
-				(name "SDA/SDI"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "24"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
 			(pin no_connect line
-				(at 0 -5.08 0)
+				(at -29.21 1.27 0)
 				(length 7.62)
-				(name "NC"
+				(name "RESV"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -2812,10 +2631,10 @@
 					)
 				)
 			)
-			(pin no_connect line
-				(at 0 -7.62 0)
+			(pin output line
+				(at -29.21 -1.27 0)
 				(length 7.62)
-				(name "NC"
+				(name "INT1/INT"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -2830,10 +2649,10 @@
 					)
 				)
 			)
-			(pin no_connect line
-				(at 0 -10.16 0)
+			(pin power_in line
+				(at -29.21 -3.81 0)
 				(length 7.62)
-				(name "NC"
+				(name "VDDIO"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -2848,10 +2667,10 @@
 					)
 				)
 			)
-			(pin no_connect line
-				(at 0 -12.7 0)
+			(pin power_out line
+				(at -29.21 -6.35 0)
 				(length 7.62)
-				(name "NC"
+				(name "GND"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -2866,10 +2685,10 @@
 					)
 				)
 			)
-			(pin unspecified line
-				(at 0 -15.24 0)
+			(pin input line
+				(at -29.21 -8.89 0)
 				(length 7.62)
-				(name "AUX_CL"
+				(name "FSYNC"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -2885,9 +2704,9 @@
 				)
 			)
 			(pin power_in line
-				(at 0 -17.78 0)
+				(at 29.21 -8.89 180)
 				(length 7.62)
-				(name "VDDIO"
+				(name "VDD"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -2902,10 +2721,10 @@
 					)
 				)
 			)
-			(pin bidirectional line
-				(at 0 -20.32 0)
+			(pin output line
+				(at 29.21 -6.35 180)
 				(length 7.62)
-				(name "SDO/AD0"
+				(name "INT2"
 					(effects
 						(font
 							(size 1.27 1.27)
