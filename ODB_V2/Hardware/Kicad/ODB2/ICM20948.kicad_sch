@@ -1,0 +1,25 @@
+(kicad_sch
+	(version 20231120)
+	(generator "eeschema")
+	(generator_version "8.0")
+	(uuid "f4f04d11-eea5-49aa-9fc9-de7d54591976")
+	(paper "A4")
+	(title_block
+		(title "Acc/Gyro/Mag")
+		(date "2024-11-09")
+		(company "GAUL")
+	)
+	(lib_symbols)
+	(text "Acce/Gyro/Mag"
+		(exclude_from_sim no)
+		(at 49.022 18.542 0)
+		(effects
+			(font
+				(size 6 6)
+				(thickness 1.2)
+				(bold yes)
+			)
+		)
+		(uuid "4a16405e-5adf-4bcc-bf23-e6ea1352fbb3")
+	)
+)

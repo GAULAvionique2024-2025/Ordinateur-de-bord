@@ -1,0 +1,5 @@
+../Core/Src/GAUL_Drivers/Low_Level/SPI_driver.c:5:6:SPI_Enable_Clock	16	static
+../Core/Src/GAUL_Drivers/Low_Level/SPI_driver.c:35:6:SPI_InitPeriph	16	static
+../Core/Src/GAUL_Drivers/Low_Level/SPI_driver.c:47:8:SPI_MOSI	32	static
+../Core/Src/GAUL_Drivers/Low_Level/SPI_driver.c:68:8:SPI_MISO	32	static
+../Core/Src/GAUL_Drivers/Low_Level/SPI_driver.c:91:8:SPI_TransmitReceive	40	static

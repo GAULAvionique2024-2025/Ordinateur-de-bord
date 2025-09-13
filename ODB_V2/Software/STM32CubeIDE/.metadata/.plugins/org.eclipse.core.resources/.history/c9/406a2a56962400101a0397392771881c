@@ -1,0 +1,55 @@
+#include <GAUL_Drivers/Low_Level/GPIO_driver.h>
+
+void GPIO_Enable_Clock(GPIO_TypeDef *port) {
+    if (port == GPIOA) {
+        RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN; // Activate PORTA
+    } else if (port == GPIOB) {
+        RCC->AHB1ENR |= RCC_AHB1ENR_GPIOBEN; // Activate PORTB
+    } else if (port == GPIOC) {
+        RCC->AHB1ENR |= RCC_AHB1ENR_GPIOCEN; // Activate PORTC
+    } else if (port == GPIOD) {
+        RCC->AHB1ENR |= RCC_AHB1ENR_GPIODEN; // Activate PORTD
+    } else if (port == GPIOE) {
+        RCC->AHB1ENR |= RCC_AHB1ENR_GPIOEEN; // Activate PORTE
+    } else if (port == GPIOF) {
+        RCC->AHB1ENR |= RCC_AHB1ENR_GPIOFEN; // Activate PORTF
+    } else if (port == GPIOG) {
+        RCC->AHB1ENR |= RCC_AHB1ENR_GPIOGEN; // Activate PORTG
+    } else if (port == GPIOH) {
+        RCC->AHB1ENR |= RCC_AHB1ENR_GPIOHEN; // Activate PORTH
+    } else return;
+}
+
+void GPIO_InitPeriph(GPIO_TypeDef *GPIOx, unsigned short pin, unsigned short dir, unsigned short opt) {
+	GPIO_Enable_Clock(GPIOx);
+
+    // Pin configuration
+    GPIOx->MODER &= ~(0xF << (pin * 2));	// Clear
+	GPIOx->MODER |= (dir << (pin * 2));		// Set direction (mode)
+	if(dir == OUT) {
+		GPIOx->OTYPER &= ~(1 << pin);		// Clear
+		GPIOx->OTYPER |= (opt << pin); 		// Set option direction
+	}
+	if(dir == ALT) {
+		unsigned short pinIndex = (pin < 8) ? pin : pin - 8;
+		unsigned short index = (pin < 8) ? 0 : 1;
+		GPIOx->AFR[index] &= ~(0xF << (pinIndex * 4)); 	// Clear
+		GPIOx->AFR[index] |= (opt << (pinIndex * 4));   // Set new Alternate Function (opt)
+	}
+}
+
+int GPIO_ReadPin(GPIO_TypeDef *GPIOx, unsigned short pin) {
+    return (GPIOx->IDR & (1 << pin)) >> pin;
+}
+
+void GPIO_WritePin(GPIO_TypeDef *GPIOx, unsigned short pin, unsigned short state) {
+    if (state) {
+    	GPIOx->ODR |= (1 << pin);
+    } else {
+    	GPIOx->ODR &= ~(1 << pin);
+    }
+}
+
+void GPIO_Toggle(GPIO_TypeDef *GPIOx, unsigned short pin) {
+	GPIOx->ODR ^= (1 << pin);
+}

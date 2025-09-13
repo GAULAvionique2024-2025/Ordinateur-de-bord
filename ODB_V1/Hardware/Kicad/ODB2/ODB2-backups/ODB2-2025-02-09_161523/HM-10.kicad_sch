@@ -1,0 +1,25 @@
+(kicad_sch
+	(version 20231120)
+	(generator "eeschema")
+	(generator_version "8.0")
+	(uuid "5f19047a-1ce7-4fed-9d82-3e09ddef5a57")
+	(paper "A4")
+	(title_block
+		(title "Bluetooth")
+		(date "2024-11-09")
+		(company "GAUL")
+	)
+	(lib_symbols)
+	(text "Bluetooth"
+		(exclude_from_sim no)
+		(at 34.798 17.78 0)
+		(effects
+			(font
+				(size 6 6)
+				(thickness 1.2)
+				(bold yes)
+			)
+		)
+		(uuid "6a975d1e-93ea-47bf-89d9-b7510d1fc31c")
+	)
+)

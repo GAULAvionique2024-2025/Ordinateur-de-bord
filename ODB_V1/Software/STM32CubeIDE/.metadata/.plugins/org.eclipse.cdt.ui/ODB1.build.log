@@ -1,0 +1,256 @@
+10:17:26 **** Incremental Build of configuration Debug for project ODB1 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/ICM20602.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -DUSE_FULL_LL_DRIVER -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../FATFS/Target -I../FATFS/App -I../Middlewares/Third_Party/FatFs/src -Og -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/ICM20602.d" -MT"Core/Src/GAUL_Drivers/ICM20602.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/GAUL_Drivers/ICM20602.o"
+arm-none-eabi-gcc "../Core/Src/GAUL_Drivers/KalmanFilter.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -DUSE_FULL_LL_DRIVER -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../FATFS/Target -I../FATFS/App -I../Middlewares/Third_Party/FatFs/src -Og -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/GAUL_Drivers/KalmanFilter.d" -MT"Core/Src/GAUL_Drivers/KalmanFilter.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/GAUL_Drivers/KalmanFilter.o"
+arm-none-eabi-gcc "../Core/Src/fatfs_sd.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -DUSE_FULL_LL_DRIVER -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../FATFS/Target -I../FATFS/App -I../Middlewares/Third_Party/FatFs/src -Og -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/fatfs_sd.d" -MT"Core/Src/fatfs_sd.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/fatfs_sd.o"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -DUSE_FULL_LL_DRIVER -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../FATFS/Target -I../FATFS/App -I../Middlewares/Third_Party/FatFs/src -Og -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc "../Core/Src/util.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -DUSE_FULL_LL_DRIVER -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../FATFS/Target -I../FATFS/App -I../Middlewares/Third_Party/FatFs/src -Og -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/util.d" -MT"Core/Src/util.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/util.o"
+In file included from ../Core/Src/GAUL_Drivers/ICM20602.c:10:
+../Core/Inc/GAUL_Drivers/ICM20602.h:52:23: error: unknown type name 'ICM20602'
+   52 | uint8_t ICM20602_Init(ICM20602 *dev);
+      |                       ^~~~~~~~
+../Core/Inc/GAUL_Drivers/ICM20602.h:53:26: error: unknown type name 'ICM20602'
+   53 | void ICM20602_Update_All(ICM20602 *dev);
+      |                          ^~~~~~~~
+../Core/Inc/GAUL_Drivers/ICM20602.h:54:25: error: unknown type name 'ICM20602'
+   54 | void ICM20602_Calibrate(ICM20602 *dev, int8_t p_Sense);
+      |                         ^~~~~~~~
+../Core/Inc/GAUL_Drivers/ICM20602.h:55:28: error: unknown type name 'ICM20602'
+   55 | int8_t ICM20602_Data_Ready(ICM20602 *dev);
+      |                            ^~~~~~~~
+../Core/Inc/GAUL_Drivers/ICM20602.h:58:20: error: unknown type name 'ICM20602'
+   58 | void ICM20602_Read(ICM20602 *dev, uint8_t address, uint8_t rxData[], uint8_t size);
+      |                    ^~~~~~~~
+../Core/Inc/GAUL_Drivers/ICM20602.h:59:21: error: unknown type name 'ICM20602'
+   59 | void ICM20602_Write(ICM20602 *dev, uint8_t address, uint8_t value);
+      |                     ^~~~~~~~
+In file included from ../Core/Inc/util.h:16,
+                 from ../Core/Inc/GAUL_Drivers/KalmanFilter.h:11,
+                 from ../Core/Src/GAUL_Drivers/KalmanFilter.c:8:
+../Core/Inc/GAUL_Drivers/ICM20602.h:52:23: error: unknown type name 'ICM20602'
+   52 | uint8_t ICM20602_Init(ICM20602 *dev);
+      |                       ^~~~~~~~
+../Core/Inc/GAUL_Drivers/ICM20602.h:53:26: error: unknown type name 'ICM20602'
+   53 | void ICM20602_Update_All(ICM20602 *dev);
+      |                          ^~~~~~~~
+../Core/Inc/GAUL_Drivers/ICM20602.h:54:25: error: unknown type name 'ICM20602'
+   54 | void ICM20602_Calibrate(ICM20602 *dev, int8_t p_Sense);
+      |                         ^~~~~~~~
+../Core/Inc/GAUL_Drivers/ICM20602.h:55:28: error: unknown type name 'ICM20602'
+   55 | int8_t ICM20602_Data_Ready(ICM20602 *dev);
+      |                            ^~~~~~~~
+../Core/Inc/GAUL_Drivers/ICM20602.h:58:20: error: unknown type name 'ICM20602'
+   58 | void ICM20602_Read(ICM20602 *dev, uint8_t address, uint8_t rxData[], uint8_t size);
+      |                    ^~~~~~~~
+../Core/Inc/GAUL_Drivers/ICM20602.h:59:21: error: unknown type name 'ICM20602'
+   59 | void ICM20602_Write(ICM20602 *dev, uint8_t address, uint8_t value);
+      |                     ^~~~~~~~
+In file included from ../Core/Inc/util.h:16,
+                 from ../Core/Src/fatfs_sd.c:16:
+../Core/Inc/GAUL_Drivers/ICM20602.h:52:23: error: unknown type name 'ICM20602'
+   52 | uint8_t ICM20602_Init(ICM20602 *dev);
+      |                       ^~~~~~~~
+../Core/Inc/GAUL_Drivers/ICM20602.h:53:26: error: unknown type name 'ICM20602'
+   53 | void ICM20602_Update_All(ICM20602 *dev);
+      |                          ^~~~~~~~
+../Core/Inc/GAUL_Drivers/ICM20602.h:54:25: error: unknown type name 'ICM20602'
+   54 | void ICM20602_Calibrate(ICM20602 *dev, int8_t p_Sense);
+      |                         ^~~~~~~~
+../Core/Inc/GAUL_Drivers/ICM20602.h:55:28: error: unknown type name 'ICM20602'
+   55 | int8_t ICM20602_Data_Ready(ICM20602 *dev);
+      |                            ^~~~~~~~
+../Core/Inc/GAUL_Drivers/ICM20602.h:58:20: error: unknown type name 'ICM20602'
+   58 | void ICM20602_Read(ICM20602 *dev, uint8_t address, uint8_t rxData[], uint8_t size);
+      |                    ^~~~~~~~
+../Core/Inc/GAUL_Drivers/ICM20602.h:59:21: error: unknown type name 'ICM20602'
+   59 | void ICM20602_Write(ICM20602 *dev, uint8_t address, uint8_t value);
+      |                     ^~~~~~~~
+In file included from ../Core/Inc/util.h:16,
+                 from ../Core/Src/main.c:25:
+../Core/Inc/GAUL_Drivers/ICM20602.h:52:23: error: unknown type name 'ICM20602'
+   52 | uint8_t ICM20602_Init(ICM20602 *dev);
+      |                       ^~~~~~~~
+../Core/Inc/GAUL_Drivers/ICM20602.h:53:26: error: unknown type name 'ICM20602'
+   53 | void ICM20602_Update_All(ICM20602 *dev);
+      |                          ^~~~~~~~
+../Core/Inc/GAUL_Drivers/ICM20602.h:54:25: error: unknown type name 'ICM20602'
+   54 | void ICM20602_Calibrate(ICM20602 *dev, int8_t p_Sense);
+      |                         ^~~~~~~~
+In file included from ../Core/Inc/util.h:16,
+                 from ../Core/Src/util.c:8:
+../Core/Inc/GAUL_Drivers/ICM20602.h:52:23: error: unknown type name 'ICM20602'
+   52 | uint8_t ICM20602_Init(ICM20602 *dev);
+      |                       ^~~~~~~~
+../Core/Inc/GAUL_Drivers/ICM20602.h:55:28: error: unknown type name 'ICM20602'
+   55 | int8_t ICM20602_Data_Ready(ICM20602 *dev);
+      |                            ^~~~~~~~
+../Core/Inc/GAUL_Drivers/ICM20602.h:58:20: error: unknown type name 'ICM20602'
+   58 | void ICM20602_Read(ICM20602 *dev, uint8_t address, uint8_t rxData[], uint8_t size);
+      |                    ^~~~~~~~
+../Core/Inc/GAUL_Drivers/ICM20602.h:53:26: error: unknown type name 'ICM20602'
+   53 | void ICM20602_Update_All(ICM20602 *dev);
+      |                          ^~~~~~~~
+../Core/Inc/GAUL_Drivers/ICM20602.h:59:21: error: unknown type name 'ICM20602'
+   59 | void ICM20602_Write(ICM20602 *dev, uint8_t address, uint8_t value);
+      |                     ^~~~~~~~
+../Core/Inc/GAUL_Drivers/ICM20602.h:54:25: error: unknown type name 'ICM20602'
+   54 | void ICM20602_Calibrate(ICM20602 *dev, int8_t p_Sense);
+      |                         ^~~~~~~~
+../Core/Inc/GAUL_Drivers/ICM20602.h:55:28: error: unknown type name 'ICM20602'
+   55 | int8_t ICM20602_Data_Ready(ICM20602 *dev);
+      |                            ^~~~~~~~
+../Core/Src/GAUL_Drivers/ICM20602.c:18:23: error: unknown type name 'ICM20602'
+   18 | uint8_t ICM20602_Init(ICM20602 *dev){
+      |                       ^~~~~~~~
+../Core/Inc/GAUL_Drivers/ICM20602.h:58:20: error: unknown type name 'ICM20602'
+   58 | void ICM20602_Read(ICM20602 *dev, uint8_t address, uint8_t rxData[], uint8_t size);
+      |                    ^~~~~~~~
+../Core/Src/GAUL_Drivers/ICM20602.c:64:26: error: unknown type name 'ICM20602'
+   64 | void ICM20602_Update_All(ICM20602 *dev){
+      |                          ^~~~~~~~
+../Core/Inc/GAUL_Drivers/ICM20602.h:59:21: error: unknown type name 'ICM20602'
+   59 | void ICM20602_Write(ICM20602 *dev, uint8_t address, uint8_t value);
+      |                     ^~~~~~~~
+../Core/Src/GAUL_Drivers/ICM20602.c:102:25: error: unknown type name 'ICM20602'
+  102 | void ICM20602_Calibrate(ICM20602 *dev, int8_t p_Sense){
+      |                         ^~~~~~~~
+make: *** [Core/Src/GAUL_Drivers/subdir.mk:52: Core/Src/GAUL_Drivers/KalmanFilter.o] Error 1
+make: *** Waiting for unfinished jobs....
+../Core/Src/GAUL_Drivers/ICM20602.c:143:20: error: unknown type name 'ICM20602'
+  143 | void ICM20602_Read(ICM20602 *dev, uint8_t address, uint8_t rxData[], uint8_t size)
+      |                    ^~~~~~~~
+../Core/Src/GAUL_Drivers/ICM20602.c:161:21: error: unknown type name 'ICM20602'
+  161 | void ICM20602_Write(ICM20602 *dev, uint8_t address, uint8_t value){
+      |                     ^~~~~~~~
+../Core/Src/main.c:53:1: error: unknown type name 'ICM20602'
+   53 | ICM20602 icm_data;
+      | ^~~~~~~~
+make: *** [Core/Src/subdir.mk:43: Core/Src/fatfs_sd.o] Error 1
+../Core/Src/GAUL_Drivers/ICM20602.c: In function 'ICM20948_SelectBank':
+../Core/Src/GAUL_Drivers/ICM20602.c:176:9: warning: implicit declaration of function 'HAL_SPI_Transmit'; did you mean 'HAL_UART_Transmit'? [-Wimplicit-function-declaration]
+  176 |         HAL_SPI_Transmit(dev->SPIx, tx, 2, HAL_MAX_DELAY);
+      |         ^~~~~~~~~~~~~~~~
+      |         HAL_UART_Transmit
+../Core/Src/GAUL_Drivers/ICM20602.c: At top level:
+../Core/Src/GAUL_Drivers/ICM20602.c:173:13: warning: 'ICM20948_SelectBank' defined but not used [-Wunused-function]
+  173 | static void ICM20948_SelectBank(ICM20948 *dev, uint8_t bank) {
+      |             ^~~~~~~~~~~~~~~~~~~
+../Core/Src/util.c:18:8: error: unknown type name 'ICM20602'
+   18 | extern ICM20602 icm_data;
+      |        ^~~~~~~~
+../Core/Src/util.c: In function 'ROCKET_InitRoutine':
+../Core/Src/util.c:70:17: error: request for member 'SPIx' in something not a structure or union
+   70 |         icm_data.SPIx = SPI2;
+      |                 ^
+../Core/Src/util.c:71:17: error: request for member 'cs_pin' in something not a structure or union
+   71 |         icm_data.cs_pin = 12;
+      |                 ^
+../Core/Src/util.c:72:17: error: request for member 'cs_port' in something not a structure or union
+   72 |         icm_data.cs_port = GPIOB;
+      |                 ^
+../Core/Src/util.c:73:17: error: request for member 'int_pin' in something not a structure or union
+   73 |         icm_data.int_pin = 10;
+      |                 ^
+../Core/Src/util.c:74:17: error: request for member 'int_port' in something not a structure or union
+   74 |         icm_data.int_port = GPIOA;
+      |                 ^
+make: *** [Core/Src/subdir.mk:43: Core/Src/main.o] Error 1
+make: *** [Core/Src/GAUL_Drivers/subdir.mk:52: Core/Src/GAUL_Drivers/ICM20602.o] Error 1
+../Core/Src/util.c:75:51: warning: implicit declaration of function 'ICM20602_Init' [-Wimplicit-function-declaration]
+   75 |         rocket_data.header_states.accelerometer = ICM20602_Init(&icm_data) == 0 ? 0x01 : 0x00;
+      |                                                   ^~~~~~~~~~~~~
+../Core/Src/util.c: In function 'ROCKET_Behavior':
+../Core/Src/util.c:99:5: warning: implicit declaration of function 'ICM20602_Update_All' [-Wimplicit-function-declaration]
+   99 |     ICM20602_Update_All(&icm_data);
+      |     ^~~~~~~~~~~~~~~~~~~
+../Core/Src/util.c:104:17: error: request for member 'accZ' in something not a structure or union
+  104 |     if (icm_data.accZ > 0) {
+      |                 ^
+../Core/Src/util.c:108:17: error: request for member 'accZ' in something not a structure or union
+  108 |     if (icm_data.accZ <= ACCZ_MIN && icm_data.accZ >= -ACCZ_MIN) {
+      |                 ^
+../Core/Src/util.c:108:46: error: request for member 'accZ' in something not a structure or union
+  108 |     if (icm_data.accZ <= ACCZ_MIN && icm_data.accZ >= -ACCZ_MIN) {
+      |                                              ^
+../Core/Src/util.c:122:17: error: request for member 'angleX' in something not a structure or union
+  122 |     if (icm_data.angleX >= ANGLE_MIN) {
+      |                 ^
+../Core/Src/util.c:126:17: error: request for member 'angleX' in something not a structure or union
+  126 |     if (icm_data.angleX <= -ANGLE_MIN) {
+      |                 ^
+../Core/Src/util.c:130:17: error: request for member 'angleY' in something not a structure or union
+  130 |     if (icm_data.angleY <= -ANGLE_MIN) {
+      |                 ^
+../Core/Src/util.c:134:17: error: request for member 'angleY' in something not a structure or union
+  134 |     if (icm_data.angleY >= ANGLE_MIN) {
+      |                 ^
+../Core/Src/util.c:138:17: error: request for member 'accResult' in something not a structure or union
+  138 |     if (icm_data.accResult >= ACCRES_MIN) {
+      |                 ^
+../Core/Src/util.c: In function 'ROCKET_ModeRoutine':
+../Core/Src/util.c:185:55: error: request for member 'kalmanRoll' in something not a structure or union
+  185 |                         STM32_i32To8((int32_t)icm_data.kalmanRoll, rocket_data, 8);
+      |                                                       ^
+../Core/Src/util.c:186:55: error: request for member 'kalmanPitch' in something not a structure or union
+  186 |                         STM32_i32To8((int32_t)icm_data.kalmanPitch, rocket_data, 12);
+      |                                                       ^
+../Core/Src/util.c:208:44: error: request for member 'gyroX' in something not a structure or union
+  208 |                         STM32_fTo8(icm_data.gyroX, rocket_data, 16);
+      |                                            ^
+../Core/Src/util.c:209:44: error: request for member 'gyroY' in something not a structure or union
+  209 |                         STM32_fTo8(icm_data.gyroY, rocket_data, 20);
+      |                                            ^
+../Core/Src/util.c:210:44: error: request for member 'gyroZ' in something not a structure or union
+  210 |                         STM32_fTo8(icm_data.gyroZ, rocket_data, 24);
+      |                                            ^
+../Core/Src/util.c:212:44: error: request for member 'accX' in something not a structure or union
+  212 |                         STM32_fTo8(icm_data.accX, rocket_data, 28);
+      |                                            ^
+../Core/Src/util.c:213:44: error: request for member 'accY' in something not a structure or union
+  213 |                         STM32_fTo8(icm_data.accY, rocket_data, 32);
+      |                                            ^
+../Core/Src/util.c:214:44: error: request for member 'accZ' in something not a structure or union
+  214 |                         STM32_fTo8(icm_data.accZ, rocket_data, 36);
+      |                                            ^
+../Core/Src/util.c:216:44: error: request for member 'angle_roll_acc' in something not a structure or union
+  216 |                         STM32_fTo8(icm_data.angle_roll_acc, rocket_data, 40);
+      |                                            ^
+../Core/Src/util.c:217:44: error: request for member 'angle_pitch_acc' in something not a structure or union
+  217 |                         STM32_fTo8(icm_data.angle_pitch_acc, rocket_data, 44);
+      |                                            ^
+../Core/Src/util.c: In function 'ParseLOG':
+../Core/Src/util.c:348:56: warning: initialization discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
+  348 |                         {DATA_TYPE_STRING, .data.str = ROCKET_ModeToString(rocket_data.header_states.mode)},
+      |                                                        ^~~~~~~~~~~~~~~~~~~
+../Core/Src/util.c:353:61: error: request for member 'gyroX' in something not a structure or union
+  353 |                         {DATA_TYPE_FLOAT, .data.f = icm_data.gyroX},
+      |                                                             ^
+../Core/Src/util.c:354:61: error: request for member 'gyroY' in something not a structure or union
+  354 |                         {DATA_TYPE_FLOAT, .data.f = icm_data.gyroY},
+      |                                                             ^
+../Core/Src/util.c:355:61: error: request for member 'gyroZ' in something not a structure or union
+  355 |                         {DATA_TYPE_FLOAT, .data.f = icm_data.gyroZ},
+      |                                                             ^
+../Core/Src/util.c:356:61: error: request for member 'accX' in something not a structure or union
+  356 |                         {DATA_TYPE_FLOAT, .data.f = icm_data.accX},
+      |                                                             ^
+../Core/Src/util.c:357:61: error: request for member 'accY' in something not a structure or union
+  357 |                         {DATA_TYPE_FLOAT, .data.f = icm_data.accY},
+      |                                                             ^
+../Core/Src/util.c:358:61: error: request for member 'accZ' in something not a structure or union
+  358 |                         {DATA_TYPE_FLOAT, .data.f = icm_data.accZ},
+      |                                                             ^
+../Core/Src/util.c:359:61: error: request for member 'accResult' in something not a structure or union
+  359 |                         {DATA_TYPE_FLOAT, .data.f = icm_data.accResult},
+      |                                                             ^
+../Core/Src/util.c:360:61: error: request for member 'angle_roll_acc' in something not a structure or union
+  360 |                         {DATA_TYPE_FLOAT, .data.f = icm_data.angle_roll_acc},
+      |                                                             ^
+../Core/Src/util.c:361:61: error: request for member 'angle_pitch_acc' in something not a structure or union
+  361 |                         {DATA_TYPE_FLOAT, .data.f = icm_data.angle_pitch_acc}
+      |                                                             ^
+make: *** [Core/Src/subdir.mk:43: Core/Src/util.o] Error 1
+"make -j12 all" terminated with exit code 2. Build might be incomplete.
+
+10:17:27 Build Failed. 75 errors, 5 warnings. (took 1s.106ms)
+

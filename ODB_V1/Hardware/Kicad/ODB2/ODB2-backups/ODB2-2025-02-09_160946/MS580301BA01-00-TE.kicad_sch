@@ -1,0 +1,25 @@
+(kicad_sch
+	(version 20231120)
+	(generator "eeschema")
+	(generator_version "8.0")
+	(uuid "043b88b2-1fe6-47ad-89ae-3e48732887af")
+	(paper "A4")
+	(title_block
+		(title "Barometer")
+		(date "2024-11-09")
+		(company "GAUL")
+	)
+	(lib_symbols)
+	(text "Barometer"
+		(exclude_from_sim no)
+		(at 36.068 18.034 0)
+		(effects
+			(font
+				(size 6 6)
+				(thickness 1.2)
+				(bold yes)
+			)
+		)
+		(uuid "98ea7577-ee0b-44a4-8867-c119fc0c5ecd")
+	)
+)
