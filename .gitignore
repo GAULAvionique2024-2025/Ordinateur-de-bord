@@ -4,26 +4,27 @@
 **/.externalToolBuilders/
 **/.vscode/
 **/.idea/
-*.launch
-*.log
+**/*.launch
+**/*.log
 **/Debug/
 **/Release/
 
 # === KiCad ===
 # Fichiers générés automatiquement
-*.bak
-*.kicad_prl
-*.kicad_sch-bak
-*.tmp
-*.net
-*.xml
+**/*.bak
+**/*.kicad_prl
+**/*.kicad_sch-bak
+**/*.tmp
+**/*.net
+**/*.xml
+**/*.lck
 
 # Sauvegardes automatiques KiCad
-*-backups/
-*-cache.lib
+**/*-backups/
+**/*-cache.lib
 
 # === Fichiers temporaires ===
 **/Backup/*.bak
-*.swp
-*.swo
-*~
+**/*.swp
+**/*.swo
+**/*~
