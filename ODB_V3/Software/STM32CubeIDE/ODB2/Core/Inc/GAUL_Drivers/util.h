@@ -1,0 +1,18 @@
+#ifndef INC_GAUL_DRIVERS_UTIL_H
+#define INC_GAUL_DRIVERS_UTIL_H
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdarg.h>
+#include <stdio.h>
+#include <stdbool.h>
+
+#include "stm32f4xx_hal.h"
+#include "main.h"
+
+void RunTimerInit(RunTimer* dev);
+void UpdateTime(RunTimer* dev);
+int printt(const char *format, ...);
+int _write(int le, char *ptr, int len);
+
+#endif /* INC_GAUL_DRIVERS_UTIL_H */
