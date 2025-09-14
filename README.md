@@ -90,6 +90,8 @@ Pour les fonctionnalités à venir et les améliorations prévues, veuillez cons
 - L'environnement de développement intégré pour STM32 est [STM32CubeIDE](https://www.st.com/en/development-tools/stm32cubeide.html). Un document est disponible pour permettre une [prise en main](./Documentation/Logiciel.md) initiale pour le projet.
 - [deepbluembedded](https://deepbluembedded.com/stm32-arm-programming-tutorials/) offre des tutoriels sur la programmation STM32.
 
+> [Ce projet suit les règles de [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) afin de garder un historique clair et cohérent.]
+
 ## 👥 **Auteurs et Contributeurs**
 
 - [@SamLol12](https://github.com/SamLol12)
