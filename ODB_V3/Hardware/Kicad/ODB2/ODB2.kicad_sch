@@ -5714,6 +5714,16 @@
 	)
 	(wire
 		(pts
+			(xy 231.14 106.68) (xy 237.49 106.68)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "168eb654-5df9-4ca3-a01e-39064f5e4b50")
+	)
+	(wire
+		(pts
 			(xy 346.71 78.74) (xy 331.47 78.74)
 		)
 		(stroke
@@ -7903,6 +7913,28 @@
 					(size 1.27 1.27)
 				)
 				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "SYS_SWO"
+		(shape input)
+		(at 237.49 106.68 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "dd0d343f-8f48-46a1-9246-a7b2a49952ab")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 248.9418 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
 				(hide yes)
 			)
 		)
