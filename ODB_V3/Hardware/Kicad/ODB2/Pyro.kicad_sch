@@ -4242,7 +4242,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "16ca8b3e-af51-4727-9e83-e40aba452119")
-		(property "Reference" "Pyros_PNP1"
+		(property "Reference" "Pyros_PNP?"
 			(at 73.152 42.164 0)
 			(effects
 				(font
@@ -4298,6 +4298,14 @@
 		)
 		(pin "1"
 			(uuid "8a8da15c-761b-4ecb-a01f-5652e3266ffd")
+		)
+		(instances
+			(project "ODB2"
+				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
+					(reference "Pyros_PNP?")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -4443,7 +4451,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "23a2d81f-4482-40d8-af37-eea7fdf96b1b")
-		(property "Reference" "Pyros_MOSFET1"
+		(property "Reference" "Pyros_MOSFET?"
 			(at 89.662 93.726 0)
 			(effects
 				(font
@@ -4505,6 +4513,14 @@
 		)
 		(pin "3"
 			(uuid "25aaeda2-3478-4509-85cb-b16bf4bd3c77")
+		)
+		(instances
+			(project "ODB2"
+				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
+					(reference "Pyros_MOSFET?")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -5985,7 +6001,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "bb3d60d7-a5fc-4a04-8b3b-4703d19294fe")
-		(property "Reference" "U2"
+		(property "Reference" "U?"
 			(at 70.3265 76.2 0)
 			(effects
 				(font
@@ -6045,6 +6061,14 @@
 		)
 		(pin "4"
 			(uuid "55497179-6b59-4956-bcf3-a3ca183f53eb")
+		)
+		(instances
+			(project "ODB2"
+				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
+					(reference "U?")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -6730,7 +6754,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "e0eb8946-6bd0-4fb2-aa7e-677d836669f1")
-		(property "Reference" "Pyros_AND1"
+		(property "Reference" "Pyros_AND?"
 			(at 127 121.92 0)
 			(effects
 				(font
@@ -6816,6 +6840,14 @@
 		)
 		(pin "6"
 			(uuid "0c52fe29-f02a-42d5-a190-f786d1c0ff21")
+		)
+		(instances
+			(project "ODB2"
+				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
+					(reference "Pyros_AND?")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -7095,7 +7127,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "f62c305b-a698-4c00-8d59-25898798a2ea")
-		(property "Reference" "Pyros_J1"
+		(property "Reference" "Pyros_J?"
 			(at 95.25 63.4999 0)
 			(effects
 				(font
@@ -7145,6 +7177,14 @@
 		)
 		(pin "2"
 			(uuid "bce5510b-7479-445e-b2be-e386d507d46a")
+		)
+		(instances
+			(project "ODB2"
+				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
+					(reference "Pyros_J?")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -7289,7 +7329,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "ff05c551-58eb-4f01-adee-a9bd615da5a8")
-		(property "Reference" "U3"
+		(property "Reference" "U?"
 			(at 45.72 130.048 0)
 			(effects
 				(font
@@ -7348,6 +7388,14 @@
 		)
 		(pin "3"
 			(uuid "6423ee2d-11bf-45bb-af6d-3473f78af6a6")
+		)
+		(instances
+			(project "ODB2"
+				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
+					(reference "U?")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
