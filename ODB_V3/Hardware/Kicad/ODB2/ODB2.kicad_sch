@@ -14090,6 +14090,48 @@
 		)
 	)
 	(sheet
+		(at 17.78 157.48)
+		(size 29.21 23.495)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "d36e1320-573f-4272-b60a-b3e03e35d7d5")
+		(property "Sheetname" "GPS"
+			(at 17.78 156.7684 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "GPS.kicad_sch"
+			(at 17.78 181.5596 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "ODB2"
+				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78"
+					(page "6")
+				)
+			)
+		)
+	)
+	(sheet
 		(at 17.78 36.83)
 		(size 29.21 24.13)
 		(exclude_from_sim no)

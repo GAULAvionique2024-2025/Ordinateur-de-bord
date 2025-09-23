@@ -4148,21 +4148,15 @@
 			)
 		)
 		(pin "3"
-			(uuid "f58528e8-28db-46eb-86fb-22549ca3a8d1")
+			(uuid "c99ecc15-57c4-4175-adc1-ed3480200a50")
 		)
 		(pin "1"
-			(uuid "412e0b55-71bf-4ef1-952c-77fac5b61bba")
+			(uuid "36d91224-0792-4af6-b9c2-2fc2424d182f")
 		)
 		(pin "2"
-			(uuid "29fe2359-ce32-4618-9019-6ee2b7640d16")
+			(uuid "e929d14e-adc7-4799-960b-88e02935c153")
 		)
 		(instances
-			(project "Pyro"
-				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
-					(reference "Pyros_NPN?")
-					(unit 1)
-				)
-			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_NPN1")
@@ -4224,18 +4218,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "ff17c4d3-9465-42a4-aef3-768ccaf0fc31")
+			(uuid "54c6fa49-9363-4e23-b750-bc7cb81f2f8a")
 		)
 		(pin "2"
-			(uuid "71ecfa3f-959a-409a-ab31-d48570f78e28")
+			(uuid "5fecd04f-74b3-4507-bb50-a00445c5adca")
 		)
 		(instances
-			(project "Pyro"
-				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
-					(reference "Pyros_LED?")
-					(unit 1)
-				)
-			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_LED1")
@@ -4303,27 +4291,13 @@
 			)
 		)
 		(pin "3"
-			(uuid "f46eb798-2f91-4643-89b2-7c11d440655f")
+			(uuid "9a2c7860-2e37-4267-8e0c-df19f5a5e2f4")
 		)
 		(pin "2"
-			(uuid "58976dd7-c8ca-421e-9774-b6326c1f85e4")
+			(uuid "f02192f2-bd46-4dd3-a76e-18d60de1a8da")
 		)
 		(pin "1"
-			(uuid "efcc5e14-3951-4a80-b130-7545d36bb98c")
-		)
-		(instances
-			(project "Pyro"
-				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
-					(reference "Pyros_PNP?")
-					(unit 1)
-				)
-			)
-			(project ""
-				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
-					(reference "Pyros_PNP1")
-					(unit 1)
-				)
-			)
+			(uuid "8a8da15c-761b-4ecb-a01f-5652e3266ffd")
 		)
 	)
 	(symbol
@@ -4379,18 +4353,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "223f5bf5-bbbb-47fc-b190-715570b1da6b")
+			(uuid "febba001-678d-4b5d-8bb9-0d45b6d5e4f8")
 		)
 		(pin "2"
-			(uuid "20521285-00e9-4a90-a633-d47d73083190")
+			(uuid "1d021699-896b-4f52-93b1-74d6c1a0f2f5")
 		)
 		(instances
-			(project "Pyro"
-				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
-					(reference "Pyros_R?")
-					(unit 1)
-				)
-			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_R6")
@@ -4452,18 +4420,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "1f448a0e-1d01-4879-826d-915c6dfa1b10")
+			(uuid "034c8131-250f-4fed-a1d5-987fbd495d42")
 		)
 		(pin "2"
-			(uuid "80436fda-1dae-4929-bd1b-2c08b6ffc8a4")
+			(uuid "3afde19d-44a3-4946-a82b-77b113554911")
 		)
 		(instances
-			(project "Pyro"
-				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
-					(reference "Pyros_R?")
-					(unit 1)
-				)
-			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_R16")
@@ -4530,33 +4492,19 @@
 			)
 		)
 		(pin "4"
-			(uuid "d859cb34-8d44-4882-a6b1-27577e34bc7e")
+			(uuid "e8dfb20c-d100-4076-8480-f2286e09ca31")
 		)
 		(pin "1"
-			(uuid "3b7f18cf-0285-4c5b-ac35-85d8becef6d3")
+			(uuid "d12a0dae-fa4a-40ff-9aa3-6cd5b3793714")
 		)
 		(pin "5"
-			(uuid "7f4c430d-3ffc-46d5-aa23-205f4f8618a1")
+			(uuid "134c3e86-7861-4b3b-8c44-233d2534666d")
 		)
 		(pin "2"
-			(uuid "2ef9aa44-4a16-443b-a083-5acf66b5524d")
+			(uuid "e3c98404-8076-4300-bc7d-ed6ce3debb72")
 		)
 		(pin "3"
-			(uuid "acdc09b0-b67a-4f36-8abc-8e04591055b8")
-		)
-		(instances
-			(project "Pyro"
-				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
-					(reference "Pyros_MOSFET?")
-					(unit 1)
-				)
-			)
-			(project ""
-				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
-					(reference "Pyros_MOSFET1")
-					(unit 1)
-				)
-			)
+			(uuid "25aaeda2-3478-4509-85cb-b16bf4bd3c77")
 		)
 	)
 	(symbol
@@ -4612,18 +4560,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "037a15e7-c14e-4bef-9199-a179267263ec")
+			(uuid "48a775a5-7bb4-4336-87ca-a47d42f8afa0")
 		)
 		(pin "2"
-			(uuid "242ed29c-dfc3-4a9b-8511-47994699af4e")
+			(uuid "e51f2fc7-4e5d-474d-9b5e-b9be267ce372")
 		)
 		(instances
-			(project "Pyro"
-				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
-					(reference "Pyros_R?")
-					(unit 1)
-				)
-			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_R4")
@@ -4686,15 +4628,9 @@
 			)
 		)
 		(pin "1"
-			(uuid "f4077e94-4a9b-4e6d-be99-6fbdd390fdb5")
+			(uuid "2107344a-b44c-4c17-a675-e91f0a0ff459")
 		)
 		(instances
-			(project "Pyro"
-				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
-					(reference "#PWR?")
-					(unit 1)
-				)
-			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "#PWR096")
@@ -4758,15 +4694,9 @@
 			)
 		)
 		(pin "1"
-			(uuid "61065f8d-757b-4d2e-a866-cb27a32feae5")
+			(uuid "44e712f4-2b5e-40e5-b214-e63966e9c843")
 		)
 		(instances
-			(project "Pyro"
-				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
-					(reference "#PWR?")
-					(unit 1)
-				)
-			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "#PWR031")
@@ -4828,18 +4758,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "90c3caae-bae7-4ff6-ad78-6a4c3e58c53b")
+			(uuid "b83f20a8-d058-4cf4-b29f-b41a3b62c86b")
 		)
 		(pin "2"
-			(uuid "fd7f608c-3f4c-4dfd-a274-0ec598882b1f")
+			(uuid "4072ab36-6d12-4cd9-94bf-1ba1f0a8f93d")
 		)
 		(instances
-			(project "Pyro"
-				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
-					(reference "Pyros_R?")
-					(unit 1)
-				)
-			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_R5")
@@ -4903,15 +4827,9 @@
 			)
 		)
 		(pin "1"
-			(uuid "33036e20-dbbd-4c1c-ad44-6920f1b9e417")
+			(uuid "0ef1c1d1-7922-401f-b13b-fd84c02d737b")
 		)
 		(instances
-			(project "Pyro"
-				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
-					(reference "#PWR?")
-					(unit 1)
-				)
-			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "#PWR085")
@@ -4978,27 +4896,21 @@
 			)
 		)
 		(pin "4"
-			(uuid "cc7a1cb4-7506-43e4-a3bc-f4d9724808f6")
+			(uuid "f7173e65-b7da-4a16-a615-d21b388020de")
 		)
 		(pin "1"
-			(uuid "ba4cb055-4470-471f-afff-172508d9e9a9")
+			(uuid "8b1b5991-8431-4a19-8200-32f36652329d")
 		)
 		(pin "5"
-			(uuid "a7e32363-2ace-4faf-9acf-61b32a4b0365")
+			(uuid "0ff320b2-d94e-4850-b20a-925b53991528")
 		)
 		(pin "2"
-			(uuid "b8e5208f-346d-4036-bb02-6c555bfb6870")
+			(uuid "3ca3ae6d-8016-4ddc-b3ce-e84016f63be8")
 		)
 		(pin "3"
-			(uuid "2a62f6e1-9b03-463c-8111-efd5e7a4ee42")
+			(uuid "ec7b5f7c-a47e-4bba-b85f-d28c14650b28")
 		)
 		(instances
-			(project "Pyro"
-				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
-					(reference "Pyros_MOSFET?")
-					(unit 1)
-				)
-			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_MOSFET2")
@@ -5060,18 +4972,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "60e0634d-e1f1-42d3-989d-ae2019148752")
+			(uuid "d54b94b6-1fcd-4f08-bac2-11da26617605")
 		)
 		(pin "2"
-			(uuid "ab90a9cd-03d9-4d55-85e9-6609e6a3c066")
+			(uuid "f66cdbc7-f397-4b60-a924-00ba6ddaa658")
 		)
 		(instances
-			(project "Pyro"
-				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
-					(reference "Pyros_R?")
-					(unit 1)
-				)
-			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_R7")
@@ -5135,15 +5041,9 @@
 			)
 		)
 		(pin "1"
-			(uuid "cd4dad3f-afb6-4278-96d1-ebe8ff5345a6")
+			(uuid "a31d5624-31e9-4d8c-b577-2d2c26707750")
 		)
 		(instances
-			(project "Pyro"
-				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
-					(reference "#PWR?")
-					(unit 1)
-				)
-			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "#PWR083")
@@ -5205,18 +5105,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "75c79f58-29e2-45e6-8f70-ba49647a0e6c")
+			(uuid "50b43dc2-770e-4ddd-806f-1b53db7578b6")
 		)
 		(pin "2"
-			(uuid "443a7c55-7246-49fe-b105-c554324390e8")
+			(uuid "89c56176-6ef4-4872-adb8-8876e8e317b3")
 		)
 		(instances
-			(project "Pyro"
-				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
-					(reference "Pyros_LED?")
-					(unit 1)
-				)
-			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_LED4")
@@ -5278,18 +5172,12 @@
 			)
 		)
 		(pin "2"
-			(uuid "a2c3c3c0-64a8-449c-bc4f-83f052f4536f")
+			(uuid "71919d91-a2ce-4951-8a80-041e1c16351f")
 		)
 		(pin "1"
-			(uuid "afbd3334-fa71-4eac-abf5-7ddfbf9b2692")
+			(uuid "9cc4e771-7bb6-41d9-bb00-68149c707b62")
 		)
 		(instances
-			(project "Pyro"
-				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
-					(reference "Pyros_C?")
-					(unit 1)
-				)
-			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_C1")
@@ -5353,15 +5241,9 @@
 			)
 		)
 		(pin "1"
-			(uuid "09147cdf-2fd6-471e-9869-e507a2141f84")
+			(uuid "71858e61-be66-4dfd-b5b5-242fb381310a")
 		)
 		(instances
-			(project "Pyro"
-				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
-					(reference "#PWR?")
-					(unit 1)
-				)
-			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "#PWR095")
@@ -5424,15 +5306,9 @@
 			)
 		)
 		(pin "1"
-			(uuid "9481c42a-48aa-4219-a9f9-9eb454c293f1")
+			(uuid "cb1bdfe7-00a8-4280-9b27-6e0cd1b009e2")
 		)
 		(instances
-			(project "Pyro"
-				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
-					(reference "#PWR?")
-					(unit 1)
-				)
-			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "#PWR079")
@@ -5495,15 +5371,9 @@
 			)
 		)
 		(pin "1"
-			(uuid "4cddd25d-baca-4afa-9f1c-dac91376d7dd")
+			(uuid "94c961f4-e9bd-436c-af56-9698fc80e7bb")
 		)
 		(instances
-			(project "Pyro"
-				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
-					(reference "#PWR?")
-					(unit 1)
-				)
-			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "#PWR0118")
@@ -5565,18 +5435,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "7afae094-8f99-4498-af67-cd94a838ac5f")
+			(uuid "e5a1af06-a65c-4131-8b52-b03f8840c198")
 		)
 		(pin "2"
-			(uuid "58c3985f-4bc9-4961-87d5-b24483e1663e")
+			(uuid "a98edb4b-7618-430d-9260-a40a00d5adc1")
 		)
 		(instances
-			(project "Pyro"
-				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
-					(reference "Pyros_R?")
-					(unit 1)
-				)
-			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_R14")
@@ -5639,7 +5503,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "b1e3a8c1-91e8-4a13-b0bc-ad5082010786")
+			(uuid "879390f2-4015-4d76-8ccf-4a65f1f37631")
 		)
 		(instances
 			(project "ODB2"
@@ -5705,15 +5569,9 @@
 			)
 		)
 		(pin "1"
-			(uuid "995192c3-5c8b-4913-86ac-e68e9d99f9ba")
+			(uuid "eaba9ace-8233-429c-8520-8a3483dd5312")
 		)
 		(instances
-			(project "Pyro"
-				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
-					(reference "#PWR?")
-					(unit 1)
-				)
-			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "#PWR078")
@@ -5776,15 +5634,9 @@
 			)
 		)
 		(pin "1"
-			(uuid "226c9c0b-f879-4f31-8ea3-ecdb92fdb045")
+			(uuid "79938590-8d01-459a-a3f8-2e0df544146f")
 		)
 		(instances
-			(project "Pyro"
-				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
-					(reference "#PWR?")
-					(unit 1)
-				)
-			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "#PWR084")
@@ -5848,15 +5700,9 @@
 			)
 		)
 		(pin "1"
-			(uuid "416c137f-2025-4d99-8d87-21a1d6d0ed2c")
+			(uuid "e8bc3267-a675-4ac6-aa51-38794a352070")
 		)
 		(instances
-			(project "Pyro"
-				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
-					(reference "#PWR?")
-					(unit 1)
-				)
-			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "#PWR088")
@@ -5918,18 +5764,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "2d572c13-7f85-4aed-9c21-1c86a86f93f7")
+			(uuid "9b3cb63e-eb03-4fd8-9bde-c5379e8a82f0")
 		)
 		(pin "2"
-			(uuid "a50df6ea-d5ef-4180-8734-584dde714968")
+			(uuid "7e86cccc-70b7-49ef-b784-cc903ef384c2")
 		)
 		(instances
-			(project "Pyro"
-				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
-					(reference "Pyros_R?")
-					(unit 1)
-				)
-			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_R8")
@@ -5992,7 +5832,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "750da02f-06f2-4fbe-ad67-20db3ee1e2d4")
+			(uuid "62dfa52f-e0ba-460d-b01b-b1af13a78896")
 		)
 		(instances
 			(project "ODB2"
@@ -6057,15 +5897,9 @@
 			)
 		)
 		(pin "1"
-			(uuid "6cb01125-a31b-4389-b298-77a6658ce44c")
+			(uuid "0517db63-54b3-456c-8a4c-0b26e4248256")
 		)
 		(instances
-			(project "Pyro"
-				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
-					(reference "#PWR?")
-					(unit 1)
-				)
-			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "#PWR086")
@@ -6127,18 +5961,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "ec67d8e8-e8eb-41a9-ad8a-4230a087336c")
+			(uuid "da927e86-6eda-4f73-92ce-a4e64e562d9c")
 		)
 		(pin "2"
-			(uuid "3b804897-5fdd-4bfb-915f-dbda6df64f7a")
+			(uuid "a644e984-0ae7-4eca-a1df-ec141b8cbc55")
 		)
 		(instances
-			(project "Pyro"
-				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
-					(reference "Pyros_R?")
-					(unit 1)
-				)
-			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_R15")
@@ -6204,27 +6032,19 @@
 			)
 		)
 		(pin "2"
-			(uuid "8182f30f-526c-479d-91ad-417cfe55234c")
+			(uuid "e3458ef7-2df2-42df-847b-0b2557409f3f")
 		)
 		(pin "1"
-			(uuid "3f1ba69e-a292-4e86-97df-e11bed1d781d")
+			(uuid "c1ec99da-0635-48b0-b0eb-650d992b97ce")
 		)
 		(pin "3"
-			(uuid "a06e06be-6d31-45a8-bbd4-1420056cfa4f")
+			(uuid "0b9a045e-7ae2-4b49-8891-e99bbaf76c53")
 		)
 		(pin "5"
-			(uuid "0cc9ca25-055e-454e-a61e-befaa953cf84")
+			(uuid "a2a9073e-ab7b-4fc4-918f-ea51d8fa5726")
 		)
 		(pin "4"
-			(uuid "7dedd001-26e0-466d-8bc6-0019980c6b0e")
-		)
-		(instances
-			(project ""
-				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
-					(reference "U2")
-					(unit 1)
-				)
-			)
+			(uuid "55497179-6b59-4956-bcf3-a3ca183f53eb")
 		)
 	)
 	(symbol
@@ -6280,18 +6100,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "bceae332-8ab1-43c5-9ff9-a12901f10b61")
+			(uuid "43897347-0d5d-4d73-9406-63a1b4587f25")
 		)
 		(pin "2"
-			(uuid "91d34118-bb99-4073-b44d-5ab445d4733a")
+			(uuid "fdada77c-0ef2-44af-9120-910121740a37")
 		)
 		(instances
-			(project "Pyro"
-				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
-					(reference "Pyros_R?")
-					(unit 1)
-				)
-			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_R1")
@@ -6355,15 +6169,9 @@
 			)
 		)
 		(pin "1"
-			(uuid "6d70f9e1-ce1a-41f4-a4ed-f581700d6b3d")
+			(uuid "3379c685-e1c1-43ba-85dc-5ca5f78a1d86")
 		)
 		(instances
-			(project "Pyro"
-				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
-					(reference "#PWR?")
-					(unit 1)
-				)
-			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "#PWR098")
@@ -6426,15 +6234,9 @@
 			)
 		)
 		(pin "1"
-			(uuid "185b340a-4ffe-497d-b97f-3c72564d1b2f")
+			(uuid "e6b4eb72-f993-4e86-86dd-6153c7cd3aa6")
 		)
 		(instances
-			(project "Pyro"
-				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
-					(reference "#PWR?")
-					(unit 1)
-				)
-			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "#PWR087")
@@ -6498,15 +6300,9 @@
 			)
 		)
 		(pin "1"
-			(uuid "e714ca01-ee4a-42dd-8be6-4581f49cf61d")
+			(uuid "b01a1299-4f5a-46bd-b165-490d25ddef82")
 		)
 		(instances
-			(project "Pyro"
-				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
-					(reference "#PWR?")
-					(unit 1)
-				)
-			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "#PWR0119")
@@ -6569,7 +6365,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "3318a6f5-6302-4b11-9299-9d4f762d4a3d")
+			(uuid "f625d0a4-e50e-40d4-aa99-83fd61f11ead")
 		)
 		(instances
 			(project "ODB2"
@@ -6636,18 +6432,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "a2718fe3-8af7-48f5-a3cd-ba832d0cc5a9")
+			(uuid "45865ca1-8d71-4130-977a-56dfba037e98")
 		)
 		(pin "2"
-			(uuid "7da4a7b5-cef9-4667-b30e-62203f62da1e")
+			(uuid "533734c4-b5d9-43d5-a154-27e53ca980f1")
 		)
 		(instances
-			(project "Pyro"
-				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
-					(reference "Pyros_J?")
-					(unit 1)
-				)
-			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_J2")
@@ -6709,18 +6499,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "4628e977-abff-4e11-9e6e-5799653b06e5")
+			(uuid "5b9816db-cb86-4a03-b574-f65e12699ed0")
 		)
 		(pin "2"
-			(uuid "fe83f151-d4cf-4a77-a207-d3da2ca7d8ec")
+			(uuid "680b7004-0ea5-479f-bf99-0d3af1eb1703")
 		)
 		(instances
-			(project "Pyro"
-				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
-					(reference "Pyros_R?")
-					(unit 1)
-				)
-			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_R3")
@@ -6787,21 +6571,15 @@
 			)
 		)
 		(pin "3"
-			(uuid "8e120389-e910-423c-9f38-3725544e85e1")
+			(uuid "2e8def4e-8d1d-4bf2-b107-2b792cadc221")
 		)
 		(pin "1"
-			(uuid "35da9db4-7868-4a8b-832d-1d66896c6156")
+			(uuid "8e75ad10-8f8d-45bf-94c7-507dd0f21a23")
 		)
 		(pin "2"
-			(uuid "3ed734ac-f855-44d2-a856-157b861987f5")
+			(uuid "6f03b7e7-f605-46ac-9de2-4063960725cf")
 		)
 		(instances
-			(project "Pyro"
-				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
-					(reference "Pyros_NPN?")
-					(unit 1)
-				)
-			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_NPN2")
@@ -6864,15 +6642,9 @@
 			)
 		)
 		(pin "1"
-			(uuid "450938bf-224b-46d2-ae26-e45084f57dea")
+			(uuid "38835a6b-29a4-4c20-a2be-041b3fd7dc3f")
 		)
 		(instances
-			(project "Pyro"
-				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
-					(reference "#PWR?")
-					(unit 1)
-				)
-			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "#PWR081")
@@ -6934,18 +6706,12 @@
 			)
 		)
 		(pin "2"
-			(uuid "eb11a38e-01de-4f84-9655-62fc1caff6c4")
+			(uuid "17173cd4-8049-4e57-bc74-01b0d355d06a")
 		)
 		(pin "1"
-			(uuid "2aa03542-8ecc-4946-81f1-5f83e7a4c346")
+			(uuid "261e4b68-bd04-48fc-bd98-4925ac36ea0b")
 		)
 		(instances
-			(project "Pyro"
-				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
-					(reference "Pyros_R?")
-					(unit 1)
-				)
-			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_R19")
@@ -7010,60 +6776,46 @@
 			)
 		)
 		(pin "4"
-			(uuid "0159e25f-e14d-43c9-89a2-72b1a815fdb1")
+			(uuid "08dd541e-c8ec-4e82-b0f0-dee95ec5d6e4")
 		)
 		(pin "11"
-			(uuid "835a1f21-7820-4204-a4f0-a8e0d8e0a5b3")
+			(uuid "b7ef898b-a75a-4881-9194-f0523196d3b7")
 		)
 		(pin "3"
-			(uuid "4968b69d-f23d-401a-9fe9-5ed0ec4e65ce")
+			(uuid "24a8fe25-af0c-44cc-a54e-cd6acc2ec69d")
 		)
 		(pin "7"
-			(uuid "015e0b07-bef8-4252-8c57-e23696bef685")
+			(uuid "9a48967a-907e-4654-b3f4-feda33586885")
 		)
 		(pin "1"
-			(uuid "fd513a4e-2489-4812-b68e-7592f2132f0f")
+			(uuid "a2eaee13-6d7c-463d-9dad-ae6d8dd3757c")
 		)
 		(pin "10"
-			(uuid "903caa0d-0974-4be8-a753-53ef39d65210")
+			(uuid "c0ba6464-d2a8-4b8d-9186-98dca2e8f3f3")
 		)
 		(pin "12"
-			(uuid "c02ffe37-9b72-4041-b545-7515e8d8c313")
+			(uuid "d2081d1a-fb13-43c0-afa4-4deac1f4f76d")
 		)
 		(pin "5"
-			(uuid "84c7e690-1732-44be-acd7-690b71e7456f")
+			(uuid "9bf5f0d2-bcb7-4b0e-bd6b-26ca5b637f92")
 		)
 		(pin "13"
-			(uuid "99005d63-7678-40d4-85e8-544f53030f0b")
+			(uuid "97819e74-721f-4b6d-8a6e-a09daa9f043e")
 		)
 		(pin "8"
-			(uuid "dca46229-1221-4cac-9e1d-7348e7bcf4e0")
+			(uuid "147c08e2-350e-4307-a8cf-13ed577024d6")
 		)
 		(pin "9"
-			(uuid "e61e740f-613a-4367-9e13-0045a3faeed5")
+			(uuid "ab384c37-de57-4fed-a0bc-53b05fae9b4a")
 		)
 		(pin "14"
-			(uuid "01c92f84-01f9-49f8-aad6-237865f70beb")
+			(uuid "18f57103-f4f9-4c23-85e9-7cb459420626")
 		)
 		(pin "2"
-			(uuid "06c54fbf-67a9-4c08-b5b6-efdfc6b9ade5")
+			(uuid "9725f626-b235-4bc5-b0f4-7359aa834937")
 		)
 		(pin "6"
-			(uuid "56125554-1724-4d5a-a3be-bd16ce550374")
-		)
-		(instances
-			(project "Pyro"
-				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
-					(reference "U?")
-					(unit 1)
-				)
-			)
-			(project ""
-				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
-					(reference "Pyros_AND1")
-					(unit 1)
-				)
-			)
+			(uuid "0c52fe29-f02a-42d5-a190-f786d1c0ff21")
 		)
 	)
 	(symbol
@@ -7119,18 +6871,12 @@
 			)
 		)
 		(pin "2"
-			(uuid "60a2497a-9892-4528-be0f-4f22e0b99e7d")
+			(uuid "d1fd7b33-5ebd-49e7-bab9-5377e324e7cf")
 		)
 		(pin "1"
-			(uuid "bfde6c6b-140c-4a87-bd73-8ffd8f16f356")
+			(uuid "68d04954-c032-40ff-9e10-bfb1a6097835")
 		)
 		(instances
-			(project "Pyro"
-				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
-					(reference "Pyros_R?")
-					(unit 1)
-				)
-			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_R18")
@@ -7194,15 +6940,9 @@
 			)
 		)
 		(pin "1"
-			(uuid "1bf0223a-8a72-4e6b-b60f-c39ed328a24f")
+			(uuid "8ac0af21-ecb1-48c5-b321-59dc3d4c7653")
 		)
 		(instances
-			(project "Pyro"
-				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
-					(reference "#PWR?")
-					(unit 1)
-				)
-			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "#PWR097")
@@ -7264,18 +7004,12 @@
 			)
 		)
 		(pin "2"
-			(uuid "27cb43ab-bd83-4ca3-acd7-ca563bad57de")
+			(uuid "3c4096f3-aff1-48ef-ac9e-145d11a291f6")
 		)
 		(pin "1"
-			(uuid "57c344bf-cf03-4fbf-9b0c-02e621d9fce8")
+			(uuid "04ecfe70-7bbe-4028-9a32-f0e755b976d8")
 		)
 		(instances
-			(project "Pyro"
-				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
-					(reference "Pyros_R?")
-					(unit 1)
-				)
-			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_R17")
@@ -7337,18 +7071,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "cd493d3d-6fa3-4005-9ced-bfab6d224878")
+			(uuid "ae14d49a-b770-425b-b3fd-5696bd44a3a2")
 		)
 		(pin "2"
-			(uuid "f2e9ec7b-77c9-4d54-b54c-91c69ffbc217")
+			(uuid "17966c32-6512-4c01-912e-1fbf3c7b8131")
 		)
 		(instances
-			(project "Pyro"
-				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
-					(reference "Pyros_LED?")
-					(unit 1)
-				)
-			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_LED2")
@@ -7413,24 +7141,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "8fce62eb-3d61-4372-b316-15a61e20e45c")
+			(uuid "d8f35121-bf0a-40bc-ba64-a69de1cbb3c5")
 		)
 		(pin "2"
-			(uuid "d33104cb-e0a5-472e-ae9e-f8b70465cbd5")
-		)
-		(instances
-			(project "Pyro"
-				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
-					(reference "Pyros_J?")
-					(unit 1)
-				)
-			)
-			(project ""
-				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
-					(reference "Pyros_J1")
-					(unit 1)
-				)
-			)
+			(uuid "bce5510b-7479-445e-b2be-e386d507d46a")
 		)
 	)
 	(symbol
@@ -7488,15 +7202,9 @@
 			)
 		)
 		(pin "1"
-			(uuid "a82139db-6e9b-4f16-bd62-d36a9fd07c0c")
+			(uuid "f91273ec-8b3b-4e80-b5cb-cb94075156ed")
 		)
 		(instances
-			(project "Pyro"
-				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
-					(reference "#PWR?")
-					(unit 1)
-				)
-			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "#PWR0117")
@@ -7558,18 +7266,12 @@
 			)
 		)
 		(pin "2"
-			(uuid "73b4afaf-1297-4dc7-ad83-a7efd12e20a7")
+			(uuid "425c73d1-4fb4-46e6-a9cc-d43931c31113")
 		)
 		(pin "1"
-			(uuid "1836ca93-28c5-4018-aaf4-bac5cc3cc432")
+			(uuid "b02635d8-48ff-46a6-893a-16af3619dce1")
 		)
 		(instances
-			(project "Pyro"
-				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
-					(reference "Pyros_C?")
-					(unit 1)
-				)
-			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_C2")
@@ -7633,27 +7335,19 @@
 			)
 		)
 		(pin "2"
-			(uuid "a802b6d3-dfd4-4f38-a934-df92dcd9f04f")
+			(uuid "11690280-bbb9-42ac-9833-0d76f17eea8d")
 		)
 		(pin "1"
-			(uuid "55d86d18-b132-4d4c-a19e-4e129b824b52")
+			(uuid "ab577aa0-4a0b-4d59-ae93-386db0f4e6bf")
 		)
 		(pin "5"
-			(uuid "20167b09-050a-4346-9a89-6feb9246da0d")
+			(uuid "d0807ca9-3f6e-406b-b48e-9f12820dcfa2")
 		)
 		(pin "4"
-			(uuid "9d9a5424-b9f6-4704-8b80-e5005fca9d82")
+			(uuid "da7dd10f-ece7-48d4-a94b-0e036501d8fa")
 		)
 		(pin "3"
-			(uuid "cc5453c3-d27d-4ce5-9187-3a453018b728")
-		)
-		(instances
-			(project ""
-				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
-					(reference "U3")
-					(unit 1)
-				)
-			)
+			(uuid "6423ee2d-11bf-45bb-af6d-3473f78af6a6")
 		)
 	)
 	(symbol
@@ -7709,18 +7403,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "9b806414-4bf8-4d45-bd1d-1a7fd6e00206")
+			(uuid "8ee12039-0c94-410d-955d-41e90b6390c6")
 		)
 		(pin "2"
-			(uuid "819270dc-5d3e-4450-b5b1-7b6eaded45e6")
+			(uuid "e72a674c-a36d-4606-8fca-e6bda5b0e8bc")
 		)
 		(instances
-			(project "Pyro"
-				(path "/1e84272f-8019-4e3b-b195-f9e1a3e696c3"
-					(reference "Pyros_R?")
-					(unit 1)
-				)
-			)
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "Pyros_R2")
