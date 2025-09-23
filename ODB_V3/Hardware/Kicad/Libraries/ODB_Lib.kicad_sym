@@ -3670,10 +3670,11 @@
 					(size 1.27 1.27)
 				)
 				(justify left bottom)
+				(hide yes)
 			)
 		)
 		(property "Value" "MEM2067"
-			(at -7.62 -25.146 0)
+			(at 3.302 13.208 0)
 			(effects
 				(font
 					(size 1.27 1.27)
