@@ -5628,7 +5628,7 @@
 	)
 	(rectangle
 		(start 65.405 110.49)
-		(end 128.905 140.97)
+		(end 127.635 140.97)
 		(stroke
 			(width 0)
 			(type dash)
@@ -7292,7 +7292,7 @@
 			)
 		)
 	)
-	(global_label "GPS_TX_READY"
+	(global_label "GPS_FUNCT_1"
 		(shape input)
 		(at 110.49 123.19 0)
 		(fields_autoplaced yes)
@@ -7304,7 +7304,7 @@
 		)
 		(uuid "4c1f54ab-375c-4b87-94e7-7965fc7d847d")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 127.2032 123.19 0)
+			(at 126.3566 123.19 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7603,6 +7603,28 @@
 			)
 		)
 	)
+	(global_label "GPS_FUNCT_2"
+		(shape input)
+		(at 110.49 128.27 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "912c0d8a-ea17-4831-b86d-96d53ab07c77")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 126.3566 128.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+	)
 	(global_label "MEM_SPI5_CLK"
 		(shape input)
 		(at 33.02 134.62 180)
@@ -7795,28 +7817,6 @@
 		(uuid "ca40b1ff-a298-44df-8f46-a011b086eb3b")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 248.8813 64.77 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "GPS_EXTINT"
-		(shape input)
-		(at 110.49 128.27 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "cae04c0a-c94b-496e-bb21-84fbd8dfb039")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 124.4213 128.27 0)
 			(effects
 				(font
 					(size 1.27 1.27)
