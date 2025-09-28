@@ -57,10 +57,18 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define MEM_QSPI_IO2_Pin GPIO_PIN_2
+#define MEM_QSPI_IO2_GPIO_Port GPIOE
 #define IDEFIX_I2C2_SDA_Pin GPIO_PIN_0
 #define IDEFIX_I2C2_SDA_GPIO_Port GPIOF
 #define IDEFIX_I2C2_SCL_Pin GPIO_PIN_1
 #define IDEFIX_I2C2_SCL_GPIO_Port GPIOF
+#define MEM_QSPI_IO3_Pin GPIO_PIN_6
+#define MEM_QSPI_IO3_GPIO_Port GPIOF
+#define MEM_QSPI_IO0_Pin GPIO_PIN_8
+#define MEM_QSPI_IO0_GPIO_Port GPIOF
+#define MEM_QSPI_IO1_Pin GPIO_PIN_9
+#define MEM_QSPI_IO1_GPIO_Port GPIOF
 #define BT_USART2_TX_Pin GPIO_PIN_2
 #define BT_USART2_TX_GPIO_Port GPIOA
 #define BT_USART2_RX_Pin GPIO_PIN_3
@@ -71,6 +79,8 @@ void Error_Handler(void);
 #define BARO_SPI1_MISO_GPIO_Port GPIOA
 #define BARO_SPI1_MOSI_Pin GPIO_PIN_7
 #define BARO_SPI1_MOSI_GPIO_Port GPIOA
+#define MEM_QSPI_CLK_Pin GPIO_PIN_1
+#define MEM_QSPI_CLK_GPIO_Port GPIOB
 #define SD_SPI5_SCLK_Pin GPIO_PIN_12
 #define SD_SPI5_SCLK_GPIO_Port GPIOE
 #define SD_SPI5_MISO_Pin GPIO_PIN_13
@@ -81,6 +91,8 @@ void Error_Handler(void);
 #define RFD_USART3_TX_GPIO_Port GPIOD
 #define RFD_USART3_RX_Pin GPIO_PIN_9
 #define RFD_USART3_RX_GPIO_Port GPIOD
+#define MEM_QSPI_CS_Pin GPIO_PIN_6
+#define MEM_QSPI_CS_GPIO_Port GPIOG
 #define GPS_USART6_TX_Pin GPIO_PIN_6
 #define GPS_USART6_TX_GPIO_Port GPIOC
 #define GPS_USART6_RX_Pin GPIO_PIN_7
