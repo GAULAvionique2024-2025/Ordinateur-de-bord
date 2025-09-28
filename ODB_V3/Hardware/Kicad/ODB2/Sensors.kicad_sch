@@ -2356,8 +2356,8 @@
 		)
 	)
 	(rectangle
-		(start 185.42 113.03)
-		(end 281.94 163.83)
+		(start 186.055 114.3)
+		(end 283.21 165.1)
 		(stroke
 			(width 0)
 			(type dash)
@@ -2438,7 +2438,7 @@
 	)
 	(text "Intégration pour antenne active"
 		(exclude_from_sim no)
-		(at 263.144 115.062 0)
+		(at 264.414 116.332 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2448,7 +2448,7 @@
 	)
 	(text "GPS Lock\n"
 		(exclude_from_sim no)
-		(at 186.69 116.586 0)
+		(at 187.198 117.856 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2480,6 +2480,16 @@
 			)
 		)
 		(uuid "97ffa2fa-a553-473a-ab29-136c15a072ac")
+	)
+	(text "À CHANGER (pas sphere)"
+		(exclude_from_sim no)
+		(at 53.848 132.842 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "c3a5511e-a17e-4b88-b9c4-78290046307d")
 	)
 	(text "Barometer"
 		(exclude_from_sim no)
@@ -2527,7 +2537,7 @@
 		(uuid "ffd6d80b-3bd9-488b-94b4-fc247bb42a39")
 	)
 	(junction
-		(at 270.51 128.27)
+		(at 271.78 129.54)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "01fd22ce-efbc-439f-8068-a2c34e78e970")
@@ -2539,7 +2549,7 @@
 		(uuid "162b58d4-aa77-4bcd-82d2-ecef2a6444e4")
 	)
 	(junction
-		(at 247.65 156.21)
+		(at 248.92 157.48)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "338e4a61-a1b3-47c0-ba64-685694ab3e84")
@@ -2551,7 +2561,7 @@
 		(uuid "4687e04f-e2a7-4bd9-9c37-3da256c32f67")
 	)
 	(junction
-		(at 201.93 133.35)
+		(at 203.2 134.62)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "4dda6d15-c6e1-4845-9a35-c8147bd24cb7")
@@ -2569,13 +2579,13 @@
 		(uuid "547cc287-2aa9-4209-9f5d-c75c453b6c46")
 	)
 	(junction
-		(at 247.65 123.19)
+		(at 248.92 124.46)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "56eb7685-a787-45f0-9c9c-485049855a10")
 	)
 	(junction
-		(at 247.65 125.73)
+		(at 248.92 127)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "67fc462c-e3fe-4294-bff0-c3041a250b60")
@@ -2593,7 +2603,7 @@
 		(uuid "80f645d1-df1c-4469-a1b1-6b204b6f5850")
 	)
 	(junction
-		(at 247.65 153.67)
+		(at 248.92 154.94)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "84619429-91f1-4b09-a6b6-73ba14e83df7")
@@ -2611,7 +2621,7 @@
 		(uuid "a5d60b97-a847-4ed1-9288-4559b6123353")
 	)
 	(junction
-		(at 247.65 151.13)
+		(at 248.92 152.4)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "a6e405c9-8248-4d52-ab40-91c349847f57")
@@ -2709,7 +2719,7 @@
 		(uuid "30522491-6f93-448f-abfe-4f75aab1edd4")
 	)
 	(no_connect
-		(at 245.11 138.43)
+		(at 246.38 139.7)
 		(uuid "415a485e-99ae-4446-a9d1-b3a6ba04f3a0")
 	)
 	(no_connect
@@ -2717,7 +2727,7 @@
 		(uuid "68fdbfd9-7b87-4eae-9077-694980808bbf")
 	)
 	(no_connect
-		(at 245.11 133.35)
+		(at 246.38 134.62)
 		(uuid "74ba9367-f3c0-45e9-84da-f1130f5b0ccb")
 	)
 	(no_connect
@@ -2737,7 +2747,7 @@
 		(uuid "a9bf5960-2aa8-43f3-ab35-c50a5882909f")
 	)
 	(no_connect
-		(at 204.47 143.51)
+		(at 205.74 144.78)
 		(uuid "b03aa377-7535-4b4c-9b1e-ba36ab3c688f")
 	)
 	(no_connect
@@ -2745,7 +2755,7 @@
 		(uuid "b9282bf5-971b-4ffe-a4b2-410b71266151")
 	)
 	(no_connect
-		(at 204.47 146.05)
+		(at 205.74 147.32)
 		(uuid "c96ab433-ba5f-4954-9b13-22aa67e151cb")
 	)
 	(no_connect
@@ -2774,7 +2784,7 @@
 	)
 	(wire
 		(pts
-			(xy 245.11 128.27) (xy 248.92 128.27)
+			(xy 246.38 129.54) (xy 250.19 129.54)
 		)
 		(stroke
 			(width 0)
@@ -2784,7 +2794,7 @@
 	)
 	(wire
 		(pts
-			(xy 247.65 121.92) (xy 247.65 123.19)
+			(xy 248.92 123.19) (xy 248.92 124.46)
 		)
 		(stroke
 			(width 0)
@@ -2954,7 +2964,7 @@
 	)
 	(wire
 		(pts
-			(xy 245.11 146.05) (xy 250.19 146.05)
+			(xy 246.38 147.32) (xy 251.46 147.32)
 		)
 		(stroke
 			(width 0)
@@ -2994,7 +3004,7 @@
 	)
 	(wire
 		(pts
-			(xy 247.65 153.67) (xy 247.65 151.13)
+			(xy 248.92 154.94) (xy 248.92 152.4)
 		)
 		(stroke
 			(width 0)
@@ -3004,7 +3014,7 @@
 	)
 	(wire
 		(pts
-			(xy 247.65 156.21) (xy 247.65 153.67)
+			(xy 248.92 157.48) (xy 248.92 154.94)
 		)
 		(stroke
 			(width 0)
@@ -3034,7 +3044,7 @@
 	)
 	(wire
 		(pts
-			(xy 247.65 157.48) (xy 247.65 156.21)
+			(xy 248.92 158.75) (xy 248.92 157.48)
 		)
 		(stroke
 			(width 0)
@@ -3064,7 +3074,7 @@
 	)
 	(wire
 		(pts
-			(xy 256.54 128.27) (xy 259.08 128.27)
+			(xy 257.81 129.54) (xy 260.35 129.54)
 		)
 		(stroke
 			(width 0)
@@ -3074,7 +3084,7 @@
 	)
 	(wire
 		(pts
-			(xy 201.93 133.35) (xy 204.47 133.35)
+			(xy 203.2 134.62) (xy 205.74 134.62)
 		)
 		(stroke
 			(width 0)
@@ -3094,7 +3104,7 @@
 	)
 	(wire
 		(pts
-			(xy 245.11 156.21) (xy 247.65 156.21)
+			(xy 246.38 157.48) (xy 248.92 157.48)
 		)
 		(stroke
 			(width 0)
@@ -3144,7 +3154,7 @@
 	)
 	(wire
 		(pts
-			(xy 270.51 127) (xy 270.51 128.27)
+			(xy 271.78 128.27) (xy 271.78 129.54)
 		)
 		(stroke
 			(width 0)
@@ -3154,7 +3164,7 @@
 	)
 	(wire
 		(pts
-			(xy 245.11 143.51) (xy 250.19 143.51)
+			(xy 246.38 144.78) (xy 251.46 144.78)
 		)
 		(stroke
 			(width 0)
@@ -3204,7 +3214,7 @@
 	)
 	(wire
 		(pts
-			(xy 201.93 133.35) (xy 201.93 148.59)
+			(xy 203.2 134.62) (xy 203.2 149.86)
 		)
 		(stroke
 			(width 0)
@@ -3214,7 +3224,7 @@
 	)
 	(wire
 		(pts
-			(xy 245.11 123.19) (xy 247.65 123.19)
+			(xy 246.38 124.46) (xy 248.92 124.46)
 		)
 		(stroke
 			(width 0)
@@ -3284,7 +3294,7 @@
 	)
 	(wire
 		(pts
-			(xy 278.13 121.92) (xy 278.13 125.73)
+			(xy 279.4 123.19) (xy 279.4 127)
 		)
 		(stroke
 			(width 0)
@@ -3304,7 +3314,7 @@
 	)
 	(wire
 		(pts
-			(xy 245.11 153.67) (xy 247.65 153.67)
+			(xy 246.38 154.94) (xy 248.92 154.94)
 		)
 		(stroke
 			(width 0)
@@ -3314,7 +3324,7 @@
 	)
 	(wire
 		(pts
-			(xy 247.65 139.7) (xy 247.65 151.13)
+			(xy 248.92 140.97) (xy 248.92 152.4)
 		)
 		(stroke
 			(width 0)
@@ -3324,7 +3334,7 @@
 	)
 	(wire
 		(pts
-			(xy 247.65 125.73) (xy 247.65 134.62)
+			(xy 248.92 127) (xy 248.92 135.89)
 		)
 		(stroke
 			(width 0)
@@ -3404,7 +3414,7 @@
 	)
 	(wire
 		(pts
-			(xy 247.65 125.73) (xy 247.65 123.19)
+			(xy 248.92 127) (xy 248.92 124.46)
 		)
 		(stroke
 			(width 0)
@@ -3424,7 +3434,7 @@
 	)
 	(wire
 		(pts
-			(xy 245.11 151.13) (xy 247.65 151.13)
+			(xy 246.38 152.4) (xy 248.92 152.4)
 		)
 		(stroke
 			(width 0)
@@ -3434,7 +3444,7 @@
 	)
 	(wire
 		(pts
-			(xy 245.11 125.73) (xy 247.65 125.73)
+			(xy 246.38 127) (xy 248.92 127)
 		)
 		(stroke
 			(width 0)
@@ -3464,7 +3474,7 @@
 	)
 	(wire
 		(pts
-			(xy 200.66 138.43) (xy 204.47 138.43)
+			(xy 201.93 139.7) (xy 205.74 139.7)
 		)
 		(stroke
 			(width 0)
@@ -3544,7 +3554,7 @@
 	)
 	(wire
 		(pts
-			(xy 270.51 130.81) (xy 270.51 128.27)
+			(xy 271.78 132.08) (xy 271.78 129.54)
 		)
 		(stroke
 			(width 0)
@@ -3574,7 +3584,7 @@
 	)
 	(wire
 		(pts
-			(xy 278.13 121.92) (xy 275.59 121.92)
+			(xy 279.4 123.19) (xy 276.86 123.19)
 		)
 		(stroke
 			(width 0)
@@ -3584,7 +3594,7 @@
 	)
 	(wire
 		(pts
-			(xy 201.93 123.19) (xy 201.93 124.46)
+			(xy 203.2 124.46) (xy 203.2 125.73)
 		)
 		(stroke
 			(width 0)
@@ -3624,7 +3634,7 @@
 	)
 	(wire
 		(pts
-			(xy 266.7 128.27) (xy 270.51 128.27)
+			(xy 267.97 129.54) (xy 271.78 129.54)
 		)
 		(stroke
 			(width 0)
@@ -3644,7 +3654,7 @@
 	)
 	(wire
 		(pts
-			(xy 201.93 132.08) (xy 201.93 133.35)
+			(xy 203.2 133.35) (xy 203.2 134.62)
 		)
 		(stroke
 			(width 0)
@@ -3704,7 +3714,7 @@
 	)
 	(global_label "GPS_USART6_RX"
 		(shape input)
-		(at 250.19 146.05 0)
+		(at 251.46 147.32 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -3714,7 +3724,7 @@
 		)
 		(uuid "2185b423-7261-422e-8764-d499aab0c488")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 268.4151 146.05 0)
+			(at 269.6851 147.32 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3858,7 +3868,7 @@
 	)
 	(global_label "L76LM33_RF"
 		(shape input)
-		(at 200.66 138.43 180)
+		(at 201.93 139.7 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3867,7 +3877,7 @@
 		)
 		(uuid "ab2c5096-3db4-4417-8b21-29e4b697e8b4")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 190.5991 138.43 0)
+			(at 191.8691 139.7 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3877,7 +3887,7 @@
 			)
 		)
 		(property "Impedance" "50ohm"
-			(at 180.086 147.828 0)
+			(at 181.356 149.098 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3911,7 +3921,7 @@
 	)
 	(global_label "L76LM33_RF"
 		(shape input)
-		(at 270.51 130.81 270)
+		(at 271.78 132.08 270)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -3921,7 +3931,7 @@
 		)
 		(uuid "c3c70aaa-6fba-486e-b23d-401787ccb92e")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 270.51 145.467 90)
+			(at 271.78 146.737 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3955,7 +3965,7 @@
 	)
 	(global_label "GPS_USART6_TX"
 		(shape input)
-		(at 250.19 143.51 0)
+		(at 251.46 144.78 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -3965,7 +3975,7 @@
 		)
 		(uuid "c6416a1a-70d7-4fa7-bf98-72b87b8567b3")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 268.1127 143.51 0)
+			(at 269.3827 144.78 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4442,7 +4452,7 @@
 	)
 	(symbol
 		(lib_id "ODB2:L76L-M33")
-		(at 224.79 138.43 0)
+		(at 226.06 139.7 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -4450,7 +4460,7 @@
 		(dnp no)
 		(uuid "29690f75-e78f-46d5-aae1-26ebe49486fe")
 		(property "Reference" "U5"
-			(at 209.55 119.888 0)
+			(at 210.82 121.158 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4460,7 +4470,7 @@
 			)
 		)
 		(property "Value" "L76L-M33"
-			(at 224.79 119.126 0)
+			(at 226.06 120.396 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4468,7 +4478,7 @@
 			)
 		)
 		(property "Footprint" "L76L-M33:XCVR_L76L-M33"
-			(at 224.79 138.43 0)
+			(at 226.06 139.7 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4478,7 +4488,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 224.79 138.43 0)
+			(at 226.06 139.7 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4487,7 +4497,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 224.79 138.43 0)
+			(at 226.06 139.7 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4496,7 +4506,7 @@
 			)
 		)
 		(property "MF" "Quectel"
-			(at 224.79 138.43 0)
+			(at 226.06 139.7 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4506,7 +4516,7 @@
 			)
 		)
 		(property "Description_1" "L76L-M33, the extremely compact GNSS module, is a concurrent GNSS receiver with multiple GNSS systems. It provides simultaneous GPS, GLONASS, BeiDou, Galileo and QZSS open service L1 reception capability."
-			(at 224.79 138.43 0)
+			(at 226.06 139.7 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4516,7 +4526,7 @@
 			)
 		)
 		(property "Package" "Custom Quectel"
-			(at 224.79 138.43 0)
+			(at 226.06 139.7 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4526,7 +4536,7 @@
 			)
 		)
 		(property "Price" "None"
-			(at 224.79 138.43 0)
+			(at 226.06 139.7 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4536,7 +4546,7 @@
 			)
 		)
 		(property "MP" "L76L-M33"
-			(at 224.79 138.43 0)
+			(at 226.06 139.7 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4546,7 +4556,7 @@
 			)
 		)
 		(property "Availability" "In Stock"
-			(at 224.79 138.43 0)
+			(at 226.06 139.7 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4608,7 +4618,7 @@
 	)
 	(symbol
 		(lib_id "power:+3V3")
-		(at 247.65 121.92 0)
+		(at 248.92 123.19 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -4616,7 +4626,7 @@
 		(dnp no)
 		(uuid "2a8bca42-8b1a-456d-a59a-deaa1265f31c")
 		(property "Reference" "#PWR049"
-			(at 247.65 125.73 0)
+			(at 248.92 127 0)
 			(effects
 				(font
 					(size 1 1)
@@ -4625,7 +4635,7 @@
 			)
 		)
 		(property "Value" "+3V3"
-			(at 247.65 118.11 0)
+			(at 248.92 119.38 0)
 			(effects
 				(font
 					(size 1 1)
@@ -4633,7 +4643,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 247.65 121.92 0)
+			(at 248.92 123.19 0)
 			(effects
 				(font
 					(size 1 1)
@@ -4642,7 +4652,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 247.65 121.92 0)
+			(at 248.92 123.19 0)
 			(effects
 				(font
 					(size 1 1)
@@ -4651,7 +4661,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 247.65 121.92 0)
+			(at 248.92 123.19 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5189,7 +5199,7 @@
 	)
 	(symbol
 		(lib_id "Device:R")
-		(at 201.93 128.27 0)
+		(at 203.2 129.54 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -5197,7 +5207,7 @@
 		(dnp no)
 		(uuid "62557a8d-28de-41b8-bdbf-0af60786883c")
 		(property "Reference" "L76L_R2"
-			(at 200.406 126.746 0)
+			(at 201.676 128.016 0)
 			(effects
 				(font
 					(size 1 1)
@@ -5206,7 +5216,7 @@
 			)
 		)
 		(property "Value" "10k"
-			(at 200.152 128.524 0)
+			(at 201.422 129.794 0)
 			(effects
 				(font
 					(size 1 1)
@@ -5215,7 +5225,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-			(at 200.152 128.27 90)
+			(at 201.422 129.54 90)
 			(effects
 				(font
 					(size 1 1)
@@ -5224,7 +5234,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 201.93 128.27 0)
+			(at 203.2 129.54 0)
 			(effects
 				(font
 					(size 1 1)
@@ -5233,7 +5243,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 201.93 128.27 0)
+			(at 203.2 129.54 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5258,7 +5268,7 @@
 	)
 	(symbol
 		(lib_id "Device:R")
-		(at 252.73 128.27 270)
+		(at 254 129.54 270)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -5266,7 +5276,7 @@
 		(dnp no)
 		(uuid "62981be5-430c-472a-94b9-40401a2085ea")
 		(property "Reference" "L76L_R1"
-			(at 252.73 125.984 90)
+			(at 254 127.254 90)
 			(effects
 				(font
 					(size 1 1)
@@ -5274,7 +5284,7 @@
 			)
 		)
 		(property "Value" "10R"
-			(at 252.73 130.556 90)
+			(at 254 131.826 90)
 			(effects
 				(font
 					(size 1 1)
@@ -5282,7 +5292,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-			(at 252.73 126.492 90)
+			(at 254 127.762 90)
 			(effects
 				(font
 					(size 1 1)
@@ -5291,7 +5301,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 252.73 128.27 0)
+			(at 254 129.54 0)
 			(effects
 				(font
 					(size 1 1)
@@ -5300,7 +5310,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 252.73 128.27 0)
+			(at 254 129.54 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5325,7 +5335,7 @@
 	)
 	(symbol
 		(lib_id "power:+3V3")
-		(at 201.93 123.19 0)
+		(at 203.2 124.46 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -5333,7 +5343,7 @@
 		(dnp no)
 		(uuid "74f2a2a6-0b93-4c6b-b032-66898e88e2f2")
 		(property "Reference" "#PWR060"
-			(at 201.93 127 0)
+			(at 203.2 128.27 0)
 			(effects
 				(font
 					(size 1 1)
@@ -5342,7 +5352,7 @@
 			)
 		)
 		(property "Value" "+3V3"
-			(at 201.93 119.38 0)
+			(at 203.2 120.65 0)
 			(effects
 				(font
 					(size 1 1)
@@ -5350,7 +5360,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 201.93 123.19 0)
+			(at 203.2 124.46 0)
 			(effects
 				(font
 					(size 1 1)
@@ -5359,7 +5369,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 201.93 123.19 0)
+			(at 203.2 124.46 0)
 			(effects
 				(font
 					(size 1 1)
@@ -5368,7 +5378,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 201.93 123.19 0)
+			(at 203.2 124.46 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5455,7 +5465,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 247.65 157.48 0)
+		(at 248.92 158.75 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -5463,7 +5473,7 @@
 		(dnp no)
 		(uuid "8dfbfb29-2a34-43e4-a14e-a3cb580d1358")
 		(property "Reference" "#PWR048"
-			(at 247.65 163.83 0)
+			(at 248.92 165.1 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5472,7 +5482,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 247.904 161.036 0)
+			(at 249.174 162.306 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5480,7 +5490,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 247.65 157.48 0)
+			(at 248.92 158.75 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5489,7 +5499,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 247.65 157.48 0)
+			(at 248.92 158.75 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5498,7 +5508,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 247.65 157.48 0)
+			(at 248.92 158.75 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5520,7 +5530,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 201.93 148.59 0)
+		(at 203.2 149.86 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -5528,7 +5538,7 @@
 		(dnp no)
 		(uuid "8e83b617-f1df-4f15-951e-a407b5232e02")
 		(property "Reference" "#PWR061"
-			(at 201.93 154.94 0)
+			(at 203.2 156.21 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5537,7 +5547,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 202.184 152.146 0)
+			(at 203.454 153.416 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5545,7 +5555,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 201.93 148.59 0)
+			(at 203.2 149.86 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5554,7 +5564,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 201.93 148.59 0)
+			(at 203.2 149.86 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5563,7 +5573,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 201.93 148.59 0)
+			(at 203.2 149.86 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6125,7 +6135,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 278.13 125.73 0)
+		(at 279.4 127 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -6133,7 +6143,7 @@
 		(dnp no)
 		(uuid "cfde5c70-c51e-4002-bab5-7b86f1b5bfca")
 		(property "Reference" "#PWR052"
-			(at 278.13 132.08 0)
+			(at 279.4 133.35 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6142,7 +6152,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 278.384 129.286 0)
+			(at 279.654 130.556 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6150,7 +6160,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 278.13 125.73 0)
+			(at 279.4 127 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6159,7 +6169,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 278.13 125.73 0)
+			(at 279.4 127 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6168,7 +6178,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 278.13 125.73 0)
+			(at 279.4 127 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6257,7 +6267,7 @@
 	)
 	(symbol
 		(lib_id "Connector:Conn_Coaxial")
-		(at 270.51 121.92 90)
+		(at 271.78 123.19 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -6265,7 +6275,7 @@
 		(dnp no)
 		(uuid "dfb1d1b7-122a-495a-8a44-3dff002599cf")
 		(property "Reference" "J4"
-			(at 273.304 124.206 90)
+			(at 274.574 125.476 90)
 			(effects
 				(font
 					(size 1 1)
@@ -6274,7 +6284,7 @@
 			)
 		)
 		(property "Value" "RF2-04A-T-00-50-G"
-			(at 272.796 119.126 90)
+			(at 274.066 120.396 90)
 			(effects
 				(font
 					(size 1 1)
@@ -6283,7 +6293,7 @@
 			)
 		)
 		(property "Footprint" "Connector_Coaxial:SMA_Wurth_60312002114503_Vertical"
-			(at 270.51 121.92 0)
+			(at 271.78 123.19 0)
 			(effects
 				(font
 					(size 1 1)
@@ -6292,7 +6302,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 270.51 121.92 0)
+			(at 271.78 123.19 0)
 			(effects
 				(font
 					(size 1 1)
@@ -6301,7 +6311,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 270.51 121.92 0)
+			(at 271.78 123.19 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6456,7 +6466,7 @@
 	)
 	(symbol
 		(lib_id "Device:L")
-		(at 262.89 128.27 90)
+		(at 264.16 129.54 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -6464,7 +6474,7 @@
 		(dnp no)
 		(uuid "e94cd2cc-8837-461a-ba6d-6c3056b9beb3")
 		(property "Reference" "L76L_L1"
-			(at 262.89 125.73 90)
+			(at 264.16 127 90)
 			(effects
 				(font
 					(size 1 1)
@@ -6472,7 +6482,7 @@
 			)
 		)
 		(property "Value" "100nH"
-			(at 263.144 130.556 90)
+			(at 264.414 131.826 90)
 			(effects
 				(font
 					(size 1 1)
@@ -6480,7 +6490,7 @@
 			)
 		)
 		(property "Footprint" "Inductor_SMD:L_0603_1608Metric"
-			(at 262.89 128.27 0)
+			(at 264.16 129.54 0)
 			(effects
 				(font
 					(size 1 1)
@@ -6489,7 +6499,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.digikey.ca/en/products/detail/vishay-dale/ILSB0805ERR10K/2575081"
-			(at 262.89 128.27 0)
+			(at 264.16 129.54 0)
 			(effects
 				(font
 					(size 1 1)
@@ -6498,7 +6508,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 262.89 128.27 0)
+			(at 264.16 129.54 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6588,7 +6598,7 @@
 	)
 	(symbol
 		(lib_id "Device:C_Small")
-		(at 247.65 137.16 0)
+		(at 248.92 138.43 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -6596,7 +6606,7 @@
 		(dnp no)
 		(uuid "f13d7520-0a28-4d6a-999d-79da3be5046f")
 		(property "Reference" "L76L_C1"
-			(at 248.158 133.604 0)
+			(at 249.428 134.874 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6605,7 +6615,7 @@
 			)
 		)
 		(property "Value" "100nF"
-			(at 248.158 135.382 0)
+			(at 249.428 136.652 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6614,7 +6624,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-			(at 247.65 137.16 0)
+			(at 248.92 138.43 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6623,7 +6633,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 247.65 137.16 0)
+			(at 248.92 138.43 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6632,7 +6642,7 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor, small symbol"
-			(at 247.65 137.16 0)
+			(at 248.92 138.43 0)
 			(effects
 				(font
 					(size 1.27 1.27)
