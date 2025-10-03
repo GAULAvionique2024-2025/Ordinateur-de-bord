@@ -5962,7 +5962,7 @@
 	)
 	(wire
 		(pts
-			(xy 231.14 157.48) (xy 240.03 157.48)
+			(xy 231.14 157.48) (xy 237.49 157.48)
 		)
 		(stroke
 			(width 0)
@@ -6382,7 +6382,7 @@
 	)
 	(wire
 		(pts
-			(xy 231.14 160.02) (xy 240.03 160.02)
+			(xy 231.14 160.02) (xy 237.49 160.02)
 		)
 		(stroke
 			(width 0)
@@ -7634,7 +7634,7 @@
 	)
 	(global_label "GPS_USART6_RX"
 		(shape input)
-		(at 240.03 160.02 0)
+		(at 237.49 160.02 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -7644,7 +7644,7 @@
 		)
 		(uuid "24ca3612-c367-473d-b674-56731a2174ae")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 258.2551 160.02 0)
+			(at 255.7151 160.02 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8009,7 +8009,7 @@
 	)
 	(global_label "GPS_USART6_TX"
 		(shape input)
-		(at 240.03 157.48 0)
+		(at 237.49 157.48 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -8019,7 +8019,7 @@
 		)
 		(uuid "ac629d1a-dde0-428b-a6e4-8cb54d905c48")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 257.9527 157.48 0)
+			(at 255.4127 157.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
