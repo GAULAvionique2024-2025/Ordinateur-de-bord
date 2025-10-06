@@ -7677,7 +7677,7 @@
 			)
 		)
 	)
-	(global_label "IdeFIX_I2C_SCL"
+	(global_label "IdeFIX_I2C2_SCL"
 		(shape input)
 		(at 39.37 99.06 180)
 		(fields_autoplaced yes)
@@ -7689,7 +7689,7 @@
 		)
 		(uuid "0ff98409-5494-4826-88ea-42f8dac19a26")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 22.1124 99.06 0)
+			(at 20.9029 99.06 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7945,7 +7945,7 @@
 			)
 		)
 	)
-	(global_label "IdeFIX_I2C_SDA"
+	(global_label "IdeFIX_I2C2_SDA"
 		(shape input)
 		(at 39.37 96.52 180)
 		(fields_autoplaced yes)
@@ -7957,7 +7957,7 @@
 		)
 		(uuid "7c7d0b3b-3201-4272-bf1e-ce8261570610")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 22.0519 96.52 0)
+			(at 20.8424 96.52 0)
 			(effects
 				(font
 					(size 1.27 1.27)
