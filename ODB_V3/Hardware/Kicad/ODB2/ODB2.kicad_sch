@@ -4847,7 +4847,7 @@
 	)
 	(rectangle
 		(start 13.97 240.03)
-		(end 87.63 283.21)
+		(end 119.38 283.21)
 		(stroke
 			(width 0)
 			(type dash)
@@ -4981,14 +4981,14 @@
 		)
 		(uuid "3702b3b8-d342-42d7-b58c-417880eb6c2b")
 	)
-	(text "Note:\nLed Vf = 3.3v at 20mA"
+	(text "Note:\nLed Vf = 3.3v at 20mA\nMax consumption STM ~50mA\n\nTotal comsumption 3v3 with 10% a buffer : 560ma in worst case"
 		(exclude_from_sim no)
-		(at 14.732 244.094 0)
+		(at 14.732 241.554 0)
 		(effects
 			(font
 				(size 2 2)
 			)
-			(justify left)
+			(justify left top)
 		)
 		(uuid "46810eae-3747-4fe2-bd76-10922d7bb059")
 	)
