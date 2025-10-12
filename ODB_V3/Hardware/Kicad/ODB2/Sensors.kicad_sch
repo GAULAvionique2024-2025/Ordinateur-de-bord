@@ -4751,7 +4751,7 @@
 			)
 		)
 	)
-	(global_label "BARO_SPI1_SCLK"
+	(global_label "BARO_SPI1_CLK"
 		(shape input)
 		(at 34.29 93.98 180)
 		(fields_autoplaced yes)
@@ -4763,7 +4763,7 @@
 		)
 		(uuid "c5b30e1c-4fc5-4a17-b1a8-a2b0a5cdf693")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 15.3391 93.98 0)
+			(at 16.5486 93.98 0)
 			(effects
 				(font
 					(size 1.27 1.27)

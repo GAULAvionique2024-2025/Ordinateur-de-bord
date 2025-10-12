@@ -105,8 +105,6 @@ void Error_Handler(void);
 #define GPS_USART6_TX_GPIO_Port GPIOC
 #define GPS_USART6_RX_Pin GPIO_PIN_7
 #define GPS_USART6_RX_GPIO_Port GPIOC
-#define IMU_INT_Pin GPIO_PIN_9
-#define IMU_INT_GPIO_Port GPIOC
 #define IMU_nRESET_Pin GPIO_PIN_8
 #define IMU_nRESET_GPIO_Port GPIOA
 #define IMU_USART1_TX_Pin GPIO_PIN_9

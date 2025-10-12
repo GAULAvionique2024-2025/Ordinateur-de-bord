@@ -6234,6 +6234,17 @@
 		)
 		(uuid "91f7b104-ae0f-4e9f-be75-4a4e605dd7ac")
 	)
+	(text "À VERIFIER (PULL-UP)"
+		(exclude_from_sim no)
+		(at 57.404 106.934 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right top)
+		)
+		(uuid "a2408de6-4297-467a-8b7f-9cf7da8069c1")
+	)
 	(text "BUZZER"
 		(exclude_from_sim no)
 		(at 189.992 82.804 0)
