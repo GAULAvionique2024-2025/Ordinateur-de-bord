@@ -78,6 +78,51 @@ void HAL_MspInit(void)
 }
 
 /**
+  * @brief CRC MSP Initialization
+  * This function configures the hardware resources used in this example
+  * @param hcrc: CRC handle pointer
+  * @retval None
+  */
+void HAL_CRC_MspInit(CRC_HandleTypeDef* hcrc)
+{
+  if(hcrc->Instance==CRC)
+  {
+    /* USER CODE BEGIN CRC_MspInit 0 */
+
+    /* USER CODE END CRC_MspInit 0 */
+    /* Peripheral clock enable */
+    __HAL_RCC_CRC_CLK_ENABLE();
+    /* USER CODE BEGIN CRC_MspInit 1 */
+
+    /* USER CODE END CRC_MspInit 1 */
+
+  }
+
+}
+
+/**
+  * @brief CRC MSP De-Initialization
+  * This function freeze the hardware resources used in this example
+  * @param hcrc: CRC handle pointer
+  * @retval None
+  */
+void HAL_CRC_MspDeInit(CRC_HandleTypeDef* hcrc)
+{
+  if(hcrc->Instance==CRC)
+  {
+    /* USER CODE BEGIN CRC_MspDeInit 0 */
+
+    /* USER CODE END CRC_MspDeInit 0 */
+    /* Peripheral clock disable */
+    __HAL_RCC_CRC_CLK_DISABLE();
+    /* USER CODE BEGIN CRC_MspDeInit 1 */
+
+    /* USER CODE END CRC_MspDeInit 1 */
+  }
+
+}
+
+/**
   * @brief I2C MSP Initialization
   * This function configures the hardware resources used in this example
   * @param hi2c: I2C handle pointer
@@ -347,7 +392,7 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* hspi)
     PE13     ------> SPI5_MISO
     PE14     ------> SPI5_MOSI
     */
-    GPIO_InitStruct.Pin = SD_SPI5_SCLK_Pin|SD_SPI5_MISO_Pin|SD_SPI5_MOSI_Pin;
+    GPIO_InitStruct.Pin = SD_SPI5_CLK_Pin|SD_SPI5_MISO_Pin|SD_SPI5_MOSI_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
@@ -401,7 +446,7 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef* hspi)
     PE13     ------> SPI5_MISO
     PE14     ------> SPI5_MOSI
     */
-    HAL_GPIO_DeInit(GPIOE, SD_SPI5_SCLK_Pin|SD_SPI5_MISO_Pin|SD_SPI5_MOSI_Pin);
+    HAL_GPIO_DeInit(GPIOE, SD_SPI5_CLK_Pin|SD_SPI5_MISO_Pin|SD_SPI5_MOSI_Pin);
 
     /* USER CODE BEGIN SPI5_MspDeInit 1 */
 

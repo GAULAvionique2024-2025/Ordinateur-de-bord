@@ -6166,6 +6166,16 @@
 		)
 		(uuid "4c16b743-b601-4f13-826d-a074e72a5348")
 	)
+	(text "À MODIFIER"
+		(exclude_from_sim no)
+		(at 77.724 76.454 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "628180cf-1ed0-4ce7-b206-5687d11cd657")
+	)
 	(text "Informations"
 		(exclude_from_sim no)
 		(at 13.208 173.228 0)
@@ -6516,6 +6526,10 @@
 		(uuid "e9b99861-e9f2-4d62-9fb4-c5f046aa0819")
 	)
 	(no_connect
+		(at 87.63 76.2)
+		(uuid "eccd2182-e028-48bd-bb7c-d71d2b0edcfa")
+	)
+	(no_connect
 		(at 166.37 55.88)
 		(uuid "ee7d4a01-edad-4bd0-a75f-0f778fa00a1b")
 	)
@@ -6816,16 +6830,6 @@
 			(type default)
 		)
 		(uuid "2bc6c375-9d17-4e08-a3ee-6c916a91c94c")
-	)
-	(wire
-		(pts
-			(xy 83.82 76.2) (xy 87.63 76.2)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "32bf32d6-f8d8-4848-b0df-dad829fcdf20")
 	)
 	(wire
 		(pts
@@ -8310,28 +8314,6 @@
 					(size 1.27 1.27)
 				)
 				(justify left)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "RFD_USART3_RTS"
-		(shape input)
-		(at 83.82 76.2 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "aa6921af-88c7-4a21-9a8c-bfb887682dd1")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 64.7482 76.2 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
 				(hide yes)
 			)
 		)
