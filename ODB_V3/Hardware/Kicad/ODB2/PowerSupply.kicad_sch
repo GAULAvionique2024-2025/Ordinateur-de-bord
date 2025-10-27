@@ -3105,6 +3105,16 @@
 		)
 		(uuid "1472781c-19e8-4c45-a90f-965877e53d14")
 	)
+	(text "VERIFIER (22 µF datasheet?)"
+		(exclude_from_sim no)
+		(at 133.604 151.638 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "3678add7-06af-45ea-a649-12e1cf41231f")
+	)
 	(text "3v3 1A Buck Converter"
 		(exclude_from_sim no)
 		(at 15.748 123.19 0)
@@ -3130,6 +3140,16 @@
 			(justify left top)
 		)
 		(uuid "5a2713c5-cd64-416c-8b9f-d8d740e7f1b4")
+	)
+	(text "VÉRIFIER (SCHEMATIC DIFFERENT)"
+		(exclude_from_sim no)
+		(at 34.544 97.79 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "81c363bf-ba8a-421f-8bc0-408a1f7fa2de")
 	)
 	(text "Vin filter"
 		(exclude_from_sim no)
@@ -3482,6 +3502,10 @@
 	(no_connect
 		(at 63.5 71.12)
 		(uuid "55e68887-fb0c-4885-93b4-ac88571d6c42")
+	)
+	(no_connect
+		(at 63.5 78.74)
+		(uuid "fe937beb-22ee-4d99-970b-1a462dbb0a90")
 	)
 	(wire
 		(pts

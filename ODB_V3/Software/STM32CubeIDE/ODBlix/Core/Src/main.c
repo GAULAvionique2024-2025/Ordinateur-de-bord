@@ -545,13 +545,13 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOC_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, BT_KEY_Pin|BARO_SPI1_CS_Pin|IMU_nRESET_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, BARO_SPI1_CS_Pin|IMU_nRESET_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(SD_SPI5_CS_GPIO_Port, SD_SPI5_CS_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : BT_KEY_Pin BARO_SPI1_CS_Pin IMU_nRESET_Pin */
-  GPIO_InitStruct.Pin = BT_KEY_Pin|BARO_SPI1_CS_Pin|IMU_nRESET_Pin;
+  /*Configure GPIO pins : BARO_SPI1_CS_Pin IMU_nRESET_Pin */
+  GPIO_InitStruct.Pin = BARO_SPI1_CS_Pin|IMU_nRESET_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;

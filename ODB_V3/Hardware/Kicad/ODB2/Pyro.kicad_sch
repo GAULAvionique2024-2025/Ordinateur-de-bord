@@ -3539,6 +3539,16 @@
 		)
 		(uuid "005e06ef-1b42-472b-874c-d949bf154a13")
 	)
+	(text "Clamp"
+		(exclude_from_sim no)
+		(at 107.95 155.956 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "07ba7949-1275-4c74-b2c6-445022a85b1e")
+	)
 	(text "Pyro 1"
 		(exclude_from_sim no)
 		(at 22.352 101.346 0)
@@ -3573,6 +3583,56 @@
 			(justify left)
 		)
 		(uuid "1e5adcb7-cbe8-4b8b-a776-6c7efca4305b")
+	)
+	(text "Clamp"
+		(exclude_from_sim no)
+		(at 67.31 148.336 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "2966a51b-3aab-496b-a0ad-dffb4d1553c3")
+	)
+	(text "Clamp"
+		(exclude_from_sim no)
+		(at 136.144 100.076 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "2ca6b8b2-19b9-4426-b75e-96e576506467")
+	)
+	(text "Clamp"
+		(exclude_from_sim no)
+		(at 135.89 148.336 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "39410b3e-d9b8-4643-959c-3b4f11c1df69")
+	)
+	(text "Clamp"
+		(exclude_from_sim no)
+		(at 107.696 107.442 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "3db31751-9a3d-4d61-a906-83db95efd5be")
+	)
+	(text "Clamp"
+		(exclude_from_sim no)
+		(at 67.564 99.822 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "4ebbb849-5b51-48c5-9ec0-c6315a49abdc")
 	)
 	(text "Pyro 4"
 		(exclude_from_sim no)
@@ -3622,6 +3682,16 @@
 		)
 		(uuid "97ae3df9-4c9d-409c-96ee-da664a99aca2")
 	)
+	(text "Clamp"
+		(exclude_from_sim no)
+		(at 39.37 155.956 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "9fea591d-5adf-4aaa-a2e5-ec8d040a0e00")
+	)
 	(text "Informations"
 		(exclude_from_sim no)
 		(at 198.882 106.426 0)
@@ -3646,6 +3716,26 @@
 			)
 		)
 		(uuid "c1f7d198-20a3-425e-a77e-3eeedc0df0cc")
+	)
+	(text "VERIFIER HYSTERISIE (SCREENSHOT)"
+		(exclude_from_sim no)
+		(at 115.824 34.798 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "fd481db4-cb30-40a2-9c37-e3450b4d0e13")
+	)
+	(text "Clamp"
+		(exclude_from_sim no)
+		(at 39.624 107.442 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "ff568fbb-2958-4129-8d46-49f8bfc1a42f")
 	)
 	(junction
 		(at 41.91 48.26)

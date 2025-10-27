@@ -4937,7 +4937,7 @@
 		)
 		(uuid "047760e9-58ae-48b7-8b84-bb896c721d8f")
 	)
-	(text "C_load = (C1 x C2)/(C1 + C2) + C_tray = 12pF"
+	(text "C_load = (C1 x C2)/(C1 + C2) + C_tray >= 12pF"
 		(exclude_from_sim no)
 		(at 355.6 156.972 0)
 		(effects
@@ -4959,6 +4959,16 @@
 			)
 		)
 		(uuid "25bb45cc-da62-4145-8703-b713a1766ad2")
+	)
+	(text "Pull-up on sensor"
+		(exclude_from_sim no)
+		(at 269.748 115.824 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "2ee1db2f-32df-4984-a195-f85db648cdde")
 	)
 	(text "Mounting Hole"
 		(exclude_from_sim no)
@@ -5023,6 +5033,16 @@
 			)
 		)
 		(uuid "a653d598-a700-451b-937f-17ebcd1b67b8")
+	)
+	(text "(VÉRIFIER) Pull-up"
+		(exclude_from_sim no)
+		(at 129.54 128.524 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "a7a6edc5-7c7d-418d-ae1f-6f6a1cb0c381")
 	)
 	(text "External Crystal"
 		(exclude_from_sim no)
@@ -5451,6 +5471,10 @@
 	(no_connect
 		(at 170.18 132.08)
 		(uuid "7be084cb-983e-446f-b4f9-281ec704172a")
+	)
+	(no_connect
+		(at 231.14 58.42)
+		(uuid "7c661101-5970-4bd6-9bb8-bd3bde3ecad7")
 	)
 	(no_connect
 		(at 170.18 152.4)
@@ -5993,16 +6017,6 @@
 			(type default)
 		)
 		(uuid "28673518-df81-4808-a703-4e74bacf03d6")
-	)
-	(wire
-		(pts
-			(xy 231.14 78.74) (xy 243.84 78.74)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "29ada511-c877-4b9d-a4bc-a0388aa3aea9")
 	)
 	(wire
 		(pts
@@ -6736,16 +6750,6 @@
 	)
 	(wire
 		(pts
-			(xy 241.3 81.28) (xy 243.84 81.28)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "8543aedb-0b43-4e75-a57c-716dea12e2fe")
-	)
-	(wire
-		(pts
 			(xy 215.9 39.37) (xy 215.9 48.26)
 		)
 		(stroke
@@ -6776,7 +6780,7 @@
 	)
 	(wire
 		(pts
-			(xy 231.14 81.28) (xy 233.68 81.28)
+			(xy 231.14 81.28) (xy 243.84 81.28)
 		)
 		(stroke
 			(width 0)
@@ -6853,16 +6857,6 @@
 			(type default)
 		)
 		(uuid "8f686a46-8949-444f-8e45-8d7145ef9c68")
-	)
-	(wire
-		(pts
-			(xy 241.3 58.42) (xy 243.84 58.42)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "909064f3-d41e-4dba-b85c-2d0d511c0683")
 	)
 	(wire
 		(pts
@@ -7276,16 +7270,6 @@
 	)
 	(wire
 		(pts
-			(xy 231.14 58.42) (xy 233.68 58.42)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "b8dee4c6-6e0d-48a5-989c-f33443cc050a")
-	)
-	(wire
-		(pts
 			(xy 147.32 44.45) (xy 147.32 45.72)
 		)
 		(stroke
@@ -7586,6 +7570,26 @@
 	)
 	(wire
 		(pts
+			(xy 241.3 78.74) (xy 243.84 78.74)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "df4409c4-d78b-4b71-9214-9de404eb382a")
+	)
+	(wire
+		(pts
+			(xy 231.14 78.74) (xy 233.68 78.74)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e3f0946a-c029-4231-86b5-12d244e12a58")
+	)
+	(wire
+		(pts
 			(xy 379.73 127) (xy 379.73 129.54)
 		)
 		(stroke
@@ -7846,28 +7850,6 @@
 			)
 		)
 	)
-	(global_label "IMU_USART1_RX"
-		(shape input)
-		(at 243.84 81.28 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "0486a4c7-bab0-4d21-aeb2-17416248e703")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 261.7023 81.28 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-	)
 	(global_label "PH0"
 		(shape input)
 		(at 165.1 76.2 180)
@@ -8114,7 +8096,7 @@
 	)
 	(global_label "IMU_USART1_RX"
 		(shape input)
-		(at 243.84 78.74 0)
+		(at 243.84 81.28 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -8124,7 +8106,7 @@
 		)
 		(uuid "39cca297-3441-4603-872b-706040ae785e")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 261.7023 78.74 0)
+			(at 261.7023 81.28 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8264,6 +8246,28 @@
 					(size 1.27 1.27)
 				)
 				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "IMU_USART1_TX"
+		(shape input)
+		(at 243.84 78.74 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "56ea2094-64de-4cbe-90e6-5338adb9a730")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 261.3999 78.74 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
 				(hide yes)
 			)
 		)
@@ -8467,7 +8471,7 @@
 			)
 		)
 	)
-	(global_label "IMU_USART1_nRESET"
+	(global_label "IMU_nRESET"
 		(shape input)
 		(at 243.84 76.2 0)
 		(fields_autoplaced yes)
@@ -8479,7 +8483,7 @@
 		)
 		(uuid "8cf9dcef-29cf-416f-a56e-c7e66f1fdbde")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 266.1169 76.2 0)
+			(at 258.0736 76.2 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8641,28 +8645,6 @@
 					(size 1.27 1.27)
 				)
 				(justify right)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "BT_KEY"
-		(shape input)
-		(at 243.84 58.42 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "ab77a009-802c-4b1c-838f-0c60bb3b9a34")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 253.538 58.42 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
 				(hide yes)
 			)
 		)
@@ -12483,73 +12465,6 @@
 	)
 	(symbol
 		(lib_id "Device:R")
-		(at 237.49 58.42 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom no)
-		(on_board no)
-		(dnp no)
-		(uuid "88fa483c-df6d-44da-8bcd-5552452ae63d")
-		(property "Reference" "BT_R4"
-			(at 268.732 58.42 90)
-			(effects
-				(font
-					(size 1 1)
-				)
-			)
-		)
-		(property "Value" "10R"
-			(at 273.304 58.42 90)
-			(effects
-				(font
-					(size 1 1)
-				)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-			(at 237.49 60.198 90)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 237.49 58.42 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 237.49 58.42 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "9ac0ef54-4122-45fb-acc7-c66aac36bf0a")
-		)
-		(pin "2"
-			(uuid "6aa37e36-0e81-49bd-ae81-02b69c93717a")
-		)
-		(instances
-			(project "ODB2"
-				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78"
-					(reference "BT_R4")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R")
 		(at 163.83 142.24 270)
 		(unit 1)
 		(exclude_from_sim no)
@@ -16186,7 +16101,7 @@
 	)
 	(symbol
 		(lib_id "Device:R")
-		(at 237.49 81.28 90)
+		(at 237.49 78.74 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom no)
@@ -16194,7 +16109,7 @@
 		(dnp no)
 		(uuid "fb13a60a-8df0-4e84-85bf-9d21e701f6fc")
 		(property "Reference" "IMU_R3"
-			(at 269.24 81.28 90)
+			(at 269.24 78.74 90)
 			(effects
 				(font
 					(size 1 1)
@@ -16202,7 +16117,7 @@
 			)
 		)
 		(property "Value" "10R"
-			(at 273.812 81.28 90)
+			(at 273.812 78.74 90)
 			(effects
 				(font
 					(size 1 1)
@@ -16210,7 +16125,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-			(at 237.49 83.058 90)
+			(at 237.49 80.518 90)
 			(effects
 				(font
 					(size 1 1)
@@ -16219,7 +16134,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 237.49 81.28 0)
+			(at 237.49 78.74 0)
 			(effects
 				(font
 					(size 1 1)
@@ -16228,7 +16143,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 237.49 81.28 0)
+			(at 237.49 78.74 0)
 			(effects
 				(font
 					(size 1.27 1.27)
