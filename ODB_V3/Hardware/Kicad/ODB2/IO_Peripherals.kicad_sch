@@ -5111,6 +5111,18 @@
 		(uuid d03c8ed1-8102-4c30-9e81-c22d2128be54)
 	)
 	(rectangle
+		(start 217.17 123.825)
+		(end 282.575 164.465)
+		(stroke
+			(width 0)
+			(type dash)
+		)
+		(fill
+			(type none)
+		)
+		(uuid eac6e638-8a7b-4e66-a7df-ddb1dad22779)
+	)
+	(rectangle
 		(start 189.23 21.59)
 		(end 253.365 78.74)
 		(stroke
@@ -5121,6 +5133,19 @@
 			(type none)
 		)
 		(uuid f75a4a26-591f-4eee-8452-0b9127d7a6e4)
+	)
+	(text "IO EXTEND"
+		(exclude_from_sim no)
+		(at 217.932 126.619 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.254)
+				(bold yes)
+			)
+			(justify left bottom)
+		)
+		(uuid "0e3e3eb3-3039-4a49-8d7f-8822547e4372")
 	)
 	(text "CRITICAL RED LIGHT"
 		(exclude_from_sim no)
