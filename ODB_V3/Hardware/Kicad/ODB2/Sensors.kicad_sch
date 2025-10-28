@@ -2746,16 +2746,6 @@
 		)
 		(uuid "1fa1533f-9894-4170-b803-5968e2d24bfa")
 	)
-	(text "SÉPARER VDD et VDDIO"
-		(exclude_from_sim no)
-		(at 107.188 122.174 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "221577d5-8f3b-47ee-b3de-64d0babb9fdf")
-	)
 	(text "Max consumption 12.3mA"
 		(exclude_from_sim no)
 		(at 135.382 29.21 0)
@@ -3016,18 +3006,6 @@
 		)
 		(uuid "eec3d7c6-8515-4883-99be-1521849d8d2e")
 	)
-	(text "VÉRIFIER !!!"
-		(exclude_from_sim no)
-		(at 22.098 66.548 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-				(thickness 0.254)
-				(bold yes)
-			)
-		)
-		(uuid "f3468bb0-3a31-40b7-9caf-2b90012ade27")
-	)
 	(text "Active low"
 		(exclude_from_sim no)
 		(at 78.232 51.054 0)
@@ -3047,16 +3025,6 @@
 			)
 		)
 		(uuid "feb24f2c-1796-4f4b-b196-44e31ea5491a")
-	)
-	(text "POSSIBLE I2C (VERIFIER)"
-		(exclude_from_sim no)
-		(at 28.956 91.44 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "ffc39b87-b841-4a79-8326-53db9e2d6ab1")
 	)
 	(text "IMU Low G"
 		(exclude_from_sim no)

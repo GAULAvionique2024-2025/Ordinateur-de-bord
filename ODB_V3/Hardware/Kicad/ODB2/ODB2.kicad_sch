@@ -5013,6 +5013,16 @@
 		)
 		(uuid "6f417ccb-9285-4b47-984b-e8f4a4176ce5")
 	)
+	(text "Pull-up on sensor"
+		(exclude_from_sim no)
+		(at 129.54 128.778 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "96d7f3ff-9069-46f2-acf5-cde31c448bb7")
+	)
 	(text "OSC_OUT"
 		(exclude_from_sim no)
 		(at 396.494 118.618 0)
@@ -5033,16 +5043,6 @@
 			)
 		)
 		(uuid "a653d598-a700-451b-937f-17ebcd1b67b8")
-	)
-	(text "(VÉRIFIER) Pull-up"
-		(exclude_from_sim no)
-		(at 129.54 128.524 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "a7a6edc5-7c7d-418d-ae1f-6f6a1cb0c381")
 	)
 	(text "External Crystal"
 		(exclude_from_sim no)
