@@ -3118,10 +3118,10 @@
 	)
 	(text "3v3 1A Buck Converter"
 		(exclude_from_sim no)
-		(at 15.748 127 0)
+		(at 16.002 128.778 0)
 		(effects
 			(font
-				(size 1.27 1.27)
+				(size 2.54 2.54)
 				(thickness 0.254)
 				(bold yes)
 			)
@@ -3166,10 +3166,10 @@
 	)
 	(text "Vin filter"
 		(exclude_from_sim no)
-		(at 15.748 22.86 0)
+		(at 16.256 22.86 0)
 		(effects
 			(font
-				(size 1.27 1.27)
+				(size 2.54 2.54)
 				(thickness 0.254)
 				(bold yes)
 			)
@@ -3204,7 +3204,7 @@
 		(at 52.07 16.764 0)
 		(effects
 			(font
-				(size 4 4)
+				(size 4.064 4.064)
 				(thickness 0.254)
 				(bold yes)
 			)
@@ -3213,10 +3213,10 @@
 	)
 	(text "5v 3A Buck Converter"
 		(exclude_from_sim no)
-		(at 16.002 54.61 0)
+		(at 16.002 56.388 0)
 		(effects
 			(font
-				(size 1.27 1.27)
+				(size 2.54 2.54)
 				(thickness 0.254)
 				(bold yes)
 			)
