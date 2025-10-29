@@ -5249,8 +5249,7 @@
 		(effects
 			(font
 				(size 1.27 1.27)
-				(thickness 0.254)
-				(bold yes)
+				(thickness 0.1588)
 			)
 			(justify left top)
 		)
@@ -6495,7 +6494,7 @@
 			)
 		)
 	)
-	(global_label "RFD_USART3_RX"
+	(global_label "RFD_USART1_RX"
 		(shape input)
 		(at 83.82 68.58 180)
 		(fields_autoplaced yes)
@@ -6874,7 +6873,7 @@
 			)
 		)
 	)
-	(global_label "RFD_USART3_TX"
+	(global_label "RFD_USART1_TX"
 		(shape input)
 		(at 83.82 71.12 180)
 		(fields_autoplaced yes)
@@ -8097,7 +8096,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "359f619f-f050-4c04-bf32-904bbe467dc6")
-		(property "Reference" "MEM_C1"
+		(property "Reference" "SD_C1"
 			(at 28.702 143.002 0)
 			(effects
 				(font
@@ -8151,7 +8150,7 @@
 		(instances
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/93865dc8-71fa-4dc6-90ce-f5a9779dfd41"
-					(reference "MEM_C1")
+					(reference "SD_C1")
 					(unit 1)
 				)
 			)
@@ -9078,7 +9077,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "6fbb8420-cc7a-4c8a-8430-aae9c35b8420")
-		(property "Reference" "J1"
+		(property "Reference" "J10"
 			(at 115.57 129.54 0)
 			(effects
 				(font
@@ -9149,7 +9148,7 @@
 		(instances
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/93865dc8-71fa-4dc6-90ce-f5a9779dfd41"
-					(reference "J1")
+					(reference "J10")
 					(unit 1)
 				)
 			)
@@ -9716,7 +9715,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "b7101a0b-7455-47d3-8d87-dda6a8af75f4")
-		(property "Reference" "BUZ_Buzzer1"
+		(property "Reference" "BUZZER_Buzzer1"
 			(at 219.71 83.82 0)
 			(effects
 				(font
@@ -9771,7 +9770,7 @@
 		(instances
 			(project ""
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/93865dc8-71fa-4dc6-90ce-f5a9779dfd41"
-					(reference "BUZ_Buzzer1")
+					(reference "BUZZER_Buzzer1")
 					(unit 1)
 				)
 			)
