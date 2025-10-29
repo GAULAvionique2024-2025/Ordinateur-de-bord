@@ -43,6 +43,8 @@
 /* Private variables ---------------------------------------------------------*/
 ADC_HandleTypeDef hadc1;
 
+CAN_HandleTypeDef hcan1;
+
 CRC_HandleTypeDef hcrc;
 
 I2C_HandleTypeDef hi2c1;
@@ -80,6 +82,7 @@ static void MX_ADC1_Init(void);
 static void MX_I2C3_Init(void);
 static void MX_USART3_UART_Init(void);
 static void MX_SPI2_Init(void);
+static void MX_CAN1_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -132,6 +135,7 @@ int main(void)
   MX_I2C3_Init();
   MX_USART3_UART_Init();
   MX_SPI2_Init();
+  MX_CAN1_Init();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
@@ -244,6 +248,43 @@ static void MX_ADC1_Init(void)
   /* USER CODE BEGIN ADC1_Init 2 */
 
   /* USER CODE END ADC1_Init 2 */
+
+}
+
+/**
+  * @brief CAN1 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_CAN1_Init(void)
+{
+
+  /* USER CODE BEGIN CAN1_Init 0 */
+
+  /* USER CODE END CAN1_Init 0 */
+
+  /* USER CODE BEGIN CAN1_Init 1 */
+
+  /* USER CODE END CAN1_Init 1 */
+  hcan1.Instance = CAN1;
+  hcan1.Init.Prescaler = 16;
+  hcan1.Init.Mode = CAN_MODE_NORMAL;
+  hcan1.Init.SyncJumpWidth = CAN_SJW_1TQ;
+  hcan1.Init.TimeSeg1 = CAN_BS1_1TQ;
+  hcan1.Init.TimeSeg2 = CAN_BS2_1TQ;
+  hcan1.Init.TimeTriggeredMode = DISABLE;
+  hcan1.Init.AutoBusOff = DISABLE;
+  hcan1.Init.AutoWakeUp = DISABLE;
+  hcan1.Init.AutoRetransmission = DISABLE;
+  hcan1.Init.ReceiveFifoLocked = DISABLE;
+  hcan1.Init.TransmitFifoPriority = DISABLE;
+  if (HAL_CAN_Init(&hcan1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN CAN1_Init 2 */
+
+  /* USER CODE END CAN1_Init 2 */
 
 }
 
@@ -691,7 +732,7 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(SD_SPI5_CS_GPIO_Port, SD_SPI5_CS_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOD, EXTEND_SPI2_CS1_Pin|EXTEND_SPI2_CS2_Pin|EXTEND_SPI2_CS3_Pin|EXTEND_SPI2_CS4_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOD, EXTEND_SPI2_CS1_Pin|EXTEND_SPI2_CS2_Pin|EXTEND_SPI2_CS3_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(IMU_nReset_GPIO_Port, IMU_nReset_Pin, GPIO_PIN_RESET);
@@ -724,8 +765,8 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(SD_SPI5_CS_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : EXTEND_SPI2_CS1_Pin EXTEND_SPI2_CS2_Pin EXTEND_SPI2_CS3_Pin EXTEND_SPI2_CS4_Pin */
-  GPIO_InitStruct.Pin = EXTEND_SPI2_CS1_Pin|EXTEND_SPI2_CS2_Pin|EXTEND_SPI2_CS3_Pin|EXTEND_SPI2_CS4_Pin;
+  /*Configure GPIO pins : EXTEND_SPI2_CS1_Pin EXTEND_SPI2_CS2_Pin EXTEND_SPI2_CS3_Pin */
+  GPIO_InitStruct.Pin = EXTEND_SPI2_CS1_Pin|EXTEND_SPI2_CS2_Pin|EXTEND_SPI2_CS3_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -744,6 +785,12 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : EXTEND_IO1_Pin EXTEND_IO2_Pin EXTEND_IO3_Pin EXTEND_IO4_Pin */
+  GPIO_InitStruct.Pin = EXTEND_IO1_Pin|EXTEND_IO2_Pin|EXTEND_IO3_Pin|EXTEND_IO4_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
   /*Configure GPIO pin : IMU_INT_Pin */
   GPIO_InitStruct.Pin = IMU_INT_Pin;
