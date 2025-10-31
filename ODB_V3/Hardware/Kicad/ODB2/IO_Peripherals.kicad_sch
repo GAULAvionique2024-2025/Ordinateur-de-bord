@@ -3933,23 +3933,23 @@
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
-			(property "Reference" "HM-11"
-				(at 10.414 1.27 0)
+			(property "Reference" "H1"
+				(at 10.668 3.302 0)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
 				)
 			)
-			(property "Value" ""
-				(at 0 0 0)
+			(property "Value" "HM11"
+				(at 10.668 1.27 0)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
 				)
 			)
-			(property "Footprint" ""
+			(property "Footprint" "ODB:hm11"
 				(at 0 0 0)
 				(effects
 					(font
@@ -3958,7 +3958,7 @@
 					(hide yes)
 				)
 			)
-			(property "Datasheet" ""
+			(property "Datasheet" "https://www.micros.com.pl/mediaserver/info-rf%20hm-11.pdf"
 				(at 0 0 0)
 				(effects
 					(font
@@ -3979,7 +3979,7 @@
 			(symbol "HM-11_0_1"
 				(rectangle
 					(start 0 0)
-					(end 20.32 -27.94)
+					(end 20.32 -25.4)
 					(stroke
 						(width 0)
 						(type default)
@@ -3991,7 +3991,7 @@
 			)
 			(symbol "HM-11_1_1"
 				(pin output line
-					(at -2.54 -8.89 0)
+					(at -2.54 -6.35 0)
 					(length 2.54)
 					(name "UART_RTS"
 						(effects
@@ -4009,7 +4009,7 @@
 					)
 				)
 				(pin output line
-					(at -2.54 -11.43 0)
+					(at -2.54 -8.89 0)
 					(length 2.54)
 					(name "UART_TX"
 						(effects
@@ -4027,7 +4027,7 @@
 					)
 				)
 				(pin input line
-					(at -2.54 -13.97 0)
+					(at -2.54 -11.43 0)
 					(length 2.54)
 					(name "UART_CTS"
 						(effects
@@ -4045,7 +4045,7 @@
 					)
 				)
 				(pin input line
-					(at -2.54 -16.51 0)
+					(at -2.54 -13.97 0)
 					(length 2.54)
 					(name "UART_RX"
 						(effects
@@ -4063,7 +4063,7 @@
 					)
 				)
 				(pin no_connect line
-					(at -2.54 -19.05 0)
+					(at -2.54 -16.51 0)
 					(length 2.54)
 					(name "NC"
 						(effects
@@ -4081,7 +4081,7 @@
 					)
 				)
 				(pin no_connect line
-					(at -2.54 -21.59 0)
+					(at -2.54 -19.05 0)
 					(length 2.54)
 					(name "NC"
 						(effects
@@ -4099,7 +4099,7 @@
 					)
 				)
 				(pin no_connect line
-					(at -2.54 -24.13 0)
+					(at -2.54 -21.59 0)
 					(length 2.54)
 					(name "NC"
 						(effects
@@ -4117,7 +4117,7 @@
 					)
 				)
 				(pin no_connect line
-					(at -2.54 -26.67 0)
+					(at -2.54 -24.13 0)
 					(length 2.54)
 					(name "NC"
 						(effects
@@ -4135,7 +4135,7 @@
 					)
 				)
 				(pin input line
-					(at 22.86 -8.89 180)
+					(at 22.86 -6.35 180)
 					(length 2.54)
 					(name "PIO0"
 						(effects
@@ -4153,7 +4153,7 @@
 					)
 				)
 				(pin output line
-					(at 22.86 -11.43 180)
+					(at 22.86 -8.89 180)
 					(length 2.54)
 					(name "PIO1"
 						(effects
@@ -4171,7 +4171,7 @@
 					)
 				)
 				(pin bidirectional line
-					(at 22.86 -13.97 180)
+					(at 22.86 -11.43 180)
 					(length 2.54)
 					(name "PIO2"
 						(effects
@@ -4189,7 +4189,7 @@
 					)
 				)
 				(pin bidirectional line
-					(at 22.86 -16.51 180)
+					(at 22.86 -13.97 180)
 					(length 2.54)
 					(name "PIO3"
 						(effects
@@ -4199,6 +4199,24 @@
 						)
 					)
 					(number "13"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at 22.86 -16.51 180)
+					(length 2.54)
+					(name "RESETB"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "11"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -4224,26 +4242,8 @@
 						)
 					)
 				)
-				(pin input line
-					(at 22.86 -21.59 180)
-					(length 2.54)
-					(name "RESETB"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "11"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
 				(pin no_connect line
-					(at 22.86 -24.13 180)
+					(at 22.86 -21.59 180)
 					(length 2.54)
 					(name "NC"
 						(effects
@@ -4261,7 +4261,7 @@
 					)
 				)
 				(pin power_in line
-					(at 22.86 -26.67 180)
+					(at 22.86 -24.13 180)
 					(length 2.54)
 					(name "VCC"
 						(effects
@@ -4576,6 +4576,222 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "ODB2:SMTB-0927-TW-R"
+			(pin_names
+				(offset 0.254)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "LS"
+				(at 12.7 7.62 0)
+				(effects
+					(font
+						(size 1.524 1.524)
+					)
+				)
+			)
+			(property "Value" "SMTB-0927-TW-R"
+				(at 12.7 5.08 0)
+				(effects
+					(font
+						(size 1.524 1.524)
+					)
+				)
+			)
+			(property "Footprint" "SMTB-0927-TW-R_PUI"
+				(at 12.446 13.208 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+						(italic yes)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "SMTB-0927-TW-R"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+						(italic yes)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_locked" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "SMTB-0927-TW-R"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "SMTB-0927-TW-R_PUI"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "SMTB-0927-TW-R_0_1"
+				(polyline
+					(pts
+						(xy 8.89 3.81) (xy 8.89 2.54)
+					)
+					(stroke
+						(width 0.127)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 8.89 3.81) (xy 16.51 3.81)
+					)
+					(stroke
+						(width 0.127)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 10.16 2.54) (xy 10.16 -2.54)
+					)
+					(stroke
+						(width 0.127)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 10.16 -2.54) (xy 15.24 -2.54)
+					)
+					(stroke
+						(width 0.127)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 15.24 -2.54) (xy 15.24 2.54)
+					)
+					(stroke
+						(width 0.127)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 16.51 3.81) (xy 16.51 2.54)
+					)
+					(stroke
+						(width 0.127)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 16.51 2.54) (xy 8.89 2.54)
+					)
+					(stroke
+						(width 0.127)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 17.78 0) (xy 15.24 0)
+					)
+					(stroke
+						(width 0.127)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "SMTB-0927-TW-R_1_1"
+				(pin unspecified line
+					(at 7.62 0 0)
+					(length 2.54)
+					(name "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin unspecified line
+					(at 17.78 0 180)
+					(length 2.54)
+					(name "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "ODB2:W25Q512JVEIQ"
 			(exclude_from_sim no)
 			(in_bom yes)
@@ -4845,211 +5061,6 @@
 						)
 					)
 					(number "5"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
-		(symbol "ODB_Lib:SMTB-0927-TW-R"
-			(pin_names
-				(offset 0.254)
-			)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(property "Reference" "LS"
-				(at 12.7 10.16 0)
-				(effects
-					(font
-						(size 1.524 1.524)
-					)
-					(hide yes)
-				)
-			)
-			(property "Value" "SMTB-0927-TW-R"
-				(at 12.7 7.62 0)
-				(effects
-					(font
-						(size 1.524 1.524)
-					)
-				)
-			)
-			(property "Footprint" "SMTB-0927-TW-R_PUI"
-				(at 13.208 -7.112 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-						(italic yes)
-					)
-					(hide yes)
-				)
-			)
-			(property "Datasheet" "SMTB-0927-TW-R"
-				(at 13.716 -9.398 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-						(italic yes)
-					)
-					(hide yes)
-				)
-			)
-			(property "Description" ""
-				(at 2.54 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_locked" ""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "ki_keywords" "SMTB-0927-TW-R"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_fp_filters" "SMTB-0927-TW-R_PUI"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(symbol "SMTB-0927-TW-R_0_1"
-				(polyline
-					(pts
-						(xy 8.89 3.81) (xy 8.89 2.54)
-					)
-					(stroke
-						(width 0.127)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 8.89 3.81) (xy 16.51 3.81)
-					)
-					(stroke
-						(width 0.127)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 10.16 2.54) (xy 10.16 -2.54)
-					)
-					(stroke
-						(width 0.127)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 10.16 -2.54) (xy 15.24 -2.54)
-					)
-					(stroke
-						(width 0.127)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 15.24 -2.54) (xy 15.24 2.54)
-					)
-					(stroke
-						(width 0.127)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 16.51 3.81) (xy 16.51 2.54)
-					)
-					(stroke
-						(width 0.127)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 16.51 2.54) (xy 8.89 2.54)
-					)
-					(stroke
-						(width 0.127)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-			)
-			(symbol "SMTB-0927-TW-R_1_1"
-				(pin input line
-					(at 7.62 0 0)
-					(length 2.54)
-					(name ""
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin output line
-					(at 17.78 0 180)
-					(length 2.54)
-					(name ""
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -12024,6 +12035,116 @@
 		)
 	)
 	(symbol
+		(lib_id "ODB2:HM-11")
+		(at 129.54 33.02 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "889f93a0-e515-4872-a0f9-bc1943d339d0")
+		(property "Reference" "H5"
+			(at 139.7 27.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "HM11"
+			(at 139.7 31.75 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "ODB:hm11"
+			(at 129.54 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://www.micros.com.pl/mediaserver/info-rf%20hm-11.pdf"
+			(at 129.54 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 129.54 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "993f504b-a340-4ecd-923e-e632436e355c")
+		)
+		(pin "2"
+			(uuid "36efd12a-e099-4867-9d03-75c28905671b")
+		)
+		(pin "3"
+			(uuid "2b2d4f24-369c-424f-a325-b29ac76eecdb")
+		)
+		(pin "11"
+			(uuid "0771673c-f566-4470-97f1-9d2e5694084e")
+		)
+		(pin "10"
+			(uuid "08b81f90-c4bb-40a8-8857-c0d99238ef61")
+		)
+		(pin "4"
+			(uuid "23c3ce67-c84a-46b5-8806-558538ac0f18")
+		)
+		(pin "5"
+			(uuid "f96002eb-105b-4ed2-90e9-1174f8286a34")
+		)
+		(pin "6"
+			(uuid "8abb6475-5f20-4657-ba29-505916723ab8")
+		)
+		(pin "15"
+			(uuid "5082ec6c-995f-4113-b452-14ff8fed3f3b")
+		)
+		(pin "16"
+			(uuid "a91a8bfe-7118-4f82-8013-4acacb082a97")
+		)
+		(pin "14"
+			(uuid "38bc71cb-d8bb-438b-a060-bdf123ec8547")
+		)
+		(pin "7"
+			(uuid "72b60f2f-6460-4c4a-b585-5ef817165afa")
+		)
+		(pin "8"
+			(uuid "47f46616-85e2-412e-956d-5ec0257e24e3")
+		)
+		(pin "13"
+			(uuid "5a2aa718-1475-469a-aca5-01dce9f06fe4")
+		)
+		(pin "12"
+			(uuid "f4d6e65b-ccde-4f1b-8fbe-18483d8d52cd")
+		)
+		(pin "9"
+			(uuid "8eb9301b-4ef1-49c9-97f9-f8e11bb2f762")
+		)
+		(instances
+			(project ""
+				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/93865dc8-71fa-4dc6-90ce-f5a9779dfd41"
+					(reference "H5")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "ODB2:705430004")
 		(at 40.64 68.58 0)
 		(unit 1)
@@ -12792,6 +12913,76 @@
 		)
 	)
 	(symbol
+		(lib_id "ODB2:SMTB-0927-TW-R")
+		(at 210.82 77.47 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "a6a2b4ce-7758-4bd0-94a8-35dafbdf1634")
+		(property "Reference" "LS1"
+			(at 224.155 68.58 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "SMTB-0927-TW-R"
+			(at 224.155 71.12 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Footprint" "SMTB-0927-TW-R_PUI"
+			(at 223.266 64.262 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+					(italic yes)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "SMTB-0927-TW-R"
+			(at 210.82 77.47 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+					(italic yes)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 210.82 77.47 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "b24a6e6d-6257-4f50-aebf-2daa50174ab5")
+		)
+		(pin "1"
+			(uuid "d3f276db-6790-4427-bdcd-0d0620b8e8ad")
+		)
+		(instances
+			(project ""
+				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/93865dc8-71fa-4dc6-90ce-f5a9779dfd41"
+					(reference "LS1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_name "GND_2")
 		(lib_id "power:GND")
 		(at 34.29 44.45 0)
@@ -12853,186 +13044,6 @@
 			(project ""
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/93865dc8-71fa-4dc6-90ce-f5a9779dfd41"
 					(reference "#PWR074")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "ODB_Lib:SMTB-0927-TW-R")
-		(at 210.82 77.47 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "b7101a0b-7455-47d3-8d87-dda6a8af75f4")
-		(property "Reference" "BUZZER_Buzzer1"
-			(at 223.52 67.31 0)
-			(effects
-				(font
-					(size 1.524 1.524)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "SMTB-0927-TW-R"
-			(at 223.774 71.882 0)
-			(effects
-				(font
-					(size 1.524 1.524)
-				)
-			)
-		)
-		(property "Footprint" "ODB:SMTB-0927-TW-R_PUI"
-			(at 224.028 84.582 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-					(italic yes)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "SMTB-0927-TW-R"
-			(at 224.536 86.868 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-					(italic yes)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 213.36 77.47 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "456a4ef1-7cd9-4ed8-8dff-716663cb196c")
-		)
-		(pin "1"
-			(uuid "ec682d51-22ec-4185-93a5-f99318a58334")
-		)
-		(instances
-			(project ""
-				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/93865dc8-71fa-4dc6-90ce-f5a9779dfd41"
-					(reference "BUZZER_Buzzer1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "ODB2:HM-11")
-		(at 129.54 30.48 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "bb6e77b9-070a-4cb7-a9c0-0c516fd0622f")
-		(property "Reference" "U"
-			(at 139.7 25.4 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "HM11"
-			(at 139.954 29.21 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "ODB:hm11"
-			(at 129.54 30.48 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "https://www.micros.com.pl/mediaserver/info-rf%20hm-11.pdf"
-			(at 129.54 30.48 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 129.54 30.48 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "11"
-			(uuid "c5cc56d3-d68b-4a4d-a5dc-2aec9f5b2c7a")
-		)
-		(pin "7"
-			(uuid "9671bd21-0973-4937-a731-bc5fe5f5ce47")
-		)
-		(pin "12"
-			(uuid "2c0de6fb-b9c8-4e1d-b396-47f65370de04")
-		)
-		(pin "5"
-			(uuid "1e90c3b4-eb36-4dc1-af32-32c27e15e7f5")
-		)
-		(pin "1"
-			(uuid "1f05911e-7670-4163-99c3-4b45a9af7d61")
-		)
-		(pin "10"
-			(uuid "584a597b-e1f1-4bfd-ae41-d8e802b020ea")
-		)
-		(pin "4"
-			(uuid "bd7f63a8-f538-4b19-a1a6-d8b182897ae4")
-		)
-		(pin "14"
-			(uuid "b8c86432-2c0e-4122-8031-3e8d6cdd6d3c")
-		)
-		(pin "13"
-			(uuid "4920a19b-5857-45bf-bf18-aabeae128726")
-		)
-		(pin "6"
-			(uuid "5a84fd56-fdbe-4c24-bf18-431cc70e1f4f")
-		)
-		(pin "2"
-			(uuid "d3e9ac0b-cf16-48a7-b1f4-cf45f79c799f")
-		)
-		(pin "8"
-			(uuid "9dce6418-bab9-4602-b384-d10589c3b765")
-		)
-		(pin "9"
-			(uuid "3b38948c-d653-4d65-8513-218131460af8")
-		)
-		(pin "16"
-			(uuid "67167e6d-4ddd-4758-964c-2c5c6cfdd1c3")
-		)
-		(pin "3"
-			(uuid "35fa6856-545e-4772-875b-18e260fea88e")
-		)
-		(pin "15"
-			(uuid "e5475947-bcfd-415f-9957-52fc9bbe877a")
-		)
-		(instances
-			(project ""
-				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/93865dc8-71fa-4dc6-90ce-f5a9779dfd41"
-					(reference "U")
 					(unit 1)
 				)
 			)
