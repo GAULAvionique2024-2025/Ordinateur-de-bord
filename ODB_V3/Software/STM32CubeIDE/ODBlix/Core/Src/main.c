@@ -720,10 +720,10 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOD_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(BARO_SPI1_CS_GPIO_Port, BARO_SPI1_CS_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOF, CriticalLED_Pin|Pyros_Arm_Pin|Fire_1_Pin|Fire_2_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOF, Pyros_Arm_Pin|Fire_1_Pin|Fire_2_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(BARO_SPI1_CS_GPIO_Port, BARO_SPI1_CS_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOG, Fire_3_Pin|Fire_4_Pin, GPIO_PIN_RESET);
@@ -737,19 +737,19 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(IMU_nReset_GPIO_Port, IMU_nReset_Pin, GPIO_PIN_RESET);
 
+  /*Configure GPIO pins : CriticalLED_Pin Pyros_Arm_Pin Fire_1_Pin Fire_2_Pin */
+  GPIO_InitStruct.Pin = CriticalLED_Pin|Pyros_Arm_Pin|Fire_1_Pin|Fire_2_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
+
   /*Configure GPIO pin : BARO_SPI1_CS_Pin */
   GPIO_InitStruct.Pin = BARO_SPI1_CS_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(BARO_SPI1_CS_GPIO_Port, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : Pyros_Arm_Pin Fire_1_Pin Fire_2_Pin */
-  GPIO_InitStruct.Pin = Pyros_Arm_Pin|Fire_1_Pin|Fire_2_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
 
   /*Configure GPIO pins : Fire_3_Pin Fire_4_Pin */
   GPIO_InitStruct.Pin = Fire_3_Pin|Fire_4_Pin;

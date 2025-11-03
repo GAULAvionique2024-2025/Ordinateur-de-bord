@@ -61,6 +61,8 @@ void Error_Handler(void);
 #define IDEFIX_I2C2_SDA_GPIO_Port GPIOF
 #define IDEFIX_I2C2_SCL_Pin GPIO_PIN_1
 #define IDEFIX_I2C2_SCL_GPIO_Port GPIOF
+#define CriticalLED_Pin GPIO_PIN_2
+#define CriticalLED_GPIO_Port GPIOF
 #define MEM_QSPI_IO3_Pin GPIO_PIN_6
 #define MEM_QSPI_IO3_GPIO_Port GPIOF
 #define MEM_QSPI_IO2_Pin GPIO_PIN_7

@@ -5538,10 +5538,6 @@
 		(uuid "6eab25c6-31bd-4382-84c2-dc01eba30cea")
 	)
 	(no_connect
-		(at 170.18 132.08)
-		(uuid "7be084cb-983e-446f-b4f9-281ec704172a")
-	)
-	(no_connect
 		(at 170.18 152.4)
 		(uuid "7ce4f593-c2f2-46e7-95c2-6ddcefbefc12")
 	)
@@ -6632,6 +6628,16 @@
 			(type default)
 		)
 		(uuid "58a287ca-fa5c-4fe6-9008-ff6d5771c1d7")
+	)
+	(wire
+		(pts
+			(xy 157.48 132.08) (xy 170.18 132.08)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "58f59558-88e7-4a7c-9609-5e54d7dfb61f")
 	)
 	(wire
 		(pts
@@ -8847,6 +8853,28 @@
 		(uuid "4b573646-f613-417d-807d-d2f186990a65")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 141.1901 205.74 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "CriticalLED"
+		(shape input)
+		(at 157.48 132.08 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "4b644ee3-3ee4-463e-b7c3-4fbacc9f3fc4")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 144.1534 132.08 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13472,7 +13500,7 @@
 				)
 			)
 		)
-		(property "Footprint" "IND_25_0805_FRT"
+		(property "Footprint" "ODB:IND_25_0805_FRT"
 			(at 370.84 175.26 0)
 			(effects
 				(font
@@ -13741,7 +13769,7 @@
 				)
 			)
 		)
-		(property "Footprint" "CRYSTAL_ABM8G_ABR"
+		(property "Footprint" "ODB:CRYSTAL_ABM8G_ABR"
 			(at 340.36 132.08 0)
 			(effects
 				(font
