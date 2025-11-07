@@ -18,41 +18,57 @@
 
 ## 🌟 **Main Repo pour l'ODB du GAUL**
 
-Ce projet met en œuvre un **MCU** associé à divers capteurs et modules pour créer un ordinateur de bord performant, optimisé pour un lancement de fusée de type L4. Ce système embarqué est conçu pour collecter et analyser des données en temps réel, permettant ainsi une évaluation précise des performances de la fusée.
+Ce projet met en œuvre un MCU associé à divers capteurs et modules pour créer un ordinateur de bord performant, optimisé pour un lancement de fusée de type L4. Ce système embarqué est conçu pour collecter et analyser des données en temps réel, permettant ainsi une évaluation précise des performances de la fusée.
+De plus, l’ODB est responsable du déclenchement des charges pyrotechniques utilisées pour le déploiement des parachutes et la séparation des étages de la fusée, assurant ainsi la réussite et la sécurité des différentes phases du vol.
 
 ## 📦 **Composants Intégrés**
 
-L'intégration inclut :
+L’intégration inclut :
 
-- **Accéléromètre / Gyroscope**
-  
-  Un capteur de mouvement qui fournit des données sur l'accélération et l'orientation de la fusée.
+- **Accéléromètre / Gyroscope**  
+  Fournit des données de mouvement et d’orientation de la fusée.
 
-- **Altimètre**
-  
-  Un capteur de pression atmosphérique, permettant de calculer l'altitude.
+- **Accéléromètre haute-G**  
+  Mesure les accélérations extrêmes durant le lancement et la propulsion.
 
-- **Buzzer**
-- 
-  Utilisé pour signaler des événements critiques ou des alertes pendant le déboggage ou le démarrage de l'ordinateur de bord.
+- **Altimètre**  
+  Capteur de pression atmosphérique utilisé pour calculer l’altitude.
 
-- **Lecteur de carte SD**
-  
-  Module d'emplacement mémoire SD qui permet d'enregistre les données de télémétrie pour une analyse ultérieure.
+- **Capteur de température**  
+  Permet de surveiller la température interne du compartiment avionique et des composants critiques.
 
-- **Module GPS**
-  
-  Module de localisation qui fournit des données de position pour suivre la trajectoire de la fusée.
+- **Lecteur de carte SD**  
+  Permet l’enregistrement de toutes les données de vol pour analyse post-lancement.
 
-- **Module Radio externe**
-  
-  Module de communication qui sssure la communication en temps réel avec la station de contrôle au sol.
+- **Mémoire externe**  
+  Stockage complémentaire pour la sauvegarde de données critiques (redondance de télémétrie).
 
-- **Autres Optionnels**  
+- **Module GPS + Breakout Board (lock/unlock switch)**  
+  Fournit la position en temps réel, avec une **breakout board intégrée** GPS permettant de changer entre le module **lock** ou celui **unlock** avant le vol.
+
+- **Module Radio externe**  
+  Assure la communication en temps réel avec la station au sol pour la télémétrie et la supervision du vol.
+
+- **Module Bluetooth**  
+  Permet une communication locale rapide (configuration, test et debug sans fil).
+
+- **Support Idéfix (Détecteur de balise RSSI)**  
+  Intègre la compatibilité avec **Idéfix**, le système de repérage du GAUL, pour détecter les signaux radio des balises en phase de récupération.
+
+- **Borniers de déclenchement (charges pyrotechniques)**  
+  Sorties de puissance dédiées au **déploiement des parachutes** et à la **séparation des étages**.
+
+- **Buzzer**  
+  Sert à signaler les événements critiques ou à assister le débogage pendant les tests et le démarrage.
+
+- **Autres modules optionnels**  
   ...
 
-L’ensemble forme un système de télémétrie complet, idéal pour monitorer les performances et la trajectoire d’une fusée en temps réel. Pour des informations détaillées sur le fonctionnement de chaque composant et de leur rôle, consultez [les explications détaillées](./Documentation/ODB2/Explications.md).
-> Des explications détaillées sont aussi disponibles pour l'ODB1. Elles se trouvent [ici](./Documentation/ODB1/Explications.md).
+L’ensemble forme un **système de télémétrie complet**, capable non seulement de mesurer et enregistrer les données de vol, mais aussi d’agir activement sur les systèmes de la fusée au bon moment.
+
+> Pour des explications détaillées sur le rôle et le fonctionnement de chaque composant, consultez :  
+> - [Explications ODB2](./Documentation/ODB2/Explications.md)  
+> - [Explications ODB1](./Documentation/ODB1/Explications.md)
 
 ## 📷 **Images de l'ODB**
 
