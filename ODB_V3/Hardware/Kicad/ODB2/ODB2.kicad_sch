@@ -12143,8 +12143,8 @@
 		(at 360.68 127 90)
 		(unit 1)
 		(exclude_from_sim no)
-		(in_bom no)
-		(on_board no)
+		(in_bom yes)
+		(on_board yes)
 		(dnp no)
 		(uuid "40e20766-8eb4-48d1-af99-340c331f8f35")
 		(property "Reference" "Crystal_R2"
