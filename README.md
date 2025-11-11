@@ -1,6 +1,6 @@
 [![MasterHead](Documentation/GAUL/logo-full.webp)](https://gaulspace.web.app/home)
 
-<h1 align="center">Ordinateur de bord GAUL 2024-2025</h1>
+<h1 align="center">Ordinateur de bord GAUL 2024-2026</h1>
 
 <img align="right" src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fgithub.com%2FGAULAvionique2024-2025%2FOrdinateur-de-bord&label=Visiteurs&labelColor=%23697689&countColor=%23f47373&style=flat" alt="Visiteurs" />
 
