@@ -6629,7 +6629,7 @@
 			)
 		)
 	)
-	(global_label "Pyro_Arm"
+	(global_label "Pyros_Arm"
 		(shape input)
 		(at 186.69 39.37 180)
 		(fields_autoplaced yes)
@@ -6641,7 +6641,7 @@
 		)
 		(uuid "e13b9fe2-e251-47f8-95c4-222ec2df9920")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 174.9963 39.37 0)
+			(at 173.9682 39.37 0)
 			(effects
 				(font
 					(size 1.27 1.27)
