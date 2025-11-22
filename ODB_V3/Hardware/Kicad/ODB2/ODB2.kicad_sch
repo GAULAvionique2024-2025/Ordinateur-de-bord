@@ -4925,8 +4925,8 @@
 		(uuid 3715510d-d710-44e6-9f3b-40c01a4dec2f)
 	)
 	(rectangle
-		(start 251.46 260.35)
-		(end 297.18 281.94)
+		(start 251.46 253.365)
+		(end 297.18 283.845)
 		(stroke
 			(width 0)
 			(type dash)
@@ -5059,7 +5059,7 @@
 	)
 	(text "Mounting Hole"
 		(exclude_from_sim no)
-		(at 265.684 262.89 0)
+		(at 265.684 256.032 0)
 		(effects
 			(font
 				(size 2.54 2.54)
@@ -5140,16 +5140,6 @@
 			)
 		)
 		(uuid "a653d598-a700-451b-937f-17ebcd1b67b8")
-	)
-	(text "AJOUTER MOUNTING HOLE BREAKOUTBOARD"
-		(exclude_from_sim no)
-		(at 255.524 257.302 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "af43b323-c0e4-4753-9728-cad841d5790b")
 	)
 	(text "External Crystal"
 		(exclude_from_sim no)
@@ -12406,7 +12396,7 @@
 	)
 	(symbol
 		(lib_id "Mechanical:MountingHole")
-		(at 256.54 270.51 0)
+		(at 255.27 261.62 0)
 		(unit 1)
 		(exclude_from_sim yes)
 		(in_bom no)
@@ -12415,7 +12405,7 @@
 		(fields_autoplaced yes)
 		(uuid "493e1025-20c4-4e70-a3ac-6a625e4ce8f9")
 		(property "Reference" "H1"
-			(at 259.08 269.2399 0)
+			(at 257.81 260.3499 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12424,7 +12414,7 @@
 			)
 		)
 		(property "Value" "MountingHole"
-			(at 259.08 271.7799 0)
+			(at 257.81 262.8899 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12433,7 +12423,7 @@
 			)
 		)
 		(property "Footprint" "MountingHole:MountingHole_4.3mm_M4"
-			(at 256.54 270.51 0)
+			(at 255.27 261.62 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12442,7 +12432,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 256.54 270.51 0)
+			(at 255.27 261.62 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12451,7 +12441,7 @@
 			)
 		)
 		(property "Description" "Mounting Hole without connection"
-			(at 256.54 270.51 0)
+			(at 255.27 261.62 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12535,7 +12525,7 @@
 	)
 	(symbol
 		(lib_id "Mechanical:MountingHole")
-		(at 279.4 276.86 0)
+		(at 278.13 267.97 0)
 		(unit 1)
 		(exclude_from_sim yes)
 		(in_bom no)
@@ -12544,7 +12534,7 @@
 		(fields_autoplaced yes)
 		(uuid "4ffc6bbd-05c5-43b1-a9de-b24bc82cb865")
 		(property "Reference" "H4"
-			(at 281.94 275.5899 0)
+			(at 280.67 266.6999 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12553,7 +12543,7 @@
 			)
 		)
 		(property "Value" "MountingHole"
-			(at 281.94 278.1299 0)
+			(at 280.67 269.2399 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12562,7 +12552,7 @@
 			)
 		)
 		(property "Footprint" "MountingHole:MountingHole_4.3mm_M4"
-			(at 279.4 276.86 0)
+			(at 278.13 267.97 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12571,7 +12561,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 279.4 276.86 0)
+			(at 278.13 267.97 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12580,7 +12570,7 @@
 			)
 		)
 		(property "Description" "Mounting Hole without connection"
-			(at 279.4 276.86 0)
+			(at 278.13 267.97 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12997,6 +12987,70 @@
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78"
 					(reference "Decouple_C2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Mechanical:MountingHole")
+		(at 255.27 274.32 0)
+		(unit 1)
+		(exclude_from_sim yes)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "56d167d8-6b7c-4557-99ae-e48eb14aba41")
+		(property "Reference" "H6"
+			(at 257.81 273.0499 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "MountingHole"
+			(at 257.81 275.5899 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "MountingHole:MountingHole_4.3mm_M4"
+			(at 255.27 274.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 255.27 274.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Mounting Hole without connection"
+			(at 255.27 274.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "ODB2"
+				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78"
+					(reference "H6")
 					(unit 1)
 				)
 			)
@@ -14954,6 +15008,70 @@
 		)
 	)
 	(symbol
+		(lib_id "Mechanical:MountingHole")
+		(at 278.13 280.67 0)
+		(unit 1)
+		(exclude_from_sim yes)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "9ba2160b-8045-424c-840b-4815b289ae63")
+		(property "Reference" "H9"
+			(at 280.67 279.3999 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "MountingHole"
+			(at 280.67 281.9399 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "MountingHole:MountingHole_4.3mm_M4"
+			(at 278.13 280.67 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 278.13 280.67 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Mounting Hole without connection"
+			(at 278.13 280.67 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "ODB2"
+				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78"
+					(reference "H9")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:R")
 		(at 391.16 133.35 0)
 		(unit 1)
@@ -15422,7 +15540,7 @@
 	)
 	(symbol
 		(lib_id "Mechanical:MountingHole")
-		(at 279.4 270.51 0)
+		(at 278.13 261.62 0)
 		(unit 1)
 		(exclude_from_sim yes)
 		(in_bom no)
@@ -15431,7 +15549,7 @@
 		(fields_autoplaced yes)
 		(uuid "a8e76fd5-e8bf-4782-ab62-46988d41071e")
 		(property "Reference" "H3"
-			(at 281.94 269.2399 0)
+			(at 280.67 260.3499 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15440,7 +15558,7 @@
 			)
 		)
 		(property "Value" "MountingHole"
-			(at 281.94 271.7799 0)
+			(at 280.67 262.8899 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15449,7 +15567,7 @@
 			)
 		)
 		(property "Footprint" "MountingHole:MountingHole_4.3mm_M4"
-			(at 279.4 270.51 0)
+			(at 278.13 261.62 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15458,7 +15576,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 279.4 270.51 0)
+			(at 278.13 261.62 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15467,7 +15585,7 @@
 			)
 		)
 		(property "Description" "Mounting Hole without connection"
-			(at 279.4 270.51 0)
+			(at 278.13 261.62 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15486,7 +15604,7 @@
 	)
 	(symbol
 		(lib_id "Mechanical:MountingHole")
-		(at 256.54 276.86 0)
+		(at 255.27 267.97 0)
 		(unit 1)
 		(exclude_from_sim yes)
 		(in_bom no)
@@ -15495,7 +15613,7 @@
 		(fields_autoplaced yes)
 		(uuid "aa06056d-5f25-4cd5-9c59-353aa35eda88")
 		(property "Reference" "H2"
-			(at 259.08 275.5899 0)
+			(at 257.81 266.6999 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15504,7 +15622,7 @@
 			)
 		)
 		(property "Value" "MountingHole"
-			(at 259.08 278.1299 0)
+			(at 257.81 269.2399 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15513,7 +15631,7 @@
 			)
 		)
 		(property "Footprint" "MountingHole:MountingHole_4.3mm_M4"
-			(at 256.54 276.86 0)
+			(at 255.27 267.97 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15522,7 +15640,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 256.54 276.86 0)
+			(at 255.27 267.97 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15531,7 +15649,7 @@
 			)
 		)
 		(property "Description" "Mounting Hole without connection"
-			(at 256.54 276.86 0)
+			(at 255.27 267.97 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16613,6 +16731,70 @@
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78"
 					(reference "#PWR094")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Mechanical:MountingHole")
+		(at 278.13 274.32 0)
+		(unit 1)
+		(exclude_from_sim yes)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "ce77926d-b070-4fe8-8a1e-26764632b3b7")
+		(property "Reference" "H8"
+			(at 280.67 273.0499 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "MountingHole"
+			(at 280.67 275.5899 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "MountingHole:MountingHole_4.3mm_M4"
+			(at 278.13 274.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 278.13 274.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Mounting Hole without connection"
+			(at 278.13 274.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "ODB2"
+				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78"
+					(reference "H8")
 					(unit 1)
 				)
 			)
@@ -17708,6 +17890,70 @@
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78"
 					(reference "TP13")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Mechanical:MountingHole")
+		(at 255.27 280.67 0)
+		(unit 1)
+		(exclude_from_sim yes)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "eba03c8c-224c-4b29-9e0e-c5ee6c186a07")
+		(property "Reference" "H7"
+			(at 257.81 279.3999 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "MountingHole"
+			(at 257.81 281.9399 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "MountingHole:MountingHole_4.3mm_M4"
+			(at 255.27 280.67 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 255.27 280.67 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Mounting Hole without connection"
+			(at 255.27 280.67 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "ODB2"
+				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78"
+					(reference "H7")
 					(unit 1)
 				)
 			)
