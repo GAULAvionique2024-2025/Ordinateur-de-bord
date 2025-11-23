@@ -37,9 +37,9 @@
         "other_text_thickness": 0.15,
         "other_text_upright": false,
         "pads": {
-          "drill": 0.762,
-          "height": 1.524,
-          "width": 1.524
+          "drill": 0.0,
+          "height": 0.5,
+          "width": 0.5
         },
         "silk_line_width": 0.1,
         "silk_text_italic": false,
@@ -508,8 +508,14 @@
       "+3V7": "rgb(107, 255, 188)",
       "+5V": "rgb(255, 53, 74)",
       "+7V4": "rgb(13, 129, 255)",
+      "3V3_Main": "rgb(255, 0, 255)",
+      "5V_Main": "rgb(0, 255, 0)",
+      "7v4Enable": "rgb(255, 255, 0)",
+      "7v4_An": "rgb(255, 255, 0)",
       "GND": "rgb(112, 112, 112)",
-      "Net-(7v4_LED2-A)": "rgb(179, 96, 255)"
+      "Net-(7v4_LED2-A)": "rgb(179, 96, 255)",
+      "VIN_Filtered": "rgb(255, 0, 0)",
+      "Vin_Pyro": "rgb(194, 0, 0)"
     },
     "netclass_assignments": null,
     "netclass_patterns": []

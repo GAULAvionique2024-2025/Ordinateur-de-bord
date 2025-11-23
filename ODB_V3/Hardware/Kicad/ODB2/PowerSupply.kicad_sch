@@ -4668,16 +4668,6 @@
 	)
 	(wire
 		(pts
-			(xy 113.03 186.69) (xy 114.3 186.69)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "6f8dca4a-b69e-49fa-bf31-a74f7e43e352")
-	)
-	(wire
-		(pts
 			(xy 140.97 101.6) (xy 140.97 102.87)
 		)
 		(stroke
@@ -4865,16 +4855,6 @@
 			(type default)
 		)
 		(uuid "825ec1db-b65d-450b-97c3-e728ded389bc")
-	)
-	(wire
-		(pts
-			(xy 107.95 186.69) (xy 106.68 186.69)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "826181c9-f172-40a1-8322-9a7c99d6d3e7")
 	)
 	(wire
 		(pts
@@ -5245,16 +5225,6 @@
 			(type default)
 		)
 		(uuid "b0a1cbef-6b17-4c9f-9248-25ee1af367d2")
-	)
-	(wire
-		(pts
-			(xy 106.68 186.69) (xy 106.68 187.96)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "b28cddbe-f277-4ed6-a4f2-79a86e69e1ef")
 	)
 	(wire
 		(pts
@@ -5895,16 +5865,6 @@
 			(type default)
 		)
 		(uuid "fb7c8095-1a89-4b30-bccf-9723189f2c55")
-	)
-	(wire
-		(pts
-			(xy 114.3 186.69) (xy 114.3 187.96)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "fb8c8da4-cb0d-4bf4-b4de-6dfa3dca9d9a")
 	)
 	(wire
 		(pts
@@ -6712,7 +6672,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "NetTie:NetTie-2_SMD_Pad0.5mm"
+		(property "Footprint" "NetTie:NetTie-4_SMD_Pad0.5mm"
 			(at 110.49 181.61 0)
 			(effects
 				(font
@@ -7227,73 +7187,6 @@
 		)
 	)
 	(symbol
-		(lib_id "power:GNDD")
-		(at 106.68 187.96 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "2230610a-ab8e-4ca9-8f06-02d94df10330")
-		(property "Reference" "#PWR0105"
-			(at 106.68 194.31 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "AGND3V3"
-			(at 106.68 191.77 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Footprint" ""
-			(at 106.68 187.96 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 106.68 187.96 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GNDD\" , digital ground"
-			(at 106.68 187.96 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "fb3a065f-520e-4bb3-8505-b16d404db879")
-		)
-		(instances
-			(project "ODB2"
-				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/a0dfa29e-ccca-4096-8481-c7e33c67aac5"
-					(reference "#PWR0105")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:R_Small")
 		(at 125.73 68.58 90)
 		(unit 1)
@@ -7655,7 +7548,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_1210_3225Metric"
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
 			(at 45.72 156.21 0)
 			(effects
 				(font
@@ -7791,7 +7684,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_1210_3225Metric"
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
 			(at 92.71 137.16 0)
 			(effects
 				(font
@@ -8719,73 +8612,6 @@
 		)
 	)
 	(symbol
-		(lib_id "power:GND")
-		(at 114.3 187.96 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "61352b86-aef4-4133-ac07-64ce4569cfe2")
-		(property "Reference" "#PWR0106"
-			(at 114.3 194.31 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 114.3 193.04 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(hide yes)
-			)
-		)
-		(property "Footprint" ""
-			(at 114.3 187.96 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 114.3 187.96 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 114.3 187.96 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "28220480-0686-4838-b430-8478df4c68c2")
-		)
-		(instances
-			(project "ODB2"
-				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/a0dfa29e-ccca-4096-8481-c7e33c67aac5"
-					(reference "#PWR0106")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "ODB2:875115652007")
 		(at 21.59 38.1 0)
 		(unit 1)
@@ -9049,76 +8875,6 @@
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/a0dfa29e-ccca-4096-8481-c7e33c67aac5"
 					(reference "#PWR0126")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:NetTie_2")
-		(at 110.49 186.69 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom no)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "65ff109f-1e2a-46f0-85e5-46ff4ae874e6")
-		(property "Reference" "NT3"
-			(at 110.49 181.61 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "NetTie_2"
-			(at 110.49 184.15 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Footprint" "NetTie:NetTie-2_SMD_Pad0.5mm"
-			(at 110.49 186.69 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 110.49 186.69 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Net tie, 2 pins"
-			(at 110.49 186.69 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "7269d43c-dcd5-4f1f-864d-bb353f88dad0")
-		)
-		(pin "1"
-			(uuid "eefae101-a4b5-4c9c-bee3-e6e80217c512")
-		)
-		(instances
-			(project "ODB2"
-				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/a0dfa29e-ccca-4096-8481-c7e33c67aac5"
-					(reference "NT3")
 					(unit 1)
 				)
 			)
@@ -11987,7 +11743,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_1210_3225Metric"
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
 			(at 69.85 162.56 0)
 			(effects
 				(font
