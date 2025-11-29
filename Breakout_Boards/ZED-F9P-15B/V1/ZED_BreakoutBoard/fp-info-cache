@@ -1,4 +1,4 @@
-26699715176610971
+26713617659990023
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -67130,20 +67130,6 @@ Inductor Wuerth WE-XHMI 8080
 2
 2
 Inductor_SMD
-L_Wuerth_XHMI-6060
-Inductor, Wuerth, XHMI-6060, 6.65x6.45x5.8mm, (https://www.we-online.com/components/products/datasheet/74439346068.pdf), generated with kicad-footprint-generator gen_inductor.py
-Würth -SMT
-0
-2
-2
-Inductor_SMD
-L_Wuerth_XHMI-8080
-Inductor, Wuerth, XHMI-8080, 8.8x8.3x7.8mm, (https://www.we-online.com/components/products/datasheet/74439358068.pdf), generated with kicad-footprint-generator gen_inductor.py
-Würth -SMT
-0
-2
-2
-Inductor_SMD
 L_Wurth_WE-CAIR-5910
 WE-CAIR Air coil, https://www.we-online.com/components/products/datasheet/744918254.pdf
 air coil inductor wurth we cair
@@ -75838,13 +75824,6 @@ BGA 12 0.5 R-XBGA-N12
 24
 12
 Package_BGA
-Texas_DSBGA-12_2.11x1.61mm_Layout4x3_P0.5mm
-Texas Instruments, YZG (R-XBGA-N12) package, 0.275 .. 0.475mm body thickness, NSMD, 2.11x1.61mm, 12 Ball, 4x3 Layout, 0.5mm Pitch, generated with kicad-footprint-generator ipc_bga_generator.py, https://www.ti.com/lit/ds/symlink/tsc2007.pdf#page=34, https://www.ti.com/lit/ml/mxbg028d/mxbg028d.pdf
-BGA 12 0.5 UFBGA-12_2.11x1.61mm_Layout4x3_P0.5mm Die-Size-Ball-Grid-Array
-0
-12
-12
-Package_BGA
 Texas_DSBGA-16_2.39x2.39mm_Layout4x4_P0.5mm
 Texas Instruments, DSBGA, area grid, YZF, YZF0016, 2.39x2.39mm, 16 Ball, 4x4 Layout, 0.5mm Pitch, https://www.ti.com/lit/ds/symlink/dac80508.pdf
 BGA 16 0.5
@@ -78602,13 +78581,6 @@ Maxim TDFN NoLead
 0
 11
 7
-Package_DFN_QFN
-Maxim_TDFN-10-1EP_3x3mm_P0.5mm_EP1.58x2.35mm
-Maxim  TDFN, 10 Pin (https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/tqfn/21-0137.pdf and https://www.analog.com/media/en/package-pcb-resources/land-pattern/tdfn-ep/90-0003.pdf), generated with kicad-footprint-generator ipc_noLead_generator.py
-Maxim TDFN NoLead T1033-2 MO229/WEED-3
-0
-15
-11
 Package_DFN_QFN
 Maxim_TDFN-12-1EP_3x3mm_P0.5mm_EP1.7x2.5mm
 Maxim TDFN, 12 Pin (https://www.analog.com/media/en/package-pcb-resources/land-pattern/tdfn/90-0397.pdf)
@@ -82411,20 +82383,6 @@ VQFN NoLead
 75
 49
 Package_DFN_QFN
-VQFN-48-1EP_7x7mm_P0.5mm_EP4.2x4.2mm
-VQFN, 48 Pin (Based on JEDEC MO-220 variation VKKD-2 (using Figure 1), custom Exposed Pad from NXP, https://www.jedec.org/document_search?search_api_views_fulltext=MO-220, https://www.nxp.com/docs/en/package-information/SOT619-28.pdf), generated with kicad-footprint-generator ipc_noLead_generator.py
-VQFN NoLead NXP_SOT619-28
-0
-53
-49
-Package_DFN_QFN
-VQFN-48-1EP_7x7mm_P0.5mm_EP4.2x4.2mm_ThermalVias
-VQFN, 48 Pin (Based on JEDEC MO-220 variation VKKD-2 (using Figure 1), custom Exposed Pad from NXP, https://www.jedec.org/document_search?search_api_views_fulltext=MO-220, https://www.nxp.com/docs/en/package-information/SOT619-28.pdf), generated with kicad-footprint-generator ipc_noLead_generator.py
-VQFN NoLead NXP_SOT619-28
-0
-70
-49
-Package_DFN_QFN
 VQFN-48-1EP_7x7mm_P0.5mm_EP5.15x5.15mm
 VQFN, 48 Pin (http://www.ti.com/lit/ds/symlink/cc1312r.pdf#page=48), generated with kicad-footprint-generator ipc_noLead_generator.py
 VQFN NoLead
@@ -85268,7 +85226,7 @@ PG-TSNP-6-10 TSNP
 6
 Package_LGA
 Kionix_LGA-12_2x2mm_P0.5mm_LayoutBorder2x4y
-Kionix  LGA, 12 Pin (http://kionixfs.kionix.com/en/document/TN008-PCB-Design-Guidelines-for-2x2-LGA-Sensors.pdf#page=4), generated with kicad-footprint-generator ipc_noLead_generator.py
+Kionix  LGA, 12 Pin (https://www.digikey.com/Site/Global/Layouts/DownloadPdf.ashx?pdfUrl=3557DE8B1578472CBA17FB72BE0052DC#page=4), generated with kicad-footprint-generator ipc_noLead_generator.py
 Kionix LGA NoLead
 0
 12
@@ -85946,13 +85904,6 @@ QFP 0.8
 54
 45
 Package_QFP
-TQFP-44-1EP_10x10mm_P0.8mm_EP4.5x4.5mm_ThermalVias
-TQFP, 44 Pin (JEDEC MS-026 variation ACB, 1.00mm body thickness, custom Exposed Pad from Microchip, https://www.jedec.org/document_search?search_api_views_fulltext=MS-026, https://ww1.microchip.com/downloads/en/PackagingSpec/00000049BZ.pdf#page=662), generated with kicad-footprint-generator ipc_gullwing_generator.py
-TQFP QFP Microchip_44-Lead-Plastic-Thin-Quad-Flatpack-(MW)
-0
-71
-45
-Package_QFP
 TQFP-44_10x10mm_P0.8mm
 TQFP, 44 Pin (JEDEC MS-026 variation ACB, https://www.jedec.org/document_search?search_api_views_fulltext=MS-026, https://ww1.microchip.com/downloads/en/PackagingSpec/00000049BZ.pdf#page=658), generated with kicad-footprint-generator ipc_gullwing_generator.py
 TQFP QFP
@@ -86134,13 +86085,6 @@ TQFP QFP
 0
 144
 144
-Package_QFP
-TQFP-176_20x20mm_P0.4mm
-TQFP, 176 Pin (JEDEC MS-026 variation AFC, 1.00mm body thickness, https://www.jedec.org/document_search?search_api_views_fulltext=MS-026), generated with kicad-footprint-generator ipc_gullwing_generator.py
-TQFP QFP Microsemi_VQ176
-0
-176
-176
 Package_QFP
 TQFP-176_24x24mm_P0.5mm
 TQFP, 176 Pin (http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095), generated with kicad-footprint-generator ipc_gullwing_generator.py
@@ -86785,20 +86729,6 @@ HVSSOP SO
 0
 18
 9
-Package_SO
-HVSSOP-10-1EP_3x3mm_P0.5mm_EP1.57x1.88mm
-HVSSOP, 10 Pin (https://www.ti.com/lit/ds/symlink/bq24090.pdf), generated with kicad-footprint-generator ipc_gullwing_generator.py
-HVSSOP SO
-0
-15
-11
-Package_SO
-HVSSOP-10-1EP_3x3mm_P0.5mm_EP1.57x1.88mm_ThermalVias
-HVSSOP, 10 Pin (https://www.ti.com/lit/ds/symlink/bq24090.pdf), generated with kicad-footprint-generator ipc_gullwing_generator.py
-HVSSOP SO
-0
-20
-11
 Package_SO
 HVSSOP-10-1EP_3x3mm_P0.5mm_EP1.83x1.89mm
 HVSSOP, 10 Pin (https://www.ti.com/lit/ds/symlink/bq24090.pdf), generated with kicad-footprint-generator ipc_gullwing_generator.py
@@ -87970,8 +87900,8 @@ SSOP 3.9 4.9 1.00
 10
 Package_SO
 SSOP-14_5.3x6.2mm_P0.65mm
-SSOP14: plastic shrink small outline package; 14 leads; body width 5.3 mm; (see NXP SSOP-TSSOP-VSO-REFLOW.pdf and sot337-1_po.pdf)
-SSOP 0.65
+SSOP, 14 Pin (JEDEC MO-150 variation AB, 1.75mm body thickness, https://www.jedec.org/document_search?search_api_views_fulltext=MO-150), generated with kicad-footprint-generator ipc_gullwing_generator.py
+SSOP SO
 0
 14
 14
@@ -88019,7 +87949,7 @@ SSOP SO JEDEC-MO-152-AC SOT266-1 Nisshinbo-PI-SSOP20-E-A Rohm-SSOP-B20
 20
 Package_SO
 SSOP-20_5.3x7.2mm_P0.65mm
-SSOP, 20 Pin (http://ww1.microchip.com/downloads/en/DeviceDoc/40001800C.pdf), generated with kicad-footprint-generator ipc_gullwing_generator.py
+SSOP, 20 Pin (JEDEC MO-150 variation AE, 1.75mm body thickness, https://www.jedec.org/document_search?search_api_views_fulltext=MO-150, https://ww1.microchip.com/downloads/en/PackagingSpec/00000049BQ.pdf#page=396), generated with kicad-footprint-generator ipc_gullwing_generator.py
 SSOP SO
 0
 20
@@ -88047,8 +87977,8 @@ SSOP 0.635
 28
 Package_SO
 SSOP-28_5.3x10.2mm_P0.65mm
-28-Lead Plastic Shrink Small Outline (SS)-5.30 mm Body [SSOP] (see Microchip Packaging Specification 00000049BS.pdf)
-SSOP 0.65
+SSOP, 28 Pin (JEDEC MO-150 variation AH, 1.75mm body thickness, https://www.jedec.org/document_search?search_api_views_fulltext=MO-150, https://ww1.microchip.com/downloads/en/PackagingSpec/00000049BQ.pdf#page=400), generated with kicad-footprint-generator ipc_gullwing_generator.py
+SSOP SO
 0
 28
 28
@@ -99428,34 +99358,6 @@ Logo WEEE
 0
 0
 TerminalBlock
-TerminalBlock_Altech_AK300-2_P5.00mm
-Altech AK300 terminal block, pitch 5.0mm, 45 degree angled, see http://www.mouser.com/ds/2/16/PCBMETRC-24178.pdf
-Altech AK300 terminal block pitch 5.0mm
-0
-2
-2
-TerminalBlock
-TerminalBlock_Altech_AK300-3_P5.00mm
-Altech AK300 terminal block, pitch 5.0mm, 45 degree angled, see http://www.mouser.com/ds/2/16/PCBMETRC-24178.pdf
-Altech AK300 terminal block pitch 5.0mm
-0
-3
-3
-TerminalBlock
-TerminalBlock_Altech_AK300-4_P5.00mm
-Altech AK300 terminal block, pitch 5.0mm, 45 degree angled, see http://www.mouser.com/ds/2/16/PCBMETRC-24178.pdf
-Altech AK300 terminal block pitch 5.0mm
-0
-4
-4
-TerminalBlock
-TerminalBlock_Degson_DG246-3.81-03P
-DEGSON ELECTRONICS DG246 terminal block, https://www.degson.com/index.php?a=downloadFile&id=1090277
-connector terminal block
-0
-6
-3
-TerminalBlock
 TerminalBlock_MaiXu_MX126-5.0-02P_1x02_P5.00mm
 terminal block MaiXu MX126-5.0-02P, 2 pins, pitch 5mm, size 10.5x7.8mm, drill diameter 1.3mm, pad diameter 2.8mm, https://www.lcsc.com/datasheet/lcsc_datasheet_2309150913_MAX-MX126-5-0-03P-GN01-Cu-S-A_C5188435.pdf, script-generated using https://gitlab.com/kicad/libraries/kicad-footprint-generator/-/tree/master/scripts/TerminalBlock_MaiXu
 THT terminal block MaiXu MX126-5.0-02P pitch 5mm size 10.5x7.8mm drill 1.3mm pad 2.8mm
@@ -99617,13 +99519,6 @@ THT terminal block MaiXu MX126-5.0-24P pitch 5mm size 120x7.8mm drill 1.3mm pad 
 24
 24
 TerminalBlock
-TerminalBlock_Wuerth_691311400102_P7.62mm
-https://katalog.we-online.de/em/datasheet/6913114001xx.pdf
-Wuerth WR-TBL Series 3114 terminal block pitch 7.62mm
-0
-2
-2
-TerminalBlock
 TerminalBlock_Xinya_XY308-2.54-2P_1x02_P2.54mm_Horizontal
 Terminal Block Xinya XY308-2.54-2P, 2 pins, pitch 2.54mm, size 5.58x6.5mm, drill diameter 1.2mm, pad diameter 2mm, http://www.xinyaelectronic.com/product/xy308-254, script-generated using https://gitlab.com/kicad/libraries/kicad-footprint-generator/-/tree/master/scripts/TerminalBlock_Xinya
 THT Terminal Block Xinya XY308-2.54-2P pitch 2.54mm size 5.58x6.5mm drill 1.2mm pad 2mm
@@ -99777,48 +99672,6 @@ THT Terminal Block Xinya XY308-2.54-23P pitch 2.54mm size 58.9x6.5mm drill 1.2mm
 0
 23
 23
-TerminalBlock
-TerminalBlock_bornier-2_P5.08mm
-simple 2-pin terminal block, pitch 5.08mm, revamped version of bornier2
-terminal block bornier2
-0
-2
-2
-TerminalBlock
-TerminalBlock_bornier-3_P5.08mm
-simple 3-pin terminal block, pitch 5.08mm, revamped version of bornier3
-terminal block bornier3
-0
-3
-3
-TerminalBlock
-TerminalBlock_bornier-4_P5.08mm
-simple 4-pin terminal block, pitch 5.08mm, revamped version of bornier4
-terminal block bornier4
-0
-4
-4
-TerminalBlock
-TerminalBlock_bornier-5_P5.08mm
-simple 5-pin terminal block, pitch 5.08mm, revamped version of bornier5
-terminal block bornier5
-0
-5
-5
-TerminalBlock
-TerminalBlock_bornier-6_P5.08mm
-simple 6pin terminal block, pitch 5.08mm, revamped version of bornier6
-terminal block bornier6
-0
-6
-6
-TerminalBlock
-TerminalBlock_bornier-8_P5.08mm
-simple 8pin terminal block, pitch 5.08mm, revamped version of bornier8
-terminal block bornier8
-0
-8
-8
 TerminalBlock_4Ucon
 TerminalBlock_4Ucon_1x02_P3.50mm_Horizontal
 Terminal Block 4Ucon ItemNo. 19963, 2 pins, pitch 3.5mm, size 7.7x7mm, drill diameter 1.2mm, pad diameter 2.4mm, http://www.4uconnector.com/online/object/4udrawing/19963.pdf, script-generated using https://gitlab.com/kicad/libraries/kicad-footprint-generator/-/tree/master/scripts/TerminalBlock_4Ucon
@@ -106490,24 +106343,3 @@ Varistor VF
 0
 2
 2
-ZED_Library
-CONN_142-0701-801
-
-142-0701-801 
-0
-5
-5
-ZED_Library
-IND_25_0805_FRT
-
-2508051217Y6 
-0
-2
-2
-ZED_Library
-ZEDF9P15B
-ZED-F9P-15B-1
-Integrated Circuit
-0
-102
-102
