@@ -4992,26 +4992,8 @@
 					)
 				)
 			)
-			(pin input line
-				(at 22.86 -16.51 180)
-				(length 2.54)
-				(name "RESETB"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "11"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
 			(pin power_out line
-				(at 22.86 -19.05 180)
+				(at 22.86 -16.51 180)
 				(length 2.54)
 				(name "GND"
 					(effects
@@ -5021,6 +5003,24 @@
 					)
 				)
 				(number "12"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin input line
+				(at 22.86 -19.05 180)
+				(length 2.54)
+				(name "RESETB"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "11"
 					(effects
 						(font
 							(size 1.27 1.27)
