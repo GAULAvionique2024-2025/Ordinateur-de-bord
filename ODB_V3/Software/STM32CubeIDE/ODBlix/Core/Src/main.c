@@ -758,6 +758,12 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
 
+  /*Configure GPIO pin : Power_Good_Pin */
+  GPIO_InitStruct.Pin = Power_Good_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(Power_Good_GPIO_Port, &GPIO_InitStruct);
+
   /*Configure GPIO pin : SD_SPI5_CS_Pin */
   GPIO_InitStruct.Pin = SD_SPI5_CS_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;

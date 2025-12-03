@@ -113,6 +113,8 @@ void Error_Handler(void);
 #define Fire_3_GPIO_Port GPIOG
 #define Fire_4_Pin GPIO_PIN_1
 #define Fire_4_GPIO_Port GPIOG
+#define Power_Good_Pin GPIO_PIN_8
+#define Power_Good_GPIO_Port GPIOE
 #define SD_SPI5_CS_Pin GPIO_PIN_11
 #define SD_SPI5_CS_GPIO_Port GPIOE
 #define SD_SPI5_CLK_Pin GPIO_PIN_12

@@ -5025,6 +5025,16 @@
 		)
 		(uuid "07dcdeaf-38be-45b2-beba-4d2b01b7d628")
 	)
+	(text "Pull-up on 5V Buck"
+		(exclude_from_sim no)
+		(at 132.588 191.008 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "12516c50-5631-46dc-ab50-fd8cb59ed7ad")
+	)
 	(text "À CHANGER APRES REVIEW"
 		(exclude_from_sim no)
 		(at 345.44 203.962 0)
