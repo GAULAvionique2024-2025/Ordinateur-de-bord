@@ -1981,7 +1981,7 @@
 	)
 	(rectangle
 		(start 13.97 85.09)
-		(end 106.68 114.3)
+		(end 121.92 114.3)
 		(stroke
 			(width 0)
 			(type dash)
@@ -2938,6 +2938,16 @@
 	)
 	(wire
 		(pts
+			(xy 90.17 93.98) (xy 91.44 93.98)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6a12c5f4-d533-4b19-b9f3-fdea0a2a7185")
+	)
+	(wire
+		(pts
 			(xy 35.56 127) (xy 35.56 129.54)
 		)
 		(stroke
@@ -3328,6 +3338,16 @@
 	)
 	(wire
 		(pts
+			(xy 81.28 93.98) (xy 82.55 93.98)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "cf3282ca-ab03-419f-8fdb-d7fb4cd38392")
+	)
+	(wire
+		(pts
 			(xy 99.06 157.48) (xy 99.06 160.02)
 		)
 		(stroke
@@ -3538,16 +3558,6 @@
 	)
 	(wire
 		(pts
-			(xy 81.28 93.98) (xy 86.36 93.98)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "f625f28c-ccfe-4c5f-9d72-8379f58a359c")
-	)
-	(wire
-		(pts
 			(xy 30.48 53.34) (xy 30.48 57.15)
 		)
 		(stroke
@@ -3730,7 +3740,7 @@
 	)
 	(global_label "BARO_SPI1_MISO"
 		(shape input)
-		(at 86.36 93.98 0)
+		(at 91.44 93.98 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -3740,7 +3750,7 @@
 		)
 		(uuid "8afb7980-c3c7-4edd-8608-f428917ebd56")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 105.1295 93.98 0)
+			(at 110.2095 93.98 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4880,6 +4890,73 @@
 			(project ""
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/eac5f07f-d6a3-4c95-b286-7cebf46e30db"
 					(reference "U6")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 86.36 93.98 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "5dab74ab-b372-4ad5-8153-0c8148209d34")
+		(property "Reference" "BARO_R4"
+			(at 117.602 93.98 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+		(property "Value" "22R"
+			(at 112.268 93.98 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 86.36 92.202 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 86.36 93.98 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 86.36 93.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "183d35e9-c744-4683-9d90-99a1d0e2a031")
+		)
+		(pin "2"
+			(uuid "42f6adc6-a3be-43ce-93b1-b9b70e32674b")
+		)
+		(instances
+			(project "ODB2"
+				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/eac5f07f-d6a3-4c95-b286-7cebf46e30db"
+					(reference "BARO_R4")
 					(unit 1)
 				)
 			)
