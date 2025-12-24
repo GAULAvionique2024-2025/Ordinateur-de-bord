@@ -39550,6 +39550,17 @@
 			(uuid "1f0aa48a-955f-4387-ad6c-8c573d9f195b")
 		)
 		(embedded_fonts no)
+		(model "C:/Users/gagno/OneDrive/Documents/ULaval/GAUL/ODB2/Ordinateur-de-bord/ODB_V3/Hardware/Kicad/Symbols/SMTB_0927_TW_R/SMTB-0927-TW-R.step"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz -90 -0 -180)
+			)
+		)
 	)
 	(footprint "Capacitor_SMD:C_0402_1005Metric"
 		(layer "F.Cu")
