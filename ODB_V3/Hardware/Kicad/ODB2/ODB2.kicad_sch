@@ -5173,16 +5173,6 @@
 		)
 		(uuid "b3d5f7d3-9c71-4351-be92-78802f95282c")
 	)
-	(text "À FAIRE"
-		(exclude_from_sim no)
-		(at 368.554 222.758 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "f1d1848a-e887-44cd-b584-1dac63ff23dd")
-	)
 	(junction
 		(at 187.96 44.45)
 		(diameter 0)
@@ -9163,7 +9153,7 @@
 			)
 		)
 	)
-	(global_label "IdeFIX_I2C2_SCL"
+	(global_label "BT_USART2_RX"
 		(shape input)
 		(at 359.41 217.17 180)
 		(fields_autoplaced yes)
@@ -9175,7 +9165,7 @@
 		)
 		(uuid "b8b3d402-2b0d-419a-8e85-c38a40a3e864")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 340.9429 217.17 0)
+			(at 342.6968 217.17 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9295,7 +9285,7 @@
 			)
 		)
 	)
-	(global_label "IdeFIX_I2C2_SDA"
+	(global_label "BT_USART2_TX"
 		(shape input)
 		(at 359.41 214.63 180)
 		(fields_autoplaced yes)
@@ -9307,7 +9297,7 @@
 		)
 		(uuid "c777a616-5bdd-474b-873d-03ad518a5614")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 340.8824 214.63 0)
+			(at 342.9992 214.63 0)
 			(effects
 				(font
 					(size 1.27 1.27)
