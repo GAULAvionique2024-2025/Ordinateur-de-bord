@@ -5078,6 +5078,16 @@
 		)
 		(uuid "3702b3b8-d342-42d7-b58c-417880eb6c2b")
 	)
+	(text "USART3_TX"
+		(exclude_from_sim no)
+		(at 213.106 124.968 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "42d5fc0b-cab7-48c8-8cb6-40128fd6e0d3")
+	)
 	(text "Note:\nLed Vf = 3.3v at 20mA\nMax consumption STM ~50mA\n\nTotal comsumption 3v3 with 10% a buffer : 560ma in worst case"
 		(exclude_from_sim no)
 		(at 14.732 225.044 0)
@@ -5172,6 +5182,16 @@
 			)
 		)
 		(uuid "b3d5f7d3-9c71-4351-be92-78802f95282c")
+	)
+	(text "USART3_RX"
+		(exclude_from_sim no)
+		(at 213.106 127.254 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "dc9c294c-7877-44d4-b15a-85f8d6deb223")
 	)
 	(junction
 		(at 187.96 44.45)

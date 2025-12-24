@@ -41658,6 +41658,17 @@
 			)
 		)
 		(embedded_fonts no)
+		(model "C:/Users/gagno/OneDrive/Documents/ULaval/GAUL/ODB2/Ordinateur-de-bord/ODB_V3/Hardware/Kicad/Symbols/2508051217Y6/IND_25_0805_FRT.step"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 0)
+			)
+		)
 	)
 	(footprint "Connector_PinHeader_2.54mm:PinHeader_1x05_P2.54mm_Vertical"
 		(layer "F.Cu")
@@ -64843,6 +64854,18 @@
 			(justify left bottom)
 		)
 	)
+	(gr_text "RX"
+		(at 173.65 76.975 90)
+		(layer "F.SilkS")
+		(uuid "46843f76-9799-4d64-a074-3976cdd002ea")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.125)
+			)
+			(justify left bottom)
+		)
+	)
 	(gr_text "BREAKOUT"
 		(at 167.2 57.3 90)
 		(layer "F.SilkS" knockout)
@@ -64852,6 +64875,18 @@
 				(size 1 1)
 				(thickness 0.2)
 				(bold yes)
+			)
+			(justify left bottom)
+		)
+	)
+	(gr_text "TX"
+		(at 173.65 79.45 90)
+		(layer "F.SilkS")
+		(uuid "5c6b8fc6-df03-4df7-963e-30304a2f0725")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.125)
 			)
 			(justify left bottom)
 		)
