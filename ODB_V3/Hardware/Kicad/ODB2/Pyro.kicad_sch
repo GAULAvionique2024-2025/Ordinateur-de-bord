@@ -7917,7 +7917,7 @@
 			)
 		)
 	)
-	(global_label "Pyro1+"
+	(global_label "Vin_Pyro"
 		(shape input)
 		(at 48.26 109.22 0)
 		(fields_autoplaced yes)
@@ -7929,7 +7929,7 @@
 		)
 		(uuid "2f61e024-ea49-4f14-ab6b-f2fa1185d76f")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 58.1999 109.22 0)
+			(at 59.228 109.22 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7983,7 +7983,7 @@
 			)
 		)
 	)
-	(global_label "Pyro2+"
+	(global_label "Vin_Pyro"
 		(shape input)
 		(at 116.84 109.22 0)
 		(fields_autoplaced yes)
@@ -7995,7 +7995,7 @@
 		)
 		(uuid "33ad290c-e0e9-471c-a912-c720e8accfe1")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 126.7799 109.22 0)
+			(at 127.808 109.22 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8423,7 +8423,7 @@
 			)
 		)
 	)
-	(global_label "Pyro4+"
+	(global_label "Vin_Pyro"
 		(shape input)
 		(at 116.84 157.48 0)
 		(fields_autoplaced yes)
@@ -8435,7 +8435,7 @@
 		)
 		(uuid "901c072b-4731-4824-8a25-526f4687f94e")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 126.7799 157.48 0)
+			(at 127.808 157.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8621,7 +8621,7 @@
 			)
 		)
 	)
-	(global_label "Pyro3+"
+	(global_label "Vin_Pyro"
 		(shape input)
 		(at 48.26 157.48 0)
 		(fields_autoplaced yes)
@@ -8633,7 +8633,7 @@
 		)
 		(uuid "f57c4c49-7fa6-4276-8838-98e48687a82a")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 58.1999 157.48 0)
+			(at 59.228 157.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)

@@ -2144,7 +2144,7 @@
 	)
 	(text "Max consumption 1.4mA"
 		(exclude_from_sim no)
-		(at 94.234 86.868 0)
+		(at 108.712 87.122 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3438,7 +3438,7 @@
 	)
 	(wire
 		(pts
-			(xy 81.28 96.52) (xy 86.36 96.52)
+			(xy 81.28 96.52) (xy 91.44 96.52)
 		)
 		(stroke
 			(width 0)
@@ -3784,7 +3784,7 @@
 	)
 	(global_label "BARO_SPI1_MOSI"
 		(shape input)
-		(at 86.36 96.52 0)
+		(at 91.44 96.52 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -3794,7 +3794,7 @@
 		)
 		(uuid "bf593914-9888-4e22-bc5d-d6846ab819b7")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 105.1295 96.52 0)
+			(at 110.2095 96.52 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4905,7 +4905,7 @@
 		(dnp no)
 		(uuid "5dab74ab-b372-4ad5-8153-0c8148209d34")
 		(property "Reference" "BARO_R4"
-			(at 117.602 93.98 90)
+			(at 86.36 90.424 90)
 			(effects
 				(font
 					(size 1 1)
@@ -4913,7 +4913,7 @@
 			)
 		)
 		(property "Value" "22R"
-			(at 112.268 93.98 90)
+			(at 86.36 91.948 90)
 			(effects
 				(font
 					(size 1 1)
