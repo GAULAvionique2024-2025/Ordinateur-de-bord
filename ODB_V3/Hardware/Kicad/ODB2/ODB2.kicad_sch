@@ -5025,6 +5025,16 @@
 		)
 		(uuid "07dcdeaf-38be-45b2-beba-4d2b01b7d628")
 	)
+	(text "Active Low"
+		(exclude_from_sim no)
+		(at 135.636 132.842 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "09a53b5f-4887-4e5e-aabf-7bd80e6a97d5")
+	)
 	(text "Pull-up on 5V Buck"
 		(exclude_from_sim no)
 		(at 132.588 191.008 0)
@@ -5119,6 +5129,16 @@
 			)
 		)
 		(uuid "6f417ccb-9285-4b47-984b-e8f4a4176ce5")
+	)
+	(text "Active Low"
+		(exclude_from_sim no)
+		(at 135.636 135.128 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "7039a16e-71c7-4ae1-8fa2-fb63ae166acc")
 	)
 	(text "Pull-up on sensor"
 		(exclude_from_sim no)
