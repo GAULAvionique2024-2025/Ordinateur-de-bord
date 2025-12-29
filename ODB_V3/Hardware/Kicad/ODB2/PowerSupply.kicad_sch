@@ -3433,7 +3433,7 @@
 	)
 	(rectangle
 		(start 205.74 12.7)
-		(end 283.21 53.34)
+		(end 283.21 53.975)
 		(stroke
 			(width 0)
 			(type dash)
@@ -3469,7 +3469,7 @@
 	)
 	(text "Input 5v-38v\nFreq = 400kHz\nL = 33uH"
 		(exclude_from_sim no)
-		(at 16.256 191.008 0)
+		(at 16.002 135.382 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3490,7 +3490,7 @@
 	)
 	(text "Vin_AN = Vin_max x 27k / (27k + 180k) <= 3.3V\n0.6522V <= Vin_AN <= 3.1305V"
 		(exclude_from_sim no)
-		(at 206.756 51.054 0)
+		(at 206.502 51.562 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -11741,10 +11741,9 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "cee9a1da-3828-41b8-862f-97127794bc3a")
 		(property "Reference" "FB2"
-			(at 34.2519 135.89 90)
+			(at 34.29 136.652 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11752,7 +11751,7 @@
 			)
 		)
 		(property "Value" "FBMH3225HM601NT"
-			(at 34.2519 138.43 90)
+			(at 34.29 139.192 90)
 			(effects
 				(font
 					(size 1.27 1.27)

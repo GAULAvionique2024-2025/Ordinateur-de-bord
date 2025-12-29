@@ -4675,6 +4675,195 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "ODB2:LTST-E682KRKGWT"
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "LED"
+				(at 13.716 6.858 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+					(hide yes)
+				)
+			)
+			(property "Value" "LTST-E682KRKGWT"
+				(at 7.366 4.826 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+				)
+			)
+			(property "Footprint" "LTSTE683RGBW"
+				(at 29.21 -94.92 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "https://optoelectronics.liteon.com/upload/download/DS22-2011-0354/LTST-E682KRKGWT.pdf"
+				(at 29.21 -194.92 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+					(hide yes)
+				)
+			)
+			(property "Description" "Red/Yell-Green LED SMD PLCC4 637/569nm"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Height" "2"
+				(at 29.21 -394.92 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+					(hide yes)
+				)
+			)
+			(property "Mouser Part Number" "859-LTST-E682KRKGWT"
+				(at 29.21 -494.92 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+					(hide yes)
+				)
+			)
+			(property "Mouser Price/Stock" "https://www.mouser.co.uk/ProductDetail/Lite-On/LTST-E682KRKGWT?qs=xb8aMrBSZRL4Mm2v%2F2Q1nw%3D%3D"
+				(at 29.21 -594.92 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+					(hide yes)
+				)
+			)
+			(property "Manufacturer_Name" "Lite-On"
+				(at 29.21 -694.92 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+					(hide yes)
+				)
+			)
+			(property "Manufacturer_Part_Number" "LTST-E682KRKGWT"
+				(at 29.21 -794.92 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+					(hide yes)
+				)
+			)
+			(symbol "LTST-E682KRKGWT_1_1"
+				(rectangle
+					(start 5.08 2.54)
+					(end 27.94 -5.08)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(pin passive line
+					(at 0 0 0)
+					(length 5.08)
+					(name "A_GREEN"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -2.54 0)
+					(length 5.08)
+					(name "K_GREEN"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 33.02 0 180)
+					(length 5.08)
+					(name "K_RED"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 33.02 -2.54 180)
+					(length 5.08)
+					(name "A_RED"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "ODB2:MEM2067"
 			(pin_names
 				(offset 1.016)
@@ -6553,6 +6742,18 @@
 		(uuid 047e1347-b4dc-41a4-93f8-cbddc9b33d6e)
 	)
 	(rectangle
+		(start 59.69 86.36)
+		(end 132.08 109.22)
+		(stroke
+			(width 0)
+			(type dash)
+		)
+		(fill
+			(type none)
+		)
+		(uuid 22300903-1f44-4c58-98b4-2a4c6b62303b)
+	)
+	(rectangle
 		(start 193.04 63.5)
 		(end 258.445 104.14)
 		(stroke
@@ -6599,18 +6800,6 @@
 			(type none)
 		)
 		(uuid 67123414-b69c-4343-bdf2-cdd3b7b289d3)
-	)
-	(rectangle
-		(start 59.69 86.36)
-		(end 104.14 108.585)
-		(stroke
-			(width 0)
-			(type dash)
-		)
-		(fill
-			(type none)
-		)
-		(uuid 92f4a6a2-c657-4a37-9c1d-ae3d51d1f349)
 	)
 	(rectangle
 		(start 13.97 86.36)
@@ -6696,18 +6885,6 @@
 			(justify left bottom)
 		)
 		(uuid "0e3e3eb3-3039-4a49-8d7f-8822547e4372")
-	)
-	(text "CRITICAL RED LIGHT"
-		(exclude_from_sim no)
-		(at 79.248 89.154 0)
-		(effects
-			(font
-				(size 2.54 2.54)
-				(thickness 0.254)
-				(bold yes)
-			)
-		)
-		(uuid "0f8cc146-4665-4a4e-ad07-5023c5e5e90d")
 	)
 	(text "Max consumption 80mA"
 		(exclude_from_sim no)
@@ -6862,6 +7039,18 @@
 		)
 		(uuid "65b42b91-9cae-4845-b23a-628b54e47a15")
 	)
+	(text "CriticalLED"
+		(exclude_from_sim no)
+		(at 70.612 89.154 0)
+		(effects
+			(font
+				(size 2.54 2.54)
+				(thickness 0.254)
+				(bold yes)
+			)
+		)
+		(uuid "6f02b5d2-3601-4ff6-9b45-03e63407f660")
+	)
 	(text "MICRO USB"
 		(exclude_from_sim no)
 		(at 193.294 25.654 0)
@@ -6886,6 +7075,17 @@
 		)
 		(uuid "91f7b104-ae0f-4e9f-be75-4a4e605dd7ac")
 	)
+	(text "R = (3.3 - 2.0)V / 0.002A = 650R"
+		(exclude_from_sim no)
+		(at 60.452 107.95 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "a301782f-e154-4c47-9bfe-cda7e7e37e52")
+	)
 	(text "BUZZER"
 		(exclude_from_sim no)
 		(at 193.294 67.564 0)
@@ -6909,17 +7109,6 @@
 			(justify right top)
 		)
 		(uuid "d91bf676-c5dc-4212-950f-405fdea9afcf")
-	)
-	(text "Max consumption 2.2mA"
-		(exclude_from_sim no)
-		(at 103.378 106.934 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right top)
-		)
-		(uuid "e6c3b37c-23c1-4eed-8c3c-75626e93e52e")
 	)
 	(text "Distribution sur GND et 2x 3v3 si dépasse 100mA"
 		(exclude_from_sim no)
@@ -7215,6 +7404,16 @@
 	)
 	(wire
 		(pts
+			(xy 128.27 99.06) (xy 128.27 100.33)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "06695b22-4a4d-448f-a93a-422068221d54")
+	)
+	(wire
+		(pts
 			(xy 129.54 158.75) (xy 134.62 158.75)
 		)
 		(stroke
@@ -7295,6 +7494,16 @@
 	)
 	(wire
 		(pts
+			(xy 66.04 97.79) (xy 68.58 97.79)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0fe82668-a463-4aad-9447-ea30ef945008")
+	)
+	(wire
+		(pts
 			(xy 31.75 40.64) (xy 36.83 40.64)
 		)
 		(stroke
@@ -7332,6 +7541,16 @@
 			(type default)
 		)
 		(uuid "11c1ba9c-475c-4779-a5cb-c36fea42a972")
+	)
+	(wire
+		(pts
+			(xy 66.04 96.52) (xy 66.04 97.79)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "12567ee6-c073-4024-8398-4d88fc2a668d")
 	)
 	(wire
 		(pts
@@ -7402,16 +7621,6 @@
 			(type default)
 		)
 		(uuid "1aa6f9e8-f6e8-41ab-b797-0fdd574043ac")
-	)
-	(wire
-		(pts
-			(xy 99.06 97.79) (xy 100.33 97.79)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "1af8fe17-1cf7-476c-bae2-297cde886870")
 	)
 	(wire
 		(pts
@@ -7785,6 +7994,16 @@
 	)
 	(wire
 		(pts
+			(xy 111.76 100.33) (xy 110.49 100.33)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6a7eb574-3ec3-44d6-839f-c430dc0f5da9")
+	)
+	(wire
+		(pts
 			(xy 240.03 152.4) (xy 242.57 152.4)
 		)
 		(stroke
@@ -7835,16 +8054,6 @@
 	)
 	(wire
 		(pts
-			(xy 90.17 97.79) (xy 91.44 97.79)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "7bf96db2-76b3-4b65-80ed-f1976c161bed")
-	)
-	(wire
-		(pts
 			(xy 154.94 60.96) (xy 165.1 60.96)
 		)
 		(stroke
@@ -7865,6 +8074,16 @@
 	)
 	(wire
 		(pts
+			(xy 76.2 100.33) (xy 77.47 100.33)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "80be81a7-035e-430e-898d-1e86db63a20d")
+	)
+	(wire
+		(pts
 			(xy 41.91 121.92) (xy 46.99 121.92)
 		)
 		(stroke
@@ -7882,16 +8101,6 @@
 			(type default)
 		)
 		(uuid "8212cc12-9b11-4d08-b49a-9b740d7f81cd")
-	)
-	(wire
-		(pts
-			(xy 100.33 97.79) (xy 100.33 99.06)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "88aee56b-9cdf-4376-893b-101633cbb03b")
 	)
 	(wire
 		(pts
@@ -8095,16 +8304,6 @@
 	)
 	(wire
 		(pts
-			(xy 80.01 97.79) (xy 82.55 97.79)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "ad962563-9168-4d78-b917-2aea16f8ed0b")
-	)
-	(wire
-		(pts
 			(xy 33.02 129.54) (xy 46.99 129.54)
 		)
 		(stroke
@@ -8122,6 +8321,16 @@
 			(type default)
 		)
 		(uuid "ae6b8d8b-70f9-4015-ab76-ff040e55ad00")
+	)
+	(wire
+		(pts
+			(xy 76.2 97.79) (xy 77.47 97.79)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ae74f5ee-e2d6-4105-bb10-0076d016e1c4")
 	)
 	(wire
 		(pts
@@ -8385,6 +8594,16 @@
 	)
 	(wire
 		(pts
+			(xy 119.38 100.33) (xy 128.27 100.33)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d6f694e3-5fd3-47a2-b3cd-9da87d12347d")
+	)
+	(wire
+		(pts
 			(xy 34.29 43.18) (xy 36.83 43.18)
 		)
 		(stroke
@@ -8402,6 +8621,16 @@
 			(type default)
 		)
 		(uuid "d7c96ecf-ce40-40c3-a644-43ffea132c74")
+	)
+	(wire
+		(pts
+			(xy 110.49 97.79) (xy 111.76 97.79)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "dae4b2f9-af27-4ce0-9311-f1d8a4e3bbf8")
 	)
 	(wire
 		(pts
@@ -8750,6 +8979,28 @@
 		(uuid "2a1b69f3-971c-4615-8d24-0d29eab93bee")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 20.9634 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "CriticalLED_R"
+		(shape input)
+		(at 76.2 100.33 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "5298c822-dbc5-4871-ad59-1eef44a15916")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 60.6358 100.33 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9259,24 +9510,24 @@
 			)
 		)
 	)
-	(global_label "CriticalLED"
+	(global_label "CriticalLED_G"
 		(shape input)
-		(at 80.01 97.79 180)
+		(at 111.76 97.79 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right)
+			(justify left)
 		)
-		(uuid "dd7d4e32-09bf-4f0e-94e9-0dfd596e4361")
+		(uuid "da0f5d1b-eff4-4d89-b1a7-1d0f4cd0ed8c")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 66.6834 97.79 0)
+			(at 127.3242 97.79 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify right)
+				(justify left)
 				(hide yes)
 			)
 		)
@@ -9482,50 +9733,52 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:LED")
-		(at 95.25 97.79 180)
+		(lib_id "Device:R")
+		(at 115.57 100.33 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "0e46cd61-bdbe-4c1d-bd74-8d6856c497d7")
-		(property "Reference" "CLED_LED1"
-			(at 96.52 94.234 0)
+		(uuid "06427c44-b559-40de-b128-89dd46d270bb")
+		(property "Reference" "CLED_R2"
+			(at 112.268 102.616 90)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1 1)
 				)
+				(justify right)
 			)
 		)
-		(property "Value" "RED"
-			(at 95.25 100.838 0)
+		(property "Value" "620R"
+			(at 113.792 104.14 90)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1 1)
 				)
+				(justify right)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
-			(at 95.25 97.79 0)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 115.57 102.108 90)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1 1)
 				)
 				(hide yes)
 			)
 		)
 		(property "Datasheet" "~"
-			(at 95.25 97.79 0)
+			(at 115.57 100.33 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1 1)
 				)
 				(hide yes)
 			)
 		)
-		(property "Description" "Light emitting diode"
-			(at 95.25 97.79 0)
+		(property "Description" ""
+			(at 115.57 100.33 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9534,15 +9787,81 @@
 			)
 		)
 		(pin "1"
-			(uuid "c2895f70-343a-4207-9d2b-bd862a9b7008")
+			(uuid "d0c9f90a-7390-4c6f-b21d-d16dda2ee374")
 		)
 		(pin "2"
-			(uuid "76875e3a-9445-476f-a818-ab32ecf54945")
+			(uuid "81219dd8-9f3a-40b3-8abb-6dc19d7e595a")
 		)
 		(instances
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/93865dc8-71fa-4dc6-90ce-f5a9779dfd41"
-					(reference "CLED_LED1")
+					(reference "CLED_R2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+3V3")
+		(at 66.04 96.52 0)
+		(mirror y)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "0bd94e04-0ddb-45cb-83be-fd747e399ea3")
+		(property "Reference" "#PWR060"
+			(at 66.04 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+3V3"
+			(at 66.04 92.71 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 66.04 96.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 66.04 96.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+3V3\""
+			(at 66.04 96.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "b0794d7a-6228-4482-8971-aebf1add64de")
+		)
+		(instances
+			(project "ODB2"
+				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/93865dc8-71fa-4dc6-90ce-f5a9779dfd41"
+					(reference "#PWR060")
 					(unit 1)
 				)
 			)
@@ -11352,73 +11671,6 @@
 	)
 	(symbol
 		(lib_id "Device:R")
-		(at 86.36 97.79 270)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "611b9d2c-2c31-4608-96c8-b364be0aaf87")
-		(property "Reference" "CLED_R1"
-			(at 86.36 92.71 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "1k5"
-			(at 86.36 95.25 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-			(at 86.36 96.012 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 86.36 97.79 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor"
-			(at 86.36 97.79 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "91be7c06-e507-42f5-a339-a50840360120")
-		)
-		(pin "1"
-			(uuid "1700e045-5c26-44d7-80c3-afe79bac25ff")
-		)
-		(instances
-			(project "ODB2"
-				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/93865dc8-71fa-4dc6-90ce-f5a9779dfd41"
-					(reference "CLED_R1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R")
 		(at 86.36 139.7 0)
 		(unit 1)
 		(exclude_from_sim no)
@@ -12288,72 +12540,6 @@
 		)
 	)
 	(symbol
-		(lib_id "power:GND")
-		(at 100.33 99.06 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "9704f60a-d7fa-4936-b47e-558406bf6177")
-		(property "Reference" "#PWR091"
-			(at 100.33 105.41 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 100.33 104.14 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 100.33 99.06 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 100.33 99.06 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 100.33 99.06 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "62209538-d784-43f5-98ee-c6d1238fff06")
-		)
-		(instances
-			(project "ODB2"
-				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/93865dc8-71fa-4dc6-90ce-f5a9779dfd41"
-					(reference "#PWR091")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_name "GND_2")
 		(lib_id "power:GND")
 		(at 177.8 62.23 0)
@@ -12900,6 +13086,72 @@
 		)
 	)
 	(symbol
+		(lib_id "power:+3V3")
+		(at 128.27 99.06 0)
+		(mirror y)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "c2698acd-1fdc-4a4b-8980-6f756e5b4cc3")
+		(property "Reference" "#PWR052"
+			(at 128.27 102.87 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+3V3"
+			(at 128.27 95.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 128.27 99.06 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 128.27 99.06 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+3V3\""
+			(at 128.27 99.06 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "f861a5e6-a5a3-4147-a1db-c007c453fb1f")
+		)
+		(instances
+			(project "ODB2"
+				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/93865dc8-71fa-4dc6-90ce-f5a9779dfd41"
+					(reference "#PWR052")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:GND")
 		(at 132.08 170.18 0)
 		(unit 1)
@@ -13026,6 +13278,75 @@
 			(project ""
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/93865dc8-71fa-4dc6-90ce-f5a9779dfd41"
 					(reference "#PWR070")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 72.39 97.79 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "d4b7ba00-455f-4d43-967f-9b0cbd8303a5")
+		(property "Reference" "CLED_R1"
+			(at 69.088 94.234 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "620R"
+			(at 70.358 95.758 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 72.39 99.568 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 72.39 97.79 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 72.39 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "7410a1f8-ee78-4b96-9b9b-470c99a3831d")
+		)
+		(pin "2"
+			(uuid "5b37f3f8-0200-4cff-92d3-a58efee4899d")
+		)
+		(instances
+			(project "ODB2"
+				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/93865dc8-71fa-4dc6-90ce-f5a9779dfd41"
+					(reference "CLED_R1")
 					(unit 1)
 				)
 			)
@@ -13376,6 +13697,133 @@
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/93865dc8-71fa-4dc6-90ce-f5a9779dfd41"
 					(reference "L76L_L1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ODB2:LTST-E682KRKGWT")
+		(at 110.49 100.33 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "eaa8fa43-94b6-4ccd-8bea-0395c34c9101")
+		(property "Reference" "LED1"
+			(at 96.774 107.188 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Value" "LTST-E682KRKGWT"
+			(at 94.234 104.394 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "ODB:LTSTE683RGBW"
+			(at 81.28 5.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://optoelectronics.liteon.com/upload/download/DS22-2011-0354/LTST-E682KRKGWT.pdf"
+			(at 81.28 -94.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Description" "Red/Yell-Green LED SMD PLCC4 637/569nm"
+			(at 110.49 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Height" "2"
+			(at 81.28 -294.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "859-LTST-E682KRKGWT"
+			(at 81.28 -394.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Mouser Price/Stock" "https://www.mouser.co.uk/ProductDetail/Lite-On/LTST-E682KRKGWT?qs=xb8aMrBSZRL4Mm2v%2F2Q1nw%3D%3D"
+			(at 81.28 -494.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Lite-On"
+			(at 81.28 -594.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "LTST-E682KRKGWT"
+			(at 81.28 -694.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(pin "4"
+			(uuid "1f1c3f85-295c-45fb-8499-b8523e5ff112")
+		)
+		(pin "3"
+			(uuid "34f2ca3e-862c-4093-b75c-53fe86730d28")
+		)
+		(pin "2"
+			(uuid "2904a7a1-7dab-4c5a-b886-c3f0c33c0ecb")
+		)
+		(pin "1"
+			(uuid "25b2461d-a29c-4502-aded-a71adc780acc")
+		)
+		(instances
+			(project "ODB2"
+				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/93865dc8-71fa-4dc6-90ce-f5a9779dfd41"
+					(reference "LED1")
 					(unit 1)
 				)
 			)
