@@ -111,4 +111,4 @@ Toutes les informations sur les composants hardware / logiciel et les drivers so
 
 ---
 
-🏠 Retour à la [page d'accueil](https://github.com/GAULAvionique)](https://github.com/GAULAvionique/Ordinateur-de-bord/edit/Overview/README.md)
+🏠 Retour à la [page d'accueil](https://github.com/GAULAvionique)
