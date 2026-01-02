@@ -20,66 +20,59 @@
 
 Ce projet met en œuvre un MCU associé à divers capteurs et modules pour créer un ordinateur de bord performant, optimisé pour un lancement de fusée de type L4. Ce système embarqué est conçu pour collecter et analyser des données en temps réel, permettant ainsi une évaluation précise des performances de la fusée.
 De plus, l’ODB est responsable du déclenchement des charges pyrotechniques utilisées pour le déploiement des parachutes et la séparation des étages de la fusée, assurant ainsi la réussite et la sécurité des différentes phases du vol.
+L’ensemble forme un système de télémétrie complet, capable non seulement de mesurer et enregistrer les données de vol, mais aussi d’agir activement sur les systèmes de la fusée au bon moment.
 
-## 📦 **Composants Intégrés**
-
-L’intégration inclut :
-
-- **Accéléromètre / Gyroscope**  
-  Fournit des données de mouvement et d’orientation de la fusée.
-
-- **Accéléromètre haute-G**  
-  Mesure les accélérations extrêmes durant le lancement et la propulsion.
-
-- **Altimètre**  
-  Capteur de pression atmosphérique utilisé pour calculer l’altitude.
-
-- **Capteur de température**  
-  Permet de surveiller la température interne du compartiment avionique et des composants critiques.
-
-- **Lecteur de carte SD**  
-  Permet l’enregistrement de toutes les données de vol pour analyse post-lancement.
-
-- **Mémoire externe**  
-  Stockage complémentaire pour la sauvegarde de données critiques (redondance de télémétrie).
-
-- **Module GPS + Breakout Board (lock/unlock switch)**  
-  Fournit la position en temps réel, avec une **breakout board intégrée** GPS permettant de changer entre le module **lock** ou celui **unlock** avant le vol.
-
-- **Module Radio externe**  
-  Assure la communication en temps réel avec la station au sol pour la télémétrie et la supervision du vol.
-
-- **Module Bluetooth**  
-  Permet une communication locale rapide (configuration, test et debug sans fil).
-
-- **Support Idéfix (Détecteur de balise RSSI)**  
-  Intègre la compatibilité avec **Idéfix**, le système de repérage du GAUL, pour détecter les signaux radio des balises en phase de récupération.
-
-- **Borniers de déclenchement (charges pyrotechniques)**  
-  Sorties de puissance dédiées au **déploiement des parachutes** et à la **séparation des étages**.
-
-- **Buzzer**  
-  Sert à signaler les événements critiques ou à assister le débogage pendant les tests et le démarrage.
-
-- **Autres modules optionnels**  
-  ...
-
-L’ensemble forme un **système de télémétrie complet**, capable non seulement de mesurer et enregistrer les données de vol, mais aussi d’agir activement sur les systèmes de la fusée au bon moment.
-
-> Pour des explications détaillées sur le rôle et le fonctionnement de chaque composant, consultez :  
-> - [Explications ODB2](./Documentation/ODB2/Explications.md)  
+> Pour des explications détaillées sur le rôle et le fonctionnement de chaque composant, consultez :
 > - [Explications ODB1](./Documentation/ODB1/Explications.md)
+> - [Explications ODB2](./Documentation/ODB2/Explications.md)
+> - [Explications ODB3 (ODBlix)](./Documentation/ODB2/Explications.md)
 
-## 📷 **Images de l'ODB**
+## ⚙️ Fonctionnalités de l’Ordinateur de bord (ODB)
 
-Découvrez une galerie illustrant le design et l'implémentation de l'ordinateur de bord :
+Ce document présente une vue d’ensemble des fonctionnalités offertes par l’ordinateur de bord du GAUL.  
+Il s’agit d’un résumé fonctionnel, indépendant des détails d’implémentation propres à chaque version.
 
-[Voir la Showcase](./Documentation/ODB1/Showcase.md)
+### 📊 Acquisition et gestion des données
+- Mesure des paramètres de vol (accélération, orientation, altitude, température, etc.)
+- Acquisition des données à haute fréquence durant les phases critiques du vol
+- Synchronisation temporelle des mesures
+- Gestion simultanée de plusieurs capteurs
+- Support de la redondance des sources de données
 
-<div style="display: flex; justify-content: space-around;">
-  <img src="./Documentation/ODB1/Showcase/ODB1_PCB.png" alt="ODB1" width="45%">
-  <img src="./Documentation/ODB1/Showcase/Rocket_Launch.jpg" alt="Rocket Launch" width="45%">
-</div>
+### 💾 Enregistrement et stockage
+- Enregistrement complet des données de vol pour analyse post-lancement
+- Stockage sur mémoire embarquée et/ou carte SD
+- Structuration et horodatage des journaux de vol
+
+### 📡 Télémétrie et communication
+- Transmission des données de vol en temps réel vers la station au sol
+- Communication radio longue portée
+- Communication locale pour configuration, tests et débogage
+- Support de protocoles de communication adaptés à l’avionique expérimentale
+
+### 🚦 Gestion des événements de vol
+- Détection automatique des différentes phases de vol (lancement, apogée, descente, atterrissage)
+- Déclenchement conditionnel des événements critiques
+- Commande des charges pyrotechniques (déploiement des parachutes, séparation des étages)
+- Mécanismes de sécurité contre les déclenchements inattendus
+
+### 🧭 Navigation et localisation
+- Intégration des données de positionnement GPS
+- Suivi de la trajectoire de vol
+- Assistance à la récupération post-vol
+- Compatibilité avec notre système de repérage externe ([IdéFIX](https://github.com/GAULAvionique/IdeFIX))
+
+### 🔍 Diagnostic et supervision
+- Surveillance de l’état du système en temps réel
+- Indication des statuts de fonctionnement et des erreurs
+- Outils d’aide au débogage pour les phases de test
+- Retour d’information sonore et/ou visuel
+
+### 🧪 Tests et validation
+- Support des essais au sol
+- Modes de test et de simulation
+- Validation progressive avant intégration en vol
+- Exploitation des données de vol pour amélioration continue
 
 ## 📚 **Documentation**
 
@@ -94,27 +87,28 @@ Toutes les informations sur les composants hardware / logiciel et les drivers so
 - [Composantes](./Documentation/ODB2/Composantes.md)
 - [Drivers](./Documentation/ODB2/Drivers.md)
 
+### **Ordinateur de bord 3**
+
+- [Composantes](./Documentation/ODB3/Composantes.md)
+- [Drivers](./Documentation/ODB3/Drivers.md)
+
 > [Prise en main des logiciels](./Documentation/Logiciel.md)
 
-## 🛠 **Roadmap**
-
-Pour les fonctionnalités à venir et les améliorations prévues, veuillez consulter la [roadmap](./Documentation/Roadmap.md).
-
-## 💡 **Liens Utiles**
-
+### 💡 **Liens Utiles**
 - Pour voir la première itération de l'ordinateur de bord, consultez le projet [ODB1](https://github.com/GAULAvionique2023-2024/ODB1_Firmware).
 - L'environnement de développement intégré pour STM32 est [STM32CubeIDE](https://www.st.com/en/development-tools/stm32cubeide.html). Un document est disponible pour permettre une [prise en main](./Documentation/Logiciel.md) initiale pour le projet.
 - [deepbluembedded](https://deepbluembedded.com/stm32-arm-programming-tutorials/) offre des tutoriels sur la programmation STM32.
 
-> Ce projet suit les règles de [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) afin de garder un historique clair et cohérent.
+> Ce projet essaye de suivre les règles de [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) afin de garder un historique clair et cohérent.
 
 ## 👥 **Auteurs et Contributeurs**
 
 - [@SamLol12](https://github.com/SamLol12)
 - [@bestrider14](https://github.com/bestrider14)
 - [@mathouqc](https://github.com/mathouqc)
+- [@vides119](https://github.com/vides119),
 - [Autres Participants](./Documentation/Participants.md)
 
 ---
 
-🏠 Retour au la [page d'accueil](https://github.com/GAULAvionique)
+🏠 Retour à la [page d'accueil](https://github.com/GAULAvionique)](https://github.com/GAULAvionique/Ordinateur-de-bord/edit/Overview/README.md)
