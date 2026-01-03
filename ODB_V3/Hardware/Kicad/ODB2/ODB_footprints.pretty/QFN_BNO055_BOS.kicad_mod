@@ -5,7 +5,7 @@
 	(layer "F.Cu")
 	(tags "BNO055 ")
 	(property "Reference" "REF**"
-		(at 0 0 0)
+		(at 0.6 0.1 0)
 		(unlocked yes)
 		(layer "F.SilkS")
 		(uuid "bdb1002c-2787-4468-8ac2-06a8865c6baf")
@@ -1436,7 +1436,7 @@
 		(uuid "4cd10e4e-9287-4cf1-a8a7-ff2ee38de92c")
 	)
 	(fp_text user "*"
-		(at -2.250001 -2.4384 0)
+		(at -2.8 -2.3 0)
 		(layer "F.SilkS")
 		(uuid "ccbbd85a-217e-44e9-bd5b-b23a746becc5")
 		(effects
@@ -1447,7 +1447,7 @@
 		)
 	)
 	(fp_text user "*"
-		(at -2.250001 -2.4384 0)
+		(at -2.8 -2.3 0)
 		(unlocked yes)
 		(layer "F.SilkS")
 		(uuid "d56e01b9-1a00-422a-a1db-249f44a045bd")

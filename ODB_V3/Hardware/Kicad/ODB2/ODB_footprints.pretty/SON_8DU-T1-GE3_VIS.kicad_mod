@@ -54,8 +54,8 @@
 	)
 	(attr smd)
 	(fp_line
-		(start -1.1176 -1.6637)
-		(end -1.1176 -1.418252)
+		(start -1.2 -1.8)
+		(end -1.2 -1.554552)
 		(stroke
 			(width 0.1524)
 			(type solid)
@@ -84,26 +84,6 @@
 		(uuid "337c3108-e659-4e18-8c51-a8b1628dea20")
 	)
 	(fp_line
-		(start 1.1176 -1.6637)
-		(end -1.1176 -1.6637)
-		(stroke
-			(width 0.1524)
-			(type solid)
-		)
-		(layer "F.SilkS")
-		(uuid "6cd99fb2-2e09-4164-b519-a34693ba3bd6")
-	)
-	(fp_line
-		(start 1.1176 -1.418252)
-		(end 1.1176 -1.6637)
-		(stroke
-			(width 0.1524)
-			(type solid)
-		)
-		(layer "F.SilkS")
-		(uuid "a6ffbce9-66fe-4a38-a789-3a2c626d7aa6")
-	)
-	(fp_line
 		(start 1.1176 1.6637)
 		(end 1.1176 1.46139)
 		(stroke
@@ -113,9 +93,29 @@
 		(layer "F.SilkS")
 		(uuid "eabd421b-9040-45cd-9661-f877b1f5d276")
 	)
+	(fp_line
+		(start 1.2 -1.8)
+		(end -1.2 -1.8)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "6cd99fb2-2e09-4164-b519-a34693ba3bd6")
+	)
+	(fp_line
+		(start 1.2 -1.577276)
+		(end 1.2 -1.8)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "a6ffbce9-66fe-4a38-a789-3a2c626d7aa6")
+	)
 	(fp_circle
-		(center -1.622993 -0.974979)
-		(end -1.495993 -0.974979)
+		(center -1.34 -2.15)
+		(end -1.213 -2.15)
 		(stroke
 			(width 0.1524)
 			(type solid)
@@ -379,4 +379,15 @@
 		(uuid "ab857116-1e86-46dd-82a7-2b4b64aa0ef7")
 	)
 	(embedded_fonts no)
+	(model "${KIPRJMOD}/../Symbols/SI5442DU_T1_G3/SI5442DU-T1-GE3.stp"
+		(offset
+			(xyz 0 0.02 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz -0 -0 90)
+		)
+	)
 )

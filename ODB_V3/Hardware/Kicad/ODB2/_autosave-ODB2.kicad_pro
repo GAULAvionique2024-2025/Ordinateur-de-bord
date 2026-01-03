@@ -227,7 +227,9 @@
   },
   "libraries": {
     "pinned_footprint_libs": [],
-    "pinned_symbol_libs": []
+    "pinned_symbol_libs": [
+      "ODB2"
+    ]
   },
   "meta": {
     "filename": "_autosave-ODB2.kicad_pro",
