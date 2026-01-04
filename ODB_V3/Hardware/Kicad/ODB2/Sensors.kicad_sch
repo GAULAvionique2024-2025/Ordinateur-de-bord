@@ -3950,16 +3950,17 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "MS580301BA01-00"
+		(property "Datasheet" "https://www.digikey.com/en/products/detail/te-connectivity-measurement-specialties/MS580301BA01-00/5277628"
 			(at 58.166 87.63 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 					(italic yes)
 				)
+				(hide yes)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "Pressure Sensor 0.15PSI ~ 18.85PSI (1kPa ~ 130kPa) Absolute 24 b 8-SMD Module"
 			(at 35.56 93.98 0)
 			(effects
 				(font
@@ -3968,7 +3969,7 @@
 				(hide yes)
 			)
 		)
-		(property "DigiKey_Part_Number" ""
+		(property "DigiKey_Part_Number" "223-1623-5-ND"
 			(at 35.56 93.98 0)
 			(effects
 				(font
@@ -4421,7 +4422,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.digikey.ca/en/products/detail/analog-devices-inc/ADXL382-2BCCZ-RL7/25578658"
 			(at 72.39 144.78 0)
 			(effects
 				(font
@@ -4479,7 +4480,7 @@
 				(hide yes)
 			)
 		)
-		(property "DigiKey_Part_Number" ""
+		(property "DigiKey_Part_Number" "505-ADXL382-2BCCZ-RL7CT-ND"
 			(at 72.39 144.78 0)
 			(effects
 				(font
@@ -5098,7 +5099,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "BNO055"
+		(property "Datasheet" "https://www.digikey.ca/en/products/detail/bosch-sensortec/BNO055/6136301"
 			(at 48.26 43.18 0)
 			(effects
 				(font
@@ -5117,7 +5118,7 @@
 				(hide yes)
 			)
 		)
-		(property "DigiKey_Part_Number" ""
+		(property "DigiKey_Part_Number" "828-1058-1-ND"
 			(at 48.26 43.18 0)
 			(effects
 				(font
@@ -6590,7 +6591,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.digikey.ca/en/products/detail/analog-devices-inc-maxim-integrated/MAX6612MXK-T/1520357"
 			(at 182.88 49.53 0)
 			(effects
 				(font
@@ -6608,7 +6609,7 @@
 				(hide yes)
 			)
 		)
-		(property "DigiKey_Part_Number" ""
+		(property "DigiKey_Part_Number" "MAX6612MXK+TCT-ND"
 			(at 182.88 49.53 0)
 			(effects
 				(font

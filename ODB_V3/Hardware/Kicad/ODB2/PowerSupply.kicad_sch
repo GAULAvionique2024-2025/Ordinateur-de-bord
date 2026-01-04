@@ -6545,7 +6545,7 @@
 				)
 			)
 		)
-		(property "Value" "PA4342.472NLT"
+		(property "Value" "4.7 uH"
 			(at 152.654 85.852 0)
 			(effects
 				(font
@@ -6563,7 +6563,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "PA4342.472NLT"
+		(property "Datasheet" "https://www.digikey.ca/en/products/detail/pulse-electronics/PA4342-472NLT/5436333"
 			(at 144.78 83.82 0)
 			(effects
 				(font
@@ -6573,7 +6573,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "4.7 µH Shielded Molded Inductor 10 A 15.5mOhm Max Nonstandard"
 			(at 144.78 83.82 0)
 			(effects
 				(font
@@ -6582,7 +6582,7 @@
 				(hide yes)
 			)
 		)
-		(property "DigiKey_Part_Number" ""
+		(property "Digikey" "553-3001-1-ND"
 			(at 144.78 83.82 0)
 			(effects
 				(font
@@ -6619,6 +6619,15 @@
 			)
 		)
 		(property "Sim.Type" ""
+			(at 144.78 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DigiKey_Part_Number" "553-3001-1-ND"
 			(at 144.78 83.82 0)
 			(effects
 				(font
@@ -8006,7 +8015,7 @@
 				)
 			)
 		)
-		(property "Value" "7447715330"
+		(property "Value" "33 uH"
 			(at 105.41 148.844 0)
 			(effects
 				(font
@@ -8024,7 +8033,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.digikey.ca/en/products/detail/w%C3%BCrth-elektronik/7447715330/2175612"
 			(at 105.41 147.32 0)
 			(effects
 				(font
@@ -8033,7 +8042,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "7447715330; 33 µH Shielded Drum Core, Wirewound Inductor 2.3 A 85mOhm Max Nonstandard"
 			(at 105.41 147.32 0)
 			(effects
 				(font
@@ -8042,7 +8051,7 @@
 				(hide yes)
 			)
 		)
-		(property "DigiKey_Part_Number" ""
+		(property "Digikey" "732-2196-1-ND"
 			(at 105.41 147.32 0)
 			(effects
 				(font
@@ -8079,6 +8088,15 @@
 			)
 		)
 		(property "Sim.Type" ""
+			(at 105.41 147.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DigiKey_Part_Number" "732-2196-1-ND"
 			(at 105.41 147.32 0)
 			(effects
 				(font
@@ -9015,7 +9033,7 @@
 				(hide yes)
 			)
 		)
-		(property "DigiKey_Part_Number" ""
+		(property "DigiKey_Part_Number" "732-11942-1-ND"
 			(at 21.59 38.1 0)
 			(effects
 				(font
@@ -10059,7 +10077,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.monolithicpower.com/en/documentview/productdocument/index/version/2/document_type/Datasheet/lang/en/sku/MPQ9843GL"
+		(property "Datasheet" "https://www.digikey.com/en/products/detail/monolithic-power-systems-inc/MPQ9843GLE-5-AEC1-Z/14645612"
 			(at 81.28 68.58 0)
 			(effects
 				(font
@@ -10078,7 +10096,7 @@
 				(hide yes)
 			)
 		)
-		(property "DigiKey_Part_Number" ""
+		(property "DigiKey_Part_Number" "1589-MPQ9843GLE-5-AEC1-ZCT-ND"
 			(at 81.28 68.58 0)
 			(effects
 				(font
@@ -10218,7 +10236,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "2920L700/24SLER"
+		(property "Datasheet" "https://www.digikey.ca/en/products/detail/littelfuse-inc/2920L700-24SLER/12807015"
 			(at 257.81 27.94 0)
 			(effects
 				(font
@@ -10236,7 +10254,7 @@
 				(hide yes)
 			)
 		)
-		(property "DigiKey_Part_Number" ""
+		(property "DigiKey_Part_Number" "18-2920L700/24SLERCT-ND"
 			(at 257.81 27.94 90)
 			(effects
 				(font
@@ -11060,7 +11078,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.digikey.com/en/products/detail/stmicroelectronics/L6981N33DR/16841571"
 			(at 68.58 147.32 0)
 			(effects
 				(font
@@ -11118,7 +11136,7 @@
 				(hide yes)
 			)
 		)
-		(property "DigiKey_Part_Number" ""
+		(property "DigiKey_Part_Number" "497-L6981N33DRCT-ND"
 			(at 68.58 147.32 0)
 			(effects
 				(font
@@ -12731,7 +12749,7 @@
 				)
 			)
 		)
-		(property "Value" "FBMH3225HM601NT"
+		(property "Value" "600R"
 			(at 36.83 68.326 90)
 			(effects
 				(font
@@ -12748,7 +12766,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://www.digikey.ca/en/products/detail/taiyo-yuden/FBMH3225HM601NT/957843"
 			(at 36.83 71.12 0)
 			(effects
 				(font
@@ -12757,7 +12775,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Ferrite bead, small symbol"
+		(property "Description" "600 Ohms @ 100 MHz 1 Power Line Ferrite Bead 1210 (3225 Metric) 3A 42mOhm"
 			(at 36.83 71.12 0)
 			(effects
 				(font
@@ -12766,7 +12784,7 @@
 				(hide yes)
 			)
 		)
-		(property "DigiKey_Part_Number" ""
+		(property "DigiKey_Part_Number" "587-1755-1-ND"
 			(at 36.83 71.12 90)
 			(effects
 				(font
@@ -12843,7 +12861,7 @@
 				)
 			)
 		)
-		(property "Value" "FBMH3225HM601NT"
+		(property "Value" "600R"
 			(at 34.29 139.192 90)
 			(effects
 				(font
@@ -12860,7 +12878,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://www.digikey.ca/en/products/detail/taiyo-yuden/FBMH3225HM601NT/957843"
 			(at 34.29 142.24 0)
 			(effects
 				(font
@@ -12869,7 +12887,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Ferrite bead, small symbol"
+		(property "Description" "600 Ohms @ 100 MHz 1 Power Line Ferrite Bead 1210 (3225 Metric) 3A 42mOhm"
 			(at 34.29 142.24 0)
 			(effects
 				(font
@@ -12878,7 +12896,7 @@
 				(hide yes)
 			)
 		)
-		(property "DigiKey_Part_Number" ""
+		(property "DigiKey_Part_Number" "587-1755-1-ND"
 			(at 34.29 142.24 90)
 			(effects
 				(font
