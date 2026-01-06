@@ -106,7 +106,7 @@ Toutes les informations sur les composants hardware / logiciel et les drivers so
 - [@SamLol12](https://github.com/SamLol12)
 - [@bestrider14](https://github.com/bestrider14)
 - [@mathouqc](https://github.com/mathouqc)
-- [@vides119](https://github.com/vides119),
+- [@vides119](https://github.com/vides119)
 - [Autres Participants](./Documentation/Participants.md)
 
 ---
