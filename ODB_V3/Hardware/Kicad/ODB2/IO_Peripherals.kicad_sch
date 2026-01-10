@@ -7648,7 +7648,7 @@
 		)
 		(uuid "0e3e3eb3-3039-4a49-8d7f-8822547e4372")
 	)
-	(text "Max consumption 80mA"
+	(text "Max consumption 44mA"
 		(exclude_from_sim no)
 		(at 257.556 64.516 0)
 		(effects
@@ -10584,7 +10584,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "620R"
+		(property "Value" "100R"
 			(at 113.792 104.14 90)
 			(effects
 				(font
@@ -11060,72 +11060,6 @@
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/93865dc8-71fa-4dc6-90ce-f5a9779dfd41"
 					(reference "#PWR0149")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_name "+3V3_1")
-		(lib_id "power:+3V3")
-		(at 196.85 74.93 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "20044fa6-5351-45ee-9b58-c8b3143ec630")
-		(property "Reference" "#PWR072"
-			(at 196.85 78.74 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+3V3"
-			(at 196.596 70.612 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 196.85 74.93 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 196.85 74.93 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+3V3\""
-			(at 196.85 74.93 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "86436571-763e-4439-ace6-c78c346b5879")
-		)
-		(instances
-			(project ""
-				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/93865dc8-71fa-4dc6-90ce-f5a9779dfd41"
-					(reference "#PWR072")
 					(unit 1)
 				)
 			)
@@ -11762,7 +11696,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+		(property "Footprint" "ODB:C_0402_1005Metric"
 			(at 43.18 140.97 0)
 			(effects
 				(font
@@ -12054,7 +11988,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "1k5"
+		(property "Value" "1.5k"
 			(at 155.956 40.386 90)
 			(effects
 				(font
@@ -12366,7 +12300,7 @@
 				)
 			)
 		)
-		(property "Value" "27R"
+		(property "Value" "100R"
 			(at 205.74 74.93 90)
 			(effects
 				(font
@@ -12488,7 +12422,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+		(property "Footprint" "ODB:C_0402_1005Metric"
 			(at 48.26 30.48 0)
 			(effects
 				(font
@@ -14325,7 +14259,7 @@
 				)
 			)
 		)
-		(property "Value" "1k5"
+		(property "Value" "1.5k"
 			(at 227.33 96.012 90)
 			(effects
 				(font
@@ -14448,7 +14382,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+		(property "Footprint" "ODB:C_0402_1005Metric"
 			(at 165.1 57.15 0)
 			(effects
 				(font
@@ -15182,7 +15116,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "620R"
+		(property "Value" "100R"
 			(at 70.358 95.758 90)
 			(effects
 				(font
@@ -15652,6 +15586,71 @@
 		)
 	)
 	(symbol
+		(lib_id "power:+5V")
+		(at 196.85 74.93 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "e5d58354-f305-47b7-af4e-d46b4b7f52a3")
+		(property "Reference" "#PWR061"
+			(at 196.85 78.74 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+5V"
+			(at 196.85 71.12 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 196.85 74.93 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 196.85 74.93 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+5V\""
+			(at 196.85 74.93 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "773713c5-84bb-454b-ae64-46a3c3fa3f75")
+		)
+		(instances
+			(project "ODB2"
+				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/93865dc8-71fa-4dc6-90ce-f5a9779dfd41"
+					(reference "#PWR061")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:L")
 		(at 147.32 140.97 90)
 		(unit 1)
@@ -16029,7 +16028,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+		(property "Footprint" "ODB:C_0402_1005Metric"
 			(at 132.08 148.59 0)
 			(effects
 				(font

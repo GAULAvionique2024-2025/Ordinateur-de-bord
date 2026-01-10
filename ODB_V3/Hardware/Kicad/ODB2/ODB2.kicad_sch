@@ -11973,7 +11973,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1k5"
+		(property "Value" "1.5k"
 			(at 383.794 34.544 90)
 			(effects
 				(font
@@ -16036,7 +16036,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+		(property "Footprint" "ODB:C_0402_1005Metric"
 			(at 148.2852 64.77 0)
 			(effects
 				(font
