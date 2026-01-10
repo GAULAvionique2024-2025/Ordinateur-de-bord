@@ -7925,6 +7925,12 @@
 		(uuid "37082f87-b12f-4b08-b247-291a19c20145")
 	)
 	(junction
+		(at 165.1 38.1)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "3c23bf88-d3f6-4e42-8916-d0a8c471026f")
+	)
+	(junction
 		(at 232.41 77.47)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -7935,6 +7941,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "47211f16-091a-460d-abd6-52da6fbed556")
+	)
+	(junction
+		(at 154.94 38.1)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "47b32928-404f-47a4-ae91-066923ed4c8b")
 	)
 	(junction
 		(at 132.08 138.43)
@@ -8208,7 +8220,7 @@
 	)
 	(wire
 		(pts
-			(xy 171.45 38.1) (xy 171.45 39.37)
+			(xy 175.26 38.1) (xy 175.26 39.37)
 		)
 		(stroke
 			(width 0)
@@ -8538,7 +8550,7 @@
 	)
 	(wire
 		(pts
-			(xy 43.18 119.38) (xy 46.99 119.38)
+			(xy 43.18 119.38) (xy 39.37 119.38)
 		)
 		(stroke
 			(width 0)
@@ -8595,6 +8607,16 @@
 			(type default)
 		)
 		(uuid "40a496d1-48e5-4557-a796-80b92434a38c")
+	)
+	(wire
+		(pts
+			(xy 154.94 38.1) (xy 156.21 38.1)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "42a5bed4-b04c-4fc6-acdf-25381af95ce0")
 	)
 	(wire
 		(pts
@@ -8678,6 +8700,16 @@
 	)
 	(wire
 		(pts
+			(xy 165.1 38.1) (xy 163.83 38.1)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4da2459e-9e3f-43fb-bd53-15552307e67a")
+	)
+	(wire
+		(pts
 			(xy 83.82 71.12) (xy 87.63 71.12)
 		)
 		(stroke
@@ -8758,6 +8790,16 @@
 	)
 	(wire
 		(pts
+			(xy 156.21 31.75) (xy 154.94 31.75)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "63990ecd-b145-4f4e-9be1-697110969b33")
+	)
+	(wire
+		(pts
 			(xy 129.54 156.21) (xy 134.62 156.21)
 		)
 		(stroke
@@ -8768,7 +8810,7 @@
 	)
 	(wire
 		(pts
-			(xy 152.4 38.1) (xy 153.67 38.1)
+			(xy 152.4 38.1) (xy 154.94 38.1)
 		)
 		(stroke
 			(width 0)
@@ -8838,13 +8880,23 @@
 	)
 	(wire
 		(pts
-			(xy 170.18 38.1) (xy 171.45 38.1)
+			(xy 173.99 38.1) (xy 175.26 38.1)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
 		(uuid "79ec0558-22b5-4ca3-abeb-3cdcee831083")
+	)
+	(wire
+		(pts
+			(xy 165.1 31.75) (xy 165.1 38.1)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7a7b2b02-24ae-4492-ae49-6cd90fd64659")
 	)
 	(wire
 		(pts
@@ -8958,7 +9010,7 @@
 	)
 	(wire
 		(pts
-			(xy 162.56 38.1) (xy 161.29 38.1)
+			(xy 166.37 38.1) (xy 165.1 38.1)
 		)
 		(stroke
 			(width 0)
@@ -9278,6 +9330,16 @@
 	)
 	(wire
 		(pts
+			(xy 163.83 31.75) (xy 165.1 31.75)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "caa69d98-649a-433d-a41d-0316370cc5c1")
+	)
+	(wire
+		(pts
 			(xy 255.27 154.94) (xy 256.54 154.94)
 		)
 		(stroke
@@ -9305,6 +9367,16 @@
 			(type default)
 		)
 		(uuid "ce3beb62-673c-4aaf-b2c5-9da7966a9a59")
+	)
+	(wire
+		(pts
+			(xy 154.94 31.75) (xy 154.94 38.1)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "cf0d5048-62a4-49b2-bef5-7e255b2dad35")
 	)
 	(wire
 		(pts
@@ -11000,7 +11072,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 171.45 39.37 0)
+		(at 175.26 39.37 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -11009,7 +11081,7 @@
 		(fields_autoplaced yes)
 		(uuid "1c2208ba-2331-4185-b23e-2f4c6085780c")
 		(property "Reference" "#PWR0149"
-			(at 171.45 45.72 0)
+			(at 175.26 45.72 0)
 			(effects
 				(font
 					(size 1 1)
@@ -11018,7 +11090,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 171.45 44.45 0)
+			(at 175.26 44.45 0)
 			(effects
 				(font
 					(size 1 1)
@@ -11027,7 +11099,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 171.45 39.37 0)
+			(at 175.26 39.37 0)
 			(effects
 				(font
 					(size 1 1)
@@ -11036,7 +11108,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 171.45 39.37 0)
+			(at 175.26 39.37 0)
 			(effects
 				(font
 					(size 1 1)
@@ -11045,7 +11117,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 171.45 39.37 0)
+			(at 175.26 39.37 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11972,7 +12044,7 @@
 	)
 	(symbol
 		(lib_id "Device:R")
-		(at 157.48 38.1 90)
+		(at 160.02 38.1 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -11980,7 +12052,7 @@
 		(dnp no)
 		(uuid "4410ff29-522a-4278-8c38-597357e9d4b5")
 		(property "Reference" "BT_R2"
-			(at 155.194 36.068 90)
+			(at 157.734 36.068 90)
 			(effects
 				(font
 					(size 1 1)
@@ -11989,7 +12061,7 @@
 			)
 		)
 		(property "Value" "1.5k"
-			(at 155.956 40.386 90)
+			(at 158.496 40.386 90)
 			(effects
 				(font
 					(size 1 1)
@@ -11998,7 +12070,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-			(at 157.48 39.878 90)
+			(at 160.02 39.878 90)
 			(effects
 				(font
 					(size 1 1)
@@ -12007,7 +12079,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 157.48 38.1 0)
+			(at 160.02 38.1 0)
 			(effects
 				(font
 					(size 1 1)
@@ -12016,7 +12088,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 157.48 38.1 0)
+			(at 160.02 38.1 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12025,7 +12097,7 @@
 			)
 		)
 		(property "DigiKey_Part_Number" ""
-			(at 157.48 38.1 90)
+			(at 160.02 38.1 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12034,7 +12106,7 @@
 			)
 		)
 		(property "Purchase-URL" ""
-			(at 157.48 38.1 90)
+			(at 160.02 38.1 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12043,7 +12115,7 @@
 			)
 		)
 		(property "Sim.Device" ""
-			(at 157.48 38.1 90)
+			(at 160.02 38.1 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12052,7 +12124,7 @@
 			)
 		)
 		(property "Sim.Pins" ""
-			(at 157.48 38.1 90)
+			(at 160.02 38.1 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12061,7 +12133,7 @@
 			)
 		)
 		(property "Sim.Type" ""
-			(at 157.48 38.1 90)
+			(at 160.02 38.1 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13173,7 +13245,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+		(property "Footprint" "ODB:R_0402_1005Metric"
 			(at 137.16 139.192 90)
 			(effects
 				(font
@@ -13926,7 +13998,7 @@
 	)
 	(symbol
 		(lib_id "Device:LED")
-		(at 166.37 38.1 180)
+		(at 170.18 38.1 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -13934,7 +14006,7 @@
 		(dnp no)
 		(uuid "93111817-1df1-4a54-9b9b-65e75ba051ab")
 		(property "Reference" "BT_LED1"
-			(at 162.814 35.56 0)
+			(at 166.624 35.56 0)
 			(effects
 				(font
 					(size 1 1)
@@ -13943,8 +14015,8 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "BLUE"
-			(at 164.592 35.56 0)
+		(property "Value" "GREEN"
+			(at 168.402 35.56 0)
 			(effects
 				(font
 					(size 1 1)
@@ -13953,7 +14025,7 @@
 			)
 		)
 		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
-			(at 166.37 38.1 0)
+			(at 170.18 38.1 0)
 			(effects
 				(font
 					(size 1 1)
@@ -13962,7 +14034,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 166.37 38.1 0)
+			(at 170.18 38.1 0)
 			(effects
 				(font
 					(size 1 1)
@@ -13971,7 +14043,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 166.37 38.1 0)
+			(at 170.18 38.1 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13980,7 +14052,7 @@
 			)
 		)
 		(property "DigiKey_Part_Number" ""
-			(at 166.37 38.1 0)
+			(at 170.18 38.1 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13989,7 +14061,7 @@
 			)
 		)
 		(property "Purchase-URL" ""
-			(at 166.37 38.1 0)
+			(at 170.18 38.1 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13998,7 +14070,7 @@
 			)
 		)
 		(property "Sim.Device" ""
-			(at 166.37 38.1 0)
+			(at 170.18 38.1 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14007,7 +14079,7 @@
 			)
 		)
 		(property "Sim.Pins" ""
-			(at 166.37 38.1 0)
+			(at 170.18 38.1 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14016,7 +14088,7 @@
 			)
 		)
 		(property "Sim.Type" ""
-			(at 166.37 38.1 0)
+			(at 170.18 38.1 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14169,6 +14241,120 @@
 			(project ""
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/93865dc8-71fa-4dc6-90ce-f5a9779dfd41"
 					(reference "#PWR073")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 160.02 31.75 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "9560c737-6861-430a-b7fe-08eebb76d132")
+		(property "Reference" "BT_R4"
+			(at 157.734 29.718 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "1.5k"
+			(at 158.496 34.036 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 160.02 33.528 90)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 160.02 31.75 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 160.02 31.75 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 160.02 31.75 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Purchase-URL" ""
+			(at 160.02 31.75 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Device" ""
+			(at 160.02 31.75 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Pins" ""
+			(at 160.02 31.75 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Type" ""
+			(at 160.02 31.75 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "5b6ecf40-9056-48f3-9f20-87dd6fb93005")
+		)
+		(pin "2"
+			(uuid "e2a3e8c9-018d-4429-b7c3-072a19c8ce49")
+		)
+		(instances
+			(project "ODB2"
+				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/93865dc8-71fa-4dc6-90ce-f5a9779dfd41"
+					(reference "BT_R4")
 					(unit 1)
 				)
 			)
