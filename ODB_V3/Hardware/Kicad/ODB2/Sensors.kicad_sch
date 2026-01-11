@@ -4717,7 +4717,7 @@
 		(dnp no)
 		(uuid "462d71f9-7f12-4702-b42e-3fdb840e34c3")
 		(property "Reference" "R82"
-			(at 137.16 45.212 0)
+			(at 135.636 45.212 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4725,7 +4725,7 @@
 			)
 		)
 		(property "Value" "5k 1%"
-			(at 135.128 46.99 0)
+			(at 136.652 46.99 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5313,7 +5313,7 @@
 		(dnp no)
 		(uuid "605c5604-796f-470d-b98c-2d65dcf9f2f1")
 		(property "Reference" "C34"
-			(at 118.618 43.434 0)
+			(at 119.126 44.958 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5322,7 +5322,7 @@
 			)
 		)
 		(property "Value" "100nF"
-			(at 118.618 45.212 0)
+			(at 118.872 49.276 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5622,7 +5622,7 @@
 		(dnp no)
 		(uuid "a18e109b-4a98-41ff-8de8-1d282046351a")
 		(property "Reference" "C51"
-			(at 46.736 58.928 90)
+			(at 45.212 60.452 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5631,7 +5631,7 @@
 			)
 		)
 		(property "Value" "1uF"
-			(at 44.958 60.706 90)
+			(at 44.958 66.548 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6093,7 +6093,7 @@
 		(dnp no)
 		(uuid "c51e8974-e564-4d11-a530-18001ad09c2e")
 		(property "Reference" "C35"
-			(at 40.132 41.148 90)
+			(at 36.068 41.148 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6102,7 +6102,7 @@
 			)
 		)
 		(property "Value" "100nF"
-			(at 39.116 42.926 90)
+			(at 37.338 43.18 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6803,7 +6803,7 @@
 		(dnp no)
 		(uuid "d71cf3d2-47ce-4136-8dc3-99c082d68d0d")
 		(property "Reference" "R83"
-			(at 147.32 45.212 0)
+			(at 145.542 45.212 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6811,7 +6811,7 @@
 			)
 		)
 		(property "Value" "5k 1%"
-			(at 145.288 46.99 0)
+			(at 146.812 46.99 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6915,7 +6915,7 @@
 		(dnp no)
 		(uuid "dde8d2cf-4334-4815-940d-3dcaf1eead4f")
 		(property "Reference" "R50"
-			(at 35.306 59.182 0)
+			(at 33.782 59.182 0)
 			(effects
 				(font
 					(size 1.27 1.27)

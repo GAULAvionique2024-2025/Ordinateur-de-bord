@@ -16948,7 +16948,7 @@
 		(fp_text user "*"
 			(at -2.250001 -1.27 90)
 			(layer "F.Fab")
-			(uuid "e51a36aa-8f75-4566-8f0d-68f01392616d")
+			(uuid "fe2e6697-4471-428a-a18a-ada795207f98")
 			(effects
 				(font
 					(size 1 1)
@@ -86073,6 +86073,14 @@
 		(uuid "7279ad8d-984c-4b4c-aadb-1709d4712d5c")
 	)
 	(segment
+		(start 150.084482 153.328035)
+		(end 150.084482 152.202918)
+		(width 0.254)
+		(layer "F.Cu")
+		(net 14)
+		(uuid "7ec7f2d5-7bd5-4585-85dc-3a17bcdfbaa1")
+	)
+	(segment
 		(start 150.0886 153.4922)
 		(end 150.0886 153.332153)
 		(width 0.2)
@@ -86095,14 +86103,6 @@
 		(layer "F.Cu")
 		(net 14)
 		(uuid "ae44560f-b03a-4546-b518-945d77662682")
-	)
-	(segment
-		(start 150.084482 153.328035)
-		(end 150.084482 152.482)
-		(width 0.254)
-		(layer "F.Cu")
-		(net 14)
-		(uuid "ba2c6740-9440-4a6a-92ca-db8b506d0502")
 	)
 	(segment
 		(start 131.556366 72.356366)
