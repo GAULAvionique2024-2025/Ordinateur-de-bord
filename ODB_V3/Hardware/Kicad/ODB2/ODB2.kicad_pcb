@@ -15529,6 +15529,17 @@
 		(sheetname "/Sensors/")
 		(sheetfile "Sensors.kicad_sch")
 		(attr smd)
+		(fp_circle
+			(center -2.7 -2.5)
+			(end -2.55 -2.5)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(fill yes)
+			(layer "F.SilkS")
+			(uuid "6a2dff60-af28-4b82-bdff-397afe5896ca")
+		)
 		(fp_poly
 			(pts
 				(xy -0.4405 2.0574) (xy -0.4405 2.3114) (xy -0.059499 2.3114) (xy -0.059499 2.0574)
@@ -16911,18 +16922,6 @@
 			(layer "F.Fab")
 			(uuid "9a772803-4f4e-4c57-ab21-d872aeb6e927")
 		)
-		(fp_text user "*"
-			(at -2.8 -2.3 270)
-			(unlocked yes)
-			(layer "F.SilkS")
-			(uuid "e9133d4d-5fc8-495d-8aac-b98a20ac68de")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 		(fp_text user "${REFERENCE}"
 			(at 0 0 270)
 			(unlocked yes)
@@ -16938,7 +16937,7 @@
 		(fp_text user "*"
 			(at -2.250001 -1.27 90)
 			(layer "F.Fab")
-			(uuid "884e729f-ffa8-422f-a3af-8ecad9ef8591")
+			(uuid "e51a36aa-8f75-4566-8f0d-68f01392616d")
 			(effects
 				(font
 					(size 1 1)
@@ -16947,7 +16946,7 @@
 			)
 		)
 		(fp_text user "*"
-			(at -2.250001 -1.27 270)
+			(at -2.250001 -1.27 90)
 			(layer "F.Fab")
 			(uuid "e51a36aa-8f75-4566-8f0d-68f01392616d")
 			(effects
@@ -23763,6 +23762,7 @@
 		(property "Reference" "C5"
 			(at 0 -1.16 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "c122777e-4bb1-486d-b42f-860a20e524f9")
 			(effects
 				(font
@@ -40200,6 +40200,7 @@
 			(at 0 0.1724 0)
 			(unlocked yes)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "999655bf-37b0-4963-b62a-6d59aecd827a")
 			(effects
 				(font
@@ -42885,6 +42886,7 @@
 		(property "Reference" "R3"
 			(at 0 -1.17 180)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "89a3bf50-a481-4b62-8c54-3e85934590ca")
 			(effects
 				(font
