@@ -114,6 +114,7 @@ class _NavBarPageState extends State<NavBarPage> {
   Widget build(BuildContext context) {
     final tabs = {
       'OverviewPage': OverviewPageWidget(),
+      'ConnectionPage': ConnectionPageWidget(),
       'StatisticsPage': StatisticsPageWidget(),
       'CommandsPage': CommandsPageWidget(),
     };
@@ -145,6 +146,18 @@ class _NavBarPageState extends State<NavBarPage> {
               size: 24.0,
             ),
             label: 'Overview',
+            tooltip: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.bluetooth_drive_outlined,
+              size: 24.0,
+            ),
+            activeIcon: Icon(
+              Icons.bluetooth_drive,
+              size: 24.0,
+            ),
+            label: 'Connection',
             tooltip: '',
           ),
           BottomNavigationBarItem(

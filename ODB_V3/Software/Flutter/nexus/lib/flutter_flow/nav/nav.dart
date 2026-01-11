@@ -73,6 +73,15 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                 : NavBarPage(
                     initialPage: 'CommandsPage',
                     page: CommandsPageWidget(),
+                  )),
+        FFRoute(
+            name: ConnectionPageWidget.routeName,
+            path: ConnectionPageWidget.routePath,
+            builder: (context, params) => params.isEmpty
+                ? NavBarPage(initialPage: 'ConnectionPage')
+                : NavBarPage(
+                    initialPage: 'ConnectionPage',
+                    page: ConnectionPageWidget(),
                   ))
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
