@@ -45,7 +45,7 @@ class _ConnectionPageWidgetState extends State<ConnectionPageWidget> {
 
   @override
   void dispose() {
-    // Stop scan via service if available
+    // Stop scan via service si disponible
     try {
       final svc = context.read<BluetoothServiceManager>();
       svc.stopScan();
@@ -97,71 +97,134 @@ class _ConnectionPageWidgetState extends State<ConnectionPageWidget> {
           key: scaffoldKey,
           backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
           body: SafeArea(
+            top: true,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
               child: SingleChildScrollView(
                 child: Column(
+                  mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(height: 24.0),
                     Row(
+                      mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Column(
+                          mainAxisSize: MainAxisSize.max,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               'Connexion',
                               style: FlutterFlowTheme.of(context)
                                   .displaySmall
-                                  .copyWith(fontSize: 28.0),
+                                  .override(
+                                    font: GoogleFonts.interTight(
+                                      fontWeight: FontWeight.bold,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .displaySmall
+                                          .fontStyle,
+                                    ),
+                                    fontSize: 28,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.bold,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .displaySmall
+                                        .fontStyle,
+                                  ),
                             ),
                             Text(
                               'Connexion de l\'application Nexus à l\'ODB',
-                              style: FlutterFlowTheme.of(context).bodyMedium,
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    font: GoogleFonts.inter(
+                                      fontWeight: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontWeight,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontStyle,
+                                    ),
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryText,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .fontStyle,
+                                  ),
                             ),
                           ],
                         ),
                         Icon(
                           Icons.settings,
                           color: FlutterFlowTheme.of(context).primaryText,
+                          size: 24,
                         ),
                       ],
                     ),
-                    const SizedBox(height: 16.0),
                     Container(
                       width: double.infinity,
-                      height: 500,
+                      height: 450,
                       decoration: BoxDecoration(
                         color: FlutterFlowTheme.of(context).secondaryBackground,
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
-                              blurRadius: 4.0,
-                              color: Colors.black.withValues(alpha: 0.2),
-                              offset: const Offset(0, 2)),
+                            blurRadius: 4,
+                            color: Color(0x33000000),
+                            offset: Offset(
+                              0,
+                              2,
+                            ),
+                          )
                         ],
-                        borderRadius: BorderRadius.circular(12.0),
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: Colors.transparent,
+                          width: 1,
+                        ),
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.all(16.0),
+                        padding: const EdgeInsets.all(16),
                         child: Column(
+                          mainAxisSize: MainAxisSize.max,
                           children: [
                             Row(
+                              mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Row(
+                                  mainAxisSize: MainAxisSize.max,
                                   children: [
                                     Icon(
                                       Icons.bluetooth,
-                                      color: FlutterFlowTheme.of(context).primary,
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
+                                      size: 24,
                                     ),
-                                    const SizedBox(width: 8),
                                     Text(
                                       'Scan Bluetooth',
                                       style: FlutterFlowTheme.of(context)
-                                          .titleMedium,
+                                          .titleMedium
+                                          .override(
+                                            font: GoogleFonts.interTight(
+                                              fontWeight: FontWeight.w600,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .titleMedium
+                                                      .fontStyle,
+                                            ),
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.w600,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .titleMedium
+                                                    .fontStyle,
+                                          ),
                                     ),
-                                  ],
+                                  ].divide(const SizedBox(width: 8)),
                                 ),
                                 Switch(
                                   value: bt.isScanning,
@@ -184,7 +247,10 @@ class _ConnectionPageWidgetState extends State<ConnectionPageWidget> {
                               textAlign: TextAlign.center,
                               style: FlutterFlowTheme.of(context).bodyMedium,
                             ),
-                            const Divider(),
+                            Divider(
+                              thickness: 1,
+                              color: FlutterFlowTheme.of(context).alternate,
+                            ),
                             Expanded(
                               child: ListView.builder(
                                 itemCount: bt.scanResults.length,
@@ -233,11 +299,65 @@ class _ConnectionPageWidgetState extends State<ConnectionPageWidget> {
                                   ),
                                 ),
                               ),
-                          ],
+                          ].divide(const SizedBox(height: 12)),
                         ),
                       ),
                     ),
-                  ],
+                    Container(
+                      width: double.infinity,
+                      height: 125,
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).secondaryBackground,
+                        boxShadow: const [
+                          BoxShadow(
+                            blurRadius: 4,
+                            color: Color(0x33000000),
+                            offset: Offset(
+                              0,
+                              2,
+                            ),
+                          )
+                        ],
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: Colors.transparent,
+                          width: 1,
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Expanded(
+                              child: ListView.builder(
+                                reverse: false,
+                                itemCount: bt.logs.length,
+                                itemBuilder: (context, index) {
+                                  final log = bt.logs[index];
+
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(vertical: 2.0),
+                                    child: Text(
+                                      log,
+                                      style: FlutterFlowTheme.of(context).bodySmall.override(
+                                            fontFamily: 'monospace',
+                                            fontSize: 12,
+                                            color: FlutterFlowTheme.of(context).secondaryText,
+                                          ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ].divide(const SizedBox(height: 12)),
+                        ),
+                      ),
+                    ),
+                  ]
+                      .divide(const SizedBox(height: 24))
+                      .addToStart(const SizedBox(height: 24))
+                      .addToEnd(const SizedBox(height: 24)),
                 ),
               ),
             ),

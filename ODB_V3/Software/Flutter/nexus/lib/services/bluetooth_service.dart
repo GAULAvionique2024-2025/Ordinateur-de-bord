@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 
 class BluetoothServiceManager with ChangeNotifier {
-  // STATE
+  // ---------- STATE ----------
   List<ScanResult> scanResults = [];
   bool isScanning = false;
 
@@ -11,26 +11,36 @@ class BluetoothServiceManager with ChangeNotifier {
   StreamSubscription<BluetoothConnectionState>? connectionSubscription;
   final Map<Guid, StreamSubscription<List<int>>> notifySubscriptions = {};
 
+  // ---------- LOGS ----------
+  final List<String> _logs = [];
+  List<String> get logs => List.unmodifiable(_logs);
+
   // ---------- SCAN ----------
   Future<void> startScan({Duration timeout = const Duration(seconds: 15)}) async {
     if (isScanning) return;
+
+    _addLog('Démarrage du scan Bluetooth');
 
     scanResults.clear();
     isScanning = true;
     notifyListeners();
 
-    // Listen to scan results stream
     FlutterBluePlus.scanResults.listen((results) {
       scanResults = results;
+      if (results.isNotEmpty) {
+        _addLog('${results.length} appareil(s) détecté(s)');
+      }
       notifyListeners();
     });
 
-    // Start scan (flutter_blue_plus handles timeouts)
     await FlutterBluePlus.startScan(timeout: timeout);
 
-    // Stop automatically when scanning ends
-    FlutterBluePlus.isScanning.where((val) => val == false).first.then((_) {
+    FlutterBluePlus.isScanning
+        .where((v) => v == false)
+        .first
+        .then((_) {
       isScanning = false;
+      _addLog('Scan Bluetooth terminé');
       notifyListeners();
     });
   }
@@ -41,12 +51,18 @@ class BluetoothServiceManager with ChangeNotifier {
     await FlutterBluePlus.stopScan();
     isScanning = false;
     scanResults.clear();
+    _addLog('Scan Bluetooth arrêté manuellement');
     notifyListeners();
   }
 
   // ---------- CONNECT ----------
   Future<void> connect(BluetoothDevice device) async {
+    final name =
+        device.platformName.isNotEmpty ? device.platformName : device.remoteId.str;
+
     try {
+      _addLog('Connexion à $name');
+
       await connectionSubscription?.cancel();
       await connectedDevice?.disconnect();
       await stopScan();
@@ -61,33 +77,47 @@ class BluetoothServiceManager with ChangeNotifier {
       notifyListeners();
 
       connectionSubscription = device.connectionState.listen((state) {
+        _addLog('État connexion: $state');
+
         if (state == BluetoothConnectionState.disconnected) {
           connectedDevice = null;
+          _addLog('Appareil déconnecté');
           notifyListeners();
         }
       });
 
-      // Discover services automatically
       await discoverServices();
+
+      _addLog('Connexion établie avec $name');
     } catch (e) {
-      debugPrint("Erreur connexion: $e");
+      _addLog('Erreur de connexion: $e');
+      debugPrint('Erreur connexion: $e');
       rethrow;
     }
   }
 
   Future<void> disconnect() async {
+    if (connectedDevice == null) {
+      _addLog('Aucun appareil à déconnecter');
+      return;
+    }
+
+    _addLog('Déconnexion en cours');
+
     await connectionSubscription?.cancel();
     connectionSubscription = null;
 
-    for (var sub in notifySubscriptions.values) {
+    for (final sub in notifySubscriptions.values) {
       await sub.cancel();
     }
     notifySubscriptions.clear();
 
     try {
-      await connectedDevice?.disconnect();
+      await connectedDevice!.disconnect();
+      _addLog('Déconnexion réussie');
     } catch (e) {
-      debugPrint("Erreur during disconnect: $e");
+      _addLog('Erreur déconnexion: $e');
+      debugPrint('Erreur disconnect: $e');
     } finally {
       connectedDevice = null;
       notifyListeners();
@@ -97,13 +127,19 @@ class BluetoothServiceManager with ChangeNotifier {
   // ---------- SERVICES ----------
   Future<void> discoverServices() async {
     if (connectedDevice == null) return;
-    List<BluetoothService> services = await connectedDevice!.discoverServices();
-    for (var service in services) {
-      for (var c in service.characteristics) {
+
+    _addLog('Découverte des services');
+
+    final services = await connectedDevice!.discoverServices();
+    _addLog('${services.length} service(s) trouvé(s)');
+
+    for (final service in services) {
+      for (final c in service.characteristics) {
         if (c.properties.notify) {
+          _addLog('Notification activée: ${c.uuid}');
           await enableNotifications(c, (data) {
-            String text = String.fromCharCodes(data);
-            debugPrint("Message reçu: $text");
+            final text = String.fromCharCodes(data);
+            _addLog('RX: $text');
           });
         }
       }
@@ -114,21 +150,33 @@ class BluetoothServiceManager with ChangeNotifier {
       BluetoothCharacteristic c, void Function(List<int>) onData) async {
     try {
       await c.setNotifyValue(true);
-      var sub = c.lastValueStream.listen(onData);
-      notifySubscriptions[c.uuid] = sub;
+      notifySubscriptions[c.uuid] = c.lastValueStream.listen(onData);
     } catch (e) {
-      debugPrint("Erreur enableNotifications: $e");
+      _addLog('Erreur notification ${c.uuid}: $e');
     }
   }
 
-  Future<void> sendMessage(BluetoothCharacteristic c, String message) async {
-    await c.write(message.codeUnits, withoutResponse: false);
+  Future<void> sendMessage(
+      BluetoothCharacteristic c, String message) async {
+    try {
+      await c.write(message.codeUnits, withoutResponse: false);
+      _addLog('TX: $message');
+    } catch (e) {
+      _addLog('Erreur envoi message: $e');
+    }
+  }
+
+  // ---------- LOG HELPER ----------
+  void _addLog(String message) {
+    final time = DateTime.now().toIso8601String().substring(11, 19);
+    _logs.insert(0, '[$time] $message');
+    notifyListeners();
   }
 
   @override
   void dispose() {
     connectionSubscription?.cancel();
-    for (var sub in notifySubscriptions.values) {
+    for (final sub in notifySubscriptions.values) {
       sub.cancel();
     }
     notifySubscriptions.clear();
