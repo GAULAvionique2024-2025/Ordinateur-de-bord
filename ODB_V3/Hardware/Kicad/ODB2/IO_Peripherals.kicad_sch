@@ -12629,7 +12629,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "5cf0c24a-edb2-48fb-80ce-6c1f17dd13ae")
-		(property "Reference" "J6"
+		(property "Reference" "U16"
 			(at 225.044 36.576 0)
 			(effects
 				(font
@@ -12740,7 +12740,7 @@
 		(instances
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/93865dc8-71fa-4dc6-90ce-f5a9779dfd41"
-					(reference "J6")
+					(reference "U16")
 					(unit 1)
 				)
 			)
