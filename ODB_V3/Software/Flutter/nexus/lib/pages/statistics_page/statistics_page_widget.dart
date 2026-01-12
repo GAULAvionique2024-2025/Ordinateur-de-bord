@@ -63,7 +63,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
           body: SafeArea(
             top: true,
             child: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+              padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
               child: SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
@@ -72,7 +72,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                     Container(
                       width: double.infinity,
                       decoration: BoxDecoration(
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
                             blurRadius: 4.0,
                             color: Color(0x33000000),
@@ -88,13 +88,13 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                             FlutterFlowTheme.of(context).accent1
                           ],
                           stops: [0.0, 1.0],
-                          begin: AlignmentDirectional(1.0, -1.0),
-                          end: AlignmentDirectional(-1.0, 1.0),
+                          begin: const AlignmentDirectional(1.0, -1.0),
+                          end: const AlignmentDirectional(-1.0, 1.0),
                         ),
                         borderRadius: BorderRadius.circular(16.0),
                       ),
                       child: Padding(
-                        padding: EdgeInsets.all(20.0),
+                        padding: const EdgeInsets.all(20.0),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           children: [
@@ -129,7 +129,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                           ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
                                           0.0, 4.0, 0.0, 0.0),
                                       child: Text(
                                         'Ordinateur de bord',
@@ -234,7 +234,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                     ),
                     GridView(
                       padding: EdgeInsets.zero,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 12.0,
                         mainAxisSpacing: 12.0,
@@ -263,7 +263,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                               ),
                             ),
                             child: Padding(
-                              padding: EdgeInsets.all(16.0),
+                              padding: const EdgeInsets.all(16.0),
                               child: Column(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment:
@@ -349,7 +349,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                                       .fontStyle,
                                             ),
                                       ),
-                                    ].divide(SizedBox(height: 4.0)),
+                                    ].divide(const SizedBox(height: 4.0)),
                                   ),
                                   Text(
                                     'ÉTAT ODB',
@@ -397,7 +397,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                               ),
                             ),
                             child: Padding(
-                              padding: EdgeInsets.all(16.0),
+                              padding: const EdgeInsets.all(16.0),
                               child: Column(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment:
@@ -483,7 +483,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                                       .fontStyle,
                                             ),
                                       ),
-                                    ].divide(SizedBox(height: 4.0)),
+                                    ].divide(const SizedBox(height: 4.0)),
                                   ),
                                   Text(
                                     'TEMPÉRATURE',
@@ -531,7 +531,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                               ),
                             ),
                             child: Padding(
-                              padding: EdgeInsets.all(16.0),
+                              padding: const EdgeInsets.all(16.0),
                               child: Column(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment:
@@ -640,7 +640,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                                       .fontStyle,
                                             ),
                                       ),
-                                    ].divide(SizedBox(height: 4.0)),
+                                    ].divide(const SizedBox(height: 4.0)),
                                   ),
                                   Text(
                                     'BATTERIE',
@@ -688,7 +688,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                               ),
                             ),
                             child: Padding(
-                              padding: EdgeInsets.all(16.0),
+                              padding: const EdgeInsets.all(16.0),
                               child: Column(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment:
@@ -794,7 +794,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                                           .fontStyle,
                                                 ),
                                           ),
-                                        ].divide(SizedBox(width: 8.0)),
+                                        ].divide(const SizedBox(width: 8.0)),
                                       ),
                                       Row(
                                         mainAxisSize: MainAxisSize.max,
@@ -831,7 +831,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                                           .fontStyle,
                                                 ),
                                           ),
-                                        ].divide(SizedBox(width: 8.0)),
+                                        ].divide(const SizedBox(width: 8.0)),
                                       ),
                                       Row(
                                         mainAxisSize: MainAxisSize.max,
@@ -868,7 +868,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                                           .fontStyle,
                                                 ),
                                           ),
-                                        ].divide(SizedBox(width: 8.0)),
+                                        ].divide(const SizedBox(width: 8.0)),
                                       ),
                                       Row(
                                         mainAxisSize: MainAxisSize.max,
@@ -908,9 +908,9 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                                           .fontStyle,
                                                 ),
                                           ),
-                                        ].divide(SizedBox(width: 8.0)),
+                                        ].divide(const SizedBox(width: 8.0)),
                                       ),
-                                    ].divide(SizedBox(height: 8.0)),
+                                    ].divide(const SizedBox(height: 8.0)),
                                   ),
                                   Text(
                                     'PYROTECHNIQUES',
@@ -960,13 +960,13 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                           ),
                         ),
                         child: Padding(
-                          padding: EdgeInsets.all(16.0),
+                          padding: const EdgeInsets.all(16.0),
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
                                     0.0, 0.0, 0.0, 12.0),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
@@ -1006,7 +1006,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                                         .fontStyle,
                                               ),
                                         ),
-                                      ].divide(SizedBox(width: 8.0)),
+                                      ].divide(const SizedBox(width: 8.0)),
                                     ),
                                     Container(
                                       width: 12.0,
@@ -1032,7 +1032,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                         children: [
                                           Padding(
                                             padding:
-                                                EdgeInsetsDirectional.fromSTEB(
+                                                const EdgeInsetsDirectional.fromSTEB(
                                                     0.0, 0.0, 0.0, 4.0),
                                             child: Text(
                                               'ACCÉLÉRATION',
@@ -1139,7 +1139,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                         children: [
                                           Padding(
                                             padding:
-                                                EdgeInsetsDirectional.fromSTEB(
+                                                const EdgeInsetsDirectional.fromSTEB(
                                                     0.0, 0.0, 0.0, 4.0),
                                             child: Text(
                                               'GYROSCOPE',
@@ -1246,7 +1246,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                         children: [
                                           Padding(
                                             padding:
-                                                EdgeInsetsDirectional.fromSTEB(
+                                                const EdgeInsetsDirectional.fromSTEB(
                                                     0.0, 0.0, 0.0, 4.0),
                                             child: Text(
                                               'MAGNÉTOMÈTRE',
@@ -1345,7 +1345,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                         ],
                                       ),
                                     ),
-                                  ].divide(SizedBox(width: 24.0)),
+                                  ].divide(const SizedBox(width: 24.0)),
                                 ),
                               ),
                             ],
@@ -1372,13 +1372,13 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                           ),
                         ),
                         child: Padding(
-                          padding: EdgeInsets.all(16.0),
+                          padding: const EdgeInsets.all(16.0),
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
                                     0.0, 0.0, 0.0, 12.0),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
@@ -1418,7 +1418,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                                         .fontStyle,
                                               ),
                                         ),
-                                      ].divide(SizedBox(width: 8.0)),
+                                      ].divide(const SizedBox(width: 8.0)),
                                     ),
                                     Container(
                                       width: 12.0,
@@ -1506,7 +1506,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                         ),
                                       ],
                                     ),
-                                  ].divide(SizedBox(width: 32.0)),
+                                  ].divide(const SizedBox(width: 32.0)),
                                 ),
                               ),
                             ],
@@ -1516,7 +1516,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                     ),
                     GridView(
                       padding: EdgeInsets.zero,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 12.0,
                         mainAxisSpacing: 12.0,
@@ -1545,7 +1545,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                               ),
                             ),
                             child: Padding(
-                              padding: EdgeInsets.all(16.0),
+                              padding: const EdgeInsets.all(16.0),
                               child: Column(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment:
@@ -1651,7 +1651,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                                       .fontStyle,
                                             ),
                                       ),
-                                    ].divide(SizedBox(height: 4.0)),
+                                    ].divide(const SizedBox(height: 4.0)),
                                   ),
                                   Text(
                                     'CARTE SD',
@@ -1699,7 +1699,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                               ),
                             ),
                             child: Padding(
-                              padding: EdgeInsets.all(16.0),
+                              padding: const EdgeInsets.all(16.0),
                               child: Column(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment:
@@ -1825,7 +1825,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                                       .fontStyle,
                                             ),
                                       ),
-                                    ].divide(SizedBox(height: 2.0)),
+                                    ].divide(const SizedBox(height: 2.0)),
                                   ),
                                   Text(
                                     'GPS',
@@ -1873,7 +1873,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                               ),
                             ),
                             child: Padding(
-                              padding: EdgeInsets.all(16.0),
+                              padding: const EdgeInsets.all(16.0),
                               child: Column(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment:
@@ -1985,7 +1985,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                                       .fontStyle,
                                             ),
                                       ),
-                                    ].divide(SizedBox(height: 4.0)),
+                                    ].divide(const SizedBox(height: 4.0)),
                                   ),
                                   Text(
                                     'BAROMÈTRE',
@@ -2017,9 +2017,9 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                       ],
                     ),
                   ]
-                      .divide(SizedBox(height: 16.0))
-                      .addToStart(SizedBox(height: 24.0))
-                      .addToEnd(SizedBox(height: 24.0)),
+                      .divide(const SizedBox(height: 16.0))
+                      .addToStart(const SizedBox(height: 24.0))
+                      .addToEnd(const SizedBox(height: 24.0)),
                 ),
               ),
             ),

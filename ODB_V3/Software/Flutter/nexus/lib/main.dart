@@ -8,6 +8,8 @@ import 'flutter_flow/flutter_flow_util.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'flutter_flow/nav/nav.dart';
 import 'index.dart';
+import 'package:provider/provider.dart';
+import 'services/bluetooth_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,7 +18,12 @@ void main() async {
 
   await FlutterFlowTheme.initialize();
 
-  runApp(MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => BluetoothServiceManager(),
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -64,7 +71,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'Nexus',
-      localizationsDelegates: [
+      localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
@@ -83,7 +90,7 @@ class _MyAppState extends State<MyApp> {
 }
 
 class NavBarPage extends StatefulWidget {
-  NavBarPage({
+  const NavBarPage({
     Key? key,
     this.initialPage,
     this.page,
@@ -113,10 +120,10 @@ class _NavBarPageState extends State<NavBarPage> {
   @override
   Widget build(BuildContext context) {
     final tabs = {
-      'OverviewPage': OverviewPageWidget(),
-      'ConnectionPage': ConnectionPageWidget(),
-      'StatisticsPage': StatisticsPageWidget(),
-      'CommandsPage': CommandsPageWidget(),
+      'OverviewPage': const OverviewPageWidget(),
+      'ConnectionPage': const ConnectionPageWidget(),
+      'StatisticsPage': const StatisticsPageWidget(),
+      'CommandsPage': const CommandsPageWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
 
@@ -135,7 +142,7 @@ class _NavBarPageState extends State<NavBarPage> {
         showSelectedLabels: false,
         showUnselectedLabels: false,
         type: BottomNavigationBarType.fixed,
-        items: <BottomNavigationBarItem>[
+        items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(
               Icons.home_outlined,

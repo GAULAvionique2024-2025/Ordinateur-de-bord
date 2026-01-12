@@ -67,5 +67,10 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>Bluetooth requis pour connecter l'appareil</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>Bluetooth requis pour connecter l'appareil</string>
+
 </dict>
 </plist>

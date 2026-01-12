@@ -57,7 +57,7 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
         body: SafeArea(
           top: true,
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+            padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
             child: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.max,
@@ -65,7 +65,7 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                   Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(
                           blurRadius: 4.0,
                           color: Color(0x33000000),
@@ -80,14 +80,14 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                           FlutterFlowTheme.of(context).primary,
                           FlutterFlowTheme.of(context).accent1
                         ],
-                        stops: [0.0, 1.0],
-                        begin: AlignmentDirectional(1.0, -1.0),
-                        end: AlignmentDirectional(-1.0, 1.0),
+                        stops: const [0.0, 1.0],
+                        begin: const AlignmentDirectional(1.0, -1.0),
+                        end: const AlignmentDirectional(-1.0, 1.0),
                       ),
                       borderRadius: BorderRadius.circular(16.0),
                     ),
                     child: Padding(
-                      padding: EdgeInsets.all(20.0),
+                      padding: const EdgeInsets.all(20.0),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         children: [
@@ -122,7 +122,7 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                                         ),
                                   ),
                                   Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
                                         0.0, 4.0, 0.0, 0.0),
                                     child: Text(
                                       'Ordinateur de bord',
@@ -228,7 +228,7 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                     width: double.infinity,
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).secondaryBackground,
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(
                           blurRadius: 4.0,
                           color: Color(0x33000000),
@@ -245,7 +245,7 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                       ),
                     ),
                     child: Padding(
-                      padding: EdgeInsets.all(20.0),
+                      padding: const EdgeInsets.all(20.0),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         children: [
@@ -302,7 +302,7 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                             builder: (context) {
                               if (true != null) {
                                 return Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 12.0, 0.0, 0.0),
                                   child: Column(
                                     mainAxisSize: MainAxisSize.max,
@@ -387,12 +387,12 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                                                       .fontStyle,
                                             ),
                                       ),
-                                    ].divide(SizedBox(height: 8.0)),
+                                    ].divide(const SizedBox(height: 8.0)),
                                   ),
                                 );
                               } else {
                                 return Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 12.0, 0.0, 0.0),
                                   child: Column(
                                     mainAxisSize: MainAxisSize.max,
@@ -457,7 +457,7 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                                                       .fontStyle,
                                             ),
                                       ),
-                                    ].divide(SizedBox(height: 8.0)),
+                                    ].divide(const SizedBox(height: 8.0)),
                                   ),
                                 );
                               }
@@ -476,7 +476,7 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                           decoration: BoxDecoration(
                             color: FlutterFlowTheme.of(context)
                                 .secondaryBackground,
-                            boxShadow: [
+                            boxShadow: const [
                               BoxShadow(
                                 blurRadius: 4.0,
                                 color: Color(0x33000000),
@@ -489,7 +489,7 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                             borderRadius: BorderRadius.circular(12.0),
                           ),
                           child: Padding(
-                            padding: EdgeInsets.all(16.0),
+                            padding: const EdgeInsets.all(16.0),
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -500,7 +500,7 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                                   size: 32.0,
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 8.0, 0.0, 4.0),
                                   child: Text(
                                     'Altitude',
@@ -555,7 +555,7 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                           decoration: BoxDecoration(
                             color: FlutterFlowTheme.of(context)
                                 .secondaryBackground,
-                            boxShadow: [
+                            boxShadow: const [
                               BoxShadow(
                                 blurRadius: 4.0,
                                 color: Color(0x33000000),
@@ -568,7 +568,7 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                             borderRadius: BorderRadius.circular(12.0),
                           ),
                           child: Padding(
-                            padding: EdgeInsets.all(16.0),
+                            padding: const EdgeInsets.all(16.0),
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -579,7 +579,7 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                                   size: 32.0,
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 8.0, 0.0, 4.0),
                                   child: Text(
                                     'Température',
@@ -628,13 +628,13 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                           ),
                         ),
                       ),
-                    ].divide(SizedBox(width: 16.0)),
+                    ].divide(const SizedBox(width: 16.0)),
                   ),
                   Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).secondaryBackground,
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(
                           blurRadius: 4.0,
                           color: Color(0x33000000),
@@ -647,12 +647,12 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                       borderRadius: BorderRadius.circular(16.0),
                     ),
                     child: Padding(
-                      padding: EdgeInsets.all(20.0),
+                      padding: const EdgeInsets.all(20.0),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 0.0, 16.0),
                             child: Text(
                               'Statuts Système',
@@ -674,7 +674,7 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 0.0, 8.0),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
@@ -738,13 +738,13 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                                                     .fontStyle,
                                           ),
                                     ),
-                                  ].divide(SizedBox(width: 8.0)),
+                                  ].divide(const SizedBox(width: 8.0)),
                                 ),
                               ],
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 0.0, 8.0),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
@@ -808,13 +808,13 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                                                     .fontStyle,
                                           ),
                                     ),
-                                  ].divide(SizedBox(width: 8.0)),
+                                  ].divide(const SizedBox(width: 8.0)),
                                 ),
                               ],
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 0.0, 8.0),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
@@ -878,7 +878,7 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                                                     .fontStyle,
                                           ),
                                     ),
-                                  ].divide(SizedBox(width: 8.0)),
+                                  ].divide(const SizedBox(width: 8.0)),
                                 ),
                               ],
                             ),
@@ -943,7 +943,7 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                                                   .fontStyle,
                                         ),
                                   ),
-                                ].divide(SizedBox(width: 8.0)),
+                                ].divide(const SizedBox(width: 8.0)),
                               ),
                             ],
                           ),
@@ -954,7 +954,7 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                   Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(
                           blurRadius: 4.0,
                           color: Color(0x33000000),
@@ -969,14 +969,14 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                           FlutterFlowTheme.of(context).primary,
                           FlutterFlowTheme.of(context).accent1
                         ],
-                        stops: [0.0, 1.0],
-                        begin: AlignmentDirectional(1.0, -1.0),
-                        end: AlignmentDirectional(-1.0, 1.0),
+                        stops: const [0.0, 1.0],
+                        begin: const AlignmentDirectional(1.0, -1.0),
+                        end: const AlignmentDirectional(-1.0, 1.0),
                       ),
                       borderRadius: BorderRadius.circular(16.0),
                     ),
                     child: Padding(
-                      padding: EdgeInsets.all(20.0),
+                      padding: const EdgeInsets.all(20.0),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         children: [
@@ -1011,7 +1011,7 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                                         ),
                                   ),
                                   Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
                                         0.0, 4.0, 0.0, 0.0),
                                     child: Text(
                                       'Initialisation complétée',
@@ -1055,7 +1055,7 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                             ],
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 0.0, 16.0, 0.0, 0.0),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
@@ -1064,13 +1064,13 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                                   child: Container(
                                     height: 40.0,
                                     decoration: BoxDecoration(
-                                      color: Color(0x40FFFFFF),
+                                      color: const Color(0x40FFFFFF),
                                       borderRadius: BorderRadius.circular(20.0),
                                     ),
                                     child: Align(
-                                      alignment: AlignmentDirectional(0.0, 0.0),
+                                      alignment: const AlignmentDirectional(0.0, 0.0),
                                       child: Padding(
-                                        padding: EdgeInsets.all(8.0),
+                                        padding: const EdgeInsets.all(8.0),
                                         child: Text(
                                           'Prêt pour le lancement',
                                           style: FlutterFlowTheme.of(context)
@@ -1099,7 +1099,7 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                                     ),
                                   ),
                                 ),
-                              ].divide(SizedBox(width: 12.0)),
+                              ].divide(const SizedBox(width: 12.0)),
                             ),
                           ),
                         ],
@@ -1107,9 +1107,9 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                     ),
                   ),
                 ]
-                    .divide(SizedBox(height: 24.0))
-                    .addToStart(SizedBox(height: 24.0))
-                    .addToEnd(SizedBox(height: 24.0)),
+                    .divide(const SizedBox(height: 24.0))
+                    .addToStart(const SizedBox(height: 24.0))
+                    .addToEnd(const SizedBox(height: 24.0)),
               ),
             ),
           ),

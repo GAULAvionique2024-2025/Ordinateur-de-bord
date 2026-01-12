@@ -55,7 +55,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
         body: SafeArea(
           top: true,
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+            padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
             child: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.max,
@@ -64,7 +64,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                   Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(
                           blurRadius: 4.0,
                           color: Color(0x33000000),
@@ -79,14 +79,14 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                           FlutterFlowTheme.of(context).primary,
                           FlutterFlowTheme.of(context).accent1
                         ],
-                        stops: [0.0, 1.0],
-                        begin: AlignmentDirectional(1.0, -1.0),
-                        end: AlignmentDirectional(-1.0, 1.0),
+                        stops: const [0.0, 1.0],
+                        begin: const AlignmentDirectional(1.0, -1.0),
+                        end: const AlignmentDirectional(-1.0, 1.0),
                       ),
                       borderRadius: BorderRadius.circular(16.0),
                     ),
                     child: Padding(
-                      padding: EdgeInsets.all(20.0),
+                      padding: const EdgeInsets.all(20.0),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         children: [
@@ -121,7 +121,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                                         ),
                                   ),
                                   Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
                                         0.0, 4.0, 0.0, 0.0),
                                     child: Text(
                                       'Ordinateur de bord',
@@ -232,7 +232,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                     width: double.infinity,
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).secondaryBackground,
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(
                           blurRadius: 4.0,
                           color: Color(0x33000000),
@@ -249,7 +249,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                       ),
                     ),
                     child: Padding(
-                      padding: EdgeInsets.all(16.0),
+                      padding: const EdgeInsets.all(16.0),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         children: [
@@ -317,14 +317,14 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                               ),
                               FFButtonWidget(
                                 onPressed: () {
-                                  print('Button pressed ...');
+                                  debugPrint('Button pressed ...');
                                 },
                                 text: 'Exécuter',
                                 options: FFButtonOptions(
                                   height: 36.0,
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       16.0, 0.0, 16.0, 0.0),
-                                  iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                  iconPadding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 0.0),
                                   color: FlutterFlowTheme.of(context).primary,
                                   textStyle: FlutterFlowTheme.of(context)
@@ -415,14 +415,14 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                               ),
                               FFButtonWidget(
                                 onPressed: () {
-                                  print('Button pressed ...');
+                                  debugPrint('Button pressed ...');
                                 },
                                 text: 'Exécuter',
                                 options: FFButtonOptions(
                                   height: 36.0,
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       16.0, 0.0, 16.0, 0.0),
-                                  iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                  iconPadding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 0.0),
                                   color: FlutterFlowTheme.of(context).primary,
                                   textStyle: FlutterFlowTheme.of(context)
@@ -513,14 +513,14 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                               ),
                               FFButtonWidget(
                                 onPressed: () {
-                                  print('Button pressed ...');
+                                  debugPrint('Button pressed ...');
                                 },
                                 text: 'Exécuter',
                                 options: FFButtonOptions(
                                   height: 36.0,
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       16.0, 0.0, 16.0, 0.0),
-                                  iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                  iconPadding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 0.0),
                                   color: FlutterFlowTheme.of(context).primary,
                                   textStyle: FlutterFlowTheme.of(context)
@@ -547,7 +547,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                               ),
                             ],
                           ),
-                        ].divide(SizedBox(height: 12.0)),
+                        ].divide(const SizedBox(height: 12.0)),
                       ),
                     ),
                   ),
@@ -570,7 +570,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                     width: double.infinity,
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).secondaryBackground,
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(
                           blurRadius: 4.0,
                           color: Color(0x33000000),
@@ -587,7 +587,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                       ),
                     ),
                     child: Padding(
-                      padding: EdgeInsets.all(16.0),
+                      padding: const EdgeInsets.all(16.0),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         children: [
@@ -655,14 +655,14 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                               ),
                               FFButtonWidget(
                                 onPressed: () {
-                                  print('Button pressed ...');
+                                  debugPrint('Button pressed ...');
                                 },
                                 text: 'Calibrer',
                                 options: FFButtonOptions(
                                   height: 36.0,
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       16.0, 0.0, 16.0, 0.0),
-                                  iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                  iconPadding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 0.0),
                                   color: FlutterFlowTheme.of(context).tertiary,
                                   textStyle: FlutterFlowTheme.of(context)
@@ -753,14 +753,14 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                               ),
                               FFButtonWidget(
                                 onPressed: () {
-                                  print('Button pressed ...');
+                                  debugPrint('Button pressed ...');
                                 },
                                 text: 'Calibrer',
                                 options: FFButtonOptions(
                                   height: 36.0,
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       16.0, 0.0, 16.0, 0.0),
-                                  iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                  iconPadding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 0.0),
                                   color: FlutterFlowTheme.of(context).tertiary,
                                   textStyle: FlutterFlowTheme.of(context)
@@ -787,7 +787,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                               ),
                             ],
                           ),
-                        ].divide(SizedBox(height: 12.0)),
+                        ].divide(const SizedBox(height: 12.0)),
                       ),
                     ),
                   ),
@@ -817,7 +817,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                       ),
                     ),
                     child: Padding(
-                      padding: EdgeInsets.all(16.0),
+                      padding: const EdgeInsets.all(16.0),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         children: [
@@ -827,7 +827,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                             children: [
                               Expanded(
                                 child: Align(
-                                  alignment: AlignmentDirectional(0.0, 0.0),
+                                  alignment: const AlignmentDirectional(0.0, 0.0),
                                   child: Column(
                                     mainAxisSize: MainAxisSize.max,
                                     crossAxisAlignment:
@@ -835,21 +835,21 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                                     children: [
                                       Align(
                                         alignment:
-                                            AlignmentDirectional(0.0, 0.0),
+                                            const AlignmentDirectional(0.0, 0.0),
                                         child: Padding(
-                                          padding: EdgeInsets.all(12.0),
+                                          padding: const EdgeInsets.all(12.0),
                                           child: FFButtonWidget(
                                             onPressed: () {
-                                              print('Button pressed ...');
+                                              debugPrint('Button pressed ...');
                                             },
                                             text: 'Verouiller',
                                             options: FFButtonOptions(
                                               width: 150.0,
                                               height: 40.0,
-                                              padding: EdgeInsetsDirectional
+                                              padding: const EdgeInsetsDirectional
                                                   .fromSTEB(
                                                       16.0, 0.0, 16.0, 0.0),
-                                              iconPadding: EdgeInsetsDirectional
+                                              iconPadding: const EdgeInsetsDirectional
                                                   .fromSTEB(0.0, 0.0, 0.0, 0.0),
                                               color:
                                                   FlutterFlowTheme.of(context)
@@ -894,7 +894,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                           GridView(
                             padding: EdgeInsets.zero,
                             gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
+                                const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2,
                               crossAxisSpacing: 12.0,
                               mainAxisSpacing: 12.0,
@@ -909,7 +909,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                                 decoration: BoxDecoration(
                                   color: FlutterFlowTheme.of(context)
                                       .secondaryBackground,
-                                  boxShadow: [
+                                  boxShadow: const [
                                     BoxShadow(
                                       blurRadius: 4.0,
                                       color: Color(0x33000000),
@@ -926,7 +926,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                                   ),
                                 ),
                                 child: Padding(
-                                  padding: EdgeInsets.all(16.0),
+                                  padding: const EdgeInsets.all(16.0),
                                   child: Column(
                                     mainAxisSize: MainAxisSize.max,
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -986,20 +986,20 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                                             ),
                                       ),
                                       Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
                                             0.0, 4.0, 0.0, 0.0),
                                         child: FFButtonWidget(
                                           onPressed: () {
-                                            print('Button pressed ...');
+                                            debugPrint('Button pressed ...');
                                           },
                                           text: 'Déclencher',
                                           options: FFButtonOptions(
                                             height: 28.0,
                                             padding:
-                                                EdgeInsetsDirectional.fromSTEB(
+                                                const EdgeInsetsDirectional.fromSTEB(
                                                     12.0, 0.0, 12.0, 0.0),
                                             iconPadding:
-                                                EdgeInsetsDirectional.fromSTEB(
+                                                const EdgeInsetsDirectional.fromSTEB(
                                                     0.0, 0.0, 0.0, 0.0),
                                             color: FlutterFlowTheme.of(context)
                                                 .error,
@@ -1043,7 +1043,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                                 decoration: BoxDecoration(
                                   color: FlutterFlowTheme.of(context)
                                       .secondaryBackground,
-                                  boxShadow: [
+                                  boxShadow: const [
                                     BoxShadow(
                                       blurRadius: 4.0,
                                       color: Color(0x33000000),
@@ -1060,7 +1060,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                                   ),
                                 ),
                                 child: Padding(
-                                  padding: EdgeInsets.all(16.0),
+                                  padding: const EdgeInsets.all(16.0),
                                   child: Column(
                                     mainAxisSize: MainAxisSize.max,
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -1120,20 +1120,20 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                                             ),
                                       ),
                                       Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
                                             0.0, 4.0, 0.0, 0.0),
                                         child: FFButtonWidget(
                                           onPressed: () {
-                                            print('Button pressed ...');
+                                            debugPrint('Button pressed ...');
                                           },
                                           text: 'Déclencher',
                                           options: FFButtonOptions(
                                             height: 28.0,
                                             padding:
-                                                EdgeInsetsDirectional.fromSTEB(
+                                                const EdgeInsetsDirectional.fromSTEB(
                                                     12.0, 0.0, 12.0, 0.0),
                                             iconPadding:
-                                                EdgeInsetsDirectional.fromSTEB(
+                                                const EdgeInsetsDirectional.fromSTEB(
                                                     0.0, 0.0, 0.0, 0.0),
                                             color: FlutterFlowTheme.of(context)
                                                 .error,
@@ -1177,7 +1177,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                                 decoration: BoxDecoration(
                                   color: FlutterFlowTheme.of(context)
                                       .secondaryBackground,
-                                  boxShadow: [
+                                  boxShadow: const [
                                     BoxShadow(
                                       blurRadius: 4.0,
                                       color: Color(0x33000000),
@@ -1194,7 +1194,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                                   ),
                                 ),
                                 child: Padding(
-                                  padding: EdgeInsets.all(16.0),
+                                  padding: const EdgeInsets.all(16.0),
                                   child: Column(
                                     mainAxisSize: MainAxisSize.max,
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -1254,20 +1254,20 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                                             ),
                                       ),
                                       Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
                                             0.0, 4.0, 0.0, 0.0),
                                         child: FFButtonWidget(
                                           onPressed: () {
-                                            print('Button pressed ...');
+                                            debugPrint('Button pressed ...');
                                           },
                                           text: 'Déclencher',
                                           options: FFButtonOptions(
                                             height: 28.0,
                                             padding:
-                                                EdgeInsetsDirectional.fromSTEB(
+                                                const EdgeInsetsDirectional.fromSTEB(
                                                     12.0, 0.0, 12.0, 0.0),
                                             iconPadding:
-                                                EdgeInsetsDirectional.fromSTEB(
+                                                const EdgeInsetsDirectional.fromSTEB(
                                                     0.0, 0.0, 0.0, 0.0),
                                             color: FlutterFlowTheme.of(context)
                                                 .error,
@@ -1311,7 +1311,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                                 decoration: BoxDecoration(
                                   color: FlutterFlowTheme.of(context)
                                       .secondaryBackground,
-                                  boxShadow: [
+                                  boxShadow: const [
                                     BoxShadow(
                                       blurRadius: 4.0,
                                       color: Color(0x33000000),
@@ -1328,7 +1328,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                                   ),
                                 ),
                                 child: Padding(
-                                  padding: EdgeInsets.all(16.0),
+                                  padding: const EdgeInsets.all(16.0),
                                   child: Column(
                                     mainAxisSize: MainAxisSize.max,
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -1388,20 +1388,20 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                                             ),
                                       ),
                                       Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
                                             0.0, 4.0, 0.0, 0.0),
                                         child: FFButtonWidget(
                                           onPressed: () {
-                                            print('Button pressed ...');
+                                            debugPrint('Button pressed ...');
                                           },
                                           text: 'Déclencher',
                                           options: FFButtonOptions(
                                             height: 28.0,
                                             padding:
-                                                EdgeInsetsDirectional.fromSTEB(
+                                                const EdgeInsetsDirectional.fromSTEB(
                                                     12.0, 0.0, 12.0, 0.0),
                                             iconPadding:
-                                                EdgeInsetsDirectional.fromSTEB(
+                                                const EdgeInsetsDirectional.fromSTEB(
                                                     0.0, 0.0, 0.0, 0.0),
                                             color: FlutterFlowTheme.of(context)
                                                 .error,
@@ -1450,7 +1450,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                     height: 165.5,
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).alternate,
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(
                           blurRadius: 4.0,
                           color: Color(0x33000000),
@@ -1463,13 +1463,13 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                       borderRadius: BorderRadius.circular(12.0),
                     ),
                     child: Padding(
-                      padding: EdgeInsets.all(16.0),
+                      padding: const EdgeInsets.all(16.0),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Align(
-                            alignment: AlignmentDirectional(-1.0, -1.0),
+                            alignment: const AlignmentDirectional(-1.0, -1.0),
                             child: Text(
                               'Dernière Réponse',
                               style: FlutterFlowTheme.of(context)
@@ -1517,9 +1517,9 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                     ),
                   ),
                 ]
-                    .divide(SizedBox(height: 16.0))
-                    .addToStart(SizedBox(height: 16.0))
-                    .addToEnd(SizedBox(height: 24.0)),
+                    .divide(const SizedBox(height: 16.0))
+                    .addToStart(const SizedBox(height: 16.0))
+                    .addToEnd(const SizedBox(height: 24.0)),
               ),
             ),
           ),
