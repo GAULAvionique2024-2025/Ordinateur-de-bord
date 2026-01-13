@@ -110,6 +110,10 @@ class _NavBarPageState extends State<NavBarPage> {
   String _currentPageName = 'OverviewPage';
   late Widget? _currentPage;
 
+  // Transitio bidirectionnel
+  int _previousIndex = 0;
+  int _currentIndex = 0;
+
   @override
   void initState() {
     super.initState();
@@ -125,14 +129,40 @@ class _NavBarPageState extends State<NavBarPage> {
       'StatisticsPage': const StatisticsPageWidget(),
       'CommandsPage': const CommandsPageWidget(),
     };
-    final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
+    _currentIndex = tabs.keys.toList().indexOf(_currentPageName);
 
     return Scaffold(
       resizeToAvoidBottomInset: !widget.disableResizeToAvoidBottomInset,
-      body: _currentPage ?? tabs[_currentPageName],
+      body: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 300),
+        switchInCurve: Curves.easeOutCubic,
+        switchOutCurve: Curves.easeInCubic,
+        transitionBuilder: (child, animation) {
+          final isForward = _currentIndex >= _previousIndex;
+
+          final beginOffset = isForward
+              ? const Offset(1.0, 0.0)   // slide depuis la droite
+              : const Offset(-1.0, 0.0); // slide depuis la gauche
+
+          return SlideTransition(
+            position: Tween<Offset>(
+              begin: beginOffset,
+              end: Offset.zero,
+            ).animate(animation),
+            child: child,
+          );
+        },
+        child: KeyedSubtree(
+          key: ValueKey(_currentPageName),
+          child: _currentPage ?? tabs[_currentPageName]!,
+        ),
+      ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: currentIndex,
+        currentIndex: _currentIndex,
         onTap: (i) => safeSetState(() {
+          _previousIndex = _currentIndex;
+          _currentIndex = i;
+
           _currentPage = null;
           _currentPageName = tabs.keys.toList()[i];
         }),

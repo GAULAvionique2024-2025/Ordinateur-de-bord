@@ -40,19 +40,19 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       navigatorKey: appNavigatorKey,
-      errorBuilder: (context, state) => NavBarPage(),
+      errorBuilder: (context, state) => const NavBarPage(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
-          builder: (context, _) => NavBarPage(),
+          builder: (context, _) => const NavBarPage(),
         ),
         FFRoute(
             name: StatisticsPageWidget.routeName,
             path: StatisticsPageWidget.routePath,
             builder: (context, params) => params.isEmpty
-                ? NavBarPage(initialPage: 'StatisticsPage')
-                : NavBarPage(
+                ? const NavBarPage(initialPage: 'StatisticsPage')
+                : const NavBarPage(
                     initialPage: 'StatisticsPage',
                     page: StatisticsPageWidget(),
                   )),
@@ -60,8 +60,8 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             name: OverviewPageWidget.routeName,
             path: OverviewPageWidget.routePath,
             builder: (context, params) => params.isEmpty
-                ? NavBarPage(initialPage: 'OverviewPage')
-                : NavBarPage(
+                ? const NavBarPage(initialPage: 'OverviewPage')
+                : const NavBarPage(
                     initialPage: 'OverviewPage',
                     page: OverviewPageWidget(),
                   )),
@@ -69,8 +69,8 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             name: CommandsPageWidget.routeName,
             path: CommandsPageWidget.routePath,
             builder: (context, params) => params.isEmpty
-                ? NavBarPage(initialPage: 'CommandsPage')
-                : NavBarPage(
+                ? const NavBarPage(initialPage: 'CommandsPage')
+                : const NavBarPage(
                     initialPage: 'CommandsPage',
                     page: CommandsPageWidget(),
                   )),
@@ -78,8 +78,8 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             name: ConnectionPageWidget.routeName,
             path: ConnectionPageWidget.routePath,
             builder: (context, params) => params.isEmpty
-                ? NavBarPage(initialPage: 'ConnectionPage')
-                : NavBarPage(
+                ? const NavBarPage(initialPage: 'ConnectionPage')
+                : const NavBarPage(
                     initialPage: 'ConnectionPage',
                     page: ConnectionPageWidget(),
                   ))
@@ -245,7 +245,7 @@ class TransitionInfo {
   final Duration duration;
   final Alignment? alignment;
 
-  static TransitionInfo appDefault() => TransitionInfo(hasTransition: false);
+  static TransitionInfo appDefault() => const TransitionInfo(hasTransition: false);
 }
 
 class RootPageContext {
