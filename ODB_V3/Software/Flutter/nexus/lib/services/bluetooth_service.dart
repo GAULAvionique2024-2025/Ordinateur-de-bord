@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
-import 'package:nexus/services/bluetooth_data_service.dart';
+import 'package:nexus/services/data_service.dart';
 
 class BluetoothServiceManager with ChangeNotifier {
   // ---------- STATE ----------

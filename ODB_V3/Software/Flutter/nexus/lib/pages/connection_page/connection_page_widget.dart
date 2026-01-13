@@ -11,7 +11,7 @@ import 'connection_page_model.dart';
 export 'connection_page_model.dart';
 import 'package:provider/provider.dart';
 import 'package:nexus/services/bluetooth_service.dart';
-import 'package:nexus/services/bluetooth_data_service.dart';
+import 'package:nexus/services/data_service.dart';
 
 class ConnectionPageWidget extends StatefulWidget {
   const ConnectionPageWidget({super.key});
