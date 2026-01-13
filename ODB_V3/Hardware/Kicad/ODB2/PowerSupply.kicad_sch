@@ -7908,7 +7908,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "ODB:LED_QBLP601-AG15"
 			(at 118.11 107.95 0)
 			(effects
 				(font
@@ -9493,7 +9493,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "ODB:LED_QBLP601-AG15"
 			(at 125.73 175.26 0)
 			(effects
 				(font
@@ -12586,7 +12586,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.tme.com/ca/en/details/xt30pw-f/dc-power-connectors/amass/"
 			(at 270.51 27.94 0)
 			(effects
 				(font
