@@ -10,7 +10,8 @@ import '/flutter_flow/flutter_flow_util.dart';
 import 'connection_page_model.dart';
 export 'connection_page_model.dart';
 import 'package:provider/provider.dart';
-import '../../services/bluetooth_service.dart';
+import 'package:nexus/services/bluetooth_service.dart';
+import 'package:nexus/services/bluetooth_data_service.dart';
 
 class ConnectionPageWidget extends StatefulWidget {
   const ConnectionPageWidget({super.key});
@@ -85,6 +86,7 @@ class _ConnectionPageWidgetState extends State<ConnectionPageWidget> {
   @override
   Widget build(BuildContext context) {
     final bt = context.watch<BluetoothServiceManager>();
+    final dataService = BluetoothDataService(bt);
 
     return GestureDetector(
       onTap: () {
@@ -271,7 +273,7 @@ class _ConnectionPageWidgetState extends State<ConnectionPageWidget> {
                                           ? null
                                           : () async {
                                               try {
-                                                await context.read<BluetoothServiceManager>().connect(device);
+                                                await context.read<BluetoothServiceManager>().connect(device, dataService);
                                               } catch (e) {
                                                 if (mounted) {
                                                   ScaffoldMessenger.of(context).showSnackBar(

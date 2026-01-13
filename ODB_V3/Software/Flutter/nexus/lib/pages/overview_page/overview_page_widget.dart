@@ -7,6 +7,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'overview_page_model.dart';
 export 'overview_page_model.dart';
+import 'package:nexus/services/bluetooth_service.dart';
+import 'package:nexus/widgets/status_bluetooth_card.dart';
 
 /// Créer un homepage.
 ///
@@ -44,8 +46,10 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
     super.dispose();
   }
 
-  @override
   Widget build(BuildContext context) {
+    final bt = context.watch<BluetoothServiceManager>();
+    final connected = bt.connectedDevice != null;
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -62,113 +66,7 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      boxShadow: const [
-                        BoxShadow(
-                          blurRadius: 4.0,
-                          color: Color(0x33000000),
-                          offset: Offset(
-                            0.0,
-                            2.0,
-                          ),
-                        )
-                      ],
-                      gradient: LinearGradient(
-                        colors: [
-                          FlutterFlowTheme.of(context).primary,
-                          FlutterFlowTheme.of(context).accent1
-                        ],
-                        stops: const [0.0, 1.0],
-                        begin: const AlignmentDirectional(1.0, -1.0),
-                        end: const AlignmentDirectional(-1.0, 1.0),
-                      ),
-                      borderRadius: BorderRadius.circular(16.0),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                mainAxisSize: MainAxisSize.max,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Statut Bluetooth',
-                                    style: FlutterFlowTheme.of(context)
-                                        .titleMedium
-                                        .override(
-                                          font: GoogleFonts.interTight(
-                                            fontWeight: FontWeight.w600,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .titleMedium
-                                                    .fontStyle,
-                                          ),
-                                          color:
-                                              FlutterFlowTheme.of(context).info,
-                                          letterSpacing: 0.0,
-                                          fontWeight: FontWeight.w600,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .titleMedium
-                                                  .fontStyle,
-                                        ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 4.0, 0.0, 0.0),
-                                    child: Text(
-                                      'Ordinateur de bord',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            font: GoogleFonts.inter(
-                                              fontWeight:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .fontWeight,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .fontStyle,
-                                            ),
-                                            color: FlutterFlowTheme.of(context)
-                                                .info,
-                                            letterSpacing: 0.0,
-                                            fontWeight:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMedium
-                                                    .fontWeight,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMedium
-                                                    .fontStyle,
-                                          ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Opacity(
-                                opacity: 0.8,
-                                child: Icon(
-                                  Icons.bluetooth_connected,
-                                  color: FlutterFlowTheme.of(context).info,
-                                  size: 32.0,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                  const StatusBluetoothCard(),
                   Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -223,249 +121,6 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                         ],
                       ),
                     ],
-                  ),
-                  Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).secondaryBackground,
-                      boxShadow: const [
-                        BoxShadow(
-                          blurRadius: 4.0,
-                          color: Color(0x33000000),
-                          offset: Offset(
-                            0.0,
-                            2.0,
-                          ),
-                        )
-                      ],
-                      borderRadius: BorderRadius.circular(16.0),
-                      border: Border.all(
-                        color: FlutterFlowTheme.of(context).alternate,
-                        width: 1.0,
-                      ),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Connexion Bluetooth',
-                                style: FlutterFlowTheme.of(context)
-                                    .titleMedium
-                                    .override(
-                                      font: GoogleFonts.interTight(
-                                        fontWeight: FontWeight.w600,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .titleMedium
-                                            .fontStyle,
-                                      ),
-                                      letterSpacing: 0.0,
-                                      fontWeight: FontWeight.w600,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .titleMedium
-                                          .fontStyle,
-                                    ),
-                              ),
-                              Builder(
-                                builder: (context) {
-                                  if (true != null) {
-                                    return Container(
-                                      width: 12.0,
-                                      height: 12.0,
-                                      decoration: BoxDecoration(
-                                        color: FlutterFlowTheme.of(context)
-                                            .success,
-                                        shape: BoxShape.circle,
-                                      ),
-                                    );
-                                  } else {
-                                    return Container(
-                                      width: 12.0,
-                                      height: 12.0,
-                                      decoration: BoxDecoration(
-                                        color:
-                                            FlutterFlowTheme.of(context).error,
-                                        shape: BoxShape.circle,
-                                      ),
-                                    );
-                                  }
-                                },
-                              ),
-                            ],
-                          ),
-                          Builder(
-                            builder: (context) {
-                              if (true != null) {
-                                return Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 12.0, 0.0, 0.0),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Connecté à:',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              font: GoogleFonts.inter(
-                                                fontWeight:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .fontWeight,
-                                                fontStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .fontStyle,
-                                              ),
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryText,
-                                              letterSpacing: 0.0,
-                                              fontWeight:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .fontWeight,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .fontStyle,
-                                            ),
-                                      ),
-                                      Text(
-                                        'ODB-001',
-                                        style: FlutterFlowTheme.of(context)
-                                            .titleSmall
-                                            .override(
-                                              font: GoogleFonts.interTight(
-                                                fontWeight: FontWeight.w600,
-                                                fontStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .titleSmall
-                                                        .fontStyle,
-                                              ),
-                                              letterSpacing: 0.0,
-                                              fontWeight: FontWeight.w600,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .titleSmall
-                                                      .fontStyle,
-                                            ),
-                                      ),
-                                      Text(
-                                        'Signal: Fort • Batterie: 85%',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodySmall
-                                            .override(
-                                              font: GoogleFonts.inter(
-                                                fontWeight:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodySmall
-                                                        .fontWeight,
-                                                fontStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodySmall
-                                                        .fontStyle,
-                                              ),
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .success,
-                                              letterSpacing: 0.0,
-                                              fontWeight:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodySmall
-                                                      .fontWeight,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodySmall
-                                                      .fontStyle,
-                                            ),
-                                      ),
-                                    ].divide(const SizedBox(height: 8.0)),
-                                  ),
-                                );
-                              } else {
-                                return Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 12.0, 0.0, 0.0),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Aucun ODB connecté',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              font: GoogleFonts.inter(
-                                                fontWeight:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .fontWeight,
-                                                fontStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .fontStyle,
-                                              ),
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .error,
-                                              letterSpacing: 0.0,
-                                              fontWeight:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .fontWeight,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .fontStyle,
-                                            ),
-                                      ),
-                                      Text(
-                                        'Appuyé sur le \"+\" pour connecter un ODB',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodySmall
-                                            .override(
-                                              font: GoogleFonts.inter(
-                                                fontWeight:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodySmall
-                                                        .fontWeight,
-                                                fontStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodySmall
-                                                        .fontStyle,
-                                              ),
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryText,
-                                              letterSpacing: 0.0,
-                                              fontWeight:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodySmall
-                                                      .fontWeight,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodySmall
-                                                      .fontStyle,
-                                            ),
-                                      ),
-                                    ].divide(const SizedBox(height: 8.0)),
-                                  ),
-                                );
-                              }
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
                   ),
                   Row(
                     mainAxisSize: MainAxisSize.max,
@@ -524,7 +179,7 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                                   ),
                                 ),
                                 Text(
-                                  '1247m',
+                                  connected ? '1247 m' : '—',
                                   style: FlutterFlowTheme.of(context)
                                       .headlineSmall
                                       .override(
@@ -535,8 +190,10 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                                                   .headlineSmall
                                                   .fontStyle,
                                         ),
-                                        color: FlutterFlowTheme.of(context)
-                                            .primary,
+                                        color: connected
+                                            ? FlutterFlowTheme.of(context).primary
+                                            : FlutterFlowTheme.of(context)
+                                                .secondaryText,
                                         letterSpacing: 0.0,
                                         fontWeight: FontWeight.bold,
                                         fontStyle: FlutterFlowTheme.of(context)
@@ -603,7 +260,7 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                                   ),
                                 ),
                                 Text(
-                                  '23°C',
+                                  connected ? '23°C' : '—',
                                   style: FlutterFlowTheme.of(context)
                                       .headlineSmall
                                       .override(
@@ -614,8 +271,10 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                                                   .headlineSmall
                                                   .fontStyle,
                                         ),
-                                        color: FlutterFlowTheme.of(context)
-                                            .tertiary,
+                                        color: connected
+                                            ? FlutterFlowTheme.of(context).tertiary
+                                            : FlutterFlowTheme.of(context)
+                                                .secondaryText,
                                         letterSpacing: 0.0,
                                         fontWeight: FontWeight.bold,
                                         fontStyle: FlutterFlowTheme.of(context)
@@ -630,7 +289,7 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                       ),
                     ].divide(const SizedBox(width: 16.0)),
                   ),
-                  Container(
+                 Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).secondaryBackground,
@@ -711,13 +370,15 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                                       width: 8.0,
                                       height: 8.0,
                                       decoration: BoxDecoration(
-                                        color: FlutterFlowTheme.of(context)
-                                            .success,
+                                        color: connected
+                                            ? FlutterFlowTheme.of(context).success
+                                            : FlutterFlowTheme.of(context)
+                                                .secondaryText,
                                         shape: BoxShape.circle,
                                       ),
                                     ),
                                     Text(
-                                      'En ligne',
+                                      connected ? 'En ligne' : 'Hors ligne',
                                       style: FlutterFlowTheme.of(context)
                                           .bodySmall
                                           .override(
@@ -728,8 +389,11 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                                                       .bodySmall
                                                       .fontStyle,
                                             ),
-                                            color: FlutterFlowTheme.of(context)
-                                                .success,
+                                            color: connected
+                                                ? FlutterFlowTheme.of(context)
+                                                    .success
+                                                : FlutterFlowTheme.of(context)
+                                                    .secondaryText,
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.w600,
                                             fontStyle:
@@ -743,6 +407,7 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                               ],
                             ),
                           ),
+                          // Réseau de capteurs
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 0.0, 8.0),
@@ -753,26 +418,7 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                                 Text(
                                   'Réseaux de capteurs',
                                   style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        font: GoogleFonts.inter(
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
-                                        ),
-                                        letterSpacing: 0.0,
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontStyle,
-                                      ),
+                                      .bodyMedium,
                                 ),
                                 Row(
                                   mainAxisSize: MainAxisSize.max,
@@ -781,13 +427,15 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                                       width: 8.0,
                                       height: 8.0,
                                       decoration: BoxDecoration(
-                                        color: FlutterFlowTheme.of(context)
-                                            .success,
+                                        color: connected
+                                            ? FlutterFlowTheme.of(context).success
+                                            : FlutterFlowTheme.of(context)
+                                                .secondaryText,
                                         shape: BoxShape.circle,
                                       ),
                                     ),
                                     Text(
-                                      'Actifs',
+                                      connected ? 'Actifs' : 'Indisponible',
                                       style: FlutterFlowTheme.of(context)
                                           .bodySmall
                                           .override(
@@ -798,8 +446,11 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                                                       .bodySmall
                                                       .fontStyle,
                                             ),
-                                            color: FlutterFlowTheme.of(context)
-                                                .success,
+                                            color: connected
+                                                ? FlutterFlowTheme.of(context)
+                                                    .success
+                                                : FlutterFlowTheme.of(context)
+                                                    .secondaryText,
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.w600,
                                             fontStyle:
@@ -813,6 +464,7 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                               ],
                             ),
                           ),
+                          // Connexion télémétrie
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 0.0, 8.0),
@@ -823,26 +475,7 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                                 Text(
                                   'Connexion à la télémétrie',
                                   style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        font: GoogleFonts.inter(
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
-                                        ),
-                                        letterSpacing: 0.0,
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontStyle,
-                                      ),
+                                      .bodyMedium,
                                 ),
                                 Row(
                                   mainAxisSize: MainAxisSize.max,
@@ -851,13 +484,15 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                                       width: 8.0,
                                       height: 8.0,
                                       decoration: BoxDecoration(
-                                        color: FlutterFlowTheme.of(context)
-                                            .success,
+                                        color: connected
+                                            ? FlutterFlowTheme.of(context).success
+                                            : FlutterFlowTheme.of(context)
+                                                .secondaryText,
                                         shape: BoxShape.circle,
                                       ),
                                     ),
                                     Text(
-                                      'Actif',
+                                      connected ? 'Actif' : 'Inactif',
                                       style: FlutterFlowTheme.of(context)
                                           .bodySmall
                                           .override(
@@ -868,8 +503,11 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                                                       .bodySmall
                                                       .fontStyle,
                                             ),
-                                            color: FlutterFlowTheme.of(context)
-                                                .success,
+                                            color: connected
+                                                ? FlutterFlowTheme.of(context)
+                                                    .success
+                                                : FlutterFlowTheme.of(context)
+                                                    .secondaryText,
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.w600,
                                             fontStyle:
@@ -883,6 +521,7 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                               ],
                             ),
                           ),
+                          // Batterie (exemple lié à la connexion)
                           Row(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -890,24 +529,7 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                               Text(
                                 'Niveau de batterie',
                                 style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      font: GoogleFonts.inter(
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontStyle,
-                                      ),
-                                      letterSpacing: 0.0,
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontStyle,
-                                    ),
+                                    .bodyMedium,
                               ),
                               Row(
                                 mainAxisSize: MainAxisSize.max,
@@ -916,13 +538,15 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                                     width: 8.0,
                                     height: 8.0,
                                     decoration: BoxDecoration(
-                                      color:
-                                          FlutterFlowTheme.of(context).primary,
+                                      color: connected
+                                          ? FlutterFlowTheme.of(context).primary
+                                          : FlutterFlowTheme.of(context)
+                                              .secondaryText,
                                       shape: BoxShape.circle,
                                     ),
                                   ),
                                   Text(
-                                    '12.7V',
+                                    connected ? '12.7V' : '—',
                                     style: FlutterFlowTheme.of(context)
                                         .bodySmall
                                         .override(
@@ -933,8 +557,11 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                                                     .bodySmall
                                                     .fontStyle,
                                           ),
-                                          color: FlutterFlowTheme.of(context)
-                                              .primary,
+                                          color: connected
+                                              ? FlutterFlowTheme.of(context)
+                                                  .primary
+                                              : FlutterFlowTheme.of(context)
+                                                  .secondaryText,
                                           letterSpacing: 0.0,
                                           fontWeight: FontWeight.w600,
                                           fontStyle:
@@ -951,6 +578,7 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                       ),
                     ),
                   ),
+                  // Carte de mission liée à la connexion Bluetooth
                   Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
@@ -1014,15 +642,15 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                                     padding: const EdgeInsetsDirectional.fromSTEB(
                                         0.0, 4.0, 0.0, 0.0),
                                     child: Text(
-                                      'Initialisation complétée',
+                                      // lié à la connexion Bluetooth
+                                      connected
+                                          ? 'Appareil connecté: ${bt.connectedDevice?.platformName ?? bt.connectedDevice?.remoteId.str}'
+                                          : 'En attente de connexion Bluetooth',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(
                                             font: GoogleFonts.inter(
-                                              fontWeight:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .fontWeight,
+                                              fontWeight: FontWeight.w600,
                                               fontStyle:
                                                   FlutterFlowTheme.of(context)
                                                       .bodyMedium
@@ -1031,10 +659,7 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                                             color: FlutterFlowTheme.of(context)
                                                 .info,
                                             letterSpacing: 0.0,
-                                            fontWeight:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMedium
-                                                    .fontWeight,
+                                            fontWeight: FontWeight.w600,
                                             fontStyle:
                                                 FlutterFlowTheme.of(context)
                                                     .bodyMedium
@@ -1047,8 +672,10 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                               Opacity(
                                 opacity: 0.8,
                                 child: Icon(
-                                  Icons.check_circle,
-                                  color: FlutterFlowTheme.of(context).info,
+                                  connected ? Icons.check_circle : Icons.bluetooth_disabled,
+                                  color: connected
+                                      ? FlutterFlowTheme.of(context).info
+                                      : FlutterFlowTheme.of(context).secondaryText,
                                   size: 32.0,
                                 ),
                               ),
@@ -1072,7 +699,7 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Text(
-                                          'Prêt pour le lancement',
+                                          connected ? 'Prêt pour le lancement' : 'En attente de connexion Bluetooth',
                                           style: FlutterFlowTheme.of(context)
                                               .bodySmall
                                               .override(

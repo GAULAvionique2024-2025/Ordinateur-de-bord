@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
+import 'package:nexus/services/bluetooth_data_service.dart';
 
 class BluetoothServiceManager with ChangeNotifier {
   // ---------- STATE ----------
@@ -19,7 +20,7 @@ class BluetoothServiceManager with ChangeNotifier {
   Future<void> startScan({Duration timeout = const Duration(seconds: 15)}) async {
     if (isScanning) return;
 
-    _addLog('Démarrage du scan Bluetooth');
+    addLog('Démarrage du scan Bluetooth');
 
     scanResults.clear();
     isScanning = true;
@@ -28,7 +29,7 @@ class BluetoothServiceManager with ChangeNotifier {
     FlutterBluePlus.scanResults.listen((results) {
       scanResults = results;
       if (results.isNotEmpty) {
-        _addLog('${results.length} appareil(s) détecté(s)');
+        addLog('${results.length} appareil(s) détecté(s)');
       }
       notifyListeners();
     });
@@ -40,7 +41,7 @@ class BluetoothServiceManager with ChangeNotifier {
         .first
         .then((_) {
       isScanning = false;
-      _addLog('Scan Bluetooth terminé');
+      addLog('Scan Bluetooth terminé');
       notifyListeners();
     });
   }
@@ -51,17 +52,17 @@ class BluetoothServiceManager with ChangeNotifier {
     await FlutterBluePlus.stopScan();
     isScanning = false;
     scanResults.clear();
-    _addLog('Scan Bluetooth arrêté manuellement');
+    addLog('Scan Bluetooth arrêté manuellement');
     notifyListeners();
   }
 
   // ---------- CONNECT ----------
-  Future<void> connect(BluetoothDevice device) async {
+  Future<void> connect(BluetoothDevice device, BluetoothDataService dataService) async {
     final name =
         device.platformName.isNotEmpty ? device.platformName : device.remoteId.str;
 
     try {
-      _addLog('Connexion à $name');
+      addLog('Connexion à $name');
 
       await connectionSubscription?.cancel();
       await connectedDevice?.disconnect();
@@ -77,20 +78,20 @@ class BluetoothServiceManager with ChangeNotifier {
       notifyListeners();
 
       connectionSubscription = device.connectionState.listen((state) {
-        _addLog('État connexion: $state');
+        addLog('État connexion: $state');
 
         if (state == BluetoothConnectionState.disconnected) {
           connectedDevice = null;
-          _addLog('Appareil déconnecté');
+          addLog('Appareil déconnecté');
           notifyListeners();
         }
       });
 
-      await discoverServices();
+      await discoverServices(dataService);
 
-      _addLog('Connexion établie avec $name');
+      addLog('Connexion établie avec $name');
     } catch (e) {
-      _addLog('Erreur de connexion: $e');
+      addLog('Erreur de connexion: $e');
       debugPrint('Erreur connexion: $e');
       rethrow;
     }
@@ -98,11 +99,11 @@ class BluetoothServiceManager with ChangeNotifier {
 
   Future<void> disconnect() async {
     if (connectedDevice == null) {
-      _addLog('Aucun appareil à déconnecter');
+      addLog('Aucun appareil à déconnecter');
       return;
     }
 
-    _addLog('Déconnexion en cours');
+    addLog('Déconnexion en cours');
 
     await connectionSubscription?.cancel();
     connectionSubscription = null;
@@ -114,9 +115,9 @@ class BluetoothServiceManager with ChangeNotifier {
 
     try {
       await connectedDevice!.disconnect();
-      _addLog('Déconnexion réussie');
+      addLog('Déconnexion réussie');
     } catch (e) {
-      _addLog('Erreur déconnexion: $e');
+      addLog('Erreur déconnexion: $e');
       debugPrint('Erreur disconnect: $e');
     } finally {
       connectedDevice = null;
@@ -125,34 +126,42 @@ class BluetoothServiceManager with ChangeNotifier {
   }
 
   // ---------- SERVICES ----------
-  Future<void> discoverServices() async {
+  Future<void> discoverServices(BluetoothDataService dataService) async {
     if (connectedDevice == null) return;
 
-    _addLog('Découverte des services');
+    addLog('Découverte des services');
 
     final services = await connectedDevice!.discoverServices();
-    _addLog('${services.length} service(s) trouvé(s)');
+    addLog('${services.length} service(s) trouvé(s)');
 
     for (final service in services) {
       for (final c in service.characteristics) {
         if (c.properties.notify) {
-          _addLog('Notification activée: ${c.uuid}');
-          await enableNotifications(c, (data) {
-            final text = String.fromCharCodes(data);
-            _addLog('RX: $text');
-          });
+          addLog('Notification activée: ${c.uuid}');
+          await enableNotifications(c, dataService);
         }
       }
     }
   }
 
   Future<void> enableNotifications(
-      BluetoothCharacteristic c, void Function(List<int>) onData) async {
+    BluetoothCharacteristic c,
+    BluetoothDataService dataService,
+  ) async {
     try {
       await c.setNotifyValue(true);
-      notifySubscriptions[c.uuid] = c.lastValueStream.listen(onData);
+
+      var sub = c.lastValueStream.listen((data) {
+        final text = String.fromCharCodes(data);
+        addLog("Message reçu: $text");
+
+        // Appel du parser pour extraire et stocker les données
+        dataService.parseMessage(text);
+      });
+
+      notifySubscriptions[c.uuid] = sub;
     } catch (e) {
-      _addLog('Erreur notification ${c.uuid}: $e');
+      addLog("Erreur enableNotifications: $e");
     }
   }
 
@@ -160,14 +169,14 @@ class BluetoothServiceManager with ChangeNotifier {
       BluetoothCharacteristic c, String message) async {
     try {
       await c.write(message.codeUnits, withoutResponse: false);
-      _addLog('TX: $message');
+      addLog('TX: $message');
     } catch (e) {
-      _addLog('Erreur envoi message: $e');
+      addLog('Erreur envoi message: $e');
     }
   }
 
   // ---------- LOG HELPER ----------
-  void _addLog(String message) {
+  void addLog(String message) {
     final time = DateTime.now().toIso8601String().substring(11, 19);
     _logs.insert(0, '[$time] $message');
     notifyListeners();

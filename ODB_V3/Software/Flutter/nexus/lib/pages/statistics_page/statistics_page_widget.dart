@@ -7,6 +7,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'statistics_page_model.dart';
 export 'statistics_page_model.dart';
+import 'package:nexus/services/bluetooth_service.dart';
+import 'package:nexus/widgets/status_bluetooth_card.dart';
 
 /// Créer un page pour montrer les statistiques et les états de l'ordinateur
 /// de bord.
@@ -50,6 +52,9 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final bt = context.watch<BluetoothServiceManager>();
+    final connected = bt.connectedDevice != null;
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -69,114 +74,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        boxShadow: const [
-                          BoxShadow(
-                            blurRadius: 4.0,
-                            color: Color(0x33000000),
-                            offset: Offset(
-                              0.0,
-                              2.0,
-                            ),
-                          )
-                        ],
-                        gradient: LinearGradient(
-                          colors: [
-                            FlutterFlowTheme.of(context).primary,
-                            FlutterFlowTheme.of(context).accent1
-                          ],
-                          stops: [0.0, 1.0],
-                          begin: const AlignmentDirectional(1.0, -1.0),
-                          end: const AlignmentDirectional(-1.0, 1.0),
-                        ),
-                        borderRadius: BorderRadius.circular(16.0),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Statut Bluetooth',
-                                      style: FlutterFlowTheme.of(context)
-                                          .titleMedium
-                                          .override(
-                                            font: GoogleFonts.interTight(
-                                              fontWeight: FontWeight.w600,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .titleMedium
-                                                      .fontStyle,
-                                            ),
-                                            color: FlutterFlowTheme.of(context)
-                                                .info,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w600,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .titleMedium
-                                                    .fontStyle,
-                                          ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 4.0, 0.0, 0.0),
-                                      child: Text(
-                                        'Ordinateur de bord',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              font: GoogleFonts.inter(
-                                                fontWeight:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .fontWeight,
-                                                fontStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .fontStyle,
-                                              ),
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .info,
-                                              letterSpacing: 0.0,
-                                              fontWeight:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .fontWeight,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .fontStyle,
-                                            ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Opacity(
-                                  opacity: 0.8,
-                                  child: Icon(
-                                    Icons.bluetooth_connected,
-                                    color: FlutterFlowTheme.of(context).info,
-                                    size: 32.0,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                    const StatusBluetoothCard(),
                     Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -285,8 +183,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                         width: 12.0,
                                         height: 12.0,
                                         decoration: BoxDecoration(
-                                          color: FlutterFlowTheme.of(context)
-                                              .success,
+                                          color: connected ? FlutterFlowTheme.of(context).success : FlutterFlowTheme.of(context).warning,
                                           shape: BoxShape.circle,
                                         ),
                                       ),
@@ -298,7 +195,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        'Opérationnel',
+                                        connected ? 'Opérationnel' : 'Hors ligne',
                                         style: FlutterFlowTheme.of(context)
                                             .titleMedium
                                             .override(
@@ -321,7 +218,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                             ),
                                       ),
                                       Text(
-                                        'Tous systèmes OK',
+                                        connected ? 'Tous systèmes OK' : 'En attente de connexion Bluetooth',
                                         style: FlutterFlowTheme.of(context)
                                             .bodySmall
                                             .override(
@@ -419,8 +316,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                         width: 12.0,
                                         height: 12.0,
                                         decoration: BoxDecoration(
-                                          color: FlutterFlowTheme.of(context)
-                                              .success,
+                                          color: connected ? FlutterFlowTheme.of(context).success : FlutterFlowTheme.of(context).warning,
                                           shape: BoxShape.circle,
                                         ),
                                       ),
@@ -432,7 +328,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        '23.5°C',
+                                        connected ? '23.5°C' : '—',
                                         style: FlutterFlowTheme.of(context)
                                             .titleLarge
                                             .override(
@@ -455,7 +351,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                             ),
                                       ),
                                       Text(
-                                        'Température normale',
+                                        connected ? 'Température normale' : '—',
                                         style: FlutterFlowTheme.of(context)
                                             .bodySmall
                                             .override(
@@ -553,8 +449,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                         width: 12.0,
                                         height: 12.0,
                                         decoration: BoxDecoration(
-                                          color: FlutterFlowTheme.of(context)
-                                              .success,
+                                          color: connected ? FlutterFlowTheme.of(context).success : FlutterFlowTheme.of(context).warning,
                                           shape: BoxShape.circle,
                                         ),
                                       ),
@@ -566,7 +461,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        '12.4V',
+                                        connected ? '12.4V' : '—',
                                         style: FlutterFlowTheme.of(context)
                                             .titleLarge
                                             .override(
@@ -589,7 +484,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                             ),
                                       ),
                                       Text(
-                                        '85%',
+                                        connected ? '85%' : '—',
                                         style: FlutterFlowTheme.of(context)
                                             .bodySmall
                                             .override(
@@ -618,7 +513,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                             ),
                                       ),
                                       Text(
-                                        'Good Power',
+                                        connected ? 'Good Power' : '—',
                                         style: FlutterFlowTheme.of(context)
                                             .bodySmall
                                             .override(
@@ -707,7 +602,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                         size: 24.0,
                                       ),
                                       Text(
-                                        '3/4',
+                                        connected ? '3/4' : '—',
                                         style: FlutterFlowTheme.of(context)
                                             .bodySmall
                                             .override(
@@ -730,7 +625,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                             ),
                                       ),
                                       Text(
-                                        'Verrouiller',
+                                        connected ? 'Verrouiller' : 'N/A',
                                         style: FlutterFlowTheme.of(context)
                                             .bodySmall
                                             .override(
@@ -767,8 +662,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                             height: 8.0,
                                             decoration: BoxDecoration(
                                               color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .success,
+                                                  connected ? FlutterFlowTheme.of(context).success : FlutterFlowTheme.of(context).warning,
                                               shape: BoxShape.circle,
                                             ),
                                           ),
@@ -804,8 +698,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                             height: 8.0,
                                             decoration: BoxDecoration(
                                               color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .success,
+                                                  connected ? FlutterFlowTheme.of(context).success : FlutterFlowTheme.of(context).warning,
                                               shape: BoxShape.circle,
                                             ),
                                           ),
@@ -841,8 +734,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                             height: 8.0,
                                             decoration: BoxDecoration(
                                               color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .success,
+                                                  connected ? FlutterFlowTheme.of(context).success : FlutterFlowTheme.of(context).warning,
                                               shape: BoxShape.circle,
                                             ),
                                           ),
@@ -878,8 +770,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                             height: 8.0,
                                             decoration: BoxDecoration(
                                               color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .error,
+                                                  connected ? FlutterFlowTheme.of(context).success : FlutterFlowTheme.of(context).warning,
                                               shape: BoxShape.circle,
                                             ),
                                           ),
@@ -896,9 +787,6 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                                             .bodySmall
                                                             .fontStyle,
                                                   ),
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .secondaryText,
                                                   letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w500,
                                                   fontStyle:
@@ -1012,8 +900,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                       width: 12.0,
                                       height: 12.0,
                                       decoration: BoxDecoration(
-                                        color: FlutterFlowTheme.of(context)
-                                            .success,
+                                        color: connected ? FlutterFlowTheme.of(context).success : FlutterFlowTheme.of(context).warning,
                                         shape: BoxShape.circle,
                                       ),
                                     ),
@@ -1063,7 +950,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                             ),
                                           ),
                                           Text(
-                                            'X: 0.12 g',
+                                            connected ? 'X: 0.12 g' : '—',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -1085,7 +972,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                                 ),
                                           ),
                                           Text(
-                                            'Y: -0.05 g',
+                                            connected ? 'Y: -0.05 g' : '—',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -1107,7 +994,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                                 ),
                                           ),
                                           Text(
-                                            'Z: 9.81 g',
+                                            connected ? 'Z: 9.81 g' : '—',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -1170,7 +1057,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                             ),
                                           ),
                                           Text(
-                                            'X: 0.2°/s',
+                                            connected ? 'X: 0.2°/s' : '-',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -1192,7 +1079,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                                 ),
                                           ),
                                           Text(
-                                            'Y: -0.1°/s',
+                                            connected ? 'Y: -0.1°/s' : '-',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -1214,7 +1101,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                                 ),
                                           ),
                                           Text(
-                                            'Z: 0.0°/s',
+                                            connected ? 'Z: 0.0°/s' : '-',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -1277,7 +1164,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                             ),
                                           ),
                                           Text(
-                                            'X: 25.3 µT',
+                                            connected ? 'X: 25.3 µT' : '—',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -1299,7 +1186,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                                 ),
                                           ),
                                           Text(
-                                            'Y: -12.1 µT',
+                                            connected ? 'Y: -12.1 µT' : '—',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -1321,7 +1208,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                                 ),
                                           ),
                                           Text(
-                                            'Z: 42.8 µT',
+                                            connected ? 'Z: 42.8 µT' : '—',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -1361,7 +1248,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                       ),
                       child: Container(
                         width: double.infinity,
-                        height: 120.0,
+                        height: 140.0,
                         decoration: BoxDecoration(
                           color:
                               FlutterFlowTheme.of(context).secondaryBackground,
@@ -1424,8 +1311,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                       width: 12.0,
                                       height: 12.0,
                                       decoration: BoxDecoration(
-                                        color: FlutterFlowTheme.of(context)
-                                            .success,
+                                        color: connected ? FlutterFlowTheme.of(context).success : FlutterFlowTheme.of(context).warning,
                                         shape: BoxShape.circle,
                                       ),
                                     ),
@@ -1442,7 +1328,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          'X: 1.2 g',
+                                          connected ? 'X: 1.2 g' : '—',
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
@@ -1463,7 +1349,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                               ),
                                         ),
                                         Text(
-                                          'Y: -0.8 g',
+                                          connected ? 'Y: -0.8 g' : '—',
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
@@ -1484,7 +1370,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                               ),
                                         ),
                                         Text(
-                                          'Z: 15.3 g',
+                                          connected ? 'Z: 15.3 g' : '—',
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
@@ -1567,8 +1453,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                         width: 12.0,
                                         height: 12.0,
                                         decoration: BoxDecoration(
-                                          color: FlutterFlowTheme.of(context)
-                                              .success,
+                                          color: connected ? FlutterFlowTheme.of(context).success : FlutterFlowTheme.of(context).warning,
                                           shape: BoxShape.circle,
                                         ),
                                       ),
@@ -1580,7 +1465,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        '18.5 GB libre',
+                                        connected ? '18.5 GB libre' : '—',
                                         style: FlutterFlowTheme.of(context)
                                             .titleMedium
                                             .override(
@@ -1600,7 +1485,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                             ),
                                       ),
                                       Text(
-                                        '32 GB',
+                                        connected ? '32 GB' : '—',
                                         style: FlutterFlowTheme.of(context)
                                             .bodySmall
                                             .override(
@@ -1629,7 +1514,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                             ),
                                       ),
                                       Text(
-                                        'Écriture active',
+                                        connected ? 'Écriture active' : 'N/A',
                                         style: FlutterFlowTheme.of(context)
                                             .bodySmall
                                             .override(
@@ -1721,8 +1606,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                         width: 12.0,
                                         height: 12.0,
                                         decoration: BoxDecoration(
-                                          color: FlutterFlowTheme.of(context)
-                                              .success,
+                                          color: connected ? FlutterFlowTheme.of(context).success : FlutterFlowTheme.of(context).warning,
                                           shape: BoxShape.circle,
                                         ),
                                       ),
@@ -1734,7 +1618,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        '45.7640° N',
+                                        connected ? '45.7640° N' : '—',
                                         style: FlutterFlowTheme.of(context)
                                             .bodySmall
                                             .override(
@@ -1754,7 +1638,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                             ),
                                       ),
                                       Text(
-                                        '4.8357° E',
+                                        connected ? '4.8357° E' : '—',
                                         style: FlutterFlowTheme.of(context)
                                             .bodySmall
                                             .override(
@@ -1774,7 +1658,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                             ),
                                       ),
                                       Text(
-                                        'Alt: 1247 m',
+                                        connected ? 'Alt: 1247 m' : '—',
                                         style: FlutterFlowTheme.of(context)
                                             .bodySmall
                                             .override(
@@ -1803,7 +1687,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                             ),
                                       ),
                                       Text(
-                                        '4 satellites',
+                                        connected ? '4 satellites' : '—',
                                         style: FlutterFlowTheme.of(context)
                                             .bodySmall
                                             .override(
@@ -1895,8 +1779,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                         width: 12.0,
                                         height: 12.0,
                                         decoration: BoxDecoration(
-                                          color: FlutterFlowTheme.of(context)
-                                              .success,
+                                          color: connected ? FlutterFlowTheme.of(context).success : FlutterFlowTheme.of(context).warning,
                                           shape: BoxShape.circle,
                                         ),
                                       ),
@@ -1908,7 +1791,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        '1013.2',
+                                        connected ? '1013.2' : '—',
                                         style: FlutterFlowTheme.of(context)
                                             .titleMedium
                                             .override(
@@ -1957,7 +1840,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                             ),
                                       ),
                                       Text(
-                                        'Alt: 1245 m',
+                                        connected ? 'Alt: 1245 m' : '—',
                                         style: FlutterFlowTheme.of(context)
                                             .bodySmall
                                             .override(
