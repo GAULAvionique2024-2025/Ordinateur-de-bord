@@ -5262,7 +5262,7 @@
 		)
 		(uuid "1c130337-ea8d-4e5a-9a7e-1103a68d08d4")
 	)
-	(text "Power good protection, block the ignition if the power is not above 5.06v\nif V_{in} > 5.06 = Power good\n\nV_{ref} = ${/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372/a7ab30b6-1c68-4176-964a-109ef5b035cc:VALUE} * ${/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372/0614f46a-a67b-4246-947a-398bbcc78170:VALUE} / (${/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372/0f2812a9-637d-4404-af99-83782ba39a65:VALUE} + ${/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372/0614f46a-a67b-4246-947a-398bbcc78170:VALUE}) = 0.66v\nif V_{in} = 5.06 * ${/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372/92df379c-8a9d-4d9f-9702-735544800e14:VALUE} / (${/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372/5b502a14-d9e3-41e2-90ff-41e203b68768:VALUE} + ${/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372/92df379c-8a9d-4d9f-9702-735544800e14:VALUE}) = 0.66v\n"
+	(text "Power good protection, block the ignition if the power is not above 5.00v\nif V_{in} > 5.0 = Power good\n\nV_{ref} = 5V * ${/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372/0614f46a-a67b-4246-947a-398bbcc78170:VALUE} / (${/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372/0f2812a9-637d-4404-af99-83782ba39a65:VALUE} + ${/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372/0614f46a-a67b-4246-947a-398bbcc78170:VALUE}) = 1.0v\nif V_{in} = 5V * ${/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372/92df379c-8a9d-4d9f-9702-735544800e14:VALUE} / (${/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372/5b502a14-d9e3-41e2-90ff-41e203b68768:VALUE} + ${/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372/92df379c-8a9d-4d9f-9702-735544800e14:VALUE}) = 1.0v\n"
 		(exclude_from_sim no)
 		(at 16.764 84.582 0)
 		(effects
@@ -8811,6 +8811,15 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Part_Number" "SI5442DU-T1-GE3"
+			(at 109.22 177.8 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "4"
 			(uuid "a8c4796f-0deb-4bed-a370-b8c0a222bcf1")
 		)
@@ -8949,6 +8958,15 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Part_Number" "RT0603BRE075KL"
+			(at 33.02 58.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "dec93faa-5d38-4bd2-b6dc-496c33e18821")
 		)
@@ -9055,6 +9073,15 @@
 			)
 		)
 		(property "Sim.Type" ""
+			(at 29.21 181.61 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RG1608P-273-B-T5"
 			(at 29.21 181.61 0)
 			(effects
 				(font
@@ -9228,7 +9255,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "B0530WS RRG"
+		(property "Value" "NSR0620P2T5G"
 			(at 69.088 109.982 90)
 			(effects
 				(font
@@ -9246,7 +9273,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.digikey.ca/en/products/detail/taiwan-semiconductor-corporation/B0530WS-RRG/7357154"
+		(property "Datasheet" "https://www.digikey.ca/en/products/detail/onsemi/NSR0620P2T5G/1961246"
 			(at 67.31 110.49 0)
 			(effects
 				(font
@@ -9264,7 +9291,7 @@
 				(hide yes)
 			)
 		)
-		(property "DigiKey_Part_Number" "B0530WSRRGCT-ND"
+		(property "DigiKey_Part_Number" "NSR0620P2T5GOSCT-ND"
 			(at 67.31 110.49 90)
 			(effects
 				(font
@@ -9301,6 +9328,15 @@
 			)
 		)
 		(property "Sim.Type" ""
+			(at 67.31 110.49 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "NSR0620P2T5G"
 			(at 67.31 110.49 90)
 			(effects
 				(font
@@ -9415,6 +9451,15 @@
 			)
 		)
 		(property "Sim.Type" ""
+			(at 129.54 171.45 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RG1608P-273-B-T5"
 			(at 129.54 171.45 0)
 			(effects
 				(font
@@ -9596,6 +9641,15 @@
 			)
 		)
 		(property "Sim.Type" ""
+			(at 33.02 40.64 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "ERA-3AEB203V"
 			(at 33.02 40.64 0)
 			(effects
 				(font
@@ -10132,6 +10186,15 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Part_Number" "URG1608L-152-L-T05"
+			(at 102.87 177.8 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "4784ac9a-8561-4588-8dd6-4c7b2514e55d")
 		)
@@ -10380,6 +10443,15 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Part_Number" "ERA-3AEB184V"
+			(at 53.34 115.57 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "55074f11-4ddb-466e-af69-efc5bee6f0ce")
 		)
@@ -10486,6 +10558,15 @@
 			)
 		)
 		(property "Sim.Type" ""
+			(at 250.19 54.61 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RG1608P-273-B-T5"
 			(at 250.19 54.61 90)
 			(effects
 				(font
@@ -10673,6 +10754,15 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Part_Number" "RC0603FR-0710KL"
+			(at 218.44 34.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "d80834b3-37f0-4fca-9e78-2200cb38e892")
 		)
@@ -10779,6 +10869,15 @@
 			)
 		)
 		(property "Sim.Type" ""
+			(at 66.04 171.45 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "CC0402KRX5R9BB104"
 			(at 66.04 171.45 0)
 			(effects
 				(font
@@ -10901,6 +11000,15 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Part_Number" "RC0603FR-0710KL"
+			(at 205.74 57.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "831e031c-f9a2-4fa8-9b3d-ab2dfdf7d7b2")
 		)
@@ -11015,6 +11123,15 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Part_Number" "GRM188R6YA106MA73D"
+			(at 60.96 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "5b1bf8e5-85b1-4782-bfbb-56a4d413ffa6")
 		)
@@ -11121,6 +11238,15 @@
 			)
 		)
 		(property "Sim.Type" ""
+			(at 60.96 123.19 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RG1608P-273-B-T5"
 			(at 60.96 123.19 0)
 			(effects
 				(font
@@ -11375,6 +11501,15 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Part_Number" "CC0402KRX5R9BB104"
+			(at 134.62 123.19 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "7f55e920-e4f1-41eb-9cd2-ebf16d808e56")
 		)
@@ -11408,7 +11543,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "B0530WS RRG"
+		(property "Value" "NSR0620P2T5G"
 			(at 68.834 157.988 90)
 			(effects
 				(font
@@ -11426,7 +11561,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.digikey.ca/en/products/detail/taiwan-semiconductor-corporation/B0530WS-RRG/7357154"
+		(property "Datasheet" "https://www.digikey.ca/en/products/detail/onsemi/NSR0620P2T5G/1961246"
 			(at 67.31 158.75 0)
 			(effects
 				(font
@@ -11444,7 +11579,7 @@
 				(hide yes)
 			)
 		)
-		(property "DigiKey_Part_Number" "B0530WSRRGCT-ND"
+		(property "DigiKey_Part_Number" "NSR0620P2T5GOSCT-ND"
 			(at 67.31 158.75 90)
 			(effects
 				(font
@@ -11481,6 +11616,15 @@
 			)
 		)
 		(property "Sim.Type" ""
+			(at 67.31 158.75 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "NSR0620P2T5G"
 			(at 67.31 158.75 90)
 			(effects
 				(font
@@ -11865,6 +12009,15 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Part_Number" "GRM188R6YA106MA73D"
+			(at 60.96 153.67 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "cb8552ef-22fa-4851-9c9e-87e9afa84c08")
 		)
@@ -12044,6 +12197,15 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Part_Number" "URG1608L-152-L-T05"
+			(at 34.29 177.8 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "d145f47d-51e1-4860-91fb-21eb041458e1")
 		)
@@ -12150,6 +12312,15 @@
 			)
 		)
 		(property "Sim.Type" ""
+			(at 27.94 40.64 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "ERA-3AEB203V"
 			(at 27.94 40.64 0)
 			(effects
 				(font
@@ -12339,6 +12510,15 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Part_Number" "GRM188R6YA106MA73D"
+			(at 129.54 153.67 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "5f6b8167-0a70-4518-9ee8-1d79dc3fd5f1")
 		)
@@ -12520,7 +12700,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "B0530WS RRG"
+		(property "Value" "NSR0620P2T5G"
 			(at 24.892 120.142 90)
 			(effects
 				(font
@@ -12538,7 +12718,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.digikey.ca/en/products/detail/taiwan-semiconductor-corporation/B0530WS-RRG/7357154"
+		(property "Datasheet" "https://www.digikey.ca/en/products/detail/onsemi/NSR0620P2T5G/1961246"
 			(at 39.37 118.11 0)
 			(effects
 				(font
@@ -12556,7 +12736,7 @@
 				(hide yes)
 			)
 		)
-		(property "DigiKey_Part_Number" "B0530WSRRGCT-ND"
+		(property "DigiKey_Part_Number" "NSR0620P2T5GOSCT-ND"
 			(at 39.37 118.11 90)
 			(effects
 				(font
@@ -12593,6 +12773,15 @@
 			)
 		)
 		(property "Sim.Type" ""
+			(at 39.37 118.11 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "NSR0620P2T5G"
 			(at 39.37 118.11 90)
 			(effects
 				(font
@@ -12715,6 +12904,15 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Part_Number" "CC0402KRX5R9BB104"
+			(at 250.19 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "a1717e9f-0659-40ec-a08c-27f7f6eac958")
 		)
@@ -12813,7 +13011,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "B0530WS RRG"
+		(property "Value" "NSR0620P2T5G"
 			(at 24.892 168.402 90)
 			(effects
 				(font
@@ -12831,7 +13029,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.digikey.ca/en/products/detail/taiwan-semiconductor-corporation/B0530WS-RRG/7357154"
+		(property "Datasheet" "https://www.digikey.ca/en/products/detail/onsemi/NSR0620P2T5G/1961246"
 			(at 39.37 166.37 0)
 			(effects
 				(font
@@ -12849,7 +13047,7 @@
 				(hide yes)
 			)
 		)
-		(property "DigiKey_Part_Number" "B0530WSRRGCT-ND"
+		(property "DigiKey_Part_Number" "NSR0620P2T5GOSCT-ND"
 			(at 39.37 166.37 90)
 			(effects
 				(font
@@ -12886,6 +13084,15 @@
 			)
 		)
 		(property "Sim.Type" ""
+			(at 39.37 166.37 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "NSR0620P2T5G"
 			(at 39.37 166.37 90)
 			(effects
 				(font
@@ -13169,6 +13376,15 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Part_Number" "MMBT3904LT1G"
+			(at 215.9 49.53 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "6f26ee5d-ea0e-4171-ad8a-566b48dc21f8")
 		)
@@ -13280,6 +13496,15 @@
 			)
 		)
 		(property "Sim.Type" ""
+			(at 109.22 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "SI5442DU-T1-GE3"
 			(at 109.22 129.54 0)
 			(effects
 				(font
@@ -13426,6 +13651,15 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Part_Number" "URG1608L-152-L-T05"
+			(at 102.87 129.54 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "ff7b0c9e-3c48-47e6-86d9-4af9fd9a9210")
 		)
@@ -13533,6 +13767,15 @@
 			)
 		)
 		(property "Sim.Type" ""
+			(at 226.06 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "SI7617DN-T1-GE3"
 			(at 226.06 33.02 0)
 			(effects
 				(font
@@ -13813,7 +14056,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "3k 1%"
+		(property "Value" "5k 1%"
 			(at 17.526 59.436 0)
 			(effects
 				(font
@@ -13831,7 +14074,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.digikey.ca/en/products/detail/susumu/RG1608P-302-B-T5/1240549"
+		(property "Datasheet" "https://www.digikey.ca/en/products/detail/yageo/RT0603BRE075KL/7708365"
 			(at 27.94 58.42 0)
 			(effects
 				(font
@@ -13849,7 +14092,7 @@
 				(hide yes)
 			)
 		)
-		(property "DigiKey_Part_Number" "RG16P3.0KBCT-ND"
+		(property "DigiKey_Part_Number" "13-RT0603BRE075KLCT-ND"
 			(at 27.94 58.42 0)
 			(effects
 				(font
@@ -13886,6 +14129,15 @@
 			)
 		)
 		(property "Sim.Type" ""
+			(at 27.94 58.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RT0603BRE075KL"
 			(at 27.94 58.42 0)
 			(effects
 				(font
@@ -14075,6 +14327,15 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Part_Number" "ERA-3AEB184V"
+			(at 121.92 163.83 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "07fd2fe4-7113-48a0-8468-89f3d9b416d0")
 		)
@@ -14181,6 +14442,15 @@
 			)
 		)
 		(property "Sim.Type" ""
+			(at 121.92 115.57 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "ERA-3AEB184V"
 			(at 121.92 115.57 90)
 			(effects
 				(font
@@ -14303,6 +14573,15 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Part_Number" "CC0402KRX5R9BB104"
+			(at 66.04 123.19 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "7ae00f76-a8a1-4ccb-aa5e-6c2e7464bc5f")
 		)
@@ -14409,6 +14688,15 @@
 			)
 		)
 		(property "Sim.Type" ""
+			(at 181.61 119.38 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "1725711"
 			(at 181.61 119.38 0)
 			(effects
 				(font
@@ -14684,6 +14972,15 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Part_Number" "SI5442DU-T1-GE3"
+			(at 40.64 177.8 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "4"
 			(uuid "1befa2fc-f19e-4f08-b919-af559dfca7e0")
 		)
@@ -14822,6 +15119,15 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Part_Number" "ERA-3AEB184V"
+			(at 262.89 54.61 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "f5f1ec95-1618-471a-9d82-17ee5422bec4")
 		)
@@ -14928,6 +15234,15 @@
 			)
 		)
 		(property "Sim.Type" ""
+			(at 97.79 181.61 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RG1608P-273-B-T5"
 			(at 97.79 181.61 0)
 			(effects
 				(font
@@ -15050,6 +15365,15 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Part_Number" "RG1608P-273-B-T5"
+			(at 29.21 133.35 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "c8d56284-443a-4e58-81f6-cd98c3b56a99")
 		)
@@ -15060,71 +15384,6 @@
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "R58")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:+3V3")
-		(at 33.02 34.29 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "a7ab30b6-1c68-4176-964a-109ef5b035cc")
-		(property "Reference" "#PWR024"
-			(at 33.02 38.1 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+3V3"
-			(at 33.02 30.48 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 33.02 34.29 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 33.02 34.29 0)
-			(effects
-				(font
-					(size 1 1)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 33.02 34.29 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "e9d6cefe-efcc-41a0-b405-662bc354426f")
-		)
-		(instances
-			(project "ODB2"
-				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
-					(reference "#PWR024")
 					(unit 1)
 				)
 			)
@@ -15296,6 +15555,15 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Part_Number" "CC0402KRX5R9BB104"
+			(at 134.62 171.45 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "c55b49f1-3393-4efb-b2a2-2801814eef32")
 		)
@@ -15402,6 +15670,15 @@
 			)
 		)
 		(property "Sim.Type" ""
+			(at 129.54 123.19 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RG1608P-273-B-T5"
 			(at 129.54 123.19 0)
 			(effects
 				(font
@@ -15591,6 +15868,15 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Part_Number" "GRM188R6YA106MA73D"
+			(at 129.54 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "8dcf51c9-37f4-4b7a-a187-fd2fd10aaa5b")
 		)
@@ -15697,6 +15983,15 @@
 			)
 		)
 		(property "Sim.Type" ""
+			(at 97.79 133.35 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RG1608P-273-B-T5"
 			(at 97.79 133.35 0)
 			(effects
 				(font
@@ -15814,6 +16109,15 @@
 			)
 		)
 		(property "Sim.Type" ""
+			(at 40.64 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "SI5442DU-T1-GE3"
 			(at 40.64 129.54 0)
 			(effects
 				(font
@@ -16027,6 +16331,15 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Part_Number" "ERA-3AEB184V"
+			(at 53.34 163.83 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "b2d7e910-9f60-419b-a492-361ffc2dc9a7")
 		)
@@ -16133,6 +16446,15 @@
 			)
 		)
 		(property "Sim.Type" ""
+			(at 199.39 49.53 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "URG1608L-152-L-T05"
 			(at 199.39 49.53 90)
 			(effects
 				(font
@@ -16602,6 +16924,15 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Part_Number" "RG1608P-273-B-T5"
+			(at 60.96 171.45 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "f1021566-83f5-4ea3-b50c-0ac5a5e6b439")
 		)
@@ -16635,7 +16966,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "B0530WS RRG"
+		(property "Value" "NSR0620P2T5G"
 			(at 93.472 120.142 90)
 			(effects
 				(font
@@ -16653,7 +16984,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.digikey.ca/en/products/detail/taiwan-semiconductor-corporation/B0530WS-RRG/7357154"
+		(property "Datasheet" "https://www.digikey.ca/en/products/detail/onsemi/NSR0620P2T5G/1961246"
 			(at 107.95 118.11 0)
 			(effects
 				(font
@@ -16671,7 +17002,7 @@
 				(hide yes)
 			)
 		)
-		(property "DigiKey_Part_Number" "B0530WSRRGCT-ND"
+		(property "DigiKey_Part_Number" "NSR0620P2T5GOSCT-ND"
 			(at 107.95 118.11 90)
 			(effects
 				(font
@@ -16708,6 +17039,15 @@
 			)
 		)
 		(property "Sim.Type" ""
+			(at 107.95 118.11 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "NSR0620P2T5G"
 			(at 107.95 118.11 90)
 			(effects
 				(font
@@ -16749,7 +17089,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "B0530WS RRG"
+		(property "Value" "NSR0620P2T5G"
 			(at 137.668 157.48 90)
 			(effects
 				(font
@@ -16767,7 +17107,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.digikey.ca/en/products/detail/taiwan-semiconductor-corporation/B0530WS-RRG/7357154"
+		(property "Datasheet" "https://www.digikey.ca/en/products/detail/onsemi/NSR0620P2T5G/1961246"
 			(at 135.89 158.75 0)
 			(effects
 				(font
@@ -16785,7 +17125,7 @@
 				(hide yes)
 			)
 		)
-		(property "DigiKey_Part_Number" "B0530WSRRGCT-ND"
+		(property "DigiKey_Part_Number" "NSR0620P2T5GOSCT-ND"
 			(at 135.89 158.75 90)
 			(effects
 				(font
@@ -16822,6 +17162,15 @@
 			)
 		)
 		(property "Sim.Type" ""
+			(at 135.89 158.75 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "NSR0620P2T5G"
 			(at 135.89 158.75 90)
 			(effects
 				(font
@@ -16863,7 +17212,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "B0530WS RRG"
+		(property "Value" "NSR0620P2T5G"
 			(at 137.668 108.966 90)
 			(effects
 				(font
@@ -16881,7 +17230,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.digikey.ca/en/products/detail/taiwan-semiconductor-corporation/B0530WS-RRG/7357154"
+		(property "Datasheet" "https://www.digikey.ca/en/products/detail/onsemi/NSR0620P2T5G/1961246"
 			(at 135.89 110.49 0)
 			(effects
 				(font
@@ -16899,7 +17248,7 @@
 				(hide yes)
 			)
 		)
-		(property "DigiKey_Part_Number" "B0530WSRRGCT-ND"
+		(property "DigiKey_Part_Number" "NSR0620P2T5GOSCT-ND"
 			(at 135.89 110.49 90)
 			(effects
 				(font
@@ -16936,6 +17285,15 @@
 			)
 		)
 		(property "Sim.Type" ""
+			(at 135.89 110.49 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "NSR0620P2T5G"
 			(at 135.89 110.49 90)
 			(effects
 				(font
@@ -17125,6 +17483,15 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Part_Number" "URG1608L-152-L-T05"
+			(at 34.29 129.54 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "22f8aee7-1a05-45bf-8fe6-a97f31a7e649")
 		)
@@ -17135,6 +17502,71 @@
 			(project "ODB2"
 				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
 					(reference "R68")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+3V3")
+		(at 33.02 34.29 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "e7e743ba-93cd-4b66-ac07-64f74b450e34")
+		(property "Reference" "#PWR024"
+			(at 33.02 38.1 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+5V"
+			(at 33.02 30.48 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 33.02 34.29 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 33.02 34.29 0)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 33.02 34.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "46b10f8d-cf42-49ce-af0c-2f28dd16368e")
+		)
+		(instances
+			(project "ODB2"
+				(path "/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372"
+					(reference "#PWR024")
 					(unit 1)
 				)
 			)
@@ -17292,7 +17724,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "B0530WS RRG"
+		(property "Value" "NSR0620P2T5G"
 			(at 93.472 168.402 90)
 			(effects
 				(font
@@ -17310,7 +17742,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.digikey.ca/en/products/detail/taiwan-semiconductor-corporation/B0530WS-RRG/7357154"
+		(property "Datasheet" "https://www.digikey.ca/en/products/detail/onsemi/NSR0620P2T5G/1961246"
 			(at 107.95 166.37 0)
 			(effects
 				(font
@@ -17328,7 +17760,7 @@
 				(hide yes)
 			)
 		)
-		(property "DigiKey_Part_Number" "B0530WSRRGCT-ND"
+		(property "DigiKey_Part_Number" "NSR0620P2T5GOSCT-ND"
 			(at 107.95 166.37 90)
 			(effects
 				(font
@@ -17365,6 +17797,15 @@
 			)
 		)
 		(property "Sim.Type" ""
+			(at 107.95 166.37 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "NSR0620P2T5G"
 			(at 107.95 166.37 90)
 			(effects
 				(font
@@ -17479,6 +17920,15 @@
 			)
 		)
 		(property "Sim.Type" ""
+			(at 97.79 53.34 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "CC0402KRX5R9BB104"
 			(at 97.79 53.34 0)
 			(effects
 				(font

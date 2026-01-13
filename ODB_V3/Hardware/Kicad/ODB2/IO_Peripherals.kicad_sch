@@ -10377,6 +10377,15 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Part_Number" "PCAN0603E1000BST5"
+			(at 115.57 100.33 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "d0c9f90a-7390-4c6f-b21d-d16dda2ee374")
 		)
@@ -10876,6 +10885,15 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Part_Number" "RC0603FR-0710KL"
+			(at 171.45 48.26 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "861b090c-40f1-4beb-941e-201905e89b09")
 		)
@@ -10994,6 +11012,15 @@
 			)
 		)
 		(property "Sim.Type" ""
+			(at 52.07 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "MEM2067-02-180-00-A"
 			(at 52.07 129.54 0)
 			(effects
 				(font
@@ -11265,7 +11292,7 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "RFD_GT17HN-4DP-2HA56"
+		(property "Value" "GT17HN-4DP-2HA56"
 			(at 70.612 64.77 0)
 			(effects
 				(font
@@ -11340,6 +11367,15 @@
 			)
 		)
 		(property "Sim.Type" ""
+			(at 87.63 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "GT17HN-4DP-2H(A)(56)"
 			(at 87.63 68.58 0)
 			(effects
 				(font
@@ -11480,6 +11516,15 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Part_Number" "CC0402KRX5R9BB104"
+			(at 43.18 140.97 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "f7b0ac88-cb10-49e3-9f31-6d009c067da8")
 		)
@@ -11590,6 +11635,15 @@
 			)
 		)
 		(property "Sim.Type" ""
+			(at 238.76 90.17 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "MMBT3904LT1G"
 			(at 238.76 90.17 0)
 			(effects
 				(font
@@ -11773,6 +11827,15 @@
 			)
 		)
 		(property "Sim.Type" ""
+			(at 160.02 38.1 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "URG1608L-152-L-T05"
 			(at 160.02 38.1 90)
 			(effects
 				(font
@@ -12092,6 +12155,15 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Part_Number" "PCAN0603E1000BST5"
+			(at 205.74 77.47 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "80750ef6-76fc-4ba0-83bc-42700d21a1f9")
 		)
@@ -12198,6 +12270,15 @@
 			)
 		)
 		(property "Sim.Type" ""
+			(at 48.26 30.48 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "CC0402KRX5R9BB104"
 			(at 48.26 30.48 90)
 			(effects
 				(font
@@ -12472,6 +12553,15 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Part_Number" "RC0402FR-0722RL"
+			(at 38.1 121.92 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "d6eda7ff-7e93-4cc0-a874-03131d6ce1bc")
 		)
@@ -12719,6 +12809,15 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Part_Number" "USBLC6-2P6"
+			(at 223.52 46.99 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "17960f16-f061-4b83-af55-30d5930bf165")
 		)
@@ -12845,6 +12944,15 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Part_Number" "RC0603FR-0710KL"
+			(at 86.36 139.7 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "df646736-a467-44e0-9176-5daa79f8a403")
 		)
@@ -12949,6 +13057,15 @@
 			)
 		)
 		(property "Sim.Type" ""
+			(at 137.16 140.97 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "CRCW040210R0FKED"
 			(at 137.16 140.97 90)
 			(effects
 				(font
@@ -13130,6 +13247,15 @@
 			)
 		)
 		(property "Sim.Type" ""
+			(at 271.78 36.83 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "1050170001"
 			(at 271.78 36.83 0)
 			(effects
 				(font
@@ -13392,6 +13518,15 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Part_Number" "L76L-M33"
+			(at 109.22 151.13 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "12"
 			(uuid "a142d542-b63c-4cdc-ad9d-862cd05dc801")
 		)
@@ -13602,6 +13737,15 @@
 			)
 		)
 		(property "Sim.Type" ""
+			(at 170.18 38.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "QBLP601-AG15"
 			(at 170.18 38.1 0)
 			(effects
 				(font
@@ -13859,6 +14003,15 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Part_Number" "URG1608L-152-L-T05"
+			(at 160.02 31.75 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "5b6ecf40-9056-48f3-9f20-87dd6fb93005")
 		)
@@ -14039,6 +14192,15 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Part_Number" "URG1608L-152-L-T05"
+			(at 227.33 90.17 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "909b755f-af41-4c1f-a5a0-f06c6c5cbc48")
 		)
@@ -14146,6 +14308,15 @@
 			)
 		)
 		(property "Sim.Type" ""
+			(at 165.1 57.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "CC0402KRX5R9BB104"
 			(at 165.1 57.15 0)
 			(effects
 				(font
@@ -14327,6 +14498,15 @@
 			)
 		)
 		(property "Sim.Type" ""
+			(at 210.82 77.47 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "SMTB-0927-TW-R"
 			(at 210.82 77.47 0)
 			(effects
 				(font
@@ -14585,6 +14765,15 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Part_Number" "GRM188R6YA106MA73D"
+			(at 177.8 57.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "f0233fe8-e310-47d2-806c-51d9528546f0")
 		)
@@ -14796,6 +14985,15 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Part_Number" "61300611121"
+			(at 46.99 72.39 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "f16bc93d-6cca-4904-841a-095d11ca2a5b")
 		)
@@ -14979,6 +15177,15 @@
 			)
 		)
 		(property "Sim.Type" ""
+			(at 72.39 97.79 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "PCAN0603E1000BST5"
 			(at 72.39 97.79 90)
 			(effects
 				(font
@@ -15210,6 +15417,15 @@
 			)
 		)
 		(property "Sim.Type" ""
+			(at 157.48 132.08 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "142-0701-801"
 			(at 157.48 132.08 90)
 			(effects
 				(font
@@ -15474,7 +15690,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.digikey.ca/en/products/detail/vishay-dale/ILSB0805ERR10K/2575081"
+		(property "Datasheet" "https://www.digikey.ca/en/products/detail/abracon-llc/AIML-0603-R10K-T/2662951"
 			(at 147.32 140.97 0)
 			(effects
 				(font
@@ -15492,7 +15708,7 @@
 				(hide yes)
 			)
 		)
-		(property "DigiKey_Part_Number" "541-ILSB0805ERR10KCT-ND"
+		(property "DigiKey_Part_Number" "535-11609-1-ND"
 			(at 147.32 140.97 90)
 			(effects
 				(font
@@ -15529,6 +15745,15 @@
 			)
 		)
 		(property "Sim.Type" ""
+			(at 147.32 140.97 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "AIML-0603-R10K-T"
 			(at 147.32 140.97 90)
 			(effects
 				(font
@@ -15890,6 +16115,15 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Part_Number" "CC0402KRX5R9BB104"
+			(at 132.08 148.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "b8792939-d7bc-4416-a73d-a5429c70734f")
 		)
@@ -15925,7 +16159,7 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "IdeFIX_GT17HN-4DP-2HA56"
+		(property "Value" "GT17HN-4DP-2HA56"
 			(at 22.352 92.71 0)
 			(effects
 				(font
@@ -16000,6 +16234,15 @@
 			)
 		)
 		(property "Sim.Type" ""
+			(at 41.91 96.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "GT17HN-4DP-2H(A)(56)"
 			(at 41.91 96.52 0)
 			(effects
 				(font
@@ -16206,6 +16449,15 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Part_Number" "61300821121"
+			(at 247.65 149.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "62154f9e-bae8-4ffd-83f8-7f8ed65c6585")
 		)
@@ -16257,7 +16509,7 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "BUZZER_D_Schottky"
+		(property "Value" "NSR0620P2T5G"
 			(at 223.52 85.598 0)
 			(effects
 				(font
@@ -16265,7 +16517,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Diode_SMD:D_SOD-123"
+		(property "Footprint" "Diode_SMD:D_SOD-923"
 			(at 223.52 82.55 0)
 			(effects
 				(font
@@ -16274,7 +16526,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.digikey.ca/en/products/detail/onsemi/BAT54T1G/918319"
+		(property "Datasheet" "https://www.digikey.ca/en/products/detail/onsemi/NSR0620P2T5G/1961246"
 			(at 223.52 82.55 0)
 			(effects
 				(font
@@ -16292,7 +16544,7 @@
 				(hide yes)
 			)
 		)
-		(property "DigiKey_Part_Number" "BAT54T1GOSCT-ND"
+		(property "DigiKey_Part_Number" "NSR0620P2T5GOSCT-ND"
 			(at 223.52 82.55 0)
 			(effects
 				(font
@@ -16329,6 +16581,15 @@
 			)
 		)
 		(property "Sim.Type" ""
+			(at 223.52 82.55 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "NSR0620P2T5G"
 			(at 223.52 82.55 0)
 			(effects
 				(font
