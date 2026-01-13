@@ -578,7 +578,6 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                       ),
                     ),
                   ),
-                  // Carte de mission liée à la connexion Bluetooth
                   Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
@@ -642,7 +641,6 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                                     padding: const EdgeInsetsDirectional.fromSTEB(
                                         0.0, 4.0, 0.0, 0.0),
                                     child: Text(
-                                      // lié à la connexion Bluetooth
                                       connected
                                           ? 'Appareil connecté: ${bt.connectedDevice?.platformName ?? bt.connectedDevice?.remoteId.str}'
                                           : 'En attente de connexion Bluetooth',
@@ -669,16 +667,6 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                                   ),
                                 ],
                               ),
-                              Opacity(
-                                opacity: 0.8,
-                                child: Icon(
-                                  connected ? Icons.check_circle : Icons.bluetooth_disabled,
-                                  color: connected
-                                      ? FlutterFlowTheme.of(context).info
-                                      : FlutterFlowTheme.of(context).secondaryText,
-                                  size: 32.0,
-                                ),
-                              ),
                             ],
                           ),
                           Padding(
@@ -699,7 +687,7 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Text(
-                                          connected ? 'Prêt pour le lancement' : 'En attente de connexion Bluetooth',
+                                          connected ? 'Prêt pour le lancement' : '-',
                                           style: FlutterFlowTheme.of(context)
                                               .bodySmall
                                               .override(
