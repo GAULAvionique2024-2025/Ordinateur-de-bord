@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'dart:math';
 import 'package:nexus/services/bluetooth_service.dart';
+import 'package:nexus/services/console_service.dart';
 
 enum SensorState { unknown, ok, error }
 enum RadioState { disconnected, connecting, connected }
@@ -80,7 +81,7 @@ class DataServiceManager with ChangeNotifier {
   bool get missionReady => odbSensorState && radioState == RadioState.connected;
   bool get hasConnection => btService.connectedDevice != null;
 
-
+  // ---------- PARSER ----------
   void parseMessage(String message) {
     try {
       final entries = message.split(';');
@@ -206,13 +207,13 @@ class DataServiceManager with ChangeNotifier {
             break;
 
           default:
-            btService.addLog('Clé inconnue: $key -> $value');
+            ConsoleService().log('Clé inconnue: $key -> $value');
         }
       }
 
       notifyListeners();
     } catch (e) {
-      btService.addLog('Erreur parseMessage: $e');
+      ConsoleService().log('Erreur parseMessage: $e');
     }
   }
 }

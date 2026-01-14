@@ -9,6 +9,7 @@ import 'commands_page_model.dart';
 export 'commands_page_model.dart';
 import 'package:nexus/services/bluetooth_service.dart';
 import 'package:nexus/services/data_service.dart';
+import 'package:nexus/services/console_service.dart';
 import 'package:nexus/widgets/status_bluetooth_card.dart';
 
 /// J'aimerais une page contenant une liste de commandes pouvant être envoyées
@@ -218,7 +219,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                               ),
                               FFButtonWidget(
                                 onPressed: connected ? () {
-                                  bt.addLog('Test Capteurs demandé');
+                                  ConsoleService().log('Test Capteurs demandé');
                                   // TODO: appeler le service BT pour lancer le test
                                 } : null,
                                 text: 'Exécuter',
@@ -239,8 +240,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                                                   .bodySmall
                                                   .fontStyle,
                                         ),
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryBackground,
+                                        color: FlutterFlowTheme.of(context).primaryBackground,
                                         letterSpacing: 0.0,
                                         fontWeight: FontWeight.w600,
                                         fontStyle: FlutterFlowTheme.of(context)
@@ -317,7 +317,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                               ),
                               FFButtonWidget(
                                 onPressed: connected ? () {
-                                  bt.addLog('Test Communication demandé');
+                                  ConsoleService().log('Test Communication demandé');
                                   // TODO: appeler le service BT pour lancer le test
                                 } : null,
                                 text: 'Exécuter',
@@ -416,7 +416,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                               ),
                               FFButtonWidget(
                                 onPressed: connected ? () {
-                                  bt.addLog('Test Mémoire demandé');
+                                  ConsoleService().log('Test Mémoire demandé');
                                   // TODO: appeler le service BT pour lancer le test
                                 } : null,
                                 text: 'Exécuter',
@@ -559,7 +559,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                               ),
                               FFButtonWidget(
                                 onPressed: connected ? () {
-                                  bt.addLog('Calibration Accéléromètre demandé');
+                                  ConsoleService().log('Calibration Accéléromètre demandé');
                                   // TODO: appeler le service BT pour lancer le test
                                 } : null,
                                 text: 'Calibrer',
@@ -658,7 +658,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                               ),
                               FFButtonWidget(
                                 onPressed: connected ? () {
-                                  bt.addLog('Calibration Baromètre demandé');
+                                  ConsoleService().log('Calibration Baromètre demandé');
                                   // TODO: appeler le service BT pour lancer le test
                                 } : null,
                                 text: 'Calibrer',
@@ -746,13 +746,13 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                                           padding: const EdgeInsets.all(12.0),
                                           child: FFButtonWidget(
                                             onPressed: connected ? () {
-                                              bt.addLog('Verrouiller demandé');
+                                              ConsoleService().log('Verrouiller demandé');
                                               // TODO: appeler le service BT pour lancer le test
                                             } : null,
                                             text: (connected && data.pyrosArmed) ? 'Armé' : 'Désarmé',
                                             options: FFButtonOptions(
                                               width: 150.0,
-                                              height: 40.0,
+                                              height: 48.0,
                                               padding: const EdgeInsetsDirectional
                                                   .fromSTEB(
                                                       16.0, 0.0, 16.0, 0.0),
@@ -894,7 +894,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                                             0.0, 4.0, 0.0, 0.0),
                                         child: FFButtonWidget(
                                           onPressed: (connected && data.pyrosArmed && data.pyros[0]) ? () {
-                                            bt.addLog('Déclenchement pyro 1 demandé');
+                                            ConsoleService().log('Déclenchement pyro 1 demandé');
                                             // TODO: appeler le service BT pour lancer le test
                                           } : null,
                                           text: connected ? ((data.pyrosArmed && data.pyros[0]) ? 'Déclencher' : 'Désarmé / Déconnecté') : 'Inconnu',
@@ -1028,7 +1028,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                                             0.0, 4.0, 0.0, 0.0),
                                         child: FFButtonWidget(
                                           onPressed: (connected && data.pyrosArmed && data.pyros[1]) ? () {
-                                            bt.addLog('Déclenchement pyro 2 demandé');
+                                            ConsoleService().log('Déclenchement pyro 2 demandé');
                                             // TODO: appeler le service BT pour lancer le test
                                           } : null,
                                           text: connected ? ((data.pyrosArmed && data.pyros[1]) ? 'Déclencher' : 'Désarmé / Déconnecté') : 'Inconnu',
@@ -1162,7 +1162,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                                             0.0, 4.0, 0.0, 0.0),
                                         child: FFButtonWidget(
                                           onPressed: (connected && data.pyrosArmed && data.pyros[2]) ? () {
-                                            bt.addLog('Déclenchement pyro 3 demandé');
+                                            ConsoleService().log('Déclenchement pyro 3 demandé');
                                             // TODO: appeler le service BT pour lancer le test
                                           } : null,
                                           text: connected ? ((data.pyrosArmed && data.pyros[2]) ? 'Déclencher' : 'Désarmé / Déconnecté') : 'Inconnu',
@@ -1296,7 +1296,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                                             0.0, 4.0, 0.0, 0.0),
                                         child: FFButtonWidget(
                                           onPressed: (connected && data.pyrosArmed && data.pyros[3]) ? () {
-                                            bt.addLog('Déclenchement pyro 4 demandé');
+                                            ConsoleService().log('Déclenchement pyro 4 demandé');
                                             // TODO: appeler le service BT pour lancer le test
                                           } : null,
                                           text: connected ? ((data.pyrosArmed && data.pyros[3]) ? 'Déclencher' : 'Désarmé / Déconnecté') : 'Inconnu',

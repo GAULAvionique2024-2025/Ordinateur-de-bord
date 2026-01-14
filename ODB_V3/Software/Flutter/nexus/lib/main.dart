@@ -135,6 +135,7 @@ class _NavBarPageState extends State<NavBarPage> {
       'ConnectionPage': const ConnectionPageWidget(),
       'StatisticsPage': const StatisticsPageWidget(),
       'CommandsPage': const CommandsPageWidget(),
+      'RSSIPage': const RSSIPageWidget(),
     };
     _currentIndex = tabs.keys.toList().indexOf(_currentPageName);
 
@@ -226,6 +227,18 @@ class _NavBarPageState extends State<NavBarPage> {
               size: 24.0,
             ),
             label: 'Commands',
+            tooltip: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.compass_calibration_outlined,
+              size: 24.0,
+            ),
+            activeIcon: Icon(
+              Icons.compass_calibration,
+              size: 24.0,
+            ),
+            label: 'RSSI',
             tooltip: '',
           )
         ],

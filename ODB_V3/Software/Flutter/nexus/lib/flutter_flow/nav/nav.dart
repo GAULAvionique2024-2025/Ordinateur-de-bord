@@ -82,6 +82,15 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                 : const NavBarPage(
                     initialPage: 'ConnectionPage',
                     page: ConnectionPageWidget(),
+                  )),
+        FFRoute(
+            name: RSSIPageWidget.routeName,
+            path: RSSIPageWidget.routePath,
+            builder: (context, params) => params.isEmpty
+                ? const NavBarPage(initialPage: 'RSSIPage')
+                : const NavBarPage(
+                    initialPage: 'RSSIPage',
+                    page: RSSIPageWidget(),
                   ))
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
