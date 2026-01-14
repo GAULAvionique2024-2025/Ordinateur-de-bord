@@ -5,6 +5,9 @@ import 'package:nexus/services/data_service.dart';
 import 'package:nexus/services/console_service.dart';
 
 class BluetoothServiceManager with ChangeNotifier {
+  BluetoothServiceManager() {
+    ConsoleService().addListener(_onConsoleChanged);
+  }
   // ---------- STATE ----------
   List<ScanResult> scanResults = [];
   bool isScanning = false;
@@ -12,6 +15,7 @@ class BluetoothServiceManager with ChangeNotifier {
   BluetoothDevice? connectedDevice;
   StreamSubscription<BluetoothConnectionState>? connectionSubscription;
   final Map<Guid, StreamSubscription<List<int>>> notifySubscriptions = {};
+  BluetoothCharacteristic? _writeCharacteristic;
 
   // ---------- RSSI ----------
   /// stocke le dernier RSSI connu (-999 = inconnu)
@@ -25,6 +29,7 @@ class BluetoothServiceManager with ChangeNotifier {
   }
 
   // ---------- LOGS ----------
+  void _onConsoleChanged() => notifyListeners();
   List<String> get logs => ConsoleService().logs;
 
   // ---------- SCAN ----------
@@ -158,13 +163,17 @@ class BluetoothServiceManager with ChangeNotifier {
           ConsoleService().log('Notification activée: ${c.uuid}');
           await enableNotifications(c, dataService);
         }
+      
+        // Enregistrer la première caractéristique d'écriture disponible
+        if (_writeCharacteristic == null && (c.properties.write || c.properties.writeWithoutResponse)) {
+          _writeCharacteristic = c;
+          ConsoleService().log('Caractéristique écriture sélectionnée: ${c.uuid}');
+        }
       }
     }
   }
 
-  Future<void> enableNotifications(
-    BluetoothCharacteristic c,
-    DataServiceManager dataService,
+  Future<void> enableNotifications(BluetoothCharacteristic c, DataServiceManager dataService,
   ) async {
     try {
       await c.setNotifyValue(true);
@@ -183,8 +192,16 @@ class BluetoothServiceManager with ChangeNotifier {
     }
   }
 
-  Future<void> sendMessage(
-      BluetoothCharacteristic c, String message) async {
+  Future<void> send(String message, {BluetoothCharacteristic? characteristic}) async {
+    if (connectedDevice == null) {
+      ConsoleService().log('Aucun appareil connecté');
+      return;
+    }
+    final c = characteristic ?? _writeCharacteristic;
+    if (c == null) {
+      ConsoleService().log('Aucune caractéristique d\'écriture disponible');
+      return;
+    }
     try {
       await c.write(message.codeUnits, withoutResponse: false);
       ConsoleService().log('TX: $message');
@@ -195,6 +212,10 @@ class BluetoothServiceManager with ChangeNotifier {
 
   @override
   void dispose() {
+    try {
+      ConsoleService().removeListener(_onConsoleChanged);
+    } catch (_) {}
+
     connectionSubscription?.cancel();
     for (final sub in notifySubscriptions.values) {
       sub.cancel();

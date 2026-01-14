@@ -572,7 +572,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                       ),
                                       Text(
                                         connected
-                                            ? ((data.batterySensorState == SensorState.ok && data.goodPowerState == SensorState.ok) ? 'Good Power' : 'Problème batterie')
+                                            ? ((data.batterySensorState == SensorState.ok && data.goodPowerState) ? 'Good Power' : 'Problème batterie')
                                             : '—',
                                         style: FlutterFlowTheme.of(context)
                                             .bodySmall

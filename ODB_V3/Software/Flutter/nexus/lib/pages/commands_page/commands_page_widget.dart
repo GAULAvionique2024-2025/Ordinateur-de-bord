@@ -220,7 +220,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                               FFButtonWidget(
                                 onPressed: connected ? () {
                                   ConsoleService().log('Test Capteurs demandé');
-                                  // TODO: appeler le service BT pour lancer le test
+                                  bt.send('TEST:SENSORS');
                                 } : null,
                                 text: 'Exécuter',
                                 options: FFButtonOptions(
@@ -318,7 +318,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                               FFButtonWidget(
                                 onPressed: connected ? () {
                                   ConsoleService().log('Test Communication demandé');
-                                  // TODO: appeler le service BT pour lancer le test
+                                  bt.send('TEST:COMM');
                                 } : null,
                                 text: 'Exécuter',
                                 options: FFButtonOptions(
@@ -417,7 +417,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                               FFButtonWidget(
                                 onPressed: connected ? () {
                                   ConsoleService().log('Test Mémoire demandé');
-                                  // TODO: appeler le service BT pour lancer le test
+                                  bt.send('TEST:MEM');
                                 } : null,
                                 text: 'Exécuter',
                                 options: FFButtonOptions(
@@ -560,7 +560,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                               FFButtonWidget(
                                 onPressed: connected ? () {
                                   ConsoleService().log('Calibration Accéléromètre demandé');
-                                  // TODO: appeler le service BT pour lancer le test
+                                  bt.send('CALIB:ACC');
                                 } : null,
                                 text: 'Calibrer',
                                 options: FFButtonOptions(
@@ -659,7 +659,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                               FFButtonWidget(
                                 onPressed: connected ? () {
                                   ConsoleService().log('Calibration Baromètre demandé');
-                                  // TODO: appeler le service BT pour lancer le test
+                                  bt.send('CALIB:BARO');
                                 } : null,
                                 text: 'Calibrer',
                                 options: FFButtonOptions(
@@ -747,7 +747,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                                           child: FFButtonWidget(
                                             onPressed: connected ? () {
                                               ConsoleService().log('Verrouiller demandé');
-                                              // TODO: appeler le service BT pour lancer le test
+                                              bt.send('PYRO:ARM:${data.pyrosArmed ? '0' : '1'}');
                                             } : null,
                                             text: (connected && data.pyrosArmed) ? 'Armé' : 'Désarmé',
                                             options: FFButtonOptions(
@@ -895,7 +895,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                                         child: FFButtonWidget(
                                           onPressed: (connected && data.pyrosArmed && data.pyros[0]) ? () {
                                             ConsoleService().log('Déclenchement pyro 1 demandé');
-                                            // TODO: appeler le service BT pour lancer le test
+                                            bt.send('PYRO:TRIG:0');
                                           } : null,
                                           text: connected ? ((data.pyrosArmed && data.pyros[0]) ? 'Déclencher' : 'Désarmé / Déconnecté') : 'Inconnu',
                                           options: FFButtonOptions(
@@ -1029,7 +1029,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                                         child: FFButtonWidget(
                                           onPressed: (connected && data.pyrosArmed && data.pyros[1]) ? () {
                                             ConsoleService().log('Déclenchement pyro 2 demandé');
-                                            // TODO: appeler le service BT pour lancer le test
+                                            bt.send('PYRO:TRIG:1');
                                           } : null,
                                           text: connected ? ((data.pyrosArmed && data.pyros[1]) ? 'Déclencher' : 'Désarmé / Déconnecté') : 'Inconnu',
                                           options: FFButtonOptions(
@@ -1163,7 +1163,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                                         child: FFButtonWidget(
                                           onPressed: (connected && data.pyrosArmed && data.pyros[2]) ? () {
                                             ConsoleService().log('Déclenchement pyro 3 demandé');
-                                            // TODO: appeler le service BT pour lancer le test
+                                            bt.send('PYRO:TRIG:2');
                                           } : null,
                                           text: connected ? ((data.pyrosArmed && data.pyros[2]) ? 'Déclencher' : 'Désarmé / Déconnecté') : 'Inconnu',
                                           options: FFButtonOptions(
@@ -1297,7 +1297,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                                         child: FFButtonWidget(
                                           onPressed: (connected && data.pyrosArmed && data.pyros[3]) ? () {
                                             ConsoleService().log('Déclenchement pyro 4 demandé');
-                                            // TODO: appeler le service BT pour lancer le test
+                                            bt.send('PYRO:TRIG:3');
                                           } : null,
                                           text: connected ? ((data.pyrosArmed && data.pyros[3]) ? 'Déclencher' : 'Désarmé / Déconnecté') : 'Inconnu',
                                           options: FFButtonOptions(
@@ -1351,49 +1351,54 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                   ),
                   Container(
                     width: double.infinity,
-                    height: 165.5,
+                    height: 200,
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).secondaryBackground,
                       boxShadow: const [
                         BoxShadow(
-                          blurRadius: 4.0,
+                          blurRadius: 4,
                           color: Color(0x33000000),
                           offset: Offset(
-                            0.0,
-                            2.0,
+                            0,
+                            2,
                           ),
                         )
                       ],
-                      borderRadius: BorderRadius.circular(12.0),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            connected
-                                ? (bt.logs.isNotEmpty ? bt.logs.last : 'Aucune réponse reçue')
-                                : 'En attente de connexion Bluetooth',
-                            style: FlutterFlowTheme.of(context).bodySmall.override(
-                                  font: GoogleFonts.inter(
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .bodySmall
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodySmall
-                                        .fontStyle,
-                                  ),
-                                  fontSize: 12.0,
-                                  color: connected
-                                      ? FlutterFlowTheme.of(context).primaryBackground
-                                      : FlutterFlowTheme.of(context).secondaryText,
-                                ),
-                          ),
-                        ],
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: Colors.transparent,
+                        width: 1,
                       ),
                     ),
+                    child: Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Expanded(
+                              child: ListView.builder(
+                                reverse: false,
+                                itemCount: bt.logs.length,
+                                itemBuilder: (context, index) {
+                                  final log = bt.logs[index];
+
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(vertical: 2.0),
+                                    child: Text(
+                                      log,
+                                      style: FlutterFlowTheme.of(context).bodySmall.override(
+                                            fontFamily: 'monospace',
+                                            fontSize: 12,
+                                            color: FlutterFlowTheme.of(context).secondaryText,
+                                          ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ].divide(const SizedBox(height: 12)),
+                        ),
+                      ),
                   ),
                 ]
                     .divide(const SizedBox(height: 16.0))
