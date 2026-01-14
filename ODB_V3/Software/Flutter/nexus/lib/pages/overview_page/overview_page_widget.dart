@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'overview_page_model.dart';
 export 'overview_page_model.dart';
 import 'package:nexus/services/bluetooth_service.dart';
+import 'package:nexus/services/data_service.dart';
 import 'package:nexus/widgets/status_bluetooth_card.dart';
 
 /// Créer un homepage.
@@ -48,7 +49,8 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
 
   Widget build(BuildContext context) {
     final bt = context.watch<BluetoothServiceManager>();
-    final connected = bt.connectedDevice != null;
+    final data = context.watch<DataServiceManager>();
+    final connected = data.hasConnection;
 
     return GestureDetector(
       onTap: () {
@@ -179,7 +181,7 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                                   ),
                                 ),
                                 Text(
-                                  connected ? '1247 m' : '—',
+                                  connected ? data.altitudeDisplay : '—',
                                   style: FlutterFlowTheme.of(context)
                                       .headlineSmall
                                       .override(
@@ -192,8 +194,7 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                                         ),
                                         color: connected
                                             ? FlutterFlowTheme.of(context).primary
-                                            : FlutterFlowTheme.of(context)
-                                                .secondaryText,
+                                            : FlutterFlowTheme.of(context).secondaryText,
                                         letterSpacing: 0.0,
                                         fontWeight: FontWeight.bold,
                                         fontStyle: FlutterFlowTheme.of(context)
@@ -260,7 +261,7 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                                   ),
                                 ),
                                 Text(
-                                  connected ? '23°C' : '—',
+                                  connected ? data.temperatureDisplay : '—',
                                   style: FlutterFlowTheme.of(context)
                                       .headlineSmall
                                       .override(
@@ -372,8 +373,7 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                                       decoration: BoxDecoration(
                                         color: connected
                                             ? FlutterFlowTheme.of(context).success
-                                            : FlutterFlowTheme.of(context)
-                                                .secondaryText,
+                                            : FlutterFlowTheme.of(context).secondaryText,
                                         shape: BoxShape.circle,
                                       ),
                                     ),
@@ -416,7 +416,7 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'Réseaux de capteurs',
+                                  'Réseau de capteurs',
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium,
                                 ),
@@ -427,15 +427,14 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                                       width: 8.0,
                                       height: 8.0,
                                       decoration: BoxDecoration(
-                                        color: connected
+                                        color: data.odbSensorState
                                             ? FlutterFlowTheme.of(context).success
-                                            : FlutterFlowTheme.of(context)
-                                                .secondaryText,
+                                            : FlutterFlowTheme.of(context).secondaryText,
                                         shape: BoxShape.circle,
                                       ),
                                     ),
                                     Text(
-                                      connected ? 'Actifs' : 'Indisponible',
+                                      connected ? data.odbSensorState ? 'Actif' : 'Inactif / Partiel' : 'Inactif',
                                       style: FlutterFlowTheme.of(context)
                                           .bodySmall
                                           .override(
@@ -484,15 +483,14 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                                       width: 8.0,
                                       height: 8.0,
                                       decoration: BoxDecoration(
-                                        color: connected
+                                        color: data.radioState == RadioState.connected
                                             ? FlutterFlowTheme.of(context).success
-                                            : FlutterFlowTheme.of(context)
-                                                .secondaryText,
+                                            : FlutterFlowTheme.of(context).secondaryText,
                                         shape: BoxShape.circle,
                                       ),
                                     ),
                                     Text(
-                                      connected ? 'Actif' : 'Inactif',
+                                      (connected && data.radioState == RadioState.connected) ? 'Actif' : 'Inactif',
                                       style: FlutterFlowTheme.of(context)
                                           .bodySmall
                                           .override(
@@ -521,7 +519,6 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                               ],
                             ),
                           ),
-                          // Batterie (exemple lié à la connexion)
                           Row(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -538,15 +535,14 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                                     width: 8.0,
                                     height: 8.0,
                                     decoration: BoxDecoration(
-                                      color: connected
+                                      color: data.batterySensorState == SensorState.ok
                                           ? FlutterFlowTheme.of(context).primary
-                                          : FlutterFlowTheme.of(context)
-                                              .secondaryText,
+                                          : FlutterFlowTheme.of(context).secondaryText,
                                       shape: BoxShape.circle,
                                     ),
                                   ),
                                   Text(
-                                    connected ? '12.7V' : '—',
+                                    (connected && data.batterySensorState == SensorState.ok) ? '${data.batteryPercent.toStringAsFixed(1)}%' : '—',
                                     style: FlutterFlowTheme.of(context)
                                         .bodySmall
                                         .override(
@@ -557,11 +553,13 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                                                     .bodySmall
                                                     .fontStyle,
                                           ),
-                                          color: connected
-                                              ? FlutterFlowTheme.of(context)
-                                                  .primary
-                                              : FlutterFlowTheme.of(context)
-                                                  .secondaryText,
+                                          color: data.batterySensorState == SensorState.ok
+                                                  ? (data.batteryPercent > 60
+                                                    ? FlutterFlowTheme.of(context).primary
+                                                    : (data.batteryPercent > 30
+                                                      ? FlutterFlowTheme.of(context).warning
+                                                      : FlutterFlowTheme.of(context).error))
+                                              : FlutterFlowTheme.of(context).secondaryText,
                                           letterSpacing: 0.0,
                                           fontWeight: FontWeight.w600,
                                           fontStyle:
@@ -641,9 +639,7 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                                     padding: const EdgeInsetsDirectional.fromSTEB(
                                         0.0, 4.0, 0.0, 0.0),
                                     child: Text(
-                                      connected
-                                          ? 'Appareil connecté: ${bt.connectedDevice?.platformName ?? bt.connectedDevice?.remoteId.str}'
-                                          : 'En attente de connexion Bluetooth',
+                                      connected ? 'Appareil connecté: ${bt.connectedDevice?.platformName ?? bt.connectedDevice?.remoteId.str}\nStatut mission: ${data.missionStatus}' : 'En attente de connexion Bluetooth',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(
@@ -687,7 +683,7 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Text(
-                                          connected ? 'Prêt pour le lancement' : '-',
+                                          data.missionReady ? 'Prêt pour le lancement' : '-',
                                           style: FlutterFlowTheme.of(context)
                                               .bodySmall
                                               .override(

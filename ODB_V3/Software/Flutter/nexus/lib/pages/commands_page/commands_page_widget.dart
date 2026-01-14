@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'commands_page_model.dart';
 export 'commands_page_model.dart';
 import 'package:nexus/services/bluetooth_service.dart';
+import 'package:nexus/services/data_service.dart';
 import 'package:nexus/widgets/status_bluetooth_card.dart';
 
 /// J'aimerais une page contenant une liste de commandes pouvant être envoyées
@@ -47,7 +48,8 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
   @override
   Widget build(BuildContext context) {
     final bt = context.watch<BluetoothServiceManager>();
-    final connected = bt.connectedDevice != null;
+    final data = context.watch<DataServiceManager>();
+    final connected = data.hasConnection;
 
     return GestureDetector(
       onTap: () {
@@ -216,7 +218,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                               ),
                               FFButtonWidget(
                                 onPressed: connected ? () {
-                                  debugPrint('Test Capteurs demandé');
+                                  bt.addLog('Test Capteurs demandé');
                                   // TODO: appeler le service BT pour lancer le test
                                 } : null,
                                 text: 'Exécuter',
@@ -315,8 +317,8 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                               ),
                               FFButtonWidget(
                                 onPressed: connected ? () {
-                                  debugPrint('Test Communication demandé');
-                                  
+                                  bt.addLog('Test Communication demandé');
+                                  // TODO: appeler le service BT pour lancer le test
                                 } : null,
                                 text: 'Exécuter',
                                 options: FFButtonOptions(
@@ -414,7 +416,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                               ),
                               FFButtonWidget(
                                 onPressed: connected ? () {
-                                  debugPrint('Test Mémoire demandé');
+                                  bt.addLog('Test Mémoire demandé');
                                   // TODO: appeler le service BT pour lancer le test
                                 } : null,
                                 text: 'Exécuter',
@@ -557,7 +559,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                               ),
                               FFButtonWidget(
                                 onPressed: connected ? () {
-                                  debugPrint('Calibration Accéléromètre demandé');
+                                  bt.addLog('Calibration Accéléromètre demandé');
                                   // TODO: appeler le service BT pour lancer le test
                                 } : null,
                                 text: 'Calibrer',
@@ -656,7 +658,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                               ),
                               FFButtonWidget(
                                 onPressed: connected ? () {
-                                  debugPrint('Calibration Baromètre demandé');
+                                  bt.addLog('Calibration Baromètre demandé');
                                   // TODO: appeler le service BT pour lancer le test
                                 } : null,
                                 text: 'Calibrer',
@@ -744,10 +746,10 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                                           padding: const EdgeInsets.all(12.0),
                                           child: FFButtonWidget(
                                             onPressed: connected ? () {
-                                              debugPrint('Verrouiller demandé');
+                                              bt.addLog('Verrouiller demandé');
                                               // TODO: appeler le service BT pour lancer le test
                                             } : null,
-                                            text: 'Verouiller',
+                                            text: (connected && data.pyrosArmed) ? 'Armé' : 'Désarmé',
                                             options: FFButtonOptions(
                                               width: 150.0,
                                               height: 40.0,
@@ -835,7 +837,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
-                                        'Pyro 2',
+                                        'Pyro 1',
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
@@ -847,8 +849,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                                                         .fontStyle,
                                               ),
                                               color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryText,
+                                                  FlutterFlowTheme.of(context).primaryText,
                                               fontSize: 14.0,
                                               letterSpacing: 0.0,
                                               fontWeight: FontWeight.w600,
@@ -892,11 +893,11 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                                         padding: const EdgeInsetsDirectional.fromSTEB(
                                             0.0, 4.0, 0.0, 0.0),
                                         child: FFButtonWidget(
-                                          onPressed: connected ? () {
-                                            debugPrint('Déclenchement pyro demandé');
+                                          onPressed: (connected && data.pyrosArmed && data.pyros[0]) ? () {
+                                            bt.addLog('Déclenchement pyro 1 demandé');
                                             // TODO: appeler le service BT pour lancer le test
                                           } : null,
-                                          text: 'Déclencher',
+                                          text: connected ? ((data.pyrosArmed && data.pyros[0]) ? 'Déclencher' : 'Désarmé / Déconnecté') : 'Inconnu',
                                           options: FFButtonOptions(
                                             height: 28.0,
                                             padding:
@@ -1026,11 +1027,11 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                                         padding: const EdgeInsetsDirectional.fromSTEB(
                                             0.0, 4.0, 0.0, 0.0),
                                         child: FFButtonWidget(
-                                          onPressed: connected ? () {
-                                            debugPrint('Déclenchement pyro demandé');
+                                          onPressed: (connected && data.pyrosArmed && data.pyros[1]) ? () {
+                                            bt.addLog('Déclenchement pyro 2 demandé');
                                             // TODO: appeler le service BT pour lancer le test
                                           } : null,
-                                          text: 'Déclencher',
+                                          text: connected ? ((data.pyrosArmed && data.pyros[1]) ? 'Déclencher' : 'Désarmé / Déconnecté') : 'Inconnu',
                                           options: FFButtonOptions(
                                             height: 28.0,
                                             padding:
@@ -1103,7 +1104,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
-                                        'Pyro 2',
+                                        'Pyro 3',
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
@@ -1160,11 +1161,11 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                                         padding: const EdgeInsetsDirectional.fromSTEB(
                                             0.0, 4.0, 0.0, 0.0),
                                         child: FFButtonWidget(
-                                          onPressed: connected ? () {
-                                            debugPrint('Déclenchement pyro demandé');
+                                          onPressed: (connected && data.pyrosArmed && data.pyros[2]) ? () {
+                                            bt.addLog('Déclenchement pyro 3 demandé');
                                             // TODO: appeler le service BT pour lancer le test
                                           } : null,
-                                          text: 'Déclencher',
+                                          text: connected ? ((data.pyrosArmed && data.pyros[2]) ? 'Déclencher' : 'Désarmé / Déconnecté') : 'Inconnu',
                                           options: FFButtonOptions(
                                             height: 28.0,
                                             padding:
@@ -1237,7 +1238,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
-                                        'Pyro 2',
+                                        'Pyro 4',
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
@@ -1294,11 +1295,11 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                                         padding: const EdgeInsetsDirectional.fromSTEB(
                                             0.0, 4.0, 0.0, 0.0),
                                         child: FFButtonWidget(
-                                          onPressed: connected ? () {
-                                            debugPrint('Déclenchement pyro demandé');
+                                          onPressed: (connected && data.pyrosArmed && data.pyros[3]) ? () {
+                                            bt.addLog('Déclenchement pyro 4 demandé');
                                             // TODO: appeler le service BT pour lancer le test
                                           } : null,
-                                          text: 'Déclencher',
+                                          text: connected ? ((data.pyrosArmed && data.pyros[3]) ? 'Déclencher' : 'Désarmé / Déconnecté') : 'Inconnu',
                                           options: FFButtonOptions(
                                             height: 28.0,
                                             padding:
@@ -1352,7 +1353,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                     width: double.infinity,
                     height: 165.5,
                     decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).alternate,
+                      color: FlutterFlowTheme.of(context).secondaryBackground,
                       boxShadow: const [
                         BoxShadow(
                           blurRadius: 4.0,
