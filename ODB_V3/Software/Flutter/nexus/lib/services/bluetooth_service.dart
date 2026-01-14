@@ -57,7 +57,7 @@ class BluetoothServiceManager with ChangeNotifier {
   }
 
   // ---------- CONNECT ----------
-  Future<void> connect(BluetoothDevice device, BluetoothDataService dataService) async {
+  Future<void> connect(BluetoothDevice device, DataServiceManager dataService) async {
     final name =
         device.platformName.isNotEmpty ? device.platformName : device.remoteId.str;
 
@@ -126,7 +126,7 @@ class BluetoothServiceManager with ChangeNotifier {
   }
 
   // ---------- SERVICES ----------
-  Future<void> discoverServices(BluetoothDataService dataService) async {
+  Future<void> discoverServices(DataServiceManager dataService) async {
     if (connectedDevice == null) return;
 
     addLog('Découverte des services');
@@ -146,7 +146,7 @@ class BluetoothServiceManager with ChangeNotifier {
 
   Future<void> enableNotifications(
     BluetoothCharacteristic c,
-    BluetoothDataService dataService,
+    DataServiceManager dataService,
   ) async {
     try {
       await c.setNotifyValue(true);

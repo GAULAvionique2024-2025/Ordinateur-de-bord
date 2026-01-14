@@ -10,6 +10,7 @@ import 'flutter_flow/nav/nav.dart';
 import 'index.dart';
 import 'package:provider/provider.dart';
 import 'services/bluetooth_service.dart';
+import 'services/data_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,8 +20,14 @@ void main() async {
   await FlutterFlowTheme.initialize();
 
   runApp(
-    ChangeNotifierProvider(
-      create: (_) => BluetoothServiceManager(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => BluetoothServiceManager()),
+        ChangeNotifierProxyProvider<BluetoothServiceManager, DataServiceManager>(
+          create: (ctx) => DataServiceManager(ctx.read<BluetoothServiceManager>()),
+          update: (ctx, bt, prev) => DataServiceManager(bt),
+        ),
+      ],
       child: MyApp(),
     ),
   );

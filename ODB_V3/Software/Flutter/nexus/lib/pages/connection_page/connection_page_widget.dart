@@ -34,14 +34,6 @@ class _ConnectionPageWidgetState extends State<ConnectionPageWidget> {
     _model = createModel(context, () => ConnectionPageModel());
 
     _model.switchValue = false;
-
-    // Écoute l'état du Bluetooth
-    FlutterBluePlus.adapterState.listen((state) {
-      debugPrint('Bluetooth state: $state');
-      if (state != BluetoothAdapterState.on) {
-        _showBluetoothDisabledDialog();
-      }
-    });
   }
 
   @override
@@ -86,7 +78,7 @@ class _ConnectionPageWidgetState extends State<ConnectionPageWidget> {
   @override
   Widget build(BuildContext context) {
     final bt = context.watch<BluetoothServiceManager>();
-    final dataService = BluetoothDataService(bt);
+    final dataService = context.watch<DataServiceManager>();
 
     return GestureDetector(
       onTap: () {
@@ -232,7 +224,18 @@ class _ConnectionPageWidgetState extends State<ConnectionPageWidget> {
                                   value: bt.isScanning,
                                   onChanged: (newValue) async {
                                     if (newValue) {
-                                      await context.read<BluetoothServiceManager>().startScan();
+                                      try {
+                                        final state = await FlutterBluePlus.adapterState.first;
+                                        debugPrint('Bluetooth state: $state');
+                                        if (state != BluetoothAdapterState.on) {
+                                          _showBluetoothDisabledDialog();
+                                        } else {
+                                          await context.read<BluetoothServiceManager>().startScan();
+                                        }
+                                      } catch (e) {
+                                        debugPrint('Erreur lecture état Bluetooth: $e');
+                                        _showBluetoothDisabledDialog();
+                                      }
                                     } else {
                                       await context.read<BluetoothServiceManager>().stopScan();
                                     }
