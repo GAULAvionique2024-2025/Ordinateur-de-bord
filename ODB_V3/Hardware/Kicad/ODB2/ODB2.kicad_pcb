@@ -130,8 +130,9 @@
 		(pad_to_paste_clearance -0.0508)
 		(allow_soldermask_bridges_in_footprints no)
 		(tenting front back)
+		(grid_origin 117.4496 156.05)
 		(pcbplotparams
-			(layerselection 0x00000000_00000000_5555555f_ff55ffff)
+			(layerselection 0x00000000_00000000_55555555_5755ffff)
 			(plot_on_all_layers_selection 0x00000000_00000000_00000000_00000000)
 			(disableapertmacros no)
 			(usegerberextensions no)
@@ -160,14 +161,14 @@
 			(sketchpadsonfab no)
 			(plotpadnumbers no)
 			(hidednponfab no)
-			(sketchdnponfab yes)
-			(crossoutdnponfab yes)
+			(sketchdnponfab no)
+			(crossoutdnponfab no)
 			(subtractmaskfromsilk no)
 			(outputformat 1)
 			(mirror no)
 			(drillshape 0)
 			(scaleselection 1)
-			(outputdirectory "../../../../../../Downloads/Production/Gerber/")
+			(outputdirectory "production/")
 		)
 	)
 	(net 0 "")
@@ -20923,17 +20924,6 @@
 			(layer "F.Fab")
 			(uuid "e485bb7d-0572-4fb5-8bfd-109698fdccbb")
 		)
-		(fp_text user "${REFERENCE}"
-			(at 0 0 0)
-			(layer "F.Fab")
-			(uuid "1a80629a-f000-4792-8364-02b49a0cf99f")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 		(pad "1" smd roundrect
 			(at -10.6625 -8.75)
 			(size 1.475 0.3)
@@ -22800,13 +22790,13 @@
 		(at 159.48419 49.9625)
 		(tags "142-0701-801 ")
 		(property "Reference" "J1"
-			(at 0 0 0)
+			(at 6.657677 1.36948 0)
 			(unlocked yes)
 			(layer "F.SilkS")
-			(uuid "85c43473-f086-488e-bb4f-c69e1f2c0c53")
+			(uuid "7e1119c2-37de-4f78-8444-4161fed7041c")
 			(effects
 				(font
-					(size 1 1)
+					(size 0.8 0.8)
 					(thickness 0.15)
 				)
 			)
@@ -22816,7 +22806,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "03c1b367-8733-4997-94f1-9e895637245e")
+			(uuid "a5329a93-7358-4d01-92a5-9559551c110c")
 			(effects
 				(font
 					(size 1 1)
@@ -22824,11 +22814,11 @@
 				)
 			)
 		)
-		(property "Datasheet" "142-0701-801"
+		(property "Datasheet" "https://www.digikey.ca/en/products/detail/cinch-connectivity-solutions-johnson/142-0701-801/35280"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "1dc18695-44ff-452a-90eb-0d6acb1d6791")
+			(uuid "0dac9acc-f17b-4d75-8daa-9df14e60da75")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -22840,10 +22830,36 @@
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "441eed02-ff80-4c85-b94c-82fa47af88f0")
+			(uuid "c8a6df77-ee8b-4432-b55a-48f6c6ac6477")
 			(effects
 				(font
 					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" "J502-ND"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "be44756b-065e-4a08-91a9-69adeb92dfdd")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer_Part_Number" "142-0701-801"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "b127c35d-423f-4bca-aa0f-cb615ba6f9a3")
+			(effects
+				(font
+					(size 1 1)
 					(thickness 0.15)
 				)
 			)
@@ -22854,16 +22870,6 @@
 		(sheetfile "IO_Peripherals.kicad_sch")
 		(attr smd)
 		(fp_line
-			(start -4.8895 -12.192)
-			(end -4.8895 -2.87274)
-			(stroke
-				(width 0.1524)
-				(type solid)
-			)
-			(layer "F.SilkS")
-			(uuid "25aabfcb-3c3a-43c0-9f1a-50ed3d966b87")
-		)
-		(fp_line
 			(start -2.84226 2.3368)
 			(end -1.47574 2.3368)
 			(stroke
@@ -22871,7 +22877,7 @@
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "c80183af-8277-48d2-a8c5-1d2e1601bfc8")
+			(uuid "145d6722-e231-47ba-9cf9-15775780c7cb")
 		)
 		(fp_line
 			(start 1.47574 2.3368)
@@ -22881,67 +22887,7 @@
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "fb48325c-1d92-4055-be28-e6c208892422")
-		)
-		(fp_line
-			(start 4.8895 -12.192)
-			(end -4.8895 -12.192)
-			(stroke
-				(width 0.1524)
-				(type solid)
-			)
-			(layer "F.SilkS")
-			(uuid "f42a7b2d-2bc8-4a8d-a7d3-d1b4f68b326a")
-		)
-		(fp_line
-			(start 4.8895 -2.87274)
-			(end 4.8895 -12.192)
-			(stroke
-				(width 0.1524)
-				(type solid)
-			)
-			(layer "F.SilkS")
-			(uuid "bfdf1834-bd40-4a79-82e5-fa99b1727aa2")
-		)
-		(fp_line
-			(start -4.7625 -12.065)
-			(end -4.7625 -2.54)
-			(stroke
-				(width 0.0254)
-				(type solid)
-			)
-			(layer "Edge.Cuts")
-			(uuid "63cece3d-48be-4e96-b9e3-119f8914cbe7")
-		)
-		(fp_line
-			(start -4.7625 -12.065)
-			(end 4.0005 -12.065)
-			(stroke
-				(width 0.0254)
-				(type solid)
-			)
-			(layer "Edge.Cuts")
-			(uuid "8a19102a-8d18-445a-8590-633e955c6613")
-		)
-		(fp_line
-			(start -4.7625 -2.54)
-			(end 4.0005 -2.54)
-			(stroke
-				(width 0.0254)
-				(type solid)
-			)
-			(layer "Edge.Cuts")
-			(uuid "dd8d1de1-2186-419a-80ba-9a13498a08c8")
-		)
-		(fp_line
-			(start 4.0005 -12.065)
-			(end 4.0005 -2.54)
-			(stroke
-				(width 0.0254)
-				(type solid)
-			)
-			(layer "Edge.Cuts")
-			(uuid "f27151f1-5af1-4289-bfc8-10e6710283c5")
+			(uuid "425a2767-c884-4d67-9783-8783fb775a08")
 		)
 		(fp_line
 			(start -5.842 -12.319)
@@ -22951,7 +22897,7 @@
 				(type solid)
 			)
 			(layer "F.CrtYd")
-			(uuid "3c1fd239-eb68-4877-9fa0-882df5eac0e3")
+			(uuid "21feb704-509a-48b4-892d-e84af9b0bee3")
 		)
 		(fp_line
 			(start -5.842 2.794)
@@ -22961,7 +22907,7 @@
 				(type solid)
 			)
 			(layer "F.CrtYd")
-			(uuid "a0d0feb8-67b4-4b8e-9788-a795edd49447")
+			(uuid "68c4bd5e-0cc5-4c85-ac0b-b80badc90e77")
 		)
 		(fp_line
 			(start 5.842 -12.319)
@@ -22971,7 +22917,7 @@
 				(type solid)
 			)
 			(layer "F.CrtYd")
-			(uuid "82cfcd26-7751-40a3-99a4-cedb71e378cd")
+			(uuid "ca786f39-51a2-4a35-ba98-6f078cea49ac")
 		)
 		(fp_line
 			(start 5.842 2.794)
@@ -22981,7 +22927,7 @@
 				(type solid)
 			)
 			(layer "F.CrtYd")
-			(uuid "5ee1cfac-90df-473e-8882-fa89576b62c6")
+			(uuid "dae6ceba-cabd-48d5-9238-301ee21011bb")
 		)
 		(fp_line
 			(start -4.7625 -12.065)
@@ -22991,7 +22937,7 @@
 				(type solid)
 			)
 			(layer "F.Fab")
-			(uuid "5719fc6f-57e1-4d6b-96e2-cc328754c33f")
+			(uuid "76ebe0f0-ab3b-402e-8d8e-496c2c65a1e9")
 		)
 		(fp_line
 			(start -4.7625 2.2098)
@@ -23001,7 +22947,7 @@
 				(type solid)
 			)
 			(layer "F.Fab")
-			(uuid "389da456-6fd2-4363-a5f7-c1453d4da3b7")
+			(uuid "78e0e2b1-f932-4e31-867e-e0e7e87e6382")
 		)
 		(fp_line
 			(start 4.7625 -12.065)
@@ -23011,7 +22957,7 @@
 				(type solid)
 			)
 			(layer "F.Fab")
-			(uuid "374ced90-1805-484b-9fe0-5a76e9cb3c2e")
+			(uuid "5512930c-3a9d-49fd-931e-7792f2722d23")
 		)
 		(fp_line
 			(start 4.7625 2.2098)
@@ -23021,7 +22967,7 @@
 				(type solid)
 			)
 			(layer "F.Fab")
-			(uuid "e8d9c670-9eb5-4f8f-b5a5-d4f0b2358039")
+			(uuid "255a5e32-8790-4067-998b-948a467776db")
 		)
 		(fp_circle
 			(center 0 1.905)
@@ -23032,7 +22978,7 @@
 			)
 			(fill no)
 			(layer "F.Fab")
-			(uuid "d76022c2-9b86-4228-8c74-0ecee2a18398")
+			(uuid "1263209a-1d81-4ec5-b71c-a3fe2feaab00")
 		)
 		(fp_text user "${REFERENCE}"
 			(at 0 0 0)
@@ -32903,7 +32849,7 @@
 				)
 			)
 		)
-		(property "Value" "LM339"
+		(property "Value" "LM339B"
 			(at 0 3.45 0)
 			(layer "F.Fab")
 			(uuid "d54bdfc3-f967-4466-9e31-da5e93e6a319")
@@ -32938,7 +32884,7 @@
 				)
 			)
 		)
-		(property "DigiKey_Part_Number" "296-1013-1-ND"
+		(property "DigiKey_Part_Number" "296-LM339BIPWRCT-ND"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -32951,7 +32897,7 @@
 				)
 			)
 		)
-		(property "Purchase-URL" "https://www.digikey.ca/en/products/detail/texas-instruments/LM339DR/276657"
+		(property "Purchase-URL" "https://www.digikey.ca/en/products/detail/texas-instruments/LM339BIPWR/21298817"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -33003,8 +32949,21 @@
 				)
 			)
 		)
+		(property "Manufacturer_Part_Number" "LM339BIPWR"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "bfa3355b-acb9-4aa8-895d-7706707ef69f")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
 		(property ki_fp_filters "SOIC*3.9x8.7mm*P1.27mm* TSSOP*4.4x5mm*P0.65mm*")
-		(path "/8ab7427e-7183-4caa-ac8a-08b0bd412372/d37d1cd5-20aa-4616-81c5-78e6e5972093")
+		(path "/8ab7427e-7183-4caa-ac8a-08b0bd412372/90c12831-b79a-4f62-96f0-68c59f25caac")
 		(sheetname "/Pyros/")
 		(sheetfile "Pyro.kicad_sch")
 		(attr smd)
@@ -38967,7 +38926,7 @@
 		(descr "Resistor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
 		(tags "resistor")
 		(property "Reference" "R80"
-			(at 2.69989 -0.320983 0)
+			(at 2.695361 -0.44614 0)
 			(layer "F.SilkS")
 			(uuid "555a7ec1-0f8d-4351-bd48-800193dc97e9")
 			(effects

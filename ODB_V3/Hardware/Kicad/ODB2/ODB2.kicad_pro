@@ -521,8 +521,8 @@
       "gencad": "",
       "idf": "",
       "netlist": "",
-      "plot": "../../../../../../Downloads/Production/Gerber/",
-      "pos_files": "../../../../../../Downloads/",
+      "plot": "production/",
+      "pos_files": "/production",
       "specctra_dsn": "",
       "step": "production/ODB2.step",
       "svg": "",
@@ -532,7 +532,7 @@
   },
   "schematic": {
     "annotate_start_num": 0,
-    "bom_export_filename": "..\\..\\..\\..\\..\\..\\Downloads\\Production\\BOM\\ODB2.csv",
+    "bom_export_filename": "production\\bom.csv",
     "bom_fmt_presets": [],
     "bom_fmt_settings": {
       "field_delimiter": ",",
@@ -563,7 +563,7 @@
           "group_by": true,
           "label": "Footprint",
           "name": "Footprint",
-          "show": true
+          "show": false
         },
         {
           "group_by": false,
@@ -623,7 +623,7 @@
           "group_by": false,
           "label": "Datasheet",
           "name": "Datasheet",
-          "show": true
+          "show": false
         },
         {
           "group_by": false,
