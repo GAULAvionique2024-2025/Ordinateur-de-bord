@@ -7,6 +7,7 @@ import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import 'connection_page_model.dart';
 export 'connection_page_model.dart';
 import 'package:provider/provider.dart';
@@ -33,7 +34,7 @@ class _ConnectionPageWidgetState extends State<ConnectionPageWidget> {
     super.initState();
     _model = createModel(context, () => ConnectionPageModel());
 
-    _model.switchValue = false;
+    _model.textController ??= TextEditingController();
   }
 
   @override
@@ -79,6 +80,15 @@ class _ConnectionPageWidgetState extends State<ConnectionPageWidget> {
   Widget build(BuildContext context) {
     final bt = context.watch<BluetoothServiceManager>();
     final dataService = context.watch<DataServiceManager>();
+
+    // Filtrage local par nom ou UUID/id
+    final filter = _model.textController?.text ?? '';
+    final lower = filter.toLowerCase();
+    final filteredResults = bt.scanResults.where((r) {
+        final id = r.device.remoteId.str.toLowerCase();
+        final name = r.device.platformName.toLowerCase();
+        return filter.isEmpty || id.contains(lower) || name.contains(lower);
+    }).toList();
 
     return GestureDetector(
       onTap: () {
@@ -193,7 +203,7 @@ class _ConnectionPageWidgetState extends State<ConnectionPageWidget> {
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
                                     Icon(
-                                      Icons.bluetooth,
+                                      Icons.bluetooth_searching,
                                       color:
                                           FlutterFlowTheme.of(context).primary,
                                       size: 24,
@@ -220,47 +230,202 @@ class _ConnectionPageWidgetState extends State<ConnectionPageWidget> {
                                     ),
                                   ].divide(const SizedBox(width: 8)),
                                 ),
-                                Switch(
-                                  value: bt.isScanning,
-                                  onChanged: (newValue) async {
-                                    if (newValue) {
+                                FFButtonWidget(
+                                  onPressed: () async {
+                                    if (bt.isScanning) {
+                                      await context.read<BluetoothServiceManager>().stopScan();
+                                    } else {
                                       try {
                                         final state = await FlutterBluePlus.adapterState.first;
                                         debugPrint('Bluetooth state: $state');
                                         if (state != BluetoothAdapterState.on) {
                                           _showBluetoothDisabledDialog();
                                         } else {
-                                          await context.read<BluetoothServiceManager>().startScan();
+                                          await context.read<BluetoothServiceManager>().refreshScan(timeout: const Duration(seconds: 15));
                                         }
                                       } catch (e) {
                                         debugPrint('Erreur lecture état Bluetooth: $e');
                                         _showBluetoothDisabledDialog();
                                       }
-                                    } else {
-                                      await context.read<BluetoothServiceManager>().stopScan();
                                     }
                                   },
-                                  activeThumbColor:
-                                      FlutterFlowTheme.of(context).primary,
+                                  text: '',
+                                  icon: Icon(
+                                    bt.isScanning ? Icons.stop : Icons.refresh,
+                                    color: FlutterFlowTheme.of(context).info,
+                                    size: 24,
+                                  ),
+                                  options: FFButtonOptions(
+                                    height: 40,
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                        16, 0, 16, 0),
+                                    iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                        0, 0, 0, 0),
+                                    iconColor:
+                                        FlutterFlowTheme.of(context).info,
+                                    color: bt.isScanning
+                                        ? FlutterFlowTheme.of(context).primary
+                                        : FlutterFlowTheme.of(context).error,
+                                    textStyle: FlutterFlowTheme.of(context)
+                                        .titleSmall
+                                        .override(
+                                          font: GoogleFonts.interTight(
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .titleSmall
+                                                    .fontWeight,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .titleSmall
+                                                    .fontStyle,
+                                          ),
+                                          color: Colors.white,
+                                          letterSpacing: 0.0,
+                                          fontWeight:
+                                              FlutterFlowTheme.of(context)
+                                                  .titleSmall
+                                                  .fontWeight,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .titleSmall
+                                                  .fontStyle,
+                                        ),
+                                    elevation: 0,
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  showLoadingIndicator: false,
                                 ),
                               ],
                             ),
                             Text(
                               bt.isScanning
                                   ? 'Recherche d\'appareils en cours...'
-                                  : 'Scan Bluetooth arrêté',
+                                  : (bt.scanResults.isEmpty ? 'Aucun appareil trouvé' : 'Scan Bluetooth arrêté'),
                               textAlign: TextAlign.center,
-                              style: FlutterFlowTheme.of(context).bodyMedium,
+                              style: FlutterFlowTheme.of(context).bodyMedium
+                                  .override(
+                                    font: GoogleFonts.inter(
+                                      fontWeight: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontWeight,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontStyle,
+                                    ),
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryText,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .fontStyle,
+                                  ),
                             ),
                             Divider(
                               thickness: 1,
                               color: FlutterFlowTheme.of(context).alternate,
                             ),
+                            Container(
+                              width: double.infinity,
+                              child: TextFormField(
+                                controller: _model.textController,
+                                focusNode: _model.textFieldFocusNode,
+                                autofocus: false,
+                                obscureText: false,
+                                decoration: InputDecoration(
+                                  hintText: 'Rechercher par nom ou UUID',
+                                  hintStyle: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        font: GoogleFonts.inter(
+                                          fontWeight:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontWeight,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontStyle,
+                                        ),
+                                        letterSpacing: 0.0,
+                                        fontWeight: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontWeight,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontStyle,
+                                      ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: FlutterFlowTheme.of(context)
+                                          .alternate,
+                                      width: 1,
+                                    ),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
+                                      width: 1,
+                                    ),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  errorBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
+                                    ),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  focusedErrorBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
+                                    ),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  filled: true,
+                                  fillColor: FlutterFlowTheme.of(context)
+                                      .secondaryBackground,
+                                  prefixIcon: Icon(
+                                    Icons.search,
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryText,
+                                    size: 20,
+                                  ),
+                                ),
+                                style: FlutterFlowTheme.of(context).bodyMedium
+                                    .override(
+                                      font: GoogleFonts.inter(
+                                        fontWeight: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontWeight,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontStyle,
+                                      ),
+                                      letterSpacing: 0.0,
+                                      fontWeight: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontWeight,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontStyle,
+                                    ),
+                                cursorColor:
+                                    FlutterFlowTheme.of(context).primaryText,
+                                validator: _model.textControllerValidator
+                                    .asValidator(context),
+                              ),
+                            ),
                             Expanded(
                               child: ListView.builder(
-                                itemCount: bt.scanResults.length,
+                                itemCount: filteredResults.length,
                                 itemBuilder: (context, index) {
-                                  final result = bt.scanResults[index];
+                                  final result = filteredResults[index];
                                   final device = result.device;
                                   final connected =
                                       bt.connectedDevice?.remoteId == device.remoteId;
@@ -271,7 +436,7 @@ class _ConnectionPageWidgetState extends State<ConnectionPageWidget> {
                                         ? device.platformName
                                         : 'Appareil inconnu'),
                                     subtitle: Text(device.remoteId.str),
-                                    trailing: ElevatedButton(
+                                    trailing: FFButtonWidget(
                                       onPressed: connected
                                           ? null
                                           : () async {
@@ -285,7 +450,37 @@ class _ConnectionPageWidgetState extends State<ConnectionPageWidget> {
                                                 }
                                               }
                                             },
-                                      child: Text(connected ? 'Connecté' : 'Connecter'),
+                                      text: connected ? 'Connecté' : 'Connecter',
+                                      options: FFButtonOptions(
+                                        height: 36,
+                                        padding: const EdgeInsetsDirectional.fromSTEB(12, 0, 12, 0),
+                                        color: connected ? FlutterFlowTheme.of(context).secondaryText : FlutterFlowTheme.of(context).primary,
+                                        textStyle: FlutterFlowTheme.of(context)
+                                        .titleSmall
+                                        .override(
+                                          font: GoogleFonts.interTight(
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .titleSmall
+                                                    .fontWeight,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .titleSmall
+                                                    .fontStyle,
+                                          ),
+                                          color: Colors.white,
+                                          letterSpacing: 0.0,
+                                          fontWeight:
+                                              FlutterFlowTheme.of(context)
+                                                  .titleSmall
+                                                  .fontWeight,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .titleSmall
+                                                  .fontStyle,
+                                        ),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
                                     ),
                                   );
                                 },
@@ -298,10 +493,19 @@ class _ConnectionPageWidgetState extends State<ConnectionPageWidget> {
                                   leading: const Icon(Icons.bluetooth_connected),
                                   title: Text(bt.connectedDevice?.platformName ?? bt.connectedDevice?.remoteId.str ?? 'Connecté'),
                                   subtitle: const Text('Appareil connecté via service'),
-                                  trailing: ElevatedButton(
-                                    onPressed: () => context.read<BluetoothServiceManager>().disconnect(),
-                                    child: const Text('Déconnecter'),
-                                  ),
+                                  trailing: FFButtonWidget(
+                                      onPressed: () => context.read<BluetoothServiceManager>().disconnect(),
+                                      text: 'Déconnecter',
+                                      options: FFButtonOptions(
+                                        height: 36,
+                                        padding: const EdgeInsetsDirectional.fromSTEB(12, 0, 12, 0),
+                                        color: FlutterFlowTheme.of(context).error,
+                                        textStyle: FlutterFlowTheme.of(context).bodySmall.override(
+                                          color: FlutterFlowTheme.of(context).primaryBackground,
+                                        ),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                    ),
                                 ),
                               ),
                           ].divide(const SizedBox(height: 12)),
