@@ -14826,7 +14826,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "142-0701-801"
+		(property "Datasheet" "https://www.digikey.ca/en/products/detail/cinch-connectivity-solutions-johnson/142-0701-801/35280"
 			(at 147.32 132.08 0)
 			(effects
 				(font
@@ -14838,6 +14838,24 @@
 		)
 		(property "Description" ""
 			(at 147.32 132.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DigiKey_Part_Number" "J502-ND"
+			(at 147.32 132.08 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "142-0701-801"
+			(at 147.32 132.08 90)
 			(effects
 				(font
 					(size 1.27 1.27)

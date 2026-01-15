@@ -5,7 +5,7 @@
 	(layer "F.Cu")
 	(tags "SI5442DU-T1-GE3 ")
 	(property "Reference" "REF**"
-		(at 0 0 0)
+		(at -0.2 -2.7 0)
 		(unlocked yes)
 		(layer "F.SilkS")
 		(uuid "b3bd8bd8-1182-48c6-8a06-7672d14d32c3")
@@ -114,8 +114,8 @@
 		(uuid "a6ffbce9-66fe-4a38-a789-3a2c626d7aa6")
 	)
 	(fp_circle
-		(center -1.34 -2.15)
-		(end -1.213 -2.15)
+		(center -1.5 -2.1)
+		(end -1.373 -2.1)
 		(stroke
 			(width 0.1524)
 			(type solid)
@@ -123,6 +123,50 @@
 		(fill no)
 		(layer "F.SilkS")
 		(uuid "d60f932a-bcf7-4f6e-b601-d68cfc1d8a25")
+	)
+	(fp_rect
+		(start -0.685769 -1.402386)
+		(end -0.049769 -0.502386)
+		(stroke
+			(width 0)
+			(type solid)
+		)
+		(fill yes)
+		(layer "F.Paste")
+		(uuid "7345fe08-5423-4dc9-af1d-8f6c548088da")
+	)
+	(fp_rect
+		(start -0.685769 -0.40225)
+		(end -0.049769 0.49775)
+		(stroke
+			(width 0)
+			(type solid)
+		)
+		(fill yes)
+		(layer "F.Paste")
+		(uuid "45c4e452-c35c-4dee-9357-d5d65a3e6acc")
+	)
+	(fp_rect
+		(start 0.049768 -1.402386)
+		(end 0.685768 -0.502386)
+		(stroke
+			(width 0)
+			(type solid)
+		)
+		(fill yes)
+		(layer "F.Paste")
+		(uuid "36ea0cab-54bb-445d-9951-95d398f89760")
+	)
+	(fp_rect
+		(start 0.049768 -0.40225)
+		(end 0.685768 0.49775)
+		(stroke
+			(width 0)
+			(type solid)
+		)
+		(fill yes)
+		(layer "F.Paste")
+		(uuid "11c6f143-3a9b-4f91-b7ea-fa6aa72d086a")
 	)
 	(fp_line
 		(start -1.2472 -1.406779)
@@ -369,13 +413,13 @@
 	(pad "9" smd rect
 		(at 0 1.127)
 		(size 0.5588 0.3048)
-		(layers "F.Cu" "F.Mask")
+		(layers "F.Cu" "F.Mask" "F.Paste")
 		(uuid "c7f74ca5-539e-4d2a-acf3-5c798df53a03")
 	)
 	(pad "10" smd rect
 		(at 0 -0.455998)
 		(size 1.473226 2.006596)
-		(layers "F.Cu" "F.Mask" "F.Paste")
+		(layers "F.Cu" "F.Mask")
 		(uuid "ab857116-1e86-46dd-82a7-2b4b64aa0ef7")
 	)
 	(embedded_fonts no)
