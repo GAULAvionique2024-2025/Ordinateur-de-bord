@@ -36,6 +36,7 @@ class BluetoothServiceManager with ChangeNotifier {
   Future<void> startScan({Duration timeout = const Duration(seconds: 15)}) async {
     if (isScanning) return;
 
+    ConsoleService().clear();
     ConsoleService().log('Démarrage du scan Bluetooth');
 
     scanResults.clear();

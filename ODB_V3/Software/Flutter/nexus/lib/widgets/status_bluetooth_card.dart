@@ -30,10 +30,8 @@ class StatusBluetoothCard extends StatelessWidget {
             : (isScanning ? Icons.bluetooth_searching : Icons.bluetooth_disabled));
 
     final iconColor = connected
-        ? FlutterFlowTheme.of(context).success
-        : (isScanning
-            ? FlutterFlowTheme.of(context).warning
-            : FlutterFlowTheme.of(context).secondaryText);
+        ? FlutterFlowTheme.of(context).info
+        : FlutterFlowTheme.of(context).secondaryText;
 
     final colors = gradientColors ??
         [FlutterFlowTheme.of(context).primary, FlutterFlowTheme.of(context).accent1];

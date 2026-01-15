@@ -209,7 +209,7 @@ class _ConnectionPageWidgetState extends State<ConnectionPageWidget> {
                                       size: 24,
                                     ),
                                     Text(
-                                      'Scan Bluetooth',
+                                      'Recherche Bluetooth',
                                       style: FlutterFlowTheme.of(context)
                                           .titleMedium
                                           .override(
@@ -252,7 +252,9 @@ class _ConnectionPageWidgetState extends State<ConnectionPageWidget> {
                                   text: '',
                                   icon: Icon(
                                     bt.isScanning ? Icons.stop : Icons.refresh,
-                                    color: FlutterFlowTheme.of(context).info,
+                                    color: bt.isScanning
+                                        ? FlutterFlowTheme.of(context).error
+                                        : FlutterFlowTheme.of(context).success,
                                     size: 24,
                                   ),
                                   options: FFButtonOptions(
@@ -262,10 +264,8 @@ class _ConnectionPageWidgetState extends State<ConnectionPageWidget> {
                                     iconPadding: const EdgeInsetsDirectional.fromSTEB(
                                         0, 0, 0, 0),
                                     iconColor:
-                                        FlutterFlowTheme.of(context).info,
-                                    color: bt.isScanning
-                                        ? FlutterFlowTheme.of(context).primary
-                                        : FlutterFlowTheme.of(context).error,
+                                        FlutterFlowTheme.of(context).primary,
+                                    color: const Color(0x00EF3939),
                                     textStyle: FlutterFlowTheme.of(context)
                                         .titleSmall
                                         .override(
@@ -300,7 +300,7 @@ class _ConnectionPageWidgetState extends State<ConnectionPageWidget> {
                             Text(
                               bt.isScanning
                                   ? 'Recherche d\'appareils en cours...'
-                                  : (bt.scanResults.isEmpty ? 'Aucun appareil trouvé' : 'Scan Bluetooth arrêté'),
+                                  : (bt.scanResults.isEmpty ? 'Aucun appareil trouvé' : 'Recherche Bluetooth arrêtée'),
                               textAlign: TextAlign.center,
                               style: FlutterFlowTheme.of(context).bodyMedium
                                   .override(
