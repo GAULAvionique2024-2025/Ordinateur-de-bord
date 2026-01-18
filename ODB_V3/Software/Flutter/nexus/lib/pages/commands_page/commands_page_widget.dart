@@ -12,12 +12,7 @@ import 'package:nexus/services/data_service.dart';
 import 'package:nexus/services/console_service.dart';
 import 'package:nexus/widgets/status_bluetooth_card.dart';
 
-/// J'aimerais une page contenant une liste de commandes pouvant être envoyées
-/// à l'ordinateur de bord connecté par bluetooth.
-///
-/// Je voudrais pouvoir exécuter et avoir une retroaction de tests unitaires,
-/// de calibration, de mise en un état spécifique, de dclenchement manuel des
-/// 4 pyros indépendemment et autres commandes que tu juges utiles
+
 class CommandsPageWidget extends StatefulWidget {
   const CommandsPageWidget({super.key});
 

@@ -11,18 +11,7 @@ import 'package:nexus/services/bluetooth_service.dart';
 import 'package:nexus/services/data_service.dart';
 import 'package:nexus/widgets/status_bluetooth_card.dart';
 
-/// Créer un page pour montrer les statistiques et les états de l'ordinateur
-/// de bord.
-///
-/// La page se présente avec plusieurs cartes. 1ere carte est la tension de la
-/// batterie lue par l'ADC (en V et and %), incluant un bool (good power ou
-/// bad power). 2e carte est l'état de l'ODB (un string). 3e est l'état de 4
-/// pyros (non connecté ou connecté). 4e carte est la température (en degrés).
-/// 5e carte est les données du IMU 9-axes : accélération sur les 3 axes,
-/// gyros sur les 3 axes et la magnetomètre 3 axes. 6e carte est
-/// l'accélération3 axes de l'accéléromètre high G. 6e carte, les information
-/// de la carte SD. 7e carte les coordonnées GPS (lattitude et longitude,
-/// altitude). 8e carte est le baromètre (pression et altitude)
+
 class StatisticsPageWidget extends StatefulWidget {
   const StatisticsPageWidget({super.key});
 
