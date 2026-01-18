@@ -14,6 +14,7 @@ import 'package:provider/provider.dart';
 import 'package:nexus/services/bluetooth_service.dart';
 import 'package:nexus/services/data_service.dart';
 
+
 class ConnectionPageWidget extends StatefulWidget {
   const ConnectionPageWidget({super.key});
 
@@ -300,7 +301,7 @@ class _ConnectionPageWidgetState extends State<ConnectionPageWidget> {
                             Text(
                               bt.isScanning
                                   ? 'Recherche d\'appareils en cours...'
-                                  : (bt.scanResults.isEmpty ? 'Aucun appareil trouvé' : 'Recherche Bluetooth arrêtée'),
+                                  : (bt.scanResults.isEmpty ? 'Aucun appareil trouvé (BLE)' : 'Recherche Bluetooth arrêtée'),
                               textAlign: TextAlign.center,
                               style: FlutterFlowTheme.of(context).bodyMedium
                                   .override(

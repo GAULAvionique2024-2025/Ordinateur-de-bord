@@ -75,7 +75,6 @@ class BluetoothServiceManager with ChangeNotifier {
 
     await FlutterBluePlus.stopScan();
     isScanning = false;
-    scanResults.clear();
     ConsoleService().log('Scan Bluetooth arrêté manuellement');
     notifyListeners();
   }

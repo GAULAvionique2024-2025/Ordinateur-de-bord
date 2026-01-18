@@ -9,9 +9,7 @@ import 'r_s_s_i_page_model.dart';
 export 'r_s_s_i_page_model.dart';
 import 'package:nexus/services/bluetooth_service.dart';
 
-/// Créer une page me permettant de m'indiquer (avec une flèche ou une
-/// boussole) la direction de l'ordinateur de bord selon la puissance RSSI du
-/// signal bluetooth.
+
 class RSSIPageWidget extends StatefulWidget {
   const RSSIPageWidget({super.key});
 
