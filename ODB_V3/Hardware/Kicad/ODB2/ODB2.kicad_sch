@@ -10064,7 +10064,7 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(uuid "0039901f-3aa5-458c-92c0-417655605ceb")
 		(property "Reference" "TP16"
 			(at 368.808 227.33 90)
@@ -11044,7 +11044,7 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(uuid "143f856a-1e5e-4f55-b3e9-4060d18074f4")
 		(property "Reference" "TP19"
 			(at 368.808 232.41 90)
@@ -11222,7 +11222,7 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(uuid "225bd523-4f0c-4c9a-9d7f-137a2def8b09")
 		(property "Reference" "TP13"
 			(at 368.808 234.95 90)
@@ -11332,7 +11332,7 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(uuid "2472420e-9067-419e-8abc-4a6220014e1d")
 		(property "Reference" "TP22"
 			(at 374.142 219.71 90)
@@ -11914,7 +11914,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.digikey.ca/en/products/detail/susumu/URG1608L-152-L-T05/4552646"
+		(property "Datasheet" "https://www.digikey.ca/en/products/detail/panasonic-electronic-components/ERA-3AEB152V/1465858"
 			(at 382.27 31.75 0)
 			(effects
 				(font
@@ -11932,7 +11932,7 @@
 				(hide yes)
 			)
 		)
-		(property "DigiKey_Part_Number" "408-1766-1-ND"
+		(property "DigiKey_Part_Number" "P1.5KDBCT-ND"
 			(at 382.27 31.75 90)
 			(effects
 				(font
@@ -11977,7 +11977,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" "URG1608L-152-L-T05"
+		(property "Manufacturer_Part_Number" "ERA-3AEB152V"
 			(at 382.27 31.75 90)
 			(effects
 				(font
@@ -12129,7 +12129,7 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(uuid "3f5b7af7-0274-498c-9559-bf4ac8635b60")
 		(property "Reference" "TP20"
 			(at 374.142 222.25 90)
@@ -12603,7 +12603,7 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(uuid "44f11911-c7e3-445e-ac6e-ae34c7e31dc3")
 		(property "Reference" "TP14"
 			(at 368.808 237.49 90)
@@ -12714,7 +12714,7 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(uuid "4788786e-8c6f-40ba-8794-60768cd3007f")
 		(property "Reference" "TP1"
 			(at 368.808 214.63 90)
@@ -13906,7 +13906,7 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(uuid "555a7b6e-2b1d-4525-b0c1-3fa9c51dc4a6")
 		(property "Reference" "TP18"
 			(at 368.808 224.79 90)
@@ -14328,7 +14328,7 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(uuid "5f247d48-b2e2-4f11-8c1d-f7b7d3cd59f9")
 		(property "Reference" "TP4"
 			(at 368.808 247.65 90)
@@ -14683,7 +14683,7 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(uuid "6330bff9-09fa-4548-805e-3e7c1f665433")
 		(property "Reference" "TP8"
 			(at 368.808 222.25 90)
@@ -14793,7 +14793,7 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(fields_autoplaced yes)
 		(uuid "66552e8c-70a5-4f60-8842-f9181f2eb2c8")
 		(property "Reference" "TP15"
@@ -15341,7 +15341,7 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(uuid "71ef0cc3-5e2b-4e83-9404-ce580c95f343")
 		(property "Reference" "TP11"
 			(at 374.142 232.41 90)
@@ -15452,7 +15452,7 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(uuid "736aa386-8306-4766-a9b8-620b4db81693")
 		(property "Reference" "TP6"
 			(at 368.808 240.03 90)
@@ -15591,7 +15591,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.digikey.ca/en/products/detail/abracon-llc/ABM8G-25-000MHZ-18-D2Y-T/2218021"
+		(property "Datasheet" "https://www.digikey.ca/en/products/detail/abracon-llc/ABM8G-25-000MHZ-18-D2Y-T3/2637895"
 			(at 340.36 132.08 0)
 			(effects
 				(font
@@ -15610,7 +15610,7 @@
 				(hide yes)
 			)
 		)
-		(property "DigiKey_Part_Number" "535-10275-1-ND"
+		(property "DigiKey_Part_Number" "535-14129-1-ND"
 			(at 340.36 132.08 0)
 			(effects
 				(font
@@ -15655,7 +15655,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" "ABM8G-25.000MHZ-18-D2Y-T"
+		(property "Manufacturer_Part_Number" "ABM8G-25.000MHZ-18-D2Y-T3"
 			(at 340.36 132.08 0)
 			(effects
 				(font
@@ -15692,7 +15692,7 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(uuid "7a600b5f-38c2-470e-8a1b-57ee79a3a655")
 		(property "Reference" "TP12"
 			(at 374.142 229.87 90)
@@ -15870,7 +15870,7 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(uuid "804fdb1f-c683-4442-b345-04fb77609d0f")
 		(property "Reference" "TP5"
 			(at 368.808 242.57 90)
@@ -16235,7 +16235,7 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(uuid "88932bb0-6601-4100-8241-c7d3b647fa46")
 		(property "Reference" "TP17"
 			(at 368.808 229.87 90)
@@ -16779,7 +16779,7 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(uuid "93693148-f871-4792-9de8-43bb9ab4aa82")
 		(property "Reference" "TP23"
 			(at 374.142 217.17 90)
@@ -17134,7 +17134,7 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(uuid "a3686575-4791-41a8-a9db-c6a4dd76d1fc")
 		(property "Reference" "TP7"
 			(at 368.808 245.11 90)
@@ -18069,7 +18069,7 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(uuid "b7177d61-5477-4349-a767-a6b451ef81f2")
 		(property "Reference" "TP3"
 			(at 374.142 227.33 90)
@@ -18604,7 +18604,7 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(uuid "be667655-4506-4b32-a146-6cf3f7df2eb1")
 		(property "Reference" "TP2"
 			(at 368.808 217.17 90)
@@ -18836,7 +18836,7 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(uuid "c181bacd-f8c1-43ec-858a-0f913e4e7533")
 		(property "Reference" "TP9"
 			(at 368.808 219.71 90)
@@ -19133,7 +19133,7 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(uuid "c83f58c0-bfab-488a-a2e9-b3b85534a558")
 		(property "Reference" "TP21"
 			(at 374.142 214.63 90)
@@ -19432,7 +19432,7 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(uuid "ce2b5316-658b-4074-8509-1aeee2b21dc9")
 		(property "Reference" "TP10"
 			(at 374.142 224.79 90)
