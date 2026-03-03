@@ -30,8 +30,8 @@ typedef struct {
     uint16_t 		size; 		// depend du mode
 } rfd900x_t;
 
-uint8_t RFD900_Init(rfd900x_t *dev, rfd900x_id_t id);
+uint8_t RFD900X_Init(rfd900x_t *dev, rfd900x_id_t id);
 
-uint8_t RFD900_Send(rfd900x_t *dev);
+uint8_t RFD900X_Send(rfd900x_t *dev);
 
 #endif /* INC_GAUL_DRIVERS_RFD900X_H_ */

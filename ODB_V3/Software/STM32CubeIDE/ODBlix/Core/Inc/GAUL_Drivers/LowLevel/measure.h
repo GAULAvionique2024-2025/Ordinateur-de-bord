@@ -30,6 +30,6 @@ typedef struct {
 } system_measurements_t;
 
 
-void Update_System_Measurements(system_measurements_t *dev);
+void System_Measurements_Update(system_measurements_t *dev);
 
 #endif /* INC_GAUL_DRIVERS_LOWLEVEL_MEASURE_H_ */

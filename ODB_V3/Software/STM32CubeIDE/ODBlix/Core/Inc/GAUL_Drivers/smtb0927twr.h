@@ -31,6 +31,6 @@ typedef struct {
     uint32_t  delayPause;
 } buzzParametres_t;
 
-void Buzz_Handler(TIM_HandleTypeDef *htim, uint32_t channel, buzzRoutines_t routine);
+void Buzz(TIM_HandleTypeDef *htim, uint32_t channel, buzzRoutines_t routine);
 
 #endif /* INC_GAUL_DRIVERS_SMTB0927TWR_H_ */

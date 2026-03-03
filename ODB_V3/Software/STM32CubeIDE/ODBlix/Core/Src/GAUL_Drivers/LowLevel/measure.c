@@ -8,12 +8,12 @@
 #include <GAUL_Drivers/LowLevel/measure.h>
 
 
-#define DIV_ADC_STEP	0.00080586	// 3.3 / 4095
+#define DIV_ADC_STEP 0.00080586	// 3.3 / 4095
 
 extern uint16_t adc_buffer[9];
 
 
-void Update_System_Measurements(system_measurements_t *data) {
+void System_Measurements_Update(system_measurements_t *data) {
 	data->vin_batt = (adc_buffer[0] * DIV_ADC_STEP) * DIV_RATIO_VIN_BATT;
 	data->V5_buck  = (adc_buffer[1] * DIV_ADC_STEP) * DIV_RATIO_V5_BUCK;
 	data->V3_buck  = (adc_buffer[2] * DIV_ADC_STEP) * DIV_RATIO_V3_BUCK;

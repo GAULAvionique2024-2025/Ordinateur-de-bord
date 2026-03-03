@@ -11,7 +11,7 @@
 #include <GAUL_Drivers/rfd900x.h>
 
 
-uint8_t RFD900_Init(rfd900x_t *dev, rfd900x_id_t id) {
+uint8_t RFD900X_Init(rfd900x_t *dev, rfd900x_id_t id) {
 	dev->id = id;
     dev->header = 0x00;
     dev->data = NULL;
@@ -22,7 +22,7 @@ uint8_t RFD900_Init(rfd900x_t *dev, rfd900x_id_t id) {
 }
 
 // TODO: make 9bits integration (bit shift << 8 = rfd900x_id_t) => in function
-uint8_t RFD900_Send(rfd900x_t *dev) {
+uint8_t RFD900X_Send(rfd900x_t *dev) {
 
     uint16_t delim = '$';
     uint16_t crc_delim = '*';
