@@ -1,0 +1,129 @@
+
+(kicad_symbol_lib (version 20211014) (generator kicad_symbol_editor)
+  (symbol "632722100213" (pin_names (offset 1.016)) (in_bom yes) (on_board yes)
+    (property "Reference" "J" (id 0) (at 0.0 6.35 0)
+      (effects (font (size 1.27 1.27)) (justify bottom))
+    )
+    (property "Value" "632722100213" (id 1) (at 0.0 -7.62 0)
+      (effects (font (size 1.27 1.27)) (justify bottom))
+    )
+    (property "Footprint" "632722100213:632722100213" (id 2) (at 0 0 0)
+      (effects (font (size 1.27 1.27)) (justify bottom) hide)
+    )
+    (property "DigiKey_Part_Number" "732-632722100213CT-ND" (id 4) (at 0 0 0)
+      (effects (font (size 1.27 1.27)) (justify bottom) hide)
+    )
+    (property "SnapEDA_Link" "https://www.snapeda.com/parts/632722100213/Wurth+Electronics/view-part/?ref=snap" (id 5) (at 0 0 0)
+      (effects (font (size 1.27 1.27)) (justify bottom) hide)
+    )
+    (property "Description" "Receptacle USB Type C Horizontal SMT 6 pins Power Delivery" (id 6) (at 0 0 0)
+      (effects (font (size 1.27 1.27)) (justify bottom) hide)
+    )
+    (property "MF" "Wurth Electronics" (id 7) (at 0 0 0)
+      (effects (font (size 1.27 1.27)) (justify bottom) hide)
+    )
+    (property "Package" "None" (id 8) (at 0 0 0)
+      (effects (font (size 1.27 1.27)) (justify bottom) hide)
+    )
+    (property "Check_prices" "https://www.snapeda.com/parts/632722100213/Wurth+Electronics/view-part/?ref=eda" (id 9) (at 0 0 0)
+      (effects (font (size 1.27 1.27)) (justify bottom) hide)
+    )
+    (property "MP" "632722100213" (id 10) (at 0 0 0)
+      (effects (font (size 1.27 1.27)) (justify bottom) hide)
+    )
+    (symbol "632722100213_0_0"
+      (polyline
+        (pts (xy -12.7 4.445) (xy 12.7 4.445)) (stroke (width 0.254))
+      )
+      (polyline
+        (pts (xy 12.7 4.445) (xy 12.7 -5.08)) (stroke (width 0.254))
+      )
+      (text "Shield" (at 14.72 -6.7 0)
+        (effects (font (size 1.27 1.27)) (justify bottom left))
+      )
+      (rectangle (start -13.2853043478 -5.20976086957) (end 14.6546956522 4.95023913043)
+        (stroke (width 0.254)) (fill (type background))
+      )
+      (pin passive line (at -17.78 2.54 0) (length 5.08)
+        (name "CC1"
+          (effects (font (size 1.016 1.016)))
+        )
+        (number "A5"
+          (effects (font (size 1.016 1.016)))
+        )
+      )
+      (pin passive line (at -17.78 0.0 0) (length 5.08)
+        (name "VBUS1"
+          (effects (font (size 1.016 1.016)))
+        )
+        (number "A9"
+          (effects (font (size 1.016 1.016)))
+        )
+      )
+      (pin passive line (at -17.78 -2.54 0) (length 5.08)
+        (name "GND1"
+          (effects (font (size 1.016 1.016)))
+        )
+        (number "A12"
+          (effects (font (size 1.016 1.016)))
+        )
+      )
+      (pin passive line (at 17.78 0.0 180.0) (length 5.08)
+        (name "VBUS2"
+          (effects (font (size 1.016 1.016)))
+        )
+        (number "B9"
+          (effects (font (size 1.016 1.016)))
+        )
+      )
+      (pin passive line (at 17.78 2.54 180.0) (length 5.08)
+        (name "GND2"
+          (effects (font (size 1.016 1.016)))
+        )
+        (number "B12"
+          (effects (font (size 1.016 1.016)))
+        )
+      )
+      (pin passive line (at 17.78 -2.54 180.0) (length 5.08)
+        (name "CC2"
+          (effects (font (size 1.016 1.016)))
+        )
+        (number "B5"
+          (effects (font (size 1.016 1.016)))
+        )
+      )
+      (pin passive line (at 17.78 -5.08 180.0) (length 2.54)
+        (name "~"
+          (effects (font (size 1.016 1.016)))
+        )
+        (number "S1"
+          (effects (font (size 1.016 1.016)))
+        )
+      )
+      (pin passive line (at 17.78 -5.08 180.0) (length 2.54) hide
+        (name "~"
+          (effects (font (size 1.016 1.016)))
+        )
+        (number "S2"
+          (effects (font (size 1.016 1.016)))
+        )
+      )
+      (pin passive line (at 17.78 -5.08 180.0) (length 2.54) hide
+        (name "~"
+          (effects (font (size 1.016 1.016)))
+        )
+        (number "S3"
+          (effects (font (size 1.016 1.016)))
+        )
+      )
+      (pin passive line (at 17.78 -5.08 180.0) (length 2.54) hide
+        (name "~"
+          (effects (font (size 1.016 1.016)))
+        )
+        (number "S4"
+          (effects (font (size 1.016 1.016)))
+        )
+      )
+    )
+  )
+)
