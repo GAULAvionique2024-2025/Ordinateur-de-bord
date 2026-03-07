@@ -23,11 +23,11 @@ typedef enum {
 
 typedef struct {
 	rfd900x_id_t	id;
-    USART_TypeDef	*USARTx;
+    UART_HandleTypeDef	*UARTx;
     uint16_t 		header; 	// mode + states
     uint16_t 		*data; 		// Depend du mode
     uint16_t 		*crc;
-    uint16_t 		size; 		// depend du mode
+    uint8_t 		size; 		// depend du mode
 } rfd900x_t;
 
 uint8_t RFD900X_Init(rfd900x_t *dev, rfd900x_id_t id);

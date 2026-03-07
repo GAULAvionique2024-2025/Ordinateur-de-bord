@@ -24,16 +24,29 @@ uint8_t RFD900X_Init(rfd900x_t *dev, rfd900x_id_t id) {
 // TODO: make 9bits integration (bit shift << 8 = rfd900x_id_t) => in function
 uint8_t RFD900X_Send(rfd900x_t *dev) {
 
-    uint16_t delim = '$';
-    uint16_t crc_delim = '*';
-    uint16_t new_line = '\n';
+    uint8_t delim = '$';
+    uint8_t crc_delim = '*';
+    uint8_t new_line = '\n';
 
-    HAL_UART_Transmit(dev->USARTx, &delim, 1, HAL_MAX_DELAY); // Start
-    HAL_UART_Transmit(dev->USARTx, &dev->header, 1, HAL_MAX_DELAY);
-    HAL_UART_Transmit(dev->USARTx, dev->data, dev->size, HAL_MAX_DELAY);
-    HAL_UART_Transmit(dev->USARTx, &crc_delim, 1, HAL_MAX_DELAY); // CRC
-    HAL_UART_Transmit(dev->USARTx, dev->crc, 2, HAL_MAX_DELAY);
-    HAL_UART_Transmit(dev->USARTx, &new_line, 1, HAL_MAX_DELAY); // End
+    uint8_t header_lvb = dev->header;
+    uint8_t header_mvb = dev->header>>8;
+
+    uint8_t data_lvb = *dev->data;
+	uint8_t data_mvb = *dev->data>>8;
+
+	uint8_t crc_lvb = *dev->crc;
+	uint8_t crc_mvb = *dev->crc>>8;
+
+
+    HAL_UART_Transmit(dev->UARTx, &delim, 1, HAL_MAX_DELAY); // Start
+    HAL_UART_Transmit(dev->UARTx, &header_lvb, 1, HAL_MAX_DELAY);
+    HAL_UART_Transmit(dev->UARTx, &header_mvb, 1, HAL_MAX_DELAY);
+    HAL_UART_Transmit(dev->UARTx, &data_lvb, dev->size, HAL_MAX_DELAY);
+    HAL_UART_Transmit(dev->UARTx, &data_mvb, dev->size, HAL_MAX_DELAY);
+    HAL_UART_Transmit(dev->UARTx, &crc_delim, 1, HAL_MAX_DELAY); // CRC
+    HAL_UART_Transmit(dev->UARTx, &crc_lvb, 2, HAL_MAX_DELAY);
+    HAL_UART_Transmit(dev->UARTx, &crc_mvb, 2, HAL_MAX_DELAY);
+    HAL_UART_Transmit(dev->UARTx, &new_line, 1, HAL_MAX_DELAY); // End
 
     return 1; // ok
 }
