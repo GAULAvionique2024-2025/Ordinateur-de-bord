@@ -5098,7 +5098,7 @@
 		)
 		(uuid "42d5fc0b-cab7-48c8-8cb6-40128fd6e0d3")
 	)
-	(text "Note:\nLed Vf = 3.3v at 20mA\nMax consumption STM ~50mA\n\nTotal comsumption 3v3 with 10% a buffer : 560ma in worst case"
+	(text "Note:\nLed Vf = 3.3v at 20mA\nMax consumption STM ~50mA\n\nTotal comsumption 3v3 with 10% a buffer : 560ma in worst case\nRevision: 3v3 in worst case: 300mA\n	     5v  in worst case: 1.4A"
 		(exclude_from_sim no)
 		(at 14.732 225.044 0)
 		(effects
