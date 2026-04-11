@@ -8,46 +8,62 @@
  *  	Author: AudaceLol12
  */
 
-#include <GAUL_Drivers/rfd900x.h>
+#include "GAUL_Drivers/rfd900x.h"
+
+#include <string.h>
 
 
-uint8_t RFD900X_Init(rfd900x_t *dev, rfd900x_id_t id) {
-	dev->id = id;
-    dev->header = 0x00;
-    dev->data = NULL;
-    dev->crc = 0x00;
-    dev->size = 0x00;
+static void MAVLink_Transmit(RFD900x_HandleTypeDef *hrfd, mavlink_message_t *msg) {
+    uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
+    uint16_t len = mavlink_msg_to_send_buffer(buffer, msg);
 
-    return 1; // ok
+    HAL_UART_Transmit(hrfd->huart, buffer, len, HAL_MAX_DELAY);
 }
 
-// TODO: make 9bits integration (bit shift << 8 = rfd900x_id_t) => in function
-uint8_t RFD900X_Send(rfd900x_t *dev) {
+int8_t RFD900x_Init(RFD900x_HandleTypeDef *hrfd, UART_HandleTypeDef *huart, rfd900x_modem_id_t modem_id, uint8_t component_id) {
+	if (!hrfd || !huart || modem_id < 1 || component_id == 0) return -1;
 
-    uint8_t delim = '$';
-    uint8_t crc_delim = '*';
-    uint8_t new_line = '\n';
+    hrfd->huart = huart;
+    hrfd->modem_id = modem_id;
+    hrfd->component_id = component_id;
 
-    uint8_t header_lvb = dev->header;
-    uint8_t header_mvb = dev->header>>8;
-
-    uint8_t data_lvb = *dev->data;
-	uint8_t data_mvb = *dev->data>>8;
-
-	uint8_t crc_lvb = *dev->crc;
-	uint8_t crc_mvb = *dev->crc>>8;
-
-
-    HAL_UART_Transmit(dev->UARTx, &delim, 1, HAL_MAX_DELAY); // Start
-    HAL_UART_Transmit(dev->UARTx, &header_lvb, 1, HAL_MAX_DELAY);
-    HAL_UART_Transmit(dev->UARTx, &header_mvb, 1, HAL_MAX_DELAY);
-    HAL_UART_Transmit(dev->UARTx, &data_lvb, dev->size, HAL_MAX_DELAY);
-    HAL_UART_Transmit(dev->UARTx, &data_mvb, dev->size, HAL_MAX_DELAY);
-    HAL_UART_Transmit(dev->UARTx, &crc_delim, 1, HAL_MAX_DELAY); // CRC
-    HAL_UART_Transmit(dev->UARTx, &crc_lvb, 2, HAL_MAX_DELAY);
-    HAL_UART_Transmit(dev->UARTx, &crc_mvb, 2, HAL_MAX_DELAY);
-    HAL_UART_Transmit(dev->UARTx, &new_line, 1, HAL_MAX_DELAY); // End
-
-    return 1; // ok
+    return 0; // success
 }
 
+void RFD900x_Send(RFD900x_HandleTypeDef *hrfd, odb_mavlink_data *data, uint32_t current_time_ms) {
+    mavlink_message_t msg;
+    uint64_t time_usec = (uint64_t)current_time_ms * 1000;
+
+    /// Heartbeat
+    mavlink_msg_heartbeat_pack(hrfd->modem_id, hrfd->component_id, &msg, MAV_TYPE_ROCKET, MAV_AUTOPILOT_INVALID, MAV_MODE_FLAG_CUSTOM_MODE_ENABLED, 0, MAV_STATE_ACTIVE);
+    MAVLink_Transmit(hrfd, &msg);
+
+    // Status
+    mavlink_msg_named_value_int_pack(hrfd->modem_id, hrfd->component_id, &msg, current_time_ms, "STATES", data->system_states);
+    MAVLink_Transmit(hrfd, &msg);
+
+    // IMU
+    mavlink_msg_attitude_pack(hrfd->modem_id, hrfd->component_id, &msg, current_time_ms, data->roll, data->pitch, data->yaw, 0, 0, 0);
+    MAVLink_Transmit(hrfd, &msg);
+
+    // Pressure & Temp
+    mavlink_msg_scaled_pressure_pack(hrfd->modem_id, hrfd->component_id, &msg, current_time_ms, data->pressure_hpa, 0, (int16_t)(data->temp_celsius * 100.0f), 0);
+    MAVLink_Transmit(hrfd, &msg);
+
+    // High-G
+    mavlink_msg_highres_imu_pack(hrfd->modem_id, hrfd->component_id, &msg, time_usec, data->acc_x, data->acc_y, data->acc_z, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+    MAVLink_Transmit(hrfd, &msg);
+
+    // GPS
+    mavlink_msg_gps_raw_int_pack(hrfd->modem_id, hrfd->component_id, &msg, time_usec, data->gps_fix, data->lat, data->lon, data->gps_alt, 65535, 65535, 65535, 65535, data->satellites_nb, 0, 0, 0, 0, 0, 0);
+    MAVLink_Transmit(hrfd, &msg);
+}
+
+void RFD900x_Send_EventLog(RFD900x_HandleTypeDef *hrfd, uint8_t severity, const char *log) {
+    if(strlen(log) > 50) return;
+
+    mavlink_message_t msg;
+    mavlink_msg_statustext_pack(hrfd->modem_id, hrfd->component_id, &msg, severity, log, 0, 0);
+
+    MAVLink_Transmit(hrfd, &msg);
+}
