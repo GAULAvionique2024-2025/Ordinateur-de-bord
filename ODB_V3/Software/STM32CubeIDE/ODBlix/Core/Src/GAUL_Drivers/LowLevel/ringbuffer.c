@@ -2,80 +2,82 @@
  * ringbuffer.c
  *
  * Implementation of ring buffer functions.
- *
  */
 
-// https://github.com/AndersKaloer/Ring-Buffer/
-
 #include "GAUL_Drivers/LowLevel/ringbuffer.h"
+#include <assert.h>
 
-void ring_buffer_init(ring_buffer_t *buffer, char *buf, size_t buf_size) {
-  RING_BUFFER_ASSERT(RING_BUFFER_IS_POWER_OF_TWO(buf_size) == 1);
-  buffer->buffer = buf;
-  buffer->buffer_mask = buf_size - 1;
-  buffer->tail_index = 0;
-  buffer->head_index = 0;
+#define IS_POWER_OF_TWO(x) (((x) != 0) && (((x) & ((x) - 1)) == 0))
+
+
+/**
+ * Inline helper functions
+ */
+static inline bool RingBuffer_IsEmpty(const ring_buffer_t *rb) {
+    return rb->head == rb->tail;
 }
 
-void ring_buffer_queue(ring_buffer_t *buffer, char data) {
-  /* Is buffer full? */
-  if(ring_buffer_is_full(buffer)) {
-    /* Is going to overwrite the oldest byte */
-    /* Increase tail index */
-    buffer->tail_index = ((buffer->tail_index + 1) & RING_BUFFER_MASK(buffer));
-  }
-
-  /* Place data in buffer */
-  buffer->buffer[buffer->head_index] = data;
-  buffer->head_index = ((buffer->head_index + 1) & RING_BUFFER_MASK(buffer));
+static inline size_t RingBuffer_NumItems(const ring_buffer_t *rb) {
+    return (rb->head - rb->tail) & rb->mask;
 }
 
-void ring_buffer_queue_arr(ring_buffer_t *buffer, const char *data, ring_buffer_size_t size) {
-  /* Add bytes; one by one */
-  ring_buffer_size_t i;
-  for(i = 0; i < size; i++) {
-    ring_buffer_queue(buffer, data[i]);
-  }
+static inline bool RingBuffer_IsFull(const ring_buffer_t *rb) {
+    return RingBuffer_NumItems(rb) == rb->mask;
 }
 
-uint8_t ring_buffer_dequeue(ring_buffer_t *buffer, char *data) {
-  if(ring_buffer_is_empty(buffer)) {
-    /* No items */
-    return 0;
-  }
 
-  *data = buffer->buffer[buffer->tail_index];
-  buffer->tail_index = ((buffer->tail_index + 1) & RING_BUFFER_MASK(buffer));
-  return 1;
+void RingBuffer_Init(ring_buffer_t *rb, uint8_t *buf, size_t buf_size) {
+    assert(IS_POWER_OF_TWO(buf_size));
+    
+    rb->buffer = buf;
+    rb->mask   = buf_size - 1;
+    rb->head   = 0;
+    rb->tail   = 0;
 }
 
-ring_buffer_size_t ring_buffer_dequeue_arr(ring_buffer_t *buffer, char *data, ring_buffer_size_t len) {
-  if(ring_buffer_is_empty(buffer)) {
-    /* No items */
-    return 0;
-  }
+void RingBuffer_Queue(ring_buffer_t *rb, uint8_t data) {
+    if (RingBuffer_IsFull(rb)) {
+        rb->tail = (rb->tail + 1) & rb->mask;
+    }
 
-  char *data_ptr = data;
-  ring_buffer_size_t cnt = 0;
-  while((cnt < len) && ring_buffer_dequeue(buffer, data_ptr)) {
-    cnt++;
-    data_ptr++;
-  }
-  return cnt;
+    rb->buffer[rb->head] = data;
+    rb->head = (rb->head + 1) & rb->mask;
 }
 
-uint8_t ring_buffer_peek(ring_buffer_t *buffer, char *data, ring_buffer_size_t index) {
-  if(index >= ring_buffer_num_items(buffer)) {
-    /* No items at index */
-    return 0;
-  }
-
-  /* Add index to pointer */
-  ring_buffer_size_t data_index = ((buffer->tail_index + index) & RING_BUFFER_MASK(buffer));
-  *data = buffer->buffer[data_index];
-  return 1;
+void RingBuffer_Queue_Array(ring_buffer_t *rb, const uint8_t *data, size_t size) {
+    for (size_t i = 0; i < size; i++) {
+        RingBuffer_Queue(rb, data[i]);
+    }
 }
 
-extern inline uint8_t ring_buffer_is_empty(ring_buffer_t *buffer);
-extern inline uint8_t ring_buffer_is_full(ring_buffer_t *buffer);
-extern inline ring_buffer_size_t ring_buffer_num_items(ring_buffer_t *buffer);
+bool RingBuffer_Dequeue(ring_buffer_t *rb, uint8_t *data) {
+    if (RingBuffer_IsEmpty(rb)) {
+        return false;
+    }
+
+    *data = rb->buffer[rb->tail];
+    rb->tail = (rb->tail + 1) & rb->mask;
+    
+    return true;
+}
+
+size_t RingBuffer_Dequeue_Array(ring_buffer_t *rb, uint8_t *data, size_t len) {
+    size_t cnt = 0;
+    
+    while ((cnt < len) && RingBuffer_Dequeue(rb, &data[cnt])) {
+        cnt++;
+    }
+    
+    return cnt;
+}
+
+bool RingBuffer_Peek(ring_buffer_t *rb, uint8_t *data, size_t index) {
+    if (index >= RingBuffer_NumItems(rb)) {
+        return false;
+    }
+
+    size_t data_index = (rb->tail + index) & rb->mask;
+    *data = rb->buffer[data_index];
+    
+    return true;
+}

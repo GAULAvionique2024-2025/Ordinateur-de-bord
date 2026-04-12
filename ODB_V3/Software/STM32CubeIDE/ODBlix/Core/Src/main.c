@@ -25,7 +25,6 @@
 /* USER CODE BEGIN Includes */
 #include "GAUL_Drivers/smtb0927twr.h"
 #include "GAUL_Drivers/ltste682krkgwt.h"
-#include "GAUL_Drivers/bno055.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -47,16 +46,17 @@
 ADC_HandleTypeDef hadc1;
 DMA_HandleTypeDef hdma_adc1;
 
-CRC_HandleTypeDef hcrc;
-
 I2C_HandleTypeDef hi2c1;
 I2C_HandleTypeDef hi2c2;
 I2C_HandleTypeDef hi2c3;
+DMA_HandleTypeDef hdma_i2c1_rx;
+DMA_HandleTypeDef hdma_i2c3_rx;
 
 QSPI_HandleTypeDef hqspi;
 
 SPI_HandleTypeDef hspi1;
 SPI_HandleTypeDef hspi5;
+DMA_HandleTypeDef hdma_spi1_rx;
 
 TIM_HandleTypeDef htim2;
 TIM_HandleTypeDef htim4;
@@ -64,6 +64,7 @@ TIM_HandleTypeDef htim4;
 UART_HandleTypeDef huart1;
 UART_HandleTypeDef huart2;
 UART_HandleTypeDef huart6;
+DMA_HandleTypeDef hdma_usart6_rx;
 
 /* USER CODE BEGIN PV */
 
@@ -81,7 +82,6 @@ static void MX_USART1_UART_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_USART6_UART_Init(void);
 static void MX_QUADSPI_Init(void);
-static void MX_CRC_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_I2C3_Init(void);
 static void MX_TIM2_Init(void);
@@ -134,7 +134,6 @@ int main(void)
   MX_USART6_UART_Init();
   MX_QUADSPI_Init();
   MX_USB_DEVICE_Init();
-  MX_CRC_Init();
   MX_ADC1_Init();
   MX_I2C3_Init();
   MX_FATFS_Init();
@@ -326,32 +325,6 @@ static void MX_ADC1_Init(void)
   /* USER CODE BEGIN ADC1_Init 2 */
 
   /* USER CODE END ADC1_Init 2 */
-
-}
-
-/**
-  * @brief CRC Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_CRC_Init(void)
-{
-
-  /* USER CODE BEGIN CRC_Init 0 */
-
-  /* USER CODE END CRC_Init 0 */
-
-  /* USER CODE BEGIN CRC_Init 1 */
-
-  /* USER CODE END CRC_Init 1 */
-  hcrc.Instance = CRC;
-  if (HAL_CRC_Init(&hcrc) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN CRC_Init 2 */
-
-  /* USER CODE END CRC_Init 2 */
 
 }
 
@@ -688,8 +661,8 @@ static void MX_USART1_UART_Init(void)
 
   /* USER CODE END USART1_Init 1 */
   huart1.Instance = USART1;
-  huart1.Init.BaudRate = 57600;
-  huart1.Init.WordLength = UART_WORDLENGTH_9B;
+  huart1.Init.BaudRate = 115200;
+  huart1.Init.WordLength = UART_WORDLENGTH_8B;
   huart1.Init.StopBits = UART_STOPBITS_1;
   huart1.Init.Parity = UART_PARITY_NONE;
   huart1.Init.Mode = UART_MODE_TX;
@@ -779,11 +752,24 @@ static void MX_DMA_Init(void)
 
   /* DMA controller clock enable */
   __HAL_RCC_DMA2_CLK_ENABLE();
+  __HAL_RCC_DMA1_CLK_ENABLE();
 
   /* DMA interrupt init */
+  /* DMA1_Stream0_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Stream0_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Stream0_IRQn);
+  /* DMA1_Stream1_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Stream1_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Stream1_IRQn);
   /* DMA2_Stream0_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMA2_Stream0_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(DMA2_Stream0_IRQn);
+  /* DMA2_Stream1_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA2_Stream1_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(DMA2_Stream1_IRQn);
+  /* DMA2_Stream2_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA2_Stream2_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(DMA2_Stream2_IRQn);
 
 }
 
@@ -810,14 +796,14 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOD_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOF, CriticalLED_G_Pin|CriticalLED_R_Pin|Pyros_Arm_Pin|Fire_1_Pin
-                          |Fire_2_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOF, CriticalLED_G_Pin|CriticalLED_R_Pin|Pyros_Arm_Pin|Fire_4_Pin
+                          |Fire_3_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(BARO_SPI1_CS_GPIO_Port, BARO_SPI1_CS_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOG, Fire_3_Pin|Fire_4_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOG, Fire_2_Pin|Fire_1_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(SD_SPI5_CS_GPIO_Port, SD_SPI5_CS_Pin, GPIO_PIN_RESET);
@@ -825,10 +811,10 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(IMU_nReset_GPIO_Port, IMU_nReset_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : CriticalLED_G_Pin CriticalLED_R_Pin Pyros_Arm_Pin Fire_1_Pin
-                           Fire_2_Pin */
-  GPIO_InitStruct.Pin = CriticalLED_G_Pin|CriticalLED_R_Pin|Pyros_Arm_Pin|Fire_1_Pin
-                          |Fire_2_Pin;
+  /*Configure GPIO pins : CriticalLED_G_Pin CriticalLED_R_Pin Pyros_Arm_Pin Fire_4_Pin
+                           Fire_3_Pin */
+  GPIO_InitStruct.Pin = CriticalLED_G_Pin|CriticalLED_R_Pin|Pyros_Arm_Pin|Fire_4_Pin
+                          |Fire_3_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -841,8 +827,8 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(BARO_SPI1_CS_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : Fire_3_Pin Fire_4_Pin */
-  GPIO_InitStruct.Pin = Fire_3_Pin|Fire_4_Pin;
+  /*Configure GPIO pins : Fire_2_Pin Fire_1_Pin */
+  GPIO_InitStruct.Pin = Fire_2_Pin|Fire_1_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -874,12 +860,6 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : GPS_FUNCT_2_Pin GPS_FUNCT_1_Pin GPS_ID_Pin */
-  GPIO_InitStruct.Pin = GPS_FUNCT_2_Pin|GPS_FUNCT_1_Pin|GPS_ID_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
 
   /*Configure GPIO pin : IMU_INT_Pin */
   GPIO_InitStruct.Pin = IMU_INT_Pin;

@@ -9,7 +9,7 @@
 
 
 runTimer_t run_timer;
-
+l76lm33_t l76lm33_dev;
 
 
 
@@ -26,7 +26,6 @@ void RunTimer_Init(runTimer_t* dev) {
 void RunTimer_Update(runTimer_t *dev) {
 	dev->elapsed_time_ms = HAL_GetTick() - dev->start_time;
 
-	// Convertir les millisecondes en secondes, minutes et millisecondes restantes
 	dev->elapsed_time_s = (dev->elapsed_time_ms / 1000) % 60;
 	dev->elapsed_time_m = (dev->elapsed_time_ms / 60000);
 	dev->elapsed_time_remaining_ms = dev->elapsed_time_ms % 1000;

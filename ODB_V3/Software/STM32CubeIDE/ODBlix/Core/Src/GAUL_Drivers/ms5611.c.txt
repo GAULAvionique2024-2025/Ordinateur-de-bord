@@ -5,7 +5,7 @@
  *      Author: Luka
  */
 
-#include "GAUL_Drivers/ms5611.h"
+#include <GAUL_Drivers/ms5611.h.txt>
 
 error_ms5611 MS5611_Init(ms5611_dev* dev, SPI_HandleTypeDef* spi, osr_option osr_pressure, osr_option ors_temperature)
 {

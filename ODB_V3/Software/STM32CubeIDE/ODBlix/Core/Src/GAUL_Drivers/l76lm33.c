@@ -1,225 +1,176 @@
 /*
- * L76LM33.h
+ * L76LM33.c
  *
- *  Created on: May 12, 2024
- *      Author: AudaceLol12
+ * Created on: May 12, 2024
+ * Author: AudaceLol12
  *
- *  Edited on: Jul 04, 2024
- *      Autor: mathouqc
+ * Edited on: Jul 04, 2024
+ * Autor: mathouqc
  *
- *  Edited on: Mar 02, 2026
- *      Autor: AudaceLol12
+ * Edited on: Mar 02, 2026
+ * Autor: AudaceLol12
  */
 
-#include <GAUL_Drivers/l76lm33.h>
+#include "GAUL_Drivers/l76lm33.h"
+#include <string.h>
 
+static uint16_t old_pos = 0; // For UART DMA reception
 
-/**
+/*
  * Send array of character to L76LM33 using UART HAL functions.
- *
- * @param L76_data: pointer to a L76LM33 structure.
- * @param command[]: array of character to send.
- * @param size: size of the data to send.
- *
- * @retval L76LM33_OK
- * @retval L76LM33_ERROR
- */
-static int8_t L76LM33_Send_Command(l76lm33_t *dev, char command[], uint8_t size) {
+*/
+static l76lm33_state_t L76LM33_SendCommand(l76lm33_t *dev, const char *command, uint8_t size) {
     if(command == NULL) {
-    	dev->state = L76LM33_ERROR;
-        return L76LM33_ERROR; // Error
+        return L76LM33_ERROR;
     }
 
     if(HAL_UART_Transmit(dev->huart, (uint8_t *)command, size, L76LM33_UART_TIMEOUT) != HAL_OK) {
-    	dev->state = L76LM33_ERROR;
-        return L76LM33_ERROR; // Error with UART
+        return L76LM33_ERROR;
     }
 
-    dev->state = L76LM33_OK;
-    return L76LM33_OK; // OK
+    return L76LM33_OK;
 }
 
+/*
+ * Read NMEA sentence from UART circular buffer.
+*/
+static l76lm33_state_t L76LM33_ReadSentence(l76lm33_t *dev, char *out_buffer, uint16_t max_len) {
+    if(dev->line_count == 0) return L76LM33_EMPTY_BUFF;
+
+    dev->line_count--;
+    memset(out_buffer, 0, max_len);
+
+    char c;
+    for(uint16_t i = 0; i < 100; i++) {
+        if(RingBuffer_Dequeue(&(dev->UART_Buffer), (uint8_t *)&c) == 0) return L76LM33_EMPTY_BUFF; 
+        if(c == '$') {
+            out_buffer[0] = '$';
+            break;
+        }
+    }
+
+    if(c != '$') return L76LM33_ERROR; 
+
+    for (uint16_t i = 1; i < max_len - 1; i++) {
+        if(RingBuffer_Dequeue(&(dev->UART_Buffer), (uint8_t *)&c) == 0) return L76LM33_EMPTY_BUFF; 
+        
+        out_buffer[i] = c;
+        if(c == '\n') break;
+    }
+
+    if(c != '\n') return L76LM33_ERROR;
+
+    return L76LM33_OK;
+}
 
 /*
  * Source:
  * LG76 Series GNSS Protocol Specification - Section 2.3. PMTK Messages
- *
- * Only output RMC (Recommended Minimum Specific GNSS Sentence) once every one position fix
- * NMEA_RMC[] = "$PMTK314,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*35<CR><LF>"
- *
- * Set the navigation mode to "Aviation Mode" (for large acceleration movement, altitude of 10'000m max)
- * NMEA_NAVMODE = "PMTK886,2*2A<CR><LF>"
- */
+*/
 
-/**
+/*
  * Initialize L76LM33 sensor.
- *
- * @param L76_data: pointer to a L76LM33 structure.
- * @param huart: pointer to the GPS HAL UART handler.
- *
- * @retval L76LM33_OK
- * @retval L76LM33_ERROR
- */
-l76lm33_state_t L76LM33_Init(l76lm33_t *dev, UART_HandleTypeDef *huart) {
-    // Set UART handler
+*/
+l76lm33_state_t L76LM33_Init(l76lm33_t *dev, UART_HandleTypeDef *huart, l76_flight_profile_t profile) {
     dev->huart = huart;
+    dev->line_count = 0;
 
     // Initialize circular buffer
-    ring_buffer_init(&(dev->UART_Buffer), dev->UART_Buffer_arr, L76LM33_BUFFER_SIZES);
+    RingBuffer_Init(&(dev->UART_Buffer), (uint8_t *)dev->UART_Buffer_arr, L76LM33_BUFFER_SIZES);
 
-    // Receive UART data with interrupts
-    if(HAL_UART_Receive_IT(dev->huart, &(dev->received_byte), 1) != HAL_OK) {
-        dev->state = L76LM33_ERROR; // Bad state
-        return L76LM33_ERROR; // Error with UART
-    }
-
-    // Only output GPRMC sentence
-    char NMEA_RMC[] = "$PMTK314,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*35\r\n";
-    if(L76LM33_Send_Command(dev, NMEA_RMC, sizeof(NMEA_RMC)) != L76LM33_OK) {
-        dev->state = L76LM33_ERROR; // Bad state
-        return L76LM33_ERROR; // Error with UART
-    }
-    // Set navigation mode
-    char NMEA_NAVMODE[] = "PMTK886,2*2A\r\n";
-    if(L76LM33_Send_Command(dev, NMEA_NAVMODE, sizeof(NMEA_NAVMODE)) != L76LM33_OK) {
-        dev->state = L76LM33_ERROR; // Bad state
-        return L76LM33_ERROR; // Error with UART
-    }
-
-    dev->state = L76LM33_OK; // Good state
-    return L76LM33_OK; // OK
-}
-
-/**
- * Read and parse a NMEA GPRMC sentence into data structure. Call this function
- * frequently to have the latest GPS data available.
- *
- * Takes 0.3ms to complete when buffer is full
- *
- * @param L76_data: pointer to a L76LM33 structure to update.
- *
- * @retval L76LM33_OK
- * @retval L76LM33_ERROR
- * @retval L76LM33_EMPTY_BUFF Empty UART buffer, struct unchanged
- *
- */
-l76lm33_state_t L76LM33_Read(l76lm33_t *dev) {
-    // Read sentence
-    int8_t valid = L76LM33_Read_Sentence(dev);
-    if(valid == L76LM33_EMPTY_BUFF) {
-        // Empty buffer, don't change structure
-    	dev->state = L76LM33_EMPTY_BUFF; // Bad state
-        return L76LM33_EMPTY_BUFF;
-    } else if(valid != L76LM33_OK) {
-        dev->state = L76LM33_ERROR; // Bad state
-        return L76LM33_ERROR; // Error
-    }
-
-    // Validate sentence ID is RMC
-    if(NMEA_ValidateRMC(dev->NMEA_Buffer) != 0) {
-        dev->state = L76LM33_ERROR; // Bad state
-        return L76LM33_ERROR; // Error, sentence ID is not RMC
-    }
-
-    // Parse NMEA RMC sentence to local structure
-    if(NMEA_ParseRMC(&(dev->gps_data), dev->NMEA_Buffer) != 0) {
-        dev->state = L76LM33_ERROR; // Bad state
+    // Start UART Reception
+    if (HAL_UARTEx_ReceiveToIdle_DMA(dev->huart, (uint8_t *)dev->UART_Buffer_arr, L76LM33_BUFFER_SIZES) != HAL_OK) {
         return L76LM33_ERROR;
     }
 
-    dev->state = L76LM33_OK; // Good status (no error)
-    return L76LM33_OK; // OK
-}
+    /*
+     * Search GPS + GLONASS satellites only (disables BeiDou and Galileo to allow 10Hz)
+     * "$PMTK353,1,1,0,0,0*2B<CR><LF>"
+    */
+    const char NMEA_CONST[] = "$PMTK353,1,1,0,0,0*2B\r\n";
+    if(L76LM33_SendCommand(dev, NMEA_CONST, strlen(NMEA_CONST)) != L76LM33_OK) return L76LM33_ERROR;
+    HAL_Delay(10);
 
-/**
- * Read NMEA sentence from UART circular buffer into a NMEA buffer.
- *
- * Takes 0.24ms to complete when buffer is full
- *
- * @param L76_data: pointer to a L76LM33 structure.
- *
- * @retval L76LM33_OK
- * @retval L76LM33_ERROR cannot find starting or ending character.
- * @retval L76LM33_EMPTY_BUFF empty UART buffer
- *
- */
-int8_t L76LM33_Read_Sentence(l76lm33_t *dev) {
-    if(dev->new_line_flag == 0) {
-    	dev->state = L76LM33_EMPTY_BUFF;
-        return L76LM33_EMPTY_BUFF; // Error, empty UART circular buffer
+    /*
+     * Output RMC and GGA sentences only (once every one position fix)
+     * "$PMTK314,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*28<CR><LF>"
+    */
+    const char NMEA_OUTPUT[] = "$PMTK314,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*28\r\n";
+    if(L76LM33_SendCommand(dev, NMEA_OUTPUT, strlen(NMEA_OUTPUT)) != L76LM33_OK) return L76LM33_ERROR;
+    HAL_Delay(10);
+
+    /*
+     * Set position fix interval to 100ms (10Hz)
+     * "$PMTK220,100*2F<CR><LF>"
+    */
+    const char NMEA_RATE[] = "$PMTK220,100*2F\r\n";
+    if(L76LM33_SendCommand(dev, NMEA_RATE, strlen(NMEA_RATE)) != L76LM33_OK) return L76LM33_ERROR;
+    HAL_Delay(10);
+
+    // Navigation mode
+    if (profile == L76_FLIGHT_PROFILE_30K) {
+        // Mode Aviation (< 10 000m / 32 800ft)
+        // "$PMTK886,2*2B<CR><LF>"
+        const char NMEA_NAV_AVIATION[] = "$PMTK886,2*2B\r\n";
+        if(L76LM33_SendCommand(dev, NMEA_NAV_AVIATION, strlen(NMEA_NAV_AVIATION)) != L76LM33_OK) return L76LM33_ERROR;
+    } else {
+        // Balloon mode (< 80 000m / 262 000ft)
+        // "$PMTK886,3*2A<CR><LF>"
+        const char NMEA_NAV_BALLOON[] = "$PMTK886,3*2A\r\n";
+        if(L76LM33_SendCommand(dev, NMEA_NAV_BALLOON, strlen(NMEA_NAV_BALLOON)) != L76LM33_OK) return L76LM33_ERROR;
     }
+    HAL_Delay(10);
 
-    // Reset flag
-    dev->new_line_flag = 0;
+    // Baudrate
+    // "$PMTK251,115200*1F<CR><LF>"
+    const char NMEA_BAUD[] = "$PMTK251,115200*1F\r\n";
+    if(L76LM33_SendCommand(dev, NMEA_BAUD, strlen(NMEA_BAUD)) != L76LM33_OK) return L76LM33_ERROR;
+    HAL_Delay(50);
 
-    // Clear NMEA buffer
-    for(int16_t i = 0; i < sizeof(dev->NMEA_Buffer); i++) {
-    	dev->NMEA_Buffer[i] = 0;
-    }
-
-    // Variable to store character from UART buffer
-    char c;
-
-    // Try to find '$' in 100 iterations
-    for(uint16_t i = 0; i < 100; i++) {
-        // Read character from UART buffer
-        if(ring_buffer_dequeue(&(dev->UART_Buffer), &c) == 0) {
-            return L76LM33_EMPTY_BUFF; // Error, empty buffer
-        }
-
-        if(c == '$') {
-			// Set starting character in NMEA buffer
-			dev->NMEA_Buffer[0] = '$';
-			break; // Found starting characters
-        }
-    }
-
-    if(c != '$') {
-    	dev->state = L76LM33_ERROR;
-        return L76LM33_ERROR; // Error, cannot find starting character in 100 iterations
-    }
-
-
-    // Read into NMEA buffer until ending character is found
-    for (uint16_t i = 1; i < sizeof(dev->NMEA_Buffer); i++) {
-        // Read character from UART buffer
-        if(ring_buffer_dequeue(&(dev->UART_Buffer), &c) == 0) {
-        	dev->state = L76LM33_EMPTY_BUFF;
-            return L76LM33_EMPTY_BUFF; // Error, empty buffer
-        }
-
-        // Add character to NMEA buffer
-        dev->NMEA_Buffer[i] = c;
-
-        if(c == '\n') {
-            break; // Found ending character
-        }
-    }
-
-    if(c != '\n') {
-    	dev->state = L76LM33_ERROR;
-        return L76LM33_ERROR; // Error, cannot find '\n'
-    }
-
-    dev->state = L76LM33_ERROR;
     return L76LM33_OK;
 }
 
-/**
- * Callback called on incoming UART data. It is called when HAL_UART_RxCpltCallback is called in main.c.
- * Add received byte to UART circular buffer.
- *
- * @param L76_data: pointer to a L76LM33 structure.
- * @param huart: pointer to a HAL UART handler triggering the callback.
+/*
+ * Read and parse NMEA sentences into data structure.
+*/
+l76lm33_state_t L76LM33_Read(l76lm33_t *dev) {
+    char temp_nmea_buffer[L76LM33_BUFFER_SIZES];
+
+    int8_t valid = L76LM33_ReadSentence(dev, temp_nmea_buffer, L76LM33_BUFFER_SIZES);
+    if(valid == L76LM33_EMPTY_BUFF) return L76LM33_EMPTY_BUFF;
+    if(valid != L76LM33_OK) return L76LM33_ERROR;
+
+    if(NMEA_ValidateRMC(temp_nmea_buffer) == 0) {
+        if(NMEA_ParseRMC(&(dev->gps_data), temp_nmea_buffer) != 0) return L76LM33_ERROR;
+    } else if(NMEA_ValidateGGA(temp_nmea_buffer) == 0) {
+        if(NMEA_ParseGGA(&(dev->gps_data), temp_nmea_buffer) != 0) return L76LM33_ERROR;
+    }
+
+    return L76LM33_OK;
+}
+
+/*
+ * Callback on incoming UART data.
  */
-void L76LM33_RxCallback(l76lm33_t *dev, UART_HandleTypeDef *huart) {
-    if(huart->Instance == dev->huart->Instance) {
-        // Add data to circular buffer
-        ring_buffer_queue(&(dev->UART_Buffer), dev->received_byte);
-        if(dev->received_byte == '\n') {
-        	dev->new_line_flag = 1;
+void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t size) {
+    extern l76lm33_t l76lm33_dev; 
+
+    if(huart->Instance == l76lm33_dev.huart->Instance) {
+        uint16_t nb_new_bytes = 0;
+
+        if(size > old_pos) {
+            nb_new_bytes = size - old_pos;
+        } else {
+            nb_new_bytes = L76LM33_BUFFER_SIZES - old_pos + size;
         }
-        // Receive UART data with interrupts
-        HAL_UART_Receive_IT(dev->huart, &(dev->received_byte), 1);
+
+        for(uint16_t i = 0; i < nb_new_bytes; i++) {
+            uint8_t byte = l76lm33_dev.UART_Buffer_arr[(old_pos + i) % L76LM33_BUFFER_SIZES];
+            RingBuffer_Queue(&(l76lm33_dev.UART_Buffer), byte);
+            if(byte == '\n') {
+                l76lm33_dev.line_count++;
+            }
+        }
+        old_pos = size;
     }
 }

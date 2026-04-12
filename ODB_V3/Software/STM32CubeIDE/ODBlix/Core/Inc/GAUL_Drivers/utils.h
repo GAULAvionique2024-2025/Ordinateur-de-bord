@@ -9,25 +9,22 @@
 #define INC_GAUL_DRIVERS_UTILS_H_
 
 
+#include <GAUL_Drivers/bno055.h>
+#include <GAUL_Drivers/ms5611.h>
 #include "stm32f4xx_hal.h"
+#include "adxl382.h"
+#include "l76lm33.h"
+#include "ltste682krkgwt.h"
+#include "pyros.h"
+#include "rfd900x.h"
+#include "smtb0927twr.h"
+#include "LowLevel/measure.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdbool.h>
-
-typedef uint8_t u8;
-typedef uint16_t u16;
-typedef uint32_t u32;
-typedef uint64_t u64;
-
-typedef int8_t s8;
-typedef int16_t s16;
-typedef int32_t s32;
-typedef int64_t s64;
-
-typedef float f32;
-typedef double f64;
 
 
 typedef  struct  {

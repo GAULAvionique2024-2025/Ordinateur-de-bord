@@ -10,10 +10,9 @@
 #ifndef DRV_BNO055_H_
 #define DRV_BNO055_H_
 
-#include <stm32f4xx.h>
+#include "stm32f4xx_hal.h"
 #include "utils.h"
-#include "stm32f4xx_hal_i2c.h"
-#include "stm32f4xx_hal_i2c_ex.h"
+#include <stdbool.h>
 
 
 
@@ -331,22 +330,22 @@ typedef enum _error_bno {
 } error_bno;
 
 typedef struct bno055_euler {
-    f32 roll;
-    f32 pitch;
-    f32 yaw;
+    float roll;
+    float pitch;
+    float yaw;
 } bno055_euler_t;
 
 typedef struct bno055_vec3 {
-    f32 x;
-    f32 y;
-    f32 z;
+    float x;
+    float y;
+    float z;
 } bno055_vec3_t;
 
 typedef struct bno055_vec4 {
-    f32 x;
-    f32 y;
-    f32 z;
-    f32 w;
+    float x;
+    float y;
+    float z;
+    float w;
 } bno055_vec4_t;
 
 // #pragma pack(1)
@@ -355,7 +354,7 @@ typedef struct _bno055_t {
     I2C_HandleTypeDef* i2c;
     bno055_opmode_t mode;
     error_bno err;
-    u8 addr;
+    uint8_t addr;
     struct _bno055_t* ptr;
 
     bno055_pwr_t _pwr_mode;
@@ -383,8 +382,8 @@ typedef struct _bno055_t {
     bno055_mag_pwr_t _mag_pwr_mode;
 
     // Will be used later
-    void (*read_reg)(u8 addr, u8 mem_addr, u8 size, u8* buf);
-    void (*write_reg)(u8 addr, u8 mem_addr, u8 size, u8* buf);
+    void (*read_reg)(uint8_t addr, uint8_t mem_addr, uint8_t size, uint8_t* buf);
+    void (*write_reg)(uint8_t addr, uint8_t mem_addr, uint8_t size, uint8_t* buf);
 
     /**
      * # Read Temperature from internal temperature sensor
@@ -398,42 +397,42 @@ typedef struct _bno055_t {
      * > `error_bno`: Error code if something fails
      * --------------------------------------------------------
      */
-    error_bno (*temperature)(struct _bno055_t* imu, s8* buf);
+    error_bno (*temperature)(struct _bno055_t* imu, int8_t* buf);
 
-    error_bno (*acc_x)(struct _bno055_t* imu, f32* buf);
-    error_bno (*acc_y)(struct _bno055_t* imu, f32* buf);
-    error_bno (*acc_z)(struct _bno055_t* imu, f32* buf);
+    error_bno (*acc_x)(struct _bno055_t* imu, float* buf);
+    error_bno (*acc_y)(struct _bno055_t* imu, float* buf);
+    error_bno (*acc_z)(struct _bno055_t* imu, float* buf);
     error_bno (*acc)(struct _bno055_t* imu, bno055_vec3_t* buf);
 
-    error_bno (*linear_acc_x)(struct _bno055_t* imu, f32* buf);
-    error_bno (*linear_acc_y)(struct _bno055_t* imu, f32* buf);
-    error_bno (*linear_acc_z)(struct _bno055_t* imu, f32* buf);
+    error_bno (*linear_acc_x)(struct _bno055_t* imu, float* buf);
+    error_bno (*linear_acc_y)(struct _bno055_t* imu, float* buf);
+    error_bno (*linear_acc_z)(struct _bno055_t* imu, float* buf);
     error_bno (*linear_acc)(struct _bno055_t* imu, bno055_vec3_t* buf);
 
-    error_bno (*gyro_x)(struct _bno055_t* imu, f32* buf);
-    error_bno (*gyro_y)(struct _bno055_t* imu, f32* buf);
-    error_bno (*gyro_z)(struct _bno055_t* imu, f32* buf);
+    error_bno (*gyro_x)(struct _bno055_t* imu, float* buf);
+    error_bno (*gyro_y)(struct _bno055_t* imu, float* buf);
+    error_bno (*gyro_z)(struct _bno055_t* imu, float* buf);
     error_bno (*gyro)(struct _bno055_t* imu, bno055_vec3_t* buf);
 
-    error_bno (*mag_x)(struct _bno055_t* imu, f32* buf);
-    error_bno (*mag_y)(struct _bno055_t* imu, f32* buf);
-    error_bno (*mag_z)(struct _bno055_t* imu, f32* buf);
+    error_bno (*mag_x)(struct _bno055_t* imu, float* buf);
+    error_bno (*mag_y)(struct _bno055_t* imu, float* buf);
+    error_bno (*mag_z)(struct _bno055_t* imu, float* buf);
     error_bno (*mag)(struct _bno055_t* imu, bno055_vec3_t* buf);
 
-    error_bno (*gravity_x)(struct _bno055_t* imu, f32* buf);
-    error_bno (*gravity_y)(struct _bno055_t* imu, f32* buf);
-    error_bno (*gravity_z)(struct _bno055_t* imu, f32* buf);
+    error_bno (*gravity_x)(struct _bno055_t* imu, float* buf);
+    error_bno (*gravity_y)(struct _bno055_t* imu, float* buf);
+    error_bno (*gravity_z)(struct _bno055_t* imu, float* buf);
     error_bno (*gravity)(struct _bno055_t* imu, bno055_vec3_t* buf);
 
-    error_bno (*euler_roll)(struct _bno055_t* imu, f32* buf);
-    error_bno (*euler_pitch)(struct _bno055_t* imu, f32* buf);
-    error_bno (*euler_yaw)(struct _bno055_t* imu, f32* buf);
+    error_bno (*euler_roll)(struct _bno055_t* imu, float* buf);
+    error_bno (*euler_pitch)(struct _bno055_t* imu, float* buf);
+    error_bno (*euler_yaw)(struct _bno055_t* imu, float* buf);
     error_bno (*euler)(struct _bno055_t* imu, bno055_euler_t* buf);
 
-    error_bno (*quaternion_w)(struct _bno055_t* imu, f32* buf);
-    error_bno (*quaternion_x)(struct _bno055_t* imu, f32* buf);
-    error_bno (*quaternion_y)(struct _bno055_t* imu, f32* buf);
-    error_bno (*quaternion_z)(struct _bno055_t* imu, f32* buf);
+    error_bno (*quaternion_w)(struct _bno055_t* imu, float* buf);
+    error_bno (*quaternion_x)(struct _bno055_t* imu, float* buf);
+    error_bno (*quaternion_y)(struct _bno055_t* imu, float* buf);
+    error_bno (*quaternion_z)(struct _bno055_t* imu, float* buf);
     error_bno (*quaternion)(struct _bno055_t* imu, bno055_vec4_t* buf);
 
     error_bno (*remap_axis)(struct _bno055_t* imu,
@@ -462,49 +461,49 @@ error_bno bno055_reset(bno055_t* imu);
 error_bno bno055_on(bno055_t* imu);
 
 // Temperature
-error_bno bno055_temperature(bno055_t* imu, s8* buf);
+error_bno bno055_temperature(bno055_t* imu, int8_t* buf);
 
 // Accelerometer
-error_bno bno055_acc_x(bno055_t* imu, f32* buf);
-error_bno bno055_acc_y(bno055_t* imu, f32* buf);
-error_bno bno055_acc_z(bno055_t* imu, f32* buf);
+error_bno bno055_acc_x(bno055_t* imu, float* buf);
+error_bno bno055_acc_y(bno055_t* imu, float* buf);
+error_bno bno055_acc_z(bno055_t* imu, float* buf);
 error_bno bno055_acc(bno055_t* imu, bno055_vec3_t* buf);
 
 // Linear accelerometer
-error_bno bno055_linear_acc_x(bno055_t* imu, f32* buf);
-error_bno bno055_linear_acc_y(bno055_t* imu, f32* buf);
-error_bno bno055_linear_acc_z(bno055_t* imu, f32* buf);
+error_bno bno055_linear_acc_x(bno055_t* imu, float* buf);
+error_bno bno055_linear_acc_y(bno055_t* imu, float* buf);
+error_bno bno055_linear_acc_z(bno055_t* imu, float* buf);
 error_bno bno055_linear_acc(bno055_t* imu, bno055_vec3_t* buf);
 
 // Gyroscope
-error_bno bno055_gyro_x(bno055_t* imu, f32* buf);
-error_bno bno055_gyro_y(bno055_t* imu, f32* buf);
-error_bno bno055_gyro_z(bno055_t* imu, f32* buf);
+error_bno bno055_gyro_x(bno055_t* imu, float* buf);
+error_bno bno055_gyro_y(bno055_t* imu, float* buf);
+error_bno bno055_gyro_z(bno055_t* imu, float* buf);
 error_bno bno055_gyro(bno055_t* imu, bno055_vec3_t* buf);
 
 // Magnetometer
-error_bno bno055_mag_x(bno055_t* imu, f32* buf);
-error_bno bno055_mag_y(bno055_t* imu, f32* buf);
-error_bno bno055_mag_z(bno055_t* imu, f32* buf);
+error_bno bno055_mag_x(bno055_t* imu, float* buf);
+error_bno bno055_mag_y(bno055_t* imu, float* buf);
+error_bno bno055_mag_z(bno055_t* imu, float* buf);
 error_bno bno055_mag(bno055_t* imu, bno055_vec3_t* buf);
 
 // Gravity
-error_bno bno055_gravity_x(bno055_t* imu, f32* buf);
-error_bno bno055_gravity_y(bno055_t* imu, f32* buf);
-error_bno bno055_gravity_z(bno055_t* imu, f32* buf);
+error_bno bno055_gravity_x(bno055_t* imu, float* buf);
+error_bno bno055_gravity_y(bno055_t* imu, float* buf);
+error_bno bno055_gravity_z(bno055_t* imu, float* buf);
 error_bno bno055_gravity(bno055_t* imu, bno055_vec3_t* buf);
 
 // Euler angles
-error_bno bno055_euler_roll(bno055_t* imu, f32* buf);
-error_bno bno055_euler_pitch(bno055_t* imu, f32* buf);
-error_bno bno055_euler_yaw(bno055_t* imu, f32* buf);
+error_bno bno055_euler_roll(bno055_t* imu, float* buf);
+error_bno bno055_euler_pitch(bno055_t* imu, float* buf);
+error_bno bno055_euler_yaw(bno055_t* imu, float* buf);
 error_bno bno055_euler(bno055_t* imu, bno055_euler_t* buf);
 
 // Quaternions
-error_bno bno055_quaternion_w(bno055_t* imu, f32* buf);
-error_bno bno055_quaternion_x(bno055_t* imu, f32* buf);
-error_bno bno055_quaternion_y(bno055_t* imu, f32* buf);
-error_bno bno055_quaternion_z(bno055_t* imu, f32* buf);
+error_bno bno055_quaternion_w(bno055_t* imu, float* buf);
+error_bno bno055_quaternion_x(bno055_t* imu, float* buf);
+error_bno bno055_quaternion_y(bno055_t* imu, float* buf);
+error_bno bno055_quaternion_z(bno055_t* imu, float* buf);
 error_bno bno055_quaternion(bno055_t* imu, bno055_vec4_t* buf);
 
 bool bno055_calibrate(bno055_t* imu);
@@ -546,7 +545,7 @@ uint8_t bno055_get_chip_id(const bno055_t bno);
 char* bno055_err_str(error_bno err);
 error_bno bno055_post_result(bno055_t* bno, char* buf);
 
-error_bno bno055_read_regs(bno055_t imu, u8 addr, uint8_t* buf,
+error_bno bno055_read_regs(bno055_t imu, uint8_t addr, uint8_t* buf,
                            uint32_t buf_size);
 
 error_bno bno055_write_regs(bno055_t imu, uint32_t addr, uint8_t* buf,

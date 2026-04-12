@@ -1,14 +1,14 @@
 /*
  * L76LM33.h
  *
- *  Created on: May 12, 2024
- *      Author: AudaceLol12
+ * Created on: May 12, 2024
+ * Author: AudaceLol12
  *
- *  Edited on: Jul 04, 2024
- *      Autor: mathouqc
+ * Edited on: Jul 04, 2024
+ * Autor: mathouqc
  *
- *  Edited on: Mar 02, 2026
- *      Autor: AudaceLol12
+ * Edited on: Mar 02, 2026
+ * Autor: AudaceLol12
  */
 
 #ifndef INC_GAUL_DRIVERS_L76LM33_H_
@@ -18,8 +18,8 @@
 #include "GAUL_Drivers/LowLevel/nmea.h"
 #include "GAUL_Drivers/LowLevel/ringbuffer.h"
 
-#define L76LM33_BUFFER_SIZES 256  	// NMEA sentence is around 80 char max, has to be a power of two.
-#define L76LM33_UART_TIMEOUT 500 	// For UART transmit
+#define L76LM33_BUFFER_SIZES 256    // NMEA sentence is around 80 char max, has to be a power of two.
+#define L76LM33_UART_TIMEOUT 500    // For UART transmit
 
 typedef enum {
     L76LM33_EMPTY_BUFF = -2,
@@ -27,21 +27,23 @@ typedef enum {
     L76LM33_OK         =  0
 } l76lm33_state_t;
 
+typedef enum {
+    L76_FLIGHT_PROFILE_30K  = 0,    // Aviation Mode (Max 10 000m / 32 800ft)
+    L76_FLIGHT_PROFILE_100K = 1     // Balloon Mode (Max 80 000m / 262 000ft)
+} l76_flight_profile_t;
+
 typedef struct {
-	l76lm33_state_t 	state; 										// 1: OK, 0: Error with GNSS module
-    UART_HandleTypeDef 	*huart; 									// Pointer to the GNSS module UART handler
-    uint8_t 			received_byte; 								// Received char/byte from UART
-    ring_buffer_t 		UART_Buffer; 								// Ring buffer to store UART data from GNSS module
-    char 				UART_Buffer_arr[L76LM33_BUFFER_SIZES]; 		// UART buffer array for ring buffer
-    uint8_t 			new_line_flag; 								// 1: line available in UART buffer, 0: line not available in UART buffer
-    char 				NMEA_Buffer[L76LM33_BUFFER_SIZES]; 			// Buffer to store NMEA sentence
-    nmea_t 				gps_data; 									// Struct to store parsed NMEA data
+    UART_HandleTypeDef  *huart;                                 // Pointer to the GNSS module UART handler
+    uint8_t             received_byte;                          // Received char/byte from UART for HAL IT
+    ring_buffer_t       UART_Buffer;                            // Ring buffer to store UART data from GNSS module
+    char                UART_Buffer_arr[L76LM33_BUFFER_SIZES];  // UART buffer array for ring buffer
+    volatile uint8_t    line_count;                             // Counter for lines received
+    nmea_t              gps_data;                               // Struct to store parsed NMEA data
 } l76lm33_t;
 
-l76lm33_state_t L76LM33_Init(l76lm33_t *dev, UART_HandleTypeDef *huart);
+l76lm33_state_t L76LM33_Init(l76lm33_t *dev, UART_HandleTypeDef *huart, l76_flight_profile_t profile);
 
 l76lm33_state_t L76LM33_Read(l76lm33_t *dev);
-l76lm33_state_t L76LM33_Read_Sentence(l76lm33_t *dev);
 
 void L76LM33_RxCallback(l76lm33_t *dev, UART_HandleTypeDef *huart);
 

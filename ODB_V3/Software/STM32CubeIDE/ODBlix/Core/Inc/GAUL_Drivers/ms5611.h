@@ -53,21 +53,21 @@ typedef enum osr_option {
 typedef struct ms5611_dev {
 	SPI_HandleTypeDef* spi;
 
-	u8 cmd_pressure;
-	u8 cmd_temperature;
+	uint8_t cmd_pressure;
+	uint8_t cmd_temperature;
 
-	u8 delay_read_pressure;
-	u8 delay_read_temperature;
+	uint8_t delay_read_pressure;
+	uint8_t delay_read_temperature;
 
 	ms5611_state state;
 	uint32_t last_conversion_time;
 
-	u16 C[7];
+	uint16_t C[7];
 
-	u32 raw_pressure;
-	u32 raw_temperature;
+	uint32_t raw_pressure;
+	uint32_t raw_temperature;
 
-	u8 skip_counter_temperature;
+	uint8_t skip_counter_temperature;
 
 } ms5611_dev;
 
@@ -75,15 +75,15 @@ error_ms5611 MS5611_Init(ms5611_dev* dev, SPI_HandleTypeDef* spi, osr_option osr
 
 error_ms5611 MS5611_ReadData(ms5611_dev* dev);
 void MS5611_Compute(ms5611_dev* dev, float *temperature, float *pressure);
-error_ms5611 MS5611_ReadADC(SPI_HandleTypeDef* hspi, u32* data);
+error_ms5611 MS5611_ReadADC(SPI_HandleTypeDef* hspi, uint32_t* data);
 error_ms5611 MS5611_Reset(SPI_HandleTypeDef* hspi);
-error_ms5611 MS5611_ReadPROM(SPI_HandleTypeDef* hspi, u8 index, u16* c);
-u8 MS5611_CRC4(u16 prom[]);
+error_ms5611 MS5611_ReadPROM(SPI_HandleTypeDef* hspi, uint8_t index, uint16_t* c);
+uint8_t MS5611_CRC4(uint16_t prom[]);
 
 void MS5611_CS_LOW();
 void MS5611_CS_HIGH();
 
 static error_ms5611 MS5611_SendCmd(ms5611_dev* dev, uint8_t cmd);
-static u8 MS5611_GetDelay(osr_option osr);
+static uint8_t MS5611_GetDelay(osr_option osr);
 
 #endif /* INC_GAUL_DRIVERS_MS5611_H_ */
