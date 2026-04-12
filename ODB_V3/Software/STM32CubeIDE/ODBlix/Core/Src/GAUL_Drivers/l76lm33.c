@@ -116,13 +116,13 @@ l76lm33_state_t L76LM33_Read(l76lm33_t *dev) {
     }
 
     // Validate sentence ID is RMC
-    if(NMEA_ValidateRMC(dev->NMEA_Buffer) != NMEA_OK) {
+    if(NMEA_ValidateRMC(dev->NMEA_Buffer) != 0) {
         dev->state = L76LM33_ERROR; // Bad state
         return L76LM33_ERROR; // Error, sentence ID is not RMC
     }
 
     // Parse NMEA RMC sentence to local structure
-    if(NMEA_ParseRMC(&(dev->gps_data), dev->NMEA_Buffer) != NMEA_OK) {
+    if(NMEA_ParseRMC(&(dev->gps_data), dev->NMEA_Buffer) != 0) {
         dev->state = L76LM33_ERROR; // Bad state
         return L76LM33_ERROR;
     }

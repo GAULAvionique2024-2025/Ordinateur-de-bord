@@ -66,9 +66,7 @@ UART_HandleTypeDef huart2;
 UART_HandleTypeDef huart6;
 
 /* USER CODE BEGIN PV */
-bno055_t bno = {
-    .i2c = &hi2c1, .addr = BNO_ADDR, .mode = BNO_MODE_IMU,
-};
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -143,16 +141,7 @@ int main(void)
   MX_TIM2_Init();
   MX_TIM4_Init();
   /* USER CODE BEGIN 2 */
-  bno055_init(&bno);
-  bno055_set_unit(&bno, BNO_TEMP_UNIT_C, BNO_GYR_UNIT_DPS, BNO_ACC_UNITSEL_M_S2, BNO_EUL_UNIT_DEG);
-  int8_t temperature = 0;
-  bno055_vec3_t acc = {0, 0, 0};
-  bno055_vec3_t lia = {0, 0, 0};
-  bno055_vec3_t gyr = {0, 0, 0};
-  bno055_vec3_t mag = {0, 0, 0};
-  bno055_vec3_t grv = {0, 0, 0};
-  bno055_euler_t eul = {0, 0, 0};
-  bno055_vec4_t qua = {0, 0, 0};
+
   /* USER CODE END 2 */
 
   /* Infinite loop */

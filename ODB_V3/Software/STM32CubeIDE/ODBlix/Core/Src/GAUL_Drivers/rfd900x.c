@@ -55,7 +55,7 @@ void RFD900x_Send(RFD900x_HandleTypeDef *hrfd, odb_mavlink_data *data, uint32_t 
     MAVLink_Transmit(hrfd, &msg);
 
     // GPS
-    mavlink_msg_gps_raw_int_pack(hrfd->modem_id, hrfd->component_id, &msg, time_usec, data->gps_fix, data->lat, data->lon, data->gps_alt, 65535, 65535, 65535, 65535, data->satellites_nb, 0, 0, 0, 0, 0, 0);
+    mavlink_msg_gps_raw_int_pack(hrfd->modem_id, hrfd->component_id, &msg, time_usec, data->gps_fix, data->lat, data->lon, data->gps_alt, 65535, 65535, data->vel, data->cog, data->satellites_nb, 0, 0, 0, 0, 0, 0);
     MAVLink_Transmit(hrfd, &msg);
 }
 

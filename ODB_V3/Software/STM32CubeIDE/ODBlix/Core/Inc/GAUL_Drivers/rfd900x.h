@@ -70,11 +70,13 @@ typedef struct {
     float 		acc_y;
     float 		acc_z;
     // GPS
-    uint8_t     gps_fix;
-    int32_t 	lat;			// Latitude
-    int32_t 	lon;       		// Longitude
-    int32_t 	gps_alt;        // Altitude based on GPS
-    uint8_t 	satellites_nb;
+    uint8_t     gps_fix;        // 1 = Active fix, 0 = Void/No fix
+    int32_t     lat;            // Latitude in degE7 (MAVLink format: deg * 10^7)
+    int32_t     lon;            // Longitude in degE7 (MAVLink format: deg * 10^7)
+    int32_t     gps_alt;        // Altitude based on GPS (Mavlink format: mm)
+    uint16_t    vel;            // Velocity (cm/s)
+    uint16_t    cog;            // Course Over Ground (centi-degrés)
+    uint8_t     satellites_nb;  // Number of satellites used for the fix
 } odb_mavlink_data;
 
 int8_t RFD900x_Init(RFD900x_HandleTypeDef *hrfd, UART_HandleTypeDef *huart, rfd900x_modem_id_t modem_id, uint8_t component_id);
