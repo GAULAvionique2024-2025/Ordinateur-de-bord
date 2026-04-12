@@ -160,27 +160,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-	  //Buzz(&htim4, TIM_CHANNEL_1, STOP);
 
-	  CriticalLED_SetColor(GPIOF, CriticalLED_R_Pin, CriticalLED_G_Pin, NONE);
-
-	  bno.temperature(&bno, &temperature);
-	  bno.acc(&bno, &acc);
-	  bno.linear_acc(&bno, &lia);
-	  bno.gyro(&bno, &gyr);
-	  bno.mag(&bno, &mag);
-	  bno.gravity(&bno, &grv);
-	  bno.euler(&bno, &eul);
-	  bno.quaternion(&bno, &qua);
-	  printf("[+] Temperature: %2d°C\r\n", temperature);
-	  printf("[+] ACC - x: %+2.2f | y: %+2.2f | z: %+2.2f\r\n", acc.x, acc.y, acc.z);
-	  printf("[+] LIA - x: %+2.2f | y: %+2.2f | z: %+2.2f\r\n", lia.x, lia.y, lia.z);
-	  printf("[+] GYR - x: %+2.2f | y: %+2.2f | z: %+2.2f\r\n", gyr.x, gyr.y, gyr.z);
-	  printf("[+] MAG - x: %+2.2f | y: %+2.2f | z: %+2.2f\r\n", mag.x, mag.y, mag.z);
-	  printf("[+] GRV - x: %+2.2f | y: %+2.2f | z: %+2.2f\r\n", grv.x, grv.y, grv.z);
-	  printf("[+] Roll: %+2.2f | Pitch: %+2.2f | Yaw: %+2.2f\r\n", eul.roll, eul.pitch, eul.yaw);
-	  printf("[+] QUA - w: %+2.2f | x: %+2.2f | y: %+2.2f | z: %+2.2f\r\n", qua.w, qua.x, qua.y, qua.z);
-	  HAL_Delay(100);
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
