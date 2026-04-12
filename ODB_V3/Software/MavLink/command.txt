@@ -1,2 +1,2 @@
-python3 -m pip install -r pymavlink/requirements.txt
+https://github.com/mavlink/mavlink
 python3 -m pymavlink.tools.mavgen --lang=C --wire-protocol=2.0 --output=generated_headers "C:\...\Ordinateur-de-bord\ODB_V3\Software\MavLink\mavlink\message_definitions\v1.0\odb_mavlink_v1.xml"

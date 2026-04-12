@@ -5,24 +5,24 @@
 
 
 typedef struct __mavlink_rocket_telemetry_t {
- uint32_t time_boot_ms; /*<  Timestamp (ms)*/
- int32_t lat; /*<  Latitude (degE7)*/
- int32_t lon; /*<  Longitude (degE7)*/
- int32_t gps_alt; /*<  Altitude GPS (mm)*/
- float pressure_hpa; /*<  Pressure (hPa)*/
- int16_t roll; /*<  Roll (centi-deg)*/
- int16_t pitch; /*<  Pitch (centi-deg)*/
- int16_t yaw; /*<  Yaw (centi-deg)*/
- int16_t temp_celsius; /*<  Temperature (centi-deg C)*/
- int16_t acc_x; /*<  Acceleration X (centi-G)*/
- int16_t acc_y; /*<  Acceleration Y (centi-G)*/
- int16_t acc_z; /*<  Acceleration Z (centi-G)*/
- uint16_t system_states; /*<  System states*/
- uint16_t battery_mv; /*<  Battery voltage (mV)*/
- uint16_t vel; /*<  Velocity (cm/s)*/
- uint16_t cog; /*<  Course over ground (cd)*/
- uint8_t gps_fix; /*<  GPS fix type*/
- uint8_t satellites_nb; /*<  Number of satellites*/
+ uint32_t time_boot_ms; /*< [ms] Timestamp in milliseconds.*/
+ int32_t lat; /*< [degE7] Latitude in degrees * 1E7.*/
+ int32_t lon; /*< [degE7] Longitude in degrees * 1E7.*/
+ int32_t gps_alt; /*< [mm] Altitude (MSL) in millimeters.*/
+ float pressure_hpa; /*< [hPa] Pressure in hectopascals.*/
+ int16_t roll; /*< [cdeg] Roll angle in centi-degrees.*/
+ int16_t pitch; /*< [cdeg] Pitch angle in centi-degrees.*/
+ int16_t yaw; /*< [cdeg] Yaw angle in centi-degrees.*/
+ int16_t temp_celsius; /*< [cdegC] Temperature in Celsius.*/
+ int16_t acc_x; /*< [cm/s/s] Acceleration X in centimeters per second squared.*/
+ int16_t acc_y; /*< [cm/s/s] Acceleration Y in centimeters per second squared.*/
+ int16_t acc_z; /*< [cm/s/s] Acceleration Z in centimeters per second squared.*/
+ uint16_t system_states; /*<  Current system state.*/
+ uint16_t battery_mv; /*< [mV] Battery voltage in millivolts.*/
+ uint16_t vel; /*< [cm/s] Ground speed in centimeters per second.*/
+ uint16_t cog; /*< [cdeg] Course over ground (centi-degrees).*/
+ uint8_t gps_fix; /*<  1: Active fix, 0: No fix.*/
+ uint8_t satellites_nb; /*<  Number of visible satellites.*/
 } mavlink_rocket_telemetry_t;
 
 #define MAVLINK_MSG_ID_ROCKET_TELEMETRY_LEN 44
@@ -92,24 +92,24 @@ typedef struct __mavlink_rocket_telemetry_t {
  * @param component_id ID of this component (e.g. 200 for IMU)
  * @param msg The MAVLink message to compress the data into
  *
- * @param time_boot_ms  Timestamp (ms)
- * @param lat  Latitude (degE7)
- * @param lon  Longitude (degE7)
- * @param gps_alt  Altitude GPS (mm)
- * @param pressure_hpa  Pressure (hPa)
- * @param roll  Roll (centi-deg)
- * @param pitch  Pitch (centi-deg)
- * @param yaw  Yaw (centi-deg)
- * @param temp_celsius  Temperature (centi-deg C)
- * @param acc_x  Acceleration X (centi-G)
- * @param acc_y  Acceleration Y (centi-G)
- * @param acc_z  Acceleration Z (centi-G)
- * @param system_states  System states
- * @param battery_mv  Battery voltage (mV)
- * @param vel  Velocity (cm/s)
- * @param cog  Course over ground (cd)
- * @param gps_fix  GPS fix type
- * @param satellites_nb  Number of satellites
+ * @param time_boot_ms [ms] Timestamp in milliseconds.
+ * @param lat [degE7] Latitude in degrees * 1E7.
+ * @param lon [degE7] Longitude in degrees * 1E7.
+ * @param gps_alt [mm] Altitude (MSL) in millimeters.
+ * @param pressure_hpa [hPa] Pressure in hectopascals.
+ * @param roll [cdeg] Roll angle in centi-degrees.
+ * @param pitch [cdeg] Pitch angle in centi-degrees.
+ * @param yaw [cdeg] Yaw angle in centi-degrees.
+ * @param temp_celsius [cdegC] Temperature in Celsius.
+ * @param acc_x [cm/s/s] Acceleration X in centimeters per second squared.
+ * @param acc_y [cm/s/s] Acceleration Y in centimeters per second squared.
+ * @param acc_z [cm/s/s] Acceleration Z in centimeters per second squared.
+ * @param system_states  Current system state.
+ * @param battery_mv [mV] Battery voltage in millivolts.
+ * @param vel [cm/s] Ground speed in centimeters per second.
+ * @param cog [cdeg] Course over ground (centi-degrees).
+ * @param gps_fix  1: Active fix, 0: No fix.
+ * @param satellites_nb  Number of visible satellites.
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_rocket_telemetry_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg,
@@ -172,24 +172,24 @@ static inline uint16_t mavlink_msg_rocket_telemetry_pack(uint8_t system_id, uint
  * @param status MAVLink status structure
  * @param msg The MAVLink message to compress the data into
  *
- * @param time_boot_ms  Timestamp (ms)
- * @param lat  Latitude (degE7)
- * @param lon  Longitude (degE7)
- * @param gps_alt  Altitude GPS (mm)
- * @param pressure_hpa  Pressure (hPa)
- * @param roll  Roll (centi-deg)
- * @param pitch  Pitch (centi-deg)
- * @param yaw  Yaw (centi-deg)
- * @param temp_celsius  Temperature (centi-deg C)
- * @param acc_x  Acceleration X (centi-G)
- * @param acc_y  Acceleration Y (centi-G)
- * @param acc_z  Acceleration Z (centi-G)
- * @param system_states  System states
- * @param battery_mv  Battery voltage (mV)
- * @param vel  Velocity (cm/s)
- * @param cog  Course over ground (cd)
- * @param gps_fix  GPS fix type
- * @param satellites_nb  Number of satellites
+ * @param time_boot_ms [ms] Timestamp in milliseconds.
+ * @param lat [degE7] Latitude in degrees * 1E7.
+ * @param lon [degE7] Longitude in degrees * 1E7.
+ * @param gps_alt [mm] Altitude (MSL) in millimeters.
+ * @param pressure_hpa [hPa] Pressure in hectopascals.
+ * @param roll [cdeg] Roll angle in centi-degrees.
+ * @param pitch [cdeg] Pitch angle in centi-degrees.
+ * @param yaw [cdeg] Yaw angle in centi-degrees.
+ * @param temp_celsius [cdegC] Temperature in Celsius.
+ * @param acc_x [cm/s/s] Acceleration X in centimeters per second squared.
+ * @param acc_y [cm/s/s] Acceleration Y in centimeters per second squared.
+ * @param acc_z [cm/s/s] Acceleration Z in centimeters per second squared.
+ * @param system_states  Current system state.
+ * @param battery_mv [mV] Battery voltage in millivolts.
+ * @param vel [cm/s] Ground speed in centimeters per second.
+ * @param cog [cdeg] Course over ground (centi-degrees).
+ * @param gps_fix  1: Active fix, 0: No fix.
+ * @param satellites_nb  Number of visible satellites.
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_rocket_telemetry_pack_status(uint8_t system_id, uint8_t component_id, mavlink_status_t *_status, mavlink_message_t* msg,
@@ -255,24 +255,24 @@ static inline uint16_t mavlink_msg_rocket_telemetry_pack_status(uint8_t system_i
  * @param component_id ID of this component (e.g. 200 for IMU)
  * @param chan The MAVLink channel this message will be sent over
  * @param msg The MAVLink message to compress the data into
- * @param time_boot_ms  Timestamp (ms)
- * @param lat  Latitude (degE7)
- * @param lon  Longitude (degE7)
- * @param gps_alt  Altitude GPS (mm)
- * @param pressure_hpa  Pressure (hPa)
- * @param roll  Roll (centi-deg)
- * @param pitch  Pitch (centi-deg)
- * @param yaw  Yaw (centi-deg)
- * @param temp_celsius  Temperature (centi-deg C)
- * @param acc_x  Acceleration X (centi-G)
- * @param acc_y  Acceleration Y (centi-G)
- * @param acc_z  Acceleration Z (centi-G)
- * @param system_states  System states
- * @param battery_mv  Battery voltage (mV)
- * @param vel  Velocity (cm/s)
- * @param cog  Course over ground (cd)
- * @param gps_fix  GPS fix type
- * @param satellites_nb  Number of satellites
+ * @param time_boot_ms [ms] Timestamp in milliseconds.
+ * @param lat [degE7] Latitude in degrees * 1E7.
+ * @param lon [degE7] Longitude in degrees * 1E7.
+ * @param gps_alt [mm] Altitude (MSL) in millimeters.
+ * @param pressure_hpa [hPa] Pressure in hectopascals.
+ * @param roll [cdeg] Roll angle in centi-degrees.
+ * @param pitch [cdeg] Pitch angle in centi-degrees.
+ * @param yaw [cdeg] Yaw angle in centi-degrees.
+ * @param temp_celsius [cdegC] Temperature in Celsius.
+ * @param acc_x [cm/s/s] Acceleration X in centimeters per second squared.
+ * @param acc_y [cm/s/s] Acceleration Y in centimeters per second squared.
+ * @param acc_z [cm/s/s] Acceleration Z in centimeters per second squared.
+ * @param system_states  Current system state.
+ * @param battery_mv [mV] Battery voltage in millivolts.
+ * @param vel [cm/s] Ground speed in centimeters per second.
+ * @param cog [cdeg] Course over ground (centi-degrees).
+ * @param gps_fix  1: Active fix, 0: No fix.
+ * @param satellites_nb  Number of visible satellites.
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_rocket_telemetry_pack_chan(uint8_t system_id, uint8_t component_id, uint8_t chan,
@@ -374,24 +374,24 @@ static inline uint16_t mavlink_msg_rocket_telemetry_encode_status(uint8_t system
  * @brief Send a rocket_telemetry message
  * @param chan MAVLink channel to send the message
  *
- * @param time_boot_ms  Timestamp (ms)
- * @param lat  Latitude (degE7)
- * @param lon  Longitude (degE7)
- * @param gps_alt  Altitude GPS (mm)
- * @param pressure_hpa  Pressure (hPa)
- * @param roll  Roll (centi-deg)
- * @param pitch  Pitch (centi-deg)
- * @param yaw  Yaw (centi-deg)
- * @param temp_celsius  Temperature (centi-deg C)
- * @param acc_x  Acceleration X (centi-G)
- * @param acc_y  Acceleration Y (centi-G)
- * @param acc_z  Acceleration Z (centi-G)
- * @param system_states  System states
- * @param battery_mv  Battery voltage (mV)
- * @param vel  Velocity (cm/s)
- * @param cog  Course over ground (cd)
- * @param gps_fix  GPS fix type
- * @param satellites_nb  Number of satellites
+ * @param time_boot_ms [ms] Timestamp in milliseconds.
+ * @param lat [degE7] Latitude in degrees * 1E7.
+ * @param lon [degE7] Longitude in degrees * 1E7.
+ * @param gps_alt [mm] Altitude (MSL) in millimeters.
+ * @param pressure_hpa [hPa] Pressure in hectopascals.
+ * @param roll [cdeg] Roll angle in centi-degrees.
+ * @param pitch [cdeg] Pitch angle in centi-degrees.
+ * @param yaw [cdeg] Yaw angle in centi-degrees.
+ * @param temp_celsius [cdegC] Temperature in Celsius.
+ * @param acc_x [cm/s/s] Acceleration X in centimeters per second squared.
+ * @param acc_y [cm/s/s] Acceleration Y in centimeters per second squared.
+ * @param acc_z [cm/s/s] Acceleration Z in centimeters per second squared.
+ * @param system_states  Current system state.
+ * @param battery_mv [mV] Battery voltage in millivolts.
+ * @param vel [cm/s] Ground speed in centimeters per second.
+ * @param cog [cdeg] Course over ground (centi-degrees).
+ * @param gps_fix  1: Active fix, 0: No fix.
+ * @param satellites_nb  Number of visible satellites.
  */
 #ifdef MAVLINK_USE_CONVENIENCE_FUNCTIONS
 
@@ -524,7 +524,7 @@ static inline void mavlink_msg_rocket_telemetry_send_buf(mavlink_message_t *msgb
 /**
  * @brief Get field time_boot_ms from rocket_telemetry message
  *
- * @return  Timestamp (ms)
+ * @return [ms] Timestamp in milliseconds.
  */
 static inline uint32_t mavlink_msg_rocket_telemetry_get_time_boot_ms(const mavlink_message_t* msg)
 {
@@ -534,7 +534,7 @@ static inline uint32_t mavlink_msg_rocket_telemetry_get_time_boot_ms(const mavli
 /**
  * @brief Get field lat from rocket_telemetry message
  *
- * @return  Latitude (degE7)
+ * @return [degE7] Latitude in degrees * 1E7.
  */
 static inline int32_t mavlink_msg_rocket_telemetry_get_lat(const mavlink_message_t* msg)
 {
@@ -544,7 +544,7 @@ static inline int32_t mavlink_msg_rocket_telemetry_get_lat(const mavlink_message
 /**
  * @brief Get field lon from rocket_telemetry message
  *
- * @return  Longitude (degE7)
+ * @return [degE7] Longitude in degrees * 1E7.
  */
 static inline int32_t mavlink_msg_rocket_telemetry_get_lon(const mavlink_message_t* msg)
 {
@@ -554,7 +554,7 @@ static inline int32_t mavlink_msg_rocket_telemetry_get_lon(const mavlink_message
 /**
  * @brief Get field gps_alt from rocket_telemetry message
  *
- * @return  Altitude GPS (mm)
+ * @return [mm] Altitude (MSL) in millimeters.
  */
 static inline int32_t mavlink_msg_rocket_telemetry_get_gps_alt(const mavlink_message_t* msg)
 {
@@ -564,7 +564,7 @@ static inline int32_t mavlink_msg_rocket_telemetry_get_gps_alt(const mavlink_mes
 /**
  * @brief Get field pressure_hpa from rocket_telemetry message
  *
- * @return  Pressure (hPa)
+ * @return [hPa] Pressure in hectopascals.
  */
 static inline float mavlink_msg_rocket_telemetry_get_pressure_hpa(const mavlink_message_t* msg)
 {
@@ -574,7 +574,7 @@ static inline float mavlink_msg_rocket_telemetry_get_pressure_hpa(const mavlink_
 /**
  * @brief Get field roll from rocket_telemetry message
  *
- * @return  Roll (centi-deg)
+ * @return [cdeg] Roll angle in centi-degrees.
  */
 static inline int16_t mavlink_msg_rocket_telemetry_get_roll(const mavlink_message_t* msg)
 {
@@ -584,7 +584,7 @@ static inline int16_t mavlink_msg_rocket_telemetry_get_roll(const mavlink_messag
 /**
  * @brief Get field pitch from rocket_telemetry message
  *
- * @return  Pitch (centi-deg)
+ * @return [cdeg] Pitch angle in centi-degrees.
  */
 static inline int16_t mavlink_msg_rocket_telemetry_get_pitch(const mavlink_message_t* msg)
 {
@@ -594,7 +594,7 @@ static inline int16_t mavlink_msg_rocket_telemetry_get_pitch(const mavlink_messa
 /**
  * @brief Get field yaw from rocket_telemetry message
  *
- * @return  Yaw (centi-deg)
+ * @return [cdeg] Yaw angle in centi-degrees.
  */
 static inline int16_t mavlink_msg_rocket_telemetry_get_yaw(const mavlink_message_t* msg)
 {
@@ -604,7 +604,7 @@ static inline int16_t mavlink_msg_rocket_telemetry_get_yaw(const mavlink_message
 /**
  * @brief Get field temp_celsius from rocket_telemetry message
  *
- * @return  Temperature (centi-deg C)
+ * @return [cdegC] Temperature in Celsius.
  */
 static inline int16_t mavlink_msg_rocket_telemetry_get_temp_celsius(const mavlink_message_t* msg)
 {
@@ -614,7 +614,7 @@ static inline int16_t mavlink_msg_rocket_telemetry_get_temp_celsius(const mavlin
 /**
  * @brief Get field acc_x from rocket_telemetry message
  *
- * @return  Acceleration X (centi-G)
+ * @return [cm/s/s] Acceleration X in centimeters per second squared.
  */
 static inline int16_t mavlink_msg_rocket_telemetry_get_acc_x(const mavlink_message_t* msg)
 {
@@ -624,7 +624,7 @@ static inline int16_t mavlink_msg_rocket_telemetry_get_acc_x(const mavlink_messa
 /**
  * @brief Get field acc_y from rocket_telemetry message
  *
- * @return  Acceleration Y (centi-G)
+ * @return [cm/s/s] Acceleration Y in centimeters per second squared.
  */
 static inline int16_t mavlink_msg_rocket_telemetry_get_acc_y(const mavlink_message_t* msg)
 {
@@ -634,7 +634,7 @@ static inline int16_t mavlink_msg_rocket_telemetry_get_acc_y(const mavlink_messa
 /**
  * @brief Get field acc_z from rocket_telemetry message
  *
- * @return  Acceleration Z (centi-G)
+ * @return [cm/s/s] Acceleration Z in centimeters per second squared.
  */
 static inline int16_t mavlink_msg_rocket_telemetry_get_acc_z(const mavlink_message_t* msg)
 {
@@ -644,7 +644,7 @@ static inline int16_t mavlink_msg_rocket_telemetry_get_acc_z(const mavlink_messa
 /**
  * @brief Get field system_states from rocket_telemetry message
  *
- * @return  System states
+ * @return  Current system state.
  */
 static inline uint16_t mavlink_msg_rocket_telemetry_get_system_states(const mavlink_message_t* msg)
 {
@@ -654,7 +654,7 @@ static inline uint16_t mavlink_msg_rocket_telemetry_get_system_states(const mavl
 /**
  * @brief Get field battery_mv from rocket_telemetry message
  *
- * @return  Battery voltage (mV)
+ * @return [mV] Battery voltage in millivolts.
  */
 static inline uint16_t mavlink_msg_rocket_telemetry_get_battery_mv(const mavlink_message_t* msg)
 {
@@ -664,7 +664,7 @@ static inline uint16_t mavlink_msg_rocket_telemetry_get_battery_mv(const mavlink
 /**
  * @brief Get field vel from rocket_telemetry message
  *
- * @return  Velocity (cm/s)
+ * @return [cm/s] Ground speed in centimeters per second.
  */
 static inline uint16_t mavlink_msg_rocket_telemetry_get_vel(const mavlink_message_t* msg)
 {
@@ -674,7 +674,7 @@ static inline uint16_t mavlink_msg_rocket_telemetry_get_vel(const mavlink_messag
 /**
  * @brief Get field cog from rocket_telemetry message
  *
- * @return  Course over ground (cd)
+ * @return [cdeg] Course over ground (centi-degrees).
  */
 static inline uint16_t mavlink_msg_rocket_telemetry_get_cog(const mavlink_message_t* msg)
 {
@@ -684,7 +684,7 @@ static inline uint16_t mavlink_msg_rocket_telemetry_get_cog(const mavlink_messag
 /**
  * @brief Get field gps_fix from rocket_telemetry message
  *
- * @return  GPS fix type
+ * @return  1: Active fix, 0: No fix.
  */
 static inline uint8_t mavlink_msg_rocket_telemetry_get_gps_fix(const mavlink_message_t* msg)
 {
@@ -694,7 +694,7 @@ static inline uint8_t mavlink_msg_rocket_telemetry_get_gps_fix(const mavlink_mes
 /**
  * @brief Get field satellites_nb from rocket_telemetry message
  *
- * @return  Number of satellites
+ * @return  Number of visible satellites.
  */
 static inline uint8_t mavlink_msg_rocket_telemetry_get_satellites_nb(const mavlink_message_t* msg)
 {
