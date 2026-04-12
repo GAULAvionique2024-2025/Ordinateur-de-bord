@@ -10,22 +10,6 @@
 #define IS_POWER_OF_TWO(x) (((x) != 0) && (((x) & ((x) - 1)) == 0))
 
 
-/**
- * Inline helper functions
- */
-static inline bool RingBuffer_IsEmpty(const ring_buffer_t *rb) {
-    return rb->head == rb->tail;
-}
-
-static inline size_t RingBuffer_NumItems(const ring_buffer_t *rb) {
-    return (rb->head - rb->tail) & rb->mask;
-}
-
-static inline bool RingBuffer_IsFull(const ring_buffer_t *rb) {
-    return RingBuffer_NumItems(rb) == rb->mask;
-}
-
-
 void RingBuffer_Init(ring_buffer_t *rb, uint8_t *buf, size_t buf_size) {
     assert(IS_POWER_OF_TWO(buf_size));
     

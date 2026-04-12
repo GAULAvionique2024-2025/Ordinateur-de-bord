@@ -14,7 +14,6 @@
 #include "GAUL_Drivers/l76lm33.h"
 #include <string.h>
 
-static uint16_t old_pos = 0; // For UART DMA reception
 
 /*
  * Send array of character to L76LM33 using UART HAL functions.
@@ -40,27 +39,28 @@ static l76lm33_state_t L76LM33_ReadSentence(l76lm33_t *dev, char *out_buffer, ui
     dev->line_count--;
     memset(out_buffer, 0, max_len);
 
-    char c;
-    for(uint16_t i = 0; i < 100; i++) {
-        if(RingBuffer_Dequeue(&(dev->UART_Buffer), (uint8_t *)&c) == 0) return L76LM33_EMPTY_BUFF; 
+    uint8_t c;
+    bool start_found = false;
+    while(RingBuffer_Dequeue(&(dev->UART_Buffer), &c)) {
         if(c == '$') {
             out_buffer[0] = '$';
+            start_found = true;
             break;
         }
     }
 
-    if(c != '$') return L76LM33_ERROR; 
+    if(!start_found) return L76LM33_ERROR; 
 
     for (uint16_t i = 1; i < max_len - 1; i++) {
-        if(RingBuffer_Dequeue(&(dev->UART_Buffer), (uint8_t *)&c) == 0) return L76LM33_EMPTY_BUFF; 
+        if(!RingBuffer_Dequeue(&(dev->UART_Buffer), &c)) {
+            return L76LM33_EMPTY_BUFF;
+        }
         
-        out_buffer[i] = c;
-        if(c == '\n') break;
+        out_buffer[i] = (char)c;
+        if(c == '\n') return L76LM33_OK; // success
     }
 
-    if(c != '\n') return L76LM33_ERROR;
-
-    return L76LM33_OK;
+    return L76LM33_ERROR;
 }
 
 /*
@@ -77,12 +77,13 @@ l76lm33_state_t L76LM33_Init(l76lm33_t *dev) {
     }
 
     dev->line_count = 0;
+    dev->old_pos = 0;
 
     // Initialize circular buffer
-    RingBuffer_Init(&(dev->UART_Buffer), (uint8_t *)dev->UART_Buffer_arr, L76LM33_BUFFER_SIZES);
+    RingBuffer_Init(&(dev->UART_Buffer), dev->ring_buffer_arr, L76LM33_BUFFER_SIZES);
 
-    // Start UART Reception
-    if (HAL_UARTEx_ReceiveToIdle_DMA(dev->huart, (uint8_t *)dev->UART_Buffer_arr, L76LM33_BUFFER_SIZES) != HAL_OK) {
+    // Start UART DMA Reception
+    if(HAL_UARTEx_ReceiveToIdle_DMA(dev->huart, dev->dma_buffer, L76LM33_BUFFER_SIZES) != HAL_OK) {
         return L76LM33_ERROR;
     }
 
@@ -130,6 +131,11 @@ l76lm33_state_t L76LM33_Init(l76lm33_t *dev) {
     if(L76LM33_SendCommand(dev, NMEA_BAUD, strlen(NMEA_BAUD)) != L76LM33_OK) return L76LM33_ERROR;
     HAL_Delay(50);
 
+    // Restart UART DMA Reception
+    if(HAL_UARTEx_ReceiveToIdle_DMA(dev->huart, dev->dma_buffer, L76LM33_BUFFER_SIZES) != HAL_OK) {
+        return L76LM33_ERROR;
+    }
+
     return L76LM33_OK;
 }
 
@@ -156,24 +162,25 @@ l76lm33_state_t L76LM33_Read(l76lm33_t *dev) {
  * Callback on incoming UART data.
  */
 void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t size) {
-    extern l76lm33_t l76lm33_dev; 
+    extern l76lm33_t l76lm33; 
 
-    if(huart->Instance == l76lm33_dev.huart->Instance) {
+    if(huart->Instance == l76lm33.huart->Instance) {
         uint16_t nb_new_bytes = 0;
-
-        if(size > old_pos) {
-            nb_new_bytes = size - old_pos;
+        if(size >= l76lm33.old_pos) {
+            nb_new_bytes = size - l76lm33.old_pos;
         } else {
-            nb_new_bytes = L76LM33_BUFFER_SIZES - old_pos + size;
+            nb_new_bytes = L76LM33_BUFFER_SIZES - l76lm33.old_pos + size;
         }
 
         for(uint16_t i = 0; i < nb_new_bytes; i++) {
-            uint8_t byte = l76lm33_dev.UART_Buffer_arr[(old_pos + i) % L76LM33_BUFFER_SIZES];
-            RingBuffer_Queue(&(l76lm33_dev.UART_Buffer), byte);
+            uint8_t byte = l76lm33.dma_buffer[(l76lm33.old_pos + i) % L76LM33_BUFFER_SIZES];
+            RingBuffer_Queue(&(l76lm33.UART_Buffer), byte);
+            
             if(byte == '\n') {
-                l76lm33_dev.line_count++;
+                l76lm33.line_count++;
             }
         }
-        old_pos = size;
+        
+        l76lm33.old_pos = size;
     }
 }

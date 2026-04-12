@@ -29,5 +29,17 @@ size_t RingBuffer_Dequeue_Array(ring_buffer_t *rb, uint8_t *data, size_t len);
 
 bool RingBuffer_Peek(ring_buffer_t *rb, uint8_t *data, size_t index);
 
+// Inline helper functions
+static inline size_t RingBuffer_NumItems(const ring_buffer_t *rb) {
+    return (rb->head - rb->tail) & rb->mask;
+}
+
+static inline bool RingBuffer_IsEmpty(const ring_buffer_t *rb) {
+    return rb->head == rb->tail;
+}
+
+static inline bool RingBuffer_IsFull(const ring_buffer_t *rb) {
+    return RingBuffer_NumItems(rb) == rb->mask;
+}
 
 #endif /* INC_GAUL_DRIVERS_LOWLEVEL_RINGBUFFER_H_ */

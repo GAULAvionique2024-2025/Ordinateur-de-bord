@@ -33,12 +33,15 @@ typedef enum {
 } l76_flight_profile_t;
 
 typedef struct {
-    UART_HandleTypeDef   *huart;                                 // Pointer to the GNSS module UART handler
-    l76_flight_profile_t profile;                                // Flight profile for the GNSS module
-    ring_buffer_t        UART_Buffer;                            // Ring buffer to store UART data from GNSS module
-    char                 UART_Buffer_arr[L76LM33_BUFFER_SIZES];  // UART buffer array for ring buffer
-    volatile uint8_t     line_count;                             // Counter for lines received
-    nmea_t               gps_data;                               // Struct to store parsed NMEA data
+    UART_HandleTypeDef   *huart;                                // Pointer to the GNSS module UART handler
+    l76_flight_profile_t profile;                               // Flight profile for the GNSS module
+    
+    uint8_t              dma_buffer[L76LM33_BUFFER_SIZES];      // Buffer for UART DMA reception
+    uint8_t              ring_buffer_arr[L76LM33_BUFFER_SIZES]; // Array for ring buffer storage
+    ring_buffer_t        UART_Buffer;                           // Ring buffer to store UART data from GNSS module
+    uint16_t             old_pos;
+    volatile uint8_t     line_count;                            // Counter for lines received
+    nmea_t               gps_data;                              // Struct to store parsed NMEA data
 } l76lm33_t;
 
 l76lm33_state_t L76LM33_Init(l76lm33_t *dev);

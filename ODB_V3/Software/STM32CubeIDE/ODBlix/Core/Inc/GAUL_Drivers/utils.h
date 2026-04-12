@@ -9,6 +9,7 @@
 #define INC_GAUL_DRIVERS_UTILS_H_
 
 #include "bno055.h"
+#include "hm11.h"
 #include "ms5611.h"
 #include "stm32f4xx_hal.h"
 #include "adxl382.h"

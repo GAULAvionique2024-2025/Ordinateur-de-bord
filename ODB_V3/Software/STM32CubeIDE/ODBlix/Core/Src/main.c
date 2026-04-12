@@ -24,6 +24,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "GAUL_Drivers/bno055.h"
+#include "GAUL_Drivers/hm11.h"
 #include "GAUL_Drivers/ms5611.h"
 #include "GAUL_Drivers/adxl382.h"
 #include "GAUL_Drivers/bno055.h"
@@ -75,12 +76,17 @@ UART_HandleTypeDef huart6;
 DMA_HandleTypeDef hdma_usart6_rx;
 
 /* USER CODE BEGIN PV */
-bno055_t bno055_dev = {
+bno055_t bno055 = {
     .i2c = &hi2c1,
     .addr = BNO_ADDR,
     .mode = BNO_MODE_NDOF,
 };
-l76lm33_t l76lm33_dev = {
+hm11_t hm11 = {
+    .huart = &huart2,
+    .name = "ODB_1",
+    .baudrate = HM11_BAUD_115200,
+};
+l76lm33_t l76lm33 = {
     .huart = &huart6,
     .profile = L76_FLIGHT_PROFILE_30K,
 };
