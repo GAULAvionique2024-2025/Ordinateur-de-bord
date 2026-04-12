@@ -68,7 +68,7 @@ bool HM11_Reset(hm11_t *dev) {
 }
 
 hm11_state_t HM11_Init(hm11_t *dev) {
-    if(!dev || !dev->huart || dev->baudrate > 8 || dev->baudrate < 0 || !dev->name) return HM11_ERROR_INVALID_PARAM;
+    if(!dev || !dev->huart || dev->baudrate > 8 || !dev->name) return HM11_ERROR_INVALID_PARAM;
 
     hm11_state_t err = HM11_OK;
 
@@ -147,6 +147,11 @@ bool HM11_GetMessage(hm11_t *dev, char *out_buffer, uint16_t max_len) {
             break;
         }
     }
+
+    // Ignore empty line
+    if (index == 0) {
+		return false;
+	}
 
     return true; // success
 }

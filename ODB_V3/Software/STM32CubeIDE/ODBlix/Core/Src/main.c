@@ -84,7 +84,7 @@ bno055_t bno055 = {
 hm11_t hm11 = {
     .huart = &huart2,
     .name = "ODB_1",
-    .baudrate = HM11_BAUD_115200,
+    .baudrate = HM11_BAUD_9600,
 };
 l76lm33_t l76lm33 = {
     .huart = &huart6,
@@ -156,7 +156,6 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -193,7 +192,16 @@ int main(void)
   MX_TIM2_Init();
   MX_TIM4_Init();
   /* USER CODE BEGIN 2 */
-
+  if(HM11_Init(&hm11) == HM11_OK) {
+    if (HM11_TestConnection(&hm11)) {
+      // Succès : La communication UART est établie
+      printf("HM-11 detecte et operationnel !\n");
+    } else {
+      // Erreur : Le module ne répond pas (vérifiez RX/TX et l'alimentation)
+      printf("Erreur : HM-11 ne repond pas.\n");
+    }
+  }
+  char rx_buffer[HM11_RX_BUFFER_SIZE];
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -201,7 +209,19 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
+	  if (HM11_GetMessage(&hm11, rx_buffer, sizeof(rx_buffer))) {
+		  char debug_msg[80];
+		  sprintf(debug_msg, "Lu: [%s]\n", rx_buffer);
+		  HM11_SendString(&hm11, debug_msg);
 
+		  if(strcmp(rx_buffer, "LED_ON") == 0) {
+			  HM11_SendString(&hm11, "La LED est ALLUMEE\n");
+		  } else if(strcmp(rx_buffer, "LED_OFF") == 0) {
+			  HM11_SendString(&hm11, "La LED est ETEINTE\n");
+		  } else if(strcmp(rx_buffer, "TEMP") == 0) {
+			  HM11_SendString(&hm11, "Temperature: 23C\n");
+		  }
+	  }
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -747,7 +767,7 @@ static void MX_USART2_UART_Init(void)
 
   /* USER CODE END USART2_Init 1 */
   huart2.Instance = USART2;
-  huart2.Init.BaudRate = 115200;
+  huart2.Init.BaudRate = 9600;
   huart2.Init.WordLength = UART_WORDLENGTH_8B;
   huart2.Init.StopBits = UART_STOPBITS_1;
   huart2.Init.Parity = UART_PARITY_NONE;

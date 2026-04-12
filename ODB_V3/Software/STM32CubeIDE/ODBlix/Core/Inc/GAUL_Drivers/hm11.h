@@ -51,7 +51,6 @@ typedef struct {
 
 
 hm11_state_t HM11_Init(hm11_t *dev);
-bool HM11_Reset(hm11_t *dev);
 bool HM11_TestConnection(hm11_t *dev);
 
 bool HM11_SendData(hm11_t *dev, uint8_t *data, uint16_t length);
@@ -60,8 +59,5 @@ bool HM11_GetMessage(hm11_t *dev, char *out_buffer, uint16_t max_lenth);
 
 bool HM11_Sleep(hm11_t *dev);
 bool HM11_WakeUp(hm11_t *dev);
-
-// Callback
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart);
 
 #endif /* INC_GAUL_DRIVERS_HM11_H_ */
