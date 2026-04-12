@@ -17,8 +17,17 @@ typedef enum {
 	RED,
 	ORANGE,
 	NONE
-} criticalLed_color_t;
+} critical_led_color_t;
 
-void CriticalLED_SetColor(GPIO_TypeDef *port, uint16_t r_pin, uint16_t g_pin, criticalLed_color_t color);
+typedef struct {
+	GPIO_TypeDef *port;
+	uint16_t r_pin;
+	uint16_t g_pin;
+	critical_led_color_t current_color;
+} critical_led_t;
+
+int8_t CriticalLed_Init(critical_led_t *led);
+
+void CriticalLED_SetColor(critical_led_t *led, critical_led_color_t color);
 
 #endif /* INC_GAUL_DRIVERS_LTSTE682KRKGWT_H_ */

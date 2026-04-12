@@ -9,16 +9,17 @@
 #define INC_GAUL_DRIVERS_UTILS_H_
 
 
-#include <GAUL_Drivers/bno055.h>
-#include <GAUL_Drivers/ms5611.h>
+#include "bno055.h"
+#include "ms5611.h"
 #include "stm32f4xx_hal.h"
 #include "adxl382.h"
+#include "bno055.h"
 #include "l76lm33.h"
 #include "ltste682krkgwt.h"
 #include "pyros.h"
 #include "rfd900x.h"
 #include "smtb0927twr.h"
-#include "LowLevel/measure.h"
+#include "system_measurements.h"
 
 #include <stdio.h>
 #include <stdlib.h>

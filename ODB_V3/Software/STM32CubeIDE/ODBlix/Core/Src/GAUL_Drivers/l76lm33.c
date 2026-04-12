@@ -71,8 +71,11 @@ static l76lm33_state_t L76LM33_ReadSentence(l76lm33_t *dev, char *out_buffer, ui
 /*
  * Initialize L76LM33 sensor.
 */
-l76lm33_state_t L76LM33_Init(l76lm33_t *dev, UART_HandleTypeDef *huart, l76_flight_profile_t profile) {
-    dev->huart = huart;
+l76lm33_state_t L76LM33_Init(l76lm33_t *dev) {
+    if(!dev || !dev->huart) {
+        return L76LM33_ERROR;
+    }
+
     dev->line_count = 0;
 
     // Initialize circular buffer
@@ -108,7 +111,7 @@ l76lm33_state_t L76LM33_Init(l76lm33_t *dev, UART_HandleTypeDef *huart, l76_flig
     HAL_Delay(10);
 
     // Navigation mode
-    if (profile == L76_FLIGHT_PROFILE_30K) {
+    if (dev->profile == L76_FLIGHT_PROFILE_30K) {
         // Mode Aviation (< 10 000m / 32 800ft)
         // "$PMTK886,2*2B<CR><LF>"
         const char NMEA_NAV_AVIATION[] = "$PMTK886,2*2B\r\n";

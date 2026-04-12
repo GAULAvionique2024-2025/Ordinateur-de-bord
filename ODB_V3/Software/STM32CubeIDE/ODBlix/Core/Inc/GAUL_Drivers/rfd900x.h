@@ -51,7 +51,7 @@ typedef struct {
     UART_HandleTypeDef  *huart;
     rfd900x_modem_id_t  modem_id;
     uint8_t             component_id;   // main=1
-} RFD900x_HandleTypeDef;
+} rfd900x_t;
 
 // TODO: move to global struct
 typedef struct {
@@ -79,9 +79,9 @@ typedef struct {
     uint8_t     satellites_nb;  // Number of satellites used for the fix
 } odb_mavlink_data;
 
-int8_t RFD900x_Init(RFD900x_HandleTypeDef *hrfd, UART_HandleTypeDef *huart, rfd900x_modem_id_t modem_id, uint8_t component_id);
+int8_t RFD900x_Init(rfd900x_t *dev, UART_HandleTypeDef *huart, rfd900x_modem_id_t modem_id, uint8_t component_id);
 
-void RFD900x_Send(RFD900x_HandleTypeDef *hrfd, odb_mavlink_data *data, uint32_t current_time_ms);
-void RFD900x_Send_EventLog(RFD900x_HandleTypeDef *hrfd, uint8_t severity, const char *log);
+void RFD900x_Send(rfd900x_t *dev, odb_mavlink_data *data, uint32_t current_time_ms);
+void RFD900x_SendEventLog(rfd900x_t *dev, uint8_t severity, const char *log);
 
 #endif /* INC_GAUL_DRIVERS_RFD900X_H_ */

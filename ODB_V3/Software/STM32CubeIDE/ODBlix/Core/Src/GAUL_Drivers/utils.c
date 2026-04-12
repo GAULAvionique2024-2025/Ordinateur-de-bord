@@ -9,12 +9,21 @@
 
 
 runTimer_t run_timer;
-l76lm33_t l76lm33_dev;
+
+//extern adxl382_t adxl382;
+extern bno055_t bno055;
+extern l76lm33_t l76lm33;
+extern critical_led_t critical_led;
+//extern ms5611_t ms5611;
+extern pyros_t pyros;
+extern rfd900x_t rfd900x;
+extern buzzer_t buzzer;
+extern system_measurements_t system_measurements;
 
 
 
 
-/* === UTILITAIRES === */
+/* === HELPERS === */
 void RunTimer_Init(runTimer_t* dev) {
 	  dev->start_time = HAL_GetTick();
 	  dev->elapsed_time_ms = 0;

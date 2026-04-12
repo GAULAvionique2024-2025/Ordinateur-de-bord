@@ -1,11 +1,11 @@
 /*
- * telemetry.c
+ * system_measurements.c
  *
  *  Created on: 2 mars 2026
  *      Author: AudaceLol12
  */
 
-#include <GAUL_Drivers/LowLevel/measure.h>
+#include "GAUL_Drivers/system_measurements.h"
 
 
 #define DIV_ADC_STEP 0.00080586	// 3.3 / 4095
@@ -13,7 +13,7 @@
 extern uint16_t adc_buffer[9];
 
 
-void System_Measurements_Update(system_measurements_t *data) {
+void SystemMeasurements_Update(system_measurements_t *data) {
 	data->vin_batt = (adc_buffer[0] * DIV_ADC_STEP) * DIV_RATIO_VIN_BATT;
 	data->V5_buck  = (adc_buffer[1] * DIV_ADC_STEP) * DIV_RATIO_V5_BUCK;
 	data->V3_buck  = (adc_buffer[2] * DIV_ADC_STEP) * DIV_RATIO_V3_BUCK;

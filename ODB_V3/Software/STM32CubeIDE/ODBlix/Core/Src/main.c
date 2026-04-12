@@ -23,8 +23,16 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "GAUL_Drivers/smtb0927twr.h"
+#include "GAUL_Drivers/bno055.h"
+#include "GAUL_Drivers/ms5611.h"
+#include "GAUL_Drivers/adxl382.h"
+#include "GAUL_Drivers/bno055.h"
+#include "GAUL_Drivers/l76lm33.h"
 #include "GAUL_Drivers/ltste682krkgwt.h"
+#include "GAUL_Drivers/pyros.h"
+#include "GAUL_Drivers/rfd900x.h"
+#include "GAUL_Drivers/smtb0927twr.h"
+#include "GAUL_Drivers/system_measurements.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -67,7 +75,15 @@ UART_HandleTypeDef huart6;
 DMA_HandleTypeDef hdma_usart6_rx;
 
 /* USER CODE BEGIN PV */
-
+bno055_t bno055_dev = {
+    .i2c = &hi2c1,
+    .addr = BNO_ADDR,
+    .mode = BNO_MODE_NDOF,
+};
+l76lm33_t l76lm33_dev = {
+    .huart = &huart6,
+    .profile = L76_FLIGHT_PROFILE_30K,
+};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/

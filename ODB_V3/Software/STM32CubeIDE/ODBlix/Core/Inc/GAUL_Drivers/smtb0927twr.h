@@ -21,7 +21,7 @@ typedef enum {
     PENDING,
     ARMED,
     CRASH,
-} buzzRoutines_t;
+} buzzer_routines_t;
 
 typedef struct {
     uint8_t   nbBips;
@@ -29,8 +29,14 @@ typedef struct {
     int       frequencyEnd;
     uint32_t  delayModulation;
     uint32_t  delayPause;
-} buzzParametres_t;
+} buzzer_parametres_t;
 
-void Buzz(TIM_HandleTypeDef *htim, uint32_t channel, buzzRoutines_t routine);
+typedef struct {
+    TIM_HandleTypeDef *htim;
+    uint32_t channel;
+    buzzer_routines_t routine;
+} buzzer_t;
+
+void Buzzer_SetRoutine(buzzer_t *dev, buzzer_routines_t routine);
 
 #endif /* INC_GAUL_DRIVERS_SMTB0927TWR_H_ */

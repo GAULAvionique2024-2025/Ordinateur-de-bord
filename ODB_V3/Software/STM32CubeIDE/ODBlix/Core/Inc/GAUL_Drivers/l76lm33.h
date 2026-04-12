@@ -33,18 +33,19 @@ typedef enum {
 } l76_flight_profile_t;
 
 typedef struct {
-    UART_HandleTypeDef  *huart;                                 // Pointer to the GNSS module UART handler
-    uint8_t             received_byte;                          // Received char/byte from UART for HAL IT
-    ring_buffer_t       UART_Buffer;                            // Ring buffer to store UART data from GNSS module
-    char                UART_Buffer_arr[L76LM33_BUFFER_SIZES];  // UART buffer array for ring buffer
-    volatile uint8_t    line_count;                             // Counter for lines received
-    nmea_t              gps_data;                               // Struct to store parsed NMEA data
+    UART_HandleTypeDef   *huart;                                 // Pointer to the GNSS module UART handler
+    l76_flight_profile_t profile;                                // Flight profile for the GNSS module
+    ring_buffer_t        UART_Buffer;                            // Ring buffer to store UART data from GNSS module
+    char                 UART_Buffer_arr[L76LM33_BUFFER_SIZES];  // UART buffer array for ring buffer
+    volatile uint8_t     line_count;                             // Counter for lines received
+    nmea_t               gps_data;                               // Struct to store parsed NMEA data
 } l76lm33_t;
 
-l76lm33_state_t L76LM33_Init(l76lm33_t *dev, UART_HandleTypeDef *huart, l76_flight_profile_t profile);
+l76lm33_state_t L76LM33_Init(l76lm33_t *dev);
 
 l76lm33_state_t L76LM33_Read(l76lm33_t *dev);
 
-void L76LM33_RxCallback(l76lm33_t *dev, UART_HandleTypeDef *huart);
+// Callback
+void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t size);
 
 #endif /* INC_GAUL_DRIVERS_L76LM33_H_ */

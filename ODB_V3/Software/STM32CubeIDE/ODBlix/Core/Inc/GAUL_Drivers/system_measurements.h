@@ -1,12 +1,12 @@
 /*
- * telemetry.h
+ * system_measurements.h
  *
  *  Created on: 2 mars 2026
  *      Author: AudaceLol12
  */
 
-#ifndef INC_GAUL_DRIVERS_LOWLEVEL_MEASURE_H_
-#define INC_GAUL_DRIVERS_LOWLEVEL_MEASURE_H_
+#ifndef INC_GAUL_DRIVERS_LOWLEVEL_SYSTEM_MEASUREMENTS_H_
+#define INC_GAUL_DRIVERS_LOWLEVEL_SYSTEM_MEASUREMENTS_H_
 
 #include "stm32f4xx_hal.h"
 #include <stdint.h>
@@ -30,6 +30,6 @@ typedef struct {
 } system_measurements_t;
 
 
-void System_Measurements_Update(system_measurements_t *dev);
+void SystemMeasurements_Update(system_measurements_t *dev);
 
-#endif /* INC_GAUL_DRIVERS_LOWLEVEL_MEASURE_H_ */
+#endif /* INC_GAUL_DRIVERS_LOWLEVEL_SYSTEM_MEASUREMENTS_H_ */

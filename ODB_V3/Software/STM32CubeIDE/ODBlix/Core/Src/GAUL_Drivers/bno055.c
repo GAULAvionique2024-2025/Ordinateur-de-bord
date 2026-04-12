@@ -1,4 +1,4 @@
-#include <GAUL_Drivers/bno055.h.txt>
+#include <GAUL_Drivers/bno055.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stm32f4xx.h>
@@ -24,7 +24,7 @@
  * ---------------------------------------------------------------
  */
 error_bno bno055_init(bno055_t* imu) {
-    u8 id = 0;
+    uint8_t id = 0;
     error_bno err;
 
     imu->addr = (imu->addr << 1);
@@ -103,21 +103,21 @@ error_bno bno055_init(bno055_t* imu) {
  *
  * Args:
  *     > `imu[bno055_t*]`: BNO055 to read the temperature from
- *     > `buf[s8*|int8_t*]`: Buffer to store the read value in
+ *     > `buf[int8_t*|int8_t*]`: Buffer to store the read value in
  * ----------------------------------------------------------------------
  *
  * Return:
  *     > `error_bno`: `BNO_OK` on success, `BNO_ERR_X` else.
  * ----------------------------------------------------------------------
  */
-error_bno bno055_temperature(bno055_t* imu, s8* buf) {
+error_bno bno055_temperature(bno055_t* imu, int8_t* buf) {
     error_bno err;
 #ifdef BNO_AUTO_PAGE_SET
     if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
         return err;
     }
 #endif  // BNO_AUTO_PAGE_SET
-    u8 data = 0;
+    uint8_t data = 0;
     if ((err = bno055_read_regs(*imu, BNO_TEMP, &data, 1)) != BNO_OK) {
         return err;
     }
@@ -135,26 +135,26 @@ error_bno bno055_temperature(bno055_t* imu, s8* buf) {
  *
  * Args:
  *     > `imu[bno055_t*]`: BNO055 to read the data from
- *     > `buf[f32*]`: Buffer to store the read value in
+ *     > `buf[float*]`: Buffer to store the read value in
  * ----------------------------------------------------------------------
  *
  * Return:
  *     > `error_bno`: `BNO_OK` on success, errorcode else.
  * ----------------------------------------------------------------------
  */
-error_bno bno055_acc_x(bno055_t* imu, f32* buf) {
+error_bno bno055_acc_x(bno055_t* imu, float* buf) {
     error_bno err;
 #ifdef BNO_AUTO_PAGE_SET
     if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
         return err;
     }
 #endif  // BNO_AUTO_PAGE_SET
-    u8 data[2];
+    uint8_t data[2];
     if ((err = bno055_read_regs(*imu, BNO_ACC_DATA_X_LSB, data, 2)) != BNO_OK) {
         return err;
     }
 
-    *buf = (s16)((data[1] << 8) | data[0]) /
+    *buf = (int16_t)((data[1] << 8) | data[0]) /
            ((imu->_acc_unit == BNO_ACC_UNITSEL_M_S2) ? BNO_ACC_SCALE_M_2
                                                      : BNO_ACC_SCALE_MG);
     return BNO_OK;
@@ -170,26 +170,26 @@ error_bno bno055_acc_x(bno055_t* imu, f32* buf) {
  *
  * Args:
  *     > `imu[bno055_t*]`: BNO055 to read the data from
- *     > `buf[f32*]`: Buffer to store the read value in
+ *     > `buf[float*]`: Buffer to store the read value in
  * ----------------------------------------------------------------------
  *
  * Return:
  *     > `error_bno`: `BNO_OK` on success, errorcode else.
  * ----------------------------------------------------------------------
  */
-error_bno bno055_acc_y(bno055_t* imu, f32* buf) {
+error_bno bno055_acc_y(bno055_t* imu, float* buf) {
     error_bno err;
 #ifdef BNO_AUTO_PAGE_SET
     if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
         return err;
     }
 #endif  // BNO_AUTO_PAGE_SET
-    u8 data[2];
+    uint8_t data[2];
     if ((err = bno055_read_regs(*imu, BNO_ACC_DATA_Y_LSB, data, 2)) != BNO_OK) {
         return err;
     }
 
-    *buf = (s16)((data[1] << 8) | data[0]) /
+    *buf = (int16_t)((data[1] << 8) | data[0]) /
            ((imu->_acc_unit == BNO_ACC_UNITSEL_M_S2) ? BNO_ACC_SCALE_M_2
                                                      : BNO_ACC_SCALE_MG);
     return BNO_OK;
@@ -205,26 +205,26 @@ error_bno bno055_acc_y(bno055_t* imu, f32* buf) {
  *
  * Args:
  *     > `imu[bno055_t*]`: BNO055 to read the data from
- *     > `buf[f32*]`: Buffer to store the read value in
+ *     > `buf[float*]`: Buffer to store the read value in
  * ----------------------------------------------------------------------
  *
  * Return:
  *     > `error_bno`: `BNO_OK` on success, errorcode else.
  * ----------------------------------------------------------------------
  */
-error_bno bno055_acc_z(bno055_t* imu, f32* buf) {
+error_bno bno055_acc_z(bno055_t* imu, float* buf) {
     error_bno err;
 #ifdef BNO_AUTO_PAGE_SET
     if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
         return err;
     }
 #endif  // BNO_AUTO_PAGE_SET
-    u8 data[2];
+    uint8_t data[2];
     if ((err = bno055_read_regs(*imu, BNO_ACC_DATA_Z_LSB, data, 2)) != BNO_OK) {
         return err;
     }
 
-    *buf = (s16)((data[1] << 8) | data[0]) /
+    *buf = (int16_t)((data[1] << 8) | data[0]) /
            ((imu->_acc_unit == BNO_ACC_UNITSEL_M_S2) ? BNO_ACC_SCALE_M_2
                                                      : BNO_ACC_SCALE_MG);
     return BNO_OK;
@@ -255,15 +255,15 @@ error_bno bno055_acc(bno055_t* imu, bno055_vec3_t* xyz) {
         return err;
     }
 #endif  // BNO_AUTO_PAGE_SET
-    u8 data[6];
+    uint8_t data[6];
     if ((err = bno055_read_regs(*imu, BNO_ACC_DATA_X_LSB, data, 6)) != BNO_OK) {
         return err;
     }
     float scale = (imu->_acc_unit == BNO_ACC_UNITSEL_M_S2) ? BNO_ACC_SCALE_M_2
                                                            : BNO_ACC_SCALE_MG;
-    xyz->x = (s16)((data[1] << 8) | data[0]) / scale;
-    xyz->y = (s16)((data[3] << 8) | data[2]) / scale;
-    xyz->z = (s16)((data[5] << 8) | data[4]) / scale;
+    xyz->x = (int16_t)((data[1] << 8) | data[0]) / scale;
+    xyz->y = (int16_t)((data[3] << 8) | data[2]) / scale;
+    xyz->z = (int16_t)((data[5] << 8) | data[4]) / scale;
 
     return BNO_OK;
 };
@@ -278,26 +278,26 @@ error_bno bno055_acc(bno055_t* imu, bno055_vec3_t* xyz) {
  *
  * Args:
  *     > `imu[bno055_t*]`: BNO055 to read the data from
- *     > `buf[f32*]`: Buffer to store the read value in
+ *     > `buf[float*]`: Buffer to store the read value in
  * ----------------------------------------------------------------------
  *
  * Return:
  *     > `error_bno`: `BNO_OK` on success, errorcode else.
  * ----------------------------------------------------------------------
  */
-error_bno bno055_linear_acc_x(bno055_t* imu, f32* buf) {
+error_bno bno055_linear_acc_x(bno055_t* imu, float* buf) {
     error_bno err;
 #ifdef BNO_AUTO_PAGE_SET
     if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
         return err;
     }
 #endif  // BNO_AUTO_PAGE_SET
-    u8 data[2];
+    uint8_t data[2];
     if ((err = bno055_read_regs(*imu, BNO_LIA_DATA_X_LSB, data, 2)) != BNO_OK) {
         return err;
     }
 
-    *buf = (s16)((data[1] << 8) | data[0]) /
+    *buf = (int16_t)((data[1] << 8) | data[0]) /
            ((imu->_acc_unit == BNO_ACC_UNITSEL_M_S2) ? BNO_ACC_SCALE_M_2
                                                      : BNO_ACC_SCALE_MG);
     return BNO_OK;
@@ -313,26 +313,26 @@ error_bno bno055_linear_acc_x(bno055_t* imu, f32* buf) {
  *
  * Args:
  *     > `imu[bno055_t*]`: BNO055 to read the data from
- *     > `buf[f32*]`: Buffer to store the read value in
+ *     > `buf[float*]`: Buffer to store the read value in
  * ----------------------------------------------------------------------
  *
  * Return:
  *     > `error_bno`: `BNO_OK` on success, errorcode else.
  * ----------------------------------------------------------------------
  */
-error_bno bno055_linear_acc_y(bno055_t* imu, f32* buf) {
+error_bno bno055_linear_acc_y(bno055_t* imu, float* buf) {
     error_bno err;
 #ifdef BNO_AUTO_PAGE_SET
     if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
         return err;
     }
 #endif  // BNO_AUTO_PAGE_SET
-    u8 data[2];
+    uint8_t data[2];
     if ((err = bno055_read_regs(*imu, BNO_LIA_DATA_Y_LSB, data, 2)) != BNO_OK) {
         return err;
     }
 
-    *buf = (s16)((data[1] << 8) | data[0]) /
+    *buf = (int16_t)((data[1] << 8) | data[0]) /
            ((imu->_acc_unit == BNO_ACC_UNITSEL_M_S2) ? BNO_ACC_SCALE_M_2
                                                      : BNO_ACC_SCALE_MG);
     return BNO_OK;
@@ -348,26 +348,26 @@ error_bno bno055_linear_acc_y(bno055_t* imu, f32* buf) {
  *
  * Args:
  *     > `imu[bno055_t*]`: BNO055 to read the data from
- *     > `buf[f32*]`: Buffer to store the read value in
+ *     > `buf[float*]`: Buffer to store the read value in
  * ----------------------------------------------------------------------
  *
  * Return:
  *     > `error_bno`: `BNO_OK` on success, errorcode else.
  * ----------------------------------------------------------------------
  */
-error_bno bno055_linear_acc_z(bno055_t* imu, f32* buf) {
+error_bno bno055_linear_acc_z(bno055_t* imu, float* buf) {
     error_bno err;
 #ifdef BNO_AUTO_PAGE_SET
     if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
         return err;
     }
 #endif  // BNO_AUTO_PAGE_SET
-    u8 data[2];
+    uint8_t data[2];
     if ((err = bno055_read_regs(*imu, BNO_LIA_DATA_Z_LSB, data, 2)) != BNO_OK) {
         return err;
     }
 
-    *buf = (s16)((data[1] << 8) | data[0]) /
+    *buf = (int16_t)((data[1] << 8) | data[0]) /
            ((imu->_acc_unit == BNO_ACC_UNITSEL_M_S2) ? BNO_ACC_SCALE_M_2
                                                      : BNO_ACC_SCALE_MG);
     return BNO_OK;
@@ -398,15 +398,15 @@ error_bno bno055_linear_acc(bno055_t* imu, bno055_vec3_t* xyz) {
         return err;
     }
 #endif  // BNO_AUTO_PAGE_SET
-    u8 data[6];
+    uint8_t data[6];
     if ((err = bno055_read_regs(*imu, BNO_LIA_DATA_X_LSB, data, 6)) != BNO_OK) {
         return err;
     }
     float scale = (imu->_acc_unit == BNO_ACC_UNITSEL_M_S2) ? BNO_ACC_SCALE_M_2
                                                            : BNO_ACC_SCALE_MG;
-    xyz->x = (s16)((data[1] << 8) | data[0]) / scale;
-    xyz->y = (s16)((data[3] << 8) | data[2]) / scale;
-    xyz->z = (s16)((data[5] << 8) | data[4]) / scale;
+    xyz->x = (int16_t)((data[1] << 8) | data[0]) / scale;
+    xyz->y = (int16_t)((data[3] << 8) | data[2]) / scale;
+    xyz->z = (int16_t)((data[5] << 8) | data[4]) / scale;
 
     return BNO_OK;
 };
@@ -421,26 +421,26 @@ error_bno bno055_linear_acc(bno055_t* imu, bno055_vec3_t* xyz) {
  *
  * Args:
  *     > `imu[bno055_t*]`: BNO055 to read the data from
- *     > `buf[f32*]`: Buffer to store the read value in
+ *     > `buf[float*]`: Buffer to store the read value in
  * ----------------------------------------------------------------------
  *
  * Return:
  *     > `error_bno`: `BNO_OK` on success, errorcode else.
  * ----------------------------------------------------------------------
  */
-error_bno bno055_gyro_x(bno055_t* imu, f32* buf) {
+error_bno bno055_gyro_x(bno055_t* imu, float* buf) {
     error_bno err;
 #ifdef BNO_AUTO_PAGE_SET
     if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
         return err;
     }
 #endif  // BNO_AUTO_PAGE_SET
-    u8 data[2];
+    uint8_t data[2];
     if ((err = bno055_read_regs(*imu, BNO_GYR_DATA_X_LSB, data, 2)) != BNO_OK) {
         return err;
     }
 
-    *buf = (s16)((data[1] << 8) | data[0]) /
+    *buf = (int16_t)((data[1] << 8) | data[0]) /
            ((imu->_gyr_unit == BNO_GYR_UNIT_DPS) ? BNO_GYR_SCALE_DPS
                                                  : BNO_GYR_SCALE_RPS);
     return BNO_OK;
@@ -456,26 +456,26 @@ error_bno bno055_gyro_x(bno055_t* imu, f32* buf) {
  *
  * Args:
  *     > `imu[bno055_t*]`: BNO055 to read the data from
- *     > `buf[f32*]`: Buffer to store the read value in
+ *     > `buf[float*]`: Buffer to store the read value in
  * ----------------------------------------------------------------------
  *
  * Return:
  *     > `error_bno`: `BNO_OK` on success, errorcode else.
  * ----------------------------------------------------------------------
  */
-error_bno bno055_gyro_y(bno055_t* imu, f32* buf) {
+error_bno bno055_gyro_y(bno055_t* imu, float* buf) {
     error_bno err;
 #ifdef BNO_AUTO_PAGE_SET
     if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
         return err;
     }
 #endif  // BNO_AUTO_PAGE_SET
-    u8 data[2];
+    uint8_t data[2];
     if ((err = bno055_read_regs(*imu, BNO_GYR_DATA_Y_LSB, data, 2)) != BNO_OK) {
         return err;
     }
 
-    *buf = (s16)((data[1] << 8) | data[0]) /
+    *buf = (int16_t)((data[1] << 8) | data[0]) /
            ((imu->_gyr_unit == BNO_GYR_UNIT_DPS) ? BNO_GYR_SCALE_DPS
                                                  : BNO_GYR_SCALE_RPS);
     return BNO_OK;
@@ -491,26 +491,26 @@ error_bno bno055_gyro_y(bno055_t* imu, f32* buf) {
  *
  * Args:
  *     > `imu[bno055_t*]`: BNO055 to read the data from
- *     > `buf[f32*]`: Buffer to store the read value in
+ *     > `buf[float*]`: Buffer to store the read value in
  * ----------------------------------------------------------------------
  *
  * Return:
  *     > `error_bno`: `BNO_OK` on success, errorcode else.
  * ----------------------------------------------------------------------
  */
-error_bno bno055_gyro_z(bno055_t* imu, f32* buf) {
+error_bno bno055_gyro_z(bno055_t* imu, float* buf) {
     error_bno err;
 #ifdef BNO_AUTO_PAGE_SET
     if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
         return err;
     }
 #endif  // BNO_AUTO_PAGE_SET
-    u8 data[2];
+    uint8_t data[2];
     if ((err = bno055_read_regs(*imu, BNO_GYR_DATA_Z_LSB, data, 2)) != BNO_OK) {
         return err;
     }
 
-    *buf = (s16)((data[1] << 8) | data[0]) /
+    *buf = (int16_t)((data[1] << 8) | data[0]) /
            ((imu->_gyr_unit == BNO_GYR_UNIT_DPS) ? BNO_GYR_SCALE_DPS
                                                  : BNO_GYR_SCALE_RPS);
     return BNO_OK;
@@ -543,16 +543,16 @@ error_bno bno055_gyro(bno055_t* imu, bno055_vec3_t* xyz) {
         return err;
     }
 #endif  // BNO_AUTO_PAGE_SET
-    u8 data[6];
+    uint8_t data[6];
     if ((err = bno055_read_regs(*imu, BNO_GYR_DATA_X_LSB, data, 6)) != BNO_OK) {
         return err;
     }
 
-    f32 scale = (imu->_gyr_unit == BNO_GYR_UNIT_DPS) ? BNO_GYR_SCALE_DPS
+    float scale = (imu->_gyr_unit == BNO_GYR_UNIT_DPS) ? BNO_GYR_SCALE_DPS
                                                      : BNO_GYR_SCALE_RPS;
-    xyz->x = (s16)((data[1] << 8) | data[0]) / scale;
-    xyz->y = (s16)((data[3] << 8) | data[2]) / scale;
-    xyz->z = (s16)((data[5] << 8) | data[4]) / scale;
+    xyz->x = (int16_t)((data[1] << 8) | data[0]) / scale;
+    xyz->y = (int16_t)((data[3] << 8) | data[2]) / scale;
+    xyz->z = (int16_t)((data[5] << 8) | data[4]) / scale;
 
     return BNO_OK;
 }
@@ -568,26 +568,26 @@ error_bno bno055_gyro(bno055_t* imu, bno055_vec3_t* xyz) {
  *
  * Args:
  *     > `imu[bno055_t*]`: BNO055 to read the data from
- *     > `buf[f32*]`: Buffer to store the read value in
+ *     > `buf[float*]`: Buffer to store the read value in
  * ----------------------------------------------------------------------
  *
  * Return:
  *     > `error_bno`: `BNO_OK` on success, errorcode else.
  * ----------------------------------------------------------------------
  */
-error_bno bno055_mag_x(bno055_t* imu, f32* buf) {
+error_bno bno055_mag_x(bno055_t* imu, float* buf) {
     error_bno err;
 #ifdef BNO_AUTO_PAGE_SET
     if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
         return err;
     }
 #endif  // BNO_AUTO_PAGE_SET
-    u8 data[2];
+    uint8_t data[2];
     if ((err = bno055_read_regs(*imu, BNO_MAG_DATA_X_LSB, data, 2)) != BNO_OK) {
         return err;
     }
 
-    *buf = (s16)((data[1] << 8) | data[0]) / BNO_MAG_SCALE;
+    *buf = (int16_t)((data[1] << 8) | data[0]) / BNO_MAG_SCALE;
     return BNO_OK;
 }
 
@@ -602,26 +602,26 @@ error_bno bno055_mag_x(bno055_t* imu, f32* buf) {
  *
  * Args:
  *     > `imu[bno055_t*]`: BNO055 to read the data from
- *     > `buf[f32*]`: Buffer to store the read value in
+ *     > `buf[float*]`: Buffer to store the read value in
  * ----------------------------------------------------------------------
  *
  * Return:
  *     > `error_bno`: `BNO_OK` on success, errorcode else.
  * ----------------------------------------------------------------------
  */
-error_bno bno055_mag_y(bno055_t* imu, f32* buf) {
+error_bno bno055_mag_y(bno055_t* imu, float* buf) {
     error_bno err;
 #ifdef BNO_AUTO_PAGE_SET
     if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
         return err;
     }
 #endif  // BNO_AUTO_PAGE_SET
-    u8 data[2];
+    uint8_t data[2];
     if ((err = bno055_read_regs(*imu, BNO_MAG_DATA_Y_LSB, data, 2)) != BNO_OK) {
         return err;
     }
 
-    *buf = (s16)((data[1] << 8) | data[0]) / BNO_MAG_SCALE;
+    *buf = (int16_t)((data[1] << 8) | data[0]) / BNO_MAG_SCALE;
     return BNO_OK;
 }
 
@@ -635,26 +635,26 @@ error_bno bno055_mag_y(bno055_t* imu, f32* buf) {
  *
  * Args:
  *     > `imu[bno055_t*]`: BNO055 to read the data from
- *     > `buf[f32*]`: Buffer to store the read value in
+ *     > `buf[float*]`: Buffer to store the read value in
  * ----------------------------------------------------------------------
  *
  * Return:
  *     > `error_bno`: `BNO_OK` on success, errorcode else.
  * ----------------------------------------------------------------------
  */
-error_bno bno055_mag_z(bno055_t* imu, f32* buf) {
+error_bno bno055_mag_z(bno055_t* imu, float* buf) {
     error_bno err;
 #ifdef BNO_AUTO_PAGE_SET
     if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
         return err;
     }
 #endif  // BNO_AUTO_PAGE_SET
-    u8 data[2];
+    uint8_t data[2];
     if ((err = bno055_read_regs(*imu, BNO_MAG_DATA_Z_LSB, data, 2)) != BNO_OK) {
         return err;
     }
 
-    *buf = (s16)((data[1] << 8) | data[0]) / BNO_MAG_SCALE;
+    *buf = (int16_t)((data[1] << 8) | data[0]) / BNO_MAG_SCALE;
     return BNO_OK;
 }
 
@@ -682,14 +682,14 @@ error_bno bno055_mag(bno055_t* imu, bno055_vec3_t* xyz) {
         return err;
     }
 #endif  // BNO_AUTO_PAGE_SET
-    u8 data[6];
+    uint8_t data[6];
     if ((err = bno055_read_regs(*imu, BNO_MAG_DATA_X_LSB, data, 6)) != BNO_OK) {
         return err;
     }
 
-    xyz->x = (s16)((data[1] << 8) | data[0]) / BNO_MAG_SCALE;
-    xyz->y = (s16)((data[3] << 8) | data[2]) / BNO_MAG_SCALE;
-    xyz->z = (s16)((data[5] << 8) | data[4]) / BNO_MAG_SCALE;
+    xyz->x = (int16_t)((data[1] << 8) | data[0]) / BNO_MAG_SCALE;
+    xyz->y = (int16_t)((data[3] << 8) | data[2]) / BNO_MAG_SCALE;
+    xyz->z = (int16_t)((data[5] << 8) | data[4]) / BNO_MAG_SCALE;
 
     return BNO_OK;
 };
@@ -704,27 +704,27 @@ error_bno bno055_mag(bno055_t* imu, bno055_vec3_t* xyz) {
  *
  * Args:
  *     > `imu[bno055_t*]`: BNO055 to read the data from
- *     > `buf[f32*]`: Buffer to store the read value in
+ *     > `buf[float*]`: Buffer to store the read value in
  * ----------------------------------------------------------------------
  *
  * Return:
  *     > `error_bno`: `BNO_OK` on success, errorcode else.
  * ----------------------------------------------------------------------
  */
-error_bno bno055_gravity_x(bno055_t* imu, f32* buf) {
+error_bno bno055_gravity_x(bno055_t* imu, float* buf) {
     error_bno err;
 #ifdef BNO_AUTO_PAGE_SET
     if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
         return err;
     }
 #endif  // BNO_AUTO_PAGE_SET
-    u8 data[2];
+    uint8_t data[2];
     if ((err = bno055_read_regs(*imu, BNO_GRV_DATA_X_LSB, data, 2)) != BNO_OK) {
         return err;
     }
-    f32 scale = (imu->_acc_unit == BNO_ACC_UNITSEL_M_S2) ? BNO_ACC_SCALE_M_2
+    float scale = (imu->_acc_unit == BNO_ACC_UNITSEL_M_S2) ? BNO_ACC_SCALE_M_2
                                                          : BNO_ACC_SCALE_MG;
-    *buf = (s16)((data[1] << 8) | data[0]) / scale;
+    *buf = (int16_t)((data[1] << 8) | data[0]) / scale;
     return BNO_OK;
 }
 
@@ -738,27 +738,27 @@ error_bno bno055_gravity_x(bno055_t* imu, f32* buf) {
  *
  * Args:
  *     > `imu[bno055_t*]`: BNO055 to read the data from
- *     > `buf[f32*]`: Buffer to store the read value in
+ *     > `buf[float*]`: Buffer to store the read value in
  * ----------------------------------------------------------------------
  *
  * Return:
  *     > `error_bno`: `BNO_OK` on success, errorcode else.
  * ----------------------------------------------------------------------
  */
-error_bno bno055_gravity_y(bno055_t* imu, f32* buf) {
+error_bno bno055_gravity_y(bno055_t* imu, float* buf) {
     error_bno err;
 #ifdef BNO_AUTO_PAGE_SET
     if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
         return err;
     }
 #endif  // BNO_AUTO_PAGE_SET
-    u8 data[2];
+    uint8_t data[2];
     if ((err = bno055_read_regs(*imu, BNO_GRV_DATA_Y_LSB, data, 2)) != BNO_OK) {
         return err;
     }
-    f32 scale = (imu->_acc_unit == BNO_ACC_UNITSEL_M_S2) ? BNO_ACC_SCALE_M_2
+    float scale = (imu->_acc_unit == BNO_ACC_UNITSEL_M_S2) ? BNO_ACC_SCALE_M_2
                                                          : BNO_ACC_SCALE_MG;
-    *buf = (s16)((data[1] << 8) | data[0]) / scale;
+    *buf = (int16_t)((data[1] << 8) | data[0]) / scale;
     return BNO_OK;
 }
 
@@ -772,27 +772,27 @@ error_bno bno055_gravity_y(bno055_t* imu, f32* buf) {
  *
  * Args:
  *     > `imu[bno055_t*]`: BNO055 to read the data from
- *     > `buf[f32*]`: Buffer to store the read value in
+ *     > `buf[float*]`: Buffer to store the read value in
  * ----------------------------------------------------------------------
  *
  * Return:
  *     > `error_bno`: `BNO_OK` on success, errorcode else.
  * ----------------------------------------------------------------------
  */
-error_bno bno055_gravity_z(bno055_t* imu, f32* buf) {
+error_bno bno055_gravity_z(bno055_t* imu, float* buf) {
     error_bno err;
 #ifdef BNO_AUTO_PAGE_SET
     if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
         return err;
     }
 #endif  // BNO_AUTO_PAGE_SET
-    u8 data[2];
+    uint8_t data[2];
     if ((err = bno055_read_regs(*imu, BNO_GRV_DATA_Z_LSB, data, 2)) != BNO_OK) {
         return err;
     }
-    f32 scale = (imu->_acc_unit == BNO_ACC_UNITSEL_M_S2) ? BNO_ACC_SCALE_M_2
+    float scale = (imu->_acc_unit == BNO_ACC_UNITSEL_M_S2) ? BNO_ACC_SCALE_M_2
                                                          : BNO_ACC_SCALE_MG;
-    *buf = (s16)((data[1] << 8) | data[0]) / scale;
+    *buf = (int16_t)((data[1] << 8) | data[0]) / scale;
     return BNO_OK;
 }
 
@@ -821,15 +821,15 @@ error_bno bno055_gravity(bno055_t* imu, bno055_vec3_t* buf) {
         return err;
     }
 #endif  // BNO_AUTO_PAGE_SET
-    u8 data[6];
+    uint8_t data[6];
     if ((err = bno055_read_regs(*imu, BNO_GRV_DATA_X_LSB, data, 6)) != BNO_OK) {
         return err;
     }
-    f32 scale = (imu->_acc_unit == BNO_ACC_UNITSEL_M_S2) ? BNO_ACC_SCALE_M_2
+    float scale = (imu->_acc_unit == BNO_ACC_UNITSEL_M_S2) ? BNO_ACC_SCALE_M_2
                                                          : BNO_ACC_SCALE_MG;
-    buf->x = (s16)((data[1] << 8) | data[0]) / scale;
-    buf->y = (s16)((data[3] << 8) | data[2]) / scale;
-    buf->x = (s16)((data[5] << 8) | data[4]) / scale;
+    buf->x = (int16_t)((data[1] << 8) | data[0]) / scale;
+    buf->y = (int16_t)((data[3] << 8) | data[2]) / scale;
+    buf->z = (int16_t)((data[5] << 8) | data[4]) / scale;
     return BNO_OK;
 }
 
@@ -843,28 +843,28 @@ error_bno bno055_gravity(bno055_t* imu, bno055_vec3_t* buf) {
  *
  * Args:
  *     > `imu[bno055_t*]`: BNO055 to read the data from
- *     > `buf[f32*]`: Buffer to store the read value in
+ *     > `buf[float*]`: Buffer to store the read value in
  * ----------------------------------------------------------------------
  *
  * Return:
  *     > `error_bno`: `BNO_OK` on success, errorcode else.
  * ----------------------------------------------------------------------
  */
-error_bno bno055_euler_yaw(bno055_t* imu, f32* buf) {
+error_bno bno055_euler_yaw(bno055_t* imu, float* buf) {
     error_bno err;
 #ifdef BNO_AUTO_PAGE_SET
     if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
         return err;
     }
 #endif  // BNO_AUTO_PAGE_SET
-    u8 data[2];
+    uint8_t data[2];
     if ((err = bno055_read_regs(*imu, BNO_EUL_HEADING_LSB, data, 2)) !=
         BNO_OK) {
         return err;
     }
-    f32 scale = (imu->_eul_unit == BNO_EUL_UNIT_DEG) ? BNO_EUL_SCALE_DEG
+    float scale = (imu->_eul_unit == BNO_EUL_UNIT_DEG) ? BNO_EUL_SCALE_DEG
                                                      : BNO_EUL_SCALE_RAD;
-    *buf = (s16)((data[1] << 8) | data[0]) / scale;
+    *buf = (int16_t)((data[1] << 8) | data[0]) / scale;
     return BNO_OK;
 }
 
@@ -878,27 +878,27 @@ error_bno bno055_euler_yaw(bno055_t* imu, f32* buf) {
  *
  * Args:
  *     > `imu[bno055_t*]`: BNO055 to read the data from
- *     > `buf[f32*]`: Buffer to store the read value in
+ *     > `buf[float*]`: Buffer to store the read value in
  * ----------------------------------------------------------------------
  *
  * Return:
  *     > `error_bno`: `BNO_OK` on success, errorcode else.
  * ----------------------------------------------------------------------
  */
-error_bno bno055_euler_roll(bno055_t* imu, f32* buf) {
+error_bno bno055_euler_roll(bno055_t* imu, float* buf) {
     error_bno err;
 #ifdef BNO_AUTO_PAGE_SET
     if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
         return err;
     }
 #endif  // BNO_AUTO_PAGE_SET
-    u8 data[2];
+    uint8_t data[2];
     if ((err = bno055_read_regs(*imu, BNO_EUL_ROLL_LSB, data, 2)) != BNO_OK) {
         return err;
     }
-    f32 scale = (imu->_eul_unit == BNO_EUL_UNIT_DEG) ? BNO_EUL_SCALE_DEG
+    float scale = (imu->_eul_unit == BNO_EUL_UNIT_DEG) ? BNO_EUL_SCALE_DEG
                                                      : BNO_EUL_SCALE_RAD;
-    *buf = (s16)((data[1] << 8) | data[0]) / scale;
+    *buf = (int16_t)((data[1] << 8) | data[0]) / scale;
     return BNO_OK;
 }
 
@@ -912,27 +912,27 @@ error_bno bno055_euler_roll(bno055_t* imu, f32* buf) {
  *
  * Args:
  *     > `imu[bno055_t*]`: BNO055 to read the data from
- *     > `buf[f32*]`: Buffer to store the read value in
+ *     > `buf[float*]`: Buffer to store the read value in
  * ----------------------------------------------------------------------
  *
  * Return:
  *     > `error_bno`: `BNO_OK` on success, errorcode else.
  * ----------------------------------------------------------------------
  */
-error_bno bno055_euler_pitch(bno055_t* imu, f32* buf) {
+error_bno bno055_euler_pitch(bno055_t* imu, float* buf) {
     error_bno err;
 #ifdef BNO_AUTO_PAGE_SET
     if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
         return err;
     }
 #endif  // BNO_AUTO_PAGE_SET
-    u8 data[2];
+    uint8_t data[2];
     if ((err = bno055_read_regs(*imu, BNO_EUL_PITCH_LSB, data, 2)) != BNO_OK) {
         return err;
     }
-    f32 scale = (imu->_eul_unit == BNO_EUL_UNIT_DEG) ? BNO_EUL_SCALE_DEG
+    float scale = (imu->_eul_unit == BNO_EUL_UNIT_DEG) ? BNO_EUL_SCALE_DEG
                                                      : BNO_EUL_SCALE_RAD;
-    *buf = (s16)((data[1] << 8) | data[0]) / scale;
+    *buf = (int16_t)((data[1] << 8) | data[0]) / scale;
     return BNO_OK;
 }
 
@@ -961,16 +961,16 @@ error_bno bno055_euler(bno055_t* imu, bno055_euler_t* buf) {
         return err;
     }
 #endif  // BNO_AUTO_PAGE_SET
-    u8 data[6];
+    uint8_t data[6];
     if ((err = bno055_read_regs(*imu, BNO_EUL_HEADING_LSB, data, 6)) !=
         BNO_OK) {
         return err;
     }
-    f32 scale = (imu->_eul_unit == BNO_EUL_UNIT_DEG) ? BNO_EUL_SCALE_DEG
+    float scale = (imu->_eul_unit == BNO_EUL_UNIT_DEG) ? BNO_EUL_SCALE_DEG
                                                      : BNO_EUL_SCALE_RAD;
-    buf->yaw = (s16)((data[1] << 8) | data[0]) / scale;
-    buf->roll = (s16)((data[3] << 8) | data[2]) / scale;
-    buf->pitch = (s16)((data[5] << 8) | data[4]) / scale;
+    buf->yaw = (int16_t)((data[1] << 8) | data[0]) / scale;
+    buf->roll = (int16_t)((data[3] << 8) | data[2]) / scale;
+    buf->pitch = (int16_t)((data[5] << 8) | data[4]) / scale;
     return BNO_OK;
 }
 
@@ -984,25 +984,25 @@ error_bno bno055_euler(bno055_t* imu, bno055_euler_t* buf) {
  *
  * Args:
  *     > `imu[bno055_t*]`: BNO055 to read the data from
- *     > `buf[f32*]`: Buffer to store the read value in
+ *     > `buf[float*]`: Buffer to store the read value in
  * ----------------------------------------------------------------------
  *
  * Return:
  *     > `error_bno`: `BNO_OK` on success, errorcode else.
  * ----------------------------------------------------------------------
  */
-error_bno bno055_quaternion_w(bno055_t* imu, f32* buf) {
+error_bno bno055_quaternion_w(bno055_t* imu, float* buf) {
     error_bno err;
 #ifdef BNO_AUTO_PAGE_SET
     if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
         return err;
     }
 #endif  // BNO_AUTO_PAGE_SET
-    u8 data[2];
+    uint8_t data[2];
     if ((err = bno055_read_regs(*imu, BNO_QUA_DATA_W_LSB, data, 2)) != BNO_OK) {
         return err;
     }
-    *buf = (s16)((data[1] << 8) | data[0]) / (f32)BNO_QUA_SCALE;
+    *buf = (int16_t)((data[1] << 8) | data[0]) / (float)BNO_QUA_SCALE;
     return BNO_OK;
 }
 
@@ -1016,25 +1016,25 @@ error_bno bno055_quaternion_w(bno055_t* imu, f32* buf) {
  *
  * Args:
  *     > `imu[bno055_t*]`: BNO055 to read the data from
- *     > `buf[f32*]`: Buffer to store the read value in
+ *     > `buf[float*]`: Buffer to store the read value in
  * ----------------------------------------------------------------------
  *
  * Return:
  *     > `error_bno`: `BNO_OK` on success, errorcode else.
  * ----------------------------------------------------------------------
  */
-error_bno bno055_quaternion_x(bno055_t* imu, f32* buf) {
+error_bno bno055_quaternion_x(bno055_t* imu, float* buf) {
     error_bno err;
 #ifdef BNO_AUTO_PAGE_SET
     if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
         return err;
     }
 #endif  // BNO_AUTO_PAGE_SET
-    u8 data[2];
+    uint8_t data[2];
     if ((err = bno055_read_regs(*imu, BNO_QUA_DATA_X_LSB, data, 2)) != BNO_OK) {
         return err;
     }
-    *buf = (s16)((data[1] << 8) | data[0]) / (f32)BNO_QUA_SCALE;
+    *buf = (int16_t)((data[1] << 8) | data[0]) / (float)BNO_QUA_SCALE;
     return BNO_OK;
 }
 
@@ -1048,25 +1048,25 @@ error_bno bno055_quaternion_x(bno055_t* imu, f32* buf) {
  *
  * Args:
  *     > `imu[bno055_t*]`: BNO055 to read the data from
- *     > `buf[f32*]`: Buffer to store the read value in
+ *     > `buf[float*]`: Buffer to store the read value in
  * ----------------------------------------------------------------------
  *
  * Return:
  *     > `error_bno`: `BNO_OK` on success, errorcode else.
  * ----------------------------------------------------------------------
  */
-error_bno bno055_quaternion_y(bno055_t* imu, f32* buf) {
+error_bno bno055_quaternion_y(bno055_t* imu, float* buf) {
     error_bno err;
 #ifdef BNO_AUTO_PAGE_SET
     if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
         return err;
     }
 #endif  // BNO_AUTO_PAGE_SET
-    u8 data[2];
+    uint8_t data[2];
     if ((err = bno055_read_regs(*imu, BNO_QUA_DATA_Y_LSB, data, 2)) != BNO_OK) {
         return err;
     }
-    *buf = (s16)((data[1] << 8) | data[0]) / (f32)BNO_QUA_SCALE;
+    *buf = (int16_t)((data[1] << 8) | data[0]) / (float)BNO_QUA_SCALE;
     return BNO_OK;
 }
 
@@ -1080,25 +1080,25 @@ error_bno bno055_quaternion_y(bno055_t* imu, f32* buf) {
  *
  * Args:
  *     > `imu[bno055_t*]`: BNO055 to read the data from
- *     > `buf[f32*]`: Buffer to store the read value in
+ *     > `buf[float*]`: Buffer to store the read value in
  * ----------------------------------------------------------------------
  *
  * Return:
  *     > `error_bno`: `BNO_OK` on success, errorcode else.
  * ----------------------------------------------------------------------
  */
-error_bno bno055_quaternion_z(bno055_t* imu, f32* buf) {
+error_bno bno055_quaternion_z(bno055_t* imu, float* buf) {
     error_bno err;
 #ifdef BNO_AUTO_PAGE_SET
     if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
         return err;
     }
 #endif  // BNO_AUTO_PAGE_SET
-    u8 data[2];
+    uint8_t data[2];
     if ((err = bno055_read_regs(*imu, BNO_QUA_DATA_Z_LSB, data, 2)) != BNO_OK) {
         return err;
     }
-    *buf = (s16)((data[1] << 8) | data[0]) / (f32)BNO_QUA_SCALE;
+    *buf = (int16_t)((data[1] << 8) | data[0]) / (float)BNO_QUA_SCALE;
     return BNO_OK;
 }
 
@@ -1127,14 +1127,14 @@ error_bno bno055_quaternion(bno055_t* imu, bno055_vec4_t* buf) {
         return err;
     }
 #endif  // BNO_AUTO_PAGE_SET
-    u8 data[8];
+    uint8_t data[8];
     if ((err = bno055_read_regs(*imu, BNO_QUA_DATA_W_LSB, data, 8)) != BNO_OK) {
         return err;
     }
-    buf->w = (s16)((data[1] << 8) | data[0]) / (f32)BNO_QUA_SCALE;
-    buf->x = (s16)((data[3] << 8) | data[2]) / (f32)BNO_QUA_SCALE;
-    buf->y = (s16)((data[5] << 8) | data[4]) / (f32)BNO_QUA_SCALE;
-    buf->z = (s16)((data[7] << 8) | data[6]) / (f32)BNO_QUA_SCALE;
+    buf->w = (int16_t)((data[1] << 8) | data[0]) / (float)BNO_QUA_SCALE;
+    buf->x = (int16_t)((data[3] << 8) | data[2]) / (float)BNO_QUA_SCALE;
+    buf->y = (int16_t)((data[5] << 8) | data[4]) / (float)BNO_QUA_SCALE;
+    buf->z = (int16_t)((data[7] << 8) | data[6]) / (float)BNO_QUA_SCALE;
     return BNO_OK;
 }
 
@@ -1149,7 +1149,7 @@ error_bno bno055_acc_conf(bno055_t* bno, const bno055_acc_range_t range,
         return err;
     }
     HAL_Delay(BNO_CONFIG_TIME_DELAY + 5);
-    u8 config = range | bandwidth | mode;
+    uint8_t config = range | bandwidth | mode;
     if ((err = bno055_write_regs(*bno, BNO_ACC_CONFIG, &config, 1)) != BNO_OK) {
         return err;
     }
@@ -1174,7 +1174,7 @@ error_bno bno055_gyr_conf(bno055_t* bno, const bno055_gyr_range_t range,
         return err;
     }
     HAL_Delay(BNO_CONFIG_TIME_DELAY + 5);
-    u8 config[2] = {range | bandwidth, mode};
+    uint8_t config[2] = {range | bandwidth, mode};
     if ((err = bno055_write_regs(*bno, BNO_GYR_CONFIG_0, config, 2)) !=
         BNO_OK) {
         return err;
@@ -1199,7 +1199,7 @@ error_bno bno055_mag_conf(bno055_t* bno, const bno055_mag_rate_t out_rate,
         return err;
     }
     HAL_Delay(BNO_CONFIG_TIME_DELAY + 5);
-    u8 config = out_rate | pwr_mode | mode;
+    uint8_t config = out_rate | pwr_mode | mode;
     if ((err = bno055_write_regs(*bno, BNO_MAG_CONFIG, &config, 1)) != BNO_OK) {
         return err;
     }
@@ -1220,7 +1220,7 @@ error_bno bno055_set_opmode(bno055_t* imu, const bno055_opmode_t opmode) {
         return err;
     }
 #endif  // BNO_AUTO_PAGE_SET
-    if ((err = bno055_write_regs(*imu, BNO_OPR_MODE, (u8*)&opmode, 1)) !=
+    if ((err = bno055_write_regs(*imu, BNO_OPR_MODE, (uint8_t*)&opmode, 1)) !=
         BNO_OK) {
         return err;
     }
@@ -1265,7 +1265,7 @@ error_bno bno055_set_pwr_mode(bno055_t* imu, bno055_pwr_t pwr_mode) {
     if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
         return err;
     }
-    if ((err = bno055_write_regs(*imu, BNO_PWR_MODE, (u8*)&pwr_mode, 1)) !=
+    if ((err = bno055_write_regs(*imu, BNO_PWR_MODE, (uint8_t*)&pwr_mode, 1)) !=
         BNO_OK) {
         return err;
     }
@@ -1281,7 +1281,7 @@ error_bno bno055_set_pwr_mode(bno055_t* imu, bno055_pwr_t pwr_mode) {
 }
 
 error_bno bno055_reset(bno055_t* imu) {
-    u8 data = 0x20U;
+    uint8_t data = 0x20U;
     if (bno055_write_regs(*imu, BNO_SYS_TRIGGER, &data, 1) != BNO_OK) {
         return BNO_ERR_I2C;
     }
@@ -1289,36 +1289,25 @@ error_bno bno055_reset(bno055_t* imu) {
 }
 
 error_bno bno055_on(bno055_t* imu) {
-    u8 data = 0x00U;
+    uint8_t data = 0x00U;
     if (bno055_write_regs(*imu, BNO_SYS_TRIGGER, &data, 1) != BNO_OK) {
         return BNO_ERR_I2C;
     }
     return BNO_OK;
 }
 
-error_bno bno055_read_regs(bno055_t imu, u8 addr, uint8_t* buf,
-                           uint32_t buf_size) {
+error_bno bno055_read_regs(bno055_t imu, uint8_t addr, uint8_t* buf, uint32_t buf_size) {
     HAL_StatusTypeDef err;
-    // err = HAL_I2C_Mem_Read(imu.i2c, imu.addr, addr, I2C_MEMADD_SIZE_8BIT,
-    // buf,
-    //                        buf_size, HAL_MAX_DELAY);
-    err = HAL_I2C_Master_Transmit(imu.i2c, imu.addr, &addr, 1, HAL_MAX_DELAY);
-    if (err != HAL_OK) {
-        return BNO_ERR_I2C;
-    }
-    err =
-        HAL_I2C_Master_Receive(imu.i2c, imu.addr, buf, buf_size, HAL_MAX_DELAY);
+    err = HAL_I2C_Mem_Read(imu.i2c, imu.addr, addr, I2C_MEMADD_SIZE_8BIT, buf, buf_size, HAL_MAX_DELAY);
     if (err != HAL_OK) {
         return BNO_ERR_I2C;
     }
     return BNO_OK;
 }
 
-error_bno bno055_write_regs(bno055_t imu, uint32_t addr, uint8_t* buf,
-                            uint32_t buf_size) {
+error_bno bno055_write_regs(bno055_t imu, uint32_t addr, uint8_t* buf, uint32_t buf_size) {
     HAL_StatusTypeDef err;
-    err = HAL_I2C_Mem_Write(imu.i2c, imu.addr, addr, buf_size, buf, buf_size,
-                            HAL_MAX_DELAY);
+    err = HAL_I2C_Mem_Write(imu.i2c, imu.addr, addr, I2C_MEMADD_SIZE_8BIT, buf, buf_size, HAL_MAX_DELAY);
     if (err != HAL_OK) {
         return BNO_ERR_I2C;
     }
@@ -1326,14 +1315,14 @@ error_bno bno055_write_regs(bno055_t imu, uint32_t addr, uint8_t* buf,
 }
 
 error_bno bno055_set_page(bno055_t* imu, const bno055_page_t page) {
-    if (imu->_page != page) {
+    if (imu->_page == page) {
         return BNO_OK;
     }
     if (page > 0x01) {
         return BNO_ERR_PAGE_TOO_HIGH;
     }
     error_bno err;
-    err = bno055_write_regs(*imu, BNO_PAGE_ID, (u8*)&page, 1);
+    err = bno055_write_regs(*imu, BNO_PAGE_ID, (uint8_t*)&page, 1);
     if (err != BNO_OK) {
         return err;
     }

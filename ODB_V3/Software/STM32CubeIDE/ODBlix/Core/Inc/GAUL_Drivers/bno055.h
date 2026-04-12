@@ -7,11 +7,10 @@
  * @author Daniel Mironow
  * Contact: danielmironow@pm.me
  */
-#ifndef DRV_BNO055_H_
-#define DRV_BNO055_H_
+#ifndef INC_GAUL_DRIVERS_BNO055_H_
+#define INC_GAUL_DRIVERS_BNO055_H_
 
 #include "stm32f4xx_hal.h"
-#include "utils.h"
 #include <stdbool.h>
 
 
@@ -321,8 +320,7 @@ typedef enum _bno055_axis_remap {
 typedef enum _error_bno {
     BNO_OK,                /*!<No error*/
     BNO_ERR_I2C,           /*!<Error on the I2C bus*/
-    BNO_ERR_PAGE_TOO_HIGH, /*!<Page set too high
-                              [page](`BNO_PAGE_0`,`BNO_PAGE_1`)*/
+    BNO_ERR_PAGE_TOO_HIGH, /*!<Page set too high [page](`BNO_PAGE_0`,`BNO_PAGE_1`)*/
     BNO_ERR_SETTING_PAGE,
     BNO_ERR_NULL_PTR,
     BNO_ERR_AXIS_REMAP,
@@ -435,22 +433,10 @@ typedef struct _bno055_t {
     error_bno (*quaternion_z)(struct _bno055_t* imu, float* buf);
     error_bno (*quaternion)(struct _bno055_t* imu, bno055_vec4_t* buf);
 
-    error_bno (*remap_axis)(struct _bno055_t* imu,
-                            const bno055_axis_remap xremap,
-                            const bno055_axis_remap yremap,
-                            const bno055_axis_remap zremap);
-    error_bno (*acc_config)(struct _bno055_t* bno,
-                            const bno055_acc_range_t range,
-                            const bno055_acc_band_t bandwidth,
-                            const bno055_acc_mode_t mode);
-    error_bno (*gyr_config)(struct _bno055_t* bno,
-                            const bno055_gyr_range_t range,
-                            const bno055_gyr_band_t bandwidth,
-                            const bno055_gyr_mode_t mode);
-    error_bno (*mag_config)(struct _bno055_t* bno,
-                            const bno055_mag_rate_t out_rate,
-                            const bno055_mag_pwr_t pwr_mode,
-                            const bno055_mag_mode_t mode);
+    error_bno (*remap_axis)(struct _bno055_t* imu, const bno055_axis_remap xremap, const bno055_axis_remap yremap, const bno055_axis_remap zremap);
+    error_bno (*acc_config)(struct _bno055_t* bno, const bno055_acc_range_t range, const bno055_acc_band_t bandwidth, const bno055_acc_mode_t mode);
+    error_bno (*gyr_config)(struct _bno055_t* bno, const bno055_gyr_range_t range, const bno055_gyr_band_t bandwidth, const bno055_gyr_mode_t mode);
+    error_bno (*mag_config)(struct _bno055_t* bno, const bno055_mag_rate_t out_rate, const bno055_mag_pwr_t pwr_mode, const bno055_mag_mode_t mode);
 } bno055_t;
 
 bno055_t bno055_new();
@@ -507,9 +493,7 @@ error_bno bno055_quaternion_z(bno055_t* imu, float* buf);
 error_bno bno055_quaternion(bno055_t* imu, bno055_vec4_t* buf);
 
 bool bno055_calibrate(bno055_t* imu);
-error_bno bno055_remap_axis(bno055_t* imu, const bno055_axis_remap xremap,
-                            const bno055_axis_remap yremap,
-                            const bno055_axis_remap zremap);
+error_bno bno055_remap_axis(bno055_t* imu, const bno055_axis_remap xremap, const bno055_axis_remap yremap, const bno055_axis_remap zremap);
 error_bno bno055_ext_crystal(bno055_t* imu, const bool use_xtal);
 
 error_bno bno055_set_page(bno055_t* imu, const bno055_page_t page);
@@ -519,20 +503,11 @@ error_bno bno055_set_opmode(bno055_t* imu, const bno055_opmode_t mode);
 error_bno bno055_set_page(bno055_t* bno, const bno055_page_t page);
 error_bno bno055_set_opmode(bno055_t* bno, const bno055_opmode_t mode);
 
-error_bno bno055_set_unit(bno055_t* bno, const bno055_temp_unitsel_t t_unit,
-                          const bno055_gyr_unitsel_t g_unit,
-                          const bno055_acc_unitsel_t a_unit,
-                          const bno055_eul_unitsel_t e_unit);
+error_bno bno055_set_unit(bno055_t* bno, const bno055_temp_unitsel_t t_unit, const bno055_gyr_unitsel_t g_unit, const bno055_acc_unitsel_t a_unit, const bno055_eul_unitsel_t e_unit);
 
-error_bno bno055_acc_conf(bno055_t* bno, const bno055_acc_range_t range,
-                          const bno055_acc_band_t bandwidth,
-                          const bno055_acc_mode_t mode);
-error_bno bno055_gyr_conf(bno055_t* bno, const bno055_gyr_range_t range,
-                          const bno055_gyr_band_t bandwidth,
-                          const bno055_gyr_mode_t mode);
-error_bno bno055_mag_conf(bno055_t* bno, const bno055_mag_rate_t out_rate,
-                          const bno055_mag_pwr_t pwr_mode,
-                          const bno055_mag_mode_t mode);
+error_bno bno055_acc_conf(bno055_t* bno, const bno055_acc_range_t range, const bno055_acc_band_t bandwidth, const bno055_acc_mode_t mode);
+error_bno bno055_gyr_conf(bno055_t* bno, const bno055_gyr_range_t range, const bno055_gyr_band_t bandwidth, const bno055_gyr_mode_t mode);
+error_bno bno055_mag_conf(bno055_t* bno, const bno055_mag_rate_t out_rate, const bno055_mag_pwr_t pwr_mode, const bno055_mag_mode_t mode);
 
 error_bno bno055_set_pwr_mode(bno055_t* bno, const bno055_pwr_t pwr);
 error_bno bno055_set_temp_src(bno055_t* bno, const enum bno055_temp_src src);
@@ -545,10 +520,8 @@ uint8_t bno055_get_chip_id(const bno055_t bno);
 char* bno055_err_str(error_bno err);
 error_bno bno055_post_result(bno055_t* bno, char* buf);
 
-error_bno bno055_read_regs(bno055_t imu, uint8_t addr, uint8_t* buf,
-                           uint32_t buf_size);
+error_bno bno055_read_regs(bno055_t imu, uint8_t addr, uint8_t* buf, uint32_t buf_size);
 
-error_bno bno055_write_regs(bno055_t imu, uint32_t addr, uint8_t* buf,
-                            uint32_t buf_size);
+error_bno bno055_write_regs(bno055_t imu, uint32_t addr, uint8_t* buf, uint32_t buf_size);
 
-#endif
+#endif /* INC_GAUL_DRIVERS_BNO055_H_ */
