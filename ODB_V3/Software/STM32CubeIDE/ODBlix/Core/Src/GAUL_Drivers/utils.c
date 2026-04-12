@@ -22,6 +22,67 @@ extern system_measurements_t system_measurements;
 
 
 
+static void Telemetry_TransmitMessage(rfd900x_t *rfd_dev, mavlink_message_t *msg) {
+    uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
+    uint16_t len = mavlink_msg_to_send_buffer(buffer, msg);
+    RFD900x_Transmit(rfd_dev, buffer, len);
+}
+
+void Telemetry_SendRocketData(rfd900x_t *rfd_dev, odb_modem_id_t modem_id, odb_data *data, uint32_t current_time_ms) {
+    if(!rfd_dev || !data) return;
+
+    mavlink_message_t msg;
+
+    mavlink_msg_rocket_telemetry_pack(
+        modem_id,
+        MAVLINK_COMPONENT_ID,
+        &msg,
+        current_time_ms,
+        data->lat,
+        data->lon,
+        data->gps_alt,
+        data->pressure_hpa,
+        (int16_t)(data->roll * 100.0f),
+        (int16_t)(data->pitch * 100.0f),
+        (int16_t)(data->yaw * 100.0f),
+        (int16_t)(data->temp_celsius * 100.0f),
+        (int16_t)(data->acc_x * 100.0f),
+        (int16_t)(data->acc_y * 100.0f),
+        (int16_t)(data->acc_z * 100.0f),
+        data->system_states,
+        data->battery_mv,
+        data->vel,
+        data->cog,
+        data->gps_fix,
+        data->satellites_nb
+    );
+
+    Telemetry_TransmitMessage(rfd_dev, &msg);
+}
+
+void Telemetry_SendEventLog(rfd900x_t *rfd_dev, odb_modem_id_t modem_id, odb_event_severity_t severity, const char *text) {
+    if (!rfd_dev || !text || text[0] == '\0' || strlen(text) > 50) return;
+
+    mavlink_message_t msg;
+
+    mavlink_msg_statustext_pack(
+        modem_id,
+        MAVLINK_COMPONENT_ID,
+        &msg,
+        severity,
+        text,
+        0,
+        0
+    );
+
+    Telemetry_TransmitMessage(rfd_dev, &msg);
+}
+
+
+
+
+
+
 
 /* === HELPERS === */
 void RunTimer_Init(runTimer_t* dev) {
