@@ -63,34 +63,34 @@ typedef struct {
 
 /* === ODB DATA === */
 typedef struct {
-	// Status
-	uint32_t    time_boot_ms;
-	uint16_t	system_states;
-	uint16_t	battery_mv;
-	// IMU
-    float 		roll;
-    float 		pitch;
-    float 		yaw;
-    float 		imu_acc_x;
-	float 		imu_acc_y;
-	float 		imu_acc_z;
-	float 		imu_gyro_x;
-	float 		imu_gyro_y;
-	float 		imu_gyro_z;
+    // Status
+    uint32_t    time_boot_ms;   // Timestamp since system boot in milliseconds (ms)
+    uint16_t    system_states;  // Current system state or flight phase (bitmask/enum)
+    uint16_t    battery_mv;     // Main battery voltage in millivolts (mV)
+    // IMU (Attitude & Rates)
+    float       roll;           // Roll angle in degrees (converted to cdeg for MAVLink)
+    float       pitch;          // Pitch angle in degrees (converted to cdeg for MAVLink)
+    float       yaw;            // Yaw angle in degrees between -180 and 180 (converted to cdeg for MAVLink)
+    float       imu_acc_x;      // IMU Acceleration X in m/s^2 (converted to cm/s^2 for MAVLink)
+    float       imu_acc_y;      // IMU Acceleration Y in m/s^2 (converted to cm/s^2 for MAVLink)
+    float       imu_acc_z;      // IMU Acceleration Z in m/s^2 (converted to cm/s^2 for MAVLink)
+    float       imu_gyro_x;     // IMU Angular rate X in deg/s (converted to cdeg/s for MAVLink)
+    float       imu_gyro_y;     // IMU Angular rate Y in deg/s (converted to cdeg/s for MAVLink)
+    float       imu_gyro_z;     // IMU Angular rate Z in deg/s (converted to cdeg/s for MAVLink)
     // Pressure & Temp
-    float   	pressure_hpa;
-    float   	temp_celsius;	// 2 decimals
-    // High-G
-    float 		highg_acc_x;
-    float 		highg_acc_y;
-    float 		highg_acc_z;
+    float       pressure_hpa;   // Atmospheric pressure in hectopascals (hPa)
+    float       temp_celsius;   // Board or environment temperature in Celsius (°C)
+    // High-G IMU
+    float       highg_acc_x;    // High-G Acceleration X in m/s^2 (converted to cm/s^2 for MAVLink)
+    float       highg_acc_y;    // High-G Acceleration Y in m/s^2 (converted to cm/s^2 for MAVLink)
+    float       highg_acc_z;    // High-G Acceleration Z in m/s^2 (converted to cm/s^2 for MAVLink)
     // GPS
     uint8_t     gps_fix;        // 1 = Active fix, 0 = Void/No fix
     int32_t     lat;            // Latitude in degE7 (MAVLink format: deg * 10^7)
     int32_t     lon;            // Longitude in degE7 (MAVLink format: deg * 10^7)
-    int32_t     gps_alt;        // Altitude based on GPS (Mavlink format: mm)
-    uint16_t    vel;            // Velocity (cm/s)
-    uint16_t    cog;            // Course Over Ground (centi-degrés)
+    int32_t     gps_alt;        // Altitude (MSL) based on GPS in millimeters (mm)
+    uint16_t    vel;            // Ground velocity in centimeters per second (cm/s)
+    uint16_t    cog;            // Course Over Ground in centi-degrees (cdeg)
     uint8_t     satellites_nb;  // Number of satellites used for the fix
 } odb_data;
 /* =========== */
