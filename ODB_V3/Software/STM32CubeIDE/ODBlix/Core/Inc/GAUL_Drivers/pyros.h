@@ -17,27 +17,25 @@
 
 #define PYROS_ARMING_PORT	GPIOF
 #define PYROS_ARMING_PIN	13
-#define PYROS_FIRE_1_PORT	GPIOF
-#define PYROS_FIRE_1_PIN	14
-#define PYROS_FIRE_2_PORT	GPIOF
-#define PYROS_FIRE_2_PIN	15
-#define PYROS_FIRE_3_PORT	GPIOG
-#define PYROS_FIRE_3_PIN	0
-#define PYROS_FIRE_4_PORT	GPIOG
-#define PYROS_FIRE_4_PIN	1
-
 
 typedef enum {
 	PYRO_1 = 0,
 	PYRO_2 = 1,
 	PYRO_3 = 2,
 	PYRO_4 = 3
-} pyros_t;
+} pyro_channel_t;
 
+typedef struct {
+	GPIO_TypeDef 	*port;
+	uint16_t		pin;
 
-void Pyro_Init(void);
+	bool			is_connected;
+	bool			is_fire;
+} pyro_t;
+
+int8_t Pyro_Init(pyro_t *dev);
 
 void Pyro_Arming(bool arming);
-uint8_t Pyro_Fire(pyros_t pyro);
+uint8_t Pyro_Fire(pyro_t *dev);
 
 #endif /* INC_GAUL_DRIVERS_PYROS_H_ */

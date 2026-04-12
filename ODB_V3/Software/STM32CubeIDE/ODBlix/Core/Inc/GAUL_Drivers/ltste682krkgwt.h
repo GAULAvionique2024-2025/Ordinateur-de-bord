@@ -12,6 +12,8 @@
 #include "stm32f4xx_hal.h"
 
 
+#define CRITICAL_LED_PORT GPIOF
+
 typedef enum {
 	GREEN,
 	RED,
@@ -20,7 +22,8 @@ typedef enum {
 } critical_led_color_t;
 
 typedef struct {
-	GPIO_TypeDef *port;
+	GPIO_TypeDef *r_port;
+	GPIO_TypeDef *g_port;
 	uint16_t r_pin;
 	uint16_t g_pin;
 	critical_led_color_t current_color;

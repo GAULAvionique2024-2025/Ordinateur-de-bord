@@ -90,6 +90,37 @@ l76lm33_t l76lm33 = {
     .huart = &huart6,
     .profile = L76_FLIGHT_PROFILE_30K,
 };
+critical_led_t critical_led = {
+	.current_color = NONE,
+	.r_port = CriticalLED_R_GPIO_Port,
+	.g_port = CriticalLED_G_GPIO_Port,
+	.r_pin = CriticalLED_R_Pin,
+	.g_pin = CriticalLED_G_Pin,
+};
+pyro_t pyro1 = {
+	.port = Fire_1_GPIO_Port,
+	.pin = Fire_1_Pin,
+	.is_connected = false,
+	.is_fire = false,
+};
+pyro_t pyro2 = {
+	.port = Fire_2_GPIO_Port,
+	.pin = Fire_2_Pin,
+	.is_connected = false,
+	.is_fire = false,
+};
+pyro_t pyro3 = {
+	.port = Fire_3_GPIO_Port,
+	.pin = Fire_3_Pin,
+	.is_connected = false,
+	.is_fire = false,
+};
+pyro_t pyro4 = {
+	.port = Fire_4_GPIO_Port,
+	.pin = Fire_4_Pin,
+	.is_connected = false,
+	.is_fire = false,
+};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
