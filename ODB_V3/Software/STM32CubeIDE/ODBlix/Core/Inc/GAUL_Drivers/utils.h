@@ -71,13 +71,19 @@ typedef struct {
     float 		roll;
     float 		pitch;
     float 		yaw;
+    float 		imu_acc_x;
+	float 		imu_acc_y;
+	float 		imu_acc_z;
+	float 		imu_gyro_x;
+	float 		imu_gyro_y;
+	float 		imu_gyro_z;
     // Pressure & Temp
     float   	pressure_hpa;
     float   	temp_celsius;	// 2 decimals
     // High-G
-    float 		acc_x;
-    float 		acc_y;
-    float 		acc_z;
+    float 		highg_acc_x;
+    float 		highg_acc_y;
+    float 		highg_acc_z;
     // GPS
     uint8_t     gps_fix;        // 1 = Active fix, 0 = Void/No fix
     int32_t     lat;            // Latitude in degE7 (MAVLink format: deg * 10^7)
