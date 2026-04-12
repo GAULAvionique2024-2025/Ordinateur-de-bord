@@ -37,7 +37,7 @@ static void mavlink_test_rocket_telemetry(uint8_t system_id, uint8_t component_i
         uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
         uint16_t i;
     mavlink_rocket_telemetry_t packet_in = {
-        963497464,963497672,963497880,963498088,129.0,18275,18379,18483,18587,18691,18795,18899,19003,19107,19211,19315,19419,19523,19627,19731,19835,19939,39,106
+        963497464,963497672,963497880,963498088,129.0,963498504,963498712,963498920,963499128,963499336,963499544,19523,19627,19731,19835,19939,20043,20147,20251,20355,20459,20563,75,142
     };
     mavlink_rocket_telemetry_t packet1, packet2;
         memset(&packet1, 0, sizeof(packet1));
@@ -46,6 +46,12 @@ static void mavlink_test_rocket_telemetry(uint8_t system_id, uint8_t component_i
         packet1.lon = packet_in.lon;
         packet1.gps_alt = packet_in.gps_alt;
         packet1.pressure_hpa = packet_in.pressure_hpa;
+        packet1.imu_gyro_x = packet_in.imu_gyro_x;
+        packet1.imu_gyro_y = packet_in.imu_gyro_y;
+        packet1.imu_gyro_z = packet_in.imu_gyro_z;
+        packet1.highg_acc_x = packet_in.highg_acc_x;
+        packet1.highg_acc_y = packet_in.highg_acc_y;
+        packet1.highg_acc_z = packet_in.highg_acc_z;
         packet1.roll = packet_in.roll;
         packet1.pitch = packet_in.pitch;
         packet1.yaw = packet_in.yaw;
@@ -53,12 +59,6 @@ static void mavlink_test_rocket_telemetry(uint8_t system_id, uint8_t component_i
         packet1.imu_acc_x = packet_in.imu_acc_x;
         packet1.imu_acc_y = packet_in.imu_acc_y;
         packet1.imu_acc_z = packet_in.imu_acc_z;
-        packet1.imu_gyro_x = packet_in.imu_gyro_x;
-        packet1.imu_gyro_y = packet_in.imu_gyro_y;
-        packet1.imu_gyro_z = packet_in.imu_gyro_z;
-        packet1.high_g_acc_x = packet_in.high_g_acc_x;
-        packet1.high_g_acc_y = packet_in.high_g_acc_y;
-        packet1.high_g_acc_z = packet_in.high_g_acc_z;
         packet1.system_states = packet_in.system_states;
         packet1.battery_mv = packet_in.battery_mv;
         packet1.vel = packet_in.vel;
@@ -79,12 +79,12 @@ static void mavlink_test_rocket_telemetry(uint8_t system_id, uint8_t component_i
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-    mavlink_msg_rocket_telemetry_pack(system_id, component_id, &msg , packet1.time_boot_ms , packet1.lat , packet1.lon , packet1.gps_alt , packet1.pressure_hpa , packet1.roll , packet1.pitch , packet1.yaw , packet1.temp_celsius , packet1.imu_acc_x , packet1.imu_acc_y , packet1.imu_acc_z , packet1.imu_gyro_x , packet1.imu_gyro_y , packet1.imu_gyro_z , packet1.high_g_acc_x , packet1.high_g_acc_y , packet1.high_g_acc_z , packet1.system_states , packet1.battery_mv , packet1.vel , packet1.cog , packet1.gps_fix , packet1.satellites_nb );
+    mavlink_msg_rocket_telemetry_pack(system_id, component_id, &msg , packet1.time_boot_ms , packet1.lat , packet1.lon , packet1.gps_alt , packet1.pressure_hpa , packet1.roll , packet1.pitch , packet1.yaw , packet1.temp_celsius , packet1.imu_acc_x , packet1.imu_acc_y , packet1.imu_acc_z , packet1.imu_gyro_x , packet1.imu_gyro_y , packet1.imu_gyro_z , packet1.highg_acc_x , packet1.highg_acc_y , packet1.highg_acc_z , packet1.system_states , packet1.battery_mv , packet1.vel , packet1.cog , packet1.gps_fix , packet1.satellites_nb );
     mavlink_msg_rocket_telemetry_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-    mavlink_msg_rocket_telemetry_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.time_boot_ms , packet1.lat , packet1.lon , packet1.gps_alt , packet1.pressure_hpa , packet1.roll , packet1.pitch , packet1.yaw , packet1.temp_celsius , packet1.imu_acc_x , packet1.imu_acc_y , packet1.imu_acc_z , packet1.imu_gyro_x , packet1.imu_gyro_y , packet1.imu_gyro_z , packet1.high_g_acc_x , packet1.high_g_acc_y , packet1.high_g_acc_z , packet1.system_states , packet1.battery_mv , packet1.vel , packet1.cog , packet1.gps_fix , packet1.satellites_nb );
+    mavlink_msg_rocket_telemetry_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.time_boot_ms , packet1.lat , packet1.lon , packet1.gps_alt , packet1.pressure_hpa , packet1.roll , packet1.pitch , packet1.yaw , packet1.temp_celsius , packet1.imu_acc_x , packet1.imu_acc_y , packet1.imu_acc_z , packet1.imu_gyro_x , packet1.imu_gyro_y , packet1.imu_gyro_z , packet1.highg_acc_x , packet1.highg_acc_y , packet1.highg_acc_z , packet1.system_states , packet1.battery_mv , packet1.vel , packet1.cog , packet1.gps_fix , packet1.satellites_nb );
     mavlink_msg_rocket_telemetry_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
@@ -97,7 +97,7 @@ static void mavlink_test_rocket_telemetry(uint8_t system_id, uint8_t component_i
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
         
         memset(&packet2, 0, sizeof(packet2));
-    mavlink_msg_rocket_telemetry_send(MAVLINK_COMM_1 , packet1.time_boot_ms , packet1.lat , packet1.lon , packet1.gps_alt , packet1.pressure_hpa , packet1.roll , packet1.pitch , packet1.yaw , packet1.temp_celsius , packet1.imu_acc_x , packet1.imu_acc_y , packet1.imu_acc_z , packet1.imu_gyro_x , packet1.imu_gyro_y , packet1.imu_gyro_z , packet1.high_g_acc_x , packet1.high_g_acc_y , packet1.high_g_acc_z , packet1.system_states , packet1.battery_mv , packet1.vel , packet1.cog , packet1.gps_fix , packet1.satellites_nb );
+    mavlink_msg_rocket_telemetry_send(MAVLINK_COMM_1 , packet1.time_boot_ms , packet1.lat , packet1.lon , packet1.gps_alt , packet1.pressure_hpa , packet1.roll , packet1.pitch , packet1.yaw , packet1.temp_celsius , packet1.imu_acc_x , packet1.imu_acc_y , packet1.imu_acc_z , packet1.imu_gyro_x , packet1.imu_gyro_y , packet1.imu_gyro_z , packet1.highg_acc_x , packet1.highg_acc_y , packet1.highg_acc_z , packet1.system_states , packet1.battery_mv , packet1.vel , packet1.cog , packet1.gps_fix , packet1.satellites_nb );
     mavlink_msg_rocket_telemetry_decode(last_msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
