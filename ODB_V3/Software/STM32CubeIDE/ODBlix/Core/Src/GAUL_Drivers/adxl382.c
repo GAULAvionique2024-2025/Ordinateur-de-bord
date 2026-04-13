@@ -46,7 +46,7 @@ static int8_t ADXL382_Reset(adxl382_t *dev) {
 }
 
 
-static int8_t ADXL382_SetMode(adxl382_t *dev, adxl382_mode_t mode) {
+int8_t ADXL382_SetMode(adxl382_t *dev, adxl382_mode_t mode) {
     uint8_t op_mode_reg = 0;
     if(ADXL382_ReadReg(dev->hi2c, ADXL382_REG_OP_MODE, &op_mode_reg) != 0) {
         return -1;
@@ -105,10 +105,10 @@ adxl382_error_t ADXL382_Init(adxl382_t *dev) {
 
     ADXL382_Reset(dev);
     
-    // Enable XYZ
-    if(ADXL382_WriteReg(dev->hi2c, ADXL382_REG_DIG_EN, 0x70) != 0) {
-        return ADXL382_I2C_ERROR;
-    }
+    // Enable XYZ & Temp
+    if(ADXL382_WriteReg(dev->hi2c, ADXL382_REG_DIG_EN, 0xF0) != 0) {
+            return ADXL382_I2C_ERROR;
+        }
     
     // Range
     if(ADXL382_SetRange(dev, dev->range) != 0) {
@@ -133,22 +133,40 @@ bool ADXL382_IsDataReady(adxl382_t *dev) {
 }
 
 adxl382_error_t ADXL382_ReadData(adxl382_t *dev) {
-    uint8_t buffer[6];
-    if(ADXL382_ReadRegs(dev->hi2c, ADXL382_REG_XDATA_H, buffer, 6) == 0) {
-    	int16_t x = (int16_t)(((uint16_t)buffer[0] << 8) | buffer[1]);
-		int16_t y = (int16_t)(((uint16_t)buffer[2] << 8) | buffer[3]);
-		int16_t z = (int16_t)(((uint16_t)buffer[4] << 8) | buffer[5]);
+    uint8_t buffer[8];
+    if(ADXL382_ReadRegs(dev->hi2c, ADXL382_REG_XDATA_H, buffer, 8) == 0) {
+        int16_t x = (int16_t)(((uint16_t)buffer[0] << 8) | buffer[1]);
+        int16_t y = (int16_t)(((uint16_t)buffer[2] << 8) | buffer[3]);
+        int16_t z = (int16_t)(((uint16_t)buffer[4] << 8) | buffer[5]);
+        int16_t t_brut = (int16_t)(((uint16_t)buffer[6] << 8) | buffer[7]);
+        t_brut >>= 4; // 16 bits -> 12 bits adc
 
-        float scale_factor = 2000.0f;
+        dev->temp = 25.0f + ((float)t_brut - 550.0f) / 10.2f;
+
+        float t = dev->temp;
+        float delta_t = dev->temp - 25.0f;
+
+        float scale_factor_25c = 2000.0f;
         if(dev->range == ADXL382_RANGE_30G) {
-            scale_factor = 1000.0f;
+            scale_factor_25c = 1000.0f;
         } else if(dev->range == ADXL382_RANGE_60G) {
-            scale_factor = 500.0f;
+            scale_factor_25c = 500.0f;
         }
 
-        dev->acc_x = (float)x / scale_factor;
-        dev->acc_y = (float)y / scale_factor;
-        dev->acc_z = (float)z / scale_factor;
+        // Datasheet Compensation (+0.02%/C)
+        float current_scale_factor = scale_factor_25c * (1.0f + (0.0002f * delta_t));
+        float acc_x_raw = (float)x / current_scale_factor;
+        float acc_y_raw = (float)y / current_scale_factor;
+        float acc_z_raw = (float)z / current_scale_factor;
+
+        // Chip Compensation (Horner method)
+        float offset_x = dev->offset_coeffs_x.c0 + t * (dev->offset_coeffs_x.c1 + t * (dev->offset_coeffs_x.c2 + t * dev->offset_coeffs_x.c3));
+        float offset_y = dev->offset_coeffs_y.c0 + t * (dev->offset_coeffs_y.c1 + t * (dev->offset_coeffs_y.c2 + t * dev->offset_coeffs_y.c3));
+        float offset_z = dev->offset_coeffs_z.c0 + t * (dev->offset_coeffs_z.c1 + t * (dev->offset_coeffs_z.c2 + t * dev->offset_coeffs_z.c3));
+
+        dev->acc_x = acc_x_raw - offset_x;
+        dev->acc_y = acc_y_raw - offset_y;
+        dev->acc_z = acc_z_raw - offset_z;
     } else {
         return ADXL382_I2C_ERROR;
     }

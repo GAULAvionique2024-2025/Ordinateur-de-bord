@@ -58,13 +58,22 @@ typedef enum {
 } adxl382_range_t;
 
 typedef struct {
-    I2C_HandleTypeDef   *hi2c;
-    adxl382_mode_t      mode;
-    adxl382_range_t     range;
+    float c0;
+    float c1;
+    float c2;
+    float c3;
+} adxl382_offset_coeff_poly3_t;
 
-    float             	acc_x;	// g
-    float             	acc_y;	// g
-    float             	acc_z;	// g
+typedef struct {
+    I2C_HandleTypeDef               *hi2c;
+    adxl382_mode_t                  mode;
+    adxl382_range_t                 range;
+    adxl382_offset_coeff_poly3_t    offset_coeffs_x, offset_coeffs_y, offset_coeffs_z;
+
+    float             				acc_x;	// g
+    float             				acc_y;	// g
+    float             				acc_z;	// g
+    float               			temp;	// C
 } adxl382_t;
 
 
@@ -72,5 +81,6 @@ adxl382_error_t ADXL382_Init(adxl382_t *dev);
 
 adxl382_error_t ADXL382_ReadData(adxl382_t *dev);
 bool ADXL382_IsDataReady(adxl382_t *dev);
+int8_t ADXL382_SetMode(adxl382_t *dev, adxl382_mode_t mode);
 
 #endif /* INC_GAUL_DRIVERS_ADXL382_H_ */

@@ -79,7 +79,25 @@ DMA_HandleTypeDef hdma_usart6_rx;
 adxl382_t adxl382 = {
     .hi2c = &hi2c3,
     .mode = ADXL382_MODE_HP,
-	.range = ADXL382_RANGE_15G
+	.range = ADXL382_RANGE_30G,
+	.offset_coeffs_x = {
+		.c0 = 0.0f,
+		.c1 = 0.0f,
+		.c2 = 0.0f,
+		.c3 = 0.0f,
+	},
+	.offset_coeffs_y = {
+		.c0 = 0.0f,
+		.c1 = 0.0f,
+		.c2 = 0.0f,
+		.c3 = 0.0f,
+	},
+	.offset_coeffs_z = {
+		.c0 = 0.0f,
+		.c1 = 0.0f,
+		.c2 = 0.0f,
+		.c3 = 0.0f,
+	}
 };
 bno055_t bno055 = {
     .i2c = &hi2c1,
@@ -238,10 +256,11 @@ int main(void)
 	  char tx_buffer[1024];
 	  ADXL382_ReadData(&adxl382);
 	  snprintf(tx_buffer, sizeof(tx_buffer),
-			   "ACC X:%.2f, ACC Y:%.2f, ACC Z:%.2f\r\n",
+			   "ACC X:%.3f, ACC Y:%.3f, ACC Z:%.3f, TEMP:%.2f\r\n",
 			   adxl382.acc_x,
 			   adxl382.acc_y,
-			   adxl382.acc_z);
+			   adxl382.acc_z,
+			   adxl382.temp);
 	  HM11_SendString(&hm11, tx_buffer);
 	  /*
 	  bno055.temperature(&bno055, &temp);
