@@ -26,7 +26,7 @@
 #include "GAUL_Drivers/bno055.h"
 #include "GAUL_Drivers/hm11.h"
 #include "GAUL_Drivers/ms5611.h"
-#include "GAUL_Drivers/adxl382.h"
+//#include "GAUL_Drivers/adxl382.h"
 #include "GAUL_Drivers/bno055.h"
 #include "GAUL_Drivers/l76lm33.h"
 #include "GAUL_Drivers/ltste682krkgwt.h"
@@ -76,6 +76,10 @@ UART_HandleTypeDef huart6;
 DMA_HandleTypeDef hdma_usart6_rx;
 
 /* USER CODE BEGIN PV */
+adxl382_t adxl382 = {
+    .hi2c = &hi2c3,
+    .mode = ADXL382_MODE_HP,
+};
 bno055_t bno055 = {
     .i2c = &hi2c1,
     .addr = BNO_ADDR_ALT,
@@ -203,6 +207,8 @@ int main(void)
   }
 
   SystemMeasurements_Init(&system_measurements);
+
+  /*
   error_bno err = bno055_init(&bno055);
   if(err != BNO_OK) {
 	  printf("Erreur init BNO055 : %s\n", bno055_err_str(err));
@@ -211,6 +217,11 @@ int main(void)
   bno055_vec3_t accel_data, gyro_data, mag_data;
   bno055_vec4_t quat_data;
   int8_t temp;
+  */
+
+  if(ADXL382_Init(&adxl382) != 0) {
+    printf("Erreur init ADXL382\n");
+  }
   //char rx_buffer[HM11_RX_BUFFER_SIZE];
   /* USER CODE END 2 */
 
@@ -220,6 +231,18 @@ int main(void)
   {
     /* USER CODE END WHILE */
 	  char tx_buffer[1024];
+	  if(ADXL382_IsDataReady(&adxl382)) {
+		  ADXL382_ReadData(&adxl382);
+
+		  snprintf(tx_buffer, sizeof(tx_buffer),
+				   "ACC X:%.2f, ACC Y:%.2f, ACC Z:%.2f\r\n",
+				   adxl382.acc_x,
+				   adxl382.acc_y,
+				   adxl382.acc_z);
+
+		  HM11_SendString(&hm11, tx_buffer);
+	  }
+	  /*
 	  bno055.temperature(&bno055, &temp);
 	  bno055.euler(&bno055, &euler_angles);
 	  bno055.acc(&bno055, &accel_data);
@@ -247,6 +270,7 @@ int main(void)
 	           quat_data.z);
 
 	  HM11_SendString(&hm11, tx_buffer);
+	  */
 	  /*
 	  SystemMeasurements_Update(&system_measurements);
 	  snprintf(tx_buffer, sizeof(tx_buffer),

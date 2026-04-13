@@ -10,7 +10,7 @@
 
 runTimer_t run_timer;
 
-//extern adxl382_t adxl382;
+extern adxl382_t adxl382;
 extern bno055_t bno055;
 extern hm11_t hm11;
 extern l76lm33_t l76lm33;
