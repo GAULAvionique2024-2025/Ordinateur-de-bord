@@ -51,7 +51,6 @@ typedef struct {
 
 
 hm11_state_t HM11_Init(hm11_t *dev);
-bool HM11_TestConnection(hm11_t *dev);
 
 bool HM11_SendData(hm11_t *dev, uint8_t *data, uint16_t length);
 bool HM11_SendString(hm11_t *dev, const char *str);

@@ -121,6 +121,12 @@ pyro_t pyro4 = {
 	.is_connected = false,
 	.is_fire = false,
 };
+system_measurements_t system_measurements = {
+	.hadc = &hadc1,
+	.htim = &htim2
+};
+uint16_t adc_buffer[9];
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -193,15 +199,11 @@ int main(void)
   MX_TIM4_Init();
   /* USER CODE BEGIN 2 */
   if(HM11_Init(&hm11) == HM11_OK) {
-    if (HM11_TestConnection(&hm11)) {
-      // Succès : La communication UART est établie
-      printf("HM-11 detecte et operationnel !\n");
-    } else {
-      // Erreur : Le module ne répond pas (vérifiez RX/TX et l'alimentation)
-      printf("Erreur : HM-11 ne repond pas.\n");
-    }
+	  printf("Erreur : HM-11 ne repond pas.\n");
   }
-  char rx_buffer[HM11_RX_BUFFER_SIZE];
+
+  SystemMeasurements_Init(&system_measurements);
+  //char rx_buffer[HM11_RX_BUFFER_SIZE];
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -209,6 +211,24 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
+	  /*
+	  char tx_buffer[128];
+	  SystemMeasurements_Update(&system_measurements);
+	  snprintf(tx_buffer, sizeof(tx_buffer),
+			   "Temp:%.2f, Vbat:%.2f, V5:%.2f, V3:%.2f, Arm:%d, Pyro:%d,%d,%d,%d\r\n",
+			   system_measurements.temperature,
+			   system_measurements.vin_batt,
+			   system_measurements.v5_buck,
+			   system_measurements.v3_buck,
+			   system_measurements.pyros_arming,
+			   system_measurements.pyro_status[0],
+			   system_measurements.pyro_status[1],
+			   system_measurements.pyro_status[2],
+			   system_measurements.pyro_status[3]);
+
+	  HM11_SendString(&hm11, tx_buffer);
+	  */
+	  /*
 	  if (HM11_GetMessage(&hm11, rx_buffer, sizeof(rx_buffer))) {
 		  char debug_msg[80];
 		  sprintf(debug_msg, "Lu: [%s]\n", rx_buffer);
@@ -222,6 +242,7 @@ int main(void)
 			  HM11_SendString(&hm11, "Temperature: 23C\n");
 		  }
 	  }
+	  */
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

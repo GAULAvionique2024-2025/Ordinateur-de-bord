@@ -6,37 +6,84 @@
  */
 
 #include "GAUL_Drivers/system_measurements.h"
+#include <string.h>
 
 
-#define DIV_ADC_STEP 0.00080586	// 3.3 / 4095
+#define DIV_ADC_STEP 		0.00080586	// 3.3 / 4095
+
+#define DIV_RATIO_VIN_BATT 	7.6667 		// 27k / (27k + 180k)
+#define DIV_RATIO_V5_BUCK  	1.7500		// 180k / (180k + 135k)
+#define DIV_RATIO_V3_BUCK	1.1111		// 180k / (180k + 20k)
+#define PYROS_THRESHOLD		1800		// 1.5V
+
 
 extern uint16_t adc_buffer[9];
 
 
-void SystemMeasurements_Update(system_measurements_t *data) {
-	data->vin_batt = (adc_buffer[0] * DIV_ADC_STEP) * DIV_RATIO_VIN_BATT;
-	data->V5_buck  = (adc_buffer[1] * DIV_ADC_STEP) * DIV_RATIO_V5_BUCK;
-	data->V3_buck  = (adc_buffer[2] * DIV_ADC_STEP) * DIV_RATIO_V3_BUCK;
-
-    float v_temp = adc_buffer[3] * DIV_ADC_STEP;
-    data->temperature = (((v_temp - 0.40f) / 0.01953f) - 0.40f) / 0.01953f;
-
-    //float arming_continuity = adc_buffer[4] * DIV_ADC_STEP;
-    //printf("pyros_arming continuity: %f\n", arming_continuity);
-    if(adc_buffer[4] >= PYROS_THRESHOLD) {
-		data->pyros_arming = false;
-	} else {
-		data->pyros_arming = true;
+int8_t SystemMeasurements_Init(system_measurements_t *dev) {
+	if(dev == NULL || dev->hadc == NULL) {
+		return -1;
 	}
 
-    for(int8_t i = 0; i < 4; i++) {
-    	// TODO: remove voltage conversion (not necessary -> use adc output directly)
-        //float pyro_continuity = adc_buffer[5 + i] * DIV_ADC_STEP;
-        //printf("pyro[%i] continuity: %f\n", i, pyro_continuity);
-        if(adc_buffer[5 + i] >= PYROS_THRESHOLD) {
-        	data->pyro_status[i] = false;
-        } else {
-        	data->pyro_status[i] = true;
-        }
-    }
+	dev->temperature = 0.00f;
+	dev->vin_batt = 0.00f;
+	dev->v5_buck = 0.00f;
+	dev->v3_buck = 0.00f;
+	dev->pyros_arming = false;
+
+	memset(dev->pyro_status, 0, sizeof(dev->pyro_status));
+
+	if(HAL_ADC_Start_DMA(dev->hadc, (uint32_t*)adc_buffer, 9) != HAL_OK) {
+		return -1;
+	}
+
+	HAL_TIM_Base_Start(dev->htim);
+
+	return 0; // success
+}
+
+void SystemMeasurements_Update(system_measurements_t *dev) {
+	uint16_t arm = adc_buffer[0];
+	uint16_t p4 = adc_buffer[1];
+	uint16_t p1 = adc_buffer[2];
+	uint16_t temp = adc_buffer[3];
+	uint16_t vin = adc_buffer[4];
+	uint16_t v5 = adc_buffer[5];
+	uint16_t v3 = adc_buffer[6];
+	uint16_t p3 = adc_buffer[7];
+	uint16_t p2 = adc_buffer[8];
+
+	dev->vin_batt = (vin * DIV_ADC_STEP) * DIV_RATIO_VIN_BATT;
+	dev->v5_buck  = (v5 * DIV_ADC_STEP) * DIV_RATIO_V5_BUCK;
+	dev->v3_buck  = (v3 * DIV_ADC_STEP) * DIV_RATIO_V3_BUCK;
+
+    float v_temp = temp * DIV_ADC_STEP;
+    dev->temperature = (v_temp - 0.40f) / 0.01953f;
+
+    if(arm >= PYROS_THRESHOLD) {
+    	dev->pyros_arming = true;
+	} else {
+		dev->pyros_arming = false;
+	}
+
+    if(p1 >= PYROS_THRESHOLD) {
+		dev->pyro_status[0] = false;
+	} else {
+		dev->pyro_status[0] = true;
+	}
+    if(p2 >= PYROS_THRESHOLD) {
+		dev->pyro_status[1] = false;
+	} else {
+		dev->pyro_status[1] = true;
+	}
+    if(p3 >= PYROS_THRESHOLD) {
+		dev->pyro_status[2] = false;
+	} else {
+		dev->pyro_status[2] = true;
+	}
+	if(p4 >= PYROS_THRESHOLD) {
+		dev->pyro_status[3] = false;
+	} else {
+		dev->pyro_status[3] = true;
+	}
 }

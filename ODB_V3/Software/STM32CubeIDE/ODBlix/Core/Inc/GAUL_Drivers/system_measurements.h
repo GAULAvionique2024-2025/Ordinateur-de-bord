@@ -14,21 +14,20 @@
 #include <stdbool.h>
 
 
-#define DIV_RATIO_VIN_BATT 	7.6667 		// 27k / (27k + 180k)
-#define DIV_RATIO_V5_BUCK  	1.7500		// 180k / (180k + 135k)
-#define DIV_RATIO_V3_BUCK	1.1111		// 180k / (180k + 20k)
-#define PYROS_THRESHOLD		1800		// 1.5V
-
-
 typedef struct {
-    float temperature;
-    float vin_batt;
-    float V5_buck;
-    float V3_buck;
-    bool pyros_arming;
-    bool pyro_status[4];
+	ADC_HandleTypeDef 	*hadc;
+	TIM_HandleTypeDef	*htim;
+
+    float 				temperature;
+    float 				vin_batt;
+    float 				v5_buck;
+    float 				v3_buck;
+    bool 				pyros_arming;
+    bool 				pyro_status[4];
 } system_measurements_t;
 
+
+int8_t SystemMeasurements_Init(system_measurements_t *dev);
 
 void SystemMeasurements_Update(system_measurements_t *dev);
 

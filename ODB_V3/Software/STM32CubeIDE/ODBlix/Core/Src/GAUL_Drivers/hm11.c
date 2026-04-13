@@ -63,6 +63,10 @@ static bool HM11_SetBaudRate(hm11_t *dev, uint8_t baud_idx) {
     return HM11_SendATCommand(dev, cmd, "OK+Set");
 }
 
+static bool HM11_TestConnection(hm11_t *dev) {
+    return HM11_SendATCommand(dev, "AT", "OK");
+}
+
 bool HM11_Reset(hm11_t *dev) {
     return HM11_SendATCommand(dev, "AT+RESET", "OK+RESET");
 }
@@ -93,12 +97,11 @@ hm11_state_t HM11_Init(hm11_t *dev) {
     // Start receiving data asynchronously
     HAL_UART_Receive_IT(dev->huart, &dev->rx_byte, 1);
 
+    if(HM11_TestConnection(dev) != 0) {
+    	err = HM11_ERROR;
+    }
+
     return err; // success
-}
-
-
-bool HM11_TestConnection(hm11_t *dev) {
-    return HM11_SendATCommand(dev, "AT", "OK");
 }
 
 bool HM11_SendData(hm11_t *dev, uint8_t *data, uint16_t length) {
