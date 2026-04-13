@@ -53,7 +53,6 @@
 
 int8_t W25Q_Init(QSPI_HandleTypeDef *hqspi);
 
-int8_t W25Q_Reset(QSPI_HandleTypeDef *hqspi);
 int8_t W25Q_Read(QSPI_HandleTypeDef *hqspi, uint8_t* pData, uint32_t read_addr, uint32_t size);
 int8_t W25Q_Write(QSPI_HandleTypeDef *hqspi, uint8_t* pData, uint32_t write_addr, uint32_t size);
 int8_t W25Q_EraseSector(QSPI_HandleTypeDef *hqspi, uint32_t sector_addr);
