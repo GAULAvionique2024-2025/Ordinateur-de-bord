@@ -1,0 +1,60 @@
+/*
+ * w25q512jv.h
+ *
+ *  Created on: 12 avr. 2026
+ *      Author: gagno
+ */
+
+#ifndef INC_GAUL_DRIVERS_W25Q512JV_H_
+#define INC_GAUL_DRIVERS_W25Q512JV_H_
+
+#include "stm32f4xx_hal.h"
+#include <stdbool.h>
+
+#define W25Q512_FLASH_SIZE                  0x4000000 // 512 MBits => 64 MBytes
+#define W25Q512_SECTOR_SIZE                 0x1000    // 4 Ko
+#define W25Q512_BLOCK_SIZE                  0x10000   // 64 Ko
+#define W25Q512_PAGE_SIZE                   0x100     // 256 octets
+
+#define W25Q_CMD_RESET_ENABLE               0x66
+#define W25Q_CMD_RESET_MEMORY               0x99
+#define W25Q_CMD_READ_ID                    0x9F      // JEDEC ID
+#define W25Q_CMD_WRITE_ENABLE               0x06
+#define W25Q_CMD_WRITE_DISABLE              0x04
+
+#define W25Q_CMD_READ_STATUS_REG1           0x05
+#define W25Q_CMD_READ_STATUS_REG2           0x35
+#define W25Q_CMD_READ_STATUS_REG3           0x15
+#define W25Q_CMD_WRITE_STATUS_REG1          0x01
+#define W25Q_CMD_WRITE_STATUS_REG2          0x31
+#define W25Q_CMD_WRITE_STATUS_REG3          0x11
+
+#define W25Q_CMD_ENTER_4B_MODE              0xB7
+#define W25Q_CMD_EXIT_4B_MODE               0xE9
+
+#define W25Q_CMD_FAST_READ_QUAD_IO_4B       0xEC
+#define W25Q_CMD_QUAD_PAGE_PROGRAM_4B       0x34
+#define W25Q_CMD_SECTOR_ERASE_4B            0x21      // Erase 4Ko
+#define W25Q_CMD_BLOCK_ERASE_64K_4B         0xDC      // Erase 64Ko
+#define W25Q_CMD_CHIP_ERASE                 0xC7      // Erase all
+
+#define W25Q_SR1_BUSY                       0x01
+#define W25Q_SR1_WEL                        0x02
+#define W25Q_SR2_QE                         0x02      // Quad enable (Bit 1, Status Reg 2)
+
+#define W25Q_TIMEOUT                        5000
+#define W25Q_ERASE_ALL_TIMEOUT              200000
+
+
+int8_t W25Q_Init(QSPI_HandleTypeDef *hqspi);
+
+int8_t W25Q_Reset(QSPI_HandleTypeDef *hqspi);
+int8_t W25Q_Read(QSPI_HandleTypeDef *hqspi, uint8_t* pData, uint32_t read_addr, uint32_t size);
+int8_t W25Q_Write(QSPI_HandleTypeDef *hqspi, uint8_t* pData, uint32_t write_addr, uint32_t size);
+int8_t W25Q_EraseSector(QSPI_HandleTypeDef *hqspi, uint32_t sector_addr);
+int8_t W25Q_EraseBlock(QSPI_HandleTypeDef *hqspi, uint32_t block_addr);
+int8_t W25Q_EraseChip(QSPI_HandleTypeDef *hqspi);
+int8_t W25Q_SetMemoryMappedMode(QSPI_HandleTypeDef *hqspi, bool enable);
+int8_t W25Q_SetDeepPowerDown(QSPI_HandleTypeDef *hqspi, bool enable);
+
+#endif /* INC_GAUL_DRIVERS_W25Q512JV_H_ */

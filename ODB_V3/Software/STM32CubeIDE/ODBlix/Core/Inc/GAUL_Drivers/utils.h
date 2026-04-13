@@ -114,6 +114,10 @@ void Telemetry_SendRocketData(rfd900x_t *rfd_dev, odb_modem_id_t modem_id, odb_d
 void Telemetry_SendEventLog(rfd900x_t *rfd_dev, odb_modem_id_t modem_id, odb_event_severity_t severity, const char *text);
 /* =========== */
 
+/* === APP DEBUG - BLUETOOTH === */
+#define APP_BLE_NAME "ODB_1"
+/* =========== */
+
 /* === HELPERS === */
 void RunTimer_Init(runTimer_t *dev);
 void RunTimer_Update(runTimer_t *dev);

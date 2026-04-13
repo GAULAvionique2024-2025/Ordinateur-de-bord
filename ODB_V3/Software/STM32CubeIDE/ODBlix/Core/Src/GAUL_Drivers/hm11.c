@@ -136,7 +136,9 @@ bool HM11_GetMessage(hm11_t *dev, char *out_buffer, uint16_t max_len) {
         if (byte == '\n' || byte == '\r') {
             break;
         }
-        out_buffer[index++] = (char)byte;
+        if (byte >= 0x20) {
+            out_buffer[index++] = (char)byte;
+        }
     }
     out_buffer[index] = '\0';
 

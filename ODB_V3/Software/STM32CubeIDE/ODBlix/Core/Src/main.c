@@ -83,7 +83,7 @@ bno055_t bno055 = {
 };
 hm11_t hm11 = {
     .huart = &huart2,
-    .name = "ODB_1",
+    .name = APP_BLE_NAME,
     .baudrate = HM11_BAUD_9600,
 };
 l76lm33_t l76lm33 = {
