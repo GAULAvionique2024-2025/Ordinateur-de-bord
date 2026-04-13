@@ -78,7 +78,7 @@ DMA_HandleTypeDef hdma_usart6_rx;
 /* USER CODE BEGIN PV */
 bno055_t bno055 = {
     .i2c = &hi2c1,
-    .addr = BNO_ADDR,
+    .addr = BNO_ADDR_ALT,
     .mode = BNO_MODE_NDOF,
 };
 hm11_t hm11 = {
@@ -203,6 +203,14 @@ int main(void)
   }
 
   SystemMeasurements_Init(&system_measurements);
+  error_bno err = bno055_init(&bno055);
+  if(err != BNO_OK) {
+	  printf("Erreur init BNO055 : %s\n", bno055_err_str(err));
+  }
+  bno055_euler_t euler_angles;
+  bno055_vec3_t accel_data, gyro_data, mag_data;
+  bno055_vec4_t quat_data;
+  int8_t temp;
   //char rx_buffer[HM11_RX_BUFFER_SIZE];
   /* USER CODE END 2 */
 
@@ -211,8 +219,35 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
+	  char tx_buffer[1024];
+	  bno055.temperature(&bno055, &temp);
+	  bno055.euler(&bno055, &euler_angles);
+	  bno055.acc(&bno055, &accel_data);
+	  bno055.gyro(&bno055, &gyro_data);
+	  bno055.mag(&bno055, &mag_data);
+	  bno055.quaternion(&bno055, &quat_data);
+	  snprintf(tx_buffer, sizeof(tx_buffer),
+	           "Temp:%d, Yaw:%.2f, Pitch:%.2f, Roll:%.2f, ACC X:%.2f, ACC Y:%.2f, ACC Z:%.2f, GYRO X:%.2f, GYRO Y:%.2f, GYRO Z:%.2f, MAG X:%.2f, MAG Y:%.2f, MAG Z:%.2f, QUAT W:%.2f, QUAT X:%.2f, QUAT Y:%.2f, QUAT Z:%.2f\r\n",
+	           temp,
+	           euler_angles.yaw,
+	           euler_angles.pitch,
+	           euler_angles.roll,
+	           accel_data.x,
+	           accel_data.y,
+	           accel_data.z,
+	           gyro_data.x,
+	           gyro_data.y,
+	           gyro_data.z,
+	           mag_data.x,
+	           mag_data.y,
+	           mag_data.z,
+	           quat_data.w,
+	           quat_data.x,
+	           quat_data.y,
+	           quat_data.z);
+
+	  HM11_SendString(&hm11, tx_buffer);
 	  /*
-	  char tx_buffer[128];
 	  SystemMeasurements_Update(&system_measurements);
 	  snprintf(tx_buffer, sizeof(tx_buffer),
 			   "Temp:%.2f, Vbat:%.2f, V5:%.2f, V3:%.2f, Arm:%d, Pyro:%d,%d,%d,%d\r\n",
