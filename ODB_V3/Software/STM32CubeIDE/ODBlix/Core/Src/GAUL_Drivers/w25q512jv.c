@@ -92,6 +92,18 @@ static int8_t W25Q_EnableQuadMode(QSPI_HandleTypeDef *hqspi) {
     return W25Q_WaitForReady(hqspi, W25Q_TIMEOUT);
 }
 
+static int8_t W25Q_Reset(QSPI_HandleTypeDef *hqspi) {
+    QSPI_CommandTypeDef sCommand = W25Q_MakeCommand(W25Q_CMD_RESET_ENABLE, QSPI_ADDRESS_NONE, 0xFFFFFFFF, QSPI_DATA_NONE, 0, 0);
+    if(HAL_QSPI_Command(hqspi, &sCommand, HAL_QSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK) return -1;
+
+    sCommand.Instruction = W25Q_CMD_RESET_MEMORY;
+    if(HAL_QSPI_Command(hqspi, &sCommand, HAL_QSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK) return -1;
+
+    HAL_Delay(10);
+
+    return 0; // success
+}
+
 int8_t W25Q_Init(QSPI_HandleTypeDef *hqspi) {
 	// Reset
 	if(W25Q_Reset(hqspi) != 0) return -1;
@@ -105,18 +117,6 @@ int8_t W25Q_Init(QSPI_HandleTypeDef *hqspi) {
 	if(W25Q_Enter4ByteMode(hqspi) != 0) return -1;
 
 	return 0; // success
-}
-
-int8_t W25Q_Reset(QSPI_HandleTypeDef *hqspi) {
-    QSPI_CommandTypeDef sCommand = W25Q_MakeCommand(W25Q_CMD_RESET_ENABLE, QSPI_ADDRESS_NONE, 0xFFFFFFFF, QSPI_DATA_NONE, 0, 0);
-    if(HAL_QSPI_Command(hqspi, &sCommand, HAL_QSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK) return -1;
-
-    sCommand.Instruction = W25Q_CMD_RESET_MEMORY;
-    if(HAL_QSPI_Command(hqspi, &sCommand, HAL_QSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK) return -1;
-
-    HAL_Delay(10);
-
-    return 0; // success
 }
 
 int8_t W25Q_Read(QSPI_HandleTypeDef *hqspi, uint8_t* data, uint32_t read_addr, uint32_t size) {
