@@ -1,8 +1,8 @@
 /*
  * w25q512jv.h
  *
- *  Created on: 12 avr. 2026
- *      Author: gagno
+ * Created on: 12 avr. 2026
+ * Author: gagno
  */
 
 #ifndef INC_GAUL_DRIVERS_W25Q512JV_H_
@@ -10,6 +10,8 @@
 
 #include "stm32f4xx_hal.h"
 #include <stdbool.h>
+
+#define W25Q512_JEDEC_ID                    0xEF4020
 
 #define W25Q512_FLASH_SIZE                  0x4000000 // 512 MBits => 64 MBytes
 #define W25Q512_SECTOR_SIZE                 0x1000    // 4 Ko
@@ -38,12 +40,15 @@
 #define W25Q_CMD_BLOCK_ERASE_64K_4B         0xDC      // Erase 64Ko
 #define W25Q_CMD_CHIP_ERASE                 0xC7      // Erase all
 
+#define W25Q_CMD_DEEP_POWER_DOWN            0xB9
+#define W25Q_CMD_RELEASE_POWER_DOWN         0xAB
+
 #define W25Q_SR1_BUSY                       0x01
 #define W25Q_SR1_WEL                        0x02
 #define W25Q_SR2_QE                         0x02      // Quad enable (Bit 1, Status Reg 2)
 
 #define W25Q_TIMEOUT                        5000
-#define W25Q_ERASE_ALL_TIMEOUT              200000
+#define W25Q_ERASE_ALL_TIMEOUT              1000000
 
 
 int8_t W25Q_Init(QSPI_HandleTypeDef *hqspi);
@@ -54,7 +59,7 @@ int8_t W25Q_Write(QSPI_HandleTypeDef *hqspi, uint8_t* pData, uint32_t write_addr
 int8_t W25Q_EraseSector(QSPI_HandleTypeDef *hqspi, uint32_t sector_addr);
 int8_t W25Q_EraseBlock(QSPI_HandleTypeDef *hqspi, uint32_t block_addr);
 int8_t W25Q_EraseChip(QSPI_HandleTypeDef *hqspi);
-int8_t W25Q_SetMemoryMappedMode(QSPI_HandleTypeDef *hqspi, bool enable);
-int8_t W25Q_SetDeepPowerDown(QSPI_HandleTypeDef *hqspi, bool enable);
+int8_t W25Q_SetMemoryMappedMode(QSPI_HandleTypeDef *hqspi, bool enable);    // If enable is true, the flash will be mapped to the QSPI memory space, allowing for direct read access. If false, the flash will be in indirect mode, requiring commands to read/write.
+int8_t W25Q_SetDeepPowerDown(QSPI_HandleTypeDef *hqspi, bool enable);       // If enable is true, the flash will enter deep power down mode, reducing power consumption. In this mode, the flash will not respond to any command except for the release from deep power down command. If false, the flash will exit deep power down mode and be ready for normal operation. Incompatible with memory mapped mode.
 
 #endif /* INC_GAUL_DRIVERS_W25Q512JV_H_ */
