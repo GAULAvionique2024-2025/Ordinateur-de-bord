@@ -79,6 +79,7 @@ DMA_HandleTypeDef hdma_usart6_rx;
 adxl382_t adxl382 = {
     .hi2c = &hi2c3,
     .mode = ADXL382_MODE_HP,
+	.range = ADXL382_RANGE_15G
 };
 bno055_t bno055 = {
     .i2c = &hi2c1,
@@ -229,19 +230,19 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+    /* USER CODE BEGIN 3 */
     /* USER CODE END WHILE */
+
+    /* USER CODE BEGIN 3 */
+	  /* USER CODE END WHILE */
 	  char tx_buffer[1024];
-	  if(ADXL382_IsDataReady(&adxl382)) {
-		  ADXL382_ReadData(&adxl382);
-
-		  snprintf(tx_buffer, sizeof(tx_buffer),
-				   "ACC X:%.2f, ACC Y:%.2f, ACC Z:%.2f\r\n",
-				   adxl382.acc_x,
-				   adxl382.acc_y,
-				   adxl382.acc_z);
-
-		  HM11_SendString(&hm11, tx_buffer);
-	  }
+	  ADXL382_ReadData(&adxl382);
+	  snprintf(tx_buffer, sizeof(tx_buffer),
+			   "ACC X:%.2f, ACC Y:%.2f, ACC Z:%.2f\r\n",
+			   adxl382.acc_x,
+			   adxl382.acc_y,
+			   adxl382.acc_z);
+	  HM11_SendString(&hm11, tx_buffer);
 	  /*
 	  bno055.temperature(&bno055, &temp);
 	  bno055.euler(&bno055, &euler_angles);
@@ -250,24 +251,24 @@ int main(void)
 	  bno055.mag(&bno055, &mag_data);
 	  bno055.quaternion(&bno055, &quat_data);
 	  snprintf(tx_buffer, sizeof(tx_buffer),
-	           "Temp:%d, Yaw:%.2f, Pitch:%.2f, Roll:%.2f, ACC X:%.2f, ACC Y:%.2f, ACC Z:%.2f, GYRO X:%.2f, GYRO Y:%.2f, GYRO Z:%.2f, MAG X:%.2f, MAG Y:%.2f, MAG Z:%.2f, QUAT W:%.2f, QUAT X:%.2f, QUAT Y:%.2f, QUAT Z:%.2f\r\n",
-	           temp,
-	           euler_angles.yaw,
-	           euler_angles.pitch,
-	           euler_angles.roll,
-	           accel_data.x,
-	           accel_data.y,
-	           accel_data.z,
-	           gyro_data.x,
-	           gyro_data.y,
-	           gyro_data.z,
-	           mag_data.x,
-	           mag_data.y,
-	           mag_data.z,
-	           quat_data.w,
-	           quat_data.x,
-	           quat_data.y,
-	           quat_data.z);
+			   "Temp:%d, Yaw:%.2f, Pitch:%.2f, Roll:%.2f, ACC X:%.2f, ACC Y:%.2f, ACC Z:%.2f, GYRO X:%.2f, GYRO Y:%.2f, GYRO Z:%.2f, MAG X:%.2f, MAG Y:%.2f, MAG Z:%.2f, QUAT W:%.2f, QUAT X:%.2f, QUAT Y:%.2f, QUAT Z:%.2f\r\n",
+			   temp,
+			   euler_angles.yaw,
+			   euler_angles.pitch,
+			   euler_angles.roll,
+			   accel_data.x,
+			   accel_data.y,
+			   accel_data.z,
+			   gyro_data.x,
+			   gyro_data.y,
+			   gyro_data.z,
+			   mag_data.x,
+			   mag_data.y,
+			   mag_data.z,
+			   quat_data.w,
+			   quat_data.x,
+			   quat_data.y,
+			   quat_data.z);
 
 	  HM11_SendString(&hm11, tx_buffer);
 	  */
@@ -302,7 +303,7 @@ int main(void)
 		  }
 	  }
 	  */
-    /* USER CODE BEGIN 3 */
+	  HAL_Delay(100);
   }
   /* USER CODE END 3 */
 }
@@ -497,7 +498,7 @@ static void MX_I2C1_Init(void)
 
   /* USER CODE END I2C1_Init 1 */
   hi2c1.Instance = I2C1;
-  hi2c1.Init.ClockSpeed = 400000;
+  hi2c1.Init.ClockSpeed = 100000;
   hi2c1.Init.DutyCycle = I2C_DUTYCYCLE_2;
   hi2c1.Init.OwnAddress1 = 0;
   hi2c1.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
@@ -531,7 +532,7 @@ static void MX_I2C2_Init(void)
 
   /* USER CODE END I2C2_Init 1 */
   hi2c2.Instance = I2C2;
-  hi2c2.Init.ClockSpeed = 400000;
+  hi2c2.Init.ClockSpeed = 100000;
   hi2c2.Init.DutyCycle = I2C_DUTYCYCLE_2;
   hi2c2.Init.OwnAddress1 = 0;
   hi2c2.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
@@ -565,7 +566,7 @@ static void MX_I2C3_Init(void)
 
   /* USER CODE END I2C3_Init 1 */
   hi2c3.Instance = I2C3;
-  hi2c3.Init.ClockSpeed = 400000;
+  hi2c3.Init.ClockSpeed = 100000;
   hi2c3.Init.DutyCycle = I2C_DUTYCYCLE_2;
   hi2c3.Init.OwnAddress1 = 0;
   hi2c3.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;

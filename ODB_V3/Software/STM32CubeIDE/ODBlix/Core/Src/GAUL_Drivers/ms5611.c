@@ -5,7 +5,7 @@
  *      Author: Luka
  */
 
-#include <GAUL_Drivers/ms5611.h.txt>
+#include "GAUL_Drivers/ms5611.h"
 
 error_ms5611 MS5611_Init(ms5611_dev* dev, SPI_HandleTypeDef* spi, osr_option osr_pressure, osr_option ors_temperature)
 {
@@ -25,7 +25,7 @@ error_ms5611 MS5611_Init(ms5611_dev* dev, SPI_HandleTypeDef* spi, osr_option osr
 
 	MS5611_Reset(dev->spi);
 
-	u16 prom[8];
+	uint16_t prom[8];
 
 	for(int i = 0; i < 8; i++)
 	{
@@ -102,24 +102,24 @@ error_ms5611 MS5611_Update(ms5611_dev* dev)
 void MS5611_Compute(ms5611_dev* dev, float *temperature, float *pressure)
 {
 
-	s32 dT = (s32)dev->raw_temperature - ((s32)dev->C[5] << 8);
+	int32_t dT = (int32_t)dev->raw_temperature - ((int32_t)dev->C[5] << 8);
 
-	s32 TEMP = 2000 + ((s64)dT * dev->C[6]) / 8388608;
+	int32_t TEMP = 2000 + ((int64_t)dT * dev->C[6]) / 8388608;
 
-    s64 OFF = ((s64)dev->C[2] << 16) + ((s64)dev->C[4] * dT) / 128;
-    s64 SENS = ((s64)dev->C[1] << 15) + ((s64)dev->C[3] * dT) / 256;
+    int64_t OFF = ((int64_t)dev->C[2] << 16) + ((int64_t)dev->C[4] * dT) / 128;
+    int64_t SENS = ((int64_t)dev->C[1] << 15) + ((int64_t)dev->C[3] * dT) / 256;
 
-    s32 P = ((((s64)dev->raw_pressure * SENS) / 2097152 - OFF) / 32768);
+    int32_t P = ((((int64_t)dev->raw_pressure * SENS) / 2097152 - OFF) / 32768);
 
     *temperature = TEMP / 100.0;
     *pressure = P / 100.0;
 }
 
 
-error_ms5611 MS5611_ReadADC(SPI_HandleTypeDef* hspi, u32* data)
+error_ms5611 MS5611_ReadADC(SPI_HandleTypeDef* hspi, uint32_t* data)
 {
-    u8 cmd = MS5611_CMD_ADC_READ;
-    u8 rx[3];
+    uint8_t cmd = MS5611_CMD_ADC_READ;
+    uint8_t rx[3];
 
     MS5611_CS_LOW();
 
@@ -131,7 +131,7 @@ error_ms5611 MS5611_ReadADC(SPI_HandleTypeDef* hspi, u32* data)
 
     MS5611_CS_HIGH();
 
-    *data = ((u32)rx[0] << 16) | ((u32)rx[1] << 8) | rx[2];
+    *data = ((uint32_t)rx[0] << 16) | ((uint32_t)rx[1] << 8) | rx[2];
     return MS5611_OK;
 
 error_spi:
@@ -141,7 +141,7 @@ error_spi:
 
 error_ms5611 MS5611_Reset(SPI_HandleTypeDef* hspi)
 {
-    u8 cmd = MS5611_CMD_RESET;
+	uint8_t cmd = MS5611_CMD_RESET;
 
     MS5611_CS_LOW();
 
@@ -158,10 +158,10 @@ error_spi:
 	return MS5611_ERR_SPI;
 }
 
-error_ms5611 MS5611_ReadPROM(SPI_HandleTypeDef* hspi, u8 index, u16* c)
+error_ms5611 MS5611_ReadPROM(SPI_HandleTypeDef* hspi, uint8_t index, uint16_t* c)
 {
-    u8 cmd = MS5611_CMD_PROM_READ + (index * 2);
-    u8 rx[2];
+	uint8_t cmd = MS5611_CMD_PROM_READ + (index * 2);
+	uint8_t rx[2];
 
     MS5611_CS_LOW();
 
@@ -181,10 +181,10 @@ error_spi:
 	return MS5611_ERR_SPI;
 }
 
-u8 MS5611_CRC4(u16 prom[])
+uint8_t MS5611_CRC4(uint16_t prom[])
 {
-    u16 n_rem = 0;
-    u16 crc_read = prom[0];
+	uint16_t n_rem = 0;
+    uint16_t crc_read = prom[0];
 
     prom[0] &= 0xFFF0;
     prom[7] = 0;
@@ -192,9 +192,9 @@ u8 MS5611_CRC4(u16 prom[])
     for (int cnt = 0; cnt < 16; cnt++)
     {
         if (cnt % 2 == 1)
-            n_rem ^= (u16)(prom[cnt >> 1] & 0x00FF);
+            n_rem ^= (uint16_t)(prom[cnt >> 1] & 0x00FF);
         else
-            n_rem ^= (u16)(prom[cnt >> 1] >> 8);
+            n_rem ^= (uint16_t)(prom[cnt >> 1] >> 8);
 
         for (int n_bit = 8; n_bit > 0; n_bit--)
         {
@@ -236,7 +236,7 @@ static error_ms5611 MS5611_SendCmd(ms5611_dev* dev, uint8_t cmd)
     return MS5611_OK;
 }
 
-static u8 MS5611_GetDelay(osr_option osr)
+static uint8_t MS5611_GetDelay(osr_option osr)
 {
     switch (osr) {
         case OSR256:  return 1;
