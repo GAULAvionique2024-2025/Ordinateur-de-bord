@@ -17,11 +17,14 @@
 typedef struct {
 	ADC_HandleTypeDef 	*hadc;
 	TIM_HandleTypeDef	*htim;
+	GPIO_TypeDef        *pg_port;
+	uint16_t            pg_pin;
 
     float 				temperature;
     float 				vin_batt;
     float 				v5_buck;
     float 				v3_buck;
+    bool				pg_v5;
     bool 				pyros_arming;
     bool 				pyro_status[4];
 } system_measurements_t;
@@ -29,6 +32,8 @@ typedef struct {
 
 int8_t SystemMeasurements_Init(system_measurements_t *dev);
 
-void SystemMeasurements_Compute(system_measurements_t *dev);
+void SystemMeasurements_ComputePower(system_measurements_t *dev);
+void SystemMeasurements_ComputeTemperature(system_measurements_t *dev);
+void SystemMeasurements_ComputePyros(system_measurements_t *dev);
 
 #endif /* INC_GAUL_DRIVERS_LOWLEVEL_SYSTEM_MEASUREMENTS_H_ */

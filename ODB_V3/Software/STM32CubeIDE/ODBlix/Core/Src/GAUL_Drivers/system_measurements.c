@@ -29,7 +29,9 @@ int8_t SystemMeasurements_Init(system_measurements_t *dev) {
 	dev->vin_batt = 0.00f;
 	dev->v5_buck = 0.00f;
 	dev->v3_buck = 0.00f;
-	dev->pyros_arming = false;
+	if(HAL_GPIO_ReadPin(dev->pg_port, dev->pg_pin) == GPIO_PIN_SET) {
+		dev->pg_v5 = true;
+	} else dev->pg_v5 = true;
 
 	memset(dev->pyro_status, 0, sizeof(dev->pyro_status));
 
@@ -42,49 +44,34 @@ int8_t SystemMeasurements_Init(system_measurements_t *dev) {
 	return 0; // success
 }
 
-// TODO: sepeate individual compute data (frequency refresh battery not necessary the same of pyros)
-void SystemMeasurements_Compute(system_measurements_t *dev) {
-	uint16_t arm = adc_buffer[0];
-	uint16_t p4 = adc_buffer[1];
-	uint16_t p1 = adc_buffer[2];
-	uint16_t temp = adc_buffer[3];
-	uint16_t vin = adc_buffer[4];
-	uint16_t v5 = adc_buffer[5];
-	uint16_t v3 = adc_buffer[6];
-	uint16_t p3 = adc_buffer[7];
-	uint16_t p2 = adc_buffer[8];
+void SystemMeasurements_ComputePower(system_measurements_t *dev) {
+    uint16_t vin = adc_buffer[4];
+    uint16_t v5  = adc_buffer[5];
+    uint16_t v3  = adc_buffer[6];
 
-	dev->vin_batt = (vin * DIV_ADC_STEP) * DIV_RATIO_VIN_BATT;
-	dev->v5_buck  = (v5 * DIV_ADC_STEP) * DIV_RATIO_V5_BUCK;
-	dev->v3_buck  = (v3 * DIV_ADC_STEP) * DIV_RATIO_V3_BUCK;
+    dev->vin_batt = (vin * DIV_ADC_STEP) * DIV_RATIO_VIN_BATT;
+    dev->v5_buck  = (v5 * DIV_ADC_STEP) * DIV_RATIO_V5_BUCK;
+    dev->v3_buck  = (v3 * DIV_ADC_STEP) * DIV_RATIO_V3_BUCK;
+}
+
+void SystemMeasurements_ComputeTemperature(system_measurements_t *dev) {
+    uint16_t temp = adc_buffer[3];
 
     float v_temp = temp * DIV_ADC_STEP;
     dev->temperature = (v_temp - 0.40f) / 0.01953f;
+}
 
-    if(arm >= PYROS_THRESHOLD) {
-    	dev->pyros_arming = true;
-	} else {
-		dev->pyros_arming = false;
-	}
+void SystemMeasurements_ComputePyros(system_measurements_t *dev) {
+    uint16_t arm = adc_buffer[0];
+    uint16_t p4  = adc_buffer[1];
+    uint16_t p1  = adc_buffer[2];
+    uint16_t p3  = adc_buffer[7];
+    uint16_t p2  = adc_buffer[8];
 
-    if(p1 >= PYROS_THRESHOLD) {
-		dev->pyro_status[0] = false;
-	} else {
-		dev->pyro_status[0] = true;
-	}
-    if(p2 >= PYROS_THRESHOLD) {
-		dev->pyro_status[1] = false;
-	} else {
-		dev->pyro_status[1] = true;
-	}
-    if(p3 >= PYROS_THRESHOLD) {
-		dev->pyro_status[2] = false;
-	} else {
-		dev->pyro_status[2] = true;
-	}
-	if(p4 >= PYROS_THRESHOLD) {
-		dev->pyro_status[3] = false;
-	} else {
-		dev->pyro_status[3] = true;
-	}
+    dev->pyros_arming = (arm >= PYROS_THRESHOLD);
+
+    dev->pyro_status[0] = (p1 < PYROS_THRESHOLD);
+    dev->pyro_status[1] = (p2 < PYROS_THRESHOLD);
+    dev->pyro_status[2] = (p3 < PYROS_THRESHOLD);
+    dev->pyro_status[3] = (p4 < PYROS_THRESHOLD);
 }

@@ -15,7 +15,7 @@ extern bno055_t bno055;
 extern hm11_t hm11;
 extern l76lm33_t l76lm33;
 extern critical_led_t critical_led;
-//extern ms5611_t ms5611;
+extern ms5611_t ms5611;
 extern pyro_t pyro1;
 extern pyro_t pyro2;
 extern pyro_t pyro3;
@@ -23,13 +23,21 @@ extern pyro_t pyro4;
 extern rfd900x_t rfd900x;
 extern buzzer_t buzzer;
 extern system_measurements_t system_measurements;
+extern w25q_t w25q;
 
 
+/* === TELEMETRY === */
+static uint8_t mavlink_tx_buffer[MAVLINK_MAX_PACKET_LEN]; // DMA TX buffer
 
 static void Telemetry_TransmitMessage(rfd900x_t *rfd_dev, mavlink_message_t *msg) {
-    uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
-    uint16_t len = mavlink_msg_to_send_buffer(buffer, msg);
-    RFD900x_Transmit(rfd_dev, buffer, len);
+	if(!rfd_dev) return;
+
+	if(rfd_dev->huart->gState != HAL_UART_STATE_READY) {
+		return;
+	}
+
+	uint16_t len = mavlink_msg_to_send_buffer(mavlink_tx_buffer, msg);
+	RFD900x_Transmit(rfd_dev, mavlink_tx_buffer, len);
 }
 
 void Telemetry_SendRocketData(rfd900x_t *rfd_dev, odb_modem_id_t modem_id, odb_data *data, uint32_t current_time_ms) {
@@ -87,11 +95,7 @@ void Telemetry_SendEventLog(rfd900x_t *rfd_dev, odb_modem_id_t modem_id, odb_eve
 
     Telemetry_TransmitMessage(rfd_dev, &msg);
 }
-
-
-
-
-
+/* =========== */
 
 
 /* === HELPERS === */

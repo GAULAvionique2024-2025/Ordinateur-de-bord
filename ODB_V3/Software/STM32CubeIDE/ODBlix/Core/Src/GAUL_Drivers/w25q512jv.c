@@ -7,6 +7,7 @@
 
 #include "GAUL_Drivers/w25q512jv.h"
 
+
 static QSPI_CommandTypeDef W25Q_MakeCommand(uint32_t instruction, uint32_t address_mode, uint32_t address, uint32_t data_mode, uint32_t dummy_cycles, uint32_t data_length) {
     QSPI_CommandTypeDef sCommand = {0};
 
@@ -104,46 +105,46 @@ static int8_t W25Q_Reset(QSPI_HandleTypeDef *hqspi) {
     return 0; // success
 }
 
-int8_t W25Q_Init(QSPI_HandleTypeDef *hqspi) {
+int8_t W25Q_Init(w25q_t *dev) {
 	// Reset
-	if(W25Q_Reset(hqspi) != 0) return -1;
-	if(W25Q_WaitForReady(hqspi, W25Q_TIMEOUT) != 0) return -1;
+	if(W25Q_Reset(dev->hqspi) != 0) return -1;
+	if(W25Q_WaitForReady(dev->hqspi, W25Q_TIMEOUT) != 0) return -1;
 
 	// Check ID
-    uint32_t id = W25Q_GetID(hqspi);
+    uint32_t id = W25Q_GetID(dev->hqspi);
 	if(id != W25Q512_JEDEC_ID) return -1;
 
-	if(W25Q_EnableQuadMode(hqspi) != 0) return -1;
-	if(W25Q_Enter4ByteMode(hqspi) != 0) return -1;
+	if(W25Q_EnableQuadMode(dev->hqspi) != 0) return -1;
+	if(W25Q_Enter4ByteMode(dev->hqspi) != 0) return -1;
 
 	return 0; // success
 }
 
-int8_t W25Q_Read(QSPI_HandleTypeDef *hqspi, uint8_t* data, uint32_t read_addr, uint32_t size) {
+int8_t W25Q_Read(w25q_t *dev, uint8_t* data, uint32_t read_addr, uint32_t size) {
     QSPI_CommandTypeDef sCommand = W25Q_MakeCommand(W25Q_CMD_FAST_READ_QUAD_IO_4B, QSPI_ADDRESS_4_LINES, read_addr, QSPI_DATA_4_LINES, 4, size);
     sCommand.AlternateByteMode  = QSPI_ALTERNATE_BYTES_4_LINES;
     sCommand.AlternateBytesSize = QSPI_ALTERNATE_BYTES_8_BITS;
     sCommand.AlternateBytes     = 0xFF;
 
-    if(HAL_QSPI_Command(hqspi, &sCommand, HAL_QSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK) return -1;
-    if(HAL_QSPI_Receive(hqspi, data, HAL_QSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK) return -1;
+    if(HAL_QSPI_Command(dev->hqspi, &sCommand, HAL_QSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK) return -1;
+    if(HAL_QSPI_Receive(dev->hqspi, data, HAL_QSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK) return -1;
 
     return 0; // success
 }
 
-int8_t W25Q_Write(QSPI_HandleTypeDef *hqspi, uint8_t* data, uint32_t write_addr, uint32_t size) {
+int8_t W25Q_Write(w25q_t *dev, uint8_t* data, uint32_t write_addr, uint32_t size) {
     uint32_t current_addr = write_addr;
     uint32_t current_size;
     while(size > 0) {
         current_size = W25Q512_PAGE_SIZE - (current_addr % W25Q512_PAGE_SIZE);
         if(current_size > size) current_size = size;
 
-        if(W25Q_WriteEnable(hqspi) != 0) return -1;
+        if(W25Q_WriteEnable(dev->hqspi) != 0) return -1;
         
         QSPI_CommandTypeDef sCommand = W25Q_MakeCommand(W25Q_CMD_QUAD_PAGE_PROGRAM_4B, QSPI_ADDRESS_1_LINE, current_addr, QSPI_DATA_4_LINES, 0, current_size);
-        if(HAL_QSPI_Command(hqspi, &sCommand, HAL_QSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK) return -1;
-        if(HAL_QSPI_Transmit(hqspi, data, HAL_QSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK) return -1;
-        if(W25Q_WaitForReady(hqspi, W25Q_TIMEOUT) != 0) return -1;
+        if(HAL_QSPI_Command(dev->hqspi, &sCommand, HAL_QSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK) return -1;
+        if(HAL_QSPI_Transmit(dev->hqspi, data, HAL_QSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK) return -1;
+        if(W25Q_WaitForReady(dev->hqspi, W25Q_TIMEOUT) != 0) return -1;
 
         current_addr += current_size;
         data += current_size;
@@ -153,34 +154,34 @@ int8_t W25Q_Write(QSPI_HandleTypeDef *hqspi, uint8_t* data, uint32_t write_addr,
     return 0; // success
 }
 
-int8_t W25Q_EraseSector(QSPI_HandleTypeDef *hqspi, uint32_t sector_addr) {
-    if(W25Q_WriteEnable(hqspi) != 0) return -1;
+int8_t W25Q_EraseSector(w25q_t *dev, uint32_t sector_addr) {
+    if(W25Q_WriteEnable(dev->hqspi) != 0) return -1;
 
     QSPI_CommandTypeDef sCommand = W25Q_MakeCommand(W25Q_CMD_SECTOR_ERASE_4B, QSPI_ADDRESS_1_LINE, sector_addr, QSPI_DATA_NONE, 0, 0);
-    if(HAL_QSPI_Command(hqspi, &sCommand, HAL_QSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK) return -1;
+    if(HAL_QSPI_Command(dev->hqspi, &sCommand, HAL_QSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK) return -1;
 
-    return W25Q_WaitForReady(hqspi, W25Q_ERASE_ALL_TIMEOUT);
+    return W25Q_WaitForReady(dev->hqspi, W25Q_ERASE_ALL_TIMEOUT);
 }
 
-int8_t W25Q_EraseBlock(QSPI_HandleTypeDef *hqspi, uint32_t block_addr) {
-    if(W25Q_WriteEnable(hqspi) != 0) return -1;
+int8_t W25Q_EraseBlock(w25q_t *dev, uint32_t block_addr) {
+    if(W25Q_WriteEnable(dev->hqspi) != 0) return -1;
 
     QSPI_CommandTypeDef sCommand = W25Q_MakeCommand(W25Q_CMD_BLOCK_ERASE_64K_4B, QSPI_ADDRESS_1_LINE, block_addr, QSPI_DATA_NONE, 0, 0);
-    if(HAL_QSPI_Command(hqspi, &sCommand, HAL_QSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK) return -1;
+    if(HAL_QSPI_Command(dev->hqspi, &sCommand, HAL_QSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK) return -1;
 
-    return W25Q_WaitForReady(hqspi, W25Q_ERASE_ALL_TIMEOUT);
+    return W25Q_WaitForReady(dev->hqspi, W25Q_ERASE_ALL_TIMEOUT);
 }
 
-int8_t W25Q_EraseChip(QSPI_HandleTypeDef *hqspi) {
-    if(W25Q_WriteEnable(hqspi) != 0) return -1;
+int8_t W25Q_EraseChip(w25q_t *dev) {
+    if(W25Q_WriteEnable(dev->hqspi) != 0) return -1;
 
     QSPI_CommandTypeDef sCommand = W25Q_MakeCommand(W25Q_CMD_CHIP_ERASE, QSPI_ADDRESS_NONE, 0xFFFFFFFF, QSPI_DATA_NONE, 0, 0);
-    if(HAL_QSPI_Command(hqspi, &sCommand, HAL_QSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK) return -1;
+    if(HAL_QSPI_Command(dev->hqspi, &sCommand, HAL_QSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK) return -1;
 
-    return W25Q_WaitForReady(hqspi, W25Q_ERASE_ALL_TIMEOUT);
+    return W25Q_WaitForReady(dev->hqspi, W25Q_ERASE_ALL_TIMEOUT);
 }
 
-int8_t W25Q_SetMemoryMappedMode(QSPI_HandleTypeDef *hqspi, bool enable) {
+int8_t W25Q_SetMemoryMappedMode(w25q_t *dev, bool enable) {
     if(enable) {
         QSPI_CommandTypeDef sCommand = W25Q_MakeCommand(W25Q_CMD_FAST_READ_QUAD_IO_4B, QSPI_ADDRESS_4_LINES, 0xFFFFFFFF, QSPI_DATA_4_LINES, 4, 0);
         sCommand.AlternateByteMode  = QSPI_ALTERNATE_BYTES_4_LINES;
@@ -191,20 +192,20 @@ int8_t W25Q_SetMemoryMappedMode(QSPI_HandleTypeDef *hqspi, bool enable) {
         sMemMappedCfg.TimeOutActivation = QSPI_TIMEOUT_COUNTER_DISABLE;
         sMemMappedCfg.TimeOutPeriod     = 0;
 
-        if(HAL_QSPI_MemoryMapped(hqspi, &sCommand, &sMemMappedCfg) != HAL_OK) return -1;
+        if(HAL_QSPI_MemoryMapped(dev->hqspi, &sCommand, &sMemMappedCfg) != HAL_OK) return -1;
     } 
     else {
-        if(HAL_QSPI_Abort(hqspi) != HAL_OK) return -1;
+        if(HAL_QSPI_Abort(dev->hqspi) != HAL_OK) return -1;
     }
 
     return 0; // success
 }
 
-int8_t W25Q_SetDeepPowerDown(QSPI_HandleTypeDef *hqspi, bool enable) {
+int8_t W25Q_SetDeepPowerDown(w25q_t *dev, bool enable) {
     uint8_t instruction = enable ? W25Q_CMD_DEEP_POWER_DOWN : W25Q_CMD_RELEASE_POWER_DOWN;
     
     QSPI_CommandTypeDef sCommand = W25Q_MakeCommand(instruction, QSPI_ADDRESS_NONE, 0xFFFFFFFF, QSPI_DATA_NONE, 0, 0);
-    if(HAL_QSPI_Command(hqspi, &sCommand, HAL_QSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK) return -1;
+    if(HAL_QSPI_Command(dev->hqspi, &sCommand, HAL_QSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK) return -1;
     HAL_Delay(1);
 
     return 0; // success

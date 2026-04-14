@@ -41,8 +41,8 @@ typedef enum {
 } ms5611_osr_t;
 
 typedef struct {
-    SPI_HandleTypeDef*  spi;
-    GPIO_TypeDef*       cs_port;
+    SPI_HandleTypeDef   *spi;
+    GPIO_TypeDef        *cs_port;
     uint16_t            cs_pin;
 
     uint8_t             cmd_pressure;
@@ -62,9 +62,9 @@ typedef struct {
 } ms5611_t;
 
 
-ms5611_error_t MS5611_Init(ms5611_t* dev, ms5611_osr_t osr_pressure, ms5611_osr_t osr_temperature);
+ms5611_error_t MS5611_Init(ms5611_t *dev, ms5611_osr_t osr_pressure, ms5611_osr_t osr_temperature);
 
-ms5611_error_t MS5611_Update(ms5611_t* dev);
-ms5611_error_t MS5611_Compute(ms5611_t* dev, float *temperature, float *pressure);
+ms5611_error_t MS5611_Update(ms5611_t *dev);
+ms5611_error_t MS5611_Compute(ms5611_t *dev, float *temperature, float *pressure);
 
 #endif /* INC_GAUL_DRIVERS_MS5611_H_ */

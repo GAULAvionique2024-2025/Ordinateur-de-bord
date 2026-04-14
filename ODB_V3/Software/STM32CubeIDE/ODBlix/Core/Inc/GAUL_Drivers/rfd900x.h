@@ -14,13 +14,20 @@
 #include "stm32f4xx_hal.h"
 #include <stdint.h>
 
+
+typedef enum {
+    RFD_STATE_OK,
+    RFD_STATE_BUSY,
+    RFD_STATE_ERROR,
+} rfd900x_state_t;
+
 typedef struct {
     UART_HandleTypeDef  *huart;
 } rfd900x_t;
 
 
-int8_t RFD900x_Init(rfd900x_t *dev, UART_HandleTypeDef *huart);
+rfd900x_state_t RFD900x_Init(rfd900x_t *dev);
 
-int8_t RFD900x_Transmit(rfd900x_t *dev, uint8_t *payload, uint16_t length);
+rfd900x_state_t RFD900x_Transmit(rfd900x_t *dev, uint8_t *payload, uint16_t length);
 
 #endif /* INC_GAUL_DRIVERS_RFD900X_H_ */

@@ -34,6 +34,7 @@
 #include "GAUL_Drivers/rfd900x.h"
 #include "GAUL_Drivers/smtb0927twr.h"
 #include "GAUL_Drivers/system_measurements.h"
+#include "GAUL_Drivers/w25q512jv.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -59,14 +60,13 @@ I2C_HandleTypeDef hi2c1;
 I2C_HandleTypeDef hi2c2;
 I2C_HandleTypeDef hi2c3;
 DMA_HandleTypeDef hdma_i2c1_rx;
-DMA_HandleTypeDef hdma_i2c3_rx;
 
 QSPI_HandleTypeDef hqspi;
-DMA_HandleTypeDef hdma_quadspi;
 
 SPI_HandleTypeDef hspi1;
 SPI_HandleTypeDef hspi5;
 DMA_HandleTypeDef hdma_spi5_tx;
+DMA_HandleTypeDef hdma_spi5_rx;
 
 TIM_HandleTypeDef htim2;
 TIM_HandleTypeDef htim4;
@@ -74,6 +74,7 @@ TIM_HandleTypeDef htim4;
 UART_HandleTypeDef huart1;
 UART_HandleTypeDef huart2;
 UART_HandleTypeDef huart6;
+DMA_HandleTypeDef hdma_usart1_tx;
 DMA_HandleTypeDef hdma_usart6_rx;
 
 /* USER CODE BEGIN PV */
@@ -152,9 +153,14 @@ pyro_t pyro4 = {
 };
 system_measurements_t system_measurements = {
 	.hadc = &hadc1,
-	.htim = &htim2
+	.htim = &htim2,
+	.pg_port = Power_Good_GPIO_Port,
+	.pg_pin = Power_Good_Pin
 };
 uint16_t adc_buffer[9];
+w25q_t w25q = {
+	.hqspi = &hqspi,
+};
 
 /* USER CODE END PV */
 
@@ -232,11 +238,12 @@ int main(void)
   }
 
   //SystemMeasurements_Init(&system_measurements);
-
+  /*
   if(MS5611_Init(&ms5611, OSR1024, OSR1024) != MS5611_OK) {
       printf("Erreur init MS5611\n");
   }
   float temperature, pressure;
+  */
   /*
   error_bno err = bno055_init(&bno055);
   if(err != BNO_OK) {
@@ -259,6 +266,21 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+    /* USER CODE BEGIN 3 */
+    /* USER CODE END WHILE */
+
+    /* USER CODE BEGIN 3 */
+    /* USER CODE END WHILE */
+
+    /* USER CODE BEGIN 3 */
+    /* USER CODE END WHILE */
+
+    /* USER CODE BEGIN 3 */
+    /* USER CODE END WHILE */
+
+    /* USER CODE BEGIN 3 */
+    /* USER CODE END WHILE */
+
     /* USER CODE BEGIN 3 */
     /* USER CODE END WHILE */
 
@@ -948,15 +970,15 @@ static void MX_DMA_Init(void)
   /* DMA1_Stream0_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMA1_Stream0_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(DMA1_Stream0_IRQn);
-  /* DMA1_Stream1_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DMA1_Stream1_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(DMA1_Stream1_IRQn);
   /* DMA2_Stream0_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMA2_Stream0_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(DMA2_Stream0_IRQn);
   /* DMA2_Stream1_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMA2_Stream1_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(DMA2_Stream1_IRQn);
+  /* DMA2_Stream3_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA2_Stream3_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(DMA2_Stream3_IRQn);
   /* DMA2_Stream4_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMA2_Stream4_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(DMA2_Stream4_IRQn);

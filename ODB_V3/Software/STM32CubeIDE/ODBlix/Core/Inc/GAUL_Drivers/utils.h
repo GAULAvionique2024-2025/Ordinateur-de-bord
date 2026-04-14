@@ -20,6 +20,7 @@
 #include "rfd900x.h"
 #include "smtb0927twr.h"
 #include "system_measurements.h"
+#include "w25q512jv.h"
 #include "mavlink/odb_mavlink_v1/mavlink.h"
 
 #include <stdint.h>
@@ -117,6 +118,7 @@ void Telemetry_SendEventLog(rfd900x_t *rfd_dev, odb_modem_id_t modem_id, odb_eve
 /* === APP DEBUG - BLUETOOTH === */
 
 /* =========== */
+
 
 /* === HELPERS === */
 void RunTimer_Init(runTimer_t *dev);

@@ -50,15 +50,19 @@
 #define W25Q_TIMEOUT                        5000
 #define W25Q_ERASE_ALL_TIMEOUT              1000000
 
+typedef struct {
+	QSPI_HandleTypeDef *hqspi;
+} w25q_t;
 
-int8_t W25Q_Init(QSPI_HandleTypeDef *hqspi);
 
-int8_t W25Q_Read(QSPI_HandleTypeDef *hqspi, uint8_t* pData, uint32_t read_addr, uint32_t size);
-int8_t W25Q_Write(QSPI_HandleTypeDef *hqspi, uint8_t* pData, uint32_t write_addr, uint32_t size);
-int8_t W25Q_EraseSector(QSPI_HandleTypeDef *hqspi, uint32_t sector_addr);
-int8_t W25Q_EraseBlock(QSPI_HandleTypeDef *hqspi, uint32_t block_addr);
-int8_t W25Q_EraseChip(QSPI_HandleTypeDef *hqspi);
-int8_t W25Q_SetMemoryMappedMode(QSPI_HandleTypeDef *hqspi, bool enable);    // If enable is true, the flash will be mapped to the QSPI memory space, allowing for direct read access. If false, the flash will be in indirect mode, requiring commands to read/write.
-int8_t W25Q_SetDeepPowerDown(QSPI_HandleTypeDef *hqspi, bool enable);       // If enable is true, the flash will enter deep power down mode, reducing power consumption. In this mode, the flash will not respond to any command except for the release from deep power down command. If false, the flash will exit deep power down mode and be ready for normal operation. Incompatible with memory mapped mode.
+int8_t W25Q_Init(w25q_t *dev);
+
+int8_t W25Q_Read(w25q_t *dev, uint8_t* pData, uint32_t read_addr, uint32_t size);
+int8_t W25Q_Write(w25q_t *dev, uint8_t* pData, uint32_t write_addr, uint32_t size);
+int8_t W25Q_EraseSector(w25q_t *dev, uint32_t sector_addr);
+int8_t W25Q_EraseBlock(w25q_t *dev, uint32_t block_addr);
+int8_t W25Q_EraseChip(w25q_t *dev);
+int8_t W25Q_SetMemoryMappedMode(w25q_t *dev, bool enable);    // If enable is true, the flash will be mapped to the QSPI memory space, allowing for direct read access. If false, the flash will be in indirect mode, requiring commands to read/write.
+int8_t W25Q_SetDeepPowerDown(w25q_t *dev, bool enable);       // If enable is true, the flash will enter deep power down mode, reducing power consumption. In this mode, the flash will not respond to any command except for the release from deep power down command. If false, the flash will exit deep power down mode and be ready for normal operation. Incompatible with memory mapped mode.
 
 #endif /* INC_GAUL_DRIVERS_W25Q512JV_H_ */

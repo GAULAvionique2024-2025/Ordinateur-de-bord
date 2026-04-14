@@ -8,15 +8,15 @@
 #include "GAUL_Drivers/ms5611.h"
 
 
-static inline void MS5611_CS_LOW(ms5611_t* dev) {
+static inline void MS5611_CS_LOW(ms5611_t *dev) {
     HAL_GPIO_WritePin(dev->cs_port, dev->cs_pin, GPIO_PIN_RESET);
 }
 
-static inline void MS5611_CS_HIGH(ms5611_t* dev) {
+static inline void MS5611_CS_HIGH(ms5611_t *dev) {
     HAL_GPIO_WritePin(dev->cs_port, dev->cs_pin, GPIO_PIN_SET);
 }
 
-static int8_t MS5611_SPI_Transmit(ms5611_t* dev, uint8_t* data, uint16_t size) {
+static int8_t MS5611_SPI_Transmit(ms5611_t *dev, uint8_t* data, uint16_t size) {
     MS5611_CS_LOW(dev);
     if(HAL_SPI_Transmit(dev->spi, data, size, HAL_MAX_DELAY) != HAL_OK) {
         MS5611_CS_HIGH(dev);
@@ -27,7 +27,7 @@ static int8_t MS5611_SPI_Transmit(ms5611_t* dev, uint8_t* data, uint16_t size) {
     return 0; // success
 }
 
-static int8_t MS5611_SPI_TransmitReceive(ms5611_t* dev, uint8_t *cmd, uint8_t* rx_data, uint16_t rx_size) {
+static int8_t MS5611_SPI_TransmitReceive(ms5611_t *dev, uint8_t *cmd, uint8_t* rx_data, uint16_t rx_size) {
     MS5611_CS_LOW(dev);
     if(HAL_SPI_Transmit(dev->spi, cmd, 1, HAL_MAX_DELAY) != HAL_OK) {
         MS5611_CS_HIGH(dev);
@@ -52,7 +52,7 @@ static int8_t MS5611_SendCmd(ms5611_t* dev, uint8_t cmd) {
     return 0; // success
 }
 
-static int8_t MS5611_ReadADC(ms5611_t* dev, uint32_t* data) {
+static int8_t MS5611_ReadADC(ms5611_t *dev, uint32_t* data) {
     uint8_t cmd = MS5611_CMD_ADC_READ;
     uint8_t rx[3] = {0};
 
@@ -65,7 +65,7 @@ static int8_t MS5611_ReadADC(ms5611_t* dev, uint32_t* data) {
     return 0; // success
 }
 
-static int8_t MS5611_Reset(ms5611_t* dev) {
+static int8_t MS5611_Reset(ms5611_t *dev) {
     uint8_t cmd = MS5611_CMD_RESET;
 
     if(MS5611_SPI_Transmit(dev, &cmd, 1) != 0) {
@@ -76,7 +76,7 @@ static int8_t MS5611_Reset(ms5611_t* dev) {
     return 0; // success
 }
 
-static int8_t MS5611_ReadPROM(ms5611_t* dev, uint8_t index, uint16_t* coeffs) {
+static int8_t MS5611_ReadPROM(ms5611_t *dev, uint8_t index, uint16_t* coeffs) {
     uint8_t cmd = MS5611_CMD_PROM_READ + (index * 2);
     uint8_t rx[2] = {0};
 
@@ -134,7 +134,7 @@ static uint8_t MS5611_GetDelay(ms5611_osr_t osr) {
 }
 
 
-ms5611_error_t MS5611_Init(ms5611_t* dev, ms5611_osr_t osr_pressure, ms5611_osr_t osr_temperature) {
+ms5611_error_t MS5611_Init(ms5611_t *dev, ms5611_osr_t osr_pressure, ms5611_osr_t osr_temperature) {
     if(!dev) return MS5611_ERR_DEV;
     if(!dev->spi || !dev->cs_port) return MS5611_ERR_SPI;
 
@@ -175,7 +175,7 @@ ms5611_error_t MS5611_Init(ms5611_t* dev, ms5611_osr_t osr_pressure, ms5611_osr_
     return MS5611_OK;
 }
 
-ms5611_error_t MS5611_Update(ms5611_t* dev) {
+ms5611_error_t MS5611_Update(ms5611_t *dev) {
     uint32_t delay_ms = (dev->state == MS5611_STATE_PRESSURE) ? dev->delay_read_pressure : dev->delay_read_temperature;
     if(HAL_GetTick() - dev->last_conversion_time < delay_ms) {
         return MS5611_OK;
@@ -208,7 +208,7 @@ ms5611_error_t MS5611_Update(ms5611_t* dev) {
     return MS5611_OK;
 }
 
-ms5611_error_t MS5611_Compute(ms5611_t* dev, float *temperature, float *pressure) {
+ms5611_error_t MS5611_Compute(ms5611_t *dev, float *temperature, float *pressure) {
 	if (dev->first_conversion_done == 0) {
 		return MS5611_NOT_READY;
 	}
@@ -242,4 +242,6 @@ ms5611_error_t MS5611_Compute(ms5611_t* dev, float *temperature, float *pressure
 
     *temperature = (float)temp / 100.0f;
     *pressure = (float)p / 100.0f;
+
+    return MS5611_OK;
 }
