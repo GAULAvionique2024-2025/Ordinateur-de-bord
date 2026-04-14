@@ -72,9 +72,8 @@ static l76lm33_state_t L76LM33_ReadSentence(l76lm33_t *dev, char *out_buffer, ui
  * Initialize L76LM33 sensor.
 */
 l76lm33_state_t L76LM33_Init(l76lm33_t *dev) {
-    if(!dev || !dev->huart) {
-        return L76LM33_ERROR;
-    }
+    if(!dev) return L76LM33_ERROR_DEV;
+    if(!dev->huart) return L76LM33_ERROR_UART;
 
     dev->line_count = 0;
     dev->old_pos = 0;

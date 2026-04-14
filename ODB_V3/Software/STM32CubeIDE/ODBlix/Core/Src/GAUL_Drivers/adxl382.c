@@ -132,6 +132,7 @@ bool ADXL382_IsDataReady(adxl382_t *dev) {
     return false; // failure
 }
 
+// TODO: seperate compute + read reg (like baro)
 adxl382_error_t ADXL382_ReadData(adxl382_t *dev) {
     uint8_t buffer[8];
     if(ADXL382_ReadRegs(dev->hi2c, ADXL382_REG_XDATA_H, buffer, 8) == 0) {

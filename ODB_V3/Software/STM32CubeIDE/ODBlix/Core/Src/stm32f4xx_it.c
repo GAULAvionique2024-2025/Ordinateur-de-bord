@@ -61,8 +61,10 @@ extern DMA_HandleTypeDef hdma_i2c1_rx;
 extern DMA_HandleTypeDef hdma_i2c3_rx;
 extern I2C_HandleTypeDef hi2c1;
 extern I2C_HandleTypeDef hi2c3;
-extern DMA_HandleTypeDef hdma_spi1_rx;
-extern SPI_HandleTypeDef hspi1;
+extern DMA_HandleTypeDef hdma_quadspi;
+extern QSPI_HandleTypeDef hqspi;
+extern DMA_HandleTypeDef hdma_spi5_tx;
+extern SPI_HandleTypeDef hspi5;
 extern DMA_HandleTypeDef hdma_usart6_rx;
 extern UART_HandleTypeDef huart2;
 extern UART_HandleTypeDef huart6;
@@ -252,20 +254,6 @@ void I2C1_EV_IRQHandler(void)
 }
 
 /**
-  * @brief This function handles SPI1 global interrupt.
-  */
-void SPI1_IRQHandler(void)
-{
-  /* USER CODE BEGIN SPI1_IRQn 0 */
-
-  /* USER CODE END SPI1_IRQn 0 */
-  HAL_SPI_IRQHandler(&hspi1);
-  /* USER CODE BEGIN SPI1_IRQn 1 */
-
-  /* USER CODE END SPI1_IRQn 1 */
-}
-
-/**
   * @brief This function handles USART2 global interrupt.
   */
 void USART2_IRQHandler(void)
@@ -308,17 +296,17 @@ void DMA2_Stream1_IRQHandler(void)
 }
 
 /**
-  * @brief This function handles DMA2 stream2 global interrupt.
+  * @brief This function handles DMA2 stream4 global interrupt.
   */
-void DMA2_Stream2_IRQHandler(void)
+void DMA2_Stream4_IRQHandler(void)
 {
-  /* USER CODE BEGIN DMA2_Stream2_IRQn 0 */
+  /* USER CODE BEGIN DMA2_Stream4_IRQn 0 */
 
-  /* USER CODE END DMA2_Stream2_IRQn 0 */
-  HAL_DMA_IRQHandler(&hdma_spi1_rx);
-  /* USER CODE BEGIN DMA2_Stream2_IRQn 1 */
+  /* USER CODE END DMA2_Stream4_IRQn 0 */
+  HAL_DMA_IRQHandler(&hdma_spi5_tx);
+  /* USER CODE BEGIN DMA2_Stream4_IRQn 1 */
 
-  /* USER CODE END DMA2_Stream2_IRQn 1 */
+  /* USER CODE END DMA2_Stream4_IRQn 1 */
 }
 
 /**
@@ -333,6 +321,20 @@ void OTG_FS_IRQHandler(void)
   /* USER CODE BEGIN OTG_FS_IRQn 1 */
 
   /* USER CODE END OTG_FS_IRQn 1 */
+}
+
+/**
+  * @brief This function handles DMA2 stream7 global interrupt.
+  */
+void DMA2_Stream7_IRQHandler(void)
+{
+  /* USER CODE BEGIN DMA2_Stream7_IRQn 0 */
+
+  /* USER CODE END DMA2_Stream7_IRQn 0 */
+  HAL_DMA_IRQHandler(&hdma_quadspi);
+  /* USER CODE BEGIN DMA2_Stream7_IRQn 1 */
+
+  /* USER CODE END DMA2_Stream7_IRQn 1 */
 }
 
 /**
@@ -361,6 +363,34 @@ void I2C3_EV_IRQHandler(void)
   /* USER CODE BEGIN I2C3_EV_IRQn 1 */
 
   /* USER CODE END I2C3_EV_IRQn 1 */
+}
+
+/**
+  * @brief This function handles SPI5 global interrupt.
+  */
+void SPI5_IRQHandler(void)
+{
+  /* USER CODE BEGIN SPI5_IRQn 0 */
+
+  /* USER CODE END SPI5_IRQn 0 */
+  HAL_SPI_IRQHandler(&hspi5);
+  /* USER CODE BEGIN SPI5_IRQn 1 */
+
+  /* USER CODE END SPI5_IRQn 1 */
+}
+
+/**
+  * @brief This function handles QUADSPI global interrupt.
+  */
+void QUADSPI_IRQHandler(void)
+{
+  /* USER CODE BEGIN QUADSPI_IRQn 0 */
+
+  /* USER CODE END QUADSPI_IRQn 0 */
+  HAL_QSPI_IRQHandler(&hqspi);
+  /* USER CODE BEGIN QUADSPI_IRQn 1 */
+
+  /* USER CODE END QUADSPI_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */

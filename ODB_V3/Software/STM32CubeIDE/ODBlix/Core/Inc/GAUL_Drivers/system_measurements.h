@@ -29,6 +29,6 @@ typedef struct {
 
 int8_t SystemMeasurements_Init(system_measurements_t *dev);
 
-void SystemMeasurements_Update(system_measurements_t *dev);
+void SystemMeasurements_Compute(system_measurements_t *dev);
 
 #endif /* INC_GAUL_DRIVERS_LOWLEVEL_SYSTEM_MEASUREMENTS_H_ */

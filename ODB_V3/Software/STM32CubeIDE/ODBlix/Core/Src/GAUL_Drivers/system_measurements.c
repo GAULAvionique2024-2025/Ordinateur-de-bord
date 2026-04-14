@@ -42,7 +42,8 @@ int8_t SystemMeasurements_Init(system_measurements_t *dev) {
 	return 0; // success
 }
 
-void SystemMeasurements_Update(system_measurements_t *dev) {
+// TODO: sepeate individual compute data (frequency refresh battery not necessary the same of pyros)
+void SystemMeasurements_Compute(system_measurements_t *dev) {
 	uint16_t arm = adc_buffer[0];
 	uint16_t p4 = adc_buffer[1];
 	uint16_t p1 = adc_buffer[2];

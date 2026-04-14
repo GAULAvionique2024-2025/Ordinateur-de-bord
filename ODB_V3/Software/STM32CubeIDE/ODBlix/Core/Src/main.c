@@ -23,10 +23,10 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "GAUL_Drivers/adxl382.h"
 #include "GAUL_Drivers/bno055.h"
 #include "GAUL_Drivers/hm11.h"
 #include "GAUL_Drivers/ms5611.h"
-//#include "GAUL_Drivers/adxl382.h"
 #include "GAUL_Drivers/bno055.h"
 #include "GAUL_Drivers/l76lm33.h"
 #include "GAUL_Drivers/ltste682krkgwt.h"
@@ -48,7 +48,7 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-
+#define APP_BLE_NAME "ODB_1"
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
@@ -62,10 +62,11 @@ DMA_HandleTypeDef hdma_i2c1_rx;
 DMA_HandleTypeDef hdma_i2c3_rx;
 
 QSPI_HandleTypeDef hqspi;
+DMA_HandleTypeDef hdma_quadspi;
 
 SPI_HandleTypeDef hspi1;
 SPI_HandleTypeDef hspi5;
-DMA_HandleTypeDef hdma_spi1_rx;
+DMA_HandleTypeDef hdma_spi5_tx;
 
 TIM_HandleTypeDef htim2;
 TIM_HandleTypeDef htim4;
@@ -119,6 +120,11 @@ critical_led_t critical_led = {
 	.g_port = CriticalLED_G_GPIO_Port,
 	.r_pin = CriticalLED_R_Pin,
 	.g_pin = CriticalLED_G_Pin,
+};
+ms5611_t ms5611 = {
+    .spi = &hspi1,
+    .cs_port = BARO_SPI1_CS_GPIO_Port,
+    .cs_pin = BARO_SPI1_CS_Pin,
 };
 pyro_t pyro1 = {
 	.port = Fire_1_GPIO_Port,
@@ -225,8 +231,12 @@ int main(void)
 	  printf("Erreur : HM-11 ne repond pas.\n");
   }
 
-  SystemMeasurements_Init(&system_measurements);
+  //SystemMeasurements_Init(&system_measurements);
 
+  if(MS5611_Init(&ms5611, OSR1024, OSR1024) != MS5611_OK) {
+      printf("Erreur init MS5611\n");
+  }
+  float temperature, pressure;
   /*
   error_bno err = bno055_init(&bno055);
   if(err != BNO_OK) {
@@ -237,10 +247,11 @@ int main(void)
   bno055_vec4_t quat_data;
   int8_t temp;
   */
-
+  /*
   if(ADXL382_Init(&adxl382) != 0) {
     printf("Erreur init ADXL382\n");
   }
+  */
   //char rx_buffer[HM11_RX_BUFFER_SIZE];
   /* USER CODE END 2 */
 
@@ -252,8 +263,13 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	  /* USER CODE END WHILE */
-	  char tx_buffer[1024];
+    /* USER CODE END WHILE */
+	char tx_buffer[1024];
+	/*
+    MS5611_Update(&ms5611);
+    MS5611_Compute(&ms5611, &temperature, &pressure);
+    */
+	  /*
 	  ADXL382_ReadData(&adxl382);
 	  snprintf(tx_buffer, sizeof(tx_buffer),
 			   "ACC X:%.3f, ACC Y:%.3f, ACC Z:%.3f, TEMP:%.2f\r\n",
@@ -262,6 +278,7 @@ int main(void)
 			   adxl382.acc_z,
 			   adxl382.temp);
 	  HM11_SendString(&hm11, tx_buffer);
+	  */
 	  /*
 	  bno055.temperature(&bno055, &temp);
 	  bno055.euler(&bno055, &euler_angles);
@@ -658,7 +675,7 @@ static void MX_SPI1_Init(void)
   hspi1.Init.Mode = SPI_MODE_MASTER;
   hspi1.Init.Direction = SPI_DIRECTION_2LINES;
   hspi1.Init.DataSize = SPI_DATASIZE_8BIT;
-  hspi1.Init.CLKPolarity = SPI_POLARITY_HIGH;
+  hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;
   hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;
   hspi1.Init.NSS = SPI_NSS_SOFT;
   hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_8;
@@ -940,9 +957,12 @@ static void MX_DMA_Init(void)
   /* DMA2_Stream1_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMA2_Stream1_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(DMA2_Stream1_IRQn);
-  /* DMA2_Stream2_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DMA2_Stream2_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(DMA2_Stream2_IRQn);
+  /* DMA2_Stream4_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA2_Stream4_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(DMA2_Stream4_IRQn);
+  /* DMA2_Stream7_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA2_Stream7_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(DMA2_Stream7_IRQn);
 
 }
 

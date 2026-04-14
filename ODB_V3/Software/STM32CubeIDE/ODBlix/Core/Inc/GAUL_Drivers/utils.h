@@ -115,7 +115,7 @@ void Telemetry_SendEventLog(rfd900x_t *rfd_dev, odb_modem_id_t modem_id, odb_eve
 /* =========== */
 
 /* === APP DEBUG - BLUETOOTH === */
-#define APP_BLE_NAME "ODB_1"
+
 /* =========== */
 
 /* === HELPERS === */

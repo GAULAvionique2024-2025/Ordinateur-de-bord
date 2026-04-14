@@ -22,6 +22,8 @@
 #define L76LM33_UART_TIMEOUT 500    // For UART transmit
 
 typedef enum {
+	L76LM33_ERROR_UART = -4,
+	L76LM33_ERROR_DEV  = -3,
     L76LM33_EMPTY_BUFF = -2,
     L76LM33_ERROR      = -1,
     L76LM33_OK         =  0
@@ -43,6 +45,7 @@ typedef struct {
     volatile uint8_t     line_count;                            // Counter for lines received
     nmea_t               gps_data;                              // Struct to store parsed NMEA data
 } l76lm33_t;
+
 
 l76lm33_state_t L76LM33_Init(l76lm33_t *dev);
 
