@@ -31,7 +31,7 @@ int8_t SystemMeasurements_Init(system_measurements_t *dev) {
 	dev->v3_buck = 0.00f;
 	if(HAL_GPIO_ReadPin(dev->pg_port, dev->pg_pin) == GPIO_PIN_SET) {
 		dev->pg_v5 = true;
-	} else dev->pg_v5 = true;
+	} else dev->pg_v5 = false;
 
 	memset(dev->pyro_status, 0, sizeof(dev->pyro_status));
 
