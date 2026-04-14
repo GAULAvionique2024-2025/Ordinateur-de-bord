@@ -45,36 +45,13 @@ static int8_t ADXL382_Reset(adxl382_t *dev) {
     return 0; // success
 }
 
-
-int8_t ADXL382_SetMode(adxl382_t *dev, adxl382_mode_t mode) {
+static int8_t ADXL382_SetRange(adxl382_t *dev, adxl382_range_t range) {
     uint8_t op_mode_reg = 0;
     if(ADXL382_ReadReg(dev->hi2c, ADXL382_REG_OP_MODE, &op_mode_reg) != 0) {
         return -1;
     }
 
-    uint8_t config_bits = op_mode_reg & 0xF0;
-    if(ADXL382_WriteReg(dev->hi2c, ADXL382_REG_OP_MODE, config_bits) != HAL_OK) {
-        return -1;
-    }
-    HAL_Delay(2);
-
-    if(ADXL382_WriteReg(dev->hi2c, ADXL382_REG_OP_MODE, config_bits | (uint8_t)mode) != HAL_OK) {
-        return -1;
-    }
-    HAL_Delay(2); 
-
-    dev->mode = mode;
-    
-    return 0; // success
-}
-
-int8_t ADXL382_SetRange(adxl382_t *dev, adxl382_range_t range) {
-    uint8_t op_mode_reg = 0;
-    if(ADXL382_ReadReg(dev->hi2c, ADXL382_REG_OP_MODE, &op_mode_reg) != 0) {
-        return -1;
-    }
-
-    // Stanby mode safe
+    // Standby mode safe
     uint8_t standby_val = op_mode_reg & 0xF0;
 	if(ADXL382_WriteReg(dev->hi2c, ADXL382_REG_OP_MODE, standby_val) != 0) {
 		return -1;
@@ -93,6 +70,28 @@ int8_t ADXL382_SetRange(adxl382_t *dev, adxl382_range_t range) {
     return 0; // success
 }
 
+
+int8_t ADXL382_SetMode(adxl382_t *dev, adxl382_mode_t mode) {
+    uint8_t op_mode_reg = 0;
+    if(ADXL382_ReadReg(dev->hi2c, ADXL382_REG_OP_MODE, &op_mode_reg) != 0) {
+        return -1;
+    }
+
+    uint8_t config_bits = op_mode_reg & 0xF0;
+    if(ADXL382_WriteReg(dev->hi2c, ADXL382_REG_OP_MODE, config_bits) != HAL_OK) {
+        return -1;
+    }
+    HAL_Delay(2);
+
+    if(ADXL382_WriteReg(dev->hi2c, ADXL382_REG_OP_MODE, config_bits | (uint8_t)mode) != HAL_OK) {
+        return -1;
+    }
+    HAL_Delay(2);
+
+    dev->mode = mode;
+
+    return 0; // success
+}
 
 adxl382_error_t ADXL382_Init(adxl382_t *dev) {
     uint8_t id = 0;

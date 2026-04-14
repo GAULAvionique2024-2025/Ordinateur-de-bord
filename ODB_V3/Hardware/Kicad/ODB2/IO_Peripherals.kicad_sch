@@ -7351,6 +7351,17 @@
 		)
 		(uuid "2c047041-8838-4fd8-a616-b45be4aebfbc")
 	)
+	(text "Possibility to add PIO0 for hardware wakeup"
+		(exclude_from_sim no)
+		(at 106.934 68.326 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "3d01b437-977b-4dd9-8a3e-24a5a757e4f7")
+	)
 	(text "IdeFIX Connector"
 		(exclude_from_sim no)
 		(at 30.734 88.9 0)
@@ -7467,6 +7478,17 @@
 			(justify left bottom)
 		)
 		(uuid "a7024b3c-c69f-436b-8b03-de0bc60b857d")
+	)
+	(text "Possibility to connected VBus on stm32 io \nfor bypass the concurrency between stm32 and PC connected to usb"
+		(exclude_from_sim no)
+		(at 193.802 27.94 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "d5efeaef-2507-4720-bd63-84a16567b1f0")
 	)
 	(text "Max consumption 30mA"
 		(exclude_from_sim no)
