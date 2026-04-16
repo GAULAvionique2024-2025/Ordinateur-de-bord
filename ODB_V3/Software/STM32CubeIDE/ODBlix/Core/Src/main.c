@@ -35,6 +35,8 @@
 #include "GAUL_Drivers/smtb0927twr.h"
 #include "GAUL_Drivers/system_measurements.h"
 #include "GAUL_Drivers/w25q512jv.h"
+#include "Nexus/nexus.h"
+#include "GAUL_Drivers/utils.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -49,7 +51,6 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-#define APP_BLE_NAME "ODB_1"
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
@@ -108,7 +109,7 @@ bno055_t bno055 = {
 };
 hm11_t hm11 = {
     .huart = &huart2,
-    .name = APP_BLE_NAME,
+    .name = ODB_BLE_NAME,
     .baudrate = HM11_BAUD_9600,
 };
 l76lm33_t l76lm33 = {

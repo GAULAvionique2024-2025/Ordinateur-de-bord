@@ -63,7 +63,7 @@ static bool HM11_SetBaudRate(hm11_t *dev, uint8_t baud_idx) {
     return HM11_SendATCommand(dev, cmd, "OK+Set");
 }
 
-static bool HM11_TestConnection(hm11_t *dev) {
+static bool HM11_TestUARTConnection(hm11_t *dev) {
     return HM11_SendATCommand(dev, "AT", "OK");
 }
 
@@ -97,7 +97,7 @@ hm11_state_t HM11_Init(hm11_t *dev) {
     // Start receiving data asynchronously
     HAL_UART_Receive_IT(dev->huart, &dev->rx_byte, 1);
 
-    if(HM11_TestConnection(dev) != 0) {
+    if(HM11_TestUARTConnection(dev) != 0) {
     	err = HM11_ERROR;
     }
 
@@ -116,49 +116,100 @@ bool HM11_SendString(hm11_t *dev, const char *str) {
     return HM11_SendData(dev, (uint8_t*)str, strlen(str));
 }
 
-bool HM11_GetMessage(hm11_t *dev, char *out_buffer, uint16_t max_len) {
-    if(!dev || !out_buffer || max_len == 0) return false;
+bool HM11_GetMessage(hm11_t *dev, char *out_buffer, uint16_t max_length) {
+    if (dev == NULL || out_buffer == NULL || max_length <= 1) {
+        return false;
+    }
 
+    // State machine connection status
+    uint16_t out_idx = 0;
     uint8_t byte;
-    bool line_found = false;
-    size_t items = RingBuffer_NumItems(&dev->rx_ring);
-    for (size_t i = 0; i < items; i++) {
-        RingBuffer_Peek(&dev->rx_ring, &byte, i);
-        if (byte == '\n' || byte == '\r') {
-            line_found = true;
-            break;
+    while(RingBuffer_Dequeue(&dev->rx_ring, &byte) && (out_idx < max_length - 1)) {
+        switch (dev->parse_state) {
+            // OK+
+            case HM_PARSE_IDLE:
+                if(byte == 'O') {
+                    dev->parse_state = HM_PARSE_O;
+                } else {
+                    out_buffer[out_idx++] = byte;
+                }
+                break;
+            case HM_PARSE_O:
+                if(byte == 'K') {
+                    dev->parse_state = HM_PARSE_K;
+                } else { 
+                    out_buffer[out_idx++] = 'O'; out_buffer[out_idx++] = byte; dev->parse_state = HM_PARSE_IDLE; 
+                }
+                break;
+            case HM_PARSE_K:
+                if(byte == '+') {
+                    dev->parse_state = HM_PARSE_PLUS;
+                } else {
+                    dev->parse_state = HM_PARSE_IDLE;
+                }
+                break;
+            case HM_PARSE_PLUS:
+                if(byte == 'C') {
+                    dev->parse_state = HM_PARSE_C;
+                } else if(byte == 'L') {
+                    dev->parse_state = HM_PARSE_L;
+                } else {
+                    dev->parse_state = HM_PARSE_IDLE;
+                }
+                break;
+            // CONN
+            case HM_PARSE_C:
+                if(byte == 'O') {
+                    dev->parse_state = HM_PARSE_CO;
+                } else {
+                    dev->parse_state = HM_PARSE_IDLE;
+                }
+                break;
+            case HM_PARSE_CO:
+                if(byte == 'N') {
+                    dev->parse_state = HM_PARSE_CON;
+                } else {
+                    dev->parse_state = HM_PARSE_IDLE;
+                }
+                break;
+            case HM_PARSE_CON:
+                if(byte == 'N') {
+                    dev->is_connected = true;
+                    dev->parse_state = HM_PARSE_IDLE;
+                } else {
+                    dev->parse_state = HM_PARSE_IDLE;
+                }
+                break;
+            // LOST
+            case HM_PARSE_L:
+                if(byte == 'O') {
+                    dev->parse_state = HM_PARSE_LO;
+                } else {
+                    dev->parse_state = HM_PARSE_IDLE;
+                }
+                break;
+            case HM_PARSE_LO:
+                if(byte == 'S') {
+                    dev->parse_state = HM_PARSE_LOS;
+                } else {
+                    dev->parse_state = HM_PARSE_IDLE;
+                }
+                break;
+            case HM_PARSE_LOS:
+                if(byte == 'T') {
+                    dev->is_connected = false;
+                    dev->parse_state = HM_PARSE_IDLE;
+                } else {
+                    dev->parse_state = HM_PARSE_IDLE;
+                }
+                break;
         }
     }
 
-    if (!line_found) {
-        return false; 
-    }
+    // Null-terminate the output buffer provided by the connected device
+    out_buffer[out_idx] = '\0';
 
-    uint16_t index = 0;
-    while (index < max_len - 1 && RingBuffer_Dequeue(&dev->rx_ring, &byte)) {
-        if (byte == '\n' || byte == '\r') {
-            break;
-        }
-        if (byte >= 0x20) {
-            out_buffer[index++] = (char)byte;
-        }
-    }
-    out_buffer[index] = '\0';
-
-    while (RingBuffer_Peek(&dev->rx_ring, &byte, 0)) {
-        if (byte == '\n' || byte == '\r') {
-            RingBuffer_Dequeue(&dev->rx_ring, &byte);
-        } else {
-            break;
-        }
-    }
-
-    // Ignore empty line
-    if (index == 0) {
-		return false;
-	}
-
-    return true; // success
+    return (out_idx > 0); 
 }
 
 bool HM11_Sleep(hm11_t *dev) {

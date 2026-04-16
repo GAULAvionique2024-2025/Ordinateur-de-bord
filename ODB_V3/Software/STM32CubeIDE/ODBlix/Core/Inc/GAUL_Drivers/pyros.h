@@ -33,6 +33,7 @@ typedef struct {
 	bool			is_fire;
 } pyro_t;
 
+
 int8_t Pyro_Init(pyro_t *dev);
 
 void Pyro_Arming(bool arming);

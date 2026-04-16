@@ -38,12 +38,28 @@ typedef enum {
     HM11_BAUD_230400 = 8
 } hm11_baudrate_t;
 
+typedef enum {
+    HM_PARSE_IDLE = 0,
+    HM_PARSE_O,
+    HM_PARSE_K,
+    HM_PARSE_PLUS,
+    HM_PARSE_C,
+    HM_PARSE_CO,
+    HM_PARSE_CON,
+    HM_PARSE_L,
+    HM_PARSE_LO,
+    HM_PARSE_LOS
+} hm11_parse_t;
+
 typedef struct {
     UART_HandleTypeDef 	*huart;
     char				*name;
     hm11_baudrate_t     baudrate;
+    bool                is_connected;
 
+    hm11_parse_t        parse_state;
     char 				at_rx_buffer[HM11_RX_BUFFER_SIZE];
+    uint16_t            at_rx_index;
     uint8_t             rx_byte;
     ring_buffer_t       rx_ring;
     uint8_t             rx_ring_data[HM11_RX_BUFFER_SIZE];

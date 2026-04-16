@@ -22,13 +22,13 @@
 #include "system_measurements.h"
 #include "w25q512jv.h"
 #include "mavlink/odb_mavlink_v1/mavlink.h"
+#include "Nexus/nexus.h"
 
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
 #include <stdbool.h>
-
 
 
 typedef struct {
@@ -111,12 +111,14 @@ typedef enum {
 	EVENT_SEVERITY_INFO			= MAV_SEVERITY_INFO,
 } odb_event_severity_t;
 
-void Telemetry_SendRocketData(rfd900x_t *rfd_dev, odb_modem_id_t modem_id, odb_data *data, uint32_t current_time_ms);
-void Telemetry_SendEventLog(rfd900x_t *rfd_dev, odb_modem_id_t modem_id, odb_event_severity_t severity, const char *text);
+
+void Telemetry_SendRocketData(rfd900x_t *rfd_dev, const odb_modem_id_t modem_id, const odb_data *data, const uint32_t current_time_ms);
+void Telemetry_SendEventLog(rfd900x_t *rfd_dev, const odb_modem_id_t modem_id, const odb_event_severity_t severity, const char *text);
 /* =========== */
 
-/* === APP DEBUG - BLUETOOTH === */
-
+/* === BLUETOOTH APP === */
+void App_SendFrame(nexus_t *nexus_dev, hm11_t *hm11_dev, const odb_data *data);
+void App_HandleCommands(nexus_t *nexus_dev, hm11_t *hm11_dev);
 /* =========== */
 
 
