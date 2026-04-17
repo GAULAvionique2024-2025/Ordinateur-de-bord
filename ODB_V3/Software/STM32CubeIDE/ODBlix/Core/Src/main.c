@@ -152,11 +152,19 @@ pyro_t pyro4 = {
 	.is_connected = false,
 	.is_fire = false,
 };
+rfd900x_t rfd900x = {
+  .huart = &huart1,
+};
 system_measurements_t system_measurements = {
 	.hadc = &hadc1,
 	.htim = &htim2,
 	.pg_port = Power_Good_GPIO_Port,
 	.pg_pin = Power_Good_Pin
+};
+nexus_t nexus = {
+  .is_enabled = true,
+  .period_ms = NEXUS_DEFAULT_PERIOD_MS,
+  .last_ms = 0,
 };
 uint16_t adc_buffer[9];
 w25q_t w25q = {
@@ -234,33 +242,55 @@ int main(void)
   MX_TIM2_Init();
   MX_TIM4_Init();
   /* USER CODE BEGIN 2 */
-  if(HM11_Init(&hm11) == HM11_OK) {
+
+  if(HM11_Init(&hm11) != HM11_OK) {
 	  printf("Erreur : HM-11 ne repond pas.\n");
   }
 
-  //SystemMeasurements_Init(&system_measurements);
-  /*
+  if(SystemMeasurements_Init(&system_measurements) != 0) {
+      printf("Erreur init SystemMeasurements\n");
+  }
+
   if(MS5611_Init(&ms5611, OSR1024, OSR1024) != MS5611_OK) {
       printf("Erreur init MS5611\n");
   }
-  float temperature, pressure;
-  */
-  /*
-  error_bno err = bno055_init(&bno055);
-  if(err != BNO_OK) {
-	  printf("Erreur init BNO055 : %s\n", bno055_err_str(err));
-  }
-  bno055_euler_t euler_angles;
-  bno055_vec3_t accel_data, gyro_data, mag_data;
-  bno055_vec4_t quat_data;
-  int8_t temp;
-  */
-  /*
-  if(ADXL382_Init(&adxl382) != 0) {
+
+  if(ADXL382_Init(&adxl382) != ADXL382_OK) {
     printf("Erreur init ADXL382\n");
   }
-  */
-  //char rx_buffer[HM11_RX_BUFFER_SIZE];
+
+  if(L76LM33_Init(&l76lm33) != L76LM33_OK) {
+    printf("Erreur init L76LM33\n");
+  }
+
+  if(CriticalLed_Init(&critical_led) != 0) {
+    printf("Erreur init Critical LED\n");
+  }
+
+  if(Pyro_Init(&pyro1) != 1) {
+    printf("Erreur init Pyro 1\n");
+  }
+  if(Pyro_Init(&pyro2) != 1) {
+    printf("Erreur init Pyro 2\n");
+  }
+  if(Pyro_Init(&pyro3) != 1) {
+    printf("Erreur init Pyro 3\n");
+  }
+  if(Pyro_Init(&pyro4) != 1) {
+    printf("Erreur init Pyro 4\n");
+  }
+
+  if(RFD900x_Init(&rfd900x) != RFD_OK) {
+    printf("Erreur init RFD900x\n");
+  }
+
+  if(W25Q_Init(&w25q) != 0) {
+    printf("Erreur init W25Q\n");
+  }
+
+  odb_data bt_data = {0};
+  float temperature, pressure;
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -268,101 +298,71 @@ int main(void)
   while (1)
   {
     /* USER CODE BEGIN 3 */
-    /* USER CODE END WHILE */
 
-    /* USER CODE BEGIN 3 */
-    /* USER CODE END WHILE */
+    SystemMeasurements_ComputeTemperature(&system_measurements);
+    SystemMeasurements_ComputePower(&system_measurements);
+    SystemMeasurements_ComputePyros(&system_measurements);
 
-    /* USER CODE BEGIN 3 */
-    /* USER CODE END WHILE */
-
-    /* USER CODE BEGIN 3 */
-    /* USER CODE END WHILE */
-
-    /* USER CODE BEGIN 3 */
-    /* USER CODE END WHILE */
-
-    /* USER CODE BEGIN 3 */
-    /* USER CODE END WHILE */
-
-    /* USER CODE BEGIN 3 */
-    /* USER CODE END WHILE */
-	char tx_buffer[1024];
-	/*
     MS5611_Update(&ms5611);
-    MS5611_Compute(&ms5611, &temperature, &pressure);
-    */
-	  /*
-	  ADXL382_ReadData(&adxl382);
-	  snprintf(tx_buffer, sizeof(tx_buffer),
-			   "ACC X:%.3f, ACC Y:%.3f, ACC Z:%.3f, TEMP:%.2f\r\n",
-			   adxl382.acc_x,
-			   adxl382.acc_y,
-			   adxl382.acc_z,
-			   adxl382.temp);
-	  HM11_SendString(&hm11, tx_buffer);
-	  */
-	  /*
-	  bno055.temperature(&bno055, &temp);
-	  bno055.euler(&bno055, &euler_angles);
-	  bno055.acc(&bno055, &accel_data);
-	  bno055.gyro(&bno055, &gyro_data);
-	  bno055.mag(&bno055, &mag_data);
-	  bno055.quaternion(&bno055, &quat_data);
-	  snprintf(tx_buffer, sizeof(tx_buffer),
-			   "Temp:%d, Yaw:%.2f, Pitch:%.2f, Roll:%.2f, ACC X:%.2f, ACC Y:%.2f, ACC Z:%.2f, GYRO X:%.2f, GYRO Y:%.2f, GYRO Z:%.2f, MAG X:%.2f, MAG Y:%.2f, MAG Z:%.2f, QUAT W:%.2f, QUAT X:%.2f, QUAT Y:%.2f, QUAT Z:%.2f\r\n",
-			   temp,
-			   euler_angles.yaw,
-			   euler_angles.pitch,
-			   euler_angles.roll,
-			   accel_data.x,
-			   accel_data.y,
-			   accel_data.z,
-			   gyro_data.x,
-			   gyro_data.y,
-			   gyro_data.z,
-			   mag_data.x,
-			   mag_data.y,
-			   mag_data.z,
-			   quat_data.w,
-			   quat_data.x,
-			   quat_data.y,
-			   quat_data.z);
+    if(MS5611_Compute(&ms5611, &temperature, &pressure) == MS5611_OK) {
+      bt_data.pressure_hpa = pressure;
+      bt_data.temp_celsius = temperature;
+    }
 
-	  HM11_SendString(&hm11, tx_buffer);
-	  */
-	  /*
-	  SystemMeasurements_Update(&system_measurements);
-	  snprintf(tx_buffer, sizeof(tx_buffer),
-			   "Temp:%.2f, Vbat:%.2f, V5:%.2f, V3:%.2f, Arm:%d, Pyro:%d,%d,%d,%d\r\n",
-			   system_measurements.temperature,
-			   system_measurements.vin_batt,
-			   system_measurements.v5_buck,
-			   system_measurements.v3_buck,
-			   system_measurements.pyros_arming,
-			   system_measurements.pyro_status[0],
-			   system_measurements.pyro_status[1],
-			   system_measurements.pyro_status[2],
-			   system_measurements.pyro_status[3]);
+    if(ADXL382_ReadData(&adxl382) == ADXL382_OK) {
+      bt_data.highg_acc_x = adxl382.acc_x;
+      bt_data.highg_acc_y = adxl382.acc_y;
+      bt_data.highg_acc_z = adxl382.acc_z;
+    }
 
-	  HM11_SendString(&hm11, tx_buffer);
-	  */
-	  /*
-	  if (HM11_GetMessage(&hm11, rx_buffer, sizeof(rx_buffer))) {
-		  char debug_msg[80];
-		  sprintf(debug_msg, "Lu: [%s]\n", rx_buffer);
-		  HM11_SendString(&hm11, debug_msg);
+    if(L76LM33_Read(&l76lm33) == L76LM33_OK) {
+      bt_data.gps_fix = l76lm33.gps_data.gps_fix;
+      bt_data.lat = l76lm33.gps_data.lat;
+      bt_data.lon = l76lm33.gps_data.lon;
+      bt_data.gps_alt = l76lm33.gps_data.gps_alt;
+      bt_data.vel = l76lm33.gps_data.vel;
+      bt_data.cog = l76lm33.gps_data.cog;
+      bt_data.satellites_nb = l76lm33.gps_data.satellites_nb;
+    }
 
-		  if(strcmp(rx_buffer, "LED_ON") == 0) {
-			  HM11_SendString(&hm11, "La LED est ALLUMEE\n");
-		  } else if(strcmp(rx_buffer, "LED_OFF") == 0) {
-			  HM11_SendString(&hm11, "La LED est ETEINTE\n");
-		  } else if(strcmp(rx_buffer, "TEMP") == 0) {
-			  HM11_SendString(&hm11, "Temperature: 23C\n");
-		  }
-	  }
-	  */
-	  HAL_Delay(100);
+    bt_data.time_boot_ms = HAL_GetTick();
+    bt_data.system_states = FLAG_STATUS_ODB(ODB_STATE_READY);
+    bt_data.battery_mv = (uint16_t)(system_measurements.vin_batt * 1000.0f);
+
+    if(system_measurements.pyros_arming) {
+      bt_data.system_states |= FLAG_PYROS_ARMED;
+    }
+    if(system_measurements.pyro_status[0]) {
+      bt_data.system_states |= FLAG_PYRO1_FIRED;
+    }
+    if(system_measurements.pyro_status[1]) {
+      bt_data.system_states |= FLAG_PYRO2_FIRED;
+    }
+    if(system_measurements.pyro_status[2]) {
+      bt_data.system_states |= FLAG_PYRO3_FIRED;
+    }
+    if(system_measurements.pyro_status[3]) {
+      bt_data.system_states |= FLAG_PYRO4_FIRED;
+    }
+
+    bt_data.roll = 0.0f;
+    bt_data.pitch = 0.0f;
+    bt_data.yaw = 0.0f;
+    bt_data.imu_acc_x = 0.0f;
+    bt_data.imu_acc_y = 0.0f;
+    bt_data.imu_acc_z = 0.0f;
+    bt_data.imu_gyro_x = 0.0f;
+    bt_data.imu_gyro_y = 0.0f;
+    bt_data.imu_gyro_z = 0.0f;
+
+    if(bt_data.gps_fix > 1) {
+      bt_data.system_states |= FLAG_GPS_OK;
+    }
+
+    App_SendFrame(&nexus, &hm11, &bt_data);
+    App_HandleCommands(&nexus, &hm11);
+
+  HAL_Delay(100);
   }
   /* USER CODE END 3 */
 }

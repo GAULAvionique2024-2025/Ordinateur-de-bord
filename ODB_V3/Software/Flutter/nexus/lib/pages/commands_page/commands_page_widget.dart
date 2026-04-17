@@ -108,6 +108,27 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                                   .fontStyle,
                             ),
                       ),
+                            Text(
+                              connected ? 'Timestamp: ${data.timeBootDisplay} | État ODB: ${data.missionStatus}' : '—',
+                            style: FlutterFlowTheme.of(context).bodySmall.override(
+                                font: GoogleFonts.inter(
+                                fontWeight: FlutterFlowTheme.of(context)
+                                  .bodySmall
+                                  .fontWeight,
+                                fontStyle: FlutterFlowTheme.of(context)
+                                  .bodySmall
+                                  .fontStyle,
+                                ),
+                                color: FlutterFlowTheme.of(context).secondaryText,
+                                letterSpacing: 0.0,
+                                fontWeight: FlutterFlowTheme.of(context)
+                                  .bodySmall
+                                  .fontWeight,
+                                fontStyle: FlutterFlowTheme.of(context)
+                                  .bodySmall
+                                  .fontStyle,
+                              ),
+                            ),
                     ],
                   ),
                   Text(

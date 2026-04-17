@@ -16,9 +16,9 @@
 
 
 typedef enum {
-    RFD_STATE_OK,
-    RFD_STATE_BUSY,
-    RFD_STATE_ERROR,
+    RFD_OK,
+    RFD_BUSY,
+    RFD_ERROR,
 } rfd900x_state_t;
 
 typedef struct {

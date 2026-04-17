@@ -27,6 +27,7 @@ class ConnectionPageWidget extends StatefulWidget {
 
 class _ConnectionPageWidgetState extends State<ConnectionPageWidget> {
   late ConnectionPageModel _model;
+  static const int _minRssiThresholdDbm = -90;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -82,14 +83,38 @@ class _ConnectionPageWidgetState extends State<ConnectionPageWidget> {
     final bt = context.watch<BluetoothServiceManager>();
     final dataService = context.watch<DataServiceManager>();
 
-    // Filtrage local par nom ou UUID/id
+    // Filtrage local + seuil RSSI + déduplication
     final filter = _model.textController?.text ?? '';
     final lower = filter.toLowerCase();
-    final filteredResults = bt.scanResults.where((r) {
-        final id = r.device.remoteId.str.toLowerCase();
-        final name = r.device.platformName.toLowerCase();
-        return filter.isEmpty || id.contains(lower) || name.contains(lower);
-    }).toList();
+    final bestByDevice = <String, ScanResult>{};
+    for (final result in bt.scanResults) {
+      if (result.rssi < _minRssiThresholdDbm) continue;
+
+      final id = result.device.remoteId.str;
+      final idLower = id.toLowerCase();
+      final nameLower = result.device.platformName.toLowerCase();
+      final matchesFilter =
+          filter.isEmpty || idLower.contains(lower) || nameLower.contains(lower);
+      if (!matchesFilter) continue;
+
+      final currentBest = bestByDevice[id];
+      if (currentBest == null || result.rssi > currentBest.rssi) {
+        bestByDevice[id] = result;
+      }
+    }
+
+    final filteredResults = bestByDevice.values.toList()
+      ..sort((a, b) {
+        final byRssi = b.rssi.compareTo(a.rssi);
+        if (byRssi != 0) return byRssi;
+        final aName = a.device.platformName.isNotEmpty
+            ? a.device.platformName
+            : a.device.remoteId.str;
+        final bName = b.device.platformName.isNotEmpty
+            ? b.device.platformName
+            : b.device.remoteId.str;
+        return aName.toLowerCase().compareTo(bName.toLowerCase());
+      });
 
     return GestureDetector(
       onTap: () {
@@ -436,7 +461,7 @@ class _ConnectionPageWidgetState extends State<ConnectionPageWidget> {
                                     title: Text(device.platformName.isNotEmpty
                                         ? device.platformName
                                         : 'Appareil inconnu'),
-                                    subtitle: Text(device.remoteId.str),
+                                    subtitle: Text('${device.remoteId.str}  |  RSSI: ${result.rssi} dBm'),
                                     trailing: FFButtonWidget(
                                       onPressed: connected
                                           ? null

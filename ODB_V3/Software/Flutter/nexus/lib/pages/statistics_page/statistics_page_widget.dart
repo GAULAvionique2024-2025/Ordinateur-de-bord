@@ -42,7 +42,6 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final bt = context.watch<BluetoothServiceManager>();
     final data = context.watch<DataServiceManager>();
     final connected = data.hasConnection;
 
@@ -141,7 +140,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                           ),
                           child: Container(
                             width: 100.0,
-                            height: 100.0,
+                            height: 190.0,
                             decoration: BoxDecoration(
                               color: FlutterFlowTheme.of(context)
                                   .secondaryBackground,
@@ -241,6 +240,35 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                                       .fontStyle,
                                             ),
                                       ),
+                                            Text(
+                                            connected ? 'Timestamp: ${data.timeBootDisplay}' : '—',
+                                            style: FlutterFlowTheme.of(context)
+                                              .bodySmall
+                                              .override(
+                                                font: GoogleFonts.inter(
+                                                fontWeight:
+                                                  FlutterFlowTheme.of(context)
+                                                    .bodySmall
+                                                    .fontWeight,
+                                                fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                    .bodySmall
+                                                    .fontStyle,
+                                                ),
+                                                color:
+                                                  FlutterFlowTheme.of(context)
+                                                    .secondaryText,
+                                                letterSpacing: 0.0,
+                                                fontWeight:
+                                                  FlutterFlowTheme.of(context)
+                                                    .bodySmall
+                                                    .fontWeight,
+                                                fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                    .bodySmall
+                                                    .fontStyle,
+                                              ),
+                                            ),
                                     ].divide(const SizedBox(height: 4.0)),
                                   ),
                                   Text(
@@ -561,7 +589,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                       ),
                                       Text(
                                         connected
-                                            ? ((data.batterySensorState == SensorState.ok && data.goodPowerState) ? 'Good Power' : 'Problème batterie')
+                                            ? ((data.batterySensorState == SensorState.ok && data.goodPowerState) ? 'Power Good' : 'Problème Alimentation')
                                             : '—',
                                         style: FlutterFlowTheme.of(context)
                                             .bodySmall
@@ -897,7 +925,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                       ),
                       child: Container(
                         width: double.infinity,
-                        height: 180.0,
+                        height: 280.0,
                         decoration: BoxDecoration(
                           color:
                               FlutterFlowTheme.of(context).secondaryBackground,
@@ -921,40 +949,11 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Icon(
-                                          Icons.explore,
-                                          color: FlutterFlowTheme.of(context)
-                                              .primary,
-                                          size: 24.0,
-                                        ),
-                                        Text(
-                                          'IMU 9-AXES',
-                                          style: FlutterFlowTheme.of(context)
-                                              .labelSmall
-                                              .override(
-                                                font: GoogleFonts.inter(
-                                                  fontWeight: FontWeight.w600,
-                                                  fontStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .labelSmall
-                                                          .fontStyle,
-                                                ),
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryText,
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.w600,
-                                                fontStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .labelSmall
-                                                        .fontStyle,
-                                              ),
-                                        ),
-                                      ].divide(const SizedBox(width: 8.0)),
+                                    Icon(
+                                      Icons.explore,
+                                      color: FlutterFlowTheme.of(context)
+                                          .primary,
+                                      size: 24.0,
                                     ),
                                     Container(
                                       width: 12.0,
@@ -1299,6 +1298,211 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                   ].divide(const SizedBox(width: 24.0)),
                                 ),
                               ),
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 8.0, 0.0, 8.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'ROLL',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodySmall
+                                                .override(
+                                                  font: GoogleFonts.inter(
+                                                    fontWeight: FontWeight.w600,
+                                                    fontStyle:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodySmall
+                                                            .fontStyle,
+                                                  ),
+                                                  color:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .secondaryText,
+                                                  letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.w600,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodySmall
+                                                          .fontStyle,
+                                                ),
+                                          ),
+                                          Text(
+                                            connected && data.imuSensorState == SensorState.ok
+                                                ? '${data.roll.toStringAsFixed(1)}°'
+                                                : '—',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  font: GoogleFonts.inter(
+                                                    fontWeight: FontWeight.w500,
+                                                    fontStyle:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyMedium
+                                                            .fontStyle,
+                                                  ),
+                                                  letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.w500,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .fontStyle,
+                                                ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'PITCH',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodySmall
+                                                .override(
+                                                  font: GoogleFonts.inter(
+                                                    fontWeight: FontWeight.w600,
+                                                    fontStyle:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodySmall
+                                                            .fontStyle,
+                                                  ),
+                                                  color:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .secondaryText,
+                                                  letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.w600,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodySmall
+                                                          .fontStyle,
+                                                ),
+                                          ),
+                                          Text(
+                                            connected && data.imuSensorState == SensorState.ok
+                                                ? '${data.pitch.toStringAsFixed(1)}°'
+                                                : '—',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  font: GoogleFonts.inter(
+                                                    fontWeight: FontWeight.w500,
+                                                    fontStyle:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyMedium
+                                                            .fontStyle,
+                                                  ),
+                                                  letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.w500,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .fontStyle,
+                                                ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'YAW',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodySmall
+                                                .override(
+                                                  font: GoogleFonts.inter(
+                                                    fontWeight: FontWeight.w600,
+                                                    fontStyle:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodySmall
+                                                            .fontStyle,
+                                                  ),
+                                                  color:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .secondaryText,
+                                                  letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.w600,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodySmall
+                                                          .fontStyle,
+                                                ),
+                                          ),
+                                          Text(
+                                            connected && data.imuSensorState == SensorState.ok
+                                                ? '${data.yaw.toStringAsFixed(1)}°'
+                                                : '—',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  font: GoogleFonts.inter(
+                                                    fontWeight: FontWeight.w500,
+                                                    fontStyle:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyMedium
+                                                            .fontStyle,
+                                                  ),
+                                                  letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.w500,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .fontStyle,
+                                                ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: 8.0),
+                              Text(
+                                'IMU 9-AXES',
+                                style: FlutterFlowTheme.of(context)
+                                    .labelSmall
+                                    .override(
+                                      font: GoogleFonts.inter(
+                                        fontWeight: FontWeight.w600,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .labelSmall
+                                            .fontStyle,
+                                      ),
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryText,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.w600,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .labelSmall
+                                          .fontStyle,
+                                    ),
+                              ),
                             ],
                           ),
                         ),
@@ -1312,7 +1516,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                       ),
                       child: Container(
                         width: double.infinity,
-                        height: 140.0,
+                        height: 180.0,
                         decoration: BoxDecoration(
                           color:
                               FlutterFlowTheme.of(context).secondaryBackground,
@@ -1336,40 +1540,11 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Icon(
-                                          Icons.speed,
-                                          color: FlutterFlowTheme.of(context)
-                                              .primary,
-                                          size: 24.0,
-                                        ),
-                                        Text(
-                                          'ACCÉLÉROMÈTRE HIGH-G',
-                                          style: FlutterFlowTheme.of(context)
-                                              .labelSmall
-                                              .override(
-                                                font: GoogleFonts.inter(
-                                                  fontWeight: FontWeight.w600,
-                                                  fontStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .labelSmall
-                                                          .fontStyle,
-                                                ),
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryText,
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.w600,
-                                                fontStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .labelSmall
-                                                        .fontStyle,
-                                              ),
-                                        ),
-                                      ].divide(const SizedBox(width: 8.0)),
+                                    Icon(
+                                      Icons.speed,
+                                      color: FlutterFlowTheme.of(context)
+                                          .primary,
+                                      size: 24.0,
                                     ),
                                     Container(
                                       width: 12.0,
@@ -1462,6 +1637,27 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                     ),
                                   ].divide(const SizedBox(width: 32.0)),
                                 ),
+                              ),
+                              const SizedBox(height: 8.0),
+                              Text(
+                                'ACCÉLÉROMÈTRE HIGH-G',
+                                style: FlutterFlowTheme.of(context)
+                                    .labelSmall
+                                    .override(
+                                      font: GoogleFonts.inter(
+                                        fontWeight: FontWeight.w600,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .labelSmall
+                                            .fontStyle,
+                                      ),
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryText,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.w600,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .labelSmall
+                                          .fontStyle,
+                                    ),
                               ),
                             ],
                           ),
@@ -1777,6 +1973,52 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .success,
+                                              letterSpacing: 0.0,
+                                              fontWeight: FontWeight.w500,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodySmall
+                                                      .fontStyle,
+                                            ),
+                                      ),
+                                      Text(
+                                        connected && data.gpsSensorState == SensorState.ok ? 'Vel: ${data.gpsVelocityDisplay}' : '—',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodySmall
+                                            .override(
+                                              font: GoogleFonts.inter(
+                                                fontWeight: FontWeight.w500,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodySmall
+                                                        .fontStyle,
+                                              ),
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryText,
+                                              letterSpacing: 0.0,
+                                              fontWeight: FontWeight.w500,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodySmall
+                                                      .fontStyle,
+                                            ),
+                                      ),
+                                      Text(
+                                        connected && data.gpsSensorState == SensorState.ok ? 'COG: ${data.gpsCourseDisplay}' : '—',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodySmall
+                                            .override(
+                                              font: GoogleFonts.inter(
+                                                fontWeight: FontWeight.w500,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodySmall
+                                                        .fontStyle,
+                                              ),
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryText,
                                               letterSpacing: 0.0,
                                               fontWeight: FontWeight.w500,
                                               fontStyle:

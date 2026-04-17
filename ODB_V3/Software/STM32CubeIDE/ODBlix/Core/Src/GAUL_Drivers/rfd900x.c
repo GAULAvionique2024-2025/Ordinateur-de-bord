@@ -12,21 +12,21 @@
 
 
 rfd900x_state_t RFD900x_Init(rfd900x_t *dev) {
-    if (!dev || !dev->huart) return RFD_STATE_ERROR;
+    if (!dev || !dev->huart) return RFD_ERROR;
 
-    return RFD_STATE_OK; // success
+    return RFD_OK; // success
 }
 
 rfd900x_state_t RFD900x_Transmit(rfd900x_t *dev, uint8_t *payload, uint16_t length) {
-    if(!dev || !payload || length == 0) return RFD_STATE_ERROR;
+    if(!dev || !payload || length == 0) return RFD_ERROR;
 
     if(dev->huart->gState != HAL_UART_STATE_READY) {
-        return RFD_STATE_BUSY;
+        return RFD_BUSY;
     }
 
     if(HAL_UART_Transmit_DMA(dev->huart, payload, length)) {
-    	return RFD_STATE_ERROR;
+    	return RFD_ERROR;
     }
 
-    return RFD_STATE_OK;
+    return RFD_OK;
 }
