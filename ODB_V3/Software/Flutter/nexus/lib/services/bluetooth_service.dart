@@ -15,6 +15,7 @@ class BluetoothServiceManager with ChangeNotifier {
   BluetoothDevice? connectedDevice;
   StreamSubscription<BluetoothConnectionState>? connectionSubscription;
   final Map<Guid, StreamSubscription<List<int>>> notifySubscriptions = {};
+  final Map<Guid, String> _notifyBuffers = {};
   BluetoothCharacteristic? _writeCharacteristic;
 
   // ---------- RSSI ----------
@@ -135,6 +136,7 @@ class BluetoothServiceManager with ChangeNotifier {
       await sub.cancel();
     }
     notifySubscriptions.clear();
+    _notifyBuffers.clear();
 
     try {
       await connectedDevice!.disconnect();
@@ -177,13 +179,31 @@ class BluetoothServiceManager with ChangeNotifier {
   ) async {
     try {
       await c.setNotifyValue(true);
+      _notifyBuffers[c.uuid] = '';
 
       var sub = c.lastValueStream.listen((data) {
-        final text = String.fromCharCodes(data);
-        ConsoleService().log("Message reçu: $text");
+        final chunk = String.fromCharCodes(data);
+        final existing = _notifyBuffers[c.uuid] ?? '';
+        var buffer = '$existing$chunk';
 
-        // Appel du parser pour extraire et stocker les données
-        dataService.parseMessage(text);
+        // On reconstruit les lignes complètes terminées par \n avant parsing.
+        while (buffer.contains('\n')) {
+          final splitIndex = buffer.indexOf('\n');
+          final rawLine = buffer.substring(0, splitIndex).replaceAll('\r', '');
+          buffer = buffer.substring(splitIndex + 1);
+
+          final line = rawLine.trim();
+          if (line.isEmpty) {
+            continue;
+          }
+
+          ConsoleService().log('Message reçu: $line');
+          if (!dataService.isDisposed) {
+            dataService.parseMessage(line);
+          }
+        }
+
+        _notifyBuffers[c.uuid] = buffer;
       });
 
       notifySubscriptions[c.uuid] = sub;
@@ -221,6 +241,7 @@ class BluetoothServiceManager with ChangeNotifier {
       sub.cancel();
     }
     notifySubscriptions.clear();
+    _notifyBuffers.clear();
     super.dispose();
   }
 }

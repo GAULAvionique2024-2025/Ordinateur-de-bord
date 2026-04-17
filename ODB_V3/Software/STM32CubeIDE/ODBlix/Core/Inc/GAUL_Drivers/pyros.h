@@ -36,7 +36,7 @@ typedef struct {
 
 int8_t Pyro_Init(pyro_t *dev);
 
-void Pyro_Arming(bool arming);
-uint8_t Pyro_Fire(pyro_t *dev);
+bool Pyro_Arming(bool arming);
+bool Pyro_Fire(pyro_t *dev);
 
 #endif /* INC_GAUL_DRIVERS_PYROS_H_ */

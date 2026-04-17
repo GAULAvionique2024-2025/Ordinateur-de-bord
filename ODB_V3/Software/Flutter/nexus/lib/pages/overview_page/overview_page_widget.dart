@@ -639,7 +639,7 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                                     padding: const EdgeInsetsDirectional.fromSTEB(
                                         0.0, 4.0, 0.0, 0.0),
                                     child: Text(
-                                      connected ? 'Appareil connecté: ${bt.connectedDevice?.platformName ?? bt.connectedDevice?.remoteId.str}\nStatut mission: ${data.missionStatus}\nTimestamp: ${data.timeBootDisplay}' : 'En attente de connexion Bluetooth',
+                                      connected ? 'Appareil connecté: ${bt.connectedDevice?.platformName ?? bt.connectedDevice?.remoteId.str}\nMission: ${data.missionStatus}\nFlags système: ${data.systemStateDisplay}\nTimestamp: ${data.timeBootDisplay}' : 'En attente de connexion Bluetooth',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(

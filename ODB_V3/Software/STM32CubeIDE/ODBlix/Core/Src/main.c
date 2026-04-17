@@ -242,55 +242,8 @@ int main(void)
   MX_TIM2_Init();
   MX_TIM4_Init();
   /* USER CODE BEGIN 2 */
-
-  if(HM11_Init(&hm11) != HM11_OK) {
-	  printf("Erreur : HM-11 ne repond pas.\n");
-  }
-
-  if(SystemMeasurements_Init(&system_measurements) != 0) {
-      printf("Erreur init SystemMeasurements\n");
-  }
-
-  if(MS5611_Init(&ms5611, OSR1024, OSR1024) != MS5611_OK) {
-      printf("Erreur init MS5611\n");
-  }
-
-  if(ADXL382_Init(&adxl382) != ADXL382_OK) {
-    printf("Erreur init ADXL382\n");
-  }
-
-  if(L76LM33_Init(&l76lm33) != L76LM33_OK) {
-    printf("Erreur init L76LM33\n");
-  }
-
-  if(CriticalLed_Init(&critical_led) != 0) {
-    printf("Erreur init Critical LED\n");
-  }
-
-  if(Pyro_Init(&pyro1) != 1) {
-    printf("Erreur init Pyro 1\n");
-  }
-  if(Pyro_Init(&pyro2) != 1) {
-    printf("Erreur init Pyro 2\n");
-  }
-  if(Pyro_Init(&pyro3) != 1) {
-    printf("Erreur init Pyro 3\n");
-  }
-  if(Pyro_Init(&pyro4) != 1) {
-    printf("Erreur init Pyro 4\n");
-  }
-
-  if(RFD900x_Init(&rfd900x) != RFD_OK) {
-    printf("Erreur init RFD900x\n");
-  }
-
-  if(W25Q_Init(&w25q) != 0) {
-    printf("Erreur init W25Q\n");
-  }
-
-  odb_data bt_data = {0};
-  float temperature, pressure;
-
+  odb_data data;
+  ODB_Init(&data);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -298,71 +251,12 @@ int main(void)
   while (1)
   {
     /* USER CODE BEGIN 3 */
-
-    SystemMeasurements_ComputeTemperature(&system_measurements);
-    SystemMeasurements_ComputePower(&system_measurements);
-    SystemMeasurements_ComputePyros(&system_measurements);
-
-    MS5611_Update(&ms5611);
-    if(MS5611_Compute(&ms5611, &temperature, &pressure) == MS5611_OK) {
-      bt_data.pressure_hpa = pressure;
-      bt_data.temp_celsius = temperature;
-    }
-
-    if(ADXL382_ReadData(&adxl382) == ADXL382_OK) {
-      bt_data.highg_acc_x = adxl382.acc_x;
-      bt_data.highg_acc_y = adxl382.acc_y;
-      bt_data.highg_acc_z = adxl382.acc_z;
-    }
-
-    if(L76LM33_Read(&l76lm33) == L76LM33_OK) {
-      bt_data.gps_fix = l76lm33.gps_data.gps_fix;
-      bt_data.lat = l76lm33.gps_data.lat;
-      bt_data.lon = l76lm33.gps_data.lon;
-      bt_data.gps_alt = l76lm33.gps_data.gps_alt;
-      bt_data.vel = l76lm33.gps_data.vel;
-      bt_data.cog = l76lm33.gps_data.cog;
-      bt_data.satellites_nb = l76lm33.gps_data.satellites_nb;
-    }
-
-    bt_data.time_boot_ms = HAL_GetTick();
-    bt_data.system_states = FLAG_STATUS_ODB(ODB_STATE_READY);
-    bt_data.battery_mv = (uint16_t)(system_measurements.vin_batt * 1000.0f);
-
-    if(system_measurements.pyros_arming) {
-      bt_data.system_states |= FLAG_PYROS_ARMED;
-    }
-    if(system_measurements.pyro_status[0]) {
-      bt_data.system_states |= FLAG_PYRO1_FIRED;
-    }
-    if(system_measurements.pyro_status[1]) {
-      bt_data.system_states |= FLAG_PYRO2_FIRED;
-    }
-    if(system_measurements.pyro_status[2]) {
-      bt_data.system_states |= FLAG_PYRO3_FIRED;
-    }
-    if(system_measurements.pyro_status[3]) {
-      bt_data.system_states |= FLAG_PYRO4_FIRED;
-    }
-
-    bt_data.roll = 0.0f;
-    bt_data.pitch = 0.0f;
-    bt_data.yaw = 0.0f;
-    bt_data.imu_acc_x = 0.0f;
-    bt_data.imu_acc_y = 0.0f;
-    bt_data.imu_acc_z = 0.0f;
-    bt_data.imu_gyro_x = 0.0f;
-    bt_data.imu_gyro_y = 0.0f;
-    bt_data.imu_gyro_z = 0.0f;
-
-    if(bt_data.gps_fix > 1) {
-      bt_data.system_states |= FLAG_GPS_OK;
-    }
-
-    App_SendFrame(&nexus, &hm11, &bt_data);
-    App_HandleCommands(&nexus, &hm11);
-
-  HAL_Delay(100);
+	  ODB_Update(&data);
+	  App_SendFrame(&nexus, &hm11, &data);
+	  if(DEBUG_MODE == 1) {
+		  App_HandleCommands(&nexus, &hm11);
+	  }
+	  HAL_Delay(100);
   }
   /* USER CODE END 3 */
 }

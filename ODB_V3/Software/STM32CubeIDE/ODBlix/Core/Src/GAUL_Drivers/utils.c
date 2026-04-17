@@ -29,6 +29,267 @@ extern w25q_t w25q;
 extern nexus_t nexus;
 
 
+/* === ODB === */
+void ODB_Reset(odb_data *data) {
+    if(!data) {
+        return;
+    }
+
+    data->time_boot_ms = 0;
+    data->system_states = 0x0000; // All flags cleared (components not OK)
+    data->battery_mv = 0;
+    data->roll = 0.0f;
+    data->pitch = 0.0f;
+    data->yaw = 0.0f;
+    data->imu_acc_x = 0.0f;
+    data->imu_acc_y = 0.0f;
+    data->imu_acc_z = 0.0f;
+    data->imu_gyro_x = 0.0f;
+    data->imu_gyro_y = 0.0f;
+    data->imu_gyro_z = 0.0f;
+    data->pressure_hpa = 0.0f;
+    data->temp_celsius = 0.0f;
+    data->highg_acc_x = 0.0f;
+    data->highg_acc_y = 0.0f;
+    data->highg_acc_z = 0.0f;
+    data->gps_fix = 0;
+    data->lat = 0;
+    data->lon = 0;
+    data->gps_alt = 0;
+    data->vel = 0;
+    data->cog = 0;
+    data->satellites_nb = 0;
+}
+
+odb_state_t ODB_Init(odb_data *data) {
+    if(!data) {
+        return ODB_ERROR;
+    }
+
+    bool alimentation_fault = false;
+    uint8_t error = 0;
+    uint8_t warning = 0;
+
+    ODB_Reset(data);
+    data->mission_state = ODB_MISSION_STATE_PREFLIGHT;
+
+    uint16_t system_states = 0x0000;
+    if(SystemMeasurements_Init(&system_measurements) == 0) {
+        SystemMeasurements_ComputePower(&system_measurements);
+        if(system_measurements.vin_batt <= 5000 || system_measurements.vin_batt >= 24000 || system_measurements.v5_buck <= 4500 || system_measurements.v5_buck >= 5500 || system_measurements.v3_buck <= 3100 || system_measurements.v3_buck >= 3500 || system_measurements.pg_v5 == false) {
+            alimentation_fault = true;
+            printf("Erreur : Batterie trop faible !\n");
+        }
+
+        SystemMeasurements_ComputePyros(&system_measurements);
+        uint8_t pyros_connected = 0;
+        // Pyros need to be armed for read status
+        Pyro_Arming(true);
+        // Verify if arming is really enabled
+        if(!system_measurements.pyros_arming) {
+            error += 1;
+            printf("Erreur : Armement des Pyros bloqué\n");
+        }
+        // Check pyros continuity
+        if(Pyro_Init(&pyro1) == 0) {
+            system_states |= FLAG_PYRO1_CONN;
+            pyros_connected += 1;
+        } else {
+            warning += 1;
+            printf("Erreur Pyro 1 déconnecté\n");
+        }
+        if(Pyro_Init(&pyro2) == 0) {
+            system_states |= FLAG_PYRO2_CONN;
+            pyros_connected += 1;
+        } else {
+            warning += 1;
+            printf("Erreur Pyro 2 déconnecté\n");
+        }
+        if(Pyro_Init(&pyro3) == 0) {
+            system_states |= FLAG_PYRO3_CONN;
+            pyros_connected += 1;
+        } else {
+            warning += 1;
+            printf("Erreur Pyro 3 déconnecté\n");
+        }
+        if(Pyro_Init(&pyro4) == 0) {
+            system_states |= FLAG_PYRO4_CONN;
+            pyros_connected += 1;
+        } else {
+            warning += 1;
+            printf("Erreur Pyro 4 déconnecté\n");
+        }
+
+        Pyro_Arming(false);
+        // Verify if arming is really disabled
+        if(system_measurements.pyros_arming) {
+            error += 1;
+            printf("Erreur : Pyros armés en prévol\n");
+        }
+        // Protection
+        if(pyros_connected == 0) {
+            error += 1;
+            printf("Erreur : Aucun pyro connecté !\n");
+        }
+
+        SystemMeasurements_ComputeTemperature(&system_measurements);
+        if(system_measurements.temperature < -55.0f || system_measurements.temperature > 150.0f) {
+            error += 1;
+            printf("Erreur : Température hors limites !\n");
+        }
+    } else {
+        error += 1;
+        printf("Erreur init SystemMeasurements\n");
+    }
+
+    /*
+    if(BNO055_Init(&bno055) == BNO055_OK) {
+        system_states |= FLAG_IMU_OK;
+    } else {
+        error += 1;
+        printf("Erreur init BNO055\n");
+    }
+    */
+
+    if(MS5611_Init(&ms5611, OSR1024, OSR1024) == MS5611_OK) {
+        system_states |= FLAG_BARO_OK;
+    } else {
+        error += 1;
+        printf("Erreur init MS5611\n");
+    }
+
+    if(ADXL382_Init(&adxl382) == ADXL382_OK) {
+        system_states |= FLAG_HIGHG_OK;
+    } else {
+        error += 1;
+        printf("Erreur init ADXL382\n");
+    }
+
+    if(L76LM33_Init(&l76lm33) == L76LM33_OK) {
+        system_states |= FLAG_GPS_OK;
+    } else {
+        error += 1;
+        printf("Erreur init L76LM33\n");
+    }
+
+    if(RFD900x_Init(&rfd900x) == RFD_OK) {
+        system_states |= FLAG_RADIO_OK;
+    } else {
+        error += 1;
+        printf("Erreur init RFD900x\n");
+    }
+
+    if(W25Q_Init(&w25q) == 0) {
+        system_states |= FLAG_FLASH_OK;
+    } else {
+        warning += 1;
+        printf("Erreur init W25Q\n");
+    }
+
+    if(HM11_Init(&hm11) != HM11_OK) {
+        warning += 1;
+        printf("Erreur : HM-11 ne repond pas.\n");
+    }
+
+    if(CriticalLed_Init(&critical_led) != 0) {
+        warning += 1;
+        printf("Erreur init Critical LED\n");
+    }
+
+    odb_state_t odb_state = ODB_ERROR;
+    if(alimentation_fault) {
+        ODB_SetMissionState(data, ODB_MISSION_STATE_ERROR);
+        odb_state = ODB_ALIMENTATION_ERROR;
+        printf("Erreur : Alimentation non conforme !\n");
+    } else if(error > 0) {
+        ODB_SetMissionState(data, ODB_MISSION_STATE_ERROR);
+        odb_state = ODB_ERROR;
+        printf("Erreur : %d erreur(s) détectée(s) lors de l'initialisation du système.\n", error);
+    } else if(warning > 0) {
+        ODB_SetMissionState(data, ODB_MISSION_STATE_READY); // Ready with warnings
+        odb_state = ODB_WARNING;
+        printf("Attention : %d warning(s) détectée(s) lors de l'initialisation du système.\n", warning);
+    } else {
+        ODB_SetMissionState(data, ODB_MISSION_STATE_READY); // All good
+        odb_state = ODB_OK;
+    }
+
+    // Update system states
+    data->system_states = system_states;
+
+    return odb_state;
+}
+
+void ODB_Update(odb_data *data) {
+    SystemMeasurements_ComputeTemperature(&system_measurements);
+    SystemMeasurements_ComputePower(&system_measurements);
+    SystemMeasurements_ComputePyros(&system_measurements);
+
+    float temperature, pressure;
+    MS5611_Update(&ms5611);
+    if(MS5611_Compute(&ms5611, &temperature, &pressure) == MS5611_OK) {
+      data->pressure_hpa = pressure;
+      data->temp_celsius = temperature;
+    }
+
+    if(ADXL382_ReadData(&adxl382) == ADXL382_OK) {
+      data->highg_acc_x = adxl382.acc_x;
+      data->highg_acc_y = adxl382.acc_y;
+      data->highg_acc_z = adxl382.acc_z;
+    }
+
+    if(L76LM33_Read(&l76lm33) == L76LM33_OK) {
+      data->gps_fix = l76lm33.gps_data.gps_fix;
+      data->lat = l76lm33.gps_data.lat;
+      data->lon = l76lm33.gps_data.lon;
+      data->gps_alt = l76lm33.gps_data.gps_alt;
+      data->vel = l76lm33.gps_data.vel;
+      data->cog = l76lm33.gps_data.cog;
+      data->satellites_nb = l76lm33.gps_data.satellites_nb;
+    }
+
+    data->time_boot_ms = HAL_GetTick();
+    data->battery_mv = (uint16_t)(system_measurements.vin_batt * 1000.0f);
+
+    if(system_measurements.pyros_arming) {
+      data->system_states |= FLAG_PYROS_ARMED;
+    }
+    if(system_measurements.pyro_status[0]) {
+      data->system_states |= FLAG_PYRO1_CONN;
+    }
+    if(system_measurements.pyro_status[1]) {
+      data->system_states |= FLAG_PYRO2_CONN;
+    }
+    if(system_measurements.pyro_status[2]) {
+      data->system_states |= FLAG_PYRO3_CONN;
+    }
+    if(system_measurements.pyro_status[3]) {
+      data->system_states |= FLAG_PYRO4_CONN;
+    }
+
+    // TODO: add real updated values
+    data->roll = 0.0f;
+    data->pitch = 0.0f;
+    data->yaw = 0.0f;
+    data->imu_acc_x = 0.0f;
+    data->imu_acc_y = 0.0f;
+    data->imu_acc_z = 0.0f;
+    data->imu_gyro_x = 0.0f;
+    data->imu_gyro_y = 0.0f;
+    data->imu_gyro_z = 0.0f;
+
+    if(data->gps_fix > 1) {
+      data->system_states |= FLAG_GPS_OK;
+    }
+
+}
+
+int8_t ODB_SetMissionState(odb_data *data, uint8_t mission_state) {
+	data->mission_state = mission_state;
+	return 0;
+}
+/* =========== */
+
 /* === TELEMETRY === */
 static uint8_t mavlink_tx_buffer[MAVLINK_MAX_PACKET_LEN]; // DMA TX buffer
 
@@ -106,9 +367,10 @@ void App_SendFrame(nexus_t *nexus_dev, hm11_t *hm11_dev, const odb_data *data) {
 
     char buffer[512];
     snprintf(buffer, sizeof(buffer),
-            "DATA,time_boot_ms=%lu,system_states=%u,battery_mv=%u,roll=%.2f,pitch=%.2f,yaw=%.2f,imu_acc_x=%.2f,imu_acc_y=%.2f,imu_acc_z=%.2f,imu_gyro_x=%.2f,imu_gyro_y=%.2f,imu_gyro_z=%.2f,pressure_hpa=%.2f,temp_celsius=%.2f,highg_acc_x=%.2f,highg_acc_y=%.2f,highg_acc_z=%.2f,gps_fix=%u,lat=%ld,lon=%ld,gps_alt=%ld,vel=%u,cog=%u,satellites_nb=%u\r\n",
+            "DATA,time_boot_ms=%lu,system_states=%u,mission_state=%u,battery_mv=%u,roll=%.2f,pitch=%.2f,yaw=%.2f,imu_acc_x=%.2f,imu_acc_y=%.2f,imu_acc_z=%.2f,imu_gyro_x=%.2f,imu_gyro_y=%.2f,imu_gyro_z=%.2f,pressure_hpa=%.2f,temp_celsius=%.2f,highg_acc_x=%.2f,highg_acc_y=%.2f,highg_acc_z=%.2f,gps_fix=%u,lat=%ld,lon=%ld,gps_alt=%ld,vel=%u,cog=%u,satellites_nb=%u\r\n",
             (unsigned long)data->time_boot_ms,
             (unsigned)data->system_states,
+            (unsigned)data->mission_state,
             (unsigned)data->battery_mv,
             data->roll,
             data->pitch,

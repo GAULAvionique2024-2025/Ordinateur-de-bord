@@ -9,10 +9,20 @@ enum RadioState { disconnected, connecting, connected }
 class DataServiceManager with ChangeNotifier {
   final BluetoothServiceManager btService;
   DataServiceManager(this.btService);
+  bool _isDisposed = false;
+
+  bool get isDisposed => _isDisposed;
+
+  void _safeNotifyListeners() {
+    if (!_isDisposed) {
+      notifyListeners();
+    }
+  }
 
   // ---------- Variables extraites ----------
   int timeBootMs = 0;
   int systemStates = 0;
+  int missionState = -1;
   String odbState = '';
   double batteryVoltage = 0.0;
   double batteryVoltageMax = 0.0;
@@ -69,18 +79,38 @@ class DataServiceManager with ChangeNotifier {
   }
   int get pyrosActiveCount => pyros.where((p) => p).length;
   String get pyrosSummary => pyros.map((p) => p ? '1' : '0').join(',');
-    String get systemStateDisplay => systemStates > 0 ? 'État $systemStates' : '—';
-    String get timeBootDisplay => timeBootMs > 0 ? '$timeBootMs ms' : '—';
-    String get attitudeDisplay => hasConnection
+  String get missionStateDisplay {
+    switch (missionState) {
+      case 0:
+        return 'Prévol';
+      case 1:
+        return 'Prêt';
+      case 2:
+        return 'En vol';
+      case 3:
+        return 'Post-vol';
+      case 4:
+        return 'Erreur';
+      default:
+        return '—';
+    }
+  }
+  String get systemStateDisplay => systemStates > 0 ? 'Flags $systemStates' : '—';
+  String get timeBootDisplay => timeBootMs > 0 ? '$timeBootMs ms' : '—';
+  String get attitudeDisplay => hasConnection
       ? 'R ${roll.toStringAsFixed(1)}°  P ${pitch.toStringAsFixed(1)}°  Y ${yaw.toStringAsFixed(1)}°'
       : '—';
-    String get gpsVelocityDisplay => gpsSensorState == SensorState.ok
+  String get gpsVelocityDisplay => gpsSensorState == SensorState.ok
       ? '${gpsVelocity.toStringAsFixed(1)} m/s'
       : '—';
-    String get gpsCourseDisplay => gpsSensorState == SensorState.ok
+  String get gpsCourseDisplay => gpsSensorState == SensorState.ok
       ? '${gpsCourse.toStringAsFixed(0)}°'
       : '—';
-    String get missionStatus => odbState.isNotEmpty ? odbState : systemStateDisplay;
+  String get missionStatus {
+    if (missionStateDisplay != '—') return missionStateDisplay;
+    if (odbState.isNotEmpty) return odbState;
+    return systemStateDisplay;
+  }
   
   bool get odbSensorState => (
       temperatureSensorState == SensorState.ok &&
@@ -98,6 +128,8 @@ class DataServiceManager with ChangeNotifier {
 
   // ---------- PARSER ----------
   void parseMessage(String message) {
+    if (_isDisposed) return;
+
     try {
       final normalized = message.trim();
       final isTelemetryFrame = normalized.startsWith('DATA,');
@@ -130,7 +162,10 @@ class DataServiceManager with ChangeNotifier {
             break;
           case 'system_states':
             systemStates = int.tryParse(value) ?? systemStates;
-            odbState = 'État $systemStates';
+            break;
+          case 'mission':
+          case 'mission_state':
+            missionState = int.tryParse(value) ?? missionState;
             break;
           case 'temp':
           case 'temp_celsius':
@@ -301,9 +336,16 @@ class DataServiceManager with ChangeNotifier {
         }
       }
 
-      notifyListeners();
+      _safeNotifyListeners();
     } catch (e) {
+      if (_isDisposed) return;
       ConsoleService().log('Erreur parseMessage: $e');
     }
+  }
+
+  @override
+  void dispose() {
+    _isDisposed = true;
+    super.dispose();
   }
 }

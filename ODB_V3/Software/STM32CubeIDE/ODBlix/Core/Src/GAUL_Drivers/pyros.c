@@ -10,7 +10,7 @@
 
 #include "GAUL_Drivers/pyros.h"
 
-
+// TODO: Pyros need to be armed for read status
 int8_t Pyro_Init(pyro_t *dev) {
 	if(!dev) return -1; // failed
 
@@ -18,21 +18,23 @@ int8_t Pyro_Init(pyro_t *dev) {
 	dev->is_connected = true;
 	dev->is_fire = false;
 
-	return dev->is_connected;
+	return (dev->is_connected == true) ? 0 : -1; // 0 = success, -1 = failed
 }
 
-void Pyro_Arming(bool arming) {
+bool Pyro_Arming(bool arming) {
 	GPIO_PinState state = arming ? GPIO_PIN_SET : GPIO_PIN_RESET;
 	HAL_GPIO_WritePin(PYROS_ARMING_PORT, PYROS_ARMING_PIN, state);
+
+	return true;
 }
 
-uint8_t Pyro_Fire(pyro_t *dev) {
+bool Pyro_Fire(pyro_t *dev) {
 	HAL_GPIO_WritePin(dev->port, dev->pin, GPIO_PIN_SET);
 	HAL_Delay(500);
+	// TODO: Check with system_measurements and ...
 	HAL_GPIO_WritePin(dev->port, dev->pin, GPIO_PIN_RESET);
 
-	// TODO: Check with system_measurements and ...
 	dev->is_fire = true;
 
-	return 1; // success
+	return (dev->is_fire && !dev->is_connected); // success
 }
