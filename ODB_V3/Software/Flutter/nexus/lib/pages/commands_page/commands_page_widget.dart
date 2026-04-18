@@ -109,7 +109,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                             ),
                       ),
                             Text(
-                              connected ? 'Timestamp: ${data.timeBootDisplay} | Mission: ${data.missionStatus} | Flags: ${data.systemStateDisplay}' : '—',
+                              connected ? 'Timestamp: ${data.timeBootDisplay} | Mission: ${data.missionStatus} | Flags: ${data.systemStateDisplay} | Events: ${data.eventStateDisplay} | Vin: ${data.vinDisplay}' : '—',
                             style: FlutterFlowTheme.of(context).bodySmall.override(
                                 font: GoogleFonts.inter(
                                 fontWeight: FlutterFlowTheme.of(context)

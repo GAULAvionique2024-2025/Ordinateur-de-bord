@@ -22,8 +22,10 @@ class DataServiceManager with ChangeNotifier {
   // ---------- Variables extraites ----------
   int timeBootMs = 0;
   int systemStates = 0;
+  int eventStates = 0;
   int missionState = -1;
   String odbState = '';
+  int vinMv = 0;
   double batteryVoltage = 0.0;
   double batteryVoltageMax = 0.0;
   bool goodPowerState = false;
@@ -96,6 +98,12 @@ class DataServiceManager with ChangeNotifier {
     }
   }
   String get systemStateDisplay => systemStates > 0 ? 'Flags $systemStates' : '—';
+  String get eventStateDisplay => eventStates > 0 ? 'Events $eventStates' : '—';
+  String get vinDisplay {
+    if (vinMv > 0) return '$vinMv mV';
+    if (batteryVoltage > 0) return '${(batteryVoltage * 1000).round()} mV';
+    return '—';
+  }
   String get timeBootDisplay => timeBootMs > 0 ? '$timeBootMs ms' : '—';
   String get attitudeDisplay => hasConnection
       ? 'R ${roll.toStringAsFixed(1)}°  P ${pitch.toStringAsFixed(1)}°  Y ${yaw.toStringAsFixed(1)}°'
@@ -163,6 +171,9 @@ class DataServiceManager with ChangeNotifier {
           case 'system_states':
             systemStates = int.tryParse(value) ?? systemStates;
             break;
+          case 'event_states':
+            eventStates = int.tryParse(value) ?? eventStates;
+            break;
           case 'mission':
           case 'mission_state':
             missionState = int.tryParse(value) ?? missionState;
@@ -182,7 +193,17 @@ class DataServiceManager with ChangeNotifier {
             goodPowerState = batteryVoltage >= 5.06;
             break;
           case 'battery_mv':
-            batteryVoltage = (int.tryParse(value) ?? (batteryVoltage * 1000).round()) / 1000.0;
+            vinMv = int.tryParse(value) ?? vinMv;
+            batteryVoltage = vinMv > 0
+                ? vinMv / 1000.0
+                : (int.tryParse(value) ?? (batteryVoltage * 1000).round()) / 1000.0;
+            batterySensorState = batteryVoltage > 0 ? SensorState.ok : SensorState.error;
+            goodPowerState = batteryVoltage >= 5.06;
+            break;
+          case 'vin':
+          case 'vin_mv':
+            vinMv = int.tryParse(value) ?? vinMv;
+            batteryVoltage = vinMv > 0 ? vinMv / 1000.0 : batteryVoltage;
             batterySensorState = batteryVoltage > 0 ? SensorState.ok : SensorState.error;
             goodPowerState = batteryVoltage >= 5.06;
             break;

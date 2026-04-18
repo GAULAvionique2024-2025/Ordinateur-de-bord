@@ -97,7 +97,7 @@ hm11_state_t HM11_Init(hm11_t *dev) {
     // Start receiving data asynchronously
     HAL_UART_Receive_IT(dev->huart, &dev->rx_byte, 1);
 
-    if(HM11_TestUARTConnection(dev) != 0) {
+    if(HM11_TestUARTConnection(dev) == false) {
     	err = HM11_ERROR;
     }
 

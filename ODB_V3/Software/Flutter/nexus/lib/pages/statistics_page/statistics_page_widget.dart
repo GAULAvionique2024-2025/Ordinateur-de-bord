@@ -241,7 +241,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                             ),
                                       ),
                                             Text(
-                                            connected ? 'Timestamp: ${data.timeBootDisplay}' : '—',
+                                            connected ? 'Timestamp: ${data.timeBootDisplay} | ${data.eventStateDisplay} | Vin: ${data.vinDisplay}' : '—',
                                             style: FlutterFlowTheme.of(context)
                                               .bodySmall
                                               .override(

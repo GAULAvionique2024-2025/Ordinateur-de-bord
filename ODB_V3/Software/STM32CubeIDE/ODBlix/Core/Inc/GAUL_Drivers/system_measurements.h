@@ -21,9 +21,9 @@ typedef struct {
 	uint16_t            pg_pin;
 
     float 				temperature;
-    float 				vin_batt;
-    float 				v5_buck;
-    float 				v3_buck;
+    uint16_t 			vin_batt;
+    uint16_t 			v5_buck;
+    uint16_t 			v3_buck;
     bool				pg_v5;
     bool 				pyros_arming;
     bool 				pyro_status[4];

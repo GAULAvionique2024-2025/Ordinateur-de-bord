@@ -252,8 +252,8 @@ int main(void)
   {
     /* USER CODE BEGIN 3 */
 	  ODB_Update(&data);
-	  App_SendFrame(&nexus, &hm11, &data);
-	  if(DEBUG_MODE == 1) {
+    if(DEBUG_MODE == 1) {
+	    App_SendFrame(&nexus, &hm11, &data);
 		  App_HandleCommands(&nexus, &hm11);
 	  }
 	  HAL_Delay(100);

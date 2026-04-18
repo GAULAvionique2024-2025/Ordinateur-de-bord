@@ -37,6 +37,7 @@ void ODB_Reset(odb_data *data) {
 
     data->time_boot_ms = 0;
     data->system_states = 0x0000; // All flags cleared (components not OK)
+    data->event_states = 0x00;    // All flags cleared (events not occurred)
     data->battery_mv = 0;
     data->roll = 0.0f;
     data->pitch = 0.0f;
@@ -61,6 +62,64 @@ void ODB_Reset(odb_data *data) {
     data->satellites_nb = 0;
 }
 
+uint8_t ODB_SetEventStates(const odb_event_t *event_states) {
+    if(!event_states) {
+        return 0x00;
+    }
+
+    uint8_t packed = 0x00;
+    if(event_states->pyro1_fired) {
+        packed |= FLAG_PYRO1_FIRED;
+    }
+    if(event_states->pyro2_fired) {
+        packed |= FLAG_PYRO2_FIRED;
+    }
+    if(event_states->pyro3_fired) {
+        packed |= FLAG_PYRO3_FIRED;
+    }
+    if(event_states->pyro4_fired) {
+        packed |= FLAG_PYRO4_FIRED;
+    }
+    if(event_states->apogee_detected) {
+        packed |= FLAG_APOGEE_DETECTED;
+    }
+    if(event_states->main_deployed) {
+        packed |= FLAG_MAIN_DEPLOYED;
+    }
+    if(event_states->drogue_deployed) {
+        packed |= FLAG_DROGUE_DEPLOYED;
+    }
+    if(event_states->mach_lock_enabled) {
+        packed |= FLAG_MACH_LOCK_ENABLED;
+    }
+
+    return packed;
+}
+
+odb_event_t ODB_GetEventStates(const odb_data *data) {
+    odb_event_t event_states = {
+        .pyro1_fired = false,
+        .pyro2_fired = false,
+        .pyro3_fired = false,
+        .pyro4_fired = false,
+        .apogee_detected = false,
+        .main_deployed = false,
+        .drogue_deployed = false,
+        .mach_lock_enabled = false
+    };
+
+    event_states.pyro1_fired = (data->event_states & FLAG_PYRO1_FIRED) != 0U;
+    event_states.pyro2_fired = (data->event_states & FLAG_PYRO2_FIRED) != 0U;
+    event_states.pyro3_fired = (data->event_states & FLAG_PYRO3_FIRED) != 0U;
+    event_states.pyro4_fired = (data->event_states & FLAG_PYRO4_FIRED) != 0U;
+    event_states.apogee_detected = (data->event_states & FLAG_APOGEE_DETECTED) != 0U;
+    event_states.main_deployed = (data->event_states & FLAG_MAIN_DEPLOYED) != 0U;
+    event_states.drogue_deployed = (data->event_states & FLAG_DROGUE_DEPLOYED) != 0U;
+    event_states.mach_lock_enabled = (data->event_states & FLAG_MACH_LOCK_ENABLED) != 0U;
+    
+    return event_states;
+}
+
 odb_state_t ODB_Init(odb_data *data) {
     if(!data) {
         return ODB_ERROR;
@@ -81,12 +140,14 @@ odb_state_t ODB_Init(odb_data *data) {
             printf("Erreur : Batterie trop faible !\n");
         }
 
-        SystemMeasurements_ComputePyros(&system_measurements);
         uint8_t pyros_connected = 0;
         // Pyros need to be armed for read status
         Pyro_Arming(true);
+        SystemMeasurements_ComputePyros(&system_measurements);
         // Verify if arming is really enabled
-        if(!system_measurements.pyros_arming) {
+        if(system_measurements.pyros_arming) {
+            system_states |= FLAG_PYROS_ARMED_OK;
+        } else {
             error += 1;
             printf("Erreur : Armement des Pyros bloqué\n");
         }
@@ -96,35 +157,39 @@ odb_state_t ODB_Init(odb_data *data) {
             pyros_connected += 1;
         } else {
             warning += 1;
-            printf("Erreur Pyro 1 déconnecté\n");
+            printf("Erreur : Pyro 1 déconnecté\n");
         }
         if(Pyro_Init(&pyro2) == 0) {
             system_states |= FLAG_PYRO2_CONN;
             pyros_connected += 1;
         } else {
             warning += 1;
-            printf("Erreur Pyro 2 déconnecté\n");
+            printf("Erreur : Pyro 2 déconnecté\n");
         }
         if(Pyro_Init(&pyro3) == 0) {
             system_states |= FLAG_PYRO3_CONN;
             pyros_connected += 1;
         } else {
             warning += 1;
-            printf("Erreur Pyro 3 déconnecté\n");
+            printf("Erreur : Pyro 3 déconnecté\n");
         }
         if(Pyro_Init(&pyro4) == 0) {
             system_states |= FLAG_PYRO4_CONN;
             pyros_connected += 1;
         } else {
             warning += 1;
-            printf("Erreur Pyro 4 déconnecté\n");
+            printf("Erreur : Pyro 4 déconnecté\n");
         }
 
         Pyro_Arming(false);
+        SystemMeasurements_ComputePyros(&system_measurements);
         // Verify if arming is really disabled
-        if(system_measurements.pyros_arming) {
+        if(!system_measurements.pyros_arming) {
+            system_states |= FLAG_PYROS_ARMED_OK;
+        } else {
+            system_states &= ~FLAG_PYROS_ARMED_OK;
             error += 1;
-            printf("Erreur : Pyros armés en prévol\n");
+            printf("Erreur : Désarmement des Pyros bloqué\n");
         }
         // Protection
         if(pyros_connected == 0) {
@@ -139,7 +204,7 @@ odb_state_t ODB_Init(odb_data *data) {
         }
     } else {
         error += 1;
-        printf("Erreur init SystemMeasurements\n");
+        printf("Erreur : Init SystemMeasurements\n");
     }
 
     /*
@@ -147,7 +212,7 @@ odb_state_t ODB_Init(odb_data *data) {
         system_states |= FLAG_IMU_OK;
     } else {
         error += 1;
-        printf("Erreur init BNO055\n");
+        printf("Erreur : Init BNO055\n");
     }
     */
 
@@ -155,35 +220,35 @@ odb_state_t ODB_Init(odb_data *data) {
         system_states |= FLAG_BARO_OK;
     } else {
         error += 1;
-        printf("Erreur init MS5611\n");
+        printf("Erreur : Init MS5611\n");
     }
 
     if(ADXL382_Init(&adxl382) == ADXL382_OK) {
         system_states |= FLAG_HIGHG_OK;
     } else {
         error += 1;
-        printf("Erreur init ADXL382\n");
+        printf("Erreur : Init ADXL382\n");
     }
 
     if(L76LM33_Init(&l76lm33) == L76LM33_OK) {
         system_states |= FLAG_GPS_OK;
     } else {
         error += 1;
-        printf("Erreur init L76LM33\n");
+        printf("Erreur : Init L76LM33\n");
     }
 
     if(RFD900x_Init(&rfd900x) == RFD_OK) {
         system_states |= FLAG_RADIO_OK;
     } else {
         error += 1;
-        printf("Erreur init RFD900x\n");
+        printf("Erreur : Init RFD900x\n");
     }
 
     if(W25Q_Init(&w25q) == 0) {
         system_states |= FLAG_FLASH_OK;
     } else {
         warning += 1;
-        printf("Erreur init W25Q\n");
+        printf("Erreur : Init W25Q\n");
     }
 
     if(HM11_Init(&hm11) != HM11_OK) {
@@ -193,7 +258,7 @@ odb_state_t ODB_Init(odb_data *data) {
 
     if(CriticalLed_Init(&critical_led) != 0) {
         warning += 1;
-        printf("Erreur init Critical LED\n");
+        printf("Erreur : Init Critical LED\n");
     }
 
     odb_state_t odb_state = ODB_ERROR;
@@ -221,6 +286,10 @@ odb_state_t ODB_Init(odb_data *data) {
 }
 
 void ODB_Update(odb_data *data) {
+    if(!data) {
+        return;
+    }
+
     SystemMeasurements_ComputeTemperature(&system_measurements);
     SystemMeasurements_ComputePower(&system_measurements);
     SystemMeasurements_ComputePyros(&system_measurements);
@@ -249,22 +318,14 @@ void ODB_Update(odb_data *data) {
     }
 
     data->time_boot_ms = HAL_GetTick();
-    data->battery_mv = (uint16_t)(system_measurements.vin_batt * 1000.0f);
+    data->battery_mv = (uint16_t)(system_measurements.vin_batt);
 
+    odb_event_t event_states = ODB_GetEventStates(data);
     if(system_measurements.pyros_arming) {
-      data->system_states |= FLAG_PYROS_ARMED;
-    }
-    if(system_measurements.pyro_status[0]) {
-      data->system_states |= FLAG_PYRO1_CONN;
-    }
-    if(system_measurements.pyro_status[1]) {
-      data->system_states |= FLAG_PYRO2_CONN;
-    }
-    if(system_measurements.pyro_status[2]) {
-      data->system_states |= FLAG_PYRO3_CONN;
-    }
-    if(system_measurements.pyro_status[3]) {
-      data->system_states |= FLAG_PYRO4_CONN;
+        event_states.pyro1_fired = pyro1.is_fire;
+        event_states.pyro2_fired = pyro2.is_fire;
+        event_states.pyro3_fired = pyro3.is_fire;
+        event_states.pyro4_fired = pyro4.is_fire;
     }
 
     // TODO: add real updated values
@@ -281,6 +342,8 @@ void ODB_Update(odb_data *data) {
     if(data->gps_fix > 1) {
       data->system_states |= FLAG_GPS_OK;
     }
+
+    data->event_states = ODB_SetEventStates(&event_states);
 
 }
 
@@ -307,8 +370,8 @@ static void Telemetry_TransmitMessage(rfd900x_t *rfd_dev, const mavlink_message_
 void Telemetry_SendRocketData(rfd900x_t *rfd_dev, const odb_modem_id_t modem_id, const odb_data *data, const uint32_t current_time_ms) {
     if(!rfd_dev || !data) return;
 
+    // TODO: add event_states
     mavlink_message_t msg;
-
     mavlink_msg_rocket_telemetry_pack(
         modem_id,
         MAVLINK_COMPONENT_ID,
@@ -346,7 +409,6 @@ void Telemetry_SendEventLog(rfd900x_t *rfd_dev, const odb_modem_id_t modem_id, c
     if (!rfd_dev || !text || text[0] == '\0' || strlen(text) > 50) return;
 
     mavlink_message_t msg;
-
     mavlink_msg_statustext_pack(
         modem_id,
         MAVLINK_COMPONENT_ID,
@@ -367,9 +429,10 @@ void App_SendFrame(nexus_t *nexus_dev, hm11_t *hm11_dev, const odb_data *data) {
 
     char buffer[512];
     snprintf(buffer, sizeof(buffer),
-            "DATA,time_boot_ms=%lu,system_states=%u,mission_state=%u,battery_mv=%u,roll=%.2f,pitch=%.2f,yaw=%.2f,imu_acc_x=%.2f,imu_acc_y=%.2f,imu_acc_z=%.2f,imu_gyro_x=%.2f,imu_gyro_y=%.2f,imu_gyro_z=%.2f,pressure_hpa=%.2f,temp_celsius=%.2f,highg_acc_x=%.2f,highg_acc_y=%.2f,highg_acc_z=%.2f,gps_fix=%u,lat=%ld,lon=%ld,gps_alt=%ld,vel=%u,cog=%u,satellites_nb=%u\r\n",
+            "DATA,time_boot_ms=%lu,system_states=%u,event_states=%u,mission_state=%u,battery_mv=%u,roll=%.2f,pitch=%.2f,yaw=%.2f,imu_acc_x=%.2f,imu_acc_y=%.2f,imu_acc_z=%.2f,imu_gyro_x=%.2f,imu_gyro_y=%.2f,imu_gyro_z=%.2f,pressure_hpa=%.2f,temp_celsius=%.2f,highg_acc_x=%.2f,highg_acc_y=%.2f,highg_acc_z=%.2f,gps_fix=%u,lat=%ld,lon=%ld,gps_alt=%ld,vel=%u,cog=%u,satellites_nb=%u\r\n",
             (unsigned long)data->time_boot_ms,
             (unsigned)data->system_states,
+            (unsigned)data->event_states,
             (unsigned)data->mission_state,
             (unsigned)data->battery_mv,
             data->roll,

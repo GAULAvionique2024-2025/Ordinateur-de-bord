@@ -9,7 +9,7 @@
 #include <string.h>
 
 
-#define DIV_ADC_STEP 		0.00080586	// 3.3 / 4095
+#define DIV_ADC_STEP 		0.80586f	// 3300 / 4095
 
 #define DIV_RATIO_VIN_BATT 	7.6667 		// 27k / (27k + 180k)
 #define DIV_RATIO_V5_BUCK  	1.7500		// 180k / (180k + 135k)
@@ -26,9 +26,9 @@ int8_t SystemMeasurements_Init(system_measurements_t *dev) {
 	}
 
 	dev->temperature = 0.00f;
-	dev->vin_batt = 0.00f;
-	dev->v5_buck = 0.00f;
-	dev->v3_buck = 0.00f;
+	dev->vin_batt = 0;
+	dev->v5_buck = 0;
+	dev->v3_buck = 0;
 	dev->pg_v5 = (HAL_GPIO_ReadPin(dev->pg_port, dev->pg_pin) == GPIO_PIN_SET);
 
 	memset(dev->pyro_status, 0, sizeof(dev->pyro_status));
@@ -47,18 +47,19 @@ void SystemMeasurements_ComputePower(system_measurements_t *dev) {
     uint16_t v5  = adc_buffer[5];
     uint16_t v3  = adc_buffer[6];
 
-    dev->vin_batt = (vin * DIV_ADC_STEP) * DIV_RATIO_VIN_BATT;
-    dev->v5_buck  = (v5 * DIV_ADC_STEP) * DIV_RATIO_V5_BUCK;
-    dev->v3_buck  = (v3 * DIV_ADC_STEP) * DIV_RATIO_V3_BUCK;
+    dev->vin_batt = (uint16_t)((vin * DIV_ADC_STEP) * DIV_RATIO_VIN_BATT);
+    dev->v5_buck  = (uint16_t)((v5 * DIV_ADC_STEP) * DIV_RATIO_V5_BUCK);
+    dev->v3_buck  = (uint16_t)((v3 * DIV_ADC_STEP) * DIV_RATIO_V3_BUCK);
 }
 
 void SystemMeasurements_ComputeTemperature(system_measurements_t *dev) {
     uint16_t temp = adc_buffer[3];
 
-    float v_temp = temp * DIV_ADC_STEP;
+    float v_temp = temp * DIV_ADC_STEP * 1000.0f;
     dev->temperature = (v_temp - 0.40f) / 0.01953f;
 }
 
+// TODO: add real pyros continuity threshold
 void SystemMeasurements_ComputePyros(system_measurements_t *dev) {
     uint16_t arm = adc_buffer[0];
     uint16_t p4  = adc_buffer[1];

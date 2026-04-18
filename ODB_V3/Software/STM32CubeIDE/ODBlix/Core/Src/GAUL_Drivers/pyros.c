@@ -29,12 +29,14 @@ bool Pyro_Arming(bool arming) {
 }
 
 bool Pyro_Fire(pyro_t *dev) {
+	if(!dev) return false;
+
 	HAL_GPIO_WritePin(dev->port, dev->pin, GPIO_PIN_SET);
 	HAL_Delay(500);
-	// TODO: Check with system_measurements and ...
 	HAL_GPIO_WritePin(dev->port, dev->pin, GPIO_PIN_RESET);
 
+	// TODO: Check with system_measurements and ...
 	dev->is_fire = true;
 
-	return (dev->is_fire && !dev->is_connected); // success
+	return true;
 }

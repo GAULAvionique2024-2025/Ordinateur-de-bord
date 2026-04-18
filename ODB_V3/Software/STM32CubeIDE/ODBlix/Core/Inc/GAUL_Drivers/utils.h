@@ -59,7 +59,7 @@ typedef struct {
 #define FLAG_BARO_OK                    (1 << 7)
 #define FLAG_IMU_OK                     (1 << 6)
 #define FLAG_RADIO_OK                   (1 << 5)
-#define FLAG_PYROS_ARMED                (1 << 4)
+#define FLAG_PYROS_ARMED_OK             (1 << 4)
 #define FLAG_PYRO1_CONN                 (1 << 3)
 #define FLAG_PYRO2_CONN                 (1 << 2)
 #define FLAG_PYRO3_CONN                 (1 << 1)
@@ -79,13 +79,25 @@ typedef enum {
     ODB_OK                  =  0,
     ODB_WARNING             = -1,
     ODB_ALIMENTATION_ERROR  = -2,
-    ODB_ERROR               = -2,
+    ODB_ERROR               = -3,
 } odb_state_t;
+
+typedef struct {
+    bool pyro1_fired;
+    bool pyro2_fired;
+    bool pyro3_fired;
+    bool pyro4_fired;
+    bool apogee_detected;
+    bool main_deployed;
+    bool drogue_deployed;
+    bool mach_lock_enabled;
+} odb_event_t;
 
 typedef struct {
     // Status
     uint32_t    time_boot_ms;       // Timestamp since system boot in milliseconds (ms)
     uint16_t    system_states;      // Current system/component states
+    uint8_t     event_states;       // Current events states (pyros fired, apogee detected, etc.)
     uint8_t     mission_state;      // Mission state (preflight, ready, inflight, postflight)
     uint16_t    battery_mv;         // Main battery voltage in millivolts (mV)
     // IMU (Attitude & Rates)
@@ -118,6 +130,8 @@ typedef struct {
 odb_state_t ODB_Init(odb_data *data);
 void ODB_Reset(odb_data *data);
 void ODB_Update(odb_data *data);
+odb_event_t ODB_GetEventStates(const odb_data *data);
+uint8_t ODB_SetEventStates(const odb_event_t *event_states);
 int8_t ODB_SetMissionState(odb_data *data, uint8_t mission_state);
 /* =========== */
 
