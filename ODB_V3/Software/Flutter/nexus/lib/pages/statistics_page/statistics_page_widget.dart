@@ -1263,12 +1263,12 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                         ],
                                       ),
                                     ),
-                                  ].divide(const SizedBox(width: 24.0)),
+                                  ]
                                 ),
                               ),
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 8.0, 0.0, 0.0),
+                                    0.0, 0.0, 0.0, 0.0),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
@@ -1407,7 +1407,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                           Padding(
                                             padding:
                                                 const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 4.0),
+                                                    0.0, 0.0, 0.0, 0.0),
                                             child: Text(
                                               'YAW',
                                               style: FlutterFlowTheme.of(
