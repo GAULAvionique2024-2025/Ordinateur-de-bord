@@ -9,6 +9,7 @@ import 'commands_page_model.dart';
 export 'commands_page_model.dart';
 import 'package:nexus/services/bluetooth_service.dart';
 import 'package:nexus/services/data_service.dart';
+import 'package:nexus/services/data_service.dart' show SensorState;
 import 'package:nexus/services/console_service.dart';
 import 'package:nexus/widgets/status_bluetooth_card.dart';
 
@@ -108,27 +109,6 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                                   .fontStyle,
                             ),
                       ),
-                            Text(
-                              connected ? 'Timestamp: ${data.timeBootDisplay} | Mission: ${data.missionStatus} | Flags: ${data.systemStateDisplay} | Events: ${data.eventStateDisplay} | Vin: ${data.vinDisplay}' : '—',
-                            style: FlutterFlowTheme.of(context).bodySmall.override(
-                                font: GoogleFonts.inter(
-                                fontWeight: FlutterFlowTheme.of(context)
-                                  .bodySmall
-                                  .fontWeight,
-                                fontStyle: FlutterFlowTheme.of(context)
-                                  .bodySmall
-                                  .fontStyle,
-                                ),
-                                color: FlutterFlowTheme.of(context).secondaryText,
-                                letterSpacing: 0.0,
-                                fontWeight: FlutterFlowTheme.of(context)
-                                  .bodySmall
-                                  .fontWeight,
-                                fontStyle: FlutterFlowTheme.of(context)
-                                  .bodySmall
-                                  .fontStyle,
-                              ),
-                            ),
                     ],
                   ),
                   Text(

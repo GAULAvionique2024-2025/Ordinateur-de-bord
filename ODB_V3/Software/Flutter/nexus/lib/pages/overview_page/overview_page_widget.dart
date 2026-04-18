@@ -1,6 +1,5 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -9,6 +8,7 @@ import 'overview_page_model.dart';
 export 'overview_page_model.dart';
 import 'package:nexus/services/bluetooth_service.dart';
 import 'package:nexus/services/data_service.dart';
+import 'package:nexus/services/data_service.dart' show SensorState;
 import 'package:nexus/widgets/status_bluetooth_card.dart';
 
 /// Créer un homepage.
@@ -446,10 +446,10 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                                                       .fontStyle,
                                             ),
                                             color: connected
-                                                ? FlutterFlowTheme.of(context)
-                                                    .success
-                                                : FlutterFlowTheme.of(context)
-                                                    .secondaryText,
+                                                ? (data.odbSensorState
+                                                    ? FlutterFlowTheme.of(context).success
+                                                    : FlutterFlowTheme.of(context).warning)
+                                                : FlutterFlowTheme.of(context).secondaryText,
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.w600,
                                             fontStyle:
@@ -639,7 +639,7 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                                     padding: const EdgeInsetsDirectional.fromSTEB(
                                         0.0, 4.0, 0.0, 0.0),
                                     child: Text(
-                                      connected ? 'Appareil connecté: ${bt.connectedDevice?.platformName ?? bt.connectedDevice?.remoteId.str}\nMission: ${data.missionStatus}\nFlags système: ${data.systemStateDisplay}\nÉvénements: ${data.eventStateDisplay}\nVin: ${data.vinDisplay}\nTimestamp: ${data.timeBootDisplay}' : 'En attente de connexion Bluetooth',
+                                      connected ? 'Appareil connecté: ${bt.connectedDevice?.platformName ?? bt.connectedDevice?.remoteId.str}\nMission: ${data.missionStatus}\n${data.timeBootFormatted}' : 'En attente de connexion Bluetooth',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(

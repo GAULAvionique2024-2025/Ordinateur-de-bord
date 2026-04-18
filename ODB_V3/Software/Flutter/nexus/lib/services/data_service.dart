@@ -27,7 +27,7 @@ class DataServiceManager with ChangeNotifier {
   String odbState = '';
   int vinMv = 0;
   double batteryVoltage = 0.0;
-  double batteryVoltageMax = 0.0;
+  double batteryVoltageMax = 24.0;
   bool goodPowerState = false;
   double temperature = 0.0;
   List<bool> pyros = List.filled(4, false);
@@ -105,6 +105,16 @@ class DataServiceManager with ChangeNotifier {
     return '—';
   }
   String get timeBootDisplay => timeBootMs > 0 ? '$timeBootMs ms' : '—';
+  
+  String get timeBootFormatted {
+    if (timeBootMs <= 0) return '00h:00m:00s:00ms';
+    final hours = timeBootMs ~/ 3600000;
+    final minutes = (timeBootMs % 3600000) ~/ 60000;
+    final seconds = (timeBootMs % 60000) ~/ 1000;
+    final milliseconds = timeBootMs % 1000;
+    return '${hours.toString().padLeft(2, '0')}h:${minutes.toString().padLeft(2, '0')}m:${seconds.toString().padLeft(2, '0')}s:${milliseconds.toString().padLeft(2, '0')}ms';
+  }
+  
   String get attitudeDisplay => hasConnection
       ? 'R ${roll.toStringAsFixed(1)}°  P ${pitch.toStringAsFixed(1)}°  Y ${yaw.toStringAsFixed(1)}°'
       : '—';
@@ -120,6 +130,39 @@ class DataServiceManager with ChangeNotifier {
     return systemStateDisplay;
   }
   
+  // --- IMU / Accelerations ---
+  String get imuAccDisplay => hasConnection && imuSensorState == SensorState.ok
+      ? 'X: ${imuAccX.toStringAsFixed(2)} | Y: ${imuAccY.toStringAsFixed(2)} | Z: ${imuAccZ.toStringAsFixed(2)} m/s²'
+      : '—';
+  String get imuGyroDisplay => hasConnection && imuSensorState == SensorState.ok
+      ? 'X: ${imuGyroX.toStringAsFixed(2)} | Y: ${imuGyroY.toStringAsFixed(2)} | Z: ${imuGyroZ.toStringAsFixed(2)} °/s'
+      : '—';
+  String get highGAccDisplay => hasConnection && accHighGSensorState == SensorState.ok
+      ? 'X: ${accHighGX.toStringAsFixed(2)} | Y: ${accHighGY.toStringAsFixed(2)} | Z: ${accHighGZ.toStringAsFixed(2)} m/s²'
+      : '—';
+  
+  // --- Barometer ---
+  String get pressureDisplay => hasConnection && barometerSensorState == SensorState.ok
+      ? '${barometerPressure.toStringAsFixed(2)} hPa'
+      : '—';
+  
+  // --- GPS ---
+  String get gpsLatDisplay => hasConnection && gpsSensorState == SensorState.ok
+      ? '${gpsLat.toStringAsFixed(6)}°'
+      : '—';
+  String get gpsLonDisplay => hasConnection && gpsSensorState == SensorState.ok
+      ? '${gpsLon.toStringAsFixed(6)}°'
+      : '—';
+  String get gpsAltDisplay => hasConnection && gpsSensorState == SensorState.ok
+      ? '${gpsAlt.toStringAsFixed(1)} m'
+      : '—';
+  String get gpsSatellitesDisplay => hasConnection && gpsSensorState == SensorState.ok
+      ? '${gpsSatellites} satellites'
+      : '—';
+  String get gpsFixDisplay => hasConnection 
+      ? (gpsFix ? '✓ Actif' : '✗ Aucun fix')
+      : '—';
+
   bool get odbSensorState => (
       temperatureSensorState == SensorState.ok &&
       imuSensorState == SensorState.ok &&
@@ -159,6 +202,12 @@ class DataServiceManager with ChangeNotifier {
           entries[parts[0].trim().toLowerCase()] = parts[1].trim();
         }
       }
+      /*
+      ConsoleService().log('✅ Parsed ${entries.length} entries');
+      if (entries.containsKey('battery_mv')) {
+        ConsoleService().log('🔋 battery_mv = ${entries['battery_mv']}');
+      }
+      */
 
       for (final entry in entries.entries) {
         final key = entry.key;
@@ -181,7 +230,12 @@ class DataServiceManager with ChangeNotifier {
           case 'temp':
           case 'temp_celsius':
             temperature = double.tryParse(value) ?? temperature;
-            temperatureSensorState = temperature >= -30 && temperature <= 80 ? SensorState.ok : SensorState.error;
+            // Validate temperature range (-50°C to +100°C)
+            if (temperature >= -50 && temperature <= 100) {
+              temperatureSensorState = SensorState.ok;
+            } else {
+              temperatureSensorState = SensorState.error;
+            }
             break;
           case 'odb':
             odbState = value;
@@ -247,31 +301,39 @@ class DataServiceManager with ChangeNotifier {
           case 'accy':
           case 'imu_acc_y':
             imuAccY = double.tryParse(value) ?? imuAccY;
+            imuSensorState = SensorState.ok;
             break;
           case 'accz':
           case 'imu_acc_z':
             imuAccZ = double.tryParse(value) ?? imuAccZ;
+            imuSensorState = SensorState.ok;
             break;
           case 'gyrox':
           case 'imu_gyro_x':
             imuGyroX = double.tryParse(value) ?? imuGyroX;
+            imuSensorState = SensorState.ok;
             break;
           case 'gyroy':
           case 'imu_gyro_y':
             imuGyroY = double.tryParse(value) ?? imuGyroY;
+            imuSensorState = SensorState.ok;
             break;
           case 'gyroz':
           case 'imu_gyro_z':
             imuGyroZ = double.tryParse(value) ?? imuGyroZ;
+            imuSensorState = SensorState.ok;
             break;
           case 'magx':
             imuMagX = double.tryParse(value) ?? imuMagX;
+            imuSensorState = SensorState.ok;
             break;
           case 'magy':
             imuMagY = double.tryParse(value) ?? imuMagY;
+            imuSensorState = SensorState.ok;
             break;
           case 'magz':
             imuMagZ = double.tryParse(value) ?? imuMagZ;
+            imuSensorState = SensorState.ok;
             break;
 
           case 'acc_hg_x':
@@ -282,10 +344,12 @@ class DataServiceManager with ChangeNotifier {
           case 'acc_hg_y':
           case 'highg_acc_y':
             accHighGY = double.tryParse(value) ?? accHighGY;
+            accHighGSensorState = SensorState.ok;
             break;
           case 'acc_hg_z':
           case 'highg_acc_z':
             accHighGZ = double.tryParse(value) ?? accHighGZ;
+            accHighGSensorState = SensorState.ok;
             break;
 
           case 'sd_used':
@@ -306,6 +370,7 @@ class DataServiceManager with ChangeNotifier {
             break;
           case 'gps_lon':
             gpsLon = double.tryParse(value) ?? gpsLon;
+            gpsSensorState = SensorState.ok;
             break;
           case 'lon':
             gpsLon = (int.tryParse(value) ?? (gpsLon * 10000000).round()) / 10000000.0;
@@ -315,9 +380,11 @@ class DataServiceManager with ChangeNotifier {
             gpsAlt = isTelemetryFrame
                 ? (int.tryParse(value) ?? (gpsAlt * 1000).round()) / 1000.0
                 : double.tryParse(value) ?? gpsAlt;
+            gpsSensorState = SensorState.ok;
             break;
           case 'gps_alt_mm':
             gpsAlt = (int.tryParse(value) ?? (gpsAlt * 1000).round()) / 1000.0;
+            gpsSensorState = SensorState.ok;
             break;
           case 'gps_sats':
           case 'satellites_nb':

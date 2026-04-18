@@ -5,7 +5,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import 'flutter_flow/flutter_flow_util.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'flutter_flow/nav/nav.dart';
 import 'index.dart';
 import 'package:provider/provider.dart';
@@ -25,7 +24,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => BluetoothServiceManager()),
         ChangeNotifierProxyProvider<BluetoothServiceManager, DataServiceManager>(
           create: (ctx) => DataServiceManager(ctx.read<BluetoothServiceManager>()),
-          update: (ctx, bt, prev) => DataServiceManager(bt),
+          update: (ctx, bt, prev) => prev ?? DataServiceManager(bt),
         ),
       ],
       child: MyApp(),

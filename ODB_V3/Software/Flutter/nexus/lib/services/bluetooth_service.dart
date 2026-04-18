@@ -156,8 +156,12 @@ class BluetoothServiceManager with ChangeNotifier {
 
     ConsoleService().log('Découverte des services');
 
-    final services = await connectedDevice!.discoverServices();
-    ConsoleService().log('${services.length} service(s) trouvé(s)');
+    try {
+      final services = await connectedDevice!.discoverServices().timeout(
+        const Duration(seconds: 30),
+        onTimeout: () => throw TimeoutException('Service discovery timeout'),
+      );
+      ConsoleService().log('${services.length} service(s) trouvé(s)');
 
     for (final service in services) {
       for (final c in service.characteristics) {
@@ -172,6 +176,10 @@ class BluetoothServiceManager with ChangeNotifier {
           ConsoleService().log('Caractéristique écriture sélectionnée: ${c.uuid}');
         }
       }
+    }
+    } catch (e) {
+      ConsoleService().log('Erreur découverte services: $e');
+      debugPrint('Erreur discoverServices: $e');
     }
   }
 
@@ -197,7 +205,6 @@ class BluetoothServiceManager with ChangeNotifier {
             continue;
           }
 
-          ConsoleService().log('Message reçu: $line');
           if (!dataService.isDisposed) {
             dataService.parseMessage(line);
           }
