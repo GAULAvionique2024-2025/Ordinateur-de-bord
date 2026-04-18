@@ -1,7 +1,6 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -9,7 +8,6 @@ import 'commands_page_model.dart';
 export 'commands_page_model.dart';
 import 'package:nexus/services/bluetooth_service.dart';
 import 'package:nexus/services/data_service.dart';
-import 'package:nexus/services/data_service.dart' show SensorState;
 import 'package:nexus/services/console_service.dart';
 import 'package:nexus/widgets/status_bluetooth_card.dart';
 
@@ -216,7 +214,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                               FFButtonWidget(
                                 onPressed: connected ? () {
                                   ConsoleService().log('Test Capteurs demandé');
-                                  bt.send('TEST:SENSORS');
+                                  bt.send('TEST1');
                                 } : null,
                                 text: 'Exécuter',
                                 options: FFButtonOptions(
@@ -314,7 +312,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                               FFButtonWidget(
                                 onPressed: connected ? () {
                                   ConsoleService().log('Test Communication demandé');
-                                  bt.send('TEST:COMM');
+                                  bt.send('TEST2');
                                 } : null,
                                 text: 'Exécuter',
                                 options: FFButtonOptions(
@@ -413,7 +411,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                               FFButtonWidget(
                                 onPressed: connected ? () {
                                   ConsoleService().log('Test Mémoire demandé');
-                                  bt.send('TEST:MEM');
+                                  bt.send('TEST3');
                                 } : null,
                                 text: 'Exécuter',
                                 options: FFButtonOptions(
@@ -556,7 +554,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                               FFButtonWidget(
                                 onPressed: connected ? () {
                                   ConsoleService().log('Calibration Accéléromètre demandé');
-                                  bt.send('CALIB:ACC');
+                                  bt.send('CALIB1');
                                 } : null,
                                 text: 'Calibrer',
                                 options: FFButtonOptions(
@@ -655,7 +653,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                               FFButtonWidget(
                                 onPressed: connected ? () {
                                   ConsoleService().log('Calibration Baromètre demandé');
-                                  bt.send('CALIB:BARO');
+                                  bt.send('CALIB2');
                                 } : null,
                                 text: 'Calibrer',
                                 options: FFButtonOptions(
@@ -743,7 +741,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                                           child: FFButtonWidget(
                                             onPressed: connected ? () {
                                               ConsoleService().log('Verrouiller demandé');
-                                              bt.send('PYRO:ARM:${data.pyrosArmed ? '0' : '1'}');
+                                              bt.send(data.pyrosArmed ? 'ARM0' : 'ARM1');
                                             } : null,
                                             text: (connected && data.pyrosArmed) ? 'Armé' : 'Désarmé',
                                             options: FFButtonOptions(
@@ -891,7 +889,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                                         child: FFButtonWidget(
                                           onPressed: (connected && data.pyrosArmed && data.pyros[0]) ? () {
                                             ConsoleService().log('Déclenchement pyro 1 demandé');
-                                            bt.send('PYRO:TRIG:0');
+                                            bt.send('P1');
                                           } : null,
                                           text: connected ? ((data.pyrosArmed && data.pyros[0]) ? 'Déclencher' : 'Désarmé / Déconnecté') : 'Inconnu',
                                           options: FFButtonOptions(
@@ -1025,7 +1023,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                                         child: FFButtonWidget(
                                           onPressed: (connected && data.pyrosArmed && data.pyros[1]) ? () {
                                             ConsoleService().log('Déclenchement pyro 2 demandé');
-                                            bt.send('PYRO:TRIG:1');
+                                            bt.send('P2');
                                           } : null,
                                           text: connected ? ((data.pyrosArmed && data.pyros[1]) ? 'Déclencher' : 'Désarmé / Déconnecté') : 'Inconnu',
                                           options: FFButtonOptions(
@@ -1159,7 +1157,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                                         child: FFButtonWidget(
                                           onPressed: (connected && data.pyrosArmed && data.pyros[2]) ? () {
                                             ConsoleService().log('Déclenchement pyro 3 demandé');
-                                            bt.send('PYRO:TRIG:2');
+                                            bt.send('P3');
                                           } : null,
                                           text: connected ? ((data.pyrosArmed && data.pyros[2]) ? 'Déclencher' : 'Désarmé / Déconnecté') : 'Inconnu',
                                           options: FFButtonOptions(
@@ -1293,7 +1291,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                                         child: FFButtonWidget(
                                           onPressed: (connected && data.pyrosArmed && data.pyros[3]) ? () {
                                             ConsoleService().log('Déclenchement pyro 4 demandé');
-                                            bt.send('PYRO:TRIG:3');
+                                            bt.send('P4');
                                           } : null,
                                           text: connected ? ((data.pyrosArmed && data.pyros[3]) ? 'Déclencher' : 'Désarmé / Déconnecté') : 'Inconnu',
                                           options: FFButtonOptions(

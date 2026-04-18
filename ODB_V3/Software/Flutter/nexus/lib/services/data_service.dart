@@ -157,7 +157,7 @@ class DataServiceManager with ChangeNotifier {
       ? '${gpsAlt.toStringAsFixed(1)} m'
       : '—';
   String get gpsSatellitesDisplay => hasConnection && gpsSensorState == SensorState.ok
-      ? '${gpsSatellites} satellites'
+      ? '$gpsSatellites satellites'
       : '—';
   String get gpsFixDisplay => hasConnection 
       ? (gpsFix ? '✓ Actif' : '✗ Aucun fix')
@@ -417,6 +417,12 @@ class DataServiceManager with ChangeNotifier {
                 : value.toLowerCase() == 'connecting'
                     ? RadioState.connecting
                     : RadioState.disconnected;
+            break;
+
+          case 'ack':
+          case 'res':
+          case 'err':
+            ConsoleService().log('Réponse STM32: $value');
             break;
 
           default:

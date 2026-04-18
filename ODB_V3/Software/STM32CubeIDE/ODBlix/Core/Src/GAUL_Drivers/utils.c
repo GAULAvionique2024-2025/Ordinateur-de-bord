@@ -464,8 +464,8 @@ void App_HandleCommands(nexus_t *nexus_dev, hm11_t *hm11_dev) {
 
     char cmd[HM11_RX_BUFFER_SIZE] = {0}; 
     if(!HM11_GetMessage(hm11_dev, cmd, sizeof(cmd))) {
-        return;
-    }
+		return;
+	}
 
     for(int i = 0; cmd[i] && i < sizeof(cmd) - 1; i++) {
         cmd[i] = toupper((unsigned char)cmd[i]);

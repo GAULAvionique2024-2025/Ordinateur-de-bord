@@ -164,30 +164,3 @@ l76lm33_state_t L76LM33_Read(l76lm33_t *dev) {
 
     return L76LM33_OK;
 }
-
-/*
- * Callback on incoming UART data.
- */
-void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t size) {
-    extern l76lm33_t l76lm33; 
-
-    if(huart->Instance == l76lm33.huart->Instance) {
-        uint16_t nb_new_bytes = 0;
-        if(size >= l76lm33.old_pos) {
-            nb_new_bytes = size - l76lm33.old_pos;
-        } else {
-            nb_new_bytes = L76LM33_BUFFER_SIZES - l76lm33.old_pos + size;
-        }
-
-        for(uint16_t i = 0; i < nb_new_bytes; i++) {
-            uint8_t byte = l76lm33.dma_buffer[(l76lm33.old_pos + i) % L76LM33_BUFFER_SIZES];
-            RingBuffer_Queue(&(l76lm33.UART_Buffer), byte);
-            
-            if(byte == '\n') {
-                l76lm33.line_count++;
-            }
-        }
-        
-        l76lm33.old_pos = size;
-    }
-}

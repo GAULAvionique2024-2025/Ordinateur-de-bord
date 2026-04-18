@@ -5,6 +5,19 @@ import 'package:nexus/services/data_service.dart';
 import 'package:nexus/services/console_service.dart';
 
 class BluetoothServiceManager with ChangeNotifier {
+  static const String _nordicUartWriteUuid = '6e400002-b5a3-f393-e0a9-e50e24dcca9e';
+  static const String _bluetoothBaseUuidSuffix = '-0000-1000-8000-00805f9b34fb';
+  static const Set<String> _standardServiceUuids = {
+    '1800',
+    '1801',
+    '180a',
+    '180d',
+    '180f',
+    '1810',
+    '1811',
+    '1812',
+  };
+
   BluetoothServiceManager() {
     ConsoleService().addListener(_onConsoleChanged);
   }
@@ -17,6 +30,7 @@ class BluetoothServiceManager with ChangeNotifier {
   final Map<Guid, StreamSubscription<List<int>>> notifySubscriptions = {};
   final Map<Guid, String> _notifyBuffers = {};
   BluetoothCharacteristic? _writeCharacteristic;
+  final List<BluetoothCharacteristic> _writeCandidates = [];
 
   // ---------- RSSI ----------
   /// stocke le dernier RSSI connu (-999 = inconnu)
@@ -104,10 +118,8 @@ class BluetoothServiceManager with ChangeNotifier {
         ConsoleService().log('État connexion: $state');
 
         if (state == BluetoothConnectionState.disconnected) {
-          connectedDevice = null;
-          rssi = -999;
+          _resetConnectionState();
           ConsoleService().log('Appareil déconnecté');
-          notifyListeners();
         }
       });
 
@@ -132,12 +144,6 @@ class BluetoothServiceManager with ChangeNotifier {
     await connectionSubscription?.cancel();
     connectionSubscription = null;
 
-    for (final sub in notifySubscriptions.values) {
-      await sub.cancel();
-    }
-    notifySubscriptions.clear();
-    _notifyBuffers.clear();
-
     try {
       await connectedDevice!.disconnect();
       ConsoleService().log('Déconnexion réussie');
@@ -145,9 +151,23 @@ class BluetoothServiceManager with ChangeNotifier {
       ConsoleService().log('Erreur déconnexion: $e');
       debugPrint('Erreur disconnect: $e');
     } finally {
-      connectedDevice = null;
-      notifyListeners();
+      _resetConnectionState();
     }
+  }
+
+  void _resetConnectionState() {
+    connectedDevice = null;
+    rssi = -999;
+    _writeCharacteristic = null;
+    _writeCandidates.clear();
+
+    for (final sub in notifySubscriptions.values) {
+      sub.cancel();
+    }
+    notifySubscriptions.clear();
+    _notifyBuffers.clear();
+
+    notifyListeners();
   }
 
   // ---------- SERVICES ----------
@@ -157,6 +177,8 @@ class BluetoothServiceManager with ChangeNotifier {
     ConsoleService().log('Découverte des services');
 
     try {
+      _writeCharacteristic = null;
+      _writeCandidates.clear();
       final services = await connectedDevice!.discoverServices().timeout(
         const Duration(seconds: 30),
         onTimeout: () => throw TimeoutException('Service discovery timeout'),
@@ -164,23 +186,71 @@ class BluetoothServiceManager with ChangeNotifier {
       ConsoleService().log('${services.length} service(s) trouvé(s)');
 
     for (final service in services) {
+      final serviceUuid = service.uuid.toString().toLowerCase();
+      final isStandardService = _isStandardBluetoothUuid(serviceUuid) || _standardServiceUuids.contains(serviceUuid);
+
+      ConsoleService().log(
+        'Service découvert: ${service.uuid} '
+        '${isStandardService ? '(standard)' : '(personnalisé)'}',
+      );
+
       for (final c in service.characteristics) {
         if (c.properties.notify) {
           ConsoleService().log('Notification activée: ${c.uuid}');
           await enableNotifications(c, dataService);
         }
-      
-        // Enregistrer la première caractéristique d'écriture disponible
-        if (_writeCharacteristic == null && (c.properties.write || c.properties.writeWithoutResponse)) {
-          _writeCharacteristic = c;
-          ConsoleService().log('Caractéristique écriture sélectionnée: ${c.uuid}');
+
+        if (!isStandardService && (c.properties.write || c.properties.writeWithoutResponse)) {
+          _writeCandidates.add(c);
+
+          final uuid = c.uuid.toString().toLowerCase();
+          if (_writeCharacteristic == null || uuid == _nordicUartWriteUuid) {
+            _writeCharacteristic = c;
+          }
+
+          ConsoleService().log(
+            'Caractéristique écriture détectée: ${c.uuid} '
+            '(write=${c.properties.write}, writeNoResp=${c.properties.writeWithoutResponse})',
+          );
+        } else if (c.properties.write || c.properties.writeWithoutResponse) {
+          ConsoleService().log(
+            'Caractéristique écrivable ignorée car standard: ${c.uuid} '
+            '(service=${service.uuid})',
+          );
         }
       }
     }
+
+      _writeCandidates.sort((a, b) {
+        final aUuid = a.uuid.toString().toLowerCase();
+        final bUuid = b.uuid.toString().toLowerCase();
+        if (aUuid == _nordicUartWriteUuid && bUuid != _nordicUartWriteUuid) {
+          return -1;
+        }
+        if (bUuid == _nordicUartWriteUuid && aUuid != _nordicUartWriteUuid) {
+          return 1;
+        }
+        if (a.properties.write && !b.properties.write) {
+          return -1;
+        }
+        if (b.properties.write && !a.properties.write) {
+          return 1;
+        }
+        return a.uuid.toString().compareTo(b.uuid.toString());
+      });
+
+      if (_writeCandidates.isNotEmpty) {
+        _writeCharacteristic = _writeCandidates.first;
+        ConsoleService().log('Caractéristique écriture prioritaire: ${_writeCharacteristic!.uuid}');
+      }
     } catch (e) {
       ConsoleService().log('Erreur découverte services: $e');
       debugPrint('Erreur discoverServices: $e');
     }
+  }
+
+  bool _isStandardBluetoothUuid(String uuid) {
+    return uuid.endsWith(_bluetoothBaseUuidSuffix);
   }
 
   Future<void> enableNotifications(BluetoothCharacteristic c, DataServiceManager dataService,
@@ -224,14 +294,33 @@ class BluetoothServiceManager with ChangeNotifier {
       ConsoleService().log('Aucun appareil connecté');
       return;
     }
-    final c = characteristic ?? _writeCharacteristic;
-    if (c == null) {
+    final preferred = characteristic != null
+        ? <BluetoothCharacteristic>[characteristic]
+        : <BluetoothCharacteristic>{
+            if (_writeCharacteristic != null) _writeCharacteristic!,
+            ..._writeCandidates,
+          }.toList();
+
+    if (preferred.isEmpty) {
       ConsoleService().log('Aucune caractéristique d\'écriture disponible');
       return;
     }
+
+    final payload = message.codeUnits;
     try {
-      await c.write(message.codeUnits, withoutResponse: false);
-      ConsoleService().log('TX: $message');
+      for (final c in preferred) {
+        final withoutResponse = c.properties.writeWithoutResponse && !c.properties.write;
+        try {
+          await c.write(payload, withoutResponse: withoutResponse);
+          _writeCharacteristic = c;
+          ConsoleService().log('TX: $message via ${c.uuid}');
+          return;
+        } catch (e) {
+          ConsoleService().log('Échec écriture via ${c.uuid}: $e');
+        }
+      }
+
+      ConsoleService().log('Erreur envoi message: aucune caractéristique d\'écriture n\'a accepté la commande');
     } catch (e) {
       ConsoleService().log('Erreur envoi message: $e');
     }

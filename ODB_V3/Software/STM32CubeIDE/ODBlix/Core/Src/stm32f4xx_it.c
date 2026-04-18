@@ -22,6 +22,10 @@
 #include "stm32f4xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include <stdbool.h>
+#include "GAUL_Drivers/hm11.h"
+#include "GAUL_Drivers/l76lm33.h"
+#include "GAUL_Drivers/rfd900x.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -64,10 +68,13 @@ extern DMA_HandleTypeDef hdma_spi5_rx;
 extern SPI_HandleTypeDef hspi5;
 extern DMA_HandleTypeDef hdma_usart1_tx;
 extern DMA_HandleTypeDef hdma_usart6_rx;
+extern UART_HandleTypeDef huart1;
 extern UART_HandleTypeDef huart2;
 extern UART_HandleTypeDef huart6;
 /* USER CODE BEGIN EV */
-
+extern hm11_t     hm11;
+extern l76lm33_t  l76lm33;
+extern rfd900x_t  rfd900x;
 /* USER CODE END EV */
 
 /******************************************************************************/
@@ -238,6 +245,20 @@ void I2C1_EV_IRQHandler(void)
 }
 
 /**
+  * @brief This function handles USART1 global interrupt.
+  */
+void USART1_IRQHandler(void)
+{
+  /* USER CODE BEGIN USART1_IRQn 0 */
+
+  /* USER CODE END USART1_IRQn 0 */
+  HAL_UART_IRQHandler(&huart1);
+  /* USER CODE BEGIN USART1_IRQn 1 */
+
+  /* USER CODE END USART1_IRQn 1 */
+}
+
+/**
   * @brief This function handles USART2 global interrupt.
   */
 void USART2_IRQHandler(void)
@@ -364,5 +385,39 @@ void SPI5_IRQHandler(void)
 }
 
 /* USER CODE BEGIN 1 */
+/**
+ * Gestion du HM-11 (Bluetooth)
+ */
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
+    if(huart->Instance == hm11.huart->Instance) {
+        RingBuffer_Queue(&hm11.rx_ring, hm11.rx_byte);
+        HAL_UART_Receive_IT(hm11.huart, &hm11.rx_byte, 1);
+    }
+}
 
+/**
+ * Gestion du L76LM33 (GPS)
+ */
+void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t size) {
+    if(huart->Instance == l76lm33.huart->Instance) {
+        uint16_t nb_new_bytes = (size >= l76lm33.old_pos) ? (size - l76lm33.old_pos) : (L76LM33_BUFFER_SIZES - l76lm33.old_pos + size);
+
+        for(uint16_t i = 0; i < nb_new_bytes; i++) {
+            uint8_t byte = l76lm33.dma_buffer[(l76lm33.old_pos + i) % L76LM33_BUFFER_SIZES];
+            RingBuffer_Queue(&(l76lm33.UART_Buffer), byte);
+            if(byte == '\n') l76lm33.line_count++;
+        }
+        l76lm33.old_pos = size;
+    }
+}
+
+/**
+ * Gestion du RFD900x (Radio)
+ */
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) {
+    if(huart->Instance == rfd900x.huart->Instance) {
+        rfd900x.is_transmitting = false;
+        RFD900x_ProcessTX(&rfd900x);
+    }
+}
 /* USER CODE END 1 */

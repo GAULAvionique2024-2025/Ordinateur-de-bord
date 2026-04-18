@@ -115,99 +115,52 @@ bool HM11_SendString(hm11_t *dev, const char *str) {
 }
 
 bool HM11_GetMessage(hm11_t *dev, char *out_buffer, uint16_t max_length) {
-    if (dev == NULL || out_buffer == NULL || max_length <= 1) {
+    if(dev == NULL || out_buffer == NULL || max_length <= 1) {
         return false;
     }
 
-    // State machine connection status
-    uint16_t out_idx = 0;
+    static char local_buffer[HM11_RX_BUFFER_SIZE];
+    static uint16_t local_idx = 0;
+
     uint8_t byte;
-    while(RingBuffer_Dequeue(&dev->rx_ring, &byte) && (out_idx < max_length - 1)) {
-        switch (dev->parse_state) {
-            // OK+
-            case HM_PARSE_IDLE:
-                if(byte == 'O') {
-                    dev->parse_state = HM_PARSE_O;
-                } else {
-                    out_buffer[out_idx++] = byte;
-                }
-                break;
-            case HM_PARSE_O:
-                if(byte == 'K') {
-                    dev->parse_state = HM_PARSE_K;
-                } else { 
-                    out_buffer[out_idx++] = 'O'; out_buffer[out_idx++] = byte; dev->parse_state = HM_PARSE_IDLE; 
-                }
-                break;
-            case HM_PARSE_K:
-                if(byte == '+') {
-                    dev->parse_state = HM_PARSE_PLUS;
-                } else {
-                    dev->parse_state = HM_PARSE_IDLE;
-                }
-                break;
-            case HM_PARSE_PLUS:
-                if(byte == 'C') {
-                    dev->parse_state = HM_PARSE_C;
-                } else if(byte == 'L') {
-                    dev->parse_state = HM_PARSE_L;
-                } else {
-                    dev->parse_state = HM_PARSE_IDLE;
-                }
-                break;
-            // CONN
-            case HM_PARSE_C:
-                if(byte == 'O') {
-                    dev->parse_state = HM_PARSE_CO;
-                } else {
-                    dev->parse_state = HM_PARSE_IDLE;
-                }
-                break;
-            case HM_PARSE_CO:
-                if(byte == 'N') {
-                    dev->parse_state = HM_PARSE_CON;
-                } else {
-                    dev->parse_state = HM_PARSE_IDLE;
-                }
-                break;
-            case HM_PARSE_CON:
-                if(byte == 'N') {
-                    dev->is_connected = true;
-                    dev->parse_state = HM_PARSE_IDLE;
-                } else {
-                    dev->parse_state = HM_PARSE_IDLE;
-                }
-                break;
-            // LOST
-            case HM_PARSE_L:
-                if(byte == 'O') {
-                    dev->parse_state = HM_PARSE_LO;
-                } else {
-                    dev->parse_state = HM_PARSE_IDLE;
-                }
-                break;
-            case HM_PARSE_LO:
-                if(byte == 'S') {
-                    dev->parse_state = HM_PARSE_LOS;
-                } else {
-                    dev->parse_state = HM_PARSE_IDLE;
-                }
-                break;
-            case HM_PARSE_LOS:
-                if(byte == 'T') {
-                    dev->is_connected = false;
-                    dev->parse_state = HM_PARSE_IDLE;
-                } else {
-                    dev->parse_state = HM_PARSE_IDLE;
-                }
-                break;
+    while(RingBuffer_Dequeue(&dev->rx_ring, &byte)) {
+        if(local_idx < HM11_RX_BUFFER_SIZE - 1) {
+            local_buffer[local_idx++] = byte;
+            local_buffer[local_idx] = '\0';
+        } else {
+            local_idx = 0;
+            local_buffer[0] = '\0';
+        }
+
+        if(strstr(local_buffer, "OK+CONN") != NULL) {
+            dev->is_connected = true;
+            local_idx = 0;
+            local_buffer[0] = '\0';
+            continue;
+        }
+        if(strstr(local_buffer, "OK+LOST") != NULL) {
+            dev->is_connected = false;
+            local_idx = 0;
+            local_buffer[0] = '\0';
+            continue;
+        }
+
+        if(byte == '\n' || byte == '\r') {
+            if(local_idx > 1) {
+                strncpy(out_buffer, local_buffer, max_length - 1);
+                out_buffer[max_length - 1] = '\0';
+
+                local_idx = 0;
+                local_buffer[0] = '\0';
+                return true;
+            } else {
+                local_idx = 0;
+                local_buffer[0] = '\0';
+            }
         }
     }
 
-    // Null-terminate the output buffer provided by the connected device
-    out_buffer[out_idx] = '\0';
-
-    return (out_idx > 0); 
+    return false;
 }
 
 bool HM11_Sleep(hm11_t *dev) {
@@ -218,15 +171,4 @@ bool HM11_WakeUp(hm11_t *dev) {
 	const char wake_up_string[] = "wake up!, wake up!, wake up!, wake up!, wake up!, wake up!, wake up!, wake up!, wake up!";
     
 	return HM11_SendATCommand(dev, wake_up_string, "OK+WAKE");
-}
-
-// Callback
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
-    extern hm11_t hm11; 
-
-    if(huart->Instance == hm11.huart->Instance) {
-        RingBuffer_Queue(&hm11.rx_ring, hm11.rx_byte);
-        
-        HAL_UART_Receive_IT(hm11.huart, &hm11.rx_byte, 1);
-    }
 }
