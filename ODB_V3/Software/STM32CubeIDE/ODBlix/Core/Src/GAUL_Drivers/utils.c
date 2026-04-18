@@ -249,9 +249,11 @@ odb_state_t ODB_Init(odb_data *data) {
         printf("Erreur : Init W25Q\n");
     }
 
-    if(HM11_Init(&hm11) != HM11_OK) {
-        warning += 1;
-        printf("Erreur : HM-11 ne repond pas.\n");
+    if(HM11_Init(&hm11) == HM11_OK) {
+    	system_states |= FLAG_BT_OK;
+    } else {
+    	warning += 1;
+    	printf("Erreur : HM-11 ne repond pas.\n");
     }
 
     if(CriticalLed_Init(&critical_led) != 0) {

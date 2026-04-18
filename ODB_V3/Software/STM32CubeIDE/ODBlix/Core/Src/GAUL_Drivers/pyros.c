@@ -30,7 +30,8 @@ bool Pyro_Arming(bool arming, system_measurements_t *measures) {
 	HAL_GPIO_WritePin(PYROS_ARMING_PORT, PYROS_ARMING_PIN, state);
 
 	SystemMeasurements_ComputePyros(measures);
-	return (measures->pyros_arming >= ARM_THRESHOLD);;
+
+	return (measures->pyros_arming >= ARM_THRESHOLD);
 }
 
 bool Pyro_Fire(pyro_t *dev, system_measurements_t *measures) {

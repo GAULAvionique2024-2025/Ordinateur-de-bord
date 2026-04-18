@@ -56,7 +56,7 @@ void SystemMeasurements_ComputePower(system_measurements_t *dev) {
 void SystemMeasurements_ComputeTemperature(system_measurements_t *dev) {
     uint16_t temp = adc_buffer[3];
 
-    float v_temp = temp * DIV_ADC_STEP * 1000.0f;
+    float v_temp = temp * DIV_ADC_STEP * 0.001f;
     dev->temperature = (v_temp - 0.40f) / 0.01953f;
 }
 
