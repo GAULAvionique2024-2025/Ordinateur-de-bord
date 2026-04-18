@@ -1263,9 +1263,18 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                         ],
                                       ),
                                     ),
+                                  ].divide(const SizedBox(width: 24.0)),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 8.0, 0.0, 0.0),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
                                     Expanded(
                                       child: Column(
-                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisSize: MainAxisSize.min,
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
@@ -1274,7 +1283,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                                 const EdgeInsetsDirectional.fromSTEB(
                                                     0.0, 0.0, 0.0, 4.0),
                                             child: Text(
-                                              'ATTITUDE',
+                                              'PITCH',
                                               style: FlutterFlowTheme.of(
                                                       context)
                                                   .bodySmall
@@ -1302,7 +1311,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                             ),
                                           ),
                                           Text(
-                                            (connected && data.imuSensorState == SensorState.ok) ? 'R: ${data.roll.toStringAsFixed(1)}°' : '—',
+                                            (connected && data.imuSensorState == SensorState.ok) ? '${data.pitch.toStringAsFixed(1)}°' : '—',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -1323,8 +1332,49 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                                           .fontStyle,
                                                 ),
                                           ),
+                                        ],
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding:
+                                                const EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 0.0, 0.0, 4.0),
+                                            child: Text(
+                                              'ROLL',
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodySmall
+                                                  .override(
+                                                    font: GoogleFonts.inter(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      fontStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodySmall
+                                                              .fontStyle,
+                                                    ),
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .secondaryText,
+                                                    letterSpacing: 0.0,
+                                                    fontWeight: FontWeight.w600,
+                                                    fontStyle:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodySmall
+                                                            .fontStyle,
+                                                  ),
+                                            ),
+                                          ),
                                           Text(
-                                            (connected && data.imuSensorState == SensorState.ok) ? 'P: ${data.pitch.toStringAsFixed(1)}°' : '—',
+                                            (connected && data.imuSensorState == SensorState.ok) ? '${data.roll.toStringAsFixed(1)}°' : '—',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -1345,8 +1395,49 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                                           .fontStyle,
                                                 ),
                                           ),
+                                        ],
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding:
+                                                const EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 0.0, 0.0, 4.0),
+                                            child: Text(
+                                              'YAW',
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodySmall
+                                                  .override(
+                                                    font: GoogleFonts.inter(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      fontStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodySmall
+                                                              .fontStyle,
+                                                    ),
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .secondaryText,
+                                                    letterSpacing: 0.0,
+                                                    fontWeight: FontWeight.w600,
+                                                    fontStyle:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodySmall
+                                                            .fontStyle,
+                                                  ),
+                                            ),
+                                          ),
                                           Text(
-                                            (connected && data.imuSensorState == SensorState.ok) ? 'Y: ${data.yaw.toStringAsFixed(1)}°' : '—',
+                                            (connected && data.imuSensorState == SensorState.ok) ? '${data.yaw.toStringAsFixed(1)}°' : '—',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
