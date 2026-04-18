@@ -14,7 +14,6 @@
 #define DIV_RATIO_VIN_BATT 	7.6667 		// 27k / (27k + 180k)
 #define DIV_RATIO_V5_BUCK  	1.7500		// 180k / (180k + 135k)
 #define DIV_RATIO_V3_BUCK	1.1111		// 180k / (180k + 20k)
-#define PYROS_THRESHOLD		1800		// 1.5V
 
 
 extern uint16_t adc_buffer[9];
@@ -39,6 +38,8 @@ int8_t SystemMeasurements_Init(system_measurements_t *dev) {
 
 	HAL_TIM_Base_Start(dev->htim);
 
+	HAL_Delay(100);
+
 	return 0; // success
 }
 
@@ -59,7 +60,6 @@ void SystemMeasurements_ComputeTemperature(system_measurements_t *dev) {
     dev->temperature = (v_temp - 0.40f) / 0.01953f;
 }
 
-// TODO: add real pyros continuity threshold
 void SystemMeasurements_ComputePyros(system_measurements_t *dev) {
     uint16_t arm = adc_buffer[0];
     uint16_t p4  = adc_buffer[1];
@@ -67,10 +67,9 @@ void SystemMeasurements_ComputePyros(system_measurements_t *dev) {
     uint16_t p3  = adc_buffer[7];
     uint16_t p2  = adc_buffer[8];
 
-    dev->pyros_arming = (arm >= PYROS_THRESHOLD);
-
-    dev->pyro_status[0] = (p1 < PYROS_THRESHOLD);
-    dev->pyro_status[1] = (p2 < PYROS_THRESHOLD);
-    dev->pyro_status[2] = (p3 < PYROS_THRESHOLD);
-    dev->pyro_status[3] = (p4 < PYROS_THRESHOLD);
+    dev->pyros_arming 	= arm;
+    dev->pyro_status[0] = p1;
+    dev->pyro_status[1] = p2;
+    dev->pyro_status[2] = p3;
+    dev->pyro_status[3] = p4;
 }

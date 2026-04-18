@@ -142,38 +142,37 @@ odb_state_t ODB_Init(odb_data *data) {
 
         uint8_t pyros_connected = 0;
         // Pyros need to be armed for read status
-        Pyro_Arming(true);
-        SystemMeasurements_ComputePyros(&system_measurements);
+        bool is_armed = Pyro_Arming(true, &system_measurements);
         // Verify if arming is really enabled
-        if(system_measurements.pyros_arming) {
+        if(is_armed) {
             system_states |= FLAG_PYROS_ARMED_OK;
         } else {
             error += 1;
             printf("Erreur : Armement des Pyros bloqué\n");
         }
         // Check pyros continuity
-        if(Pyro_Init(&pyro1) == 0) {
+        if(Pyro_Init(&pyro1, &system_measurements) == 0) {
             system_states |= FLAG_PYRO1_CONN;
             pyros_connected += 1;
         } else {
             warning += 1;
             printf("Erreur : Pyro 1 déconnecté\n");
         }
-        if(Pyro_Init(&pyro2) == 0) {
+        if(Pyro_Init(&pyro2, &system_measurements) == 0) {
             system_states |= FLAG_PYRO2_CONN;
             pyros_connected += 1;
         } else {
             warning += 1;
             printf("Erreur : Pyro 2 déconnecté\n");
         }
-        if(Pyro_Init(&pyro3) == 0) {
+        if(Pyro_Init(&pyro3, &system_measurements) == 0) {
             system_states |= FLAG_PYRO3_CONN;
             pyros_connected += 1;
         } else {
             warning += 1;
             printf("Erreur : Pyro 3 déconnecté\n");
         }
-        if(Pyro_Init(&pyro4) == 0) {
+        if(Pyro_Init(&pyro4, &system_measurements) == 0) {
             system_states |= FLAG_PYRO4_CONN;
             pyros_connected += 1;
         } else {
@@ -181,16 +180,15 @@ odb_state_t ODB_Init(odb_data *data) {
             printf("Erreur : Pyro 4 déconnecté\n");
         }
 
-        Pyro_Arming(false);
-        SystemMeasurements_ComputePyros(&system_measurements);
+        is_armed = Pyro_Arming(true, &system_measurements);
         // Verify if arming is really disabled
-        if(!system_measurements.pyros_arming) {
-            system_states |= FLAG_PYROS_ARMED_OK;
-        } else {
+		if(!is_armed) {
+			system_states |= FLAG_PYROS_ARMED_OK;
+		} else {
             system_states &= ~FLAG_PYROS_ARMED_OK;
-            error += 1;
+			error += 1;
             printf("Erreur : Désarmement des Pyros bloqué\n");
-        }
+		}
         // Protection
         if(pyros_connected == 0) {
             error += 1;
@@ -344,7 +342,6 @@ void ODB_Update(odb_data *data) {
     }
 
     data->event_states = ODB_SetEventStates(&event_states);
-
 }
 
 int8_t ODB_SetMissionState(odb_data *data, uint8_t mission_state) {
@@ -476,11 +473,11 @@ void App_HandleCommands(nexus_t *nexus_dev, hm11_t *hm11_dev) {
     if(strncmp(cmd, "PING", 4) == 0) {
         HM11_SendString(hm11_dev, "PONG\r\n");
     } else if(strncmp(cmd, "ARM0", 4) == 0) {
-    	Pyro_Arming(false);
+    	Pyro_Arming(false, &system_measurements);
         HM11_SendString(hm11_dev, "ACK: DISARMED\r\n");
         Telemetry_SendEventLog(&rfd900x, 1, MAV_SEVERITY_WARNING, "PYROS DISARMED VIA BT");
     } else if(strncmp(cmd, "ARM1", 4) == 0) {
-    	Pyro_Arming(true);
+    	Pyro_Arming(true, &system_measurements);
         HM11_SendString(hm11_dev, "ACK: ARMED\r\n");
         Telemetry_SendEventLog(&rfd900x, 1, MAV_SEVERITY_WARNING, "PYROS ARMED VIA BT");
     }
@@ -488,22 +485,22 @@ void App_HandleCommands(nexus_t *nexus_dev, hm11_t *hm11_dev) {
     else if(strncmp(cmd, "P", 1) == 0 && isdigit((unsigned char)cmd[1])) {
         if(system_measurements.pyros_arming) {
             if(cmd[1] == '1') {
-                Pyro_Fire(&pyro1);
+                Pyro_Fire(&pyro1, &system_measurements);
                 // TODO: Check with system_measurements and ...
                 HM11_SendString(hm11_dev, "ACK: P1 FIRED\r\n");
                 Telemetry_SendEventLog(&rfd900x, 1, MAV_SEVERITY_CRITICAL, "PYRO 1 FIRED");
             } else if(cmd[1] == '2') {
-                Pyro_Fire(&pyro2);
+                Pyro_Fire(&pyro2, &system_measurements);
                 // TODO: Check with system_measurements and ...
                 HM11_SendString(hm11_dev, "ACK: P2 FIRED\r\n");
                 Telemetry_SendEventLog(&rfd900x, 1, MAV_SEVERITY_CRITICAL, "PYRO 2 FIRED");
             } else if(cmd[1] == '3') {
-                Pyro_Fire(&pyro3);
+                Pyro_Fire(&pyro3, &system_measurements);
                 // TODO: Check with system_measurements and ...
                 HM11_SendString(hm11_dev, "ACK: P3 FIRED\r\n");
                 Telemetry_SendEventLog(&rfd900x, 1, MAV_SEVERITY_CRITICAL, "PYRO 3 FIRED");
             } else if(cmd[1] == '4') {
-                Pyro_Fire(&pyro4);
+                Pyro_Fire(&pyro4, &system_measurements);
                 // TODO: Check with system_measurements and ...
                 HM11_SendString(hm11_dev, "ACK: P4 FIRED\r\n");
                 Telemetry_SendEventLog(&rfd900x, 1, MAV_SEVERITY_CRITICAL, "PYRO 4 FIRED");

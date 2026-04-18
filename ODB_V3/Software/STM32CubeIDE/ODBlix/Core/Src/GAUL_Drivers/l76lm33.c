@@ -131,6 +131,14 @@ l76lm33_state_t L76LM33_Init(l76lm33_t *dev) {
     HAL_Delay(50);
 
     // Restart UART DMA Reception
+    HAL_UART_AbortReceive(dev->huart);
+    dev->huart->Init.BaudRate = 115200;
+    if(HAL_UART_Init(dev->huart) != HAL_OK) {
+    	return L76LM33_ERROR;
+    }
+    // Clear pending buffers
+    __HAL_UART_CLEAR_OREFLAG(dev->huart);
+    __HAL_UART_CLEAR_FEFLAG(dev->huart);
     if(HAL_UARTEx_ReceiveToIdle_DMA(dev->huart, dev->dma_buffer, L76LM33_BUFFER_SIZES) != HAL_OK) {
         return L76LM33_ERROR;
     }

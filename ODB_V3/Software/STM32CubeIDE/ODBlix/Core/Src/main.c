@@ -131,24 +131,28 @@ ms5611_t ms5611 = {
 pyro_t pyro1 = {
 	.port = Fire_1_GPIO_Port,
 	.pin = Fire_1_Pin,
+	.channel = PYRO_1,
 	.is_connected = false,
 	.is_fire = false,
 };
 pyro_t pyro2 = {
 	.port = Fire_2_GPIO_Port,
 	.pin = Fire_2_Pin,
+	.channel = PYRO_2,
 	.is_connected = false,
 	.is_fire = false,
 };
 pyro_t pyro3 = {
 	.port = Fire_3_GPIO_Port,
 	.pin = Fire_3_Pin,
+	.channel = PYRO_3,
 	.is_connected = false,
 	.is_fire = false,
 };
 pyro_t pyro4 = {
 	.port = Fire_4_GPIO_Port,
 	.pin = Fire_4_Pin,
+	.channel = PYRO_4,
 	.is_connected = false,
 	.is_fire = false,
 };
@@ -250,6 +254,8 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+    /* USER CODE END WHILE */
+
     /* USER CODE BEGIN 3 */
 	  ODB_Update(&data);
     if(DEBUG_MODE == 1) {
@@ -834,7 +840,7 @@ static void MX_USART6_UART_Init(void)
 
   /* USER CODE END USART6_Init 1 */
   huart6.Instance = USART6;
-  huart6.Init.BaudRate = 115200;
+  huart6.Init.BaudRate = 9600;
   huart6.Init.WordLength = UART_WORDLENGTH_8B;
   huart6.Init.StopBits = UART_STOPBITS_1;
   huart6.Init.Parity = UART_PARITY_NONE;
