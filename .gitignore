@@ -29,6 +29,41 @@
 **/*.swo
 **/*~
 
+# === Python ===
+# Bytecode / cache
+**/__pycache__/
+**/*.py[cod]
+**/*$py.class
+
+# Environnements virtuels
+**/.venv/
+**/venv/
+**/env/
+**/ENV/
+
+# Packaging / build
+**/build/
+**/dist/
+**/*.egg-info/
+**/.eggs/
+
+# Tests / coverage
+**/.pytest_cache/
+**/.coverage
+**/.coverage.*
+**/htmlcov/
+
+# Type checkers / linters
+**/.mypy_cache/
+**/.ruff_cache/
+**/.pyre/
+
+# Jupyter
+**/.ipynb_checkpoints/
+
+# Logs Python
+**/*.log
+
 # === Versions ===
 ODB_V1/
 ODB_V2/
