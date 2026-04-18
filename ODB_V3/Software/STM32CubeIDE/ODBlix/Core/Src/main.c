@@ -129,29 +129,37 @@ ms5611_t ms5611 = {
     .cs_pin = BARO_SPI1_CS_Pin,
 };
 pyro_t pyro1 = {
-	.port = Fire_1_GPIO_Port,
-	.pin = Fire_1_Pin,
+	.fire_port = Fire_1_GPIO_Port,
+	.fire_pin = Fire_1_Pin,
+	.arm_port = Pyros_Arm_GPIO_Port,
+	.arm_pin = Pyros_Arm_Pin,
 	.channel = PYRO_1,
 	.is_connected = false,
 	.is_fire = false,
 };
 pyro_t pyro2 = {
-	.port = Fire_2_GPIO_Port,
-	.pin = Fire_2_Pin,
+	.fire_port = Fire_2_GPIO_Port,
+	.fire_pin = Fire_2_Pin,
+	.arm_port = Pyros_Arm_GPIO_Port,
+	.arm_pin = Pyros_Arm_Pin,
 	.channel = PYRO_2,
 	.is_connected = false,
 	.is_fire = false,
 };
 pyro_t pyro3 = {
-	.port = Fire_3_GPIO_Port,
-	.pin = Fire_3_Pin,
+	.fire_port = Fire_3_GPIO_Port,
+	.fire_pin = Fire_3_Pin,
+	.arm_port = Pyros_Arm_GPIO_Port,
+	.arm_pin = Pyros_Arm_Pin,
 	.channel = PYRO_3,
 	.is_connected = false,
 	.is_fire = false,
 };
 pyro_t pyro4 = {
-	.port = Fire_4_GPIO_Port,
-	.pin = Fire_4_Pin,
+	.fire_port = Fire_4_GPIO_Port,
+	.fire_pin = Fire_4_Pin,
+	.arm_port = Pyros_Arm_GPIO_Port,
+	.arm_pin = Pyros_Arm_Pin,
 	.channel = PYRO_4,
 	.is_connected = false,
 	.is_fire = false,
@@ -170,7 +178,7 @@ nexus_t nexus = {
   .period_ms = NEXUS_DEFAULT_PERIOD_MS,
   .last_ms = 0,
 };
-uint16_t adc_buffer[9];
+volatile uint16_t adc_buffer[9];
 w25q_t w25q = {
 	.hqspi = &hqspi,
 };
@@ -257,12 +265,12 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	  ODB_Update(&data);
+	ODB_Update(&data);
     if(DEBUG_MODE == 1) {
-	    App_SendFrame(&nexus, &hm11, &data);
-		  App_HandleCommands(&nexus, &hm11);
-	  }
-	  HAL_Delay(100);
+    	App_SendFrame(&nexus, &hm11, &data);
+    	App_HandleCommands(&nexus, &hm11);
+    }
+    HAL_Delay(100);
   }
   /* USER CODE END 3 */
 }

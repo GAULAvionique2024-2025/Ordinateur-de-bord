@@ -324,14 +324,17 @@ class DataServiceManager with ChangeNotifier {
             imuSensorState = SensorState.ok;
             break;
           case 'magx':
+          case 'imu_mag_x':
             imuMagX = double.tryParse(value) ?? imuMagX;
             imuSensorState = SensorState.ok;
             break;
           case 'magy':
+          case 'imu_mag_y':
             imuMagY = double.tryParse(value) ?? imuMagY;
             imuSensorState = SensorState.ok;
             break;
           case 'magz':
+          case 'imu_mag_z':
             imuMagZ = double.tryParse(value) ?? imuMagZ;
             imuSensorState = SensorState.ok;
             break;

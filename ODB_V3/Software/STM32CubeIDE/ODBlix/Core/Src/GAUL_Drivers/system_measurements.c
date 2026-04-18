@@ -16,14 +16,14 @@
 #define DIV_RATIO_V3_BUCK	1.1111		// 180k / (180k + 20k)
 
 
-extern uint16_t adc_buffer[9];
-
+extern volatile uint16_t adc_buffer[9];
 
 int8_t SystemMeasurements_Init(system_measurements_t *dev) {
 	if(dev == NULL || dev->hadc == NULL) {
 		return -1;
 	}
 
+	dev->dma_ready = false;
 	dev->temperature = 0.00f;
 	dev->vin_batt = 0;
 	dev->v5_buck = 0;
@@ -72,4 +72,11 @@ void SystemMeasurements_ComputePyros(system_measurements_t *dev) {
     dev->pyro_status[1] = p2;
     dev->pyro_status[2] = p3;
     dev->pyro_status[3] = p4;
+}
+
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc) {
+	extern system_measurements_t system_measurements;
+    if(hadc->Instance == ADC1) {
+    	system_measurements.dma_ready = true;
+    }
 }

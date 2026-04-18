@@ -110,6 +110,9 @@ typedef struct {
     float       imu_gyro_x;         // IMU Angular rate X in deg/s (converted to cdeg/s for MAVLink)
     float       imu_gyro_y;         // IMU Angular rate Y in deg/s (converted to cdeg/s for MAVLink)
     float       imu_gyro_z;         // IMU Angular rate Z in deg/s (converted to cdeg/s for MAVLink)
+    float		imu_mag_x;			// IMU Magnetometer X in uT (converted to cuT for MAVLink)
+    float		imu_mag_y;			// IMU Magnetometer Y in uT (converted to cuT for MAVLink)
+    float		imu_mag_z;			// IMU Magnetometer Z in uT (converted to cuT for MAVLink)
     // Pressure & Temp
     float       pressure_hpa;       // Atmospheric pressure in hectopascals (hPa)
     float       temp_celsius;       // Board or environment temperature in Celsius (°C)

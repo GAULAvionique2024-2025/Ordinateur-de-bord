@@ -142,7 +142,7 @@ odb_state_t ODB_Init(odb_data *data) {
 
         uint8_t pyros_connected = 0;
         // Pyros need to be armed for read status
-        bool is_armed = Pyro_Arming(true, &system_measurements);
+        bool is_armed = Pyro_Arming(&pyro1, &system_measurements, true);
         // Verify if arming is really enabled
         if(is_armed) {
             system_states |= FLAG_PYROS_ARMED_OK;
@@ -180,7 +180,7 @@ odb_state_t ODB_Init(odb_data *data) {
             printf("Erreur : Pyro 4 déconnecté\n");
         }
 
-        is_armed = Pyro_Arming(true, &system_measurements);
+        is_armed = Pyro_Arming(&pyro1, &system_measurements, false);
         // Verify if arming is really disabled
 		if(!is_armed) {
 			system_states |= FLAG_PYROS_ARMED_OK;
@@ -369,8 +369,8 @@ static void Telemetry_TransmitMessage(rfd900x_t *rfd_dev, const mavlink_message_
 void Telemetry_SendRocketData(rfd900x_t *rfd_dev, const odb_modem_id_t modem_id, const odb_data *data, const uint32_t current_time_ms) {
     if(!rfd_dev || !data) return;
 
-    // TODO: add event_states
     mavlink_message_t msg;
+
     mavlink_msg_rocket_telemetry_pack(
         modem_id,
         MAVLINK_COMPONENT_ID,
@@ -380,6 +380,12 @@ void Telemetry_SendRocketData(rfd900x_t *rfd_dev, const odb_modem_id_t modem_id,
         data->lon,
         data->gps_alt,
         data->pressure_hpa,
+        (int32_t)(data->imu_gyro_x * 100.0f),
+        (int32_t)(data->imu_gyro_y * 100.0f),
+        (int32_t)(data->imu_gyro_z * 100.0f),
+        (int32_t)(data->highg_acc_x * 100.0f),
+        (int32_t)(data->highg_acc_y * 100.0f),
+        (int32_t)(data->highg_acc_z * 100.0f),
         (int16_t)(data->roll * 100.0f),
         (int16_t)(data->pitch * 100.0f),
         (int16_t)(data->yaw * 100.0f),
@@ -387,16 +393,15 @@ void Telemetry_SendRocketData(rfd900x_t *rfd_dev, const odb_modem_id_t modem_id,
         (int16_t)(data->imu_acc_x * 100.0f),
         (int16_t)(data->imu_acc_y * 100.0f),
         (int16_t)(data->imu_acc_z * 100.0f),
-        (int32_t)(data->imu_gyro_x * 100.0f),
-        (int32_t)(data->imu_gyro_y * 100.0f),
-        (int32_t)(data->imu_gyro_z * 100.0f),
-        (int32_t)(data->highg_acc_x * 100.0f),
-        (int32_t)(data->highg_acc_y * 100.0f),
-        (int32_t)(data->highg_acc_z * 100.0f),
+        (int16_t)(data->imu_mag_x * 10.0f),
+        (int16_t)(data->imu_mag_y * 10.0f),
+        (int16_t)(data->imu_mag_z * 10.0f),
         data->system_states,
         data->battery_mv,
         data->vel,
         data->cog,
+        data->event_states,
+        data->mission_state,
         data->gps_fix,
         data->satellites_nb
     );
@@ -428,7 +433,7 @@ void App_SendFrame(nexus_t *nexus_dev, hm11_t *hm11_dev, const odb_data *data) {
 
     char buffer[512];
     snprintf(buffer, sizeof(buffer),
-            "DATA,time_boot_ms=%lu,system_states=%u,event_states=%u,mission_state=%u,battery_mv=%u,roll=%.2f,pitch=%.2f,yaw=%.2f,imu_acc_x=%.2f,imu_acc_y=%.2f,imu_acc_z=%.2f,imu_gyro_x=%.2f,imu_gyro_y=%.2f,imu_gyro_z=%.2f,pressure_hpa=%.2f,temp_celsius=%.2f,highg_acc_x=%.2f,highg_acc_y=%.2f,highg_acc_z=%.2f,gps_fix=%u,lat=%ld,lon=%ld,gps_alt=%ld,vel=%u,cog=%u,satellites_nb=%u\r\n",
+            "DATA,time_boot_ms=%lu,system_states=%u,event_states=%u,mission_state=%u,battery_mv=%u,roll=%.2f,pitch=%.2f,yaw=%.2f,imu_acc_x=%.2f,imu_acc_y=%.2f,imu_acc_z=%.2f,imu_gyro_x=%.2f,imu_gyro_y=%.2f,imu_gyro_z=%.2f,imu_mag_x=%.2f,imu_mag_y=%.2f,imu_mag_z=%.2f,pressure_hpa=%.2f,temp_celsius=%.2f,highg_acc_x=%.2f,highg_acc_y=%.2f,highg_acc_z=%.2f,gps_fix=%u,lat=%ld,lon=%ld,gps_alt=%ld,vel=%u,cog=%u,satellites_nb=%u\r\n",
             (unsigned long)data->time_boot_ms,
             (unsigned)data->system_states,
             (unsigned)data->event_states,
@@ -443,6 +448,9 @@ void App_SendFrame(nexus_t *nexus_dev, hm11_t *hm11_dev, const odb_data *data) {
             data->imu_gyro_x,
             data->imu_gyro_y,
             data->imu_gyro_z,
+			data->imu_mag_x,
+			data->imu_mag_y,
+			data->imu_mag_z,
             data->pressure_hpa,
             data->temp_celsius,
             data->highg_acc_x,
@@ -475,11 +483,11 @@ void App_HandleCommands(nexus_t *nexus_dev, hm11_t *hm11_dev) {
     if(strncmp(cmd, "PING", 4) == 0) {
         HM11_SendString(hm11_dev, "PONG\r\n");
     } else if(strncmp(cmd, "ARM0", 4) == 0) {
-    	Pyro_Arming(false, &system_measurements);
+    	Pyro_Arming(&pyro1, &system_measurements, false);
         HM11_SendString(hm11_dev, "ACK: DISARMED\r\n");
         Telemetry_SendEventLog(&rfd900x, 1, MAV_SEVERITY_WARNING, "PYROS DISARMED VIA BT");
     } else if(strncmp(cmd, "ARM1", 4) == 0) {
-    	Pyro_Arming(true, &system_measurements);
+    	Pyro_Arming(&pyro1, &system_measurements, true);
         HM11_SendString(hm11_dev, "ACK: ARMED\r\n");
         Telemetry_SendEventLog(&rfd900x, 1, MAV_SEVERITY_WARNING, "PYROS ARMED VIA BT");
     }

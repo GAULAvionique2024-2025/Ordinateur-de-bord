@@ -19,6 +19,7 @@ typedef struct {
 	TIM_HandleTypeDef	*htim;
 	GPIO_TypeDef        *pg_port;
 	uint16_t            pg_pin;
+	bool 				dma_ready;
 
     float 				temperature;
     uint16_t 			vin_batt;
