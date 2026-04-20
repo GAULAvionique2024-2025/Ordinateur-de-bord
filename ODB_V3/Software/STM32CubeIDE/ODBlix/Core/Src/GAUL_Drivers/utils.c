@@ -5,6 +5,8 @@
  *      Author: gagno
  */
 
+// Apogee Detection & Pyros Firing logic: https://www.rocketryforum.com/threads/most-accurate-way-to-measure-velocity-accelerometer-vs-barometer-vs.157866/page-2 
+
 #include "GAUL_Drivers/utils.h"
 
 #include <ctype.h>
@@ -48,6 +50,9 @@ void ODB_Reset(odb_data *data) {
     data->imu_gyro_x = 0.0f;
     data->imu_gyro_y = 0.0f;
     data->imu_gyro_z = 0.0f;
+    data->imu_mag_x = 0.0f;
+    data->imu_mag_y = 0.0f;
+    data->imu_mag_z = 0.0f;
     data->pressure_hpa = 0.0f;
     data->temp_celsius = 0.0f;
     data->highg_acc_x = 0.0f;
@@ -341,6 +346,8 @@ void ODB_Update(odb_data *data) {
 
     if(data->gps_fix > 1) {
       data->system_states |= FLAG_GPS_OK;
+    } else {
+      data->system_states &= ~FLAG_GPS_OK;
     }
 
     data->event_states = ODB_SetEventStates(&event_states);
@@ -357,10 +364,6 @@ static uint8_t mavlink_tx_buffer[MAVLINK_MAX_PACKET_LEN]; // DMA TX buffer
 
 static void Telemetry_TransmitMessage(rfd900x_t *rfd_dev, const mavlink_message_t *msg) {
 	if(!rfd_dev) return;
-
-	if(rfd_dev->huart->gState != HAL_UART_STATE_READY) {
-		return;
-	}
 
 	uint16_t len = mavlink_msg_to_send_buffer(mavlink_tx_buffer, msg);
 	RFD900x_Transmit(rfd_dev, mavlink_tx_buffer, len);

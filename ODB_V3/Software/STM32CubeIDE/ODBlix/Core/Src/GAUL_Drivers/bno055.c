@@ -1,1352 +1,352 @@
-#include <GAUL_Drivers/bno055.h>
-#include <stdint.h>
-#include <stdio.h>
-#include <stm32f4xx.h>
-
-#include "stm32f4xx_hal.h"
-#include "stm32f4xx_hal_def.h"
-#include "stm32f4xx_hal_i2c.h"
-
-/**
- * Initialize the Bosch BNO055 Sensor
- * ---------------------------------------------------------------
+/*
+ * bno055.c
  *
- *  Initializes the Bosch BNO055 Sensor with
- *  the specified operation mode.
- * ---------------------------------------------------------------
- *
- *  Args:
- *  > `imu[bno055_t*]`: pointer to the structure to initialize
- * ---------------------------------------------------------------
- *
- *  Return:
- *  > `bool`: `true` if none of the init steps fail, `false` else
- * ---------------------------------------------------------------
+ * Created on: 20 avr. 2026
+ * Author: AudaceLol12
  */
-error_bno bno055_init(bno055_t* imu) {
-    uint8_t id = 0;
-    error_bno err;
 
-    imu->addr = (imu->addr << 1);
-    err = bno055_read_regs(*imu, BNO_CHIP_ID, &id, 1);
-    if (err != BNO_OK) {
-        return err;
-    }
-    if (id != BNO_DEF_CHIP_ID) {
-        return BNO_ERR_WRONG_CHIP_ID;
-    }
-    if ((err = bno055_set_opmode(imu, BNO_MODE_CONFIG)) != BNO_OK) {
-        return err;
-    }
-    HAL_Delay(2);
-    bno055_reset(imu);
-    HAL_Delay(5000);
-    if ((err = bno055_set_pwr_mode(imu, BNO_PWR_NORMAL)) != BNO_OK) {
-        return err;
-    }
-    HAL_Delay(10);
-    if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
-        return err;
-    }
-    HAL_Delay(BNO_CONFIG_TIME_DELAY + 5);
-    bno055_on(imu);
-    if ((err = bno055_set_opmode(imu, imu->mode)) != BNO_OK) {
-        return err;
-    }
-    HAL_Delay(BNO_ANY_TIME_DELAY + 5);
+#include "GAUL_Drivers/bno055.h"
+#include <math.h>
 
-    imu->temperature = &bno055_temperature;
-    imu->acc_x = &bno055_acc_x;
-    imu->acc_y = &bno055_acc_y;
-    imu->acc_z = &bno055_acc_z;
-    imu->acc = &bno055_acc;
-    imu->linear_acc_x = &bno055_linear_acc_x;
-    imu->linear_acc_y = &bno055_linear_acc_y;
-    imu->linear_acc_z = &bno055_linear_acc_z;
-    imu->linear_acc = &bno055_linear_acc;
-    imu->gyro_x = &bno055_gyro_x;
-    imu->gyro_y = &bno055_gyro_y;
-    imu->gyro_z = &bno055_gyro_z;
-    imu->gyro = &bno055_gyro;
-    imu->mag_x = &bno055_mag_x;
-    imu->mag_y = &bno055_mag_y;
-    imu->mag_z = &bno055_mag_z;
-    imu->mag = &bno055_mag;
-    imu->gravity_x = &bno055_gravity_x;
-    imu->gravity_y = &bno055_gravity_y;
-    imu->gravity_z = &bno055_gravity_z;
-    imu->gravity = &bno055_gravity;
-    imu->euler_yaw = &bno055_euler_yaw;
-    imu->euler_roll = &bno055_euler_roll;
-    imu->euler_pitch = &bno055_euler_pitch;
-    imu->euler = &bno055_euler;
-    imu->quaternion_w = &bno055_quaternion_w;
-    imu->quaternion_x = &bno055_quaternion_x;
-    imu->quaternion_y = &bno055_quaternion_y;
-    imu->quaternion_z = &bno055_quaternion_z;
-    imu->quaternion = &bno055_quaternion;
 
-    imu->acc_config = &bno055_acc_conf;
-    imu->gyr_config = &bno055_gyr_conf;
-    imu->mag_config = &bno055_mag_conf;
-    return BNO_OK;
+const uint8_t BNO055_REMAP_CONFIG[] = {0x24, 0x24, 0x24, 0x24, 0x21, 0x21, 0x21, 0x21};
+const uint8_t BNO055_REMAP_SIGN[]   = {0x00, 0x01, 0x02, 0x03, 0x01, 0x02, 0x03, 0x00};
+
+
+static int8_t BNO055_ReadReg(I2C_HandleTypeDef *hi2c, uint8_t reg, uint8_t *data) {
+    if(HAL_I2C_Mem_Read(hi2c, BNO055_I2C_ADDR, reg, I2C_MEMADD_SIZE_8BIT, data, 1, 25) != HAL_OK) {
+        return -1;
+    }
+    return 0; // success
 }
 
-/**
- * Bosch BNO055 read temperature function
- * ----------------------------------------------------------------------
- *
- * Read the temperature of the Bosch BNO055 Sensor and store it in a
- * specified buffer.
- * Unit can be specified with `bno055_set_unit(...)`. (Default: Celsius)
- * ----------------------------------------------------------------------
- *
- * Args:
- *     > `imu[bno055_t*]`: BNO055 to read the temperature from
- *     > `buf[int8_t*|int8_t*]`: Buffer to store the read value in
- * ----------------------------------------------------------------------
- *
- * Return:
- *     > `error_bno`: `BNO_OK` on success, `BNO_ERR_X` else.
- * ----------------------------------------------------------------------
- */
-error_bno bno055_temperature(bno055_t* imu, int8_t* buf) {
-    error_bno err;
-#ifdef BNO_AUTO_PAGE_SET
-    if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
-        return err;
+static int8_t BNO055_WriteReg(I2C_HandleTypeDef *hi2c, uint8_t reg, uint8_t data) {
+    if(HAL_I2C_Mem_Write(hi2c, BNO055_I2C_ADDR, reg, I2C_MEMADD_SIZE_8BIT, &data, 1, 25) != HAL_OK) {
+        return -1;
     }
-#endif  // BNO_AUTO_PAGE_SET
-    uint8_t data = 0;
-    if ((err = bno055_read_regs(*imu, BNO_TEMP, &data, 1)) != BNO_OK) {
-        return err;
-    }
-    *buf = (imu->_temp_unit) ? data * 2 : data;
-    return BNO_OK;
+    return 0; // success
 }
 
-/**
- * Bosch BNO055 read accelerometer data on X-axis
- * ----------------------------------------------------------------------
- *
- * Reads the accelerometer data and stores the value in the specified buffer.
- * Unit can be specified with `bno055_set_unit(...)`. (Default: m/s^2)
- * ----------------------------------------------------------------------
- *
- * Args:
- *     > `imu[bno055_t*]`: BNO055 to read the data from
- *     > `buf[float*]`: Buffer to store the read value in
- * ----------------------------------------------------------------------
- *
- * Return:
- *     > `error_bno`: `BNO_OK` on success, errorcode else.
- * ----------------------------------------------------------------------
- */
-error_bno bno055_acc_x(bno055_t* imu, float* buf) {
-    error_bno err;
-#ifdef BNO_AUTO_PAGE_SET
-    if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
-        return err;
+static int8_t BNO055_ReadRegs(I2C_HandleTypeDef *hi2c, uint8_t reg, uint8_t *data, uint16_t length) {
+    if(HAL_I2C_Mem_Read(hi2c, BNO055_I2C_ADDR, reg, I2C_MEMADD_SIZE_8BIT, data, length, 25) != HAL_OK) {
+        return -1;
     }
-#endif  // BNO_AUTO_PAGE_SET
-    uint8_t data[2];
-    if ((err = bno055_read_regs(*imu, BNO_ACC_DATA_X_LSB, data, 2)) != BNO_OK) {
-        return err;
-    }
-
-    *buf = (int16_t)((data[1] << 8) | data[0]) /
-           ((imu->_acc_unit == BNO_ACC_UNITSEL_M_S2) ? BNO_ACC_SCALE_M_2
-                                                     : BNO_ACC_SCALE_MG);
-    return BNO_OK;
-};
-
-/**
- * Bosch BNO055 read accelerometer data on Y-axis
- * ----------------------------------------------------------------------
- *
- * Reads the accelerometer data and stores the value in the specified buffer.
- * Unit can be specified with `bno055_set_unit(...)`. (Default: m/s^2)
- * ----------------------------------------------------------------------
- *
- * Args:
- *     > `imu[bno055_t*]`: BNO055 to read the data from
- *     > `buf[float*]`: Buffer to store the read value in
- * ----------------------------------------------------------------------
- *
- * Return:
- *     > `error_bno`: `BNO_OK` on success, errorcode else.
- * ----------------------------------------------------------------------
- */
-error_bno bno055_acc_y(bno055_t* imu, float* buf) {
-    error_bno err;
-#ifdef BNO_AUTO_PAGE_SET
-    if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
-        return err;
-    }
-#endif  // BNO_AUTO_PAGE_SET
-    uint8_t data[2];
-    if ((err = bno055_read_regs(*imu, BNO_ACC_DATA_Y_LSB, data, 2)) != BNO_OK) {
-        return err;
-    }
-
-    *buf = (int16_t)((data[1] << 8) | data[0]) /
-           ((imu->_acc_unit == BNO_ACC_UNITSEL_M_S2) ? BNO_ACC_SCALE_M_2
-                                                     : BNO_ACC_SCALE_MG);
-    return BNO_OK;
-};
-
-/**
- * Bosch BNO055 read accelerometer data on Z-axis
- * ----------------------------------------------------------------------
- *
- * Reads the accelerometer data and stores the value in the specified buffer.
- * Unit can be specified with `bno055_set_unit(...)`. (Default: m/s^2)
- * ----------------------------------------------------------------------
- *
- * Args:
- *     > `imu[bno055_t*]`: BNO055 to read the data from
- *     > `buf[float*]`: Buffer to store the read value in
- * ----------------------------------------------------------------------
- *
- * Return:
- *     > `error_bno`: `BNO_OK` on success, errorcode else.
- * ----------------------------------------------------------------------
- */
-error_bno bno055_acc_z(bno055_t* imu, float* buf) {
-    error_bno err;
-#ifdef BNO_AUTO_PAGE_SET
-    if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
-        return err;
-    }
-#endif  // BNO_AUTO_PAGE_SET
-    uint8_t data[2];
-    if ((err = bno055_read_regs(*imu, BNO_ACC_DATA_Z_LSB, data, 2)) != BNO_OK) {
-        return err;
-    }
-
-    *buf = (int16_t)((data[1] << 8) | data[0]) /
-           ((imu->_acc_unit == BNO_ACC_UNITSEL_M_S2) ? BNO_ACC_SCALE_M_2
-                                                     : BNO_ACC_SCALE_MG);
-    return BNO_OK;
-};
-
-/**
- * Bosch BNO055 read acceleration data on all axis
- * ----------------------------------------------------------------------
- *
- * Reads the acceleration data and stores the value in the specified
- * vector buffer. Unit can be specified with `bno055_set_unit(...)`. (Default:
- * m/s^2)
- * ----------------------------------------------------------------------
- *
- * Args:
- *     > `imu[bno055_t*]`: BNO055 to read the data from
- *     > `buf[bno055_vec3_t*]`: Buffer to store the read value in
- * ----------------------------------------------------------------------
- *
- * Return:
- *     > `error_bno`: `BNO_OK` on success, errorcode else.
- * ----------------------------------------------------------------------
- */
-error_bno bno055_acc(bno055_t* imu, bno055_vec3_t* xyz) {
-    error_bno err;
-#ifdef BNO_AUTO_PAGE_SET
-    if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
-        return err;
-    }
-#endif  // BNO_AUTO_PAGE_SET
-    uint8_t data[6];
-    if ((err = bno055_read_regs(*imu, BNO_ACC_DATA_X_LSB, data, 6)) != BNO_OK) {
-        return err;
-    }
-    float scale = (imu->_acc_unit == BNO_ACC_UNITSEL_M_S2) ? BNO_ACC_SCALE_M_2
-                                                           : BNO_ACC_SCALE_MG;
-    xyz->x = (int16_t)((data[1] << 8) | data[0]) / scale;
-    xyz->y = (int16_t)((data[3] << 8) | data[2]) / scale;
-    xyz->z = (int16_t)((data[5] << 8) | data[4]) / scale;
-
-    return BNO_OK;
-};
-
-/**
- * Bosch BNO055 read linear acceleration data on X-axis
- * ----------------------------------------------------------------------
- *
- * Reads the linear acceleration data and stores the value in the specified
- * buffer. Unit can be specified with `bno055_set_unit(...)`. (Default: m/s^2)
- * ----------------------------------------------------------------------
- *
- * Args:
- *     > `imu[bno055_t*]`: BNO055 to read the data from
- *     > `buf[float*]`: Buffer to store the read value in
- * ----------------------------------------------------------------------
- *
- * Return:
- *     > `error_bno`: `BNO_OK` on success, errorcode else.
- * ----------------------------------------------------------------------
- */
-error_bno bno055_linear_acc_x(bno055_t* imu, float* buf) {
-    error_bno err;
-#ifdef BNO_AUTO_PAGE_SET
-    if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
-        return err;
-    }
-#endif  // BNO_AUTO_PAGE_SET
-    uint8_t data[2];
-    if ((err = bno055_read_regs(*imu, BNO_LIA_DATA_X_LSB, data, 2)) != BNO_OK) {
-        return err;
-    }
-
-    *buf = (int16_t)((data[1] << 8) | data[0]) /
-           ((imu->_acc_unit == BNO_ACC_UNITSEL_M_S2) ? BNO_ACC_SCALE_M_2
-                                                     : BNO_ACC_SCALE_MG);
-    return BNO_OK;
-};
-
-/**
- * Bosch BNO055 read linear acceleration data on Y-axis
- * ----------------------------------------------------------------------
- *
- * Reads the linear acceleration data and stores the value in the specified
- * buffer. Unit can be specified with `bno055_set_unit(...)`. (Default: m/s^2)
- * ----------------------------------------------------------------------
- *
- * Args:
- *     > `imu[bno055_t*]`: BNO055 to read the data from
- *     > `buf[float*]`: Buffer to store the read value in
- * ----------------------------------------------------------------------
- *
- * Return:
- *     > `error_bno`: `BNO_OK` on success, errorcode else.
- * ----------------------------------------------------------------------
- */
-error_bno bno055_linear_acc_y(bno055_t* imu, float* buf) {
-    error_bno err;
-#ifdef BNO_AUTO_PAGE_SET
-    if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
-        return err;
-    }
-#endif  // BNO_AUTO_PAGE_SET
-    uint8_t data[2];
-    if ((err = bno055_read_regs(*imu, BNO_LIA_DATA_Y_LSB, data, 2)) != BNO_OK) {
-        return err;
-    }
-
-    *buf = (int16_t)((data[1] << 8) | data[0]) /
-           ((imu->_acc_unit == BNO_ACC_UNITSEL_M_S2) ? BNO_ACC_SCALE_M_2
-                                                     : BNO_ACC_SCALE_MG);
-    return BNO_OK;
-};
-
-/**
- * Bosch BNO055 read linear acceleration data on Z-axis
- * ----------------------------------------------------------------------
- *
- * Reads the linear acceleration data and stores the value in the specified
- * buffer. Unit can be specified with `bno055_set_unit(...)`. (Default: m/s^2)
- * ----------------------------------------------------------------------
- *
- * Args:
- *     > `imu[bno055_t*]`: BNO055 to read the data from
- *     > `buf[float*]`: Buffer to store the read value in
- * ----------------------------------------------------------------------
- *
- * Return:
- *     > `error_bno`: `BNO_OK` on success, errorcode else.
- * ----------------------------------------------------------------------
- */
-error_bno bno055_linear_acc_z(bno055_t* imu, float* buf) {
-    error_bno err;
-#ifdef BNO_AUTO_PAGE_SET
-    if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
-        return err;
-    }
-#endif  // BNO_AUTO_PAGE_SET
-    uint8_t data[2];
-    if ((err = bno055_read_regs(*imu, BNO_LIA_DATA_Z_LSB, data, 2)) != BNO_OK) {
-        return err;
-    }
-
-    *buf = (int16_t)((data[1] << 8) | data[0]) /
-           ((imu->_acc_unit == BNO_ACC_UNITSEL_M_S2) ? BNO_ACC_SCALE_M_2
-                                                     : BNO_ACC_SCALE_MG);
-    return BNO_OK;
-};
-
-/**
- * Bosch BNO055 read linear acceleration data on all axis
- * ----------------------------------------------------------------------
- *
- * Reads the linear acceleration data and stores the value in the specified
- * vector buffer. Unit can be specified with `bno055_set_unit(...)`. (Default:
- * m/s^2)
- * ----------------------------------------------------------------------
- *
- * Args:
- *     > `imu[bno055_t*]`: BNO055 to read the data from
- *     > `buf[bno055_vec3_t*]`: Buffer to store the read value in
- * ----------------------------------------------------------------------
- *
- * Return:
- *     > `error_bno`: `BNO_OK` on success, errorcode else.
- * ----------------------------------------------------------------------
- */
-error_bno bno055_linear_acc(bno055_t* imu, bno055_vec3_t* xyz) {
-    error_bno err;
-#ifdef BNO_AUTO_PAGE_SET
-    if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
-        return err;
-    }
-#endif  // BNO_AUTO_PAGE_SET
-    uint8_t data[6];
-    if ((err = bno055_read_regs(*imu, BNO_LIA_DATA_X_LSB, data, 6)) != BNO_OK) {
-        return err;
-    }
-    float scale = (imu->_acc_unit == BNO_ACC_UNITSEL_M_S2) ? BNO_ACC_SCALE_M_2
-                                                           : BNO_ACC_SCALE_MG;
-    xyz->x = (int16_t)((data[1] << 8) | data[0]) / scale;
-    xyz->y = (int16_t)((data[3] << 8) | data[2]) / scale;
-    xyz->z = (int16_t)((data[5] << 8) | data[4]) / scale;
-
-    return BNO_OK;
-};
-
-/**
- * Bosch BNO055 read gyroscope data on X-axis
- * ----------------------------------------------------------------------
- *
- * Reads the gyroscope data and stores the value in the specified
- * buffer. Unit can be specified with `bno055_set_unit(...)`. (Default: m/s^2)
- * ----------------------------------------------------------------------
- *
- * Args:
- *     > `imu[bno055_t*]`: BNO055 to read the data from
- *     > `buf[float*]`: Buffer to store the read value in
- * ----------------------------------------------------------------------
- *
- * Return:
- *     > `error_bno`: `BNO_OK` on success, errorcode else.
- * ----------------------------------------------------------------------
- */
-error_bno bno055_gyro_x(bno055_t* imu, float* buf) {
-    error_bno err;
-#ifdef BNO_AUTO_PAGE_SET
-    if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
-        return err;
-    }
-#endif  // BNO_AUTO_PAGE_SET
-    uint8_t data[2];
-    if ((err = bno055_read_regs(*imu, BNO_GYR_DATA_X_LSB, data, 2)) != BNO_OK) {
-        return err;
-    }
-
-    *buf = (int16_t)((data[1] << 8) | data[0]) /
-           ((imu->_gyr_unit == BNO_GYR_UNIT_DPS) ? BNO_GYR_SCALE_DPS
-                                                 : BNO_GYR_SCALE_RPS);
-    return BNO_OK;
-};
-
-/**
- * Bosch BNO055 read gyroscope data on Y-axis
- * ----------------------------------------------------------------------
- *
- * Reads the gyroscope data and stores the value in the specified
- * buffer. Unit can be specified with `bno055_set_unit(...)`. (Default: m/s^2)
- * ----------------------------------------------------------------------
- *
- * Args:
- *     > `imu[bno055_t*]`: BNO055 to read the data from
- *     > `buf[float*]`: Buffer to store the read value in
- * ----------------------------------------------------------------------
- *
- * Return:
- *     > `error_bno`: `BNO_OK` on success, errorcode else.
- * ----------------------------------------------------------------------
- */
-error_bno bno055_gyro_y(bno055_t* imu, float* buf) {
-    error_bno err;
-#ifdef BNO_AUTO_PAGE_SET
-    if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
-        return err;
-    }
-#endif  // BNO_AUTO_PAGE_SET
-    uint8_t data[2];
-    if ((err = bno055_read_regs(*imu, BNO_GYR_DATA_Y_LSB, data, 2)) != BNO_OK) {
-        return err;
-    }
-
-    *buf = (int16_t)((data[1] << 8) | data[0]) /
-           ((imu->_gyr_unit == BNO_GYR_UNIT_DPS) ? BNO_GYR_SCALE_DPS
-                                                 : BNO_GYR_SCALE_RPS);
-    return BNO_OK;
-};
-
-/**
- * Bosch BNO055 read gyroscope data on Z-axis
- * ----------------------------------------------------------------------
- *
- * Reads the gyroscope data and stores the value in the specified
- * buffer. Unit can be specified with `bno055_set_unit(...)`. (Default: m/s^2)
- * ----------------------------------------------------------------------
- *
- * Args:
- *     > `imu[bno055_t*]`: BNO055 to read the data from
- *     > `buf[float*]`: Buffer to store the read value in
- * ----------------------------------------------------------------------
- *
- * Return:
- *     > `error_bno`: `BNO_OK` on success, errorcode else.
- * ----------------------------------------------------------------------
- */
-error_bno bno055_gyro_z(bno055_t* imu, float* buf) {
-    error_bno err;
-#ifdef BNO_AUTO_PAGE_SET
-    if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
-        return err;
-    }
-#endif  // BNO_AUTO_PAGE_SET
-    uint8_t data[2];
-    if ((err = bno055_read_regs(*imu, BNO_GYR_DATA_Z_LSB, data, 2)) != BNO_OK) {
-        return err;
-    }
-
-    *buf = (int16_t)((data[1] << 8) | data[0]) /
-           ((imu->_gyr_unit == BNO_GYR_UNIT_DPS) ? BNO_GYR_SCALE_DPS
-                                                 : BNO_GYR_SCALE_RPS);
-    return BNO_OK;
-};
-
-/**
- * Bosch BNO055 read gyroscope data on all axis
- * ----------------------------------------------------------------------
- *
- * Reads the gyroscope data and stores the value in the specified
- * vector buffer. Unit can be specified with `bno055_set_unit(...)`. (Default:
- * m/s^2)
- *
- * FIX: MCU restart when moving
- * ----------------------------------------------------------------------
- *
- * Args:
- *     > `imu[bno055_t*]`: BNO055 to read the data from
- *     > `buf[bno055_vec3_t*]`: Buffer to store the read value in
- * ----------------------------------------------------------------------
- *
- * Return:
- *     > `error_bno`: `BNO_OK` on success, errorcode else.
- * ----------------------------------------------------------------------
- */
-error_bno bno055_gyro(bno055_t* imu, bno055_vec3_t* xyz) {
-    error_bno err;
-#ifdef BNO_AUTO_PAGE_SET
-    if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
-        return err;
-    }
-#endif  // BNO_AUTO_PAGE_SET
-    uint8_t data[6];
-    if ((err = bno055_read_regs(*imu, BNO_GYR_DATA_X_LSB, data, 6)) != BNO_OK) {
-        return err;
-    }
-
-    float scale = (imu->_gyr_unit == BNO_GYR_UNIT_DPS) ? BNO_GYR_SCALE_DPS
-                                                     : BNO_GYR_SCALE_RPS;
-    xyz->x = (int16_t)((data[1] << 8) | data[0]) / scale;
-    xyz->y = (int16_t)((data[3] << 8) | data[2]) / scale;
-    xyz->z = (int16_t)((data[5] << 8) | data[4]) / scale;
-
-    return BNO_OK;
+    return 0; // success
 }
 
-/**
- * Bosch BNO055 read magnetometer data on X-axis
- * ----------------------------------------------------------------------
- *
- * Reads the magnetometer data and stores the value in the specified
- * buffer. Unit is `[uT]`.
-
- * ----------------------------------------------------------------------
- *
- * Args:
- *     > `imu[bno055_t*]`: BNO055 to read the data from
- *     > `buf[float*]`: Buffer to store the read value in
- * ----------------------------------------------------------------------
- *
- * Return:
- *     > `error_bno`: `BNO_OK` on success, errorcode else.
- * ----------------------------------------------------------------------
- */
-error_bno bno055_mag_x(bno055_t* imu, float* buf) {
-    error_bno err;
-#ifdef BNO_AUTO_PAGE_SET
-    if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
-        return err;
-    }
-#endif  // BNO_AUTO_PAGE_SET
-    uint8_t data[2];
-    if ((err = bno055_read_regs(*imu, BNO_MAG_DATA_X_LSB, data, 2)) != BNO_OK) {
-        return err;
-    }
-
-    *buf = (int16_t)((data[1] << 8) | data[0]) / BNO_MAG_SCALE;
-    return BNO_OK;
+static int8_t BNO055_SetPage(I2C_HandleTypeDef *hi2c, uint8_t page) {
+    return BNO055_WriteReg(hi2c, BNO055_REG_PAGE_ID, page);
 }
 
-/**
- * Bosch BNO055 read magnetometer data on Y-axis
- * ----------------------------------------------------------------------
- *
- * Reads the magnetometer data and stores the value in the specified
- * buffer. Unit is `[uT]`.
-
- * ----------------------------------------------------------------------
- *
- * Args:
- *     > `imu[bno055_t*]`: BNO055 to read the data from
- *     > `buf[float*]`: Buffer to store the read value in
- * ----------------------------------------------------------------------
- *
- * Return:
- *     > `error_bno`: `BNO_OK` on success, errorcode else.
- * ----------------------------------------------------------------------
- */
-error_bno bno055_mag_y(bno055_t* imu, float* buf) {
-    error_bno err;
-#ifdef BNO_AUTO_PAGE_SET
-    if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
-        return err;
-    }
-#endif  // BNO_AUTO_PAGE_SET
-    uint8_t data[2];
-    if ((err = bno055_read_regs(*imu, BNO_MAG_DATA_Y_LSB, data, 2)) != BNO_OK) {
-        return err;
+static int8_t BNO055_SetUnits(bno055_t *dev, bno055_unit_accel_t acc_unit, bno055_unit_gyro_t gyr_unit, bno055_unit_euler_t eul_unit) {
+    uint8_t unit_sel = acc_unit | gyr_unit | eul_unit;
+    if(BNO055_WriteReg(dev->hi2c, BNO055_REG_UNIT_SEL, unit_sel) != 0) {
+        return -1;
     }
 
-    *buf = (int16_t)((data[1] << 8) | data[0]) / BNO_MAG_SCALE;
-    return BNO_OK;
+    if (acc_unit == BNO055_UNIT_ACCEL_MS2) {
+        dev->scale_acc = 100.0f; // 1 m/s² = 100 LSB
+    } else {
+        dev->scale_acc = 1.0f;   // 1 mg = 1 LSB
+    }
+
+    if (gyr_unit == BNO055_UNIT_GYRO_DPS) {
+        dev->scale_gyro = 16.0f;   // 1 Dps = 16 LSB
+    } else {
+        dev->scale_gyro = 900.0f;  // 1 Rps = 900 LSB
+    }
+    return 0; // success
+}
+    
+static int8_t BNO055_SetAccConfig(bno055_t *dev, bno055_acc_range_t range) {
+    // Set page 1
+    if(BNO055_SetPage(dev->hi2c, 0x01) != 0) {
+        return -1;
+    }
+
+    uint8_t current_acc_config;
+    if(BNO055_ReadReg(dev->hi2c, BNO055_REG_ACC_CONFIG, &current_acc_config) != 0) {
+        return -1;
+    }
+    
+    // Set range (les 2 bits de poids faible)
+    uint8_t new_acc_config = (current_acc_config & 0xFC) | range;
+    if(BNO055_WriteReg(dev->hi2c, BNO055_REG_ACC_CONFIG, new_acc_config) != 0) {
+        return -1;
+    }
+
+    // Set page 0
+    if(BNO055_SetPage(dev->hi2c, 0x00) != 0) {
+        return -1;
+    }
+
+    return 0; // success
 }
 
-/**
- * Bosch BNO055 read magnetometer data on Z-axis
- * ----------------------------------------------------------------------
- *
- * Reads the magnetometer data and stores the value in the specified
- * buffer. Unit is `[uT]`.
- * ----------------------------------------------------------------------
- *
- * Args:
- *     > `imu[bno055_t*]`: BNO055 to read the data from
- *     > `buf[float*]`: Buffer to store the read value in
- * ----------------------------------------------------------------------
- *
- * Return:
- *     > `error_bno`: `BNO_OK` on success, errorcode else.
- * ----------------------------------------------------------------------
- */
-error_bno bno055_mag_z(bno055_t* imu, float* buf) {
-    error_bno err;
-#ifdef BNO_AUTO_PAGE_SET
-    if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
-        return err;
+static int8_t BNO055_SetAxisRemap(bno055_t *dev, bno055_axis_profile_t profile) {
+    bno055_mode_t current_mode = dev->mode;
+
+    uint8_t config = BNO055_REMAP_CONFIG[profile];
+    uint8_t sign = BNO055_REMAP_SIGN[profile];
+    
+    if(BNO055_WriteReg(dev->hi2c, BNO055_REG_OPR_MODE, BNO055_MODE_CONFIG) != 0) {
+        return BNO055_I2C_ERROR;
     }
-#endif  // BNO_AUTO_PAGE_SET
-    uint8_t data[2];
-    if ((err = bno055_read_regs(*imu, BNO_MAG_DATA_Z_LSB, data, 2)) != BNO_OK) {
-        return err;
+    HAL_Delay(25);
+
+    if(BNO055_WriteReg(dev->hi2c, BNO055_REG_AXIS_MAP_CONFIG, config) != 0) {
+        return BNO055_I2C_ERROR;
+    }
+    if(BNO055_WriteReg(dev->hi2c, BNO055_REG_AXIS_MAP_SIGN, sign) != 0) {
+        return BNO055_I2C_ERROR;
     }
 
-    *buf = (int16_t)((data[1] << 8) | data[0]) / BNO_MAG_SCALE;
-    return BNO_OK;
+    if(BNO055_WriteReg(dev->hi2c, BNO055_REG_OPR_MODE, (uint8_t)current_mode) != 0) {
+        return BNO055_I2C_ERROR;
+    }
+    HAL_Delay(25);
+
+    return BNO055_OK;
 }
 
-/**
- * Bosch BNO055 read magnetometer data on all axis
- * ----------------------------------------------------------------------
- *
- * Reads the magnetometer data and stores the value in the specified vector
- * buffer. Unit is `[uT]`.
- * ----------------------------------------------------------------------
- *
- * Args:
- *     > `imu[bno055_t*]`: BNO055 to read the data from
- *     > `buf[bno055_vec3_t*]`: Buffer to store the read value in
- * ----------------------------------------------------------------------
- *
- * Return:
- *     > `error_bno`: `BNO_OK` on success, errorcode else.
- * ----------------------------------------------------------------------
- */
-error_bno bno055_mag(bno055_t* imu, bno055_vec3_t* xyz) {
-    error_bno err;
-#ifdef BNO_AUTO_PAGE_SET
-    if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
-        return err;
+static int8_t BNO055_Reset(bno055_t *dev) {
+    if(BNO055_WriteReg(dev->hi2c, BNO055_REG_SYS_TRIGGER, 0x20) != 0) {
+        return -1;
     }
-#endif  // BNO_AUTO_PAGE_SET
-    uint8_t data[6];
-    if ((err = bno055_read_regs(*imu, BNO_MAG_DATA_X_LSB, data, 6)) != BNO_OK) {
-        return err;
-    }
+    HAL_Delay(700);
 
-    xyz->x = (int16_t)((data[1] << 8) | data[0]) / BNO_MAG_SCALE;
-    xyz->y = (int16_t)((data[3] << 8) | data[2]) / BNO_MAG_SCALE;
-    xyz->z = (int16_t)((data[5] << 8) | data[4]) / BNO_MAG_SCALE;
+    dev->acc_x = 0.0f;
+    dev->acc_y = 0.0f;
+    dev->acc_z = 0.0f;
+    dev->gyro_x = 0.0f;
+    dev->gyro_y = 0.0f;
+    dev->gyro_z = 0.0f;
+    dev->mag_x = 0.0f;
+    dev->mag_y = 0.0f;
+    dev->mag_z = 0.0f;
+    dev->temperature = 0.0f;
+    dev->quat_w = 1.0f;
+    dev->quat_x = 0.0f;
+    dev->quat_y = 0.0f;
+    dev->quat_z = 0.0f;
+    dev->lin_x = 0.0f;
+    dev->lin_y = 0.0f;
+    dev->lin_z = 0.0f;
+    dev->roll = 0.0f;
+    dev->pitch = 0.0f;
+    dev->yaw = 0.0f;
 
-    return BNO_OK;
-};
-
-/**
- * Bosch BNO055 read gravity data on X-axis
- * ----------------------------------------------------------------------
- *
- * Reads the gravity data and stores the value in the specified
- * buffer. Unit can be specified with `bno055_set_unit(...)`. (Default: m/s^2)
- * ----------------------------------------------------------------------
- *
- * Args:
- *     > `imu[bno055_t*]`: BNO055 to read the data from
- *     > `buf[float*]`: Buffer to store the read value in
- * ----------------------------------------------------------------------
- *
- * Return:
- *     > `error_bno`: `BNO_OK` on success, errorcode else.
- * ----------------------------------------------------------------------
- */
-error_bno bno055_gravity_x(bno055_t* imu, float* buf) {
-    error_bno err;
-#ifdef BNO_AUTO_PAGE_SET
-    if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
-        return err;
-    }
-#endif  // BNO_AUTO_PAGE_SET
-    uint8_t data[2];
-    if ((err = bno055_read_regs(*imu, BNO_GRV_DATA_X_LSB, data, 2)) != BNO_OK) {
-        return err;
-    }
-    float scale = (imu->_acc_unit == BNO_ACC_UNITSEL_M_S2) ? BNO_ACC_SCALE_M_2
-                                                         : BNO_ACC_SCALE_MG;
-    *buf = (int16_t)((data[1] << 8) | data[0]) / scale;
-    return BNO_OK;
+    return 0; // success
 }
 
-/**
- * Bosch BNO055 read gravity data on Y-axis
- * ----------------------------------------------------------------------
- *
- * Reads the gravity data and stores the value in the specified
- * buffer. Unit can be specified with `bno055_set_unit(...)`. (Default: m/s^2)
- * ----------------------------------------------------------------------
- *
- * Args:
- *     > `imu[bno055_t*]`: BNO055 to read the data from
- *     > `buf[float*]`: Buffer to store the read value in
- * ----------------------------------------------------------------------
- *
- * Return:
- *     > `error_bno`: `BNO_OK` on success, errorcode else.
- * ----------------------------------------------------------------------
- */
-error_bno bno055_gravity_y(bno055_t* imu, float* buf) {
-    error_bno err;
-#ifdef BNO_AUTO_PAGE_SET
-    if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
-        return err;
+
+bno055_error_t BNO055_Init(bno055_t *dev) {
+    if(!dev || !dev->hi2c || (dev->mode != BNO055_MODE_IMU && dev->mode != BNO055_MODE_NDOF && dev->mode != BNO055_MODE_AMG)) {
+        return BNO055_ERROR;
     }
-#endif  // BNO_AUTO_PAGE_SET
-    uint8_t data[2];
-    if ((err = bno055_read_regs(*imu, BNO_GRV_DATA_Y_LSB, data, 2)) != BNO_OK) {
-        return err;
+
+    // Check ID
+    uint8_t id;
+    if(BNO055_ReadReg(dev->hi2c, BNO055_REG_CHIP_ID, &id) != 0) {
+        return BNO055_I2C_ERROR;
     }
-    float scale = (imu->_acc_unit == BNO_ACC_UNITSEL_M_S2) ? BNO_ACC_SCALE_M_2
-                                                         : BNO_ACC_SCALE_MG;
-    *buf = (int16_t)((data[1] << 8) | data[0]) / scale;
-    return BNO_OK;
+    if(id != BNO055_ID_VAL) {
+        return BNO055_ID_ERROR;
+    }
+
+    // Config mode
+    if(BNO055_WriteReg(dev->hi2c, BNO055_REG_OPR_MODE, BNO055_MODE_CONFIG) != 0) {
+        return BNO055_CONFIG_ERROR;
+    }
+    HAL_Delay(25);
+
+    // Reset
+    BNO055_Reset(dev);
+
+    // Set page 0
+    if(BNO055_SetPage(dev->hi2c, 0x00) != 0) {
+        return BNO055_CONFIG_ERROR;
+    }
+    HAL_Delay(25);
+
+    // Set units (m/s², Dps, Degrees)
+    if(BNO055_SetUnits(dev, dev->acc_unit, dev->gyro_unit, dev->euler_unit) != 0) {
+        return BNO055_CONFIG_ERROR;
+    }
+
+    // Set axis remap
+    BNO055_SetAxisRemap(dev, dev->axis_profile);
+
+    // If in IMU mode, set accelerometer range to ±16G (max for fusion modes is ±4G)
+    if (dev->mode == BNO055_MODE_AMG) {
+        if(BNO055_SetAccConfig(dev, dev->acc_range) != 0) {
+             return BNO055_CONFIG_ERROR;
+        }
+    }
+
+    // Check Self-Test
+	uint8_t st_res;
+	HAL_Delay(50);
+	if(BNO055_ReadReg(dev->hi2c, BNO055_REG_ST_RESULT, &st_res) == 0) {
+		if((st_res & 0x0F) != 0x0F) {
+			return BNO055_ERROR;
+		}
+	}
+
+    // Activate mode
+    if(BNO055_WriteReg(dev->hi2c, BNO055_REG_OPR_MODE, (uint8_t)dev->mode) != 0){
+        return BNO055_CONFIG_ERROR;
+    }
+    HAL_Delay(25);
+
+    return BNO055_OK;
 }
 
-/**
- * Bosch BNO055 read gravity data on Z-axis
- * ----------------------------------------------------------------------
- *
- * Reads the gravity data and stores the value in the specified
- * buffer. Unit can be specified with `bno055_set_unit(...)`. (Default: m/s^2)
- * ----------------------------------------------------------------------
- *
- * Args:
- *     > `imu[bno055_t*]`: BNO055 to read the data from
- *     > `buf[float*]`: Buffer to store the read value in
- * ----------------------------------------------------------------------
- *
- * Return:
- *     > `error_bno`: `BNO_OK` on success, errorcode else.
- * ----------------------------------------------------------------------
- */
-error_bno bno055_gravity_z(bno055_t* imu, float* buf) {
-    error_bno err;
-#ifdef BNO_AUTO_PAGE_SET
-    if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
-        return err;
+void BNO055_HardReset(bno055_t *dev) {
+    if (dev->rst_port != NULL) {
+        HAL_GPIO_WritePin(dev->rst_port, dev->rst_pin, GPIO_PIN_RESET);
+        HAL_Delay(10); 
+        
+        HAL_GPIO_WritePin(dev->rst_port, dev->rst_pin, GPIO_PIN_SET);
+        
+        HAL_Delay(700); 
     }
-#endif  // BNO_AUTO_PAGE_SET
-    uint8_t data[2];
-    if ((err = bno055_read_regs(*imu, BNO_GRV_DATA_Z_LSB, data, 2)) != BNO_OK) {
-        return err;
-    }
-    float scale = (imu->_acc_unit == BNO_ACC_UNITSEL_M_S2) ? BNO_ACC_SCALE_M_2
-                                                         : BNO_ACC_SCALE_MG;
-    *buf = (int16_t)((data[1] << 8) | data[0]) / scale;
-    return BNO_OK;
 }
 
-/**
- * Bosch BNO055 read gravity data on all axis
- * ----------------------------------------------------------------------
- *
- * Reads the gravity data and stores the value in the specified
- * vector buffer. Unit can be selected with `bno055_set_unit(...)` (default:
- * m/s^2).
- * ----------------------------------------------------------------------
- *
- * Args:
- *     > `imu[bno055_t*]`: BNO055 to read the data from
- *     > `buf[bno055_vec3_t*]`: Buffer to store the read value in
- * ----------------------------------------------------------------------
- *
- * Return:
- *     > `error_bno`: `BNO_OK` on success, errorcode else.
- * ----------------------------------------------------------------------
- */
-error_bno bno055_gravity(bno055_t* imu, bno055_vec3_t* buf) {
-    error_bno err;
-#ifdef BNO_AUTO_PAGE_SET
-    if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
-        return err;
+bool BNO055_IsDataReady(bno055_t *dev) {
+    if (dev->data_ready_flag) {
+        dev->data_ready_flag = false;
+        return true;
     }
-#endif  // BNO_AUTO_PAGE_SET
-    uint8_t data[6];
-    if ((err = bno055_read_regs(*imu, BNO_GRV_DATA_X_LSB, data, 6)) != BNO_OK) {
-        return err;
-    }
-    float scale = (imu->_acc_unit == BNO_ACC_UNITSEL_M_S2) ? BNO_ACC_SCALE_M_2
-                                                         : BNO_ACC_SCALE_MG;
-    buf->x = (int16_t)((data[1] << 8) | data[0]) / scale;
-    buf->y = (int16_t)((data[3] << 8) | data[2]) / scale;
-    buf->z = (int16_t)((data[5] << 8) | data[4]) / scale;
-    return BNO_OK;
+    return false;
 }
 
-/**
- * Bosch BNO055 read euler yaw data
- * ----------------------------------------------------------------------
- *
- * Reads the yaw data and stores the value in the specified
- * buffer. Unit can be specified with `bno055_set_unit(...)`. (Default: deg)
- * ----------------------------------------------------------------------
- *
- * Args:
- *     > `imu[bno055_t*]`: BNO055 to read the data from
- *     > `buf[float*]`: Buffer to store the read value in
- * ----------------------------------------------------------------------
- *
- * Return:
- *     > `error_bno`: `BNO_OK` on success, errorcode else.
- * ----------------------------------------------------------------------
- */
-error_bno bno055_euler_yaw(bno055_t* imu, float* buf) {
-    error_bno err;
-#ifdef BNO_AUTO_PAGE_SET
-    if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
-        return err;
+bno055_error_t BNO055_ReadAllData(bno055_t *dev) {
+    uint8_t buffer[18];
+
+    // Reading Acc, Mag, Gyro
+    if(BNO055_ReadRegs(dev->hi2c, BNO055_REG_ACC_DATA_X_LSB, buffer, 18) != 0) {
+        return BNO055_I2C_ERROR;
     }
-#endif  // BNO_AUTO_PAGE_SET
-    uint8_t data[2];
-    if ((err = bno055_read_regs(*imu, BNO_EUL_HEADING_LSB, data, 2)) !=
-        BNO_OK) {
-        return err;
+
+    dev->acc_x  = (float)((int16_t)((buffer[1] << 8) | buffer[0])) / dev->scale_acc;
+    dev->acc_y  = (float)((int16_t)((buffer[3] << 8) | buffer[2])) / dev->scale_acc;
+    dev->acc_z  = (float)((int16_t)((buffer[5] << 8) | buffer[4])) / dev->scale_acc;
+
+    dev->mag_x  = (float)((int16_t)((buffer[7] << 8) | buffer[6])) / 16.0f;
+    dev->mag_y  = (float)((int16_t)((buffer[9] << 8) | buffer[8])) / 16.0f;
+    dev->mag_z  = (float)((int16_t)((buffer[11] << 8) | buffer[10])) / 16.0f;
+
+    dev->gyro_x = (float)((int16_t)((buffer[13] << 8) | buffer[12])) / dev->scale_gyro;
+    dev->gyro_y = (float)((int16_t)((buffer[15] << 8) | buffer[14])) / dev->scale_gyro;
+    dev->gyro_z = (float)((int16_t)((buffer[17] << 8) | buffer[16])) / dev->scale_gyro;
+
+    // Quaternions & Linear Acc
+    if(BNO055_ReadRegs(dev->hi2c, BNO055_REG_QUA_DATA_W_LSB, buffer, 14) != 0) {
+        return BNO055_I2C_ERROR;
     }
-    float scale = (imu->_eul_unit == BNO_EUL_UNIT_DEG) ? BNO_EUL_SCALE_DEG
-                                                     : BNO_EUL_SCALE_RAD;
-    *buf = (int16_t)((data[1] << 8) | data[0]) / scale;
-    return BNO_OK;
+
+    const float q_scale = 1.0f / 16384.0f;
+    dev->quat_w = (float)((int16_t)((buffer[1] << 8) | buffer[0])) * q_scale;
+    dev->quat_x = (float)((int16_t)((buffer[3] << 8) | buffer[2])) * q_scale;
+    dev->quat_y = (float)((int16_t)((buffer[5] << 8) | buffer[4])) * q_scale;
+    dev->quat_z = (float)((int16_t)((buffer[7] << 8) | buffer[6])) * q_scale;
+
+    dev->lin_x  = (float)((int16_t)((buffer[9] << 8) | buffer[8])) / dev->scale_acc;
+    dev->lin_y  = (float)((int16_t)((buffer[11] << 8) | buffer[10])) / dev->scale_acc;
+    dev->lin_z  = (float)((int16_t)((buffer[13] << 8) | buffer[12])) / dev->scale_acc;
+    
+    BNO055_ComputeEulerAngles(dev);
+    return BNO055_OK;
 }
 
-/**
- * Bosch BNO055 read euler roll data
- * ----------------------------------------------------------------------
- *
- * Reads the roll data and stores the value in the specified
- * buffer. Unit can be specified with `bno055_set_unit(...)`. (Default: deg)
- * ----------------------------------------------------------------------
- *
- * Args:
- *     > `imu[bno055_t*]`: BNO055 to read the data from
- *     > `buf[float*]`: Buffer to store the read value in
- * ----------------------------------------------------------------------
- *
- * Return:
- *     > `error_bno`: `BNO_OK` on success, errorcode else.
- * ----------------------------------------------------------------------
- */
-error_bno bno055_euler_roll(bno055_t* imu, float* buf) {
-    error_bno err;
-#ifdef BNO_AUTO_PAGE_SET
-    if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
-        return err;
+bno055_error_t BNO055_ReadTemperature(bno055_t *dev) {
+    uint8_t reg;
+    if(BNO055_ReadReg(dev->hi2c, BNO055_REG_TEMP, &reg) != 0) {
+        return BNO055_I2C_ERROR;
     }
-#endif  // BNO_AUTO_PAGE_SET
-    uint8_t data[2];
-    if ((err = bno055_read_regs(*imu, BNO_EUL_ROLL_LSB, data, 2)) != BNO_OK) {
-        return err;
-    }
-    float scale = (imu->_eul_unit == BNO_EUL_UNIT_DEG) ? BNO_EUL_SCALE_DEG
-                                                     : BNO_EUL_SCALE_RAD;
-    *buf = (int16_t)((data[1] << 8) | data[0]) / scale;
-    return BNO_OK;
+    dev->temperature = (int8_t)reg;
+
+    return BNO055_OK;
 }
 
-/**
- * Bosch BNO055 read euler pitch data
- * ----------------------------------------------------------------------
- *
- * Reads the pitch data and stores the value in the specified
- * buffer. Unit can be specified with `bno055_set_unit(...)`. (Default: deg)
- * ----------------------------------------------------------------------
- *
- * Args:
- *     > `imu[bno055_t*]`: BNO055 to read the data from
- *     > `buf[float*]`: Buffer to store the read value in
- * ----------------------------------------------------------------------
- *
- * Return:
- *     > `error_bno`: `BNO_OK` on success, errorcode else.
- * ----------------------------------------------------------------------
- */
-error_bno bno055_euler_pitch(bno055_t* imu, float* buf) {
-    error_bno err;
-#ifdef BNO_AUTO_PAGE_SET
-    if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
-        return err;
+bno055_error_t BNO055_UpdateCalibration(bno055_t *dev) {
+    uint8_t reg;
+    if(BNO055_ReadReg(dev->hi2c, BNO055_REG_CALIB_STAT, &reg) != 0) {
+        return BNO055_I2C_ERROR;
     }
-#endif  // BNO_AUTO_PAGE_SET
-    uint8_t data[2];
-    if ((err = bno055_read_regs(*imu, BNO_EUL_PITCH_LSB, data, 2)) != BNO_OK) {
-        return err;
-    }
-    float scale = (imu->_eul_unit == BNO_EUL_UNIT_DEG) ? BNO_EUL_SCALE_DEG
-                                                     : BNO_EUL_SCALE_RAD;
-    *buf = (int16_t)((data[1] << 8) | data[0]) / scale;
-    return BNO_OK;
+
+    dev->calib_sys  = (reg >> 6) & 0x03;
+    dev->calib_gyro = (reg >> 4) & 0x03;
+    dev->calib_acc  = (reg >> 2) & 0x03;
+    dev->calib_mag  = reg & 0x03;
+
+    return BNO055_OK;
 }
 
-/**
- * Bosch BNO055 read euler data on all axis
- * ----------------------------------------------------------------------
- *
- * Reads the euler data and stores the value in the specified
- * vector buffer. Unit can be selected with `bno055_set_unit(...)` (default:
- * deg).
- * ----------------------------------------------------------------------
- *
- * Args:
- *     > `imu[bno055_t*]`: BNO055 to read the data from
- *     > `buf[bno055_euler_t*]`: Buffer to store the read value in
- * ----------------------------------------------------------------------
- *
- * Return:
- *     > `error_bno`: `BNO_OK` on success, errorcode else.
- * ----------------------------------------------------------------------
- */
-error_bno bno055_euler(bno055_t* imu, bno055_euler_t* buf) {
-    error_bno err;
-#ifdef BNO_AUTO_PAGE_SET
-    if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
-        return err;
-    }
-#endif  // BNO_AUTO_PAGE_SET
-    uint8_t data[6];
-    if ((err = bno055_read_regs(*imu, BNO_EUL_HEADING_LSB, data, 6)) !=
-        BNO_OK) {
-        return err;
-    }
-    float scale = (imu->_eul_unit == BNO_EUL_UNIT_DEG) ? BNO_EUL_SCALE_DEG
-                                                     : BNO_EUL_SCALE_RAD;
-    buf->yaw = (int16_t)((data[1] << 8) | data[0]) / scale;
-    buf->roll = (int16_t)((data[3] << 8) | data[2]) / scale;
-    buf->pitch = (int16_t)((data[5] << 8) | data[4]) / scale;
-    return BNO_OK;
+void BNO055_ComputeEulerAngles(bno055_t *dev) {
+    float w = dev->quat_w;
+    float x = dev->quat_x;
+    float y = dev->quat_y;
+    float z = dev->quat_z;
+
+    if(w == 0.0f && x == 0.0f && y == 0.0f && z == 0.0f) return;
+
+    // Roll
+    float t0 = +2.0f * (w * x + y * z);
+    float t1 = +1.0f - 2.0f * (x * x + y * y);
+    dev->roll = atan2f(t0, t1) * (180.0f / M_PI);
+
+    // Pitch
+    float t2 = +2.0f * (w * y - z * x);
+    t2 = (t2 > 1.0f) ? 1.0f : t2;
+    t2 = (t2 < -1.0f) ? -1.0f : t2;
+    dev->pitch = asinf(t2) * (180.0f / M_PI);
+
+    // Yaw
+    float t3 = +2.0f * (w * z + x * y);
+    float t4 = +1.0f - 2.0f * (y * y + z * z);
+    dev->yaw = atan2f(t3, t4) * (180.0f / M_PI);
 }
 
-/**
- * Bosch BNO055 read quaternion W-axis data
- * ----------------------------------------------------------------------
- *
- * Reads the quaternion data and stores the value in the specified
- * buffer.
- * ----------------------------------------------------------------------
- *
- * Args:
- *     > `imu[bno055_t*]`: BNO055 to read the data from
- *     > `buf[float*]`: Buffer to store the read value in
- * ----------------------------------------------------------------------
- *
- * Return:
- *     > `error_bno`: `BNO_OK` on success, errorcode else.
- * ----------------------------------------------------------------------
- */
-error_bno bno055_quaternion_w(bno055_t* imu, float* buf) {
-    error_bno err;
-#ifdef BNO_AUTO_PAGE_SET
-    if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
-        return err;
+// Wait until all calibration data is collected and are at 3/3
+bno055_error_t BNO055_GetCalibrationProfile(bno055_t *dev, bno055_calib_profile_t *profile) {
+    bno055_mode_t current_mode = dev->mode;
+    
+    if(BNO055_WriteReg(dev->hi2c, BNO055_REG_OPR_MODE, BNO055_MODE_CONFIG) != 0) {
+        return BNO055_I2C_ERROR;
     }
-#endif  // BNO_AUTO_PAGE_SET
-    uint8_t data[2];
-    if ((err = bno055_read_regs(*imu, BNO_QUA_DATA_W_LSB, data, 2)) != BNO_OK) {
-        return err;
+    HAL_Delay(25);
+
+    if(BNO055_ReadRegs(dev->hi2c, BNO055_REG_ACC_OFFSET_X_LSB, profile->data, 22) != 0) {
+        return BNO055_I2C_ERROR;
     }
-    *buf = (int16_t)((data[1] << 8) | data[0]) / (float)BNO_QUA_SCALE;
-    return BNO_OK;
+
+    if(BNO055_WriteReg(dev->hi2c, BNO055_REG_OPR_MODE, (uint8_t)current_mode) != 0) {
+        return BNO055_I2C_ERROR;
+    }
+    HAL_Delay(25);
+
+    return BNO055_OK;
 }
 
-/**
- * Bosch BNO055 read quaternion X-axis data
- * ----------------------------------------------------------------------
- *
- * Reads the quaternion data and stores the value in the specified
- * buffer.
- * ----------------------------------------------------------------------
- *
- * Args:
- *     > `imu[bno055_t*]`: BNO055 to read the data from
- *     > `buf[float*]`: Buffer to store the read value in
- * ----------------------------------------------------------------------
- *
- * Return:
- *     > `error_bno`: `BNO_OK` on success, errorcode else.
- * ----------------------------------------------------------------------
- */
-error_bno bno055_quaternion_x(bno055_t* imu, float* buf) {
-    error_bno err;
-#ifdef BNO_AUTO_PAGE_SET
-    if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
-        return err;
+bno055_error_t BNO055_SetCalibrationProfile(bno055_t *dev, bno055_calib_profile_t *profile) {
+    bno055_mode_t current_mode = dev->mode;
+    
+    if(BNO055_WriteReg(dev->hi2c, BNO055_REG_OPR_MODE, BNO055_MODE_CONFIG) != 0) {
+        return BNO055_I2C_ERROR;
     }
-#endif  // BNO_AUTO_PAGE_SET
-    uint8_t data[2];
-    if ((err = bno055_read_regs(*imu, BNO_QUA_DATA_X_LSB, data, 2)) != BNO_OK) {
-        return err;
-    }
-    *buf = (int16_t)((data[1] << 8) | data[0]) / (float)BNO_QUA_SCALE;
-    return BNO_OK;
-}
+    HAL_Delay(25);
 
-/**
- * Bosch BNO055 read quaternion Y-axis data
- * ----------------------------------------------------------------------
- *
- * Reads the quaternion data and stores the value in the specified
- * buffer.
- * ----------------------------------------------------------------------
- *
- * Args:
- *     > `imu[bno055_t*]`: BNO055 to read the data from
- *     > `buf[float*]`: Buffer to store the read value in
- * ----------------------------------------------------------------------
- *
- * Return:
- *     > `error_bno`: `BNO_OK` on success, errorcode else.
- * ----------------------------------------------------------------------
- */
-error_bno bno055_quaternion_y(bno055_t* imu, float* buf) {
-    error_bno err;
-#ifdef BNO_AUTO_PAGE_SET
-    if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
-        return err;
+    // Write 22 bytes of calibration data starting from ACC_OFFSET_X_LSB
+    if(HAL_I2C_Mem_Write(dev->hi2c, BNO055_I2C_ADDR, BNO055_REG_ACC_OFFSET_X_LSB, I2C_MEMADD_SIZE_8BIT, profile->data, 22, 100) != HAL_OK) {
+        return BNO055_I2C_ERROR;
     }
-#endif  // BNO_AUTO_PAGE_SET
-    uint8_t data[2];
-    if ((err = bno055_read_regs(*imu, BNO_QUA_DATA_Y_LSB, data, 2)) != BNO_OK) {
-        return err;
-    }
-    *buf = (int16_t)((data[1] << 8) | data[0]) / (float)BNO_QUA_SCALE;
-    return BNO_OK;
-}
 
-/**
- * Bosch BNO055 read quaternion Z-axis data
- * ----------------------------------------------------------------------
- *
- * Reads the quaternion data and stores the value in the specified
- * buffer.
- * ----------------------------------------------------------------------
- *
- * Args:
- *     > `imu[bno055_t*]`: BNO055 to read the data from
- *     > `buf[float*]`: Buffer to store the read value in
- * ----------------------------------------------------------------------
- *
- * Return:
- *     > `error_bno`: `BNO_OK` on success, errorcode else.
- * ----------------------------------------------------------------------
- */
-error_bno bno055_quaternion_z(bno055_t* imu, float* buf) {
-    error_bno err;
-#ifdef BNO_AUTO_PAGE_SET
-    if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
-        return err;
+    if(BNO055_WriteReg(dev->hi2c, BNO055_REG_OPR_MODE, (uint8_t)current_mode) != 0) {
+        return BNO055_I2C_ERROR;
     }
-#endif  // BNO_AUTO_PAGE_SET
-    uint8_t data[2];
-    if ((err = bno055_read_regs(*imu, BNO_QUA_DATA_Z_LSB, data, 2)) != BNO_OK) {
-        return err;
-    }
-    *buf = (int16_t)((data[1] << 8) | data[0]) / (float)BNO_QUA_SCALE;
-    return BNO_OK;
-}
+    HAL_Delay(25);
 
-/**
- * Bosch BNO055 read quaternion data on all axis
- * ----------------------------------------------------------------------
- *
- * Reads the euler data and stores the value in the specified
- * vector buffer. Unit can be selected with `bno055_set_unit(...)` (default:
- * deg).
- * ----------------------------------------------------------------------
- *
- * Args:
- *     > `imu[bno055_t*]`: BNO055 to read the data from
- *     > `buf[bno055_euler_t*]`: Buffer to store the read value in
- * ----------------------------------------------------------------------
- *
- * Return:
- *     > `error_bno`: `BNO_OK` on success, errorcode else.
- * ----------------------------------------------------------------------
- */
-error_bno bno055_quaternion(bno055_t* imu, bno055_vec4_t* buf) {
-    error_bno err;
-#ifdef BNO_AUTO_PAGE_SET
-    if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
-        return err;
-    }
-#endif  // BNO_AUTO_PAGE_SET
-    uint8_t data[8];
-    if ((err = bno055_read_regs(*imu, BNO_QUA_DATA_W_LSB, data, 8)) != BNO_OK) {
-        return err;
-    }
-    buf->w = (int16_t)((data[1] << 8) | data[0]) / (float)BNO_QUA_SCALE;
-    buf->x = (int16_t)((data[3] << 8) | data[2]) / (float)BNO_QUA_SCALE;
-    buf->y = (int16_t)((data[5] << 8) | data[4]) / (float)BNO_QUA_SCALE;
-    buf->z = (int16_t)((data[7] << 8) | data[6]) / (float)BNO_QUA_SCALE;
-    return BNO_OK;
-}
-
-error_bno bno055_acc_conf(bno055_t* bno, const bno055_acc_range_t range,
-                          const bno055_acc_band_t bandwidth,
-                          const bno055_acc_mode_t mode) {
-    error_bno err;
-    if ((err = bno055_set_page(bno, BNO_PAGE_1)) != BNO_OK) {
-        return err;
-    }
-    if ((err = bno055_set_opmode(bno, BNO_MODE_CONFIG)) != BNO_OK) {
-        return err;
-    }
-    HAL_Delay(BNO_CONFIG_TIME_DELAY + 5);
-    uint8_t config = range | bandwidth | mode;
-    if ((err = bno055_write_regs(*bno, BNO_ACC_CONFIG, &config, 1)) != BNO_OK) {
-        return err;
-    }
-    if ((err = bno055_set_opmode(bno, bno->mode)) != BNO_OK) {
-        return err;
-    }
-    HAL_Delay(BNO_ANY_TIME_DELAY + 5);
-    if ((err = bno055_set_page(bno, BNO_PAGE_0)) != BNO_OK) {
-        return err;
-    }
-    return BNO_OK;
-}
-
-error_bno bno055_gyr_conf(bno055_t* bno, const bno055_gyr_range_t range,
-                          const bno055_gyr_band_t bandwidth,
-                          const bno055_gyr_mode_t mode) {
-    error_bno err;
-    if ((err = bno055_set_page(bno, BNO_PAGE_1)) != BNO_OK) {
-        return err;
-    }
-    if ((err = bno055_set_opmode(bno, BNO_MODE_CONFIG)) != BNO_OK) {
-        return err;
-    }
-    HAL_Delay(BNO_CONFIG_TIME_DELAY + 5);
-    uint8_t config[2] = {range | bandwidth, mode};
-    if ((err = bno055_write_regs(*bno, BNO_GYR_CONFIG_0, config, 2)) !=
-        BNO_OK) {
-        return err;
-    }
-    if ((err = bno055_set_opmode(bno, bno->mode)) != BNO_OK) {
-        return err;
-    }
-    HAL_Delay(BNO_ANY_TIME_DELAY + 5);
-    if ((err = bno055_set_page(bno, BNO_PAGE_0)) != BNO_OK) {
-        return err;
-    }
-    return BNO_OK;
-}
-error_bno bno055_mag_conf(bno055_t* bno, const bno055_mag_rate_t out_rate,
-                          const bno055_mag_pwr_t pwr_mode,
-                          const bno055_mag_mode_t mode) {
-    error_bno err;
-    if ((err = bno055_set_page(bno, BNO_PAGE_1)) != BNO_OK) {
-        return err;
-    }
-    if ((err = bno055_set_opmode(bno, BNO_MODE_CONFIG)) != BNO_OK) {
-        return err;
-    }
-    HAL_Delay(BNO_CONFIG_TIME_DELAY + 5);
-    uint8_t config = out_rate | pwr_mode | mode;
-    if ((err = bno055_write_regs(*bno, BNO_MAG_CONFIG, &config, 1)) != BNO_OK) {
-        return err;
-    }
-    if ((err = bno055_set_opmode(bno, bno->mode)) != BNO_OK) {
-        return err;
-    }
-    HAL_Delay(BNO_ANY_TIME_DELAY + 5);
-    if ((err = bno055_set_page(bno, BNO_PAGE_0)) != BNO_OK) {
-        return err;
-    }
-    return BNO_OK;
-}
-
-error_bno bno055_set_opmode(bno055_t* imu, const bno055_opmode_t opmode) {
-    error_bno err;
-#ifdef BNO_AUTO_PAGE_SET
-    if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
-        return err;
-    }
-#endif  // BNO_AUTO_PAGE_SET
-    if ((err = bno055_write_regs(*imu, BNO_OPR_MODE, (uint8_t*)&opmode, 1)) !=
-        BNO_OK) {
-        return err;
-    }
-    HAL_Delay(BNO_ANY_TIME_DELAY + 5);
-    return BNO_OK;
-}
-
-error_bno bno055_set_unit(bno055_t* bno, const bno055_temp_unitsel_t t_unit,
-                          const bno055_gyr_unitsel_t g_unit,
-                          const bno055_acc_unitsel_t a_unit,
-                          const bno055_eul_unitsel_t e_unit) {
-    error_bno err;
-    if ((err = bno055_set_opmode(bno, BNO_MODE_CONFIG)) != BNO_OK) {
-        return err;
-    }
-    if ((err = bno055_set_page(bno, BNO_PAGE_0)) != BNO_OK) {
-        return err;
-    }
-    uint8_t data = t_unit | g_unit | a_unit | e_unit;
-    if ((err = bno055_write_regs(*bno, BNO_UNIT_SEL, &data, 1)) != BNO_OK) {
-        return err;
-    }
-    bno->_gyr_unit = g_unit;
-    bno->_acc_unit = a_unit;
-    bno->_eul_unit = e_unit;
-    bno->_temp_unit = t_unit;
-
-    if ((err = bno055_set_opmode(bno, bno->mode)) != BNO_OK) {
-        return err;
-    }
-    return BNO_OK;
-}
-
-error_bno bno055_set_pwr_mode(bno055_t* imu, bno055_pwr_t pwr_mode) {
-    if (imu == NULL) {
-        return BNO_ERR_NULL_PTR;
-    }
-    error_bno err;
-    if ((err = bno055_set_opmode(imu, BNO_MODE_CONFIG)) != BNO_OK) {
-        return err;
-    }
-    if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
-        return err;
-    }
-    if ((err = bno055_write_regs(*imu, BNO_PWR_MODE, (uint8_t*)&pwr_mode, 1)) !=
-        BNO_OK) {
-        return err;
-    }
-    imu->_pwr_mode = pwr_mode;
-    if ((err = bno055_set_page(imu, BNO_PAGE_0)) != BNO_OK) {
-        return err;
-    }
-    if ((err = bno055_set_opmode(imu, imu->mode)) != BNO_OK) {
-        return err;
-    }
-    HAL_Delay(2);
-    return BNO_OK;
-}
-
-error_bno bno055_reset(bno055_t* imu) {
-    uint8_t data = 0x20U;
-    if (bno055_write_regs(*imu, BNO_SYS_TRIGGER, &data, 1) != BNO_OK) {
-        return BNO_ERR_I2C;
-    }
-    return BNO_OK;
-}
-
-error_bno bno055_on(bno055_t* imu) {
-    uint8_t data = 0x00U;
-    if (bno055_write_regs(*imu, BNO_SYS_TRIGGER, &data, 1) != BNO_OK) {
-        return BNO_ERR_I2C;
-    }
-    return BNO_OK;
-}
-
-error_bno bno055_read_regs(bno055_t imu, uint8_t addr, uint8_t* buf, uint32_t buf_size) {
-    HAL_StatusTypeDef err;
-    err = HAL_I2C_Mem_Read(imu.i2c, imu.addr, addr, I2C_MEMADD_SIZE_8BIT, buf, buf_size, HAL_MAX_DELAY);
-    if (err != HAL_OK) {
-        return BNO_ERR_I2C;
-    }
-    return BNO_OK;
-}
-
-error_bno bno055_write_regs(bno055_t imu, uint32_t addr, uint8_t* buf, uint32_t buf_size) {
-    HAL_StatusTypeDef err;
-    err = HAL_I2C_Mem_Write(imu.i2c, imu.addr, addr, I2C_MEMADD_SIZE_8BIT, buf, buf_size, HAL_MAX_DELAY);
-    if (err != HAL_OK) {
-        return BNO_ERR_I2C;
-    }
-    return BNO_OK;
-}
-
-error_bno bno055_set_page(bno055_t* imu, const bno055_page_t page) {
-    if (imu->_page == page) {
-        return BNO_OK;
-    }
-    if (page > 0x01) {
-        return BNO_ERR_PAGE_TOO_HIGH;
-    }
-    error_bno err;
-    err = bno055_write_regs(*imu, BNO_PAGE_ID, (uint8_t*)&page, 1);
-    if (err != BNO_OK) {
-        return err;
-    }
-    imu->_page = page;
-    HAL_Delay(2);
-    return BNO_OK;
-}
-
-char* bno055_err_str(const error_bno err) {
-    switch (err) {
-        case BNO_OK:
-            return "[BNO] Ok!";
-        case BNO_ERR_I2C:
-            return "[BNO] I2C error!";
-        case BNO_ERR_PAGE_TOO_HIGH:
-            return "[BNO] Page setting to high.";
-        case BNO_ERR_NULL_PTR:
-            return "[BNO] BNO struct is nullpointer.";
-        case BNO_ERR_AXIS_REMAP:
-            return "[BNO] Axis remap error!";
-        case BNO_ERR_SETTING_PAGE:
-            return "[BNO] TODO";
-        case BNO_ERR_WRONG_CHIP_ID:
-            return "[BNO] Wrong Chip ID.";
-    }
-    return "[BNO] Ok!";
+    return BNO055_OK;
 }

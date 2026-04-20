@@ -103,9 +103,14 @@ adxl382_t adxl382 = {
 	}
 };
 bno055_t bno055 = {
-    .i2c = &hi2c1,
-    .addr = BNO_ADDR_ALT,
-    .mode = BNO_MODE_NDOF,
+    .hi2c = &hi2c1,
+    .drdy_port = IMU_INT_GPIO_Port,
+    .drdy_pin = IMU_INT_Pin,
+    .rst_port = IMU_nReset_GPIO_Port,
+    .rst_pin = IMU_nReset_Pin,
+    .mode = BNO055_MODE_NDOF,
+    .axis_profile = BNO055_AXIS_P0,
+    .acc_range = BNO055_ACC_RANGE_4G, // effective only if using a non-fusion mode
 };
 hm11_t hm11 = {
     .huart = &huart2,
@@ -988,7 +993,7 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin : IMU_INT_Pin */
   GPIO_InitStruct.Pin = IMU_INT_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   HAL_GPIO_Init(IMU_INT_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : IMU_nReset_Pin */
@@ -997,6 +1002,10 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(IMU_nReset_GPIO_Port, &GPIO_InitStruct);
+
+  /* EXTI interrupt init*/
+  HAL_NVIC_SetPriority(EXTI4_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI4_IRQn);
 
   /* USER CODE BEGIN MX_GPIO_Init_2 */
 

@@ -1,20 +1,26 @@
-import time
 import os
+
+os.environ["MAVLINK20"] = "1"
+
+import time
+
 from pymavlink import mavutil
+
 import odb_mavlink_v1 as mavlink_dialect
 
 # --- CONFIGURATION ---
-os.environ['MAVLINK20'] = '1'
 #SERIAL_PORT = 'COM14'
 SERIAL_PORT = 'udpout:127.0.0.1:14550'
 BAUD_RATE = 115200
+BOOSTER_SYSTEM_ID = 2
+SUSTAINER_SYSTEM_ID = 3
 
 def run_transmitter():
     master = mavutil.mavlink_connection(SERIAL_PORT, baud=BAUD_RATE)
     
-    # Instances MAVLin
-    booster_mav = mavlink_dialect.MAVLink(master, srcSystem=1, srcComponent=1)
-    sustainer_mav = mavlink_dialect.MAVLink(master, srcSystem=2, srcComponent=1)
+    # Instances MAVLink séparées pour chaque airframe.
+    booster_mav = mavlink_dialect.MAVLink(master, srcSystem=BOOSTER_SYSTEM_ID, srcComponent=1)
+    sustainer_mav = mavlink_dialect.MAVLink(master, srcSystem=SUSTAINER_SYSTEM_ID, srcComponent=1)
 
     print(f"Transmission lancée sur {SERIAL_PORT}...")    
     start_time = time.time()
@@ -54,8 +60,7 @@ def run_transmitter():
             gps_fix=1,
             satellites_nb=12
         )
-        print(f"[{current_ms}ms] Packet envoyé : BOOSTER (ID 1)")
-        time.sleep(1)
+        print(f"[{current_ms}ms] Packet envoyé : BOOSTER (ID {BOOSTER_SYSTEM_ID})")
 
         # --- ENVOI SUSTAINER (ID 2) ---
         sustainer_mav.rocket_telemetry_send(
@@ -89,7 +94,7 @@ def run_transmitter():
             gps_fix=1, 
             satellites_nb=10
         )
-        print(f"[{current_ms}ms] Packet envoyé : SUSTAINER (ID 2)")
+        print(f"[{current_ms}ms] Packet envoyé : SUSTAINER (ID {SUSTAINER_SYSTEM_ID})")
         time.sleep(1)
 
 if __name__ == "__main__":

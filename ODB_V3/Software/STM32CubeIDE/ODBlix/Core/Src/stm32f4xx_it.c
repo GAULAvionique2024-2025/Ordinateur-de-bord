@@ -26,6 +26,7 @@
 #include "GAUL_Drivers/hm11.h"
 #include "GAUL_Drivers/l76lm33.h"
 #include "GAUL_Drivers/rfd900x.h"
+#include "GAUL_Drivers/bno055.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -76,6 +77,7 @@ extern UART_HandleTypeDef huart6;
 extern hm11_t     hm11;
 extern l76lm33_t  l76lm33;
 extern rfd900x_t  rfd900x;
+extern bno055_t   bno055;
 /* USER CODE END EV */
 
 /******************************************************************************/
@@ -216,6 +218,21 @@ void SysTick_Handler(void)
 /* For the available peripheral interrupt handler names,                      */
 /* please refer to the startup file (startup_stm32f4xx.s).                    */
 /******************************************************************************/
+
+/**
+  * @brief This function handles EXTI line4 interrupt.
+  */
+void EXTI4_IRQHandler(void)
+{
+  /* USER CODE BEGIN EXTI4_IRQn 0 */
+  bno055.data_ready_flag = true;
+  /* USER CODE END EXTI4_IRQn 0 */
+  HAL_GPIO_EXTI_IRQHandler(IMU_INT_Pin);
+  /* USER CODE BEGIN EXTI4_IRQn 1 */
+
+   /* USER CODE END EXTI4_IRQn 1 */
+  /* USER CODE END EXTI4_IRQn 1 */
+}
 
 /**
   * @brief This function handles DMA1 stream0 global interrupt.
