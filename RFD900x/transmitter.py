@@ -1,16 +1,13 @@
 import os
-
 os.environ["MAVLINK20"] = "1"
 
 import time
-
 from pymavlink import mavutil
-
 import odb_mavlink_v1 as mavlink_dialect
 
 # --- CONFIGURATION ---
-#SERIAL_PORT = 'COM14'
-SERIAL_PORT = 'udpout:127.0.0.1:14550'
+SERIAL_PORT = 'COM15'
+#SERIAL_PORT = 'udpout:127.0.0.1:14550'
 BAUD_RATE = 115200
 BOOSTER_SYSTEM_ID = 2
 SUSTAINER_SYSTEM_ID = 3
@@ -95,7 +92,7 @@ def run_transmitter():
             satellites_nb=10
         )
         print(f"[{current_ms}ms] Packet envoyé : SUSTAINER (ID {SUSTAINER_SYSTEM_ID})")
-        time.sleep(1)
+        time.sleep(0.25)
 
 if __name__ == "__main__":
     run_transmitter()

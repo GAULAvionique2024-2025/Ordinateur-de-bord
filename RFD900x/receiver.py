@@ -3,20 +3,18 @@ os.environ["MAVLINK20"] = "1"
 os.environ.pop("MAV_IGNORE_CRC", None)
 
 import time
-
 from pymavlink import mavutil
-
 import odb_mavlink_v1 as mavlink_dialect
 
-
 # --- CONFIGURATION ---
-#SERIAL_PORT = 'COM15'
-SERIAL_PORT = 'udpin:0.0.0.0:14550'
+SERIAL_PORT = 'COM14'
+#SERIAL_PORT = 'udpin:0.0.0.0:14550'
 BAUD_RATE = 115200
 SOURCE_SYSTEM = 1
-BOOSTER_SYS_ID = 1
-SUSTAINER_SYS_ID = 2
+BOOSTER_SYS_ID = 2
+SUSTAINER_SYS_ID = 3
 
+# Add try/catch and error handler + add usb limitations
 def run_receiver():
     master = mavutil.mavlink_connection(SERIAL_PORT, baud=BAUD_RATE, source_system=SOURCE_SYSTEM)
     master.mav = mavlink_dialect.MAVLink(master, srcSystem=SOURCE_SYSTEM, srcComponent=1)
@@ -24,7 +22,7 @@ def run_receiver():
     print(f"Station Sol active sur {SERIAL_PORT}")
 
     while True:
-        msg = master.recv_match(blocking=True, timeout=0.5)
+        msg = master.recv_match(blocking=True)
         if not msg:
             continue
 
