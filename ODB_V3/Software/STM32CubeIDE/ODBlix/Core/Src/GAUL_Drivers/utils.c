@@ -312,7 +312,7 @@ void ODB_Update(odb_data *data) {
       data->highg_acc_z = adxl382.acc_z;
     }
 
-    if(L76LM33_Read(&l76lm33) == L76LM33_OK) {
+    if(L76LM33_Compute(&l76lm33) == L76LM33_OK) {
       data->gps_fix = l76lm33.gps_data.gps_fix;
       data->lat = l76lm33.gps_data.lat;
       data->lon = l76lm33.gps_data.lon;

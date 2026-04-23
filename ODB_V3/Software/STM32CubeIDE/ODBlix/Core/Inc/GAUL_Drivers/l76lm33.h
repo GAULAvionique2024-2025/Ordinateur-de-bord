@@ -49,9 +49,6 @@ typedef struct {
 
 l76lm33_state_t L76LM33_Init(l76lm33_t *dev);
 
-l76lm33_state_t L76LM33_Read(l76lm33_t *dev);
-
-// Callback
-void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t size);
+l76lm33_state_t L76LM33_Compute(l76lm33_t *dev);
 
 #endif /* INC_GAUL_DRIVERS_L76LM33_H_ */

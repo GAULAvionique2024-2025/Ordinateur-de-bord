@@ -418,7 +418,7 @@ void SPI5_IRQHandler(void)
 
 /* USER CODE BEGIN 1 */
 /**
- * Gestion du HM-11 (Bluetooth)
+ * HM-11 (Bluetooth)
  */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
     if(huart->Instance == hm11.huart->Instance) {
@@ -428,7 +428,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 }
 
 /**
- * Gestion du L76LM33 (GPS)
+ * L76LM33 (GPS)
  */
 void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t size) {
     if(huart->Instance == l76lm33.huart->Instance) {
@@ -444,7 +444,7 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t size) {
 }
 
 /**
- * Gestion du RFD900x (Radio)
+ * RFD900x (Radio)
  */
 void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) {
     if(huart->Instance == rfd900x.huart->Instance) {

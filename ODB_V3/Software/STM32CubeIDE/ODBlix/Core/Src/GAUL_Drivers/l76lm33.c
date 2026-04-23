@@ -95,7 +95,43 @@ l76lm33_state_t L76LM33_Init(l76lm33_t *dev) {
     HAL_Delay(10);
 
     /*
-     * Output RMC and GGA sentences only (once every one position fix)
+	 * Activate SBAS (Positioning correction) + DPGS Mode
+	 * "$PMTK313,1*2E<CR><LF>"
+	 * "$PMTK301,2*2E<CR><LF>"
+	*/
+	const char NMEA_SBAS[] = "$PMTK313,1*2E\r\n";
+	const char NMEA_DGPS[] = "$PMTK301,2*2E\r\n";
+	if(L76LM33_SendCommand(dev, NMEA_DGPS, strlen(NMEA_DGPS)) != L76LM33_OK) return L76LM33_ERROR;
+	HAL_Delay(10);
+	if(L76LM33_SendCommand(dev, NMEA_SBAS, strlen(NMEA_SBAS)) != L76LM33_OK) return L76LM33_ERROR;
+	HAL_Delay(10);
+
+	/*
+	 * Disable EASY
+	 * "$PMTK869,1,0*34<CR><LF>"
+	*/
+	const char NMEA_EASY[] = "$PMTK869,1,0*34\r\n";
+	if(L76LM33_SendCommand(dev, NMEA_EASY, strlen(NMEA_EASY)) != L76LM33_OK) return L76LM33_ERROR;
+	HAL_Delay(10);
+
+	/*
+	 * Activate AIC (active interference canceller)
+	 * "$PMTK286,1*23<CR><LF>"
+	*/
+	const char NMEA_AIC[] = "$PMTK286,1*23\r\n";
+	if(L76LM33_SendCommand(dev, NMEA_AIC, strlen(NMEA_AIC)) != L76LM33_OK) return L76LM33_ERROR;
+	HAL_Delay(10);
+
+	/*
+	 * Set Periodic mode (disable AlwayLocate)
+	 * "$PMTK225,0*2B<CR><LF>"
+	*/
+	const char NMEA_PERIOD[] = "$PMTK225,0*2B\r\n";
+	if(L76LM33_SendCommand(dev, NMEA_PERIOD, strlen(NMEA_PERIOD)) != L76LM33_OK) return L76LM33_ERROR;
+	HAL_Delay(10);
+
+    /*
+     * Output RMC and GGA sentences only (once every one position fix) & altitude is given in WGS84 ellipsoid convention
      * "$PMTK314,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*28<CR><LF>"
     */
     const char NMEA_OUTPUT[] = "$PMTK314,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*28\r\n";
@@ -103,15 +139,16 @@ l76lm33_state_t L76LM33_Init(l76lm33_t *dev) {
     HAL_Delay(10);
 
     /*
-     * Set position fix interval to 100ms (10Hz)
+     * Set position fix interval to 100ms (10Hz) TODO: 5Hz practical, but 10Hz theoretical
      * "$PMTK220,100*2F<CR><LF>"
+     * "$PMTK220,200*2C<CR><LF>"
     */
     const char NMEA_RATE[] = "$PMTK220,100*2F\r\n";
     if(L76LM33_SendCommand(dev, NMEA_RATE, strlen(NMEA_RATE)) != L76LM33_OK) return L76LM33_ERROR;
     HAL_Delay(10);
 
     // Navigation mode
-    if (dev->profile == L76_FLIGHT_PROFILE_30K) {
+    if(dev->profile == L76_FLIGHT_PROFILE_30K) {
         // Mode Aviation (< 10 000m / 32 800ft)
         // "$PMTK886,2*2B<CR><LF>"
         const char NMEA_NAV_AVIATION[] = "$PMTK886,2*2B\r\n";
@@ -124,8 +161,10 @@ l76lm33_state_t L76LM33_Init(l76lm33_t *dev) {
     }
     HAL_Delay(10);
 
-    // Baudrate
-    // "$PMTK251,115200*1F<CR><LF>"
+    /* Baudrate
+     * "$PMTK251,115200*1F<CR><LF>"
+    */
+    /*
     const char NMEA_BAUD[] = "$PMTK251,115200*1F\r\n";
     if(L76LM33_SendCommand(dev, NMEA_BAUD, strlen(NMEA_BAUD)) != L76LM33_OK) return L76LM33_ERROR;
     HAL_Delay(50);
@@ -142,6 +181,7 @@ l76lm33_state_t L76LM33_Init(l76lm33_t *dev) {
     if(HAL_UARTEx_ReceiveToIdle_DMA(dev->huart, dev->dma_buffer, L76LM33_BUFFER_SIZES) != HAL_OK) {
         return L76LM33_ERROR;
     }
+    */
 
     return L76LM33_OK;
 }
@@ -149,7 +189,7 @@ l76lm33_state_t L76LM33_Init(l76lm33_t *dev) {
 /*
  * Read and parse NMEA sentences into data structure.
 */
-l76lm33_state_t L76LM33_Read(l76lm33_t *dev) {
+l76lm33_state_t L76LM33_Compute(l76lm33_t *dev) {
     char temp_nmea_buffer[L76LM33_BUFFER_SIZES];
 
     int8_t valid = L76LM33_ReadSentence(dev, temp_nmea_buffer, L76LM33_BUFFER_SIZES);
