@@ -76,7 +76,7 @@ typedef enum {
     BNO055_OP_MODE_AMG          = 0x07, // Not-Fusion (Raw Accel+Mag+Gyro)
     BNO055_OP_MODE_IMU          = 0x08, // Fusion (Accel+Gyro) (Max 4G)
     BNO055_OP_MODE_NDOF         = 0x0C  // Fusion (Accel+Gyro+Mag) (Max 4G)
-} bno055_operating_mode_t;
+} bno055_op_mode_t;
 
 typedef enum {
     BNO055_PWR_MODE_NORMAL      = 0x00, // Default
@@ -106,7 +106,7 @@ typedef struct {
     GPIO_TypeDef            *rst_port;
     uint16_t                rst_pin;
 
-    bno055_operating_mode_t operating_mode;
+    bno055_op_mode_t 		op_mode;
     bno055_axis_profile_t   axis_profile;
     bno055_acc_range_t      acc_range;
 

@@ -85,12 +85,12 @@ static int8_t BNO055_SetAccConfig(bno055_t *dev, bno055_acc_range_t range) {
 }
 
 static int8_t BNO055_SetAxisRemap(bno055_t *dev, bno055_axis_profile_t profile) {
-    bno055_mode_t current_mode = dev->mode;
+	bno055_op_mode_t current_mode = dev->op_mode;
 
     uint8_t config = BNO055_REMAP_CONFIG[profile];
     uint8_t sign = BNO055_REMAP_SIGN[profile];
     
-    if(BNO055_WriteReg(dev->hi2c, BNO055_REG_OPR_MODE, BNO055_MODE_CONFIG) != 0) {
+    if(BNO055_WriteReg(dev->hi2c, BNO055_REG_OPR_MODE, BNO055_OP_MODE_CONFIG) != 0) {
         return BNO055_I2C_ERROR;
     }
     HAL_Delay(25);
@@ -155,7 +155,7 @@ bno055_error_t BNO055_SetPowerMode(bno055_t *dev, bno055_pwr_mode_t power_mode) 
 }
 
 bno055_error_t BNO055_Init(bno055_t *dev) {
-    if(!dev || !dev->hi2c || (dev->operating_mode != BNO055_MODE_IMU && dev->operating_mode != BNO055_MODE_NDOF && dev->operating_mode != BNO055_MODE_AMG)) {
+    if(!dev || !dev->hi2c || (dev->op_mode != BNO055_OP_MODE_IMU && dev->op_mode != BNO055_OP_MODE_NDOF && dev->op_mode != BNO055_OP_MODE_AMG)) {
         return BNO055_ERROR;
     }
 
@@ -169,7 +169,7 @@ bno055_error_t BNO055_Init(bno055_t *dev) {
     }
 
     // Config mode
-    if(BNO055_WriteReg(dev->hi2c, BNO055_REG_OPR_MODE, BNO055_MODE_CONFIG) != 0) {
+    if(BNO055_WriteReg(dev->hi2c, BNO055_REG_OPR_MODE, BNO055_OP_MODE_CONFIG) != 0) {
         return BNO055_CONFIG_ERROR;
     }
     HAL_Delay(25);
@@ -192,7 +192,7 @@ bno055_error_t BNO055_Init(bno055_t *dev) {
     BNO055_SetAxisRemap(dev, dev->axis_profile);
 
     // If in IMU mode, set accelerometer range to ±16G (max for fusion modes is ±4G)
-    if(dev->operating_mode == BNO055_MODE_AMG) {
+    if(dev->op_mode == BNO055_OP_MODE_AMG) {
         if(BNO055_SetAccConfig(dev, dev->acc_range) != 0) {
              return BNO055_CONFIG_ERROR;
         }
@@ -208,7 +208,7 @@ bno055_error_t BNO055_Init(bno055_t *dev) {
 	}
 
     // Activate operating mode
-    if(BNO055_WriteReg(dev->hi2c, BNO055_REG_OPR_MODE, (uint8_t)dev->operating_mode) != 0){
+    if(BNO055_WriteReg(dev->hi2c, BNO055_REG_OPR_MODE, (uint8_t)dev->op_mode) != 0){
         return BNO055_CONFIG_ERROR;
     }
     HAL_Delay(25);
@@ -328,9 +328,9 @@ void BNO055_ComputeEulerAngles(bno055_t *dev) {
 
 // Wait until all calibration data is collected and are at 3/3
 bno055_error_t BNO055_GetCalibrationProfile(bno055_t *dev, bno055_calib_profile_t *profile) {
-    bno055_mode_t current_mode = dev->mode;
+    bno055_op_mode_t current_mode = dev->op_mode;
     
-    if(BNO055_WriteReg(dev->hi2c, BNO055_REG_OPR_MODE, BNO055_MODE_CONFIG) != 0) {
+    if(BNO055_WriteReg(dev->hi2c, BNO055_REG_OPR_MODE, BNO055_OP_MODE_CONFIG) != 0) {
         return BNO055_I2C_ERROR;
     }
     HAL_Delay(25);
@@ -348,9 +348,9 @@ bno055_error_t BNO055_GetCalibrationProfile(bno055_t *dev, bno055_calib_profile_
 }
 
 bno055_error_t BNO055_SetCalibrationProfile(bno055_t *dev, bno055_calib_profile_t *profile) {
-    bno055_mode_t current_mode = dev->mode;
+    bno055_op_mode_t current_mode = dev->op_mode;
     
-    if(BNO055_WriteReg(dev->hi2c, BNO055_REG_OPR_MODE, BNO055_MODE_CONFIG) != 0) {
+    if(BNO055_WriteReg(dev->hi2c, BNO055_REG_OPR_MODE, BNO055_OP_MODE_CONFIG) != 0) {
         return BNO055_I2C_ERROR;
     }
     HAL_Delay(25);

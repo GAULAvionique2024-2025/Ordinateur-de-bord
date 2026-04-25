@@ -108,7 +108,7 @@ bno055_t bno055 = {
     .drdy_pin = IMU_INT_Pin,
     .rst_port = IMU_nReset_GPIO_Port,
     .rst_pin = IMU_nReset_Pin,
-    .operating_mode = BNO055_OP_MODE_NDOF,
+    .op_mode = BNO055_OP_MODE_NDOF,
     .axis_profile = BNO055_AXIS_P0,
     .acc_range = BNO055_ACC_RANGE_4G, // effective only if using a non-fusion mode, else its set 4G by IMU's MCU
 };
