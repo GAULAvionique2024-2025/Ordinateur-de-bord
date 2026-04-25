@@ -110,7 +110,7 @@ bno055_t bno055 = {
     .rst_pin = IMU_nReset_Pin,
     .mode = BNO055_MODE_NDOF,
     .axis_profile = BNO055_AXIS_P0,
-    .acc_range = BNO055_ACC_RANGE_4G, // effective only if using a non-fusion mode
+    .acc_range = BNO055_ACC_RANGE_4G, // effective only if using a non-fusion mode, else its set 4G by IMU's MCU
 };
 hm11_t hm11 = {
     .huart = &huart2,
@@ -177,6 +177,10 @@ system_measurements_t system_measurements = {
 	.htim = &htim2,
 	.pg_port = Power_Good_GPIO_Port,
 	.pg_pin = Power_Good_Pin
+};
+buzzer_t buzzer = {
+	.htim = &htim4,
+	.channel = TIM_CHANNEL_1
 };
 nexus_t nexus = {
   .is_enabled = true,

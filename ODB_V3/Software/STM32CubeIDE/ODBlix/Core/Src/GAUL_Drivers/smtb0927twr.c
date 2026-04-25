@@ -18,9 +18,10 @@ static const buzzer_parametres_t buzzParams[] = {
 };
 
 
-static void Buzzer_SetFreq(TIM_HandleTypeDef *htim, uint32_t channel, int freq) {
+static void Buzzer_SetFreq(TIM_HandleTypeDef *htim, uint32_t channel, uint16_t freq) {
     if(freq <= 0) {
         HAL_TIM_PWM_Stop(htim, channel);
+
         return;
     }
 
@@ -33,36 +34,53 @@ static void Buzzer_SetFreq(TIM_HandleTypeDef *htim, uint32_t channel, int freq) 
     __HAL_TIM_SET_COMPARE(htim, channel, (arr + 1) / 2);
 }
 
-void Buzzer_SetRoutine(buzzer_t *dev, buzzer_routines_t routine) {
+static void Buzzer_PlayTone(buzzer_t *dev, uint16_t freq, uint32_t duration) {
+    Buzzer_SetFreq(dev->htim, dev->channel, freq);
+    HAL_TIM_PWM_Start(dev->htim, dev->channel);
+    HAL_Delay(duration);
+}
+
+static void Buzzer_Bip(buzzer_t *dev, uint8_t count, uint32_t on_time, uint32_t off_time, uint16_t freq) {
+    for(uint8_t i = 0; i < count; i++) {
+        Buzzer_PlayTone(dev, freq, on_time);
+        HAL_TIM_PWM_Stop(dev->htim, dev->channel);
+
+        if(i < count - 1) {
+            HAL_Delay(off_time);
+        }
+    }
+}
+
+static void Buzzer_Pause(uint32_t ms) {
+    HAL_Delay(ms);
+}
+
+void Buzzer_RunRoutine(buzzer_t *dev, buzzer_routines_t routine) {
+    if(routine >= (sizeof(buzzParams)/sizeof(buzzParams[0]))) {
+        return;
+    }
     const buzzer_parametres_t parameters = buzzParams[routine];
-
     for(uint8_t bip = 0; bip < parameters.nbBips; bip++) {
-
         if(parameters.frequencyStart != parameters.frequencyEnd) {
             int step = (parameters.frequencyEnd > parameters.frequencyStart) ? 10 : -10;
             int currentFreq = parameters.frequencyStart;
             int targetFreq = parameters.frequencyEnd;
-            int finished = 0;
 
+            int finished = 0;
             while(!finished) {
-                Buzzer_SetFreq(dev->htim, dev->channel, currentFreq);
-                HAL_TIM_PWM_Start(dev->htim, dev->channel);
-                HAL_Delay(parameters.delayModulation);
+                Buzzer_PlayTone(dev, currentFreq, parameters.delayModulation);
 
                 if(currentFreq == targetFreq) {
                     finished = 1;
                 } else {
                     currentFreq += step;
-
                     if((step > 0 && currentFreq > targetFreq) || (step < 0 && currentFreq < targetFreq)) {
                         currentFreq = targetFreq;
                     }
                 }
             }
         } else {
-            Buzzer_SetFreq(dev->htim, dev->channel, parameters.frequencyStart);
-            HAL_TIM_PWM_Start(dev->htim, dev->channel);
-            HAL_Delay(parameters.delayModulation);
+            Buzzer_PlayTone(dev, parameters.frequencyStart, parameters.delayModulation);
         }
 
         HAL_TIM_PWM_Stop(dev->htim, dev->channel);
@@ -70,5 +88,67 @@ void Buzzer_SetRoutine(buzzer_t *dev, buzzer_routines_t routine) {
         if(bip < (parameters.nbBips - 1)) {
             HAL_Delay(parameters.delayPause);
         }
+    }
+}
+
+// TODO: Use enum for global state (paired with utils mask/enum)
+/*
+ * Exemple of status report:
+ * Battery: 12.0V -> bip / pause / bip bip / pause / bip bip bip bip bip bip bip bip bip bip (10 bips = 0)
+ * Pause 1s
+ * Pyros [true, true, false, false] -> bip bip / pause / bip bip / pause / bip / pause / bip
+ * Pause 1s
+ * Global state [OK]: bip
+ * Pause 1s
+ * Start Bip -> 5s biiiiip...
+ *
+ * Total = (350 + 550 + 1900) + 1000 + (550 + 550 + 350 + 100) + 1000 + (100) + 1000 + (5000)
+ * 		 = (2800) + 1000 + (1550) + 1000 + (100) + 1000 + (5000)
+ * 		 = 12 450 ms
+*/
+void Buzzer_ReportStatus(buzzer_t *dev, uint16_t freq, uint16_t battery_dv, bool pyros_continuity[4], uint8_t global_state) {
+    // Battery voltage
+    uint16_t temp = battery_dv;
+    uint8_t digits[5];
+    uint8_t len = 0;
+
+    do {
+        digits[len++] = temp % 10;
+        temp /= 10;
+    } while(temp > 0);
+
+    for(int i = len - 1; i >= 0; i--) {
+        uint8_t d = digits[i];
+        uint8_t bipCount = (d == 0) ? 10 : d;
+
+        Buzzer_Bip(dev, bipCount, 100, 100, freq);
+        if(i > 0) Buzzer_Pause(250);
+    }
+
+    Buzzer_Pause(1000);
+
+    // Pyros continuity
+    for(int i = 0; i < 4; i++) {
+        if(pyros_continuity[i]) {
+            Buzzer_Bip(dev, 2, 100, 100, freq);
+        } else {
+            Buzzer_Bip(dev, 1, 100, 100, freq);
+        }
+        if(i < 3) Buzzer_Pause(250);
+    }
+
+    Buzzer_Pause(1000);
+
+    // Global state
+    if(global_state < 1) global_state = 1;
+    if(global_state > 8) global_state = 8;
+
+    Buzzer_Bip(dev, global_state, 100, 100, freq);
+
+    Buzzer_Pause(1000);
+
+    // Start Bip
+    if(global_state == 1) {
+    	Buzzer_Bip(dev, global_state, 5000, 100, freq);
     }
 }

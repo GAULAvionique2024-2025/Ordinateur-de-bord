@@ -11,7 +11,7 @@
 #include "GAUL_Drivers/pyros.h"
 #include <stddef.h>
 
-// TODO: Pyros need to be armed for read status
+// Pyros need to be armed for read status
 int8_t Pyro_Init(pyro_t *dev, system_measurements_t *measures) {
 	if(!dev || !measures || dev->channel < 0 || dev->channel > 3 || !dev->fire_port || !dev->arm_port) return -1; // failed
 

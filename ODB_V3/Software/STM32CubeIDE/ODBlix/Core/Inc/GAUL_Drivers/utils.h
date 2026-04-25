@@ -93,6 +93,7 @@ typedef struct {
     bool mach_lock_enabled;
 } odb_event_t;
 
+// TODO: add max_altitude, altitude_apogee_detected, altitude_main_deployed, altitude_drogue_deployed, mach_lock_enabled_event, max height for each sensor (GPS, baro, kalman), max speed, max acceleration (m/s2 or G), apogee time, max descend speed, flight time, pad/last reported location
 typedef struct {
     // Status
     uint32_t    time_boot_ms;       // Timestamp since system boot in milliseconds (ms)
@@ -136,6 +137,10 @@ void ODB_Update(odb_data *data);
 odb_event_t ODB_GetEventStates(const odb_data *data);
 uint8_t ODB_SetEventStates(const odb_event_t *event_states);
 int8_t ODB_SetMissionState(odb_data *data, uint8_t mission_state);
+/* =========== */
+
+/* === Sensors === */
+float HighG_WordFrameZ(float ax, float ay, float az, float qw, float qx, float qy, float qz);
 /* =========== */
 
 /* === TELEMETRY === */

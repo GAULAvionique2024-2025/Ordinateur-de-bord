@@ -287,6 +287,10 @@ odb_state_t ODB_Init(odb_data *data) {
     // Update system states
     data->system_states = system_states;
 
+    // Buzzer report
+    // TODO: change frequency with config.h
+    Buzzer_ReportStatus(&buzzer, 2000, system_measurements.vin_batt, (bool[]){(system_states & FLAG_PYRO1_CONN) != 0U, (system_states & FLAG_PYRO2_CONN) != 0U, (system_states & FLAG_PYRO3_CONN) != 0U, (system_states & FLAG_PYRO4_CONN) != 0U}, odb_state);
+
     return odb_state;
 }
 
@@ -356,6 +360,15 @@ void ODB_Update(odb_data *data) {
 int8_t ODB_SetMissionState(odb_data *data, uint8_t mission_state) {
 	data->mission_state = mission_state;
 	return 0;
+}
+/* =========== */
+
+/* === Sensors === */
+float HighG_WordFrameZ(float ax, float ay, float az, float qw, float qx, float qy, float qz) {
+    float world_z = 2.0f * (qx * qz - qw * qy) * ax + 2.0f * (qy * qz + qw * qx) * ay + (qw * qw - qx * qx - qy * qy + qz * qz) * az;
+    float linear_acc_z = world_z - 9.80665f;
+
+    return linear_acc_z;
 }
 /* =========== */
 
