@@ -204,3 +204,15 @@ l76lm33_state_t L76LM33_Compute(l76lm33_t *dev) {
 
     return L76LM33_OK;
 }
+
+l76lm33_state_t L76LM33_SetStandby(l76lm33_t *dev) {
+    /*
+     * Set standby mode (power save)
+     * "$PMTK161,0*28<CR><LF>"
+    */
+    const char NMEA_STANDBY[] = "$PMTK161,0*28\r\n";
+    if(L76LM33_SendCommand(dev, NMEA_STANDBY, strlen(NMEA_STANDBY)) != L76LM33_OK) return L76LM33_ERROR;
+    HAL_Delay(10);
+
+    return L76LM33_OK;
+}

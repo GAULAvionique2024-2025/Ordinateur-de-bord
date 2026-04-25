@@ -24,6 +24,7 @@
 #define BNO055_REG_LIA_DATA_X_LSB   0x28 // Linear Accel: 6 octets
 #define BNO055_REG_TEMP             0x34 // Température
 #define BNO055_REG_CALIB_STAT       0x35
+#define BNO055_REG_PWR_MODE         0x3E
 #define BNO055_REG_SYS_TRIGGER      0x3F
 #define BNO055_REG_OPR_MODE         0x3D
 #define BNO055_REG_UNIT_SEL         0x3B
@@ -41,41 +42,47 @@
 #define BNO055_REG_SYS_ERR          0x3A
 
 typedef enum {
-    BNO055_OK            	= 0,
-    BNO055_ERROR         	= -1,
-    BNO055_I2C_ERROR     	= -2,
-    BNO055_ID_ERROR      	= -3,
-    BNO055_CONFIG_ERROR  	= -4
+    BNO055_OK            	    = 0,
+    BNO055_ERROR         	    = -1,
+    BNO055_I2C_ERROR     	    = -2,
+    BNO055_ID_ERROR      	    = -3,
+    BNO055_CONFIG_ERROR  	    = -4
 } bno055_error_t;
 
 typedef enum {
-    BNO055_UNIT_ACCEL_MS2   = 0x00,
-    BNO055_UNIT_ACCEL_MG    = 0x01,
+    BNO055_UNIT_ACCEL_MS2       = 0x00,
+    BNO055_UNIT_ACCEL_MG        = 0x01,
 } bno055_unit_accel_t;
 
 typedef enum {
-    BNO055_UNIT_GYRO_DPS    = 0x00,
-    BNO055_UNIT_GYRO_RPS    = 0x02,
+    BNO055_UNIT_GYRO_DPS        = 0x00,
+    BNO055_UNIT_GYRO_RPS        = 0x02,
 } bno055_unit_gyro_t;
 
 typedef enum {
-    BNO055_UNIT_EULER_DEG   = 0x00,
-    BNO055_UNIT_EULER_RAD   = 0x04,
+    BNO055_UNIT_EULER_DEG       = 0x00,
+    BNO055_UNIT_EULER_RAD       = 0x04,
 } bno055_unit_euler_t;
 
 typedef enum {
-    BNO055_ACC_RANGE_2G     = 0x00,
-    BNO055_ACC_RANGE_4G     = 0x01,
-    BNO055_ACC_RANGE_8G     = 0x02,
-    BNO055_ACC_RANGE_16G    = 0x03,
+    BNO055_ACC_RANGE_2G         = 0x00,
+    BNO055_ACC_RANGE_4G         = 0x01,
+    BNO055_ACC_RANGE_8G         = 0x02,
+    BNO055_ACC_RANGE_16G        = 0x03,
 } bno055_acc_range_t;
 
 typedef enum {
-    BNO055_MODE_CONFIG      = 0x00,
-    BNO055_MODE_AMG         = 0x07, // Not-Fusion (Raw Accel+Mag+Gyro)
-    BNO055_MODE_IMU         = 0x08, // Fusion (Accel+Gyro) (Max 4G)
-    BNO055_MODE_NDOF        = 0x0C  // Fusion (Accel+Gyro+Mag) (Max 4G)
-} bno055_mode_t;
+    BNO055_OP_MODE_CONFIG       = 0x00,
+    BNO055_OP_MODE_AMG          = 0x07, // Not-Fusion (Raw Accel+Mag+Gyro)
+    BNO055_OP_MODE_IMU          = 0x08, // Fusion (Accel+Gyro) (Max 4G)
+    BNO055_OP_MODE_NDOF         = 0x0C  // Fusion (Accel+Gyro+Mag) (Max 4G)
+} bno055_operating_mode_t;
+
+typedef enum {
+    BNO055_PWR_MODE_NORMAL      = 0x00, // Default
+    BNO055_PWR_MODE_LOW_POWER   = 0x01, // Only accelerometer active, reduced performance and wake-up when motion is detected
+    BNO055_PWR_MODE_SUSPEND     = 0x02  // All sensors disabled, lowest power consumption
+} bno055_pwr_mode_t;
 
 typedef enum {
     BNO055_AXIS_P0 = 0, // Default: X forward, Y left, Z up
@@ -99,7 +106,7 @@ typedef struct {
     GPIO_TypeDef            *rst_port;
     uint16_t                rst_pin;
 
-    bno055_mode_t           mode;
+    bno055_operating_mode_t operating_mode;
     bno055_axis_profile_t   axis_profile;
     bno055_acc_range_t      acc_range;
 
@@ -125,6 +132,7 @@ typedef struct {
 
 bno055_error_t BNO055_Init(bno055_t *dev);
 void BNO055_HardReset(bno055_t *dev);
+bno055_error_t BNO055_SetPowerMode(bno055_t *dev, bno055_pwr_mode_t power_mode);
 
 bool BNO055_IsDataReady(bno055_t *dev);
 bno055_error_t BNO055_ReadAllData(bno055_t *dev);

@@ -50,5 +50,6 @@ typedef struct {
 l76lm33_state_t L76LM33_Init(l76lm33_t *dev);
 
 l76lm33_state_t L76LM33_Compute(l76lm33_t *dev);
+l76lm33_state_t L76LM33_SetStandby(l76lm33_t *dev);             // Definitively put the module in standby mode (require a reset to wake up)
 
 #endif /* INC_GAUL_DRIVERS_L76LM33_H_ */

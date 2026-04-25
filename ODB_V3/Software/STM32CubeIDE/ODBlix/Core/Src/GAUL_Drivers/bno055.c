@@ -44,17 +44,18 @@ static int8_t BNO055_SetUnits(bno055_t *dev, bno055_unit_accel_t acc_unit, bno05
         return -1;
     }
 
-    if (acc_unit == BNO055_UNIT_ACCEL_MS2) {
+    if(acc_unit == BNO055_UNIT_ACCEL_MS2) {
         dev->scale_acc = 100.0f; // 1 m/s² = 100 LSB
     } else {
         dev->scale_acc = 1.0f;   // 1 mg = 1 LSB
     }
 
-    if (gyr_unit == BNO055_UNIT_GYRO_DPS) {
+    if(gyr_unit == BNO055_UNIT_GYRO_DPS) {
         dev->scale_gyro = 16.0f;   // 1 Dps = 16 LSB
     } else {
         dev->scale_gyro = 900.0f;  // 1 Rps = 900 LSB
     }
+
     return 0; // success
 }
     
@@ -140,8 +141,21 @@ static int8_t BNO055_Reset(bno055_t *dev) {
 }
 
 
+bno055_error_t BNO055_SetPowerMode(bno055_t *dev, bno055_pwr_mode_t power_mode) {
+    if(BNO055_SetPage(dev->hi2c, 0x00) != 0) {
+        return BNO055_I2C_ERROR;
+    }
+
+    if(BNO055_WriteReg(dev->hi2c, BNO055_REG_PWR_MODE, (uint8_t)power_mode) != 0) {
+        return BNO055_I2C_ERROR;
+    }
+    HAL_Delay(30); 
+
+    return BNO055_OK;
+}
+
 bno055_error_t BNO055_Init(bno055_t *dev) {
-    if(!dev || !dev->hi2c || (dev->mode != BNO055_MODE_IMU && dev->mode != BNO055_MODE_NDOF && dev->mode != BNO055_MODE_AMG)) {
+    if(!dev || !dev->hi2c || (dev->operating_mode != BNO055_MODE_IMU && dev->operating_mode != BNO055_MODE_NDOF && dev->operating_mode != BNO055_MODE_AMG)) {
         return BNO055_ERROR;
     }
 
@@ -178,7 +192,7 @@ bno055_error_t BNO055_Init(bno055_t *dev) {
     BNO055_SetAxisRemap(dev, dev->axis_profile);
 
     // If in IMU mode, set accelerometer range to ±16G (max for fusion modes is ±4G)
-    if (dev->mode == BNO055_MODE_AMG) {
+    if(dev->operating_mode == BNO055_MODE_AMG) {
         if(BNO055_SetAccConfig(dev, dev->acc_range) != 0) {
              return BNO055_CONFIG_ERROR;
         }
@@ -193,8 +207,8 @@ bno055_error_t BNO055_Init(bno055_t *dev) {
 		}
 	}
 
-    // Activate mode
-    if(BNO055_WriteReg(dev->hi2c, BNO055_REG_OPR_MODE, (uint8_t)dev->mode) != 0){
+    // Activate operating mode
+    if(BNO055_WriteReg(dev->hi2c, BNO055_REG_OPR_MODE, (uint8_t)dev->operating_mode) != 0){
         return BNO055_CONFIG_ERROR;
     }
     HAL_Delay(25);
@@ -203,7 +217,7 @@ bno055_error_t BNO055_Init(bno055_t *dev) {
 }
 
 void BNO055_HardReset(bno055_t *dev) {
-    if (dev->rst_port != NULL) {
+    if(dev->rst_port != NULL) {
         HAL_GPIO_WritePin(dev->rst_port, dev->rst_pin, GPIO_PIN_RESET);
         HAL_Delay(10); 
         
@@ -211,19 +225,21 @@ void BNO055_HardReset(bno055_t *dev) {
         
         HAL_Delay(700); 
     }
+
+    BNO055_Reset(dev);
 }
 
 bool BNO055_IsDataReady(bno055_t *dev) {
-    if (dev->data_ready_flag) {
+    if(dev->data_ready_flag) {
         dev->data_ready_flag = false;
         return true;
     }
+
     return false;
 }
 
 bno055_error_t BNO055_ReadAllData(bno055_t *dev) {
     uint8_t buffer[18];
-
     // Reading Acc, Mag, Gyro
     if(BNO055_ReadRegs(dev->hi2c, BNO055_REG_ACC_DATA_X_LSB, buffer, 18) != 0) {
         return BNO055_I2C_ERROR;
@@ -257,6 +273,7 @@ bno055_error_t BNO055_ReadAllData(bno055_t *dev) {
     dev->lin_z  = (float)((int16_t)((buffer[13] << 8) | buffer[12])) / dev->scale_acc;
     
     BNO055_ComputeEulerAngles(dev);
+
     return BNO055_OK;
 }
 

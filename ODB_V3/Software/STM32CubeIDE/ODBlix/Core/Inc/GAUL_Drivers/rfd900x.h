@@ -24,10 +24,12 @@ typedef enum {
     RFD_OK,
     RFD_BUSY,
     RFD_ERROR,
+    RFD_TIMEOUT
 } rfd900x_state_t;
 
 typedef struct {
     UART_HandleTypeDef  *huart;
+
     ring_buffer_t       tx_ring;
     uint8_t             tx_ring_data[RFD_TX_RING_SIZE];
     uint8_t             dma_busy_buffer[255];
@@ -38,6 +40,7 @@ typedef struct {
 rfd900x_state_t RFD900x_Init(rfd900x_t *dev);
 
 rfd900x_state_t RFD900x_Transmit(rfd900x_t *dev, uint8_t *payload, uint16_t length);
+rfd900x_state_t RFD900x_Sleep(rfd900x_t *dev);
 void RFD900x_ProcessTX(rfd900x_t *dev);
 
 #endif /* INC_GAUL_DRIVERS_RFD900X_H_ */
