@@ -80,8 +80,8 @@ DMA_HandleTypeDef hdma_usart6_rx;
 
 /* USER CODE BEGIN PV */
 adxl382_t adxl382 = {
-    .hi2c = &hi2c3,
-    .mode = ADXL382_MODE_HP,
+  .hi2c = &hi2c3,
+  .mode = ADXL382_MODE_HP,
 	.range = ADXL382_RANGE_30G,
 	.offset_coeffs_x = {
 		.c0 = 0.0f,
@@ -103,23 +103,23 @@ adxl382_t adxl382 = {
 	}
 };
 bno055_t bno055 = {
-    .hi2c = &hi2c1,
-    .drdy_port = IMU_INT_GPIO_Port,
-    .drdy_pin = IMU_INT_Pin,
-    .rst_port = IMU_nReset_GPIO_Port,
-    .rst_pin = IMU_nReset_Pin,
-    .op_mode = BNO055_OP_MODE_NDOF,
-    .axis_profile = BNO055_AXIS_P0,
-    .acc_range = BNO055_ACC_RANGE_4G, // effective only if using a non-fusion mode, else its set 4G by IMU's MCU
+  .hi2c = &hi2c1,
+  .drdy_port = IMU_INT_GPIO_Port,
+  .drdy_pin = IMU_INT_Pin,
+  .rst_port = IMU_nReset_GPIO_Port,
+  .rst_pin = IMU_nReset_Pin,
+  .op_mode = BNO055_OP_MODE_NDOF,
+  .axis_profile = BNO055_AXIS_P0,
+  .acc_range = BNO055_ACC_RANGE_4G, // effective only if using a non-fusion mode, else its set 4G by IMU's MCU
 };
 hm11_t hm11 = {
-    .huart = &huart2,
-    .name = ODB_BLE_NAME,
-    .baudrate = HM11_BAUD_9600,
+  .huart = &huart2,
+  .name = ODB_BLE_NAME,
+  .baudrate = HM11_BAUD_9600,
 };
 l76lm33_t l76lm33 = {
-    .huart = &huart6,
-    .profile = L76_FLIGHT_PROFILE_30K,
+  .huart = &huart6,
+  .profile = L76_FLIGHT_PROFILE_30K,
 };
 critical_led_t critical_led = {
 	.current_color = NONE,
@@ -129,9 +129,9 @@ critical_led_t critical_led = {
 	.g_pin = CriticalLED_G_Pin,
 };
 ms5611_t ms5611 = {
-    .spi = &hspi1,
-    .cs_port = BARO_SPI1_CS_GPIO_Port,
-    .cs_pin = BARO_SPI1_CS_Pin,
+  .spi = &hspi1,
+  .cs_port = BARO_SPI1_CS_GPIO_Port,
+  .cs_pin = BARO_SPI1_CS_Pin,
 };
 pyro_t pyro1 = {
 	.fire_port = Fire_1_GPIO_Port,
