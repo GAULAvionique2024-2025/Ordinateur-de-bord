@@ -289,7 +289,7 @@ odb_state_t ODB_Init(odb_data *data) {
 
     // Buzzer report
     // TODO: change frequency with config.h
-    Buzzer_ReportStatus(&buzzer, 2000, system_measurements.vin_batt, (bool[]){(system_states & FLAG_PYRO1_CONN) != 0U, (system_states & FLAG_PYRO2_CONN) != 0U, (system_states & FLAG_PYRO3_CONN) != 0U, (system_states & FLAG_PYRO4_CONN) != 0U}, odb_state);
+    Buzzer_ReportStatus(&buzzer, 500, system_measurements.vin_batt, (bool[]){(system_states & FLAG_PYRO1_CONN) != 0U, (system_states & FLAG_PYRO2_CONN) != 0U, (system_states & FLAG_PYRO3_CONN) != 0U, (system_states & FLAG_PYRO4_CONN) != 0U}, odb_state);
 
     return odb_state;
 }

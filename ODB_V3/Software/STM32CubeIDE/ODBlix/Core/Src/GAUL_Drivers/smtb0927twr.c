@@ -94,17 +94,13 @@ void Buzzer_RunRoutine(buzzer_t *dev, buzzer_routines_t routine) {
 // TODO: Use enum for global state (paired with utils mask/enum)
 /*
  * Exemple of status report:
- * Battery: 12.0V -> bip / pause / bip bip / pause / bip bip bip bip bip bip bip bip bip bip (10 bips = 0)
+ * Battery: 12.0V (1200mV) -> bip / pause / bip bip / pause / bip bip bip bip bip bip bip bip bip bip x2 (10 bips = 0)
  * Pause 1s
  * Pyros [true, true, false, false] -> bip bip / pause / bip bip / pause / bip / pause / bip
  * Pause 1s
  * Global state [OK]: bip
  * Pause 1s
  * Start Bip -> 5s biiiiip...
- *
- * Total = (350 + 550 + 1900) + 1000 + (550 + 550 + 350 + 100) + 1000 + (100) + 1000 + (5000)
- * 		 = (2800) + 1000 + (1550) + 1000 + (100) + 1000 + (5000)
- * 		 = 12 450 ms
 */
 void Buzzer_ReportStatus(buzzer_t *dev, uint16_t freq, uint16_t battery_dv, bool pyros_continuity[4], uint8_t global_state) {
     // Battery voltage
@@ -121,34 +117,34 @@ void Buzzer_ReportStatus(buzzer_t *dev, uint16_t freq, uint16_t battery_dv, bool
         uint8_t d = digits[i];
         uint8_t bipCount = (d == 0) ? 10 : d;
 
-        Buzzer_Bip(dev, bipCount, 100, 100, freq);
-        if(i > 0) Buzzer_Pause(250);
+        Buzzer_Bip(dev, bipCount, 250, 250, freq);
+        if(i > 0) Buzzer_Pause(1000);
     }
 
-    Buzzer_Pause(1000);
+    Buzzer_Pause(3000);
 
     // Pyros continuity
     for(int i = 0; i < 4; i++) {
         if(pyros_continuity[i]) {
-            Buzzer_Bip(dev, 2, 100, 100, freq);
+            Buzzer_Bip(dev, 2, 250, 250, freq);
         } else {
-            Buzzer_Bip(dev, 1, 100, 100, freq);
+            Buzzer_Bip(dev, 1, 250, 250, freq);
         }
-        if(i < 3) Buzzer_Pause(250);
+        if(i < 3) Buzzer_Pause(1000);
     }
 
-    Buzzer_Pause(1000);
+    Buzzer_Pause(3000);
 
     // Global state
     if(global_state < 1) global_state = 1;
     if(global_state > 8) global_state = 8;
 
-    Buzzer_Bip(dev, global_state, 100, 100, freq);
+    Buzzer_Bip(dev, global_state, 250, 250, freq);
 
-    Buzzer_Pause(1000);
+    Buzzer_Pause(3000);
 
     // Start Bip
     if(global_state == 1) {
-    	Buzzer_Bip(dev, global_state, 5000, 100, freq);
+    	Buzzer_Bip(dev, global_state, 5000, 250, freq);
     }
 }
