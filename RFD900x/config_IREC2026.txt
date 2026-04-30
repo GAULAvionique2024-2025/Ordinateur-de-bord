@@ -1,0 +1,41 @@
+=== Multipoint SiK ===
+(SERIAL_SPEED) 	ATS1=115
+(AIR_SPEED) 	ATS2=64
+(NETID) 	ATS3=0
+(TXPOWER)	ATS4=30
+(RXFRAME) 	ATS6=1
+(MIN_FREQ)	ATS8=902000
+(MAX_FREQ)	ATS8=909000
+(NUM_CHANNELS)	ATS10=50
+(DUTY_CYCLE) 	ATS11=100
+(RTSCTS)	ATS13=0
+(Max Window)	ATS14=80
+(ANT Mode) 	ATS20=0
+		AT&W
+		ATZ
+-----------------------
+=== Ground Station ===
+(NODEID)		ATS24=1
+(NODEDESTINATION)	ATS25=255
+(NETCOUNT)		ATS26=1
+(Network configuration) AT&M0=0,3
+			AT&W
+			ATZ
+-----------------------
+=== Air 1 - 30k ===
+(NODEID)		ATS24=2
+(NODEDESTINATION)	ATS25=1
+			AT&W
+			ATZ
+-----------------------
+=== Air 2 - 90k ===
+(NODEID)		ATS24=3
+(NODEDESTINATION)	ATS25=1
+			AT&W
+			ATZ
+-----------------------
+
+Bandwidth(kHz) (AIR_SPEED) -> [100, 150]kHz
+Spacing(kHz) = [MAX_FREQ(S9) - MIN_FREQ(S8)] / NUM_CHANNELS(S10)
+		= [909000 - 902000] / 50
+		= 140kHz

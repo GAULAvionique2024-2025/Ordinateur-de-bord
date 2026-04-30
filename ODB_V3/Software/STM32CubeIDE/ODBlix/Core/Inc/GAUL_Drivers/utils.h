@@ -42,13 +42,12 @@ typedef struct {
 
 /* === ODB === */
 // mission_state
-#define ODB_MISSION_STATE_PREFLIGHT     0  			// 000
-#define ODB_MISSION_STATE_READY         1  			// 001
-#define ODB_MISSION_STATE_INFLIGHT      2  			// 010
-#define ODB_MISSION_STATE_POSTFLIGHT    3  			// 011
-#define ODB_MISSION_STATE_ERROR         4  			// 100
+#define ODB_MISSION_STATE_PREFLIGHT     0  			// 00
+#define ODB_MISSION_STATE_INFLIGHT      1  			// 01
+#define ODB_MISSION_STATE_POSTFLIGHT    2  			// 10
+#define ODB_MISSION_STATE_ERROR         3  			// 11
 
-// Init system_states
+// Init system_states,
 #define FLAG_IDEFIX_OK                  (1 << 14)
 #define FLAG_BT_OK                      (1 << 13)
 #define FLAG_FLASH_OK                   (1 << 12)
