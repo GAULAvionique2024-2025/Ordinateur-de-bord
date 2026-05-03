@@ -8,6 +8,7 @@
 
 #include "GAUL_Drivers/adxl382.h"
 
+
 static int8_t ADXL382_ReadReg(I2C_HandleTypeDef *hi2c, uint8_t reg, uint8_t *data) {
     if(HAL_I2C_Mem_Read(hi2c, ADXL382_I2C_ADDR, reg, I2C_MEMADD_SIZE_8BIT, data, 1, HAL_MAX_DELAY) != HAL_OK) {
         return -1;
@@ -132,7 +133,7 @@ bool ADXL382_IsDataReady(adxl382_t *dev) {
 }
 
 // TODO: seperate compute + read reg (like baro)
-adxl382_error_t ADXL382_ReadData(adxl382_t *dev) {
+adxl382_error_t ADXL382_ReadData(adxl382_t *dev, const float current_quat[4]) {
     uint8_t buffer[8];
     if(ADXL382_ReadRegs(dev->hi2c, ADXL382_REG_XDATA_H, buffer, 8) == 0) {
         int16_t x = (int16_t)(((uint16_t)buffer[0] << 8) | buffer[1]);
@@ -159,14 +160,18 @@ adxl382_error_t ADXL382_ReadData(adxl382_t *dev) {
         float acc_y_raw = (float)y / current_scale_factor;
         float acc_z_raw = (float)z / current_scale_factor;
 
-        // Chip Compensation (Horner method)
-        float offset_x = dev->offset_coeffs_x.c0 + t * (dev->offset_coeffs_x.c1 + t * (dev->offset_coeffs_x.c2 + t * dev->offset_coeffs_x.c3));
-        float offset_y = dev->offset_coeffs_y.c0 + t * (dev->offset_coeffs_y.c1 + t * (dev->offset_coeffs_y.c2 + t * dev->offset_coeffs_y.c3));
-        float offset_z = dev->offset_coeffs_z.c0 + t * (dev->offset_coeffs_z.c1 + t * (dev->offset_coeffs_z.c2 + t * dev->offset_coeffs_z.c3));
+        // Chip Thermal Compensation
+        float offset_x = Thermal_ComputeOffset(dev->x_axis_offset, t);
+        float offset_y = Thermal_ComputeOffset(dev->y_axis_offset, t);
+        float offset_z = Thermal_ComputeOffset(dev->z_axis_offset, t);
 
         dev->acc_x = acc_x_raw - offset_x;
         dev->acc_y = acc_y_raw - offset_y;
         dev->acc_z = acc_z_raw - offset_z;
+
+        float compensated_accel[3] = {dev->acc_x, dev->acc_y, dev->acc_z};
+        dev->acc_vertical = Math_ComputeWorldVerticalAcc(compensated_accel, current_quat, true);
+
     } else {
         return ADXL382_I2C_ERROR;
     }

@@ -36,7 +36,6 @@
 #include "GAUL_Drivers/system_measurements.h"
 #include "GAUL_Drivers/w25q512jv.h"
 #include "Nexus/nexus.h"
-#include "GAUL_Drivers/utils.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -83,19 +82,19 @@ adxl382_t adxl382 = {
     .hi2c = &hi2c3,
     .mode = ADXL382_MODE_HP,
 	.range = ADXL382_RANGE_30G,
-	.offset_coeffs_x = {
+	.x_axis_offset = {
 		.c0 = 0.0f,
 		.c1 = 0.0f,
 		.c2 = 0.0f,
 		.c3 = 0.0f,
 	},
-	.offset_coeffs_y = {
+	.y_axis_offset = {
 		.c0 = 0.0f,
 		.c1 = 0.0f,
 		.c2 = 0.0f,
 		.c3 = 0.0f,
 	},
-	.offset_coeffs_z = {
+	.z_axis_offset = {
 		.c0 = 0.0f,
 		.c1 = 0.0f,
 		.c2 = 0.0f,
@@ -263,8 +262,6 @@ int main(void)
   MX_TIM2_Init();
   MX_TIM4_Init();
   /* USER CODE BEGIN 2 */
-  odb_data data;
-  ODB_Init(&data);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -274,12 +271,6 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	ODB_Update(&data);
-    if(DEBUG_MODE == 1) {
-    	App_SendFrame(&nexus, &hm11, &data);
-    	App_HandleCommands(&nexus, &hm11);
-    }
-    HAL_Delay(100);
   }
   /* USER CODE END 3 */
 }

@@ -6,6 +6,7 @@
  */
 
 #include "GAUL_Drivers/bno055.h"
+#include "GAUL_Drivers/utils.h"
 #include <math.h>
 
 
@@ -126,16 +127,17 @@ static int8_t BNO055_Reset(bno055_t *dev) {
     dev->mag_y = 0.0f;
     dev->mag_z = 0.0f;
     dev->temperature = 0.0f;
-    dev->quat_w = 1.0f;
-    dev->quat_x = 0.0f;
-    dev->quat_y = 0.0f;
-    dev->quat_z = 0.0f;
-    dev->lin_x = 0.0f;
-    dev->lin_y = 0.0f;
-    dev->lin_z = 0.0f;
-    dev->roll = 0.0f;
-    dev->pitch = 0.0f;
-    dev->yaw = 0.0f;
+    dev->acc_vertical = 0.0f;
+    dev->quat.w = 0.0f;
+    dev->quat.x = 0.0f;
+    dev->quat.y = 0.0f;
+    dev->quat.z = 0.0f;
+    dev->linear_acc.x = 0.0f;
+    dev->linear_acc.y = 0.0f;
+    dev->linear_acc.z = 0.0f;
+    dev->euler_angles.roll = 0.0f;
+    dev->euler_angles.pitch = 0.0f;
+    dev->euler_angles.yaw = 0.0f;
 
     return 0; // success
 }
@@ -263,16 +265,14 @@ bno055_error_t BNO055_ReadAllData(bno055_t *dev) {
     }
 
     const float q_scale = 1.0f / 16384.0f;
-    dev->quat_w = (float)((int16_t)((buffer[1] << 8) | buffer[0])) * q_scale;
-    dev->quat_x = (float)((int16_t)((buffer[3] << 8) | buffer[2])) * q_scale;
-    dev->quat_y = (float)((int16_t)((buffer[5] << 8) | buffer[4])) * q_scale;
-    dev->quat_z = (float)((int16_t)((buffer[7] << 8) | buffer[6])) * q_scale;
+    dev->quat.w = (float)((int16_t)((buffer[1] << 8) | buffer[0])) * q_scale;
+    dev->quat.x = (float)((int16_t)((buffer[3] << 8) | buffer[2])) * q_scale;
+    dev->quat.y = (float)((int16_t)((buffer[5] << 8) | buffer[4])) * q_scale;
+    dev->quat.z = (float)((int16_t)((buffer[7] << 8) | buffer[6])) * q_scale;
 
-    dev->lin_x  = (float)((int16_t)((buffer[9] << 8) | buffer[8])) / dev->scale_acc;
-    dev->lin_y  = (float)((int16_t)((buffer[11] << 8) | buffer[10])) / dev->scale_acc;
-    dev->lin_z  = (float)((int16_t)((buffer[13] << 8) | buffer[12])) / dev->scale_acc;
-    
-    BNO055_ComputeEulerAngles(dev);
+    dev->linear_acc.x = (float)((int16_t)((buffer[9] << 8) | buffer[8])) / dev->scale_acc;
+    dev->linear_acc.y = (float)((int16_t)((buffer[11] << 8) | buffer[10])) / dev->scale_acc;
+    dev->linear_acc.z = (float)((int16_t)((buffer[13] << 8) | buffer[12])) / dev->scale_acc;
 
     return BNO055_OK;
 }
@@ -302,28 +302,45 @@ bno055_error_t BNO055_UpdateCalibration(bno055_t *dev) {
 }
 
 void BNO055_ComputeEulerAngles(bno055_t *dev) {
-    float w = dev->quat_w;
-    float x = dev->quat_x;
-    float y = dev->quat_y;
-    float z = dev->quat_z;
+    float w = dev->quat.w;
+    float x = dev->quat.x;
+    float y = dev->quat.y;
+    float z = dev->quat.z;
 
     if(w == 0.0f && x == 0.0f && y == 0.0f && z == 0.0f) return;
 
     // Roll
     float t0 = +2.0f * (w * x + y * z);
     float t1 = +1.0f - 2.0f * (x * x + y * y);
-    dev->roll = atan2f(t0, t1) * (180.0f / M_PI);
+    dev->euler_angles.roll = atan2f(t0, t1) * (180.0f / M_PI);
 
     // Pitch
     float t2 = +2.0f * (w * y - z * x);
     t2 = (t2 > 1.0f) ? 1.0f : t2;
     t2 = (t2 < -1.0f) ? -1.0f : t2;
-    dev->pitch = asinf(t2) * (180.0f / M_PI);
+    dev->euler_angles.pitch = asinf(t2) * (180.0f / M_PI);
 
     // Yaw
     float t3 = +2.0f * (w * z + x * y);
     float t4 = +1.0f - 2.0f * (y * y + z * z);
-    dev->yaw = atan2f(t3, t4) * (180.0f / M_PI);
+    dev->euler_angles.yaw = atan2f(t3, t4) * (180.0f / M_PI);
+}
+
+void BNO055_ComputeVerticalAcc(bno055_t *dev) {
+    float accel[3] = {
+        dev->linear_acc.x,
+        dev->linear_acc.y,
+        dev->linear_acc.z
+    };
+
+    float quat[4] = {
+        dev->quat.w,
+        dev->quat.x,
+        dev->quat.y,
+        dev->quat.z
+    };
+
+    dev->acc_vertical = Math_ComputeWorldVerticalAcc(accel, quat, false);
 }
 
 // Wait until all calibration data is collected and are at 3/3

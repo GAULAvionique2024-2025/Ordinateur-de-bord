@@ -9,6 +9,8 @@
 #define INC_GAUL_DRIVERS_ADXL382_H_
 
 #include "stm32f4xx_hal.h"
+#include "GAUL_Drivers/utils.h"
+
 #include <stdint.h>
 #include <stdbool.h>
 
@@ -58,28 +60,22 @@ typedef enum {
 } adxl382_range_t;
 
 typedef struct {
-    float c0;
-    float c1;
-    float c2;
-    float c3;
-} adxl382_offset_coeff_poly3_t;
-
-typedef struct {
     I2C_HandleTypeDef               *hi2c;
     adxl382_mode_t                  mode;
     adxl382_range_t                 range;
-    adxl382_offset_coeff_poly3_t    offset_coeffs_x, offset_coeffs_y, offset_coeffs_z;
+    coeff_poly3_t					x_axis_offset, y_axis_offset, z_axis_offset;
 
-    float             				acc_x;	// g
-    float             				acc_y;	// g
-    float             				acc_z;	// g
-    float               			temp;	// C
+    float             				acc_x;	        // g, after thermal compensation and local frame transformation
+    float             				acc_y;	        // g, after thermal compensation and local frame transformation
+    float             				acc_z;	        // g, after thermal compensation and local frame transformation
+    float            				acc_vertical;   // g, vertical acceleration after world frame transformation and gravity compensation (effective acceleration)
+    float               			temp;	        // C
 } adxl382_t;
 
 
 adxl382_error_t ADXL382_Init(adxl382_t *dev);
 
-adxl382_error_t ADXL382_ReadData(adxl382_t *dev);
+adxl382_error_t ADXL382_ReadData(adxl382_t *dev, const float current_quat[4]);
 bool ADXL382_IsDataReady(adxl382_t *dev);
 int8_t ADXL382_SetMode(adxl382_t *dev, adxl382_mode_t mode);
 

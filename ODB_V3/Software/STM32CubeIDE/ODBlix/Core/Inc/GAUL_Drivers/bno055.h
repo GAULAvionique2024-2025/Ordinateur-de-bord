@@ -100,6 +100,25 @@ typedef struct {
 } bno055_calib_profile_t;
 
 typedef struct {
+    float w;
+    float x;
+    float y;
+    float z;
+} bno055_quat_t;
+
+typedef struct {
+    float x;
+    float y;
+    float z;
+} bno055_linear_acc_t;
+
+typedef struct {
+    float roll;
+    float pitch;
+    float yaw;
+} bno055_euler_angles_t;
+
+typedef struct {
     I2C_HandleTypeDef       *hi2c;
     GPIO_TypeDef            *drdy_port;
     uint16_t                drdy_pin;
@@ -125,9 +144,10 @@ typedef struct {
     float                   mag_x, mag_y, mag_z;                            // uT
     float                   temperature;                                    // C
 
-    float                   quat_w, quat_x, quat_y, quat_z;
-    float                   lin_x, lin_y, lin_z;                            // Linear Accel (without gravity)
-    float                   roll, pitch, yaw;                               // Euler angles (degrees)
+    float            		acc_vertical;                                   // vertical acceleration after gravity/temperature in world frame transformation (effective acceleration)
+    bno055_quat_t           quat;                                           // Normalized quaternion (w,x,y,z)
+    bno055_linear_acc_t     linear_acc;                                     // Linear Acceleration after gravity/temperature compensation in the sensor frame
+    bno055_euler_angles_t   euler_angles;                                   // Euler angles
 } bno055_t;
 
 bno055_error_t BNO055_Init(bno055_t *dev);
@@ -139,6 +159,7 @@ bno055_error_t BNO055_ReadAllData(bno055_t *dev);
 bno055_error_t BNO055_ReadTemperature(bno055_t *dev);
 bno055_error_t BNO055_UpdateCalibration(bno055_t *dev);
 void BNO055_ComputeEulerAngles(bno055_t *dev);
+void BNO055_ComputeVerticalAcc(bno055_t *dev);
 
 bno055_error_t BNO055_GetCalibrationProfile(bno055_t *dev, bno055_calib_profile_t *profile);
 bno055_error_t BNO055_SetCalibrationProfile(bno055_t *dev, bno055_calib_profile_t *profile);
