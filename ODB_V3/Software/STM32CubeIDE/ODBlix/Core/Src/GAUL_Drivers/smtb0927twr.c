@@ -91,7 +91,7 @@ void Buzzer_RunRoutine(buzzer_t *dev, buzzer_routines_t routine) {
     }
 }
 
-// TODO: Use enum for global state (paired with utils mask/enum)
+// TODO: add latest max altitude reached (in FLASH)
 /*
  * Exemple of status report:
  * Battery: 12.0V (1200mV) -> bip / pause / bip bip / pause / bip bip bip bip bip bip bip bip bip bip x2 (10 bips = 0)

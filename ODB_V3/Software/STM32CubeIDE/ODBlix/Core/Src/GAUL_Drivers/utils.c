@@ -10,11 +10,10 @@
 
 #include <stdlib.h>
 #include <stdarg.h>
+#include <math.h>
 
 
 /* === Offset === */
-#define GRAVITY_MS2 9.80665f
-
 float Thermal_ComputeOffset(coeff_poly3_t coeffs, float temp) {
     // Horner's method for polynomial evaluation
     return coeffs.c0 + temp * (coeffs.c1 + temp * (coeffs.c2 + temp * coeffs.c3));

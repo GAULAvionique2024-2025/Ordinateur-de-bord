@@ -12,6 +12,8 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+#define GRAVITY_MS2 9.80665f
+
 /* === Offset === */
 typedef struct {
     float c0;

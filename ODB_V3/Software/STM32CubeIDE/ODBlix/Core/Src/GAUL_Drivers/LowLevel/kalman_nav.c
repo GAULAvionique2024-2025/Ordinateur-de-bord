@@ -31,10 +31,11 @@ void KalmanNav_Init(kalman_nav_t *dev, float mean_alt, float *samples, uint8_t s
     dev->P[1][1] = 10.0;        // Initial uncertainty in speed
     dev->P[2][2] = 1.0;         // Initial uncertainty in acceleration bias
 
-    dev->Q_accel = Q_ACCEL;
-    dev->Q_bias  = Q_BIAS;
-    dev->R_alt   = variance;
-    dev->last_tick = HAL_GetTick();
+    dev->Q_accel    = Q_ACCEL;
+    dev->Q_bias     = Q_BIAS;
+    dev->R_static   = variance;
+    dev->R_alt      = variance;
+    dev->last_tick  = HAL_GetTick();
 }
 
 /*
@@ -43,7 +44,7 @@ void KalmanNav_Init(kalman_nav_t *dev, float mean_alt, float *samples, uint8_t s
 void KalmanNav_Predict(kalman_nav_t *dev, double acc_world_z) {
     uint32_t now = HAL_GetTick();
     double dt = (double)(now - dev->last_tick) / 1000.0;
-    if (dt <= 0) return;
+    if(dt <= 0) return;
     dev->last_tick = now;
 
     // State prediction
@@ -67,13 +68,18 @@ void KalmanNav_Predict(kalman_nav_t *dev, double acc_world_z) {
     dev->P[2][2] = p22 + dev->Q_bias * dt;
 }
 
-void KalmanNav_Update(kalman_nav_t *dev, double measured_alt, double current_r, bool is_machlock) {
-	if(is_machlock) return;
-
-	// Set R_alt
-	if(current_r != 0.0f) {
-		dev->R_alt = current_r;
-	}
+void KalmanNav_Update(kalman_nav_t *dev, double measured_alt) {
+    // Dynamic Measurement Noise Covariance (R_alt) & Mach Lock Override
+    if(dev->v > MACH_LOCK_VELOCITY || dev->z >= ALT_90K_FT) {
+        // If we're above Mach lock velocity or above 90k ft, we consider the altitude measurement by barometer to be unreliable and increase R_alt to reduce its influence on the state update
+        dev->R_alt = R_PENALTY;
+    } else if(dev->z >= ALT_60K_FT) {
+        // If we're above 60k ft, we consider the altitude measurement by barometer to be less reliable and increase R_alt moderately
+        dev->R_alt = dev->R_static * 10.0;
+    } else {
+        // Below 60k ft, we consider the altitude measurement by barometer to be reliable and use the static R value based on initialization
+        dev->R_alt = dev->R_static;
+    }
 
     // Innovation
     double y = measured_alt - dev->z;

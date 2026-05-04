@@ -9,10 +9,12 @@
 // Apogee Detection & Pyros Firing logic: https://www.rocketryforum.com/threads/most-accurate-way-to-measure-velocity-accelerometer-vs-barometer-vs.157866/page-2
 
 #include "GAUL_Drivers/system.h"
-#include "GAUL_Drivers/utils.h"
+#include "App/config.h"
 
 #include <ctype.h>
 
+
+#define KALMAN_NAV_SAMPLE_NB 50
 
 extern adxl382_t adxl382;
 extern bno055_t bno055;
@@ -31,6 +33,8 @@ extern w25q_t w25q;
 extern nexus_t nexus;
 
 static odb_stats_t stats;
+static kalman_nav_t kalman_filter;
+
 
 /* === ODB === */
 void ODB_Reset(odb_data *data) {
@@ -114,13 +118,11 @@ odb_state_t ODB_Init(odb_data *data) {
     uint8_t warning = 0;
 
     ODB_Reset(data);
-    // TODO: Link with FSM
-    //data->mission_state = ODB_MISSION_STATE_PREFLIGHT;
 
     uint16_t system_states = 0x0000;
     if(SystemMeasurements_Init(&system_measurements) == 0) {
         SystemMeasurements_ComputePower(&system_measurements);
-        if(system_measurements.vin_batt <= 5000 || system_measurements.vin_batt >= 24000 || system_measurements.v5_buck <= 4500 || system_measurements.v5_buck >= 5500 || system_measurements.v3_buck <= 3100 || system_measurements.v3_buck >= 3500 || system_measurements.pg_v5 == false) {
+        if(system_measurements.vin_batt <= VIN_BATT_MIN_MV || system_measurements.vin_batt >= VIN_BATT_MAX_MV || system_measurements.v5_buck <= V5_MIN_MV || system_measurements.v5_buck >= V5_MAX_MV || system_measurements.v3_buck <= V3_MIN_MV || system_measurements.v3_buck >= V3_MAX_MV || system_measurements.pg_v5 == false) {
             alimentation_fault = true;
             printf("Erreur : Batterie trop faible !\n");
         }
@@ -181,7 +183,7 @@ odb_state_t ODB_Init(odb_data *data) {
         }
 
         SystemMeasurements_ComputeTemperature(&system_measurements);
-        if(system_measurements.temperature < -55.0f || system_measurements.temperature > 150.0f) {
+        if(system_measurements.temperature < MAX6612MXK_MIN_TEMP_C || system_measurements.temperature > MAX6612MXK_MAX_TEMP_C) {
             error += 1;
             printf("Erreur : Température hors limites !\n");
         }
@@ -233,7 +235,7 @@ odb_state_t ODB_Init(odb_data *data) {
         warning += 1;
         printf("Erreur : Init W25Q\n");
     }
-
+    
     if(HM11_Init(&hm11) == HM11_OK) {
     	system_states |= FLAG_BT_OK;
     } else {
@@ -246,18 +248,29 @@ odb_state_t ODB_Init(odb_data *data) {
         printf("Erreur : Init Critical LED\n");
     }
 
+    // Kalman filter initialization -> calculate R_static
+    if((system_states & FLAG_BARO_OK) && (system_states & FLAG_HIGHG_OK)) {
+        float samples[KALMAN_NAV_SAMPLE_NB];
+        float sum = 0;
+        float temperature, pressure;
+        for(int i = 0; i < KALMAN_NAV_SAMPLE_NB; i++) { 
+            MS5611_Update(&ms5611); 
+            MS5611_Compute(&ms5611, &temperature, &pressure);
+            samples[i] = pressure;
+            sum += samples[i];
+        }
+
+        KalmanNav_Init(&kalman_filter, sum/KALMAN_NAV_SAMPLE_NB, samples, KALMAN_NAV_SAMPLE_NB);
+    }
+
     odb_state_t odb_state = ODB_ERROR;
-    // TODO: Link with FSM
     if(alimentation_fault) {
-        //ODB_SetMissionState(data, ODB_MISSION_STATE_ERROR);
         odb_state = ODB_ALIMENTATION_ERROR;
         printf("Erreur : Alimentation non conforme !\n");
     } else if(error > 0) {
-        //ODB_SetMissionState(data, ODB_MISSION_STATE_ERROR);
         odb_state = ODB_ERROR;
         printf("Erreur : %d erreur(s) détectée(s) lors de l'initialisation du système.\n", error);
     } else {
-        //ODB_SetMissionState(data, ODB_MISSION_STATE_PREFLIGHT); // All good
         odb_state = ODB_OK;
     }
 
@@ -265,12 +278,12 @@ odb_state_t ODB_Init(odb_data *data) {
     data->system_states = system_states;
 
     // Buzzer report
-    // TODO: change frequency with config.h
-    Buzzer_ReportStatus(&buzzer, 500, system_measurements.vin_batt, (bool[]){(system_states & FLAG_PYRO1_CONN) != 0U, (system_states & FLAG_PYRO2_CONN) != 0U, (system_states & FLAG_PYRO3_CONN) != 0U, (system_states & FLAG_PYRO4_CONN) != 0U}, odb_state);
+    Buzzer_ReportStatus(&buzzer, BUZZER_REPORT_TONE_HZ, system_measurements.vin_batt, (bool[]){(system_states & FLAG_PYRO1_CONN) != 0U, (system_states & FLAG_PYRO2_CONN) != 0U, (system_states & FLAG_PYRO3_CONN) != 0U, (system_states & FLAG_PYRO4_CONN) != 0U}, odb_state);
 
     return odb_state;
 }
 
+// TODO: add timestamp with RTC to all odb_stats_t data
 void ODB_Update(odb_data *data) {
     if(!data) {
         return;
@@ -287,7 +300,7 @@ void ODB_Update(odb_data *data) {
     	data->temp_celsius = temperature;
     }
 
-    // TODO: add real updated values
+    // TODO: use real updated values
     data->roll = 0.0f;
     data->pitch = 0.0f;
     data->yaw = 0.0f;
@@ -300,14 +313,26 @@ void ODB_Update(odb_data *data) {
     data->imu_mag_x = 0.0f;
     data->imu_mag_y = 0.0f;
     data->imu_mag_z = 0.0f;
+    /*
     if(BNO055_IsDataReady(&bno055)) {
         if(BNO055_ReadAllData(&bno055) == BNO055_OK) {
+            data->imu_acc_x = bno055.acc_x;
+            data->imu_acc_y = bno055.acc_y;
+            data->imu_acc_z = bno055.acc_z;
+            data->imu_gyro_x = bno055.gyro_x;
+            data->imu_gyro_y = bno055.gyro_y;
+            data->imu_gyro_z = bno055.gyro_z;
+            data->imu_mag_x = bno055.mag_x;
+            data->imu_mag_y = bno055.mag_y;
+            data->imu_mag_z = bno055.mag_z;
+
         	BNO055_ComputeEulerAngles(&bno055);
 			data->roll = bno055.euler_angles.roll;
 			data->pitch = bno055.euler_angles.pitch;
 			data->yaw = bno055.euler_angles.yaw;
         }
     }
+    */
 
     const float current_quat[4] = {bno055.quat.w, bno055.quat.x, bno055.quat.y, bno055.quat.z};
     if(ADXL382_ReadData(&adxl382, current_quat) == ADXL382_OK) {
@@ -316,14 +341,24 @@ void ODB_Update(odb_data *data) {
       data->highg_acc_z = adxl382.acc_z;
     }
 
+    // Kalman filter update with dynamic R_alt
+    float raw_accel_z = data->highg_acc_z;
+    if(fabs(raw_accel_z) < 3.5f) {
+        raw_accel_z = data->imu_acc_z;
+    }
+    KalmanNav_Predict(&kalman_filter, (double)raw_accel_z);
+    KalmanNav_Update(&kalman_filter, (double)data->pressure_hpa);
+    data->kalman_z = (float)kalman_filter.z;
+    data->kalman_v = (float)kalman_filter.v;
+
     if(L76LM33_Compute(&l76lm33) == L76LM33_OK) {
-      data->gps_fix = l76lm33.gps_data.gps_fix;
-      data->lat = l76lm33.gps_data.lat;
-      data->lon = l76lm33.gps_data.lon;
-      data->gps_alt = l76lm33.gps_data.gps_alt;
-      data->vel = l76lm33.gps_data.vel;
-      data->cog = l76lm33.gps_data.cog;
-      data->satellites_nb = l76lm33.gps_data.satellites_nb;
+      data->gps_fix         = l76lm33.gps_data.gps_fix;
+      data->lat             = l76lm33.gps_data.lat;
+      data->lon             = l76lm33.gps_data.lon;
+      data->gps_alt         = l76lm33.gps_data.gps_alt;
+      data->vel             = l76lm33.gps_data.vel;
+      data->cog             = l76lm33.gps_data.cog;
+      data->satellites_nb   = l76lm33.gps_data.satellites_nb;
     }
 
     data->time_boot_ms = HAL_GetTick();

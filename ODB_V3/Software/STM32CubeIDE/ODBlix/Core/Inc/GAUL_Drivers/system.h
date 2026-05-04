@@ -22,6 +22,7 @@
 #include "w25q512jv.h"
 #include "mavlink/odb_mavlink_v1/mavlink.h"
 #include "Nexus/nexus.h"
+#include "GAUL_Drivers/LowLevel/kalman_nav.h"
 
 #include <stdint.h>
 #include <stdio.h>
@@ -49,7 +50,7 @@
 #define FLAG_PYRO2_CONN                 (1 << 2)
 #define FLAG_PYRO3_CONN                 (1 << 1)
 #define FLAG_PYRO4_CONN                 (1 << 0)
-// Inflight states
+// Events states
 #define FLAG_PYRO1_FIRED                (1 << 0)
 #define FLAG_PYRO2_FIRED                (1 << 1)
 #define FLAG_PYRO3_FIRED                (1 << 2)
@@ -108,9 +109,9 @@ typedef struct {
 typedef struct {
     // Status
     uint32_t    time_boot_ms;       // Timestamp since system boot in milliseconds (ms)
-    uint16_t    system_states;      // Current system/component states -> linked with FLAG_*
+    uint16_t    system_states;      // Current system/component states -> linked with odb_stats_t
     uint8_t     event_states;       // Current events states (pyros fired, apogee detected, etc.) -> linked with odb_stats_t
-    uint8_t     mission_state;      // Mission state (preflight, ready, inflight, postflight) -> Linked with FSM
+    uint8_t     mission_state;      // Mission state (preflight, inflight, postflight) -> Linked with FSM
     uint16_t    battery_mv;         // Main battery voltage in millivolts (mV)
     // IMU (Attitude & Rates)
     float       roll;               // Roll angle in degrees (converted to cdeg for MAVLink) -> Linked with BNO055
@@ -144,8 +145,11 @@ typedef struct {
     // Statistics
     float       imu_acc_vertical;   // Vertical acceleration (World frame) from IMU in m/s^2 -> Linked with BNO055
     float       highg_acc_vertical; // Vertical acceleration (World frame) from High-G Accelerometer in m/s^2 -> Linked with ADXL382
+    float       kalman_z;           // filtered altitude from Kalman filter in m (converted to cm for MAVLink)
+    float       kalman_v;           // filtered velocity from Kalman filter in m/s (converted to cm/s for MAVLink)
 } odb_data;
 
+// TODO: add functions to set system states and event states based on sensors data and pyros state to convert them into packed bitfields for telemetry transmission
 odb_state_t ODB_Init(odb_data *data);
 void ODB_Reset(odb_data *data);
 void ODB_Update(odb_data *data);
