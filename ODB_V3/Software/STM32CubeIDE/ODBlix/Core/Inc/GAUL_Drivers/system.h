@@ -23,6 +23,7 @@
 #include "mavlink/odb_mavlink_v1/mavlink.h"
 #include "Nexus/nexus.h"
 #include "GAUL_Drivers/LowLevel/kalman_nav.h"
+#include "GAUL_Drivers/LowLevel/dwt.h"
 
 #include <stdint.h>
 #include <stdio.h>

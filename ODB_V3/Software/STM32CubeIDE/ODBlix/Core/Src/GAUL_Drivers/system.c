@@ -330,6 +330,9 @@ void ODB_Update(odb_data *data) {
 			data->roll = bno055.euler_angles.roll;
 			data->pitch = bno055.euler_angles.pitch;
 			data->yaw = bno055.euler_angles.yaw;
+
+            BNO055_ComputeVerticalAcc(&bno055);
+            data->imu_acc_vertical = bno055.acc_vertical;
         }
     }
     */
@@ -339,15 +342,16 @@ void ODB_Update(odb_data *data) {
       data->highg_acc_x = adxl382.acc_x;
       data->highg_acc_y = adxl382.acc_y;
       data->highg_acc_z = adxl382.acc_z;
+      data->highg_acc_vertical = adxl382.acc_vertical;
     }
 
     // Kalman filter update with dynamic R_alt
-    float raw_accel_z = data->highg_acc_z;
+    float raw_accel_z = data->highg_acc_vertical;
     if(fabs(raw_accel_z) < 3.5f) {
-        raw_accel_z = data->imu_acc_z;
+        raw_accel_z = data->imu_acc_vertical;
     }
-    KalmanNav_Predict(&kalman_filter, (double)raw_accel_z);
-    KalmanNav_Update(&kalman_filter, (double)data->pressure_hpa);
+    KalmanNav_Predict(&kalman_filter, (float)raw_accel_z);
+    KalmanNav_Update(&kalman_filter, (float)data->pressure_hpa);
     data->kalman_z = (float)kalman_filter.z;
     data->kalman_v = (float)kalman_filter.v;
 
