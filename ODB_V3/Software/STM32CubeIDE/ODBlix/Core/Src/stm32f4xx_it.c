@@ -68,6 +68,7 @@ extern I2C_HandleTypeDef hi2c1;
 extern DMA_HandleTypeDef hdma_spi5_tx;
 extern DMA_HandleTypeDef hdma_spi5_rx;
 extern SPI_HandleTypeDef hspi5;
+extern TIM_HandleTypeDef htim5;
 extern DMA_HandleTypeDef hdma_usart1_tx;
 extern DMA_HandleTypeDef hdma_usart6_rx;
 extern UART_HandleTypeDef huart1;
@@ -230,7 +231,6 @@ void EXTI4_IRQHandler(void)
   HAL_GPIO_EXTI_IRQHandler(IMU_INT_Pin);
   /* USER CODE BEGIN EXTI4_IRQn 1 */
 
-   /* USER CODE END EXTI4_IRQn 1 */
   /* USER CODE END EXTI4_IRQn 1 */
 }
 
@@ -302,6 +302,20 @@ void USART2_IRQHandler(void)
   /* USER CODE BEGIN USART2_IRQn 1 */
 
   /* USER CODE END USART2_IRQn 1 */
+}
+
+/**
+  * @brief This function handles TIM5 global interrupt.
+  */
+void TIM5_IRQHandler(void)
+{
+  /* USER CODE BEGIN TIM5_IRQn 0 */
+
+  /* USER CODE END TIM5_IRQn 0 */
+  HAL_TIM_IRQHandler(&htim5);
+  /* USER CODE BEGIN TIM5_IRQn 1 */
+
+  /* USER CODE END TIM5_IRQn 1 */
 }
 
 /**

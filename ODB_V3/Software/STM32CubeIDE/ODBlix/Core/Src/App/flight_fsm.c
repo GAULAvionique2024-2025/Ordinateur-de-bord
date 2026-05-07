@@ -6,6 +6,7 @@
  */
 
 #include "App/flight_fsm.h"
+#include "stm32f4xx_hal.h"
 #include "GAUL_Drivers/system.h"
 #include "GAUL_Drivers/utils.h"
 #include "App/config.h"
@@ -16,6 +17,7 @@
 typedef enum {
     STATE_INIT,
     STATE_PREFLIGHT,
+    STATE_ARMED,
     STATE_INFLIGHT,
     STATE_POSTFLIGHT
 } global_state_t;
@@ -30,36 +32,52 @@ typedef enum {
 } inflight_substate_t;
 
 extern odb_data flight_data;
+extern system_measurements_t system_measurements;
+extern TIM_HandleTypeDef htim5;
+extern pyro_t pyro1;
+extern pyro_t pyro2;
+extern pyro_t pyro3;
+extern pyro_t pyro4;
 
-volatile global_state_t current_global_state = STATE_INIT;
+global_state_t current_global_state = STATE_INIT;
 volatile inflight_substate_t current_substate = SUB_BOOST;
-volatile uint32_t landing_timer = 0;
+
+static uint32_t fire_timer = 0;
+static uint32_t flight_duration = 0;
+static uint32_t landing_timer = 0;
+static uint8_t fire_attempt_count = 0;
+static bool backup_active = false;
 
 void FSM_Update(void) {
+    flight_duration = __HAL_TIM_GET_COUNTER(&htim5); // Failsage apogee timeout
     switch(current_global_state) {
         case STATE_INIT:
             // Wait for ODB_Init to complete and set mission state to PREFLIGHT
-            odb_state_t odb_state = ODB_Init(&flight_data);
-            if(odb_state == ODB_OK || odb_state == ODB_WARNING) {
+            if(ODB_Init(&flight_data) <= ODB_WARNING) {
                 ODB_SetMissionState(&flight_data, STATE_PREFLIGHT);
                 current_global_state = STATE_PREFLIGHT;
-            } else {
-                // Handle initialization error
             }
             break;
+
         case STATE_PREFLIGHT:
-            // Wait for launch detection
+            // Security : Continuity pyros and stability check
+            if(flight_data.pyros_connected >= MIN_NEEDED_PYRO_NB && fabs(flight_data.kalman_v) < 0.5f) {
+                ODB_SetMissionState(&flight_data, STATE_ARMED);
+                current_global_state = STATE_ARMED;
+            }
+            break;
+
+        case STATE_ARMED:
             if(flight_data.highg_acc_z > ACC_Z_LAUNCH_THRESHOLD) {
+                ODB_SetMissionState(&flight_data, STATE_INFLIGHT);
                 //HM11_Sleep(&hm11);
+                HAL_TIM_Base_Start_IT(&htim5);      // Start timer to measure time since launch
+                __HAL_TIM_SET_COUNTER(&htim5, 0);   // Reset timer counter
                 current_global_state = STATE_INFLIGHT;
                 current_substate = SUB_BOOST;
             }
-            // Handle launch abort conditions
-            if(flight_data.kalman_v < APOGEE_DETECT_V_THRESHOLD) {
-                current_global_state = STATE_INFLIGHT;
-                current_substate = SUB_COAST;
-            }
             break;
+
         case STATE_INFLIGHT:
             // Handle substate transitions based on events
             switch(current_substate) {
@@ -70,6 +88,7 @@ void FSM_Update(void) {
                         current_substate = SUB_FAST;
                     }
                     break;
+
                 case SUB_FAST:
                     // Wait for fast ascent detection
                     if(flight_data.kalman_v < BOOST_PHASE_V_THRESHOLD) {
@@ -77,22 +96,76 @@ void FSM_Update(void) {
                         current_substate = SUB_COAST;
                     }
                     break;
+
                 case SUB_COAST:
                     // Wait for apogee detection
-                    if(flight_data.pressure_hpa < APOGEE_DETECT_V_THRESHOLD) {
-                        //Pyro_Fire(PYRO_DROGUE);
+                    /** 
+                     * WINDOWED FAILSAFE LOGIC 
+                     * 1. Nominal apogee detection : velocity below threshold after a reasonable flight duration (to avoid early detection during boost or fast phase)
+                     * 2. Failsafe timeout : if apogee not detected after a maximum time
+                     */
+                    bool nominal_apogee = (flight_data.kalman_v < APOGEE_DETECT_V_THRESHOLD) && (flight_duration > PYROS_ARMING_FAILSAFE_TICKS);
+                    bool failsafe_timeout = (flight_duration > APOGEE_FAILSAFE_TICKS);
+
+                    if(nominal_apogee || failsafe_timeout) {
                         current_substate = SUB_DROGUE;
+                        fire_timer = 0; 
+                        fire_attempt_count = 0;
+                        backup_active = false;
+                        
+                        Pyro_Arming(&pyro1, &system_measurements, true);
+                        Pyro_Arming(&pyro2, &system_measurements, true);
                     }
                     break;
+
                 case SUB_DROGUE:
                     // Wait for drogue deployment detection
-                    if(flight_data.kalman_v <= MAIN_DEPLOY_ALTITUDE_THRESHOLD) {
-                        //Pyro_Fire(PYRO_MAIN);
+                    if(HAL_GetTick() - fire_timer >= FIRE_ATTEMPT_DELAY_MS) {
+                        if(!backup_active) {
+                            if(fire_attempt_count < DROGUE_FIRE_ATTEMPT_MAX_NB) {
+                                Pyro_Fire(&pyro1, &system_measurements);
+                                fire_attempt_count++;
+                                fire_timer = HAL_GetTick();
+                            } else {
+                                backup_active = flight_data.system_states |= FLAG_PYRO2_CONN;
+                                fire_attempt_count = 0;
+                            }
+                        } else if(fire_attempt_count < DROGUE_FIRE_ATTEMPT_MAX_NB) {
+                            Pyro_Fire(&pyro2, &system_measurements);
+                            fire_attempt_count++;
+                            fire_timer = HAL_GetTick();
+                        }
+                    }
+
+                    if(flight_data.kalman_z <= MAIN_DEPLOY_ALTITUDE_THRESHOLD) {
                         current_substate = SUB_MAIN;
+                        fire_timer = 0;
+                        fire_attempt_count = 0;
+                        backup_active = false;
+                        Pyro_Arming(&pyro3, &system_measurements, true);
+                        Pyro_Arming(&pyro4, &system_measurements, true);
                     }
                     break;
+
                 case SUB_MAIN:
                     // Wait for main deployment detection
+                    if(HAL_GetTick() - fire_timer >= FIRE_ATTEMPT_DELAY_MS) {
+                        if(!backup_active) {
+                            if(fire_attempt_count < MAIN_FIRE_ATTEMPT_MAX_NB) {
+                                Pyro_Fire(&pyro3, &system_measurements);
+                                fire_attempt_count++;
+                                fire_timer = HAL_GetTick();
+                            } else {
+                                backup_active = flight_data.system_states |= FLAG_PYRO4_CONN;
+                                fire_attempt_count = 0;
+                            }
+                        } else if(fire_attempt_count < MAIN_FIRE_ATTEMPT_MAX_NB) {
+                            Pyro_Fire(&pyro4, &system_measurements);
+                            fire_attempt_count++;
+                            fire_timer = HAL_GetTick();
+                        }
+                    }
+
                     if(fabs(flight_data.kalman_v) < LANDING_DETECT_V_THRESHOLD) {
                         if(landing_timer == 0) landing_timer = HAL_GetTick();
                         if(HAL_GetTick() - landing_timer > LANDING_DETECT_TIME_THRESHOLD_MS) {
@@ -100,17 +173,29 @@ void FSM_Update(void) {
                             current_global_state = STATE_POSTFLIGHT;
                         }
                     } else {
-                        landing_timer = 0; // Reset
+                        landing_timer = 0;
                     }
                     break;
+
                 case SUB_LANDED:
-                    // Wait for landing detection
                     current_global_state = STATE_POSTFLIGHT;
                     break;
             }
             break;
+
         case STATE_POSTFLIGHT:
-            // Handle landing timer, put in low power mode and handle IdeFIX communication
+            // Handle landing timer conclusion, put in low power mode and handle IdeFIX communication
+            ODB_SetMissionState(&flight_data, STATE_POSTFLIGHT);
             break;
+    }
+}
+
+// Callback for failsafe timer (TIM5)
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
+    if(htim->Instance == TIM5) {
+        if(current_global_state == STATE_INFLIGHT && current_substate < SUB_DROGUE) {
+            current_substate = SUB_DROGUE;
+            // Pyro_Fire(&pyro1, &system_measurements);
+        }
     }
 }

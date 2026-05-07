@@ -127,7 +127,6 @@ odb_state_t ODB_Init(odb_data *data) {
             printf("Erreur : Batterie trop faible !\n");
         }
 
-        uint8_t pyros_connected = 0;
         // Pyros need to be armed for read status
         bool is_armed = Pyro_Arming(&pyro1, &system_measurements, true);
         // Verify if arming is really enabled
@@ -140,28 +139,28 @@ odb_state_t ODB_Init(odb_data *data) {
         // Check pyros continuity
         if(Pyro_Init(&pyro1, &system_measurements) == 0) {
             system_states |= FLAG_PYRO1_CONN;
-            pyros_connected += 1;
+            data->pyros_connected += 1;
         } else {
             warning += 1;
             printf("Erreur : Pyro 1 déconnecté\n");
         }
         if(Pyro_Init(&pyro2, &system_measurements) == 0) {
             system_states |= FLAG_PYRO2_CONN;
-            pyros_connected += 1;
+            data->pyros_connected += 1;
         } else {
             warning += 1;
             printf("Erreur : Pyro 2 déconnecté\n");
         }
         if(Pyro_Init(&pyro3, &system_measurements) == 0) {
             system_states |= FLAG_PYRO3_CONN;
-            pyros_connected += 1;
+            data->pyros_connected += 1;
         } else {
             warning += 1;
             printf("Erreur : Pyro 3 déconnecté\n");
         }
         if(Pyro_Init(&pyro4, &system_measurements) == 0) {
             system_states |= FLAG_PYRO4_CONN;
-            pyros_connected += 1;
+            data->pyros_connected += 1;
         } else {
             warning += 1;
             printf("Erreur : Pyro 4 déconnecté\n");
@@ -177,9 +176,9 @@ odb_state_t ODB_Init(odb_data *data) {
             printf("Erreur : Désarmement des Pyros bloqué\n");
 		}
         // Protection
-        if(pyros_connected == 0) {
+        if(data->pyros_connected < MIN_NEEDED_PYRO_NB) {
             error += 1;
-            printf("Erreur : Aucun pyro connecté !\n");
+            printf("Erreur : Pas assez de pyros connectés !\n");
         }
 
         SystemMeasurements_ComputeTemperature(&system_measurements);

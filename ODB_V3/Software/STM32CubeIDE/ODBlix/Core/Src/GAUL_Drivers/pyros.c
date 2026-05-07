@@ -40,7 +40,7 @@ bool Pyro_Fire(pyro_t *dev, system_measurements_t *measures) {
 	if(!dev) return false;
 
 	HAL_GPIO_WritePin(dev->fire_port, dev->fire_pin, GPIO_PIN_SET);
-	HAL_Delay(500);
+	HAL_Delay(250);
 
 	SystemMeasurements_ComputePyros(measures);
 	if(measures->pyro_status[dev->channel] < PYRO_THRESHOLD) {

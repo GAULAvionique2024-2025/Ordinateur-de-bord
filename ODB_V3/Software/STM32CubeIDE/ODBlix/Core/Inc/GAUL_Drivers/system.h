@@ -144,6 +144,7 @@ typedef struct {
     uint8_t     satellites_nb;      // Number of satellites used for the fix -> Linked with L76LM33
 
     // Statistics
+    uint8_t     pyros_connected;    // Number of pyros with continuity (0-4) -> Linked with Pyros continuity checks
     float       imu_acc_vertical;   // Vertical acceleration (World frame) from IMU in m/s^2 -> Linked with BNO055
     float       highg_acc_vertical; // Vertical acceleration (World frame) from High-G Accelerometer in m/s^2 -> Linked with ADXL382
     float       kalman_z;           // filtered altitude from Kalman filter in m (converted to cm for MAVLink)
