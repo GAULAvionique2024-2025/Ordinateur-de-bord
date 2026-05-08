@@ -12,6 +12,9 @@
 #include <stdarg.h>
 #include <math.h>
 
+#define TROPOSPHERE_PRESSURE_HPA 	226.32f     // ZONE 0
+#define TROPOPAUSE_PRESSURE_HPA 	54.74f	    // ZONE 1
+											    // ZONE 2 STRATOSPHERE (< Tropopause)
 
 /* === Offset === */
 float Thermal_ComputeOffset(coeff_poly3_t coeffs, float temp) {
@@ -43,6 +46,24 @@ float Math_ComputeWorldVerticalAcc(const float accel[3], const float quat[4], bo
 }
 /* =========== */
 
+/* === Altitude === */
+float Math_ComputeAltitudeMSL(float current_pressure) {
+    float altitude_msl_m = 0.0f;
+    if(current_pressure > TROPOSPHERE_PRESSURE_HPA) { // ZONE 0 : TROPOSPHERE (0 to 11000 m)
+    	altitude_msl_m = 44330.0f * (1.0f - powf(current_pressure / PRESSURE_SEA_LEVEL_HPA, 0.190295f));
+    } else if(current_pressure <= TROPOSPHERE_PRESSURE_HPA && current_pressure > TROPOPAUSE_PRESSURE_HPA) { // ZONE 1 : TROPOPAUSE (11 000 to 20000 m)
+    	altitude_msl_m = 11000.0f - 6341.6f * logf(current_pressure / TROPOSPHERE_PRESSURE_HPA);
+    } else { // ZONE 2 : STRATOSPHERE (> 20000 m)
+    	altitude_msl_m = 20000.0f + 216650.0f * (powf(current_pressure / TROPOPAUSE_PRESSURE_HPA, -0.02927f) - 1.0f);
+    }
+
+    return altitude_msl_m;
+}
+
+float Math_ComputeAltitudeAGL(float current_pressure, float ground_elevation_msl) {
+    return Math_ComputeAltitudeMSL(current_pressure) - ground_elevation_msl;
+}
+/* =========== */
 
 /* === HELPERS === */
 runTimer_t run_timer;

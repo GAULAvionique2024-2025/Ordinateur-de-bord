@@ -16,11 +16,11 @@
 #define Q_BIAS 0.001f // Process noise for bias (tune based on IMU/HIGHG noise)
 
 // Altitude thresholds for Dynamic R adjustment
-#define ALT_60K_FT 18288.0f
-#define ALT_90K_FT 27432.0f
+#define ALT_60K_M 	60000.0f
+#define ALT_90K_M	90000.0f
 
-#define R_PENALTY           1000.0f
-#define MACH_LOCK_VELOCITY  200.0f
+#define R_PENALTY   1000.0f
+
 
 typedef struct {
     // State variables

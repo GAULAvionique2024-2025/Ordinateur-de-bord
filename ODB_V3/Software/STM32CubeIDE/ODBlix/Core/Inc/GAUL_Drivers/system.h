@@ -35,7 +35,25 @@
 #define DEBUG_MODE 1
 
 /* === ODB === */
-// Init system_states,
+// Init system_states
+/*
+ * [15] : IdeFIX communication OK
+ * [14] : Bluetooth module OK
+ * [13] : Flash memory OK
+ * [12] : SD card OK
+ * [11] : Temperature sensor OK
+ * [10] : High-G accelerometer OK
+ * [9]  : GPS OK
+ * [8]  : Barometer OK
+ * [7]  : IMU OK
+ * [6]  : Radio OK
+ * [5]  : Pyros armed OK
+ * [4]  : Pyro arming module OK
+ * [3]  : Pyro 1 connected
+ * [2]  : Pyro 2 connected
+ * [1]  : Pyro 3 connected
+ * [0]  : Pyro 4 connected
+*/
 #define FLAG_IDEFIX_OK                  (1 << 14)
 #define FLAG_BT_OK                      (1 << 13)
 #define FLAG_FLASH_OK                   (1 << 12)
@@ -52,6 +70,16 @@
 #define FLAG_PYRO3_CONN                 (1 << 1)
 #define FLAG_PYRO4_CONN                 (1 << 0)
 // Events states
+/*
+ * [7]  : Mach lock enabled
+ * [6]  : Drogue deployed
+ * [5]  : Main deployed
+ * [4]  : Apogee detected
+ * [3]  : Pyro 4 fired
+ * [2]  : Pyro 3 fired
+ * [1]  : Pyro 2 fired
+ * [0]  : Pyro 1 fired
+*/
 #define FLAG_PYRO1_FIRED                (1 << 0)
 #define FLAG_PYRO2_FIRED                (1 << 1)
 #define FLAG_PYRO3_FIRED                (1 << 2)
@@ -90,20 +118,20 @@ typedef struct {
     pyro_event_t pyro4;				// in event state
     pyro_event_t mach_lock;			// in event state
 
-    metric_t max_altitude_gps;      // internal event for POST-FLIGHT reporting (save in FLASH/SD)
-    metric_t max_altitude_baro;     // internal event for POST-FLIGHT reporting (save in FLASH/SD)
-    metric_t max_altitude_kalman;   // internal event for POST-FLIGHTreporting (save in FLASH/SD)
+    metric_t max_altitude_gps;      // internal event for POSTFLIGHT reporting (save in FLASH/SD)
+    metric_t max_altitude_baro;     // internal event for POSTFLIGHT reporting (save in FLASH/SD)
+    metric_t max_altitude_kalman;   // internal event for POSTFLIGHT reporting (save in FLASH/SD)
 
     metric_t apogee;				// in event state
     metric_t main_deploy;			// in event state
     metric_t drogue_deploy;			// in event state
 
-    metric_t max_ascend_speed;      // internal event for POST-FLIGHT reporting (save in FLASH/SD)
-    metric_t max_ascend_accel;      // internal event for POST-FLIGHT reporting (save in FLASH/SD)
-    metric_t max_descend_speed;     // internal event for POST-FLIGHT reporting (save in FLASH/SD)
-    metric_t max_descend_accel;     // internal event for POST-FLIGHT reporting (save in FLASH/SD)
+    metric_t max_ascend_speed;      // internal event for POSTFLIGHT reporting (save in FLASH/SD)
+    metric_t max_ascend_accel;      // internal event for POSTFLIGHT reporting (save in FLASH/SD)
+    metric_t max_descend_speed;     // internal event for POSTFLIGHT reporting (save in FLASH/SD)
+    metric_t max_descend_accel;     // internal event for POSTFLIGHT reporting (save in FLASH/SD)
 
-    uint32_t flight_time_ms;        // internal event for POST-FLIGHT reporting (save in FLASH/SD)
+    uint32_t flight_time_ms;        // internal event for POSTFLIGHT reporting (save in FLASH/SD)
 } odb_stats_t;
 
 // Main ODB data structure to be sent via telemetry
@@ -128,6 +156,7 @@ typedef struct {
     float		imu_mag_y;			// IMU Magnetometer Y in uT (converted to cuT for MAVLink) -> Linked with BNO055
     float		imu_mag_z;			// IMU Magnetometer Z in uT (converted to cuT for MAVLink) -> Linked with BNO055
     // Pressure & Temp
+    float		altitude_msl_m;		// Altitude in meters (m) from barometer referenced with the sea level (MLS)-> Linked with MS5611
     float       pressure_hpa;       // Atmospheric pressure in hectopascals (hPa) -> Linked with MS5611
     float       temp_celsius;       // Board or environment temperature in Celsius (°C) -> Linked with MAX6612MXK
     // High-G Acclerometer

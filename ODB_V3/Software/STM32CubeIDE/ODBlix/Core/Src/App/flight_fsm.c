@@ -14,6 +14,8 @@
 #include <stdint.h>
 
 
+#define STABILITY_CHECK_THRESHOLD 0.5f // Vertical speed to consider the rocket stable on the ground during preflight checks (m/s)
+
 typedef enum {
     STATE_INIT,
     STATE_PREFLIGHT,
@@ -49,7 +51,7 @@ static uint8_t fire_attempt_count = 0;
 static bool backup_active = false;
 
 void FSM_Update(void) {
-    flight_duration = __HAL_TIM_GET_COUNTER(&htim5); // Failsage apogee timeout
+    flight_duration = __HAL_TIM_GET_COUNTER(&htim5); // Failsafe apogee timeout
     switch(current_global_state) {
         case STATE_INIT:
             // Wait for ODB_Init to complete and set mission state to PREFLIGHT
@@ -61,7 +63,7 @@ void FSM_Update(void) {
 
         case STATE_PREFLIGHT:
             // Security : Continuity pyros and stability check
-            if(flight_data.pyros_connected >= MIN_NEEDED_PYRO_NB && fabs(flight_data.kalman_v) < 0.5f) {
+            if(flight_data.pyros_connected >= MIN_NEEDED_PYRO_NB && fabs(flight_data.kalman_v) < STABILITY_CHECK_THRESHOLD) {
                 ODB_SetMissionState(&flight_data, STATE_ARMED);
                 current_global_state = STATE_ARMED;
             }
@@ -178,6 +180,7 @@ void FSM_Update(void) {
                     break;
 
                 case SUB_LANDED:
+                ODB_SetMissionState(&flight_data, STATE_POSTFLIGHT);
                     current_global_state = STATE_POSTFLIGHT;
                     break;
             }

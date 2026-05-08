@@ -12,7 +12,9 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-#define GRAVITY_MS2 9.80665f
+#define GRAVITY_MS2 			9.80665f	// m/s
+#define PRESSURE_SEA_LEVEL_HPA	1013.25f    // hPa
+
 
 /* === Offset === */
 typedef struct {
@@ -24,6 +26,11 @@ typedef struct {
 
 float Thermal_ComputeOffset(coeff_poly3_t coeffs, float temp);
 float Math_ComputeWorldVerticalAcc(const float accel[3], const float quat[4], bool gravity_compensation);
+/* =========== */
+
+/* === Altitude === */
+float Math_ComputeAltitudeMSL(float current_pressure);
+float Math_ComputeAltitudeAGL(float current_pressure, float ground_elevation_msl);
 /* =========== */
 
 /* === HELPERS === */

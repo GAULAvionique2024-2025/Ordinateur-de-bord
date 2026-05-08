@@ -6,6 +6,7 @@
  */
 
 #include "GAUL_Drivers/ms5611.h"
+#include "GAUL_Drivers/utils.h"
 
 
 static inline void MS5611_CS_LOW(ms5611_t *dev) {
@@ -116,6 +117,23 @@ static uint8_t MS5611_CRC4(uint16_t prom[]) {
     return n_rem ^ 0x00;
 }
 
+// AGL (ground reference) calibration
+void MS5611_CalibrateGroundPressure(ms5611_t *dev) {
+    float temp_p, temp_t;
+    float sum_p = 0;
+    int samples = 100;
+
+    for(int i = 0; i < samples; i++) {
+        MS5611_Update(dev);
+        if(MS5611_Compute(dev, &temp_t, &temp_p) == MS5611_OK) {
+            sum_p += temp_p;
+        }
+        HAL_Delay(20);
+    }
+
+    dev->ground_pressure = sum_p / samples;
+}
+
 static uint8_t MS5611_GetDelay(ms5611_osr_t osr) {
     switch(osr) {
         case OSR256:  
@@ -165,6 +183,10 @@ ms5611_error_t MS5611_Init(ms5611_t *dev, ms5611_osr_t osr_pressure, ms5611_osr_
     dev->state = MS5611_STATE_PRESSURE;
 
     if(MS5611_SendCmd(dev, dev->cmd_pressure) != 0) return MS5611_ERR_SPI;
+
+    // Pressure calibration reference
+    dev->ground_pressure = PRESSURE_SEA_LEVEL_HPA;
+    MS5611_CalibrateGroundPressure(dev);
 
     dev->raw_pressure = 0;
     dev->raw_temperature = 0;

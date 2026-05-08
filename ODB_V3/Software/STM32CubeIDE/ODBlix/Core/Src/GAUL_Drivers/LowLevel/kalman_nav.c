@@ -9,6 +9,7 @@
 #include "GAUL_Drivers/LowLevel/kalman_nav.h"
 #include "stm32f4xx_hal.h"
 #include "GAUL_Drivers/LowLevel/dwt.h"
+#include "App/config.h"
 
 
 void KalmanNav_Init(kalman_nav_t *dev, float mean_alt, float *samples, uint8_t sample_count) {
@@ -83,14 +84,14 @@ void KalmanNav_Predict(kalman_nav_t *dev, float acc_world_z) {
 */
 void KalmanNav_Update(kalman_nav_t *dev, float measured_alt) {
     // Dynamic Measurement Noise Covariance (R_alt) & Mach Lock Override
-    if(dev->v > MACH_LOCK_VELOCITY || dev->z >= ALT_90K_FT) {
-        // If we're above Mach lock velocity or above 90k ft, we consider the altitude measurement by barometer to be unreliable and increase R_alt to reduce its influence on the state update
+    if(dev->v > BOOST_PHASE_V_THRESHOLD || dev->z >= ALT_90K_M) {
+        // If we're above Mach lock velocity or above 90k m, we consider the altitude measurement by barometer to be unreliable and increase R_alt to reduce its influence on the state update
         dev->R_alt = R_PENALTY;
-    } else if(dev->z >= ALT_60K_FT) {
-        // If we're above 60k ft, we consider the altitude measurement by barometer to be less reliable and increase R_alt moderately
+    } else if(dev->z >= ALT_60K_M) {
+        // If we're above 60k m, we consider the altitude measurement by barometer to be less reliable and increase R_alt moderately
         dev->R_alt = dev->R_static * 10.0f;
     } else {
-        // Below 60k ft, we consider the altitude measurement by barometer to be reliable and use the static R value based on initialization
+        // Below 60k m, we consider the altitude measurement by barometer to be reliable and use the static R value based on initialization
         dev->R_alt = dev->R_static;
     }
 

@@ -297,6 +297,7 @@ void ODB_Update(odb_data *data) {
     if(MS5611_Compute(&ms5611, &temperature, &pressure) == MS5611_OK) {
     	data->pressure_hpa = pressure;
     	data->temp_celsius = temperature;
+        data->altitude_msl_m = Math_ComputeAltitudeMSL(pressure);
     }
 
     // TODO: use real updated values
@@ -350,7 +351,7 @@ void ODB_Update(odb_data *data) {
         raw_accel_z = data->imu_acc_vertical;
     }
     KalmanNav_Predict(&kalman_filter, (float)raw_accel_z);
-    KalmanNav_Update(&kalman_filter, (float)data->pressure_hpa);
+    KalmanNav_Update(&kalman_filter, (float)data->altitude_msl_m);
     data->kalman_z = (float)kalman_filter.z;
     data->kalman_v = (float)kalman_filter.v;
 

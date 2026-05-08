@@ -57,6 +57,7 @@ typedef struct {
     uint8_t             skip_counter_temperature;
     bool 				first_conversion_done;
 
+    uint32_t			ground_pressure;
     uint32_t            raw_pressure;
     uint32_t            raw_temperature;
 } ms5611_t;
