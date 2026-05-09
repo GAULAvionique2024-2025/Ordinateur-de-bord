@@ -37,7 +37,7 @@ static kalman_nav_t kalman_filter;
 
 
 /* === ODB === */
-void ODB_Reset(odb_data *data) {
+void ODB_Reset(odb_data_t *data) {
     if(!data) {
         return;
     }
@@ -108,7 +108,7 @@ uint8_t ODB_SetEventStates(const odb_stats_t *stats) {
     return packed;
 }
 
-odb_state_t ODB_Init(odb_data *data) {
+odb_state_t ODB_Init(odb_data_t *data) {
     if(!data) {
         return ODB_ERROR;
     }
@@ -279,11 +279,14 @@ odb_state_t ODB_Init(odb_data *data) {
     // Buzzer report
     Buzzer_ReportStatus(&buzzer, BUZZER_REPORT_TONE_HZ, system_measurements.vin_batt, (bool[]){(system_states & FLAG_PYRO1_CONN) != 0U, (system_states & FLAG_PYRO2_CONN) != 0U, (system_states & FLAG_PYRO3_CONN) != 0U, (system_states & FLAG_PYRO4_CONN) != 0U}, odb_state);
 
+    //Scheduler_AddTask(ODB_Update, 100);
+    //...
+
     return odb_state;
 }
 
 // TODO: add timestamp with RTC to all odb_stats_t data
-void ODB_Update(odb_data *data) {
+void ODB_Update(odb_data_t *data) {
     if(!data) {
         return;
     }
@@ -396,7 +399,7 @@ static void Telemetry_TransmitMessage(rfd900x_t *rfd_dev, const mavlink_message_
 	RFD900x_Transmit(rfd_dev, mavlink_tx_buffer, len);
 }
 
-void Telemetry_SendRocketData(rfd900x_t *rfd_dev, const odb_modem_id_t modem_id, const odb_data *data, const uint32_t current_time_ms) {
+void Telemetry_SendRocketData(rfd900x_t *rfd_dev, const odb_modem_id_t modem_id, const odb_data_t *data, const uint32_t current_time_ms) {
     if(!rfd_dev || !data) return;
 
     mavlink_message_t msg;
@@ -458,7 +461,7 @@ void Telemetry_SendEventLog(rfd900x_t *rfd_dev, const odb_modem_id_t modem_id, c
 /* =========== */
 
 /* === BLUETOOTH APP PACKAGING === */
-void App_SendFrame(nexus_t *nexus_dev, hm11_t *hm11_dev, const odb_data *data) {
+void App_SendFrame(nexus_t *nexus_dev, hm11_t *hm11_dev, const odb_data_t *data) {
     if(!nexus_dev || !hm11_dev || !data) return;
 
     char buffer[512];

@@ -58,7 +58,9 @@ typedef struct {
 int8_t W25Q_Init(w25q_t *dev);
 
 int8_t W25Q_Read(w25q_t *dev, uint8_t* pData, uint32_t read_addr, uint32_t size);
-int8_t W25Q_Write(w25q_t *dev, uint8_t* pData, uint32_t write_addr, uint32_t size);
+int8_t W25Q_WritePage(w25q_t *dev, uint8_t* pData, uint32_t write_addr, uint32_t size);
+int8_t W25Q_WritePageNoWait(w25q_t *dev, uint8_t* pData, uint32_t write_addr, uint32_t size);
+bool W25Q_IsBusy(QSPI_HandleTypeDef *hqspi);
 int8_t W25Q_EraseSector(w25q_t *dev, uint32_t sector_addr);
 int8_t W25Q_EraseBlock(w25q_t *dev, uint32_t block_addr);
 int8_t W25Q_EraseChip(w25q_t *dev);

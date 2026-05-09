@@ -30,6 +30,7 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <stdbool.h>
+#include <assert.h>
 
 
 #define DEBUG_MODE 1
@@ -135,7 +136,7 @@ typedef struct {
 } odb_stats_t;
 
 // Main ODB data structure to be sent via telemetry
-typedef struct {
+typedef struct __attribute__((packed)) {
     // Status
     uint32_t    time_boot_ms;       // Timestamp since system boot in milliseconds (ms)
     uint16_t    system_states;      // Current system/component states -> linked with odb_stats_t
@@ -178,14 +179,19 @@ typedef struct {
     float       highg_acc_vertical; // Vertical acceleration (World frame) from High-G Accelerometer in m/s^2 -> Linked with ADXL382
     float       kalman_z;           // filtered altitude from Kalman filter in m (converted to cm for MAVLink)
     float       kalman_v;           // filtered velocity from Kalman filter in m/s (converted to cm/s for MAVLink)
-} odb_data;
+
+    // TOTAL 117
+    // Empty data to reach 128 bytes
+    uint8_t padding[11];
+} odb_data_t;
+//_Static_assert(sizeof(odb_data_t) == 128, "odb_data_t_size_error");
 
 // TODO: add functions to set system states and event states based on sensors data and pyros state to convert them into packed bitfields for telemetry transmission
-odb_state_t ODB_Init(odb_data *data);
-void ODB_Reset(odb_data *data);
-void ODB_Update(odb_data *data);
+odb_state_t ODB_Init(odb_data_t *data);
+void ODB_Reset(odb_data_t *data);
+void ODB_Update(odb_data_t *data);
 uint8_t ODB_SetEventStates(const odb_stats_t *stats);
-int8_t ODB_SetMissionState(odb_data *data, uint8_t mission_state);
+int8_t ODB_SetMissionState(odb_data_t *data, uint8_t mission_state);
 /* =========== */
 
 /* === TELEMETRY === */
@@ -203,12 +209,12 @@ typedef enum {
 	EVENT_SEVERITY_INFO			= MAV_SEVERITY_INFO,
 } odb_event_severity_t;
 
-void Telemetry_SendRocketData(rfd900x_t *rfd_dev, const odb_modem_id_t modem_id, const odb_data *data, const uint32_t current_time_ms);
+void Telemetry_SendRocketData(rfd900x_t *rfd_dev, const odb_modem_id_t modem_id, const odb_data_t *data, const uint32_t current_time_ms);
 void Telemetry_SendEventLog(rfd900x_t *rfd_dev, const odb_modem_id_t modem_id, const odb_event_severity_t severity, const char *text);
 /* =========== */
 
 /* === BLUETOOTH APP === */
-void App_SendFrame(nexus_t *nexus_dev, hm11_t *hm11_dev, const odb_data *data);
+void App_SendFrame(nexus_t *nexus_dev, hm11_t *hm11_dev, const odb_data_t *data);
 void App_HandleCommands(nexus_t *nexus_dev, hm11_t *hm11_dev);
 /* =========== */
 

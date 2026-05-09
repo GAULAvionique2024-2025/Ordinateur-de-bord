@@ -33,7 +33,7 @@ typedef enum {
     SUB_LANDED
 } inflight_substate_t;
 
-extern odb_data flight_data;
+extern odb_data_t flight_data;
 extern system_measurements_t system_measurements;
 extern TIM_HandleTypeDef htim5;
 extern pyro_t pyro1;

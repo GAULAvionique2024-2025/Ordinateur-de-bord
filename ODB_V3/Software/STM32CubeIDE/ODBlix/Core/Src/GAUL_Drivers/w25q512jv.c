@@ -29,6 +29,16 @@ static QSPI_CommandTypeDef W25Q_MakeCommand(uint32_t instruction, uint32_t addre
     return sCommand;
 }
 
+static int8_t W25Q_WaitForReady(QSPI_HandleTypeDef *hqspi, uint32_t timeout_ms) {
+    uint32_t tickstart = HAL_GetTick();
+    while (W25Q_IsBusy(hqspi)) {
+        if ((HAL_GetTick() - tickstart) > timeout_ms) {
+            return -1;
+        }
+    }
+    return 0;
+}
+
 static uint32_t W25Q_GetID(QSPI_HandleTypeDef *hqspi) {
     QSPI_CommandTypeDef sCommand = W25Q_MakeCommand(W25Q_CMD_READ_ID, QSPI_ADDRESS_NONE, 0xFFFFFFFF, QSPI_DATA_1_LINE, 0, 3);
     if(HAL_QSPI_Command(hqspi, &sCommand, HAL_QSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK) return -1;
@@ -44,24 +54,6 @@ static int8_t W25Q_WriteEnable(QSPI_HandleTypeDef *hqspi) {
     if(HAL_QSPI_Command(hqspi, &sCommand, HAL_QSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK) return -1;
     
     return 0; // success
-}
-
-static int8_t W25Q_WaitForReady(QSPI_HandleTypeDef *hqspi, uint32_t timeout) {
-    QSPI_CommandTypeDef sCommand = W25Q_MakeCommand(W25Q_CMD_READ_STATUS_REG1, QSPI_ADDRESS_NONE, 0xFFFFFFFF, QSPI_DATA_1_LINE, 0, 1);
-    uint8_t status = 0;
-    uint32_t tickstart = HAL_GetTick();
-
-    do {
-        if(HAL_QSPI_Command(hqspi, &sCommand, HAL_QSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK) return -1; // failure
-        if(HAL_QSPI_Receive(hqspi, &status, HAL_QSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK) return -1; // failure
-
-        if((status & W25Q_SR1_BUSY) == 0) {
-            return 0; // ready
-        }
-
-    } while ((HAL_GetTick() - tickstart) < timeout);
-
-    return -1; // timeout
 }
 
 static int8_t W25Q_Enter4ByteMode(QSPI_HandleTypeDef *hqspi) {
@@ -105,10 +97,20 @@ static int8_t W25Q_Reset(QSPI_HandleTypeDef *hqspi) {
     return 0; // success
 }
 
+bool W25Q_IsBusy(QSPI_HandleTypeDef *hqspi) {
+    QSPI_CommandTypeDef sCommand = W25Q_MakeCommand(W25Q_CMD_READ_STATUS_REG1, QSPI_ADDRESS_NONE, 0xFFFFFFFF, QSPI_DATA_1_LINE, 0, 1);
+    uint8_t status = 0;
+    
+    if(HAL_QSPI_Command(hqspi, &sCommand, HAL_QSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK) return true;
+    if(HAL_QSPI_Receive(hqspi, &status, HAL_QSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK) return true;
+
+    return ((status & W25Q_SR1_BUSY) != 0);
+}
+
 int8_t W25Q_Init(w25q_t *dev) {
 	// Reset
 	if(W25Q_Reset(dev->hqspi) != 0) return -1;
-	if(W25Q_WaitForReady(dev->hqspi, W25Q_TIMEOUT) != 0) return -1;
+	if(W25Q_WaitForReady(dev->hqspi, 100) != 0) return -1;
 
 	// Check ID
     uint32_t id = W25Q_GetID(dev->hqspi);
@@ -132,7 +134,7 @@ int8_t W25Q_Read(w25q_t *dev, uint8_t* data, uint32_t read_addr, uint32_t size) 
     return 0; // success
 }
 
-int8_t W25Q_Write(w25q_t *dev, uint8_t* data, uint32_t write_addr, uint32_t size) {
+int8_t W25Q_WritePage(w25q_t *dev, uint8_t* data, uint32_t write_addr, uint32_t size) {
     uint32_t current_addr = write_addr;
     uint32_t current_size;
     while(size > 0) {
@@ -152,6 +154,17 @@ int8_t W25Q_Write(w25q_t *dev, uint8_t* data, uint32_t write_addr, uint32_t size
     }
 
     return 0; // success
+}
+
+int8_t W25Q_WritePageNoWait(w25q_t *dev, uint8_t* data, uint32_t write_addr, uint32_t size) {
+    if(W25Q_WriteEnable(dev->hqspi) != 0) return -1;
+
+    QSPI_CommandTypeDef sCommand = W25Q_MakeCommand(W25Q_CMD_QUAD_PAGE_PROGRAM_4B, QSPI_ADDRESS_1_LINE, write_addr, QSPI_DATA_4_LINES, 0, size);
+    
+    if(HAL_QSPI_Command(dev->hqspi, &sCommand, 10) != HAL_OK) return -1;
+    if(HAL_QSPI_Transmit(dev->hqspi, data, 10) != HAL_OK) return -1;
+
+    return 0;
 }
 
 int8_t W25Q_EraseSector(w25q_t *dev, uint32_t sector_addr) {
