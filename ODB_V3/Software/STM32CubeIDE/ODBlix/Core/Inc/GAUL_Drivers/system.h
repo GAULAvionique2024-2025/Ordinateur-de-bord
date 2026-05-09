@@ -174,15 +174,14 @@ typedef struct __attribute__((packed)) {
     uint8_t     satellites_nb;      // Number of satellites used for the fix -> Linked with L76LM33
 
     // Statistics
-    uint8_t     pyros_connected;    // Number of pyros with continuity (0-4) -> Linked with Pyros continuity checks
     float       imu_acc_vertical;   // Vertical acceleration (World frame) from IMU in m/s^2 -> Linked with BNO055
     float       highg_acc_vertical; // Vertical acceleration (World frame) from High-G Accelerometer in m/s^2 -> Linked with ADXL382
     float       kalman_z;           // filtered altitude from Kalman filter in m (converted to cm for MAVLink)
     float       kalman_v;           // filtered velocity from Kalman filter in m/s (converted to cm/s for MAVLink)
 
-    // TOTAL 117
+    // TOTAL 116
     // Empty data to reach 128 bytes
-    uint8_t padding[11];
+    uint8_t padding[12];
 } odb_data_t;
 //_Static_assert(sizeof(odb_data_t) == 128, "odb_data_t_size_error");
 
@@ -192,6 +191,7 @@ void ODB_Reset(odb_data_t *data);
 void ODB_Update(odb_data_t *data);
 uint8_t ODB_SetEventStates(const odb_stats_t *stats);
 int8_t ODB_SetMissionState(odb_data_t *data, uint8_t mission_state);
+uint8_t ODB_GetPyroStates(const odb_data_t *data);
 /* =========== */
 
 /* === TELEMETRY === */

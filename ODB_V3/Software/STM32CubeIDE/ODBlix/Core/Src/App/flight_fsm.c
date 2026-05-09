@@ -63,7 +63,7 @@ void FSM_Update(void) {
 
         case STATE_PREFLIGHT:
             // Security : Continuity pyros and stability check
-            if(flight_data.pyros_connected >= MIN_NEEDED_PYRO_NB && fabs(flight_data.kalman_v) < STABILITY_CHECK_THRESHOLD) {
+            if(ODB_GetPyroStates(&flight_data) >= MIN_NEEDED_PYRO_NB && fabs(flight_data.kalman_v) < STABILITY_CHECK_THRESHOLD) {
                 ODB_SetMissionState(&flight_data, STATE_ARMED);
                 current_global_state = STATE_ARMED;
             }

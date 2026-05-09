@@ -127,6 +127,7 @@ odb_state_t ODB_Init(odb_data_t *data) {
             printf("Erreur : Batterie trop faible !\n");
         }
 
+        uint8_t pyros_connected = 0;
         // Pyros need to be armed for read status
         bool is_armed = Pyro_Arming(&pyro1, &system_measurements, true);
         // Verify if arming is really enabled
@@ -139,28 +140,28 @@ odb_state_t ODB_Init(odb_data_t *data) {
         // Check pyros continuity
         if(Pyro_Init(&pyro1, &system_measurements) == 0) {
             system_states |= FLAG_PYRO1_CONN;
-            data->pyros_connected += 1;
+            pyros_connected++;
         } else {
             warning += 1;
             printf("Erreur : Pyro 1 déconnecté\n");
         }
         if(Pyro_Init(&pyro2, &system_measurements) == 0) {
             system_states |= FLAG_PYRO2_CONN;
-            data->pyros_connected += 1;
+            pyros_connected++;
         } else {
             warning += 1;
             printf("Erreur : Pyro 2 déconnecté\n");
         }
         if(Pyro_Init(&pyro3, &system_measurements) == 0) {
             system_states |= FLAG_PYRO3_CONN;
-            data->pyros_connected += 1;
+            pyros_connected++;
         } else {
             warning += 1;
             printf("Erreur : Pyro 3 déconnecté\n");
         }
         if(Pyro_Init(&pyro4, &system_measurements) == 0) {
             system_states |= FLAG_PYRO4_CONN;
-            data->pyros_connected += 1;
+            pyros_connected++;
         } else {
             warning += 1;
             printf("Erreur : Pyro 4 déconnecté\n");
@@ -176,7 +177,7 @@ odb_state_t ODB_Init(odb_data_t *data) {
             printf("Erreur : Désarmement des Pyros bloqué\n");
 		}
         // Protection
-        if(data->pyros_connected < MIN_NEEDED_PYRO_NB) {
+        if(pyros_connected < MIN_NEEDED_PYRO_NB) {
             error += 1;
             printf("Erreur : Pas assez de pyros connectés !\n");
         }
@@ -386,6 +387,28 @@ void ODB_Update(odb_data_t *data) {
     }
 
     data->event_states = ODB_SetEventStates(&stats);
+}
+
+uint8_t ODB_GetPyroStates(const odb_data_t *data) {
+    if(!data) {
+        return 0x00;
+    }
+
+    uint8_t pyro_continuity = 0;
+    if(data->system_states & FLAG_PYRO1_CONN) {
+        pyro_continuity++;
+    }
+    if(data->system_states & FLAG_PYRO2_CONN) {
+        pyro_continuity++;
+    }
+    if(data->system_states & FLAG_PYRO3_CONN) {
+        pyro_continuity++;
+    }
+    if(data->system_states & FLAG_PYRO4_CONN) {
+        pyro_continuity++;
+    }
+
+    return pyro_continuity;
 }
 /* =========== */
 
