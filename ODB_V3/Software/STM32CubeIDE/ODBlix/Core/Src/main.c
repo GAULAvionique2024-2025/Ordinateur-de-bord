@@ -23,6 +23,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "App/tasks.h"
+#include "App/scheduler.h"
 #include "GAUL_Drivers/adxl382.h"
 #include "GAUL_Drivers/bno055.h"
 #include "GAUL_Drivers/hm11.h"
@@ -33,6 +35,7 @@
 #include "GAUL_Drivers/pyros.h"
 #include "GAUL_Drivers/rfd900x.h"
 #include "GAUL_Drivers/smtb0927twr.h"
+#include "GAUL_Drivers/system.h"
 #include "GAUL_Drivers/system_measurements.h"
 #include "GAUL_Drivers/w25q512jv.h"
 #include "Nexus/nexus.h"
@@ -191,6 +194,7 @@ volatile uint16_t adc_buffer[9];
 w25q_t w25q = {
 	.hqspi = &hqspi,
 };
+odb_data_t flight_data = {0};
 
 /* USER CODE END PV */
 
@@ -265,6 +269,7 @@ int main(void)
   MX_TIM4_Init();
   MX_TIM5_Init();
   /* USER CODE BEGIN 2 */
+  Tasks_Init();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -274,6 +279,7 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+    Scheduler_Run();
   }
   /* USER CODE END 3 */
 }

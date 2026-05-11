@@ -389,6 +389,15 @@ void ODB_Update(odb_data_t *data) {
     data->event_states = ODB_SetEventStates(&stats);
 }
 
+int8_t ODB_SetMissionState(odb_data_t *data, uint8_t mission_state) {
+    if(!data) {
+        return ODB_ERROR;
+    }
+
+    data->mission_state = mission_state;
+    return ODB_OK;
+}
+
 uint8_t ODB_GetPyroStates(const odb_data_t *data) {
     if(!data) {
         return 0x00;
