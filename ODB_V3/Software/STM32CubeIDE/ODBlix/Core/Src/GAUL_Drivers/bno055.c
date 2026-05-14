@@ -86,27 +86,14 @@ static int8_t BNO055_SetAccConfig(bno055_t *dev, bno055_acc_range_t range) {
 }
 
 static int8_t BNO055_SetAxisRemap(bno055_t *dev, bno055_axis_profile_t profile) {
-	bno055_op_mode_t current_mode = dev->op_mode;
-
     uint8_t config = BNO055_REMAP_CONFIG[profile];
     uint8_t sign = BNO055_REMAP_SIGN[profile];
-    
-    if(BNO055_WriteReg(dev->hi2c, BNO055_REG_OPR_MODE, BNO055_OP_MODE_CONFIG) != 0) {
-        return BNO055_I2C_ERROR;
-    }
-    HAL_Delay(25);
-
     if(BNO055_WriteReg(dev->hi2c, BNO055_REG_AXIS_MAP_CONFIG, config) != 0) {
         return BNO055_I2C_ERROR;
     }
     if(BNO055_WriteReg(dev->hi2c, BNO055_REG_AXIS_MAP_SIGN, sign) != 0) {
         return BNO055_I2C_ERROR;
     }
-
-    if(BNO055_WriteReg(dev->hi2c, BNO055_REG_OPR_MODE, (uint8_t)current_mode) != 0) {
-        return BNO055_I2C_ERROR;
-    }
-    HAL_Delay(25);
 
     return BNO055_OK;
 }
@@ -170,14 +157,14 @@ bno055_error_t BNO055_Init(bno055_t *dev) {
         return BNO055_ID_ERROR;
     }
 
+    // Reset
+    BNO055_Reset(dev);
+
     // Config mode
     if(BNO055_WriteReg(dev->hi2c, BNO055_REG_OPR_MODE, BNO055_OP_MODE_CONFIG) != 0) {
         return BNO055_CONFIG_ERROR;
     }
     HAL_Delay(25);
-
-    // Reset
-    BNO055_Reset(dev);
 
     // Set page 0
     if(BNO055_SetPage(dev->hi2c, 0x00) != 0) {
@@ -191,7 +178,9 @@ bno055_error_t BNO055_Init(bno055_t *dev) {
     }
 
     // Set axis remap
-    BNO055_SetAxisRemap(dev, dev->axis_profile);
+    if(BNO055_SetAxisRemap(dev, dev->axis_profile) != 0) {
+    	return BNO055_CONFIG_ERROR;
+    }
 
     // If in IMU mode, set accelerometer range to ±16G (max for fusion modes is ±4G)
     if(dev->op_mode == BNO055_OP_MODE_AMG) {
@@ -200,20 +189,28 @@ bno055_error_t BNO055_Init(bno055_t *dev) {
         }
     }
 
-    // Check Self-Test
-	uint8_t st_res;
-	HAL_Delay(50);
-	if(BNO055_ReadReg(dev->hi2c, BNO055_REG_ST_RESULT, &st_res) == 0) {
-		if((st_res & 0x0F) != 0x0F) {
-			return BNO055_ERROR;
-		}
-	}
-
     // Activate operating mode
     if(BNO055_WriteReg(dev->hi2c, BNO055_REG_OPR_MODE, (uint8_t)dev->op_mode) != 0){
         return BNO055_CONFIG_ERROR;
     }
     HAL_Delay(25);
+
+    // Check Self-Test
+    uint8_t sys_status, sys_err, st_res;
+	HAL_Delay(50);
+	if(BNO055_ReadReg(dev->hi2c, BNO055_REG_SYS_STATUS, &sys_status) != 0) {
+		return BNO055_I2C_ERROR;
+	}
+	if(sys_status == 0x01) {
+		// Specified error
+		BNO055_ReadReg(dev->hi2c, BNO055_REG_SYS_ERR, &sys_err);
+		return BNO055_CONFIG_ERROR;
+	}
+	if(BNO055_ReadReg(dev->hi2c, BNO055_REG_ST_RESULT, &st_res) == 0) {
+		if((st_res & 0x0F) != 0x0F) {
+			return BNO055_ERROR;
+		}
+	}
 
     return BNO055_OK;
 }

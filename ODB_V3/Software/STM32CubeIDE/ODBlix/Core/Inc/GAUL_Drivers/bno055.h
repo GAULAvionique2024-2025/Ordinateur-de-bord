@@ -12,7 +12,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#define BNO055_I2C_ADDR             (0x29 << 1)
+#define BNO055_I2C_ADDR             (0x28 << 1)
 #define BNO055_ID_VAL               0xA0
 // Page 0
 #define BNO055_REG_PAGE_ID          0x07
