@@ -11,12 +11,12 @@
 #include <stdint.h>
 
 // TODO: Check viability of frequencies
-#define TASK_FSM_PERIOD_MS              200U
-#define TASK_DATA_UPDATE_PERIOD_MS		100U
-#define TASK_LOGGER_PERIOD_MS           50U
-#define TASK_TELEMETRY_PERIOD_MS        10U
-#define TASK_BLUETOOTH_RX_PERIOD_MS     20U
-#define TASK_BLUETOOTH_FRAME_PERIOD_MS  10U
+#define TASK_FSM_FREQ_HZ              	(200U)
+#define TASK_DATA_UPDATE_FREQ_HZ      	(100U)
+#define TASK_LOGGER_FREQ_HZ           	(50U)
+#define TASK_TELEMETRY_FREQ_HZ        	(10U)
+#define TASK_BLUETOOTH_RX_FREQ_HZ     	(20U)
+#define TASK_BLUETOOTH_FRAME_FREQ_HZ	(10U)
 
 void Tasks_Init(void);
 void Task_ExecuteFsm(void);

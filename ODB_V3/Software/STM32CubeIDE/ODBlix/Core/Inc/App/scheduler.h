@@ -14,6 +14,7 @@
 #define MAX_TASKS 10
 
 typedef struct {
+	char		*name;
     void 		(*task_func)(void); // Function pointer to the task
     uint32_t 	period_ms;          // How often the task should run (in milliseconds)
     uint32_t 	last_run_ms;        // Timestamp of the last time the task was run (in milliseconds)
@@ -23,7 +24,9 @@ typedef struct {
 
 void Scheduler_Init(void);
 
-bool Scheduler_AddTask(void (*func)(void), uint32_t period_ms);
+bool Scheduler_SetActive(const char *name, bool active);
+bool Scheduler_AddTask(char *name, void (*func)(void), uint32_t period_hz);
+bool Scheduler_RemoveTask(const char *name);
 void Scheduler_Run(void);
 
 #endif /* INC_APP_SCHEDULER_H_ */

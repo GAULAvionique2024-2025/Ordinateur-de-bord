@@ -10,6 +10,7 @@
 #include "GAUL_Drivers/system.h"
 #include "GAUL_Drivers/utils.h"
 #include "App/config.h"
+#include "App/scheduler.h"
 
 #include <stdint.h>
 
@@ -17,7 +18,6 @@
 #define STABILITY_CHECK_THRESHOLD 0.5f // Vertical speed to consider the rocket stable on the ground during preflight checks (m/s)
 
 typedef enum {
-    STATE_INIT,
     STATE_PREFLIGHT,
     STATE_ARMED,
     STATE_INFLIGHT,
@@ -41,7 +41,7 @@ extern pyro_t pyro2;
 extern pyro_t pyro3;
 extern pyro_t pyro4;
 
-global_state_t current_global_state = STATE_INIT;
+global_state_t current_global_state = STATE_PREFLIGHT;
 volatile inflight_substate_t current_substate = SUB_BOOST;
 
 static uint32_t fire_timer = 0;
@@ -53,14 +53,6 @@ static bool backup_active = false;
 void FSM_Update(void) {
     flight_duration = __HAL_TIM_GET_COUNTER(&htim5); // Failsafe apogee timeout
     switch(current_global_state) {
-        case STATE_INIT:
-            // Wait for ODB_Init to complete and set mission state to PREFLIGHT
-            if(ODB_Init(&flight_data) <= ODB_WARNING) {
-                ODB_SetMissionState(&flight_data, STATE_PREFLIGHT);
-                current_global_state = STATE_PREFLIGHT;
-            }
-            break;
-
         case STATE_PREFLIGHT:
             // Security : Continuity pyros and stability check
             if(ODB_GetPyroStates(&flight_data) >= MIN_NEEDED_PYRO_NB && fabs(flight_data.kalman_v) < STABILITY_CHECK_THRESHOLD) {
@@ -72,6 +64,7 @@ void FSM_Update(void) {
         case STATE_ARMED:
             if(flight_data.highg_acc_z > ACC_Z_LAUNCH_THRESHOLD) {
                 ODB_SetMissionState(&flight_data, STATE_INFLIGHT);
+                Scheduler_RemoveTask("");
                 //HM11_Sleep(&hm11);
                 HAL_TIM_Base_Start_IT(&htim5);      // Start timer to measure time since launch
                 __HAL_TIM_SET_COUNTER(&htim5, 0);   // Reset timer counter

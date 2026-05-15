@@ -44,25 +44,6 @@ void Task_BluetoothRx(void) {
 }
 
 void Task_BluetoothTx(void) {
-    static uint32_t last_frame_ms = 0U;
-    const uint32_t current_ms = HAL_GetTick();
-    if((flight_data.system_states & FLAG_BT_OK) == 0U) return;
-    if(!nexus.is_enabled) return;
-
-    if((current_ms - last_frame_ms) >= TASK_BLUETOOTH_FRAME_PERIOD_MS) {
-        App_SendFrame(&nexus, &hm11, &flight_data);
-        last_frame_ms = current_ms;
-    }
-}
-
-void Tasks_Init(void) {
-    Scheduler_Init();
-    Scheduler_AddTask(Task_ExecuteFsm, TASK_FSM_PERIOD_MS);
-    Scheduler_AddTask(Task_UpdateData, TASK_DATA_UPDATE_PERIOD_MS);
-    Scheduler_AddTask(Task_Logger, TASK_LOGGER_PERIOD_MS);
-    Scheduler_AddTask(Task_Telemetry, TASK_TELEMETRY_PERIOD_MS);
-    Scheduler_AddTask(Task_BluetoothRx, TASK_BLUETOOTH_RX_PERIOD_MS);
-    Scheduler_AddTask(Task_BluetoothTx, TASK_BLUETOOTH_FRAME_PERIOD_MS);
-
-    Logger_Init();
+	if((flight_data.system_states & FLAG_BT_OK) == 0U) return;
+	App_SendFrame(&nexus, &hm11, &flight_data);
 }

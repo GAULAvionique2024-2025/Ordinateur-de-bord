@@ -8,31 +8,69 @@
 
 #include "App/scheduler.h"
 #include "stm32f4xx_hal.h"
+#include <string.h>
+
+
+#define FREQ_TO_PERIOD_MS(hz)   		(1000U / (hz))
 
 static task_t tasks[MAX_TASKS];
 static uint8_t task_count = 0;
 
 void Scheduler_Init(void) {
     task_count = 0;
-    for (int i = 0; i < MAX_TASKS; i++) {
+    for(int i = 0; i < MAX_TASKS; i++) {
+        tasks[i].name = NULL;
         tasks[i].task_func = NULL;
         tasks[i].is_active = false;
     }
 }
 
-bool Scheduler_AddTask(void (*func)(void), uint32_t period_ms) {
+bool Scheduler_SetActive(const char *name, bool active) {
+    for(uint8_t i = 0; i < task_count; i++) {
+        if(tasks[i].name != NULL && strcmp(tasks[i].name, name) == 0) {
+            tasks[i].is_active = active;
+
+            if(active) {
+                tasks[i].last_run_ms = HAL_GetTick();
+            }
+
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool Scheduler_AddTask(char *name, void (*func)(void), uint32_t period_hz) {
     if(task_count >= MAX_TASKS || func == NULL) {
         return false;
     }
     
+    tasks[task_count].name = name;
     tasks[task_count].task_func = func;
-    tasks[task_count].period_ms = period_ms;
+    tasks[task_count].period_ms = FREQ_TO_PERIOD_MS(period_hz);
     tasks[task_count].last_run_ms = HAL_GetTick();
-    tasks[task_count].is_active = true;
+    tasks[task_count].is_active = false;
     
     task_count++;
 
     return true;
+}
+
+bool Scheduler_RemoveTask(const char *name) {
+    for(uint8_t i = 0; i < task_count; i++) {
+        if(tasks[i].is_active && tasks[i].name != NULL) {
+            if(strcmp(tasks[i].name, name) == 0) {
+                tasks[i].is_active = false;
+                tasks[i].task_func = NULL;
+                tasks[i].name = NULL;
+
+                return true;
+            }
+        }
+    }
+    
+    return false;
 }
 
 void Scheduler_Run(void) {

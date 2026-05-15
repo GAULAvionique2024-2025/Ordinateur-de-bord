@@ -192,14 +192,12 @@ odb_state_t ODB_Init(odb_data_t *data) {
         printf("Erreur : Init SystemMeasurements\n");
     }
 
-    /*
     if(BNO055_Init(&bno055) == BNO055_OK) {
         system_states |= FLAG_IMU_OK;
     } else {
         error += 1;
         printf("Erreur : Init BNO055\n");
     }
-    */
 
     if(MS5611_Init(&ms5611, OSR1024, OSR1024) == MS5611_OK) {
         system_states |= FLAG_BARO_OK;
@@ -304,42 +302,31 @@ void ODB_Update(odb_data_t *data) {
         data->altitude_msl_m = Math_ComputeAltitudeMSL(pressure);
     }
 
-    // TODO: use real updated values
-    data->roll = 0.0f;
-    data->pitch = 0.0f;
-    data->yaw = 0.0f;
-    data->imu_acc_x = 0.0f;
-    data->imu_acc_y = 0.0f;
-    data->imu_acc_z = 0.0f;
-    data->imu_gyro_x = 0.0f;
-    data->imu_gyro_y = 0.0f;
-    data->imu_gyro_z = 0.0f;
-    data->imu_mag_x = 0.0f;
-    data->imu_mag_y = 0.0f;
-    data->imu_mag_z = 0.0f;
     /*
     if(BNO055_IsDataReady(&bno055)) {
-        if(BNO055_ReadAllData(&bno055) == BNO055_OK) {
-            data->imu_acc_x = bno055.acc_x;
-            data->imu_acc_y = bno055.acc_y;
-            data->imu_acc_z = bno055.acc_z;
-            data->imu_gyro_x = bno055.gyro_x;
-            data->imu_gyro_y = bno055.gyro_y;
-            data->imu_gyro_z = bno055.gyro_z;
-            data->imu_mag_x = bno055.mag_x;
-            data->imu_mag_y = bno055.mag_y;
-            data->imu_mag_z = bno055.mag_z;
 
-        	BNO055_ComputeEulerAngles(&bno055);
-			data->roll = bno055.euler_angles.roll;
-			data->pitch = bno055.euler_angles.pitch;
-			data->yaw = bno055.euler_angles.yaw;
-
-            BNO055_ComputeVerticalAcc(&bno055);
-            data->imu_acc_vertical = bno055.acc_vertical;
-        }
     }
     */
+    if(BNO055_ReadAllData(&bno055) == BNO055_OK) {
+		data->imu_acc_x = bno055.acc_x;
+		data->imu_acc_y = bno055.acc_y;
+		data->imu_acc_z = bno055.acc_z;
+		data->imu_gyro_x = bno055.gyro_x;
+		data->imu_gyro_y = bno055.gyro_y;
+		data->imu_gyro_z = bno055.gyro_z;
+		data->imu_mag_x = bno055.mag_x;
+		data->imu_mag_y = bno055.mag_y;
+		data->imu_mag_z = bno055.mag_z;
+
+		BNO055_ComputeEulerAngles(&bno055);
+		data->roll = bno055.euler_angles.roll;
+		data->pitch = bno055.euler_angles.pitch;
+		data->yaw = bno055.euler_angles.yaw;
+
+		BNO055_ComputeVerticalAcc(&bno055);
+		data->imu_acc_vertical = bno055.acc_vertical;
+	}
+    BNO055_ReadTemperature(&bno055);
 
     const float current_quat[4] = {bno055.quat.w, bno055.quat.x, bno055.quat.y, bno055.quat.z};
     if(ADXL382_ReadData(&adxl382, current_quat) == ADXL382_OK) {

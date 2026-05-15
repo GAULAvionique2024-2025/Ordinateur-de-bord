@@ -148,6 +148,10 @@ bno055_error_t BNO055_Init(bno055_t *dev) {
         return BNO055_ERROR;
     }
 
+    // Disable Reset
+    HAL_GPIO_WritePin(dev->rst_port, dev->rst_pin, GPIO_PIN_SET);
+    HAL_Delay(700);
+
     // Check ID
     uint8_t id;
     if(BNO055_ReadReg(dev->hi2c, BNO055_REG_CHIP_ID, &id) != 0) {
