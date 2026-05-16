@@ -1,3 +1,10 @@
+/*
+ * logger.c
+ *
+ *  Created on: 8 mai 2026
+ *      Author: gagno
+ */
+
 #include "App/logger.h"
 #include <string.h> // Pour memcpy
 
@@ -84,7 +91,7 @@ odb_data_t Logger_GetLastFlightData(void) {
     return last_valid_packet;
 }
 
-void Logger_Init(void) {
+int8_t Logger_Init(void) {
     uint32_t next_id = 0;
     Logger_ScanFlash(&flash_current_address, &next_id);
 
@@ -99,7 +106,9 @@ void Logger_Init(void) {
         .metadata_rsv = 0
     };
 
-    W25Q_WritePage(&w25q, (uint8_t*)&header, flash_current_address, sizeof(flight_header_t));
+    if(W25Q_WritePage(&w25q, (uint8_t*)&header, flash_current_address, sizeof(flight_header_t)) != 0) {
+    	return -1;
+    }
     flash_current_address += 4096; 
 
     write_index = 0;
@@ -107,6 +116,8 @@ void Logger_Init(void) {
     current_write_buf = buffer_A;
     current_flush_buf = NULL;
     logger_state = LOGGER_IDLE;
+
+    return 0;
 }
 
 void Logger_PushData(odb_data_t *new_data) {

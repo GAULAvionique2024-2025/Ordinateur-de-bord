@@ -20,10 +20,10 @@ typedef struct {
     uint32_t magic_number;   // To identify the start of a valid header
     uint32_t flight_id;      // Incremented each time
     uint32_t time_date;
-    uint32_t metadata_rsv;   // Reserved for future use (ex: new functionnality)
+    uint32_t metadata_rsv;   // Reserved for future use (new functionality)
 } flight_header_t;
 
-void Logger_Init(void);
+int8_t Logger_Init(void);
 
 void Logger_PushData(odb_data_t *new_data);
 void Logger_Task(void);
