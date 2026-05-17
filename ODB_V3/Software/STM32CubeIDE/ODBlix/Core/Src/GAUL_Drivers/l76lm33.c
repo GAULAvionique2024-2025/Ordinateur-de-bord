@@ -216,3 +216,23 @@ l76lm33_state_t L76LM33_SetStandby(l76lm33_t *dev) {
 
     return L76LM33_OK;
 }
+
+// Callback
+void L76LM33_UART_RxEventCallback(l76lm33_t *dev, uint16_t size) {
+    uint16_t length;
+    if(size >= dev->old_pos) {
+        length = size - dev->old_pos;
+    } else {
+        length = L76LM33_BUFFER_SIZES - dev->old_pos + size;
+    }
+
+    for(uint16_t i = 0; i < length; i++) {
+        uint8_t c = dev->dma_buffer[(dev->old_pos + i) % L76LM33_BUFFER_SIZES];
+        RingBuffer_Queue(&(dev->UART_Buffer), c);
+        if(c == '\n') {
+            dev->line_count++;
+        }
+    }
+
+    dev->old_pos = size;
+}

@@ -276,7 +276,9 @@ odb_state_t ODB_Init(odb_data_t *data) {
     data->system_states = system_states;
 
     // Buzzer report
-    Buzzer_ReportStatus(&buzzer, BUZZER_REPORT_TONE_HZ, system_measurements.vin_batt, (bool[]){(system_states & FLAG_PYRO1_CONN) != 0U, (system_states & FLAG_PYRO2_CONN) != 0U, (system_states & FLAG_PYRO3_CONN) != 0U, (system_states & FLAG_PYRO4_CONN) != 0U}, odb_state);
+    if(ENABLE_BUZZER) {
+        Buzzer_ReportStatus(&buzzer, BUZZER_REPORT_TONE_HZ, system_measurements.vin_batt, (bool[]){(system_states & FLAG_PYRO1_CONN) != 0U, (system_states & FLAG_PYRO2_CONN) != 0U, (system_states & FLAG_PYRO3_CONN) != 0U, (system_states & FLAG_PYRO4_CONN) != 0U}, odb_state);
+    }
 
     //Scheduler_AddTask(ODB_Update, 100);
     //...

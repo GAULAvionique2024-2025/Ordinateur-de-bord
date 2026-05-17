@@ -31,5 +31,6 @@
 #define FIRE_ATTEMPT_DELAY_MS               250                     // Delay in ms between fire attempts
 #define PYROS_ARMING_FAILSAFE_TICKS         40000                   // Time in ms to wait before minimal pyros arming
 #define APOGEE_FAILSAFE_TICKS               60000                   // Maximum time in ms to wait for apogee detection (1 ms resolution)
+#define ENABLE_BUZZER						0                       // Set to 1 to enable buzzer report tone
 
 #endif /* INC_APP_CONFIG_H_ */

@@ -431,7 +431,7 @@ void SPI5_IRQHandler(void)
 }
 
 /* USER CODE BEGIN 1 */
-/**
+/*
  * HM-11 (Bluetooth)
  */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
@@ -441,23 +441,16 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
     }
 }
 
-/**
+/*
  * L76LM33 (GPS)
  */
 void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t size) {
-    if(huart->Instance == l76lm33.huart->Instance) {
-        uint16_t nb_new_bytes = (size >= l76lm33.old_pos) ? (size - l76lm33.old_pos) : (L76LM33_BUFFER_SIZES - l76lm33.old_pos + size);
-
-        for(uint16_t i = 0; i < nb_new_bytes; i++) {
-            uint8_t byte = l76lm33.dma_buffer[(l76lm33.old_pos + i) % L76LM33_BUFFER_SIZES];
-            RingBuffer_Queue(&(l76lm33.UART_Buffer), byte);
-            if(byte == '\n') l76lm33.line_count++;
-        }
-        l76lm33.old_pos = size;
-    }
+	if(huart->Instance == USART6) {
+		L76LM33_UART_RxEventCallback(&l76lm33, size);
+	}
 }
 
-/**
+/*
  * RFD900x (Radio)
  */
 void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) {
