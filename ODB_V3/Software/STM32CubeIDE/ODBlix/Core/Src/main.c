@@ -273,14 +273,14 @@ int main(void)
   ODB_Init(&flight_data);
   Scheduler_Init();
   Logger_Init();
-  Scheduler_AddTask("FSM", Task_ExecuteFsm, TASK_FSM_FREQ_HZ);
   Scheduler_AddTask("UpdateData", Task_UpdateData, TASK_DATA_UPDATE_FREQ_HZ);
+  Scheduler_AddTask("FSM", Task_ExecuteFsm, TASK_FSM_FREQ_HZ);
   Scheduler_AddTask("Logger", Task_Logger, TASK_LOGGER_FREQ_HZ);
   Scheduler_AddTask("Telemetry", Task_Telemetry, TASK_TELEMETRY_FREQ_HZ);
   Scheduler_AddTask("BTRx", Task_BluetoothRx, TASK_BLUETOOTH_RX_FREQ_HZ);
   Scheduler_AddTask("BTTx", Task_BluetoothTx, TASK_BLUETOOTH_FRAME_FREQ_HZ);
-  Scheduler_SetActive("FSM", true);
   Scheduler_SetActive("UpdateData", true);
+  Scheduler_SetActive("FSM", true);
   Scheduler_SetActive("Logger", true);
   Scheduler_SetActive("Telemetry", true);
   Scheduler_SetActive("BTRx", true);

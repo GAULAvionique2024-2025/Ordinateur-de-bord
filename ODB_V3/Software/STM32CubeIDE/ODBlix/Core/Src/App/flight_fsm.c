@@ -64,7 +64,8 @@ void FSM_Update(void) {
         case STATE_ARMED:
             if(flight_data.highg_acc_z > ACC_Z_LAUNCH_THRESHOLD) {
                 ODB_SetMissionState(&flight_data, STATE_INFLIGHT);
-                Scheduler_RemoveTask("");
+                Scheduler_RemoveTask("BTRx");
+                Scheduler_RemoveTask("BTTx");
                 //HM11_Sleep(&hm11);
                 HAL_TIM_Base_Start_IT(&htim5);      // Start timer to measure time since launch
                 __HAL_TIM_SET_COUNTER(&htim5, 0);   // Reset timer counter
@@ -122,7 +123,7 @@ void FSM_Update(void) {
                                 fire_attempt_count++;
                                 fire_timer = HAL_GetTick();
                             } else {
-                                backup_active = flight_data.system_states |= FLAG_PYRO2_CONN;
+                                backup_active = flight_data.system_states & FLAG_PYRO2_CONN;
                                 fire_attempt_count = 0;
                             }
                         } else if(fire_attempt_count < DROGUE_FIRE_ATTEMPT_MAX_NB) {
@@ -137,6 +138,7 @@ void FSM_Update(void) {
                         fire_timer = 0;
                         fire_attempt_count = 0;
                         backup_active = false;
+
                         Pyro_Arming(&pyro3, &system_measurements, true);
                         Pyro_Arming(&pyro4, &system_measurements, true);
                     }
@@ -151,7 +153,7 @@ void FSM_Update(void) {
                                 fire_attempt_count++;
                                 fire_timer = HAL_GetTick();
                             } else {
-                                backup_active = flight_data.system_states |= FLAG_PYRO4_CONN;
+                                backup_active = flight_data.system_states & FLAG_PYRO4_CONN;
                                 fire_attempt_count = 0;
                             }
                         } else if(fire_attempt_count < MAIN_FIRE_ATTEMPT_MAX_NB) {
@@ -166,6 +168,10 @@ void FSM_Update(void) {
                         if(HAL_GetTick() - landing_timer > LANDING_DETECT_TIME_THRESHOLD_MS) {
                             current_substate = SUB_LANDED;
                             current_global_state = STATE_POSTFLIGHT;
+                            Pyro_Arming(&pyro1, &system_measurements, false);
+                            Pyro_Arming(&pyro2, &system_measurements, false);
+                            Pyro_Arming(&pyro3, &system_measurements, false);
+                            Pyro_Arming(&pyro4, &system_measurements, false);
                         }
                     } else {
                         landing_timer = 0;
@@ -173,7 +179,7 @@ void FSM_Update(void) {
                     break;
 
                 case SUB_LANDED:
-                ODB_SetMissionState(&flight_data, STATE_POSTFLIGHT);
+                    ODB_SetMissionState(&flight_data, STATE_POSTFLIGHT);
                     current_global_state = STATE_POSTFLIGHT;
                     break;
             }
