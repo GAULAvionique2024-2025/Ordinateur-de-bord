@@ -311,6 +311,8 @@ int main(void)
     App_SendFrame(&nexus, &hm11, &flight_data);
     App_HandleCommands(&nexus, &hm11);
     Profiler_StopTask(PROFILE_TASK_BLE);
+    Telemetry_SendRocketData(&rfd900x, ODB_MODEM_SUSTAINER, &flight_data, 1);
+    HAL_Delay(250);
     Profiler_LogResults(1000);
   }
   /* USER CODE END 3 */

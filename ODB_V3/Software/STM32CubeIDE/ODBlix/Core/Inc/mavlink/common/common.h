@@ -10,7 +10,7 @@
     #error Wrong include order: MAVLINK_COMMON.H MUST NOT BE DIRECTLY USED. Include mavlink.h from the same directory instead or set ALL AND EVERY defines from MAVLINK.H manually accordingly, including the #define MAVLINK_H call.
 #endif
 
-#define MAVLINK_COMMON_XML_HASH 8679629272199535764
+#define MAVLINK_COMMON_XML_HASH -5315424116239340696
 
 #ifdef __cplusplus
 extern "C" {
@@ -810,7 +810,11 @@ typedef enum MAV_CMD
           Support for this command can also be tested by sending the command with param1=0 (< 0.5); the ACK should be either MAV_RESULT_FAILED or MAV_RESULT_UNSUPPORTED.
          |Flight termination activated if > 0.5. Otherwise not activated and ACK with MAV_RESULT_FAILED.| Empty| Empty| Empty| Empty| Empty| Empty|  */
    MAV_CMD_DO_CHANGE_ALTITUDE=186, /* Change altitude set point. |Altitude.| Frame of new altitude.| Empty| Empty| Empty| Empty| Empty|  */
-   MAV_CMD_DO_SET_ACTUATOR=187, /* Sets actuators (e.g. servos) to a desired value. The actuator numbers are mapped to specific outputs (e.g. on any MAIN or AUX PWM or UAVCAN) using a flight-stack specific mechanism (i.e. a parameter). |Actuator 1 value, scaled from [-1 to 1]. NaN to ignore.| Actuator 2 value, scaled from [-1 to 1]. NaN to ignore.| Actuator 3 value, scaled from [-1 to 1]. NaN to ignore.| Actuator 4 value, scaled from [-1 to 1]. NaN to ignore.| Actuator 5 value, scaled from [-1 to 1]. NaN to ignore.| Actuator 6 value, scaled from [-1 to 1]. NaN to ignore.| Index of actuator set (i.e if set to 1, Actuator 1 becomes Actuator 7)|  */
+   MAV_CMD_DO_SET_ACTUATOR=187, /* Sets actuators (e.g. servos) to a desired value. The actuator numbers are mapped to specific outputs (e.g. on any MAIN or AUX PWM or UAVCAN) using a flight-stack specific mechanism (i.e. a parameter). |Actuator 1 value, scaled from [-1 to 1]. NaN to ignore.| Actuator 2 value, scaled from [-1 to 1]. NaN to ignore.| Actuator 3 value, scaled from [-1 to 1]. NaN to ignore.| Actuator 4 value, scaled from [-1 to 1]. NaN to ignore.| Actuator 5 value.
+          If sent in COMMAND_LONG: value is scaled from [-1 to 1]. NaN to ignore.
+          If sent in COMMAND_INT or MISSION_ITEM_INT: value is scaled by 1e7. INT32_MAX to ignore.| Actuator 6 value.
+          If sent in COMMAND_LONG: value is scaled from [-1 to 1]. NaN to ignore.
+          If sent in COMMAND_INT or MISSION_ITEM_INT: value is scaled by 1e7. INT32_MAX to ignore.| Index of actuator set (i.e if set to 1, Actuator 1 becomes Actuator 7)|  */
    MAV_CMD_DO_RETURN_PATH_START=188, /* Mission item to specify the start of a failsafe/landing return-path segment (the end of the segment is the next MAV_CMD_DO_LAND_START item).
           A vehicle that is using missions for landing (e.g. in a return mode) will join the mission on the closest path of the return-path segment (instead of MAV_CMD_DO_LAND_START or the nearest waypoint).
           The main use case is to minimize the failsafe flight path in corridor missions, where the inbound/outbound paths are constrained (by geofences) to the same particular path.
@@ -2918,7 +2922,8 @@ typedef enum GLOBAL_POSITION_SRC
    GLOBAL_POSITION_SRC_TERRAIN=4, /* Terrain referenced navigation. | */
    GLOBAL_POSITION_SRC_MAGNETIC=5, /* Magnetic positioning. | */
    GLOBAL_POSITION_SRC_ESTIMATOR=6, /* Estimated position based on various sensors (eg. a Kalman Filter). | */
-   GLOBAL_POSITION_SRC_ENUM_END=7, /*  | */
+   GLOBAL_POSITION_SRC_LEO=7, /* Low Earth Orbit satellite-based positioning (e.g.: Starlink, Xona PULSAR). | */
+   GLOBAL_POSITION_SRC_ENUM_END=8, /*  | */
 } GLOBAL_POSITION_SRC;
 #endif
 
@@ -3148,6 +3153,8 @@ typedef enum GLOBAL_POSITION_FLAGS
 #include "./mavlink_msg_time_estimate_to_target.h"
 #include "./mavlink_msg_tunnel.h"
 #include "./mavlink_msg_can_frame.h"
+#include "./mavlink_msg_canfd_frame.h"
+#include "./mavlink_msg_can_filter_modify.h"
 #include "./mavlink_msg_onboard_computer_status.h"
 #include "./mavlink_msg_component_information.h"
 #include "./mavlink_msg_component_information_basic.h"
@@ -3162,8 +3169,6 @@ typedef enum GLOBAL_POSITION_FLAGS
 #include "./mavlink_msg_current_mode.h"
 #include "./mavlink_msg_available_modes_monitor.h"
 #include "./mavlink_msg_illuminator_status.h"
-#include "./mavlink_msg_canfd_frame.h"
-#include "./mavlink_msg_can_filter_modify.h"
 #include "./mavlink_msg_wheel_distance.h"
 #include "./mavlink_msg_winch_status.h"
 #include "./mavlink_msg_open_drone_id_basic_id.h"

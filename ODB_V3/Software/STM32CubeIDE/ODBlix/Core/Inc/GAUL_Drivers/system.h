@@ -198,8 +198,8 @@ uint8_t ODB_GetPyroStates(const odb_data_t *data);
 #define MAVLINK_COMPONENT_ID 1 // air_1 = 1, air_2 = 2
 
 typedef enum {
-    ODB_MODEM_BOOSTER       = 1,
-    ODB_MODEM_SUSTAINER     = 2,
+    ODB_MODEM_BOOSTER       = 2,
+    ODB_MODEM_SUSTAINER     = 3,
 } odb_modem_id_t;
 
 typedef enum {
@@ -209,7 +209,7 @@ typedef enum {
 	EVENT_SEVERITY_INFO			= MAV_SEVERITY_INFO,
 } odb_event_severity_t;
 
-void Telemetry_SendRocketData(rfd900x_t *rfd_dev, const odb_modem_id_t modem_id, const odb_data_t *data, const uint32_t current_time_ms);
+void Telemetry_SendRocketData(rfd900x_t *rfd_dev, const odb_modem_id_t modem_id, odb_data_t *data, const uint32_t current_time_ms);
 void Telemetry_SendEventLog(rfd900x_t *rfd_dev, const odb_modem_id_t modem_id, const odb_event_severity_t severity, const char *text);
 /* =========== */
 

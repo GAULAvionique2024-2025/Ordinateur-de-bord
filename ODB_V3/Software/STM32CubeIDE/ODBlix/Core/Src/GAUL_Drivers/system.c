@@ -438,48 +438,54 @@ static void Telemetry_TransmitMessage(rfd900x_t *rfd_dev, const mavlink_message_
 	RFD900x_Transmit(rfd_dev, mavlink_tx_buffer, len);
 }
 
-void Telemetry_SendRocketData(rfd900x_t *rfd_dev, const odb_modem_id_t modem_id, const odb_data_t *data, const uint32_t current_time_ms) {
+void Telemetry_SendRocketData(rfd900x_t *rfd_dev, const odb_modem_id_t modem_id, odb_data_t *data, const uint32_t current_time_ms) {
     if(!rfd_dev || !data) return;
 
+    odb_data_t *data_temp = data;
+
     mavlink_message_t msg;
-
     mavlink_msg_rocket_telemetry_pack(
-        modem_id,
-        MAVLINK_COMPONENT_ID,
-        &msg,
-        current_time_ms,
-        data->lat,
-        data->lon,
-        data->gps_alt,
-        data->pressure_hpa,
-        (int32_t)(data->imu_gyro_x * 100.0f),
-        (int32_t)(data->imu_gyro_y * 100.0f),
-        (int32_t)(data->imu_gyro_z * 100.0f),
-        (int32_t)(data->highg_acc_x * 100.0f),
-        (int32_t)(data->highg_acc_y * 100.0f),
-        (int32_t)(data->highg_acc_z * 100.0f),
-        (int16_t)(data->roll * 100.0f),
-        (int16_t)(data->pitch * 100.0f),
-        (int16_t)(data->yaw * 100.0f),
-        (int16_t)(data->temp_celsius * 100.0f),
-        (int16_t)(data->imu_acc_x * 100.0f),
-        (int16_t)(data->imu_acc_y * 100.0f),
-        (int16_t)(data->imu_acc_z * 100.0f),
-        (int16_t)(data->imu_mag_x * 10.0f),
-        (int16_t)(data->imu_mag_y * 10.0f),
-        (int16_t)(data->imu_mag_z * 10.0f),
-        data->system_states,
-        data->battery_mv,
-        data->vel,
-        data->cog,
-        data->event_states,
-        data->mission_state,
-        data->gps_fix,
-        data->satellites_nb
-    );
+            modem_id,
+            MAVLINK_COMPONENT_ID,
+            &msg,
+            current_time_ms,
+			data_temp->system_states,
+			data_temp->event_states,
+			data_temp->mission_state,
+			data_temp->battery_mv,
+			data_temp->roll,
+			data_temp->pitch,
+			data_temp->yaw,
+			data_temp->imu_acc_x,
+			data_temp->imu_acc_y,
+			data_temp->imu_acc_z,
+			data_temp->imu_gyro_x,
+			data_temp->imu_gyro_y,
+			data_temp->imu_gyro_z,
+			data_temp->imu_mag_x,
+			data_temp->imu_mag_y,
+			data_temp->imu_mag_z,
+			data_temp->altitude_msl_m,
+			data_temp->pressure_hpa,
+			data_temp->temp_celsius,
+			data_temp->highg_acc_x,
+			data_temp->highg_acc_y,
+			data_temp->highg_acc_z,
+			data_temp->gps_fix,
+			data_temp->lat,
+			data_temp->lon,
+			data_temp->gps_alt,
+			data_temp->vel,
+			data_temp->cog,
+			data_temp->satellites_nb,
+			data_temp->imu_acc_vertical,
+			data_temp->highg_acc_vertical,
+			data_temp->kalman_z,
+			data_temp->kalman_v
+        );
 
-    Telemetry_TransmitMessage(rfd_dev, &msg);
-}
+        Telemetry_TransmitMessage(rfd_dev, &msg);
+    }
 
 void Telemetry_SendEventLog(rfd900x_t *rfd_dev, const odb_modem_id_t modem_id, const odb_event_severity_t severity, const char *text) {
     if (!rfd_dev || !text || text[0] == '\0' || strlen(text) > 50) return;

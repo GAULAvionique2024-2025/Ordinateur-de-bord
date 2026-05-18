@@ -43,7 +43,7 @@ class DataServiceManager with ChangeNotifier {
   double gpsLat = 0.0, gpsLon = 0.0, gpsAlt = 0.0;
   double gpsVelocity = 0.0, gpsCourse = 0.0;
   int gpsSatellites = 0;
-  bool gpsFix = false;
+  int gpsFix = 0;
   double barometerPressure = 0.0;
   double altitudeMslM = 0.0;
   double kalmanAltitudeM = 0.0;
@@ -183,7 +183,7 @@ class DataServiceManager with ChangeNotifier {
       ? '$gpsSatellites satellites'
       : '—';
   String get gpsFixDisplay => hasConnection 
-      ? (gpsFix ? '✓ Actif' : '✗ Aucun fix')
+      ? (gpsFix > 0 ? '✓ Actif' : '✗ Aucun fix')
       : '—';
 
   bool get odbSensorState => (
@@ -192,7 +192,7 @@ class DataServiceManager with ChangeNotifier {
       accHighGSensorState == SensorState.ok &&
       sdSensorState == SensorState.ok &&
       gpsSensorState == SensorState.ok &&
-      gpsFix == true &&
+      gpsFix >= 1 &&
       barometerSensorState == SensorState.ok &&
       goodPowerState == true &&
       pyrosActiveCount >= 0
@@ -243,7 +243,6 @@ class DataServiceManager with ChangeNotifier {
           case 'event_states':
             eventStates = int.tryParse(value) ?? eventStates;
             break;
-          case 'mission':
           case 'mission_state':
             missionState = int.tryParse(value) ?? missionState;
             break;
@@ -255,15 +254,7 @@ class DataServiceManager with ChangeNotifier {
               temperatureSensorState = SensorState.error;
             }
             break;
-          case 'odb':
-            odbState = value;
-            break;
 
-          case 'bat':
-            batteryVoltage = double.tryParse(value) ?? batteryVoltage;
-            batterySensorState = batteryVoltage > 0 ? SensorState.ok : SensorState.error;
-            goodPowerState = batteryVoltage >= 5.06;
-            break;
           case 'battery_mv':
             vinMv = int.tryParse(value) ?? vinMv;
             batteryVoltage = vinMv > 0
@@ -371,16 +362,8 @@ class DataServiceManager with ChangeNotifier {
             sdSensorState = SensorState.ok;
             break;
 
-          case 'gps_lat':
-            gpsLat = (int.tryParse(value) ?? (gpsLat * 10000000).round()) / 10000000.0;
-            gpsSensorState = SensorState.ok;
-            break;
           case 'lat':
             gpsLat = (int.tryParse(value) ?? (gpsLat * 10000000).round()) / 10000000.0;
-            gpsSensorState = SensorState.ok;
-            break;
-          case 'gps_lon':
-            gpsLon = (int.tryParse(value) ?? (gpsLon * 10000000).round()) / 10000000.0;
             gpsSensorState = SensorState.ok;
             break;
           case 'lon':
@@ -396,8 +379,8 @@ class DataServiceManager with ChangeNotifier {
             gpsSensorState = SensorState.ok;
             break;
           case 'gps_fix':
-            gpsFix = value == '1' || value.toLowerCase() == 'true';
-            gpsSensorState = gpsFix ? SensorState.ok : SensorState.error;
+            gpsFix = int.tryParse(value) ?? gpsFix;
+            gpsSensorState = SensorState.ok;
             break;
           case 'vel':
             gpsVelocity = int.tryParse(value)?.toDouble() ?? gpsVelocity;

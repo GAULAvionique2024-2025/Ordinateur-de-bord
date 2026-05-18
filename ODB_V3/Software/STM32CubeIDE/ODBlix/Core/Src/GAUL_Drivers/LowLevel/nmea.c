@@ -79,9 +79,9 @@ int8_t NMEA_ParseRMC(nmea_t *gps_data, const char *nmea_sentence) {
             } 
         } else if(token_idx == 2) { // GPS FIX
             if(token[0] == 'A') {
-                gps_data->gps_fix = 3; // 3D_FIX MAVLink
+                gps_data->gps_fix = 1; // FIX MAVLink
             } else {
-                gps_data->gps_fix = 1; // NO_FIX MAVLink
+                gps_data->gps_fix = 0; // NO FIX MAVLink
                 gps_data->lat = 0;
                 gps_data->lon = 0;
                 gps_data->vel = 0;
@@ -178,9 +178,11 @@ int8_t NMEA_ParseGGA(nmea_t *gps_data, const char *nmea_sentence) {
 
         if(token_idx == 6) { 
             if(token[0] == '0' || token[0] == '\0') {
-                gps_data->gps_fix = 1; // NO_FIX MAVLink
+                gps_data->gps_fix = 0; // NO FIX MAVLink
                 gps_data->satellites_nb = 0;
                 break;
+            } else {
+            	gps_data->gps_fix = atoi(token); // FIX MAVLink
             }
         } else if(token_idx == 7) { // SATELLITES USED (00-12+)
             if(token[0] != '\0') {

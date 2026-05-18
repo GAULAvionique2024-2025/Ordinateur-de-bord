@@ -28,71 +28,83 @@ def run_transmitter():
         # --- ENVOI BOOSTER (ID 1) ---
         booster_mav.rocket_telemetry_send(
             time_boot_ms=current_ms,
+            system_states=0xFFFF,
+            event_states=0x01,
+            mission_state=1,
+            battery_mv=12400,
+            roll=5.00,
+            pitch=10.00,
+            yaw=45.00,
+            imu_acc_x=0.00,
+            imu_acc_y=0.00,
+            imu_acc_z=9.81,
+            imu_gyro_x=0.10,
+            imu_gyro_y=0.20,
+            imu_gyro_z=0.30,
+            imu_mag_x=12.3,
+            imu_mag_y=45.6,
+            imu_mag_z=78.9,
+            altitude_msl_m=1200.0,
+            pressure_hpa=980.5,
+            temp_celsius=25.0,
+            highg_acc_x=0.00,
+            highg_acc_y=0.00,
+            highg_acc_z=98.10,
+            gps_fix=1,
             lat=465000000,
             lon=66000000,
             gps_alt=1200000,
-            pressure_hpa=980.5,
-            imu_gyro_x=10, 
-            imu_gyro_y=20, 
-            imu_gyro_z=30,
-            highg_acc_x=0, 
-            highg_acc_y=0, 
-            highg_acc_z=9810,    # 1000 * 9.81 m/s^2 ? (selon ton unité en XML)
-            roll=500, 
-            pitch=1000, 
-            yaw=4500,
-            temp_celsius=2500,   # 25.00 °C
-            imu_acc_x=0, 
-            imu_acc_y=0, 
-            imu_acc_z=981,
-            imu_mag_x=123, 
-            imu_mag_y=456, 
-            imu_mag_z=789,
-            system_states=0xFFFF, # Tous les flags OK
-            battery_mv=12400,     # 12.4V
-            vel=150, 
+            vel=150,
             cog=350,
-            event_states=0x01,    # Premier flag d'événement
-            mission_state=1,      # READY
-            gps_fix=1,
-            satellites_nb=12
+            satellites_nb=12,
+            imu_acc_vertical=9.81,
+            highg_acc_vertical=98.10,
+            kalman_z=1198.4,
+            kalman_v=0.0,
         )
         print(f"[{current_ms}ms] Packet envoyé : BOOSTER (ID {BOOSTER_SYSTEM_ID})")
+
+        time.sleep(0.10)
 
         # --- ENVOI SUSTAINER (ID 2) ---
         sustainer_mav.rocket_telemetry_send(
             time_boot_ms=current_ms,
-            lat=465010000,          # Latitude un peu décalée
-            lon=66005000,           # Longitude un peu décalée
-            gps_alt=8500000,        # 8500 mètres (en mm)
-            pressure_hpa=750.2,     # Pression plus basse
-            imu_gyro_x=50,          # Rotation plus forte
-            imu_gyro_y=50, 
-            imu_gyro_z=500,
-            highg_acc_x=0, 
-            highg_acc_y=0, 
-            highg_acc_z=4500,       # 4.5G de poussée
-            roll=0, 
-            pitch=8900,             # Presque à la verticale (89 deg)
-            yaw=0,
-            temp_celsius=1800,      # Plus froid en altitude (18.00 C)
-            imu_acc_x=0, 
-            imu_acc_y=0, 
-            imu_acc_z=4500,
-            imu_mag_x=130, 
-            imu_mag_y=460, 
-            imu_mag_z=790,
-            system_states=0x0F, 
-            battery_mv=11800,       # Batterie un peu plus faible
-            vel=45000,              # 450 m/s (en cm/s)
+            system_states=0x0F,
+            event_states=0x02,
+            mission_state=2,
+            battery_mv=11800,
+            roll=0.00,
+            pitch=89.00,
+            yaw=0.00,
+            imu_acc_x=0.00,
+            imu_acc_y=0.00,
+            imu_acc_z=4.50,
+            imu_gyro_x=0.50,
+            imu_gyro_y=0.50,
+            imu_gyro_z=5.00,
+            imu_mag_x=13.0,
+            imu_mag_y=46.0,
+            imu_mag_z=79.0,
+            altitude_msl_m=8500.0,
+            pressure_hpa=750.2,
+            temp_celsius=18.0,
+            highg_acc_x=0.00,
+            highg_acc_y=0.00,
+            highg_acc_z=45.00,
+            gps_fix=1,
+            lat=465010000,
+            lon=66005000,
+            gps_alt=8500000,
+            vel=45000,
             cog=0,
-            event_states=0x02,      # Autre flag d'événement
-            mission_state=2,        # IN_FLIGHT
-            gps_fix=1, 
-            satellites_nb=10
+            satellites_nb=10,
+            imu_acc_vertical=4.50,
+            highg_acc_vertical=45.00,
+            kalman_z=8498.7,
+            kalman_v=-12.3,
         )
         print(f"[{current_ms}ms] Packet envoyé : SUSTAINER (ID {SUSTAINER_SYSTEM_ID})")
-        time.sleep(0.25)
+        time.sleep(0.40)
 
 if __name__ == "__main__":
     run_transmitter()

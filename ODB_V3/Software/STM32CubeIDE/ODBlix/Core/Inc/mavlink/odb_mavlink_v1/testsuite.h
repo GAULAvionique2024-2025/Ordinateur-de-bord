@@ -37,31 +37,36 @@ static void mavlink_test_rocket_telemetry(uint8_t system_id, uint8_t component_i
         uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
         uint16_t i;
     mavlink_rocket_telemetry_t packet_in = {
-        963497464,963497672,963497880,963498088,129.0,963498504,963498712,963498920,963499128,963499336,963499544,19523,19627,19731,19835,19939,20043,20147,20251,20355,20459,20563,20667,20771,20875,221,32,99,166
+        963497464,45.0,73.0,101.0,129.0,157.0,185.0,213.0,241.0,269.0,297.0,325.0,353.0,381.0,409.0,437.0,465.0,493.0,521.0,963501416,963501624,963501832,633.0,661.0,689.0,717.0,22643,22747,22851,22955,85,152,219,30
     };
     mavlink_rocket_telemetry_t packet1, packet2;
         memset(&packet1, 0, sizeof(packet1));
         packet1.time_boot_ms = packet_in.time_boot_ms;
-        packet1.lat = packet_in.lat;
-        packet1.lon = packet_in.lon;
-        packet1.gps_alt = packet_in.gps_alt;
-        packet1.pressure_hpa = packet_in.pressure_hpa;
-        packet1.imu_gyro_x = packet_in.imu_gyro_x;
-        packet1.imu_gyro_y = packet_in.imu_gyro_y;
-        packet1.imu_gyro_z = packet_in.imu_gyro_z;
-        packet1.highg_acc_x = packet_in.highg_acc_x;
-        packet1.highg_acc_y = packet_in.highg_acc_y;
-        packet1.highg_acc_z = packet_in.highg_acc_z;
         packet1.roll = packet_in.roll;
         packet1.pitch = packet_in.pitch;
         packet1.yaw = packet_in.yaw;
-        packet1.temp_celsius = packet_in.temp_celsius;
         packet1.imu_acc_x = packet_in.imu_acc_x;
         packet1.imu_acc_y = packet_in.imu_acc_y;
         packet1.imu_acc_z = packet_in.imu_acc_z;
+        packet1.imu_gyro_x = packet_in.imu_gyro_x;
+        packet1.imu_gyro_y = packet_in.imu_gyro_y;
+        packet1.imu_gyro_z = packet_in.imu_gyro_z;
         packet1.imu_mag_x = packet_in.imu_mag_x;
         packet1.imu_mag_y = packet_in.imu_mag_y;
         packet1.imu_mag_z = packet_in.imu_mag_z;
+        packet1.altitude_msl_m = packet_in.altitude_msl_m;
+        packet1.pressure_hpa = packet_in.pressure_hpa;
+        packet1.temp_celsius = packet_in.temp_celsius;
+        packet1.highg_acc_x = packet_in.highg_acc_x;
+        packet1.highg_acc_y = packet_in.highg_acc_y;
+        packet1.highg_acc_z = packet_in.highg_acc_z;
+        packet1.lat = packet_in.lat;
+        packet1.lon = packet_in.lon;
+        packet1.gps_alt = packet_in.gps_alt;
+        packet1.imu_acc_vertical = packet_in.imu_acc_vertical;
+        packet1.highg_acc_vertical = packet_in.highg_acc_vertical;
+        packet1.kalman_z = packet_in.kalman_z;
+        packet1.kalman_v = packet_in.kalman_v;
         packet1.system_states = packet_in.system_states;
         packet1.battery_mv = packet_in.battery_mv;
         packet1.vel = packet_in.vel;
@@ -84,12 +89,12 @@ static void mavlink_test_rocket_telemetry(uint8_t system_id, uint8_t component_i
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-    mavlink_msg_rocket_telemetry_pack(system_id, component_id, &msg , packet1.time_boot_ms , packet1.lat , packet1.lon , packet1.gps_alt , packet1.pressure_hpa , packet1.imu_gyro_x , packet1.imu_gyro_y , packet1.imu_gyro_z , packet1.highg_acc_x , packet1.highg_acc_y , packet1.highg_acc_z , packet1.roll , packet1.pitch , packet1.yaw , packet1.temp_celsius , packet1.imu_acc_x , packet1.imu_acc_y , packet1.imu_acc_z , packet1.imu_mag_x , packet1.imu_mag_y , packet1.imu_mag_z , packet1.system_states , packet1.battery_mv , packet1.vel , packet1.cog , packet1.event_states , packet1.mission_state , packet1.gps_fix , packet1.satellites_nb );
+    mavlink_msg_rocket_telemetry_pack(system_id, component_id, &msg , packet1.time_boot_ms , packet1.system_states , packet1.event_states , packet1.mission_state , packet1.battery_mv , packet1.roll , packet1.pitch , packet1.yaw , packet1.imu_acc_x , packet1.imu_acc_y , packet1.imu_acc_z , packet1.imu_gyro_x , packet1.imu_gyro_y , packet1.imu_gyro_z , packet1.imu_mag_x , packet1.imu_mag_y , packet1.imu_mag_z , packet1.altitude_msl_m , packet1.pressure_hpa , packet1.temp_celsius , packet1.highg_acc_x , packet1.highg_acc_y , packet1.highg_acc_z , packet1.gps_fix , packet1.lat , packet1.lon , packet1.gps_alt , packet1.vel , packet1.cog , packet1.satellites_nb , packet1.imu_acc_vertical , packet1.highg_acc_vertical , packet1.kalman_z , packet1.kalman_v );
     mavlink_msg_rocket_telemetry_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-    mavlink_msg_rocket_telemetry_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.time_boot_ms , packet1.lat , packet1.lon , packet1.gps_alt , packet1.pressure_hpa , packet1.imu_gyro_x , packet1.imu_gyro_y , packet1.imu_gyro_z , packet1.highg_acc_x , packet1.highg_acc_y , packet1.highg_acc_z , packet1.roll , packet1.pitch , packet1.yaw , packet1.temp_celsius , packet1.imu_acc_x , packet1.imu_acc_y , packet1.imu_acc_z , packet1.imu_mag_x , packet1.imu_mag_y , packet1.imu_mag_z , packet1.system_states , packet1.battery_mv , packet1.vel , packet1.cog , packet1.event_states , packet1.mission_state , packet1.gps_fix , packet1.satellites_nb );
+    mavlink_msg_rocket_telemetry_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.time_boot_ms , packet1.system_states , packet1.event_states , packet1.mission_state , packet1.battery_mv , packet1.roll , packet1.pitch , packet1.yaw , packet1.imu_acc_x , packet1.imu_acc_y , packet1.imu_acc_z , packet1.imu_gyro_x , packet1.imu_gyro_y , packet1.imu_gyro_z , packet1.imu_mag_x , packet1.imu_mag_y , packet1.imu_mag_z , packet1.altitude_msl_m , packet1.pressure_hpa , packet1.temp_celsius , packet1.highg_acc_x , packet1.highg_acc_y , packet1.highg_acc_z , packet1.gps_fix , packet1.lat , packet1.lon , packet1.gps_alt , packet1.vel , packet1.cog , packet1.satellites_nb , packet1.imu_acc_vertical , packet1.highg_acc_vertical , packet1.kalman_z , packet1.kalman_v );
     mavlink_msg_rocket_telemetry_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
@@ -102,7 +107,7 @@ static void mavlink_test_rocket_telemetry(uint8_t system_id, uint8_t component_i
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
         
         memset(&packet2, 0, sizeof(packet2));
-    mavlink_msg_rocket_telemetry_send(MAVLINK_COMM_1 , packet1.time_boot_ms , packet1.lat , packet1.lon , packet1.gps_alt , packet1.pressure_hpa , packet1.imu_gyro_x , packet1.imu_gyro_y , packet1.imu_gyro_z , packet1.highg_acc_x , packet1.highg_acc_y , packet1.highg_acc_z , packet1.roll , packet1.pitch , packet1.yaw , packet1.temp_celsius , packet1.imu_acc_x , packet1.imu_acc_y , packet1.imu_acc_z , packet1.imu_mag_x , packet1.imu_mag_y , packet1.imu_mag_z , packet1.system_states , packet1.battery_mv , packet1.vel , packet1.cog , packet1.event_states , packet1.mission_state , packet1.gps_fix , packet1.satellites_nb );
+    mavlink_msg_rocket_telemetry_send(MAVLINK_COMM_1 , packet1.time_boot_ms , packet1.system_states , packet1.event_states , packet1.mission_state , packet1.battery_mv , packet1.roll , packet1.pitch , packet1.yaw , packet1.imu_acc_x , packet1.imu_acc_y , packet1.imu_acc_z , packet1.imu_gyro_x , packet1.imu_gyro_y , packet1.imu_gyro_z , packet1.imu_mag_x , packet1.imu_mag_y , packet1.imu_mag_z , packet1.altitude_msl_m , packet1.pressure_hpa , packet1.temp_celsius , packet1.highg_acc_x , packet1.highg_acc_y , packet1.highg_acc_z , packet1.gps_fix , packet1.lat , packet1.lon , packet1.gps_alt , packet1.vel , packet1.cog , packet1.satellites_nb , packet1.imu_acc_vertical , packet1.highg_acc_vertical , packet1.kalman_z , packet1.kalman_v );
     mavlink_msg_rocket_telemetry_decode(last_msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 

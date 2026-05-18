@@ -1692,8 +1692,16 @@ enums["MAV_CMD"][187].param[1] = """Actuator 1 value, scaled from [-1 to 1]. NaN
 enums["MAV_CMD"][187].param[2] = """Actuator 2 value, scaled from [-1 to 1]. NaN to ignore."""
 enums["MAV_CMD"][187].param[3] = """Actuator 3 value, scaled from [-1 to 1]. NaN to ignore."""
 enums["MAV_CMD"][187].param[4] = """Actuator 4 value, scaled from [-1 to 1]. NaN to ignore."""
-enums["MAV_CMD"][187].param[5] = """Actuator 5 value, scaled from [-1 to 1]. NaN to ignore."""
-enums["MAV_CMD"][187].param[6] = """Actuator 6 value, scaled from [-1 to 1]. NaN to ignore."""
+enums["MAV_CMD"][187].param[
+    5
+] = """Actuator 5 value.
+          If sent in COMMAND_LONG: value is scaled from [-1 to 1]. NaN to ignore.
+          If sent in COMMAND_INT or MISSION_ITEM_INT: value is scaled by 1e7. INT32_MAX to ignore."""
+enums["MAV_CMD"][187].param[
+    6
+] = """Actuator 6 value.
+          If sent in COMMAND_LONG: value is scaled from [-1 to 1]. NaN to ignore.
+          If sent in COMMAND_INT or MISSION_ITEM_INT: value is scaled by 1e7. INT32_MAX to ignore."""
 enums["MAV_CMD"][187].param[7] = """Index of actuator set (i.e if set to 1, Actuator 1 becomes Actuator 7)"""
 MAV_CMD_DO_RETURN_PATH_START = 188
 enums["MAV_CMD"][188] = EnumEntry(
@@ -5425,8 +5433,10 @@ GLOBAL_POSITION_SRC_MAGNETIC = 5
 enums["GLOBAL_POSITION_SRC"][5] = EnumEntry("GLOBAL_POSITION_SRC_MAGNETIC", """Magnetic positioning.""")
 GLOBAL_POSITION_SRC_ESTIMATOR = 6
 enums["GLOBAL_POSITION_SRC"][6] = EnumEntry("GLOBAL_POSITION_SRC_ESTIMATOR", """Estimated position based on various sensors (eg. a Kalman Filter).""")
-GLOBAL_POSITION_SRC_ENUM_END = 7
-enums["GLOBAL_POSITION_SRC"][7] = EnumEntry("GLOBAL_POSITION_SRC_ENUM_END", """""")
+GLOBAL_POSITION_SRC_LEO = 7
+enums["GLOBAL_POSITION_SRC"][7] = EnumEntry("GLOBAL_POSITION_SRC_LEO", """Low Earth Orbit satellite-based positioning (e.g.: Starlink, Xona PULSAR).""")
+GLOBAL_POSITION_SRC_ENUM_END = 8
+enums["GLOBAL_POSITION_SRC"][8] = EnumEntry("GLOBAL_POSITION_SRC_ENUM_END", """""")
 
 # GLOBAL_POSITION_FLAGS
 enums["GLOBAL_POSITION_FLAGS"] = Enum()
@@ -6045,7 +6055,7 @@ enums["MAV_COMPONENT"][251] = EnumEntry("MAV_COMPONENT_ENUM_END", """""")
 # message IDs
 MAVLINK_MSG_ID_BAD_DATA = -1
 MAVLINK_MSG_ID_UNKNOWN = -2
-MAVLINK_MSG_ID_ROCKET_TELEMETRY = 1000
+MAVLINK_MSG_ID_ROCKET_TELEMETRY = 1350
 MAVLINK_MSG_ID_SYS_STATUS = 1
 MAVLINK_MSG_ID_SYSTEM_TIME = 2
 MAVLINK_MSG_ID_PING = 4
@@ -6249,6 +6259,8 @@ MAVLINK_MSG_ID_RELAY_STATUS = 376
 MAVLINK_MSG_ID_TIME_ESTIMATE_TO_TARGET = 380
 MAVLINK_MSG_ID_TUNNEL = 385
 MAVLINK_MSG_ID_CAN_FRAME = 386
+MAVLINK_MSG_ID_CANFD_FRAME = 387
+MAVLINK_MSG_ID_CAN_FILTER_MODIFY = 388
 MAVLINK_MSG_ID_ONBOARD_COMPUTER_STATUS = 390
 MAVLINK_MSG_ID_COMPONENT_INFORMATION = 395
 MAVLINK_MSG_ID_COMPONENT_INFORMATION_BASIC = 396
@@ -6263,8 +6275,6 @@ MAVLINK_MSG_ID_AVAILABLE_MODES = 435
 MAVLINK_MSG_ID_CURRENT_MODE = 436
 MAVLINK_MSG_ID_AVAILABLE_MODES_MONITOR = 437
 MAVLINK_MSG_ID_ILLUMINATOR_STATUS = 440
-MAVLINK_MSG_ID_CANFD_FRAME = 387
-MAVLINK_MSG_ID_CAN_FILTER_MODIFY = 388
 MAVLINK_MSG_ID_WHEEL_DISTANCE = 9000
 MAVLINK_MSG_ID_WINCH_STATUS = 9005
 MAVLINK_MSG_ID_OPEN_DRONE_ID_BASIC_ID = 12900
@@ -6284,63 +6294,68 @@ MAVLINK_MSG_ID_HEARTBEAT = 0
 
 class MAVLink_rocket_telemetry_message(MAVLink_message):
     """
-    ODB Rocket Telemetry.
+    Complete telemetry data for the rocket.
     """
 
     id = MAVLINK_MSG_ID_ROCKET_TELEMETRY
     msgname = "ROCKET_TELEMETRY"
-    fieldnames = ["time_boot_ms", "lat", "lon", "gps_alt", "pressure_hpa", "imu_gyro_x", "imu_gyro_y", "imu_gyro_z", "highg_acc_x", "highg_acc_y", "highg_acc_z", "roll", "pitch", "yaw", "temp_celsius", "imu_acc_x", "imu_acc_y", "imu_acc_z", "imu_mag_x", "imu_mag_y", "imu_mag_z", "system_states", "battery_mv", "vel", "cog", "event_states", "mission_state", "gps_fix", "satellites_nb"]
-    ordered_fieldnames = ["time_boot_ms", "lat", "lon", "gps_alt", "pressure_hpa", "imu_gyro_x", "imu_gyro_y", "imu_gyro_z", "highg_acc_x", "highg_acc_y", "highg_acc_z", "roll", "pitch", "yaw", "temp_celsius", "imu_acc_x", "imu_acc_y", "imu_acc_z", "imu_mag_x", "imu_mag_y", "imu_mag_z", "system_states", "battery_mv", "vel", "cog", "event_states", "mission_state", "gps_fix", "satellites_nb"]
-    fieldtypes = ["uint32_t", "int32_t", "int32_t", "int32_t", "float", "int32_t", "int32_t", "int32_t", "int32_t", "int32_t", "int32_t", "int16_t", "int16_t", "int16_t", "int16_t", "int16_t", "int16_t", "int16_t", "int16_t", "int16_t", "int16_t", "uint16_t", "uint16_t", "uint16_t", "uint16_t", "uint8_t", "uint8_t", "uint8_t", "uint8_t"]
+    fieldnames = ["time_boot_ms", "system_states", "event_states", "mission_state", "battery_mv", "roll", "pitch", "yaw", "imu_acc_x", "imu_acc_y", "imu_acc_z", "imu_gyro_x", "imu_gyro_y", "imu_gyro_z", "imu_mag_x", "imu_mag_y", "imu_mag_z", "altitude_msl_m", "pressure_hpa", "temp_celsius", "highg_acc_x", "highg_acc_y", "highg_acc_z", "gps_fix", "lat", "lon", "gps_alt", "vel", "cog", "satellites_nb", "imu_acc_vertical", "highg_acc_vertical", "kalman_z", "kalman_v"]
+    ordered_fieldnames = ["time_boot_ms", "roll", "pitch", "yaw", "imu_acc_x", "imu_acc_y", "imu_acc_z", "imu_gyro_x", "imu_gyro_y", "imu_gyro_z", "imu_mag_x", "imu_mag_y", "imu_mag_z", "altitude_msl_m", "pressure_hpa", "temp_celsius", "highg_acc_x", "highg_acc_y", "highg_acc_z", "lat", "lon", "gps_alt", "imu_acc_vertical", "highg_acc_vertical", "kalman_z", "kalman_v", "system_states", "battery_mv", "vel", "cog", "event_states", "mission_state", "gps_fix", "satellites_nb"]
+    fieldtypes = ["uint32_t", "uint16_t", "uint8_t", "uint8_t", "uint16_t", "float", "float", "float", "float", "float", "float", "float", "float", "float", "float", "float", "float", "float", "float", "float", "float", "float", "float", "uint8_t", "int32_t", "int32_t", "int32_t", "uint16_t", "uint16_t", "uint8_t", "float", "float", "float", "float"]
     fielddisplays_by_name: Dict[str, str] = {}
     fieldenums_by_name: Dict[str, str] = {}
-    fieldunits_by_name: Dict[str, str] = {"time_boot_ms": "ms", "lat": "degE7", "lon": "degE7", "gps_alt": "mm", "pressure_hpa": "hPa", "imu_gyro_x": "cdeg/s", "imu_gyro_y": "cdeg/s", "imu_gyro_z": "cdeg/s", "highg_acc_x": "cm/s/s", "highg_acc_y": "cm/s/s", "highg_acc_z": "cm/s/s", "roll": "cdeg", "pitch": "cdeg", "yaw": "cdeg", "temp_celsius": "cdegC", "imu_acc_x": "cm/s/s", "imu_acc_y": "cm/s/s", "imu_acc_z": "cm/s/s", "imu_mag_x": "cuT", "imu_mag_y": "cuT", "imu_mag_z": "cuT", "battery_mv": "mV", "vel": "cm/s", "cog": "cdeg"}
-    native_format = bytearray(b"<IiiifiiiiiihhhhhhhhhhHHHHBBBB")
-    orders = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28]
-    lengths = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-    array_lengths = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    crc_extra = 168
-    unpacker = struct.Struct("<IiiifiiiiiihhhhhhhhhhHHHHBBBB")
+    fieldunits_by_name: Dict[str, str] = {"time_boot_ms": "ms", "battery_mv": "mV", "roll": "deg", "pitch": "deg", "yaw": "deg", "imu_acc_x": "m/s/s", "imu_acc_y": "m/s/s", "imu_acc_z": "m/s/s", "imu_gyro_x": "deg/s", "imu_gyro_y": "deg/s", "imu_gyro_z": "deg/s", "imu_mag_x": "uT", "imu_mag_y": "uT", "imu_mag_z": "uT", "altitude_msl_m": "m", "pressure_hpa": "hPa", "temp_celsius": "degC", "highg_acc_x": "m/s/s", "highg_acc_y": "m/s/s", "highg_acc_z": "m/s/s", "lat": "degE7", "lon": "degE7", "gps_alt": "mm", "vel": "cm/s", "cog": "cdeg", "imu_acc_vertical": "m/s/s", "highg_acc_vertical": "m/s/s", "kalman_z": "m", "kalman_v": "m/s"}
+    native_format = bytearray(b"<IffffffffffffffffffiiiffffHHHHBBBB")
+    orders = [0, 26, 30, 31, 27, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 32, 19, 20, 21, 28, 29, 33, 22, 23, 24, 25]
+    lengths = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    array_lengths = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    crc_extra = 18
+    unpacker = struct.Struct("<IffffffffffffffffffiiiffffHHHHBBBB")
     instance_field = None
     instance_offset = -1
 
-    def __init__(self, time_boot_ms: int, lat: int, lon: int, gps_alt: int, pressure_hpa: float, imu_gyro_x: int, imu_gyro_y: int, imu_gyro_z: int, highg_acc_x: int, highg_acc_y: int, highg_acc_z: int, roll: int, pitch: int, yaw: int, temp_celsius: int, imu_acc_x: int, imu_acc_y: int, imu_acc_z: int, imu_mag_x: int, imu_mag_y: int, imu_mag_z: int, system_states: int, battery_mv: int, vel: int, cog: int, event_states: int, mission_state: int, gps_fix: int, satellites_nb: int):
+    def __init__(self, time_boot_ms: int, system_states: int, event_states: int, mission_state: int, battery_mv: int, roll: float, pitch: float, yaw: float, imu_acc_x: float, imu_acc_y: float, imu_acc_z: float, imu_gyro_x: float, imu_gyro_y: float, imu_gyro_z: float, imu_mag_x: float, imu_mag_y: float, imu_mag_z: float, altitude_msl_m: float, pressure_hpa: float, temp_celsius: float, highg_acc_x: float, highg_acc_y: float, highg_acc_z: float, gps_fix: int, lat: int, lon: int, gps_alt: int, vel: int, cog: int, satellites_nb: int, imu_acc_vertical: float, highg_acc_vertical: float, kalman_z: float, kalman_v: float):
         MAVLink_message.__init__(self, MAVLink_rocket_telemetry_message.id, MAVLink_rocket_telemetry_message.msgname)
         self._fieldnames = MAVLink_rocket_telemetry_message.fieldnames
         self._instance_field = MAVLink_rocket_telemetry_message.instance_field
         self._instance_offset = MAVLink_rocket_telemetry_message.instance_offset
         self.time_boot_ms = time_boot_ms
-        self.lat = lat
-        self.lon = lon
-        self.gps_alt = gps_alt
-        self.pressure_hpa = pressure_hpa
-        self.imu_gyro_x = imu_gyro_x
-        self.imu_gyro_y = imu_gyro_y
-        self.imu_gyro_z = imu_gyro_z
-        self.highg_acc_x = highg_acc_x
-        self.highg_acc_y = highg_acc_y
-        self.highg_acc_z = highg_acc_z
+        self.system_states = system_states
+        self.event_states = event_states
+        self.mission_state = mission_state
+        self.battery_mv = battery_mv
         self.roll = roll
         self.pitch = pitch
         self.yaw = yaw
-        self.temp_celsius = temp_celsius
         self.imu_acc_x = imu_acc_x
         self.imu_acc_y = imu_acc_y
         self.imu_acc_z = imu_acc_z
+        self.imu_gyro_x = imu_gyro_x
+        self.imu_gyro_y = imu_gyro_y
+        self.imu_gyro_z = imu_gyro_z
         self.imu_mag_x = imu_mag_x
         self.imu_mag_y = imu_mag_y
         self.imu_mag_z = imu_mag_z
-        self.system_states = system_states
-        self.battery_mv = battery_mv
+        self.altitude_msl_m = altitude_msl_m
+        self.pressure_hpa = pressure_hpa
+        self.temp_celsius = temp_celsius
+        self.highg_acc_x = highg_acc_x
+        self.highg_acc_y = highg_acc_y
+        self.highg_acc_z = highg_acc_z
+        self.gps_fix = gps_fix
+        self.lat = lat
+        self.lon = lon
+        self.gps_alt = gps_alt
         self.vel = vel
         self.cog = cog
-        self.event_states = event_states
-        self.mission_state = mission_state
-        self.gps_fix = gps_fix
         self.satellites_nb = satellites_nb
+        self.imu_acc_vertical = imu_acc_vertical
+        self.highg_acc_vertical = highg_acc_vertical
+        self.kalman_z = kalman_z
+        self.kalman_v = kalman_v
 
     def pack(self, mav: "MAVLink", force_mavlink1: bool = False) -> bytes:
-        return self._pack(mav, self.crc_extra, self.unpacker.pack(self.time_boot_ms, self.lat, self.lon, self.gps_alt, self.pressure_hpa, self.imu_gyro_x, self.imu_gyro_y, self.imu_gyro_z, self.highg_acc_x, self.highg_acc_y, self.highg_acc_z, self.roll, self.pitch, self.yaw, self.temp_celsius, self.imu_acc_x, self.imu_acc_y, self.imu_acc_z, self.imu_mag_x, self.imu_mag_y, self.imu_mag_z, self.system_states, self.battery_mv, self.vel, self.cog, self.event_states, self.mission_state, self.gps_fix, self.satellites_nb), force_mavlink1=force_mavlink1)
+        return self._pack(mav, self.crc_extra, self.unpacker.pack(self.time_boot_ms, self.roll, self.pitch, self.yaw, self.imu_acc_x, self.imu_acc_y, self.imu_acc_z, self.imu_gyro_x, self.imu_gyro_y, self.imu_gyro_z, self.imu_mag_x, self.imu_mag_y, self.imu_mag_z, self.altitude_msl_m, self.pressure_hpa, self.temp_celsius, self.highg_acc_x, self.highg_acc_y, self.highg_acc_z, self.lat, self.lon, self.gps_alt, self.imu_acc_vertical, self.highg_acc_vertical, self.kalman_z, self.kalman_v, self.system_states, self.battery_mv, self.vel, self.cog, self.event_states, self.mission_state, self.gps_fix, self.satellites_nb), force_mavlink1=force_mavlink1)
 
 
 # Define name on the class for backwards compatibility (it is now msgname).
@@ -12412,8 +12427,7 @@ class MAVLink_home_position_message(MAVLink_message):
     describes the point to which the system should fly in normal
     flight mode and then perform a landing sequence along the vector.
     Note: this message can be requested by sending the
-    MAV_CMD_REQUEST_MESSAGE with param1=242 (or the deprecated
-    MAV_CMD_GET_HOME_POSITION command).
+    MAV_CMD_REQUEST_MESSAGE with param1=242.
     """
 
     id = MAVLINK_MSG_ID_HOME_POSITION
@@ -12525,8 +12539,7 @@ class MAVLink_message_interval_message(MAVLink_message):
     The interval between messages for a particular MAVLink message ID.
     This message is sent in response to the MAV_CMD_REQUEST_MESSAGE
     command with param1=244 (this message) and param2=message_id (the
-    id of the message for which the interval is required).         It
-    may also be sent in response to MAV_CMD_GET_MESSAGE_INTERVAL.
+    id of the message for which the interval is required).
     This interface replaces DATA_STREAM.
     """
 
@@ -14777,15 +14790,15 @@ setattr(MAVLink_uavcan_node_status_message, "name", mavlink_msg_deprecated_name_
 
 class MAVLink_uavcan_node_info_message(MAVLink_message):
     """
-    General information describing a particular UAVCAN node. Please
-    refer to the definition of the UAVCAN service
-    "uavcan.protocol.GetNodeInfo" for the background information. This
-    message should be emitted by the system whenever a new node
-    appears online, or an existing node reboots. Additionally, it can
-    be emitted upon request from the other end of the MAVLink channel
-    (see MAV_CMD_UAVCAN_GET_NODE_INFO). It is also not prohibited to
-    emit this message unconditionally at a low frequency. The UAVCAN
-    specification is available at http://uavcan.org.
+    General information describing a particular UAVCAN node.
+    Please refer to the definition of the UAVCAN service
+    "uavcan.protocol.GetNodeInfo" for the background information.
+    This message should be emitted by the system whenever a new node
+    appears online, or an existing node reboots.         The message
+    may also be explicitly requested using MAV_CMD_REQUEST_MESSAGE.
+    It is also not prohibited to emit this message unconditionally at
+    a low frequency.         The DroneCAN specification is available
+    at https://dronecan.github.io/Specification/1._Introduction/.
     """
 
     id = MAVLINK_MSG_ID_UAVCAN_NODE_INFO
@@ -16119,6 +16132,99 @@ class MAVLink_can_frame_message(MAVLink_message):
 setattr(MAVLink_can_frame_message, "name", mavlink_msg_deprecated_name_property())
 
 
+class MAVLink_canfd_frame_message(MAVLink_message):
+    """
+    A forwarded CANFD frame as requested by MAV_CMD_CAN_FORWARD. These
+    are separated from CAN_FRAME as they need different handling (eg.
+    TAO handling)
+    """
+
+    id = MAVLINK_MSG_ID_CANFD_FRAME
+    msgname = "CANFD_FRAME"
+    fieldnames = ["target_system", "target_component", "bus", "len", "id", "data"]
+    ordered_fieldnames = ["id", "target_system", "target_component", "bus", "len", "data"]
+    fieldtypes = ["uint8_t", "uint8_t", "uint8_t", "uint8_t", "uint32_t", "uint8_t"]
+    fielddisplays_by_name: Dict[str, str] = {}
+    fieldenums_by_name: Dict[str, str] = {}
+    fieldunits_by_name: Dict[str, str] = {}
+    native_format = bytearray(b"<IBBBBB")
+    orders = [1, 2, 3, 4, 0, 5]
+    lengths = [1, 1, 1, 1, 1, 64]
+    array_lengths = [0, 0, 0, 0, 0, 64]
+    crc_extra = 4
+    unpacker = struct.Struct("<IBBBB64B")
+    instance_field = None
+    instance_offset = -1
+
+    def __init__(self, target_system: int, target_component: int, bus: int, len: int, id: int, data: Sequence[int]):
+        MAVLink_message.__init__(self, MAVLink_canfd_frame_message.id, MAVLink_canfd_frame_message.msgname)
+        self._fieldnames = MAVLink_canfd_frame_message.fieldnames
+        self._instance_field = MAVLink_canfd_frame_message.instance_field
+        self._instance_offset = MAVLink_canfd_frame_message.instance_offset
+        self.target_system = target_system
+        self.target_component = target_component
+        self.bus = bus
+        self.len = len
+        self.id = id
+        self.data = data
+
+    def pack(self, mav: "MAVLink", force_mavlink1: bool = False) -> bytes:
+        return self._pack(mav, self.crc_extra, self.unpacker.pack(self.id, self.target_system, self.target_component, self.bus, self.len, self.data[0], self.data[1], self.data[2], self.data[3], self.data[4], self.data[5], self.data[6], self.data[7], self.data[8], self.data[9], self.data[10], self.data[11], self.data[12], self.data[13], self.data[14], self.data[15], self.data[16], self.data[17], self.data[18], self.data[19], self.data[20], self.data[21], self.data[22], self.data[23], self.data[24], self.data[25], self.data[26], self.data[27], self.data[28], self.data[29], self.data[30], self.data[31], self.data[32], self.data[33], self.data[34], self.data[35], self.data[36], self.data[37], self.data[38], self.data[39], self.data[40], self.data[41], self.data[42], self.data[43], self.data[44], self.data[45], self.data[46], self.data[47], self.data[48], self.data[49], self.data[50], self.data[51], self.data[52], self.data[53], self.data[54], self.data[55], self.data[56], self.data[57], self.data[58], self.data[59], self.data[60], self.data[61], self.data[62], self.data[63]), force_mavlink1=force_mavlink1)
+
+
+# Define name on the class for backwards compatibility (it is now msgname).
+# Done with setattr to hide the class variable from mypy.
+setattr(MAVLink_canfd_frame_message, "name", mavlink_msg_deprecated_name_property())
+
+
+class MAVLink_can_filter_modify_message(MAVLink_message):
+    """
+    Modify the filter of what CAN messages to forward over the
+    mavlink. This can be used to make CAN forwarding work well on low
+    bandwidth links. The filtering is applied on bits 8 to 24 of the
+    CAN id (2nd and 3rd bytes) which corresponds to the DroneCAN
+    message ID for DroneCAN. Filters with more than 16 IDs can be
+    constructed by sending multiple CAN_FILTER_MODIFY messages.
+    """
+
+    id = MAVLINK_MSG_ID_CAN_FILTER_MODIFY
+    msgname = "CAN_FILTER_MODIFY"
+    fieldnames = ["target_system", "target_component", "bus", "operation", "num_ids", "ids"]
+    ordered_fieldnames = ["ids", "target_system", "target_component", "bus", "operation", "num_ids"]
+    fieldtypes = ["uint8_t", "uint8_t", "uint8_t", "uint8_t", "uint8_t", "uint16_t"]
+    fielddisplays_by_name: Dict[str, str] = {}
+    fieldenums_by_name: Dict[str, str] = {"operation": "CAN_FILTER_OP"}
+    fieldunits_by_name: Dict[str, str] = {}
+    native_format = bytearray(b"<HBBBBB")
+    orders = [1, 2, 3, 4, 5, 0]
+    lengths = [16, 1, 1, 1, 1, 1]
+    array_lengths = [16, 0, 0, 0, 0, 0]
+    crc_extra = 8
+    unpacker = struct.Struct("<16HBBBBB")
+    instance_field = None
+    instance_offset = -1
+
+    def __init__(self, target_system: int, target_component: int, bus: int, operation: int, num_ids: int, ids: Sequence[int]):
+        MAVLink_message.__init__(self, MAVLink_can_filter_modify_message.id, MAVLink_can_filter_modify_message.msgname)
+        self._fieldnames = MAVLink_can_filter_modify_message.fieldnames
+        self._instance_field = MAVLink_can_filter_modify_message.instance_field
+        self._instance_offset = MAVLink_can_filter_modify_message.instance_offset
+        self.target_system = target_system
+        self.target_component = target_component
+        self.bus = bus
+        self.operation = operation
+        self.num_ids = num_ids
+        self.ids = ids
+
+    def pack(self, mav: "MAVLink", force_mavlink1: bool = False) -> bytes:
+        return self._pack(mav, self.crc_extra, self.unpacker.pack(self.ids[0], self.ids[1], self.ids[2], self.ids[3], self.ids[4], self.ids[5], self.ids[6], self.ids[7], self.ids[8], self.ids[9], self.ids[10], self.ids[11], self.ids[12], self.ids[13], self.ids[14], self.ids[15], self.target_system, self.target_component, self.bus, self.operation, self.num_ids), force_mavlink1=force_mavlink1)
+
+
+# Define name on the class for backwards compatibility (it is now msgname).
+# Done with setattr to hide the class variable from mypy.
+setattr(MAVLink_can_filter_modify_message, "name", mavlink_msg_deprecated_name_property())
+
+
 class MAVLink_onboard_computer_status_message(MAVLink_message):
     """
     Hardware status sent by an onboard computer.
@@ -16774,99 +16880,6 @@ class MAVLink_illuminator_status_message(MAVLink_message):
 # Define name on the class for backwards compatibility (it is now msgname).
 # Done with setattr to hide the class variable from mypy.
 setattr(MAVLink_illuminator_status_message, "name", mavlink_msg_deprecated_name_property())
-
-
-class MAVLink_canfd_frame_message(MAVLink_message):
-    """
-    A forwarded CANFD frame as requested by MAV_CMD_CAN_FORWARD. These
-    are separated from CAN_FRAME as they need different handling (eg.
-    TAO handling)
-    """
-
-    id = MAVLINK_MSG_ID_CANFD_FRAME
-    msgname = "CANFD_FRAME"
-    fieldnames = ["target_system", "target_component", "bus", "len", "id", "data"]
-    ordered_fieldnames = ["id", "target_system", "target_component", "bus", "len", "data"]
-    fieldtypes = ["uint8_t", "uint8_t", "uint8_t", "uint8_t", "uint32_t", "uint8_t"]
-    fielddisplays_by_name: Dict[str, str] = {}
-    fieldenums_by_name: Dict[str, str] = {}
-    fieldunits_by_name: Dict[str, str] = {}
-    native_format = bytearray(b"<IBBBBB")
-    orders = [1, 2, 3, 4, 0, 5]
-    lengths = [1, 1, 1, 1, 1, 64]
-    array_lengths = [0, 0, 0, 0, 0, 64]
-    crc_extra = 4
-    unpacker = struct.Struct("<IBBBB64B")
-    instance_field = None
-    instance_offset = -1
-
-    def __init__(self, target_system: int, target_component: int, bus: int, len: int, id: int, data: Sequence[int]):
-        MAVLink_message.__init__(self, MAVLink_canfd_frame_message.id, MAVLink_canfd_frame_message.msgname)
-        self._fieldnames = MAVLink_canfd_frame_message.fieldnames
-        self._instance_field = MAVLink_canfd_frame_message.instance_field
-        self._instance_offset = MAVLink_canfd_frame_message.instance_offset
-        self.target_system = target_system
-        self.target_component = target_component
-        self.bus = bus
-        self.len = len
-        self.id = id
-        self.data = data
-
-    def pack(self, mav: "MAVLink", force_mavlink1: bool = False) -> bytes:
-        return self._pack(mav, self.crc_extra, self.unpacker.pack(self.id, self.target_system, self.target_component, self.bus, self.len, self.data[0], self.data[1], self.data[2], self.data[3], self.data[4], self.data[5], self.data[6], self.data[7], self.data[8], self.data[9], self.data[10], self.data[11], self.data[12], self.data[13], self.data[14], self.data[15], self.data[16], self.data[17], self.data[18], self.data[19], self.data[20], self.data[21], self.data[22], self.data[23], self.data[24], self.data[25], self.data[26], self.data[27], self.data[28], self.data[29], self.data[30], self.data[31], self.data[32], self.data[33], self.data[34], self.data[35], self.data[36], self.data[37], self.data[38], self.data[39], self.data[40], self.data[41], self.data[42], self.data[43], self.data[44], self.data[45], self.data[46], self.data[47], self.data[48], self.data[49], self.data[50], self.data[51], self.data[52], self.data[53], self.data[54], self.data[55], self.data[56], self.data[57], self.data[58], self.data[59], self.data[60], self.data[61], self.data[62], self.data[63]), force_mavlink1=force_mavlink1)
-
-
-# Define name on the class for backwards compatibility (it is now msgname).
-# Done with setattr to hide the class variable from mypy.
-setattr(MAVLink_canfd_frame_message, "name", mavlink_msg_deprecated_name_property())
-
-
-class MAVLink_can_filter_modify_message(MAVLink_message):
-    """
-    Modify the filter of what CAN messages to forward over the
-    mavlink. This can be used to make CAN forwarding work well on low
-    bandwidth links. The filtering is applied on bits 8 to 24 of the
-    CAN id (2nd and 3rd bytes) which corresponds to the DroneCAN
-    message ID for DroneCAN. Filters with more than 16 IDs can be
-    constructed by sending multiple CAN_FILTER_MODIFY messages.
-    """
-
-    id = MAVLINK_MSG_ID_CAN_FILTER_MODIFY
-    msgname = "CAN_FILTER_MODIFY"
-    fieldnames = ["target_system", "target_component", "bus", "operation", "num_ids", "ids"]
-    ordered_fieldnames = ["ids", "target_system", "target_component", "bus", "operation", "num_ids"]
-    fieldtypes = ["uint8_t", "uint8_t", "uint8_t", "uint8_t", "uint8_t", "uint16_t"]
-    fielddisplays_by_name: Dict[str, str] = {}
-    fieldenums_by_name: Dict[str, str] = {"operation": "CAN_FILTER_OP"}
-    fieldunits_by_name: Dict[str, str] = {}
-    native_format = bytearray(b"<HBBBBB")
-    orders = [1, 2, 3, 4, 5, 0]
-    lengths = [16, 1, 1, 1, 1, 1]
-    array_lengths = [16, 0, 0, 0, 0, 0]
-    crc_extra = 8
-    unpacker = struct.Struct("<16HBBBBB")
-    instance_field = None
-    instance_offset = -1
-
-    def __init__(self, target_system: int, target_component: int, bus: int, operation: int, num_ids: int, ids: Sequence[int]):
-        MAVLink_message.__init__(self, MAVLink_can_filter_modify_message.id, MAVLink_can_filter_modify_message.msgname)
-        self._fieldnames = MAVLink_can_filter_modify_message.fieldnames
-        self._instance_field = MAVLink_can_filter_modify_message.instance_field
-        self._instance_offset = MAVLink_can_filter_modify_message.instance_offset
-        self.target_system = target_system
-        self.target_component = target_component
-        self.bus = bus
-        self.operation = operation
-        self.num_ids = num_ids
-        self.ids = ids
-
-    def pack(self, mav: "MAVLink", force_mavlink1: bool = False) -> bytes:
-        return self._pack(mav, self.crc_extra, self.unpacker.pack(self.ids[0], self.ids[1], self.ids[2], self.ids[3], self.ids[4], self.ids[5], self.ids[6], self.ids[7], self.ids[8], self.ids[9], self.ids[10], self.ids[11], self.ids[12], self.ids[13], self.ids[14], self.ids[15], self.target_system, self.target_component, self.bus, self.operation, self.num_ids), force_mavlink1=force_mavlink1)
-
-
-# Define name on the class for backwards compatibility (it is now msgname).
-# Done with setattr to hide the class variable from mypy.
-setattr(MAVLink_can_filter_modify_message, "name", mavlink_msg_deprecated_name_property())
 
 
 class MAVLink_wheel_distance_message(MAVLink_message):
@@ -17794,6 +17807,8 @@ mavlink_map: Dict[int, Type[MAVLink_message]] = {
     MAVLINK_MSG_ID_TIME_ESTIMATE_TO_TARGET: MAVLink_time_estimate_to_target_message,
     MAVLINK_MSG_ID_TUNNEL: MAVLink_tunnel_message,
     MAVLINK_MSG_ID_CAN_FRAME: MAVLink_can_frame_message,
+    MAVLINK_MSG_ID_CANFD_FRAME: MAVLink_canfd_frame_message,
+    MAVLINK_MSG_ID_CAN_FILTER_MODIFY: MAVLink_can_filter_modify_message,
     MAVLINK_MSG_ID_ONBOARD_COMPUTER_STATUS: MAVLink_onboard_computer_status_message,
     MAVLINK_MSG_ID_COMPONENT_INFORMATION: MAVLink_component_information_message,
     MAVLINK_MSG_ID_COMPONENT_INFORMATION_BASIC: MAVLink_component_information_basic_message,
@@ -17808,8 +17823,6 @@ mavlink_map: Dict[int, Type[MAVLink_message]] = {
     MAVLINK_MSG_ID_CURRENT_MODE: MAVLink_current_mode_message,
     MAVLINK_MSG_ID_AVAILABLE_MODES_MONITOR: MAVLink_available_modes_monitor_message,
     MAVLINK_MSG_ID_ILLUMINATOR_STATUS: MAVLink_illuminator_status_message,
-    MAVLINK_MSG_ID_CANFD_FRAME: MAVLink_canfd_frame_message,
-    MAVLINK_MSG_ID_CAN_FILTER_MODIFY: MAVLink_can_filter_modify_message,
     MAVLINK_MSG_ID_WHEEL_DISTANCE: MAVLink_wheel_distance_message,
     MAVLINK_MSG_ID_WINCH_STATUS: MAVLink_winch_status_message,
     MAVLINK_MSG_ID_OPEN_DRONE_ID_BASIC_ID: MAVLink_open_drone_id_basic_id_message,
@@ -18223,79 +18236,89 @@ class MAVLink(object):
         m._header = MAVLink_header(msgId, incompat_flags, compat_flags, mlen, seq, srcSystem, srcComponent)
         return m
 
-    def rocket_telemetry_encode(self, time_boot_ms: int, lat: int, lon: int, gps_alt: int, pressure_hpa: float, imu_gyro_x: int, imu_gyro_y: int, imu_gyro_z: int, highg_acc_x: int, highg_acc_y: int, highg_acc_z: int, roll: int, pitch: int, yaw: int, temp_celsius: int, imu_acc_x: int, imu_acc_y: int, imu_acc_z: int, imu_mag_x: int, imu_mag_y: int, imu_mag_z: int, system_states: int, battery_mv: int, vel: int, cog: int, event_states: int, mission_state: int, gps_fix: int, satellites_nb: int) -> MAVLink_rocket_telemetry_message:
+    def rocket_telemetry_encode(self, time_boot_ms: int, system_states: int, event_states: int, mission_state: int, battery_mv: int, roll: float, pitch: float, yaw: float, imu_acc_x: float, imu_acc_y: float, imu_acc_z: float, imu_gyro_x: float, imu_gyro_y: float, imu_gyro_z: float, imu_mag_x: float, imu_mag_y: float, imu_mag_z: float, altitude_msl_m: float, pressure_hpa: float, temp_celsius: float, highg_acc_x: float, highg_acc_y: float, highg_acc_z: float, gps_fix: int, lat: int, lon: int, gps_alt: int, vel: int, cog: int, satellites_nb: int, imu_acc_vertical: float, highg_acc_vertical: float, kalman_z: float, kalman_v: float) -> MAVLink_rocket_telemetry_message:
         """
-        ODB Rocket Telemetry.
+        Complete telemetry data for the rocket.
 
-        time_boot_ms              : Timestamp in milliseconds. [ms] (type:uint32_t)
-        lat                       : Latitude in degrees * 1E7. [degE7] (type:int32_t)
-        lon                       : Longitude in degrees * 1E7. [degE7] (type:int32_t)
-        gps_alt                   : Altitude (MSL) in millimeters. [mm] (type:int32_t)
-        pressure_hpa              : Pressure in hectopascals. [hPa] (type:float)
-        imu_gyro_x                : IMU Gyro X in centi-degrees per second. [cdeg/s] (type:int32_t)
-        imu_gyro_y                : IMU Gyro Y in centi-degrees per second. [cdeg/s] (type:int32_t)
-        imu_gyro_z                : IMU Gyro Z in centi-degrees per second. [cdeg/s] (type:int32_t)
-        highg_acc_x               : High-G Acceleration X in cm/s/s. [cm/s/s] (type:int32_t)
-        highg_acc_y               : High-G Acceleration Y in cm/s/s. [cm/s/s] (type:int32_t)
-        highg_acc_z               : High-G Acceleration Z in cm/s/s. [cm/s/s] (type:int32_t)
-        roll                      : Roll angle in centi-degrees. [cdeg] (type:int16_t)
-        pitch                     : Pitch angle in centi-degrees. [cdeg] (type:int16_t)
-        yaw                       : Yaw angle in centi-degrees. [cdeg] (type:int16_t)
-        temp_celsius              : Temperature in Celsius. [cdegC] (type:int16_t)
-        imu_acc_x                 : IMU Acceleration X in cm/s/s. [cm/s/s] (type:int16_t)
-        imu_acc_y                 : IMU Acceleration Y in cm/s/s. [cm/s/s] (type:int16_t)
-        imu_acc_z                 : IMU Acceleration Z in cm/s/s. [cm/s/s] (type:int16_t)
-        imu_mag_x                 : IMU Mag X in centi-microTesla. [cuT] (type:int16_t)
-        imu_mag_y                 : IMU Mag Y in centi-microTesla. [cuT] (type:int16_t)
-        imu_mag_z                 : IMU Mag Z in centi-microTesla. [cuT] (type:int16_t)
-        system_states             : Current system state. (type:uint16_t)
-        battery_mv                : Battery voltage in millivolts. [mV] (type:uint16_t)
-        vel                       : Ground speed in centimeters per second. [cm/s] (type:uint16_t)
-        cog                       : Course over ground (centi-degrees). [cdeg] (type:uint16_t)
-        event_states              : Current events states (pyros fired, apogee, etc.). (type:uint8_t)
-        mission_state             : Mission state. (type:uint8_t)
-        gps_fix                   : 1: Active fix, 0: No fix. (type:uint8_t)
-        satellites_nb             : Number of visible satellites. (type:uint8_t)
-
-        """
-        return MAVLink_rocket_telemetry_message(time_boot_ms, lat, lon, gps_alt, pressure_hpa, imu_gyro_x, imu_gyro_y, imu_gyro_z, highg_acc_x, highg_acc_y, highg_acc_z, roll, pitch, yaw, temp_celsius, imu_acc_x, imu_acc_y, imu_acc_z, imu_mag_x, imu_mag_y, imu_mag_z, system_states, battery_mv, vel, cog, event_states, mission_state, gps_fix, satellites_nb)
-
-    def rocket_telemetry_send(self, time_boot_ms: int, lat: int, lon: int, gps_alt: int, pressure_hpa: float, imu_gyro_x: int, imu_gyro_y: int, imu_gyro_z: int, highg_acc_x: int, highg_acc_y: int, highg_acc_z: int, roll: int, pitch: int, yaw: int, temp_celsius: int, imu_acc_x: int, imu_acc_y: int, imu_acc_z: int, imu_mag_x: int, imu_mag_y: int, imu_mag_z: int, system_states: int, battery_mv: int, vel: int, cog: int, event_states: int, mission_state: int, gps_fix: int, satellites_nb: int, force_mavlink1: bool = False) -> None:
-        """
-        ODB Rocket Telemetry.
-
-        time_boot_ms              : Timestamp in milliseconds. [ms] (type:uint32_t)
-        lat                       : Latitude in degrees * 1E7. [degE7] (type:int32_t)
-        lon                       : Longitude in degrees * 1E7. [degE7] (type:int32_t)
-        gps_alt                   : Altitude (MSL) in millimeters. [mm] (type:int32_t)
-        pressure_hpa              : Pressure in hectopascals. [hPa] (type:float)
-        imu_gyro_x                : IMU Gyro X in centi-degrees per second. [cdeg/s] (type:int32_t)
-        imu_gyro_y                : IMU Gyro Y in centi-degrees per second. [cdeg/s] (type:int32_t)
-        imu_gyro_z                : IMU Gyro Z in centi-degrees per second. [cdeg/s] (type:int32_t)
-        highg_acc_x               : High-G Acceleration X in cm/s/s. [cm/s/s] (type:int32_t)
-        highg_acc_y               : High-G Acceleration Y in cm/s/s. [cm/s/s] (type:int32_t)
-        highg_acc_z               : High-G Acceleration Z in cm/s/s. [cm/s/s] (type:int32_t)
-        roll                      : Roll angle in centi-degrees. [cdeg] (type:int16_t)
-        pitch                     : Pitch angle in centi-degrees. [cdeg] (type:int16_t)
-        yaw                       : Yaw angle in centi-degrees. [cdeg] (type:int16_t)
-        temp_celsius              : Temperature in Celsius. [cdegC] (type:int16_t)
-        imu_acc_x                 : IMU Acceleration X in cm/s/s. [cm/s/s] (type:int16_t)
-        imu_acc_y                 : IMU Acceleration Y in cm/s/s. [cm/s/s] (type:int16_t)
-        imu_acc_z                 : IMU Acceleration Z in cm/s/s. [cm/s/s] (type:int16_t)
-        imu_mag_x                 : IMU Mag X in centi-microTesla. [cuT] (type:int16_t)
-        imu_mag_y                 : IMU Mag Y in centi-microTesla. [cuT] (type:int16_t)
-        imu_mag_z                 : IMU Mag Z in centi-microTesla. [cuT] (type:int16_t)
-        system_states             : Current system state. (type:uint16_t)
-        battery_mv                : Battery voltage in millivolts. [mV] (type:uint16_t)
-        vel                       : Ground speed in centimeters per second. [cm/s] (type:uint16_t)
-        cog                       : Course over ground (centi-degrees). [cdeg] (type:uint16_t)
-        event_states              : Current events states (pyros fired, apogee, etc.). (type:uint8_t)
-        mission_state             : Mission state. (type:uint8_t)
-        gps_fix                   : 1: Active fix, 0: No fix. (type:uint8_t)
-        satellites_nb             : Number of visible satellites. (type:uint8_t)
+        time_boot_ms              : Timestamp since system boot in milliseconds. [ms] (type:uint32_t)
+        system_states             : System component health flags. (type:uint16_t)
+        event_states              : Flight events such as pyros and apogee. (type:uint8_t)
+        mission_state             : Mission state linked with the FSM. (type:uint8_t)
+        battery_mv                : Main battery voltage in millivolts. [mV] (type:uint16_t)
+        roll                      : Roll angle in degrees. [deg] (type:float)
+        pitch                     : Pitch angle in degrees. [deg] (type:float)
+        yaw                       : Yaw angle in degrees between -180 and 180. [deg] (type:float)
+        imu_acc_x                 : IMU acceleration X in m/s^2. [m/s/s] (type:float)
+        imu_acc_y                 : IMU acceleration Y in m/s^2. [m/s/s] (type:float)
+        imu_acc_z                 : IMU acceleration Z in m/s^2. [m/s/s] (type:float)
+        imu_gyro_x                : IMU angular rate X in deg/s. [deg/s] (type:float)
+        imu_gyro_y                : IMU angular rate Y in deg/s. [deg/s] (type:float)
+        imu_gyro_z                : IMU angular rate Z in deg/s. [deg/s] (type:float)
+        imu_mag_x                 : IMU magnetometer X in uT. [uT] (type:float)
+        imu_mag_y                 : IMU magnetometer Y in uT. [uT] (type:float)
+        imu_mag_z                 : IMU magnetometer Z in uT. [uT] (type:float)
+        altitude_msl_m            : Altitude in meters from barometer referenced to sea level. [m] (type:float)
+        pressure_hpa              : Atmospheric pressure in hectopascals. [hPa] (type:float)
+        temp_celsius              : Board or environment temperature in Celsius. [degC] (type:float)
+        highg_acc_x               : High-G acceleration X in m/s^2. [m/s/s] (type:float)
+        highg_acc_y               : High-G acceleration Y in m/s^2. [m/s/s] (type:float)
+        highg_acc_z               : High-G acceleration Z in m/s^2. [m/s/s] (type:float)
+        gps_fix                   : GPS fix type. (type:uint8_t)
+        lat                       : Latitude in degrees times 1E7. [degE7] (type:int32_t)
+        lon                       : Longitude in degrees times 1E7. [degE7] (type:int32_t)
+        gps_alt                   : GPS altitude MSL in millimeters. [mm] (type:int32_t)
+        vel                       : Ground speed in cm/s. [cm/s] (type:uint16_t)
+        cog                       : Course over ground in cdeg. [cdeg] (type:uint16_t)
+        satellites_nb             : Number of satellites. (type:uint8_t)
+        imu_acc_vertical          : Vertical acceleration in the world frame from the IMU. [m/s/s] (type:float)
+        highg_acc_vertical        : Vertical acceleration in the world frame from the high-G accelerometer. [m/s/s] (type:float)
+        kalman_z                  : Filtered altitude from the Kalman filter. [m] (type:float)
+        kalman_v                  : Filtered velocity from the Kalman filter. [m/s] (type:float)
 
         """
-        self.send(self.rocket_telemetry_encode(time_boot_ms, lat, lon, gps_alt, pressure_hpa, imu_gyro_x, imu_gyro_y, imu_gyro_z, highg_acc_x, highg_acc_y, highg_acc_z, roll, pitch, yaw, temp_celsius, imu_acc_x, imu_acc_y, imu_acc_z, imu_mag_x, imu_mag_y, imu_mag_z, system_states, battery_mv, vel, cog, event_states, mission_state, gps_fix, satellites_nb), force_mavlink1=force_mavlink1)
+        return MAVLink_rocket_telemetry_message(time_boot_ms, system_states, event_states, mission_state, battery_mv, roll, pitch, yaw, imu_acc_x, imu_acc_y, imu_acc_z, imu_gyro_x, imu_gyro_y, imu_gyro_z, imu_mag_x, imu_mag_y, imu_mag_z, altitude_msl_m, pressure_hpa, temp_celsius, highg_acc_x, highg_acc_y, highg_acc_z, gps_fix, lat, lon, gps_alt, vel, cog, satellites_nb, imu_acc_vertical, highg_acc_vertical, kalman_z, kalman_v)
+
+    def rocket_telemetry_send(self, time_boot_ms: int, system_states: int, event_states: int, mission_state: int, battery_mv: int, roll: float, pitch: float, yaw: float, imu_acc_x: float, imu_acc_y: float, imu_acc_z: float, imu_gyro_x: float, imu_gyro_y: float, imu_gyro_z: float, imu_mag_x: float, imu_mag_y: float, imu_mag_z: float, altitude_msl_m: float, pressure_hpa: float, temp_celsius: float, highg_acc_x: float, highg_acc_y: float, highg_acc_z: float, gps_fix: int, lat: int, lon: int, gps_alt: int, vel: int, cog: int, satellites_nb: int, imu_acc_vertical: float, highg_acc_vertical: float, kalman_z: float, kalman_v: float, force_mavlink1: bool = False) -> None:
+        """
+        Complete telemetry data for the rocket.
+
+        time_boot_ms              : Timestamp since system boot in milliseconds. [ms] (type:uint32_t)
+        system_states             : System component health flags. (type:uint16_t)
+        event_states              : Flight events such as pyros and apogee. (type:uint8_t)
+        mission_state             : Mission state linked with the FSM. (type:uint8_t)
+        battery_mv                : Main battery voltage in millivolts. [mV] (type:uint16_t)
+        roll                      : Roll angle in degrees. [deg] (type:float)
+        pitch                     : Pitch angle in degrees. [deg] (type:float)
+        yaw                       : Yaw angle in degrees between -180 and 180. [deg] (type:float)
+        imu_acc_x                 : IMU acceleration X in m/s^2. [m/s/s] (type:float)
+        imu_acc_y                 : IMU acceleration Y in m/s^2. [m/s/s] (type:float)
+        imu_acc_z                 : IMU acceleration Z in m/s^2. [m/s/s] (type:float)
+        imu_gyro_x                : IMU angular rate X in deg/s. [deg/s] (type:float)
+        imu_gyro_y                : IMU angular rate Y in deg/s. [deg/s] (type:float)
+        imu_gyro_z                : IMU angular rate Z in deg/s. [deg/s] (type:float)
+        imu_mag_x                 : IMU magnetometer X in uT. [uT] (type:float)
+        imu_mag_y                 : IMU magnetometer Y in uT. [uT] (type:float)
+        imu_mag_z                 : IMU magnetometer Z in uT. [uT] (type:float)
+        altitude_msl_m            : Altitude in meters from barometer referenced to sea level. [m] (type:float)
+        pressure_hpa              : Atmospheric pressure in hectopascals. [hPa] (type:float)
+        temp_celsius              : Board or environment temperature in Celsius. [degC] (type:float)
+        highg_acc_x               : High-G acceleration X in m/s^2. [m/s/s] (type:float)
+        highg_acc_y               : High-G acceleration Y in m/s^2. [m/s/s] (type:float)
+        highg_acc_z               : High-G acceleration Z in m/s^2. [m/s/s] (type:float)
+        gps_fix                   : GPS fix type. (type:uint8_t)
+        lat                       : Latitude in degrees times 1E7. [degE7] (type:int32_t)
+        lon                       : Longitude in degrees times 1E7. [degE7] (type:int32_t)
+        gps_alt                   : GPS altitude MSL in millimeters. [mm] (type:int32_t)
+        vel                       : Ground speed in cm/s. [cm/s] (type:uint16_t)
+        cog                       : Course over ground in cdeg. [cdeg] (type:uint16_t)
+        satellites_nb             : Number of satellites. (type:uint8_t)
+        imu_acc_vertical          : Vertical acceleration in the world frame from the IMU. [m/s/s] (type:float)
+        highg_acc_vertical        : Vertical acceleration in the world frame from the high-G accelerometer. [m/s/s] (type:float)
+        kalman_z                  : Filtered altitude from the Kalman filter. [m] (type:float)
+        kalman_v                  : Filtered velocity from the Kalman filter. [m/s] (type:float)
+
+        """
+        self.send(self.rocket_telemetry_encode(time_boot_ms, system_states, event_states, mission_state, battery_mv, roll, pitch, yaw, imu_acc_x, imu_acc_y, imu_acc_z, imu_gyro_x, imu_gyro_y, imu_gyro_z, imu_mag_x, imu_mag_y, imu_mag_z, altitude_msl_m, pressure_hpa, temp_celsius, highg_acc_x, highg_acc_y, highg_acc_z, gps_fix, lat, lon, gps_alt, vel, cog, satellites_nb, imu_acc_vertical, highg_acc_vertical, kalman_z, kalman_v), force_mavlink1=force_mavlink1)
 
     def sys_status_encode(self, onboard_control_sensors_present: int, onboard_control_sensors_enabled: int, onboard_control_sensors_health: int, load: int, voltage_battery: int, current_battery: int, battery_remaining: int, drop_rate_comm: int, errors_comm: int, errors_count1: int, errors_count2: int, errors_count3: int, errors_count4: int, onboard_control_sensors_present_extended: int = 0, onboard_control_sensors_enabled_extended: int = 0, onboard_control_sensors_health_extended: int = 0) -> MAVLink_sys_status_message:
         """
@@ -23136,8 +23159,7 @@ class MAVLink(object):
         to which the system should fly in normal flight mode and then
         perform a landing sequence along the vector.         Note:
         this message can be requested by sending the
-        MAV_CMD_REQUEST_MESSAGE with param1=242 (or the deprecated
-        MAV_CMD_GET_HOME_POSITION command).
+        MAV_CMD_REQUEST_MESSAGE with param1=242.
 
         latitude                  : Latitude (WGS84) [degE7] (type:int32_t)
         longitude                 : Longitude (WGS84) [degE7] (type:int32_t)
@@ -23171,8 +23193,7 @@ class MAVLink(object):
         to which the system should fly in normal flight mode and then
         perform a landing sequence along the vector.         Note:
         this message can be requested by sending the
-        MAV_CMD_REQUEST_MESSAGE with param1=242 (or the deprecated
-        MAV_CMD_GET_HOME_POSITION command).
+        MAV_CMD_REQUEST_MESSAGE with param1=242.
 
         latitude                  : Latitude (WGS84) [degE7] (type:int32_t)
         longitude                 : Longitude (WGS84) [degE7] (type:int32_t)
@@ -23263,9 +23284,8 @@ class MAVLink(object):
         This message is sent in response to the
         MAV_CMD_REQUEST_MESSAGE command with param1=244 (this message)
         and param2=message_id (the id of the message for which the
-        interval is required).         It may also be sent in response
-        to MAV_CMD_GET_MESSAGE_INTERVAL.         This interface
-        replaces DATA_STREAM.
+        interval is required).         This interface replaces
+        DATA_STREAM.
 
         message_id                : The ID of the requested MAVLink message. v1.0 is limited to 254 messages. (type:uint16_t)
         interval_us               : The interval between two messages. A value of -1 indicates this stream is disabled, 0 indicates it is not available, > 0 indicates the interval at which it is sent. [us] (type:int32_t)
@@ -23279,9 +23299,8 @@ class MAVLink(object):
         This message is sent in response to the
         MAV_CMD_REQUEST_MESSAGE command with param1=244 (this message)
         and param2=message_id (the id of the message for which the
-        interval is required).         It may also be sent in response
-        to MAV_CMD_GET_MESSAGE_INTERVAL.         This interface
-        replaces DATA_STREAM.
+        interval is required).         This interface replaces
+        DATA_STREAM.
 
         message_id                : The ID of the requested MAVLink message. v1.0 is limited to 254 messages. (type:uint16_t)
         interval_us               : The interval between two messages. A value of -1 indicates this stream is disabled, 0 indicates it is not available, > 0 indicates the interval at which it is sent. [us] (type:int32_t)
@@ -25023,16 +25042,16 @@ class MAVLink(object):
 
     def uavcan_node_info_encode(self, time_usec: int, uptime_sec: int, name: bytes, hw_version_major: int, hw_version_minor: int, hw_unique_id: Sequence[int], sw_version_major: int, sw_version_minor: int, sw_vcs_commit: int) -> MAVLink_uavcan_node_info_message:
         """
-        General information describing a particular UAVCAN node. Please refer
-        to the definition of the UAVCAN service
+        General information describing a particular UAVCAN node.
+        Please refer to the definition of the UAVCAN service
         "uavcan.protocol.GetNodeInfo" for the background information.
         This message should be emitted by the system whenever a new
-        node appears online, or an existing node reboots.
-        Additionally, it can be emitted upon request from the other
-        end of the MAVLink channel (see MAV_CMD_UAVCAN_GET_NODE_INFO).
-        It is also not prohibited to emit this message unconditionally
-        at a low frequency. The UAVCAN specification is available at
-        http://uavcan.org.
+        node appears online, or an existing node reboots.         The
+        message may also be explicitly requested using
+        MAV_CMD_REQUEST_MESSAGE.         It is also not prohibited to
+        emit this message unconditionally at a low frequency.
+        The DroneCAN specification is available at
+        https://dronecan.github.io/Specification/1._Introduction/.
 
         time_usec                 : Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number. [us] (type:uint64_t)
         uptime_sec                : Time since the start-up of the node. [s] (type:uint32_t)
@@ -25049,16 +25068,16 @@ class MAVLink(object):
 
     def uavcan_node_info_send(self, time_usec: int, uptime_sec: int, name: bytes, hw_version_major: int, hw_version_minor: int, hw_unique_id: Sequence[int], sw_version_major: int, sw_version_minor: int, sw_vcs_commit: int, force_mavlink1: bool = False) -> None:
         """
-        General information describing a particular UAVCAN node. Please refer
-        to the definition of the UAVCAN service
+        General information describing a particular UAVCAN node.
+        Please refer to the definition of the UAVCAN service
         "uavcan.protocol.GetNodeInfo" for the background information.
         This message should be emitted by the system whenever a new
-        node appears online, or an existing node reboots.
-        Additionally, it can be emitted upon request from the other
-        end of the MAVLink channel (see MAV_CMD_UAVCAN_GET_NODE_INFO).
-        It is also not prohibited to emit this message unconditionally
-        at a low frequency. The UAVCAN specification is available at
-        http://uavcan.org.
+        node appears online, or an existing node reboots.         The
+        message may also be explicitly requested using
+        MAV_CMD_REQUEST_MESSAGE.         It is also not prohibited to
+        emit this message unconditionally at a low frequency.
+        The DroneCAN specification is available at
+        https://dronecan.github.io/Specification/1._Introduction/.
 
         time_usec                 : Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number. [us] (type:uint64_t)
         uptime_sec                : Time since the start-up of the node. [s] (type:uint32_t)
@@ -26049,6 +26068,78 @@ class MAVLink(object):
         """
         self.send(self.can_frame_encode(target_system, target_component, bus, len, id, data), force_mavlink1=force_mavlink1)
 
+    def canfd_frame_encode(self, target_system: int, target_component: int, bus: int, len: int, id: int, data: Sequence[int]) -> MAVLink_canfd_frame_message:
+        """
+        A forwarded CANFD frame as requested by MAV_CMD_CAN_FORWARD. These are
+        separated from CAN_FRAME as they need different handling (eg.
+        TAO handling)
+
+        target_system             : System ID. (type:uint8_t)
+        target_component          : Component ID. (type:uint8_t)
+        bus                       : bus number (type:uint8_t)
+        len                       : Frame length (type:uint8_t)
+        id                        : Frame ID (type:uint32_t)
+        data                      : Frame data (type:uint8_t)
+
+        """
+        return MAVLink_canfd_frame_message(target_system, target_component, bus, len, id, data)
+
+    def canfd_frame_send(self, target_system: int, target_component: int, bus: int, len: int, id: int, data: Sequence[int], force_mavlink1: bool = False) -> None:
+        """
+        A forwarded CANFD frame as requested by MAV_CMD_CAN_FORWARD. These are
+        separated from CAN_FRAME as they need different handling (eg.
+        TAO handling)
+
+        target_system             : System ID. (type:uint8_t)
+        target_component          : Component ID. (type:uint8_t)
+        bus                       : bus number (type:uint8_t)
+        len                       : Frame length (type:uint8_t)
+        id                        : Frame ID (type:uint32_t)
+        data                      : Frame data (type:uint8_t)
+
+        """
+        self.send(self.canfd_frame_encode(target_system, target_component, bus, len, id, data), force_mavlink1=force_mavlink1)
+
+    def can_filter_modify_encode(self, target_system: int, target_component: int, bus: int, operation: int, num_ids: int, ids: Sequence[int]) -> MAVLink_can_filter_modify_message:
+        """
+        Modify the filter of what CAN messages to forward over the mavlink.
+        This can be used to make CAN forwarding work well on low
+        bandwidth links. The filtering is applied on bits 8 to 24 of
+        the CAN id (2nd and 3rd bytes) which corresponds to the
+        DroneCAN message ID for DroneCAN. Filters with more than 16
+        IDs can be constructed by sending multiple CAN_FILTER_MODIFY
+        messages.
+
+        target_system             : System ID. (type:uint8_t)
+        target_component          : Component ID. (type:uint8_t)
+        bus                       : bus number (type:uint8_t)
+        operation                 : what operation to perform on the filter list. See CAN_FILTER_OP enum. (type:uint8_t, values:CAN_FILTER_OP)
+        num_ids                   : number of IDs in filter list (type:uint8_t)
+        ids                       : filter IDs, length num_ids (type:uint16_t)
+
+        """
+        return MAVLink_can_filter_modify_message(target_system, target_component, bus, operation, num_ids, ids)
+
+    def can_filter_modify_send(self, target_system: int, target_component: int, bus: int, operation: int, num_ids: int, ids: Sequence[int], force_mavlink1: bool = False) -> None:
+        """
+        Modify the filter of what CAN messages to forward over the mavlink.
+        This can be used to make CAN forwarding work well on low
+        bandwidth links. The filtering is applied on bits 8 to 24 of
+        the CAN id (2nd and 3rd bytes) which corresponds to the
+        DroneCAN message ID for DroneCAN. Filters with more than 16
+        IDs can be constructed by sending multiple CAN_FILTER_MODIFY
+        messages.
+
+        target_system             : System ID. (type:uint8_t)
+        target_component          : Component ID. (type:uint8_t)
+        bus                       : bus number (type:uint8_t)
+        operation                 : what operation to perform on the filter list. See CAN_FILTER_OP enum. (type:uint8_t, values:CAN_FILTER_OP)
+        num_ids                   : number of IDs in filter list (type:uint8_t)
+        ids                       : filter IDs, length num_ids (type:uint16_t)
+
+        """
+        self.send(self.can_filter_modify_encode(target_system, target_component, bus, operation, num_ids, ids), force_mavlink1=force_mavlink1)
+
     def onboard_computer_status_encode(self, time_usec: int, uptime: int, type: int, cpu_cores: Sequence[int], cpu_combined: Sequence[int], gpu_cores: Sequence[int], gpu_combined: Sequence[int], temperature_board: int, temperature_core: Sequence[int], fan_speed: Sequence[int], ram_usage: int, ram_total: int, storage_type: Sequence[int], storage_usage: Sequence[int], storage_total: Sequence[int], link_type: Sequence[int], link_tx_rate: Sequence[int], link_rx_rate: Sequence[int], link_tx_max: Sequence[int], link_rx_max: Sequence[int], status_flags: int = 0) -> MAVLink_onboard_computer_status_message:
         """
         Hardware status sent by an onboard computer.
@@ -26534,78 +26625,6 @@ class MAVLink(object):
 
         """
         self.send(self.illuminator_status_encode(uptime_ms, enable, mode_bitmask, error_status, mode, brightness, strobe_period, strobe_duty_cycle, temp_c, min_strobe_period, max_strobe_period), force_mavlink1=force_mavlink1)
-
-    def canfd_frame_encode(self, target_system: int, target_component: int, bus: int, len: int, id: int, data: Sequence[int]) -> MAVLink_canfd_frame_message:
-        """
-        A forwarded CANFD frame as requested by MAV_CMD_CAN_FORWARD. These are
-        separated from CAN_FRAME as they need different handling (eg.
-        TAO handling)
-
-        target_system             : System ID. (type:uint8_t)
-        target_component          : Component ID. (type:uint8_t)
-        bus                       : bus number (type:uint8_t)
-        len                       : Frame length (type:uint8_t)
-        id                        : Frame ID (type:uint32_t)
-        data                      : Frame data (type:uint8_t)
-
-        """
-        return MAVLink_canfd_frame_message(target_system, target_component, bus, len, id, data)
-
-    def canfd_frame_send(self, target_system: int, target_component: int, bus: int, len: int, id: int, data: Sequence[int], force_mavlink1: bool = False) -> None:
-        """
-        A forwarded CANFD frame as requested by MAV_CMD_CAN_FORWARD. These are
-        separated from CAN_FRAME as they need different handling (eg.
-        TAO handling)
-
-        target_system             : System ID. (type:uint8_t)
-        target_component          : Component ID. (type:uint8_t)
-        bus                       : bus number (type:uint8_t)
-        len                       : Frame length (type:uint8_t)
-        id                        : Frame ID (type:uint32_t)
-        data                      : Frame data (type:uint8_t)
-
-        """
-        self.send(self.canfd_frame_encode(target_system, target_component, bus, len, id, data), force_mavlink1=force_mavlink1)
-
-    def can_filter_modify_encode(self, target_system: int, target_component: int, bus: int, operation: int, num_ids: int, ids: Sequence[int]) -> MAVLink_can_filter_modify_message:
-        """
-        Modify the filter of what CAN messages to forward over the mavlink.
-        This can be used to make CAN forwarding work well on low
-        bandwidth links. The filtering is applied on bits 8 to 24 of
-        the CAN id (2nd and 3rd bytes) which corresponds to the
-        DroneCAN message ID for DroneCAN. Filters with more than 16
-        IDs can be constructed by sending multiple CAN_FILTER_MODIFY
-        messages.
-
-        target_system             : System ID. (type:uint8_t)
-        target_component          : Component ID. (type:uint8_t)
-        bus                       : bus number (type:uint8_t)
-        operation                 : what operation to perform on the filter list. See CAN_FILTER_OP enum. (type:uint8_t, values:CAN_FILTER_OP)
-        num_ids                   : number of IDs in filter list (type:uint8_t)
-        ids                       : filter IDs, length num_ids (type:uint16_t)
-
-        """
-        return MAVLink_can_filter_modify_message(target_system, target_component, bus, operation, num_ids, ids)
-
-    def can_filter_modify_send(self, target_system: int, target_component: int, bus: int, operation: int, num_ids: int, ids: Sequence[int], force_mavlink1: bool = False) -> None:
-        """
-        Modify the filter of what CAN messages to forward over the mavlink.
-        This can be used to make CAN forwarding work well on low
-        bandwidth links. The filtering is applied on bits 8 to 24 of
-        the CAN id (2nd and 3rd bytes) which corresponds to the
-        DroneCAN message ID for DroneCAN. Filters with more than 16
-        IDs can be constructed by sending multiple CAN_FILTER_MODIFY
-        messages.
-
-        target_system             : System ID. (type:uint8_t)
-        target_component          : Component ID. (type:uint8_t)
-        bus                       : bus number (type:uint8_t)
-        operation                 : what operation to perform on the filter list. See CAN_FILTER_OP enum. (type:uint8_t, values:CAN_FILTER_OP)
-        num_ids                   : number of IDs in filter list (type:uint8_t)
-        ids                       : filter IDs, length num_ids (type:uint16_t)
-
-        """
-        self.send(self.can_filter_modify_encode(target_system, target_component, bus, operation, num_ids, ids), force_mavlink1=force_mavlink1)
 
     def wheel_distance_encode(self, time_usec: int, count: int, distance: Sequence[float]) -> MAVLink_wheel_distance_message:
         """

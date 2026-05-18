@@ -2033,7 +2033,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                             ),
                                       ),
                                       Text(
-                                        connected ? (data.gpsSensorState == SensorState.ok ? 'Fix satellites - ${data.gpsSatellites} satellites' : 'No fix') : '—',
+                                        connected ? (data.gpsSensorState == SensorState.ok ? 'Fix satellites - ${data.gpsFix}' : 'No fix') : '—',
                                         style: FlutterFlowTheme.of(context)
                                             .bodySmall
                                             .override(
