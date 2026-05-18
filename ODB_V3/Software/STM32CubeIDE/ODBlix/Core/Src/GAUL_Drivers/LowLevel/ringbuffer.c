@@ -20,7 +20,7 @@ void RingBuffer_Init(ring_buffer_t *rb, uint8_t *buf, size_t buf_size) {
 }
 
 void RingBuffer_Queue(ring_buffer_t *rb, uint8_t data) {
-    if (RingBuffer_IsFull(rb)) {
+    if(RingBuffer_IsFull(rb)) {
         rb->tail = (rb->tail + 1) & rb->mask;
     }
 
@@ -29,13 +29,13 @@ void RingBuffer_Queue(ring_buffer_t *rb, uint8_t data) {
 }
 
 void RingBuffer_Queue_Array(ring_buffer_t *rb, const uint8_t *data, size_t size) {
-    for (size_t i = 0; i < size; i++) {
+    for(size_t i = 0; i < size; i++) {
         RingBuffer_Queue(rb, data[i]);
     }
 }
 
 bool RingBuffer_Dequeue(ring_buffer_t *rb, uint8_t *data) {
-    if (RingBuffer_IsEmpty(rb)) {
+    if(RingBuffer_IsEmpty(rb)) {
         return false;
     }
 
@@ -48,7 +48,7 @@ bool RingBuffer_Dequeue(ring_buffer_t *rb, uint8_t *data) {
 size_t RingBuffer_Dequeue_Array(ring_buffer_t *rb, uint8_t *data, size_t len) {
     size_t cnt = 0;
     
-    while ((cnt < len) && RingBuffer_Dequeue(rb, &data[cnt])) {
+    while((cnt < len) && RingBuffer_Dequeue(rb, &data[cnt])) {
         cnt++;
     }
     
@@ -56,7 +56,7 @@ size_t RingBuffer_Dequeue_Array(ring_buffer_t *rb, uint8_t *data, size_t len) {
 }
 
 bool RingBuffer_Peek(ring_buffer_t *rb, uint8_t *data, size_t index) {
-    if (index >= RingBuffer_NumItems(rb)) {
+    if(index >= RingBuffer_NumItems(rb)) {
         return false;
     }
 

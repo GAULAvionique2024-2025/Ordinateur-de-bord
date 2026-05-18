@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 
 class ConsoleService with ChangeNotifier {
+  static const int _maxLogs = 200;
+
   ConsoleService._internal();
   static final ConsoleService _instance = ConsoleService._internal();
   factory ConsoleService() => _instance;
@@ -12,6 +14,9 @@ class ConsoleService with ChangeNotifier {
   void log(String message) {
     final time = DateTime.now().toIso8601String().substring(11, 19);
     _logs.insert(0, '[$time] $message');
+    if (_logs.length > _maxLogs) {
+      _logs.removeRange(_maxLogs, _logs.length);
+    }
     notifyListeners();
   }
 

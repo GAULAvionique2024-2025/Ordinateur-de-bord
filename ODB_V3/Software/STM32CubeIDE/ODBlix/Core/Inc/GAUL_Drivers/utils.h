@@ -45,7 +45,7 @@ typedef struct {
 void RunTimer_Init(runTimer_t *dev);
 void RunTimer_Update(runTimer_t *dev);
 int printt(const char *format, ...);
-int _write(int le, char *ptr, int len);
+//int _write(int le, char *ptr, int len);
 /* =========== */
 
 

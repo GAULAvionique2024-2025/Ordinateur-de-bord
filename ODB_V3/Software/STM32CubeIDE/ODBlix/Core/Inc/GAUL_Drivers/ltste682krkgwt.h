@@ -10,6 +10,7 @@
 
 
 #include "stm32f4xx_hal.h"
+#include <stdbool.h>
 
 
 #define CRITICAL_LED_PORT GPIOF
@@ -26,6 +27,8 @@ typedef struct {
 	GPIO_TypeDef *g_port;
 	uint16_t r_pin;
 	uint16_t g_pin;
+
+	bool is_active;
 	critical_led_color_t current_color;
 } critical_led_t;
 

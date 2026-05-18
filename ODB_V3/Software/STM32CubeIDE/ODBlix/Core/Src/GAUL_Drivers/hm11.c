@@ -103,7 +103,13 @@ hm11_state_t HM11_Init(hm11_t *dev) {
 }
 
 bool HM11_SendData(hm11_t *dev, uint8_t *data, uint16_t length) {
-    if(HAL_UART_Transmit(dev->huart, data, length, HM11_TIMEOUT) == HAL_OK) {
+    if(!dev || !dev->huart) return false;
+
+    if(dev->huart->gState != HAL_UART_STATE_READY) {
+        return false;
+    }
+
+    if(HAL_UART_Transmit_IT(dev->huart, data, length) == HAL_OK) {
         return true;
     }
 
@@ -111,6 +117,8 @@ bool HM11_SendData(hm11_t *dev, uint8_t *data, uint16_t length) {
 }
 
 bool HM11_SendString(hm11_t *dev, const char *str) {
+    if(!str) return false;
+
     return HM11_SendData(dev, (uint8_t*)str, strlen(str));
 }
 

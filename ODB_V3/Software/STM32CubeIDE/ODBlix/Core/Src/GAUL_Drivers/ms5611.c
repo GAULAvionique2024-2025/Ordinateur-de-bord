@@ -19,7 +19,7 @@ static inline void MS5611_CS_HIGH(ms5611_t *dev) {
 
 static int8_t MS5611_SPI_Transmit(ms5611_t *dev, uint8_t* data, uint16_t size) {
     MS5611_CS_LOW(dev);
-    if(HAL_SPI_Transmit(dev->spi, data, size, HAL_MAX_DELAY) != HAL_OK) {
+    if(HAL_SPI_Transmit(dev->spi, data, size, 5) != HAL_OK) {
         MS5611_CS_HIGH(dev);
         return -1;
     }
@@ -30,12 +30,12 @@ static int8_t MS5611_SPI_Transmit(ms5611_t *dev, uint8_t* data, uint16_t size) {
 
 static int8_t MS5611_SPI_TransmitReceive(ms5611_t *dev, uint8_t *cmd, uint8_t* rx_data, uint16_t rx_size) {
     MS5611_CS_LOW(dev);
-    if(HAL_SPI_Transmit(dev->spi, cmd, 1, HAL_MAX_DELAY) != HAL_OK) {
+    if(HAL_SPI_Transmit(dev->spi, cmd, 1, 5) != HAL_OK) {
         MS5611_CS_HIGH(dev);
 
         return -1;
     }
-    if(HAL_SPI_Receive(dev->spi, rx_data, rx_size, HAL_MAX_DELAY) != HAL_OK) {
+    if(HAL_SPI_Receive(dev->spi, rx_data, rx_size, 5) != HAL_OK) {
         MS5611_CS_HIGH(dev);
 
         return -1;
@@ -122,16 +122,25 @@ void MS5611_CalibrateGroundPressure(ms5611_t *dev) {
     float temp_p, temp_t;
     float sum_p = 0;
     int samples = 100;
+    int valid_samples = 0;
 
-    for(int i = 0; i < samples; i++) {
-        MS5611_Update(dev);
-        if(MS5611_Compute(dev, &temp_t, &temp_p) == MS5611_OK) {
-            sum_p += temp_p;
-        }
-        HAL_Delay(20);
-    }
+    dev->first_conversion_done = false;
 
-    dev->ground_pressure = sum_p / samples;
+    while(valid_samples < samples) {
+		MS5611_Update(dev);
+		if(MS5611_Compute(dev, &temp_t, &temp_p) == MS5611_OK) {
+			sum_p += temp_p;
+			valid_samples++;
+		}
+
+		HAL_Delay(5);
+	}
+
+	if(valid_samples > 0) {
+		dev->ground_pressure = (uint32_t)(sum_p / valid_samples);
+	} else {
+		dev->ground_pressure = PRESSURE_SEA_LEVEL_HPA;
+	}
 }
 
 static uint8_t MS5611_GetDelay(ms5611_osr_t osr) {
@@ -182,17 +191,17 @@ ms5611_error_t MS5611_Init(ms5611_t *dev, ms5611_osr_t osr_pressure, ms5611_osr_
 
     dev->state = MS5611_STATE_PRESSURE;
 
-    if(MS5611_SendCmd(dev, dev->cmd_pressure) != 0) return MS5611_ERR_SPI;
-
-    // Pressure calibration reference
-    dev->ground_pressure = PRESSURE_SEA_LEVEL_HPA;
-    MS5611_CalibrateGroundPressure(dev);
-
     dev->raw_pressure = 0;
     dev->raw_temperature = 0;
     dev->first_conversion_done = false;
 
+    if(MS5611_SendCmd(dev, dev->cmd_pressure) != 0) return MS5611_ERR_SPI;
+
     dev->last_conversion_time = HAL_GetTick();
+
+    // Pressure calibration reference
+    dev->ground_pressure = PRESSURE_SEA_LEVEL_HPA;
+    MS5611_CalibrateGroundPressure(dev);
 
     return MS5611_OK;
 }
@@ -218,7 +227,7 @@ ms5611_error_t MS5611_Update(ms5611_t *dev) {
     } else { /* TEMPERATURE */
         if(MS5611_ReadADC(dev, &dev->raw_temperature) != 0) return MS5611_ERR_SPI;
 
-        dev->first_conversion_done = 1;
+        dev->first_conversion_done = true;
 
         if(MS5611_SendCmd(dev, dev->cmd_pressure) != 0) return MS5611_ERR_SPI;
 
@@ -231,7 +240,7 @@ ms5611_error_t MS5611_Update(ms5611_t *dev) {
 }
 
 ms5611_error_t MS5611_Compute(ms5611_t *dev, float *temperature, float *pressure) {
-	if (dev->first_conversion_done == 0) {
+	if(!dev->first_conversion_done) {
 		return MS5611_NOT_READY;
 	}
 

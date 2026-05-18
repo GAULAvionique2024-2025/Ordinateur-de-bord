@@ -159,6 +159,104 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
+                                      'Ping',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            font: GoogleFonts.inter(
+                                              fontWeight: FontWeight.w600,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .fontStyle,
+                                            ),
+                                            fontSize: 16.0,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.w600,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontStyle,
+                                          ),
+                                    ),
+                                    Text(
+                                      'Vérification de la connectivité',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodySmall
+                                          .override(
+                                            font: GoogleFonts.inter(
+                                              fontWeight:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodySmall
+                                                      .fontWeight,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodySmall
+                                                      .fontStyle,
+                                            ),
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryText,
+                                            fontSize: 12.0,
+                                            letterSpacing: 0.0,
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodySmall
+                                                    .fontWeight,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodySmall
+                                                    .fontStyle,
+                                          ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              FFButtonWidget(
+                                onPressed: connected ? () {
+                                  ConsoleService().log('Test Ping demandé');
+                                  bt.send('PING\r\n');
+                                } : null,
+                                text: 'Exécuter',
+                                options: FFButtonOptions(
+                                  height: 36.0,
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      16.0, 0.0, 16.0, 0.0),
+                                  iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 0.0),
+                                  color: connected ? FlutterFlowTheme.of(context).primary : FlutterFlowTheme.of(context).secondaryText,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .bodySmall
+                                      .override(
+                                        font: GoogleFonts.inter(
+                                          fontWeight: FontWeight.w600,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodySmall
+                                                  .fontStyle,
+                                        ),
+                                        color: FlutterFlowTheme.of(context).primaryBackground,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FontWeight.w600,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .bodySmall
+                                            .fontStyle,
+                                      ),
+                                  elevation: 0.0,
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
                                       'Test Capteurs',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
@@ -214,7 +312,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                               FFButtonWidget(
                                 onPressed: connected ? () {
                                   ConsoleService().log('Test Capteurs demandé');
-                                  bt.send('TEST1');
+                                  bt.send('TEST1\r\n');
                                 } : null,
                                 text: 'Exécuter',
                                 options: FFButtonOptions(
@@ -312,7 +410,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                               FFButtonWidget(
                                 onPressed: connected ? () {
                                   ConsoleService().log('Test Communication demandé');
-                                  bt.send('TEST2');
+                                  bt.send('TEST2\r\n');
                                 } : null,
                                 text: 'Exécuter',
                                 options: FFButtonOptions(
@@ -411,7 +509,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                               FFButtonWidget(
                                 onPressed: connected ? () {
                                   ConsoleService().log('Test Mémoire demandé');
-                                  bt.send('TEST3');
+                                  bt.send('TEST3\r\n');
                                 } : null,
                                 text: 'Exécuter',
                                 options: FFButtonOptions(
@@ -554,7 +652,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                               FFButtonWidget(
                                 onPressed: connected ? () {
                                   ConsoleService().log('Calibration Accéléromètre demandé');
-                                  bt.send('CALIB1');
+                                  bt.send('CALIB1\r\n');
                                 } : null,
                                 text: 'Calibrer',
                                 options: FFButtonOptions(
@@ -653,7 +751,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                               FFButtonWidget(
                                 onPressed: connected ? () {
                                   ConsoleService().log('Calibration Baromètre demandé');
-                                  bt.send('CALIB2');
+                                  bt.send('CALIB2\r\n');
                                 } : null,
                                 text: 'Calibrer',
                                 options: FFButtonOptions(
@@ -741,7 +839,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                                           child: FFButtonWidget(
                                             onPressed: connected ? () {
                                               ConsoleService().log('Verrouiller demandé');
-                                              bt.send(data.pyrosArmed ? 'ARM0' : 'ARM1');
+                                              bt.send(data.pyrosArmed ? 'ARM0\r\n' : 'ARM1\r\n');
                                             } : null,
                                             text: (connected && data.pyrosArmed) ? 'Armé' : 'Désarmé',
                                             options: FFButtonOptions(
@@ -889,7 +987,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                                         child: FFButtonWidget(
                                           onPressed: (connected && data.pyrosArmed && data.pyros[0]) ? () {
                                             ConsoleService().log('Déclenchement pyro 1 demandé');
-                                            bt.send('P1');
+                                            bt.send('P1\r\n');
                                           } : null,
                                           text: connected ? ((data.pyrosArmed && data.pyros[0]) ? 'Déclencher' : 'Désarmé / Déconnecté') : 'Inconnu',
                                           options: FFButtonOptions(
@@ -1023,7 +1121,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                                         child: FFButtonWidget(
                                           onPressed: (connected && data.pyrosArmed && data.pyros[1]) ? () {
                                             ConsoleService().log('Déclenchement pyro 2 demandé');
-                                            bt.send('P2');
+                                            bt.send('P2\r\n');
                                           } : null,
                                           text: connected ? ((data.pyrosArmed && data.pyros[1]) ? 'Déclencher' : 'Désarmé / Déconnecté') : 'Inconnu',
                                           options: FFButtonOptions(
@@ -1157,7 +1255,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                                         child: FFButtonWidget(
                                           onPressed: (connected && data.pyrosArmed && data.pyros[2]) ? () {
                                             ConsoleService().log('Déclenchement pyro 3 demandé');
-                                            bt.send('P3');
+                                            bt.send('P3\r\n');
                                           } : null,
                                           text: connected ? ((data.pyrosArmed && data.pyros[2]) ? 'Déclencher' : 'Désarmé / Déconnecté') : 'Inconnu',
                                           options: FFButtonOptions(
@@ -1291,7 +1389,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                                         child: FFButtonWidget(
                                           onPressed: (connected && data.pyrosArmed && data.pyros[3]) ? () {
                                             ConsoleService().log('Déclenchement pyro 4 demandé');
-                                            bt.send('P4');
+                                            bt.send('P4\r\n');
                                           } : null,
                                           text: connected ? ((data.pyrosArmed && data.pyros[3]) ? 'Déclencher' : 'Désarmé / Déconnecté') : 'Inconnu',
                                           options: FFButtonOptions(

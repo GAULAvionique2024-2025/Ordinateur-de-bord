@@ -18,6 +18,9 @@ void KalmanNav_Init(kalman_nav_t *dev, float mean_alt, float *samples, uint8_t s
     dev->a_bias = 0.0f;
     // Calculate variance of the altitude measurements for initial noise estimation
     float variance = 0;
+    if(variance < 0.01f) {
+		variance = 0.01f;
+	}
     for(int i = 0; i < sample_count; i++) {
         variance += (samples[i] - mean_alt) * (samples[i] - mean_alt);
     }
@@ -48,8 +51,8 @@ void KalmanNav_Predict(kalman_nav_t *dev, float acc_world_z) {
     uint32_t now_cycles = DWT_GetCycles();
     uint32_t diff_cycles = now_cycles - dev->last_cycles;
     float dt = (float)diff_cycles / (float)SystemCoreClock;
-    if(dt <= 0.0f || dt > 0.5f) return; // Overflow security check
     dev->last_cycles = now_cycles;
+    if(dt <= 0.0f || dt > 0.5f) return; // Overflow security check
 
     // State prediction
     float a = acc_world_z - dev->a_bias;

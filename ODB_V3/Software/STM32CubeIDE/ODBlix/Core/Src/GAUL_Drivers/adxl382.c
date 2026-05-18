@@ -10,7 +10,7 @@
 
 
 static int8_t ADXL382_ReadReg(I2C_HandleTypeDef *hi2c, uint8_t reg, uint8_t *data) {
-    if(HAL_I2C_Mem_Read(hi2c, ADXL382_I2C_ADDR, reg, I2C_MEMADD_SIZE_8BIT, data, 1, HAL_MAX_DELAY) != HAL_OK) {
+    if(HAL_I2C_Mem_Read(hi2c, ADXL382_I2C_ADDR, reg, I2C_MEMADD_SIZE_8BIT, data, 1, 25) != HAL_OK) {
         return -1;
     }
 
@@ -18,7 +18,7 @@ static int8_t ADXL382_ReadReg(I2C_HandleTypeDef *hi2c, uint8_t reg, uint8_t *dat
 }
 
 static int8_t ADXL382_WriteReg(I2C_HandleTypeDef *hi2c, uint8_t reg, uint8_t data) {
-    if(HAL_I2C_Mem_Write(hi2c, ADXL382_I2C_ADDR, reg, I2C_MEMADD_SIZE_8BIT, &data, 1, HAL_MAX_DELAY) != HAL_OK) {
+    if(HAL_I2C_Mem_Write(hi2c, ADXL382_I2C_ADDR, reg, I2C_MEMADD_SIZE_8BIT, &data, 1, 25) != HAL_OK) {
         return -1;
     }
 
@@ -26,7 +26,7 @@ static int8_t ADXL382_WriteReg(I2C_HandleTypeDef *hi2c, uint8_t reg, uint8_t dat
 }
 
 static int8_t ADXL382_ReadRegs(I2C_HandleTypeDef *hi2c, uint8_t reg, uint8_t *data, uint16_t length) {
-    if(HAL_I2C_Mem_Read(hi2c, ADXL382_I2C_ADDR, reg, I2C_MEMADD_SIZE_8BIT, data, length, HAL_MAX_DELAY) != HAL_OK) {
+    if(HAL_I2C_Mem_Read(hi2c, ADXL382_I2C_ADDR, reg, I2C_MEMADD_SIZE_8BIT, data, length, 25) != HAL_OK) {
         return -1;
     }
 

@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:nexus/services/data_service.dart';
 import 'package:nexus/services/console_service.dart';
 
@@ -47,9 +49,36 @@ class BluetoothServiceManager with ChangeNotifier {
   void _onConsoleChanged() => notifyListeners();
   List<String> get logs => ConsoleService().logs;
 
+  Future<bool> _ensureScanPermissions() async {
+    if (kIsWeb) return true;
+
+    final permissions = <Permission>[
+      Permission.bluetoothScan,
+      Permission.bluetoothConnect,
+      Permission.locationWhenInUse,
+    ];
+
+    final results = await permissions.request();
+    final bluetoothGranted = results[Permission.bluetoothScan]?.isGranted == true &&
+        results[Permission.bluetoothConnect]?.isGranted == true;
+    final locationGranted = results[Permission.locationWhenInUse]?.isGranted == true;
+
+    if (!bluetoothGranted && !locationGranted) {
+      ConsoleService().log('Permissions Bluetooth refusées');
+      return false;
+    }
+
+    return true;
+  }
+
   // ---------- SCAN ----------
   Future<void> startScan({Duration timeout = const Duration(seconds: 15)}) async {
     if (isScanning) return;
+
+    final hasPermissions = await _ensureScanPermissions();
+    if (!hasPermissions) {
+      return;
+    }
 
     ConsoleService().clear();
     ConsoleService().log('Démarrage du scan Bluetooth');
@@ -256,28 +285,34 @@ class BluetoothServiceManager with ChangeNotifier {
   Future<void> enableNotifications(BluetoothCharacteristic c, DataServiceManager dataService,
   ) async {
     try {
+      if (notifySubscriptions.containsKey(c.uuid)) {
+        ConsoleService().log('Notifications déjà actives pour ${c.uuid}');
+        return;
+      }
       await c.setNotifyValue(true);
       _notifyBuffers[c.uuid] = '';
 
       var sub = c.lastValueStream.listen((data) {
-        final chunk = String.fromCharCodes(data);
+        final chunk = utf8.decode(data, allowMalformed: true);
         final existing = _notifyBuffers[c.uuid] ?? '';
         var buffer = '$existing$chunk';
 
-        // On reconstruit les lignes complètes terminées par \n avant parsing.
-        while (buffer.contains('\n')) {
-          final splitIndex = buffer.indexOf('\n');
-          final rawLine = buffer.substring(0, splitIndex).replaceAll('\r', '');
-          buffer = buffer.substring(splitIndex + 1);
-
-          final line = rawLine.trim();
-          if (line.isEmpty) {
-            continue;
+        while (true) {
+          final newlineIndex = buffer.indexOf('\n');
+          if (newlineIndex < 0) {
+            break;
           }
 
-          if (!dataService.isDisposed) {
-            dataService.parseMessage(line);
+          final frame = buffer.substring(0, newlineIndex).trim();
+          buffer = buffer.substring(newlineIndex + 1);
+
+          if (frame.isNotEmpty && !dataService.isDisposed) {
+            dataService.parseMessage(frame);
           }
+        }
+
+        if (buffer.length > 4096) {
+          buffer = buffer.substring(buffer.length - 4096);
         }
 
         _notifyBuffers[c.uuid] = buffer;

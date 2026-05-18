@@ -26,6 +26,7 @@
 #include "App/tasks.h"
 #include "App/scheduler.h"
 #include "App/logger.h"
+#include "App/profiler.h"
 #include "GAUL_Drivers/adxl382.h"
 #include "GAUL_Drivers/bno055.h"
 #include "GAUL_Drivers/hm11.h"
@@ -222,7 +223,13 @@ static void MX_TIM5_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+int _write(int file, char *ptr, int len) {
+    int DataIdx;
+    for (DataIdx = 0; DataIdx < len; DataIdx++) {
+        ITM_SendChar(*ptr++);
+    }
+    return len;
+}
 /* USER CODE END 0 */
 
 /**
@@ -270,7 +277,9 @@ int main(void)
   MX_TIM4_Init();
   MX_TIM5_Init();
   /* USER CODE BEGIN 2 */
+  DWT_Init();
   ODB_Init(&flight_data);
+  /*
   Scheduler_Init();
   Logger_Init();
   Scheduler_AddTask("UpdateData", Task_UpdateData, TASK_DATA_UPDATE_FREQ_HZ);
@@ -285,6 +294,7 @@ int main(void)
   Scheduler_SetActive("Telemetry", true);
   Scheduler_SetActive("BTRx", true);
   Scheduler_SetActive("BTTx", true);
+  */
 
   /* USER CODE END 2 */
 
@@ -295,7 +305,13 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    Scheduler_Run();
+    //Scheduler_Run();
+	ODB_Update(&flight_data);
+	Profiler_StartTask(PROFILE_TASK_BLE);
+    App_SendFrame(&nexus, &hm11, &flight_data);
+    App_HandleCommands(&nexus, &hm11);
+    Profiler_StopTask(PROFILE_TASK_BLE);
+    Profiler_LogResults(1000);
   }
   /* USER CODE END 3 */
 }

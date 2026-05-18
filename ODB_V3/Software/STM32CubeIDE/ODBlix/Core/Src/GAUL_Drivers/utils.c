@@ -97,6 +97,7 @@ int printt(const char *format, ...) {
     return ret;
 }
 
+/*
 int _write(int le, char *ptr, int len) {
     int DataIdx;
     for (DataIdx = 0; DataIdx < len; DataIdx++) {
@@ -105,4 +106,5 @@ int _write(int le, char *ptr, int len) {
 
     return len;
 }
+*/
 /* =========== */
