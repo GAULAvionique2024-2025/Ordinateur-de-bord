@@ -445,7 +445,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
  * L76LM33 (GPS)
  */
 void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t size) {
-	if(huart->Instance == USART6) {
+	if(huart->Instance == l76lm33.huart->Instance) {
 		L76LM33_UART_RxEventCallback(&l76lm33, size);
 	}
 }
