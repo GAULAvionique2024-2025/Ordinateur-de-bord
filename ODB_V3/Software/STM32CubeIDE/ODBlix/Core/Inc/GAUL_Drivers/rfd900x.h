@@ -19,6 +19,7 @@
 
 
 #define RFD_TX_RING_SIZE 2048
+#define MAVLINK_COMPONENT_ID 1
 
 typedef enum {
     RFD_OK,
@@ -26,6 +27,11 @@ typedef enum {
     RFD_ERROR,
     RFD_TIMEOUT
 } rfd900x_state_t;
+
+typedef enum {
+    MAVLINK_MODEM_BOOSTER       = 2,
+    MAVLINLK_MODEM_SUSTAINER     = 3,
+} mavlink_modem_id_t;
 
 typedef struct {
     UART_HandleTypeDef  *huart;

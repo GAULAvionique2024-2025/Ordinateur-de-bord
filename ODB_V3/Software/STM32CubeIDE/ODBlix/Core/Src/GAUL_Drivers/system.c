@@ -438,7 +438,7 @@ static void Telemetry_TransmitMessage(rfd900x_t *rfd_dev, const mavlink_message_
 	RFD900x_Transmit(rfd_dev, mavlink_tx_buffer, len);
 }
 
-void Telemetry_SendRocketData(rfd900x_t *rfd_dev, const odb_modem_id_t modem_id, odb_data_t *data, const uint32_t current_time_ms) {
+void Telemetry_SendRocketData(rfd900x_t *rfd_dev, const mavlink_modem_id_t modem_id, odb_data_t *data, const uint32_t current_time_ms) {
     if(!rfd_dev || !data) return;
 
     odb_data_t *data_temp = data;
@@ -487,7 +487,8 @@ void Telemetry_SendRocketData(rfd900x_t *rfd_dev, const odb_modem_id_t modem_id,
         Telemetry_TransmitMessage(rfd_dev, &msg);
     }
 
-void Telemetry_SendEventLog(rfd900x_t *rfd_dev, const odb_modem_id_t modem_id, const odb_event_severity_t severity, const char *text) {
+/*
+void Telemetry_SendEventLog(rfd900x_t *rfd_dev, const mavlink_modem_id_t modem_id, const mavlink_event_severity_t severity, const char *text) {
     if (!rfd_dev || !text || text[0] == '\0' || strlen(text) > 50) return;
 
     mavlink_message_t msg;
@@ -503,6 +504,7 @@ void Telemetry_SendEventLog(rfd900x_t *rfd_dev, const odb_modem_id_t modem_id, c
 
     Telemetry_TransmitMessage(rfd_dev, &msg);
 }
+*/
 /* =========== */
 
 /* === BLUETOOTH APP PACKAGING === */
@@ -579,11 +581,9 @@ void App_HandleCommands(nexus_t *nexus_dev, hm11_t *hm11_dev) {
     } else if(strncmp(cmd, "ARM0", 4) == 0) {
     	Pyro_Arming(&pyro1, &system_measurements, false);
         HM11_SendString(hm11_dev, "ACK: DISARMED\r\n");
-        Telemetry_SendEventLog(&rfd900x, 1, MAV_SEVERITY_WARNING, "PYROS DISARMED VIA BT");
     } else if(strncmp(cmd, "ARM1", 4) == 0) {
     	Pyro_Arming(&pyro1, &system_measurements, true);
         HM11_SendString(hm11_dev, "ACK: ARMED\r\n");
-        Telemetry_SendEventLog(&rfd900x, 1, MAV_SEVERITY_WARNING, "PYROS ARMED VIA BT");
     }
     // Pyros
     else if(strncmp(cmd, "P", 1) == 0 && isdigit((unsigned char)cmd[1])) {
@@ -592,29 +592,23 @@ void App_HandleCommands(nexus_t *nexus_dev, hm11_t *hm11_dev) {
                 Pyro_Fire(&pyro1, &system_measurements);
                 // TODO: Check with system_measurements and ...
                 HM11_SendString(hm11_dev, "ACK: P1 FIRED\r\n");
-                Telemetry_SendEventLog(&rfd900x, 1, MAV_SEVERITY_CRITICAL, "PYRO 1 FIRED");
             } else if(cmd[1] == '2') {
                 Pyro_Fire(&pyro2, &system_measurements);
                 // TODO: Check with system_measurements and ...
                 HM11_SendString(hm11_dev, "ACK: P2 FIRED\r\n");
-                Telemetry_SendEventLog(&rfd900x, 1, MAV_SEVERITY_CRITICAL, "PYRO 2 FIRED");
             } else if(cmd[1] == '3') {
                 Pyro_Fire(&pyro3, &system_measurements);
                 // TODO: Check with system_measurements and ...
                 HM11_SendString(hm11_dev, "ACK: P3 FIRED\r\n");
-                Telemetry_SendEventLog(&rfd900x, 1, MAV_SEVERITY_CRITICAL, "PYRO 3 FIRED");
             } else if(cmd[1] == '4') {
                 Pyro_Fire(&pyro4, &system_measurements);
                 // TODO: Check with system_measurements and ...
                 HM11_SendString(hm11_dev, "ACK: P4 FIRED\r\n");
-                Telemetry_SendEventLog(&rfd900x, 1, MAV_SEVERITY_CRITICAL, "PYRO 4 FIRED");
             } else {
                 HM11_SendString(hm11_dev, "ERR: UNKNOWN PYRO\r\n");
-                Telemetry_SendEventLog(&rfd900x, 1, MAV_SEVERITY_CRITICAL, "UNKNOWN PYRO CMD VIA BT");
             }
         } else {
             HM11_SendString(hm11_dev, "ERR: REFUSED (NOT ARMED)\r\n");
-            Telemetry_SendEventLog(&rfd900x, 1, MAV_SEVERITY_WARNING, "PYRO CMD REFUSED (NOT ARMED)");
         }
     }
     // Tests

@@ -27,6 +27,7 @@
 #include "App/scheduler.h"
 #include "App/logger.h"
 #include "App/profiler.h"
+#include "App/config.h"
 #include "GAUL_Drivers/adxl382.h"
 #include "GAUL_Drivers/bno055.h"
 #include "GAUL_Drivers/hm11.h"
@@ -124,7 +125,7 @@ hm11_t hm11 = {
 };
 l76lm33_t l76lm33 = {
 	.huart = &huart6,
-    .profile = L76_FLIGHT_PROFILE_30K,
+    .profile = CONFIG_GPS_PROFILE,
 };
 critical_led_t critical_led = {
 	.current_color = NONE,
@@ -311,7 +312,7 @@ int main(void)
     App_SendFrame(&nexus, &hm11, &flight_data);
     App_HandleCommands(&nexus, &hm11);
     Profiler_StopTask(PROFILE_TASK_BLE);
-    Telemetry_SendRocketData(&rfd900x, ODB_MODEM_SUSTAINER, &flight_data, 1);
+    Telemetry_SendRocketData(&rfd900x, rocket_config.modem_id, &flight_data, HAL_GetTick());
     HAL_Delay(250);
     Profiler_LogResults(1000);
   }

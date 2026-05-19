@@ -8,6 +8,7 @@
 
 #include "App/tasks.h"
 #include "stm32f4xx_hal.h"
+#include "App/config.h"
 #include "App/flight_fsm.h"
 #include "App/logger.h"
 #include "App/scheduler.h"
@@ -35,7 +36,7 @@ void Task_Logger(void) {
 
 void Task_Telemetry(void) {
     if((flight_data.system_states & FLAG_RADIO_OK) == 0U) return;
-    Telemetry_SendRocketData(&rfd900x, ODB_MODEM_BOOSTER, &flight_data, HAL_GetTick());
+    Telemetry_SendRocketData(&rfd900x, rocket_config.modem_id, &flight_data, HAL_GetTick());
 }
 
 void Task_BluetoothRx(void) {

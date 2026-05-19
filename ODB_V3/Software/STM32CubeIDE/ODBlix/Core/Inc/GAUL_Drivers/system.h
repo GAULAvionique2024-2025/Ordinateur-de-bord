@@ -33,8 +33,6 @@
 #include <assert.h>
 
 
-#define DEBUG_MODE 1
-
 /* === ODB === */
 // Init system_states
 /*
@@ -195,22 +193,9 @@ uint8_t ODB_GetPyroStates(const odb_data_t *data);
 /* =========== */
 
 /* === TELEMETRY === */
-#define MAVLINK_COMPONENT_ID 1 // air_1 = 1, air_2 = 2
 
-typedef enum {
-    ODB_MODEM_BOOSTER       = 2,
-    ODB_MODEM_SUSTAINER     = 3,
-} odb_modem_id_t;
-
-typedef enum {
-    EVENT_SEVERITY_EMERGENCY 	= MAV_SEVERITY_EMERGENCY,
-	EVENT_SEVERITY_CRITICAL 	= MAV_SEVERITY_CRITICAL,
-	EVENT_SEVERITY_WARNING 		= MAV_SEVERITY_WARNING,
-	EVENT_SEVERITY_INFO			= MAV_SEVERITY_INFO,
-} odb_event_severity_t;
-
-void Telemetry_SendRocketData(rfd900x_t *rfd_dev, const odb_modem_id_t modem_id, odb_data_t *data, const uint32_t current_time_ms);
-void Telemetry_SendEventLog(rfd900x_t *rfd_dev, const odb_modem_id_t modem_id, const odb_event_severity_t severity, const char *text);
+void Telemetry_SendRocketData(rfd900x_t *rfd_dev, const mavlink_modem_id_t modem_id, odb_data_t *data, const uint32_t current_time_ms);
+//void Telemetry_SendEventLog(rfd900x_t *rfd_dev, const mavlink_modem_id_t modem_id, const mavlink_event_severity_t severity, const char *text);
 /* =========== */
 
 /* === BLUETOOTH APP === */
