@@ -16,6 +16,7 @@
 
 #define LOG_BUFFER_SIZE 2 // Number of stored data (2 x 118 bytes -> near to 256)
 
+
 typedef struct {
     uint32_t magic_number;   // To identify the start of a valid header
     uint32_t flight_id;      // Incremented each time

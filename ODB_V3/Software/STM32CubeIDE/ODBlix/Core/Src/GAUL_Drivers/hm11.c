@@ -7,6 +7,7 @@
 
 
 #include "GAUL_Drivers/hm11.h"
+#include "App/config.h"
 #include <stdio.h>
 
 
@@ -73,6 +74,8 @@ bool HM11_Reset(hm11_t *dev) {
 
 hm11_state_t HM11_Init(hm11_t *dev) {
     if(!dev || !dev->huart || dev->baudrate > 8 || !dev->name) return HM11_ERROR_INVALID_PARAM;
+
+    dev->name = current_config.odb_name;
 
     hm11_state_t err = HM11_OK;
 

@@ -16,7 +16,6 @@
 
 
 extern odb_data_t flight_data;
-extern nexus_t nexus;
 extern hm11_t hm11;
 extern rfd900x_t rfd900x;
 
@@ -36,15 +35,15 @@ void Task_Logger(void) {
 
 void Task_Telemetry(void) {
     if((flight_data.system_states & FLAG_RADIO_OK) == 0U) return;
-    Telemetry_SendRocketData(&rfd900x, rocket_config.modem_id, &flight_data, HAL_GetTick());
+    Telemetry_SendRocketData(&rfd900x, current_config.stage_role + 2, &flight_data, HAL_GetTick());
 }
 
 void Task_BluetoothRx(void) {
     if((flight_data.system_states & FLAG_BT_OK) == 0U) return;
-    App_HandleCommands(&nexus, &hm11);
+    App_HandleCommands(&hm11);
 }
 
 void Task_BluetoothTx(void) {
 	if((flight_data.system_states & FLAG_BT_OK) == 0U) return;
-	App_SendFrame(&nexus, &hm11, &flight_data);
+	App_SendFrame(&hm11, &flight_data);
 }

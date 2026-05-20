@@ -199,8 +199,8 @@ void Telemetry_SendRocketData(rfd900x_t *rfd_dev, const mavlink_modem_id_t modem
 /* =========== */
 
 /* === BLUETOOTH APP === */
-void App_SendFrame(nexus_t *nexus_dev, hm11_t *hm11_dev, const odb_data_t *data);
-void App_HandleCommands(nexus_t *nexus_dev, hm11_t *hm11_dev);
+void App_SendFrame(hm11_t *hm11_dev, const odb_data_t *data);
+void App_HandleCommands(hm11_t *hm11_dev);
 /* =========== */
 
 #endif /* INC_GAUL_DRIVERS_SYSTEM_H_ */

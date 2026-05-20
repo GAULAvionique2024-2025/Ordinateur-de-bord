@@ -12,6 +12,7 @@
  */
 
 #include "GAUL_Drivers/l76lm33.h"
+#include "App/config.h"
 #include <string.h>
 
 
@@ -75,6 +76,7 @@ l76lm33_state_t L76LM33_Init(l76lm33_t *dev) {
     if(!dev) return L76LM33_ERROR_DEV;
     if(!dev->huart) return L76LM33_ERROR_UART;
 
+    dev->profile = current_config.stage_role;
     dev->line_count = 0;
     dev->old_pos = 0;
 
@@ -148,16 +150,18 @@ l76lm33_state_t L76LM33_Init(l76lm33_t *dev) {
     HAL_Delay(10);
 
     // Navigation mode
-    if(dev->profile == L76_FLIGHT_PROFILE_30K) {
+    if(dev->profile == 0) {
         // Mode Aviation (< 10 000m / 32 800ft)
         // "$PMTK886,2*2B<CR><LF>"
         const char NMEA_NAV_AVIATION[] = "$PMTK886,2*2B\r\n";
         if(L76LM33_SendCommand(dev, NMEA_NAV_AVIATION, strlen(NMEA_NAV_AVIATION)) != L76LM33_OK) return L76LM33_ERROR;
-    } else {
+    } else if(dev->profile == 1) {
         // Balloon mode (< 80 000m / 262 000ft)
         // "$PMTK886,3*2A<CR><LF>"
         const char NMEA_NAV_BALLOON[] = "$PMTK886,3*2A\r\n";
         if(L76LM33_SendCommand(dev, NMEA_NAV_BALLOON, strlen(NMEA_NAV_BALLOON)) != L76LM33_OK) return L76LM33_ERROR;
+    } else {
+    	return L76LM33_ERROR_DEV;
     }
     HAL_Delay(10);
 

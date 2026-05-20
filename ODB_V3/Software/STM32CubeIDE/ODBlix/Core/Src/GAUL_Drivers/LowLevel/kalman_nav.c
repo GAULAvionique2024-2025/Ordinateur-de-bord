@@ -87,7 +87,7 @@ void KalmanNav_Predict(kalman_nav_t *dev, float acc_world_z) {
 */
 void KalmanNav_Update(kalman_nav_t *dev, float measured_alt) {
     // Dynamic Measurement Noise Covariance (R_alt) & Mach Lock Override
-    if(dev->v > BOOST_PHASE_V_THRESHOLD || dev->z >= ALT_90K_M) {
+    if(dev->v > current_config.boost_phase_v_threshold || dev->z >= ALT_90K_M) {
         // If we're above Mach lock velocity or above 90k m, we consider the altitude measurement by barometer to be unreliable and increase R_alt to reduce its influence on the state update
         dev->R_alt = R_PENALTY;
     } else if(dev->z >= ALT_60K_M) {

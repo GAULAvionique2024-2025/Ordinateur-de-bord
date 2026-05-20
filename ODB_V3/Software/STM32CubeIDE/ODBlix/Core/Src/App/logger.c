@@ -6,9 +6,9 @@
  */
 
 #include "App/logger.h"
-#include <string.h> // Pour memcpy
+#include "App/config.h"
+#include <string.h>
 
-#define FLIGHT_HEADER_MAGIC_NUMBER 0xABCD1234
 #define WRITE_TIMEOUT_MS            10
 
 
@@ -38,7 +38,7 @@ static bool Logger_ReadHeader(uint32_t addr, flight_header_t *header) {
         return false;
     }
 
-    return (header->magic_number == FLIGHT_HEADER_MAGIC_NUMBER);
+    return (header->magic_number == LOGGER_MAGIC_NUMBER);
 }
 
 static void Logger_ScanFlash(uint32_t *next_free_addr, uint32_t *next_id) {
@@ -47,24 +47,29 @@ static void Logger_ScanFlash(uint32_t *next_free_addr, uint32_t *next_id) {
     uint32_t found_id = 0;
     uint32_t found_addr = 0;
 
-    while(addr < W25Q512_FLASH_SIZE) {
+    while(addr < LOGGER_MAX_ALLOWED_ADDRESS) {
         if(Logger_ReadHeader(addr, &header)) {
             found_id = header.flight_id;
             found_addr = addr;
-            addr += 4096;
+            addr += FLASH_SECTOR_SIZE_BYTE;
         } else {
             uint32_t first_word;
             W25Q_Read(&w25q, (uint8_t*)&first_word, addr, 4);
-            if(first_word == 0xFFFFFFFF) {
-                break;
+            if(first_word != 0xFFFFFFFF) { // If not empty, might be a corrupted header, skip this sector
+                addr += FLASH_SECTOR_SIZE_BYTE;
+            } else {
+                break; // Found empty sector, stop scanning
             }
-            addr += 4096;
         }
     }
     
     last_flight_header_addr = found_addr;
     last_flight_id = found_id;
     *next_id = found_id + 1;
+
+    if(addr % FLASH_SECTOR_SIZE_BYTE != 0) {
+        addr = ((addr / FLASH_SECTOR_SIZE_BYTE) + 1) * FLASH_SECTOR_SIZE_BYTE;
+    }
     *next_free_addr = addr;
 }
 
@@ -72,15 +77,15 @@ odb_data_t Logger_GetLastFlightData(void) {
     odb_data_t last_valid_packet = {0};
     if(last_flight_id == 0) return last_valid_packet;
 
-    uint32_t read_addr = last_flight_header_addr + 4096; 
+    uint32_t read_addr = last_flight_header_addr + FLASH_SECTOR_SIZE_BYTE; 
     odb_data_t temp_packet;
-    while (read_addr < W25Q512_FLASH_SIZE) {
+    while (read_addr < LOGGER_MAX_ALLOWED_ADDRESS) {
         W25Q_Read(&w25q, (uint8_t*)&temp_packet, read_addr, sizeof(odb_data_t));
 
         uint32_t check;
         memcpy(&check, &temp_packet, 4);
         
-        if(check == FLIGHT_HEADER_MAGIC_NUMBER || check == 0xFFFFFFFF) {
+        if(check == LOGGER_MAGIC_NUMBER || check == 0xFFFFFFFF) {
             break; 
         }
 
@@ -95,13 +100,17 @@ int8_t Logger_Init(void) {
     uint32_t next_id = 0;
     Logger_ScanFlash(&flash_current_address, &next_id);
 
-    if(flash_current_address >= (W25Q512_FLASH_SIZE - 4096)) {
+    if(flash_current_address >= (LOGGER_MAX_ALLOWED_ADDRESS - FLASH_SECTOR_SIZE_BYTE)) {
         flash_current_address = 0;
         next_id = 1;
     }
 
+    if(W25Q_EraseSector(&w25q, flash_current_address) != 0) {
+        return -2;
+    }
+
     flight_header_t header = {
-        .magic_number = FLIGHT_HEADER_MAGIC_NUMBER,
+        .magic_number = LOGGER_MAGIC_NUMBER,
         .flight_id = next_id,
         .metadata_rsv = 0
     };
@@ -109,7 +118,7 @@ int8_t Logger_Init(void) {
     if(W25Q_WritePage(&w25q, (uint8_t*)&header, flash_current_address, sizeof(flight_header_t)) != 0) {
     	return -1;
     }
-    flash_current_address += 4096; 
+    flash_current_address += FLASH_SECTOR_SIZE_BYTE; 
 
     write_index = 0;
     flush_pending = false;
@@ -150,6 +159,13 @@ void Logger_Task(void) {
 
         case LOGGER_START_WRITE: {
             uint32_t size = LOG_BUFFER_SIZE * sizeof(odb_data_t);
+            if((flash_current_address + size) > LOGGER_MAX_ALLOWED_ADDRESS) {
+                flush_pending = false;
+                current_flush_buf = NULL;
+                logger_state = LOGGER_IDLE;
+                break;
+            }
+
             if(W25Q_WritePageNoWait(&w25q, (uint8_t*)current_flush_buf, flash_current_address, size) == 0) {
                 flash_current_address += size;
                 if(flash_current_address % 256 != 0) {

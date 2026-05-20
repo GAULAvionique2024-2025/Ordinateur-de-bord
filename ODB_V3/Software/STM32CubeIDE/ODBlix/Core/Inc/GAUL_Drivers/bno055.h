@@ -92,7 +92,7 @@ typedef enum {
     BNO055_AXIS_P4,     // Vertical, on the long side
     BNO055_AXIS_P5,     // Vertical, on the short side
     BNO055_AXIS_P6,     // Vertical, on the other long side
-    BNO055_AXIS_P7      // Vertical, on the other short side
+    BNO055_AXIS_P7,     // Vertical, on the other short side
 } bno055_axis_profile_t;
 
 typedef struct {

@@ -31,7 +31,6 @@ extern rfd900x_t rfd900x;
 extern buzzer_t buzzer;
 extern system_measurements_t system_measurements;
 extern w25q_t w25q;
-extern nexus_t nexus;
 
 static odb_stats_t stats;
 static kalman_nav_t kalman_filter;
@@ -125,6 +124,9 @@ odb_state_t ODB_Init(odb_data_t *data) {
 
     ODB_Reset(data);
 
+    // Load configuration from flash
+    Config_Init();
+
     uint16_t system_states = 0x0000;
     if(SystemMeasurements_Init(&system_measurements) == 0) {
         SystemMeasurements_ComputePower(&system_measurements);
@@ -183,7 +185,7 @@ odb_state_t ODB_Init(odb_data_t *data) {
             printf("Erreur : Desarmement des Pyros bloque\n");
 		}
         // Protection
-        if(pyros_connected < MIN_NEEDED_PYRO_NB) {
+        if(pyros_connected < current_config.min_needed_pyro_nb) {
             error += 1;
             printf("Erreur : Pas assez de pyros connectes !\n");
         }
@@ -284,8 +286,8 @@ odb_state_t ODB_Init(odb_data_t *data) {
     data->system_states = system_states;
 
     // Buzzer report
-    if(ENABLE_BUZZER) {
-        Buzzer_ReportStatus(&buzzer, BUZZER_REPORT_TONE_HZ, system_measurements.vin_batt, (bool[]){(system_states & FLAG_PYRO1_CONN) != 0U, (system_states & FLAG_PYRO2_CONN) != 0U, (system_states & FLAG_PYRO3_CONN) != 0U, (system_states & FLAG_PYRO4_CONN) != 0U}, odb_state);
+    if(current_config.enable_buzzer) {
+        Buzzer_ReportStatus(&buzzer, current_config.buzzer_report_tone_hz, system_measurements.vin_batt, (bool[]){(system_states & FLAG_PYRO1_CONN) != 0U, (system_states & FLAG_PYRO2_CONN) != 0U, (system_states & FLAG_PYRO3_CONN) != 0U, (system_states & FLAG_PYRO4_CONN) != 0U}, odb_state);
     }
 
     //Scheduler_AddTask(ODB_Update, 100);
@@ -508,8 +510,8 @@ void Telemetry_SendEventLog(rfd900x_t *rfd_dev, const mavlink_modem_id_t modem_i
 /* =========== */
 
 /* === BLUETOOTH APP PACKAGING === */
-void App_SendFrame(nexus_t *nexus_dev, hm11_t *hm11_dev, const odb_data_t *data) {
-    if(!nexus_dev || !hm11_dev || !data) return;
+void App_SendFrame(hm11_t *hm11_dev, const odb_data_t *data) {
+    if(!hm11_dev || !data) return;
 
     static char buffer[512];
     snprintf(buffer, sizeof(buffer),
@@ -557,18 +559,18 @@ void App_SendFrame(nexus_t *nexus_dev, hm11_t *hm11_dev, const odb_data_t *data)
     HM11_SendString(hm11_dev, buffer);
 }
 
-void App_HandleCommands(nexus_t *nexus_dev, hm11_t *hm11_dev) {
-    if(!nexus_dev || !hm11_dev) return;
+void App_HandleCommands(hm11_t *hm11_dev) {
+    if(!hm11_dev) return;
 
     char cmd[HM11_RX_BUFFER_SIZE] = {0};
     if(!HM11_GetMessage(hm11_dev, cmd, sizeof(cmd))) {
 		return;
 	}
 
+    // Uppercase conversion
     for(int i = 0; cmd[i] && i < sizeof(cmd) - 1; i++) {
         cmd[i] = toupper((unsigned char)cmd[i]);
     }
-
 
     // System & Security
     if(strncmp(cmd, "PING", 4) == 0) {
@@ -633,7 +635,127 @@ void App_HandleCommands(nexus_t *nexus_dev, hm11_t *hm11_dev) {
             HM11_SendString(hm11_dev, "ERR: UNKNOWN CALIB\r\n");
         }
     }
-    // === COMMANDE INCONNUE ===
+    // Configurations
+    else if(strncmp(cmd, "CFG:", 4) == 0) {
+        float float_val = 0.0f;
+        uint32_t uint32_val = 0;
+        int int_val = 0;
+        char str_val[32] = {0};
+        bool success = false;        
+        // ODB name
+        if(sscanf(cmd, "CFG:NAME=%31s", str_val) == 1) {
+            strncpy(current_config.odb_name, str_val, sizeof(current_config.odb_name) - 1);
+            current_config.odb_name[sizeof(current_config.odb_name) - 1] = '\0';
+            HM11_SendString(hm11_dev, "ACK: NAME UPDATED\r\n");
+            success = true;
+        }
+        // Rocket role : 0 = Booster, 1 = Sustainer
+        else if(sscanf(cmd, "CFG:ROLE=%d", &int_val) == 1) {
+            current_config.stage_role = (uint8_t)int_val;
+            HM11_SendString(hm11_dev, "ACK: ROLE UPDATED\r\n");
+            success = true;
+        }
+        // Debug mode : 0 = disabled, 1 = enabled
+        else if(sscanf(cmd, "CFG:DEBUG=%d", &int_val) == 1) {
+            current_config.debug_mode = (uint8_t)int_val;
+            HM11_SendString(hm11_dev, "ACK: DEBUG UPDATED\r\n");
+            success = true;
+        }
+        // Enable buzzer : 0 = disabled, 1 = enabled
+        else if(sscanf(cmd, "CFG:BUZZER=%d", &int_val) == 1) {
+            current_config.enable_buzzer = (uint8_t)int_val;
+            HM11_SendString(hm11_dev, "ACK: BUZZER UPDATED\r\n");
+            success = true;
+        }
+        // Minimum number of pyros needed for launch validation
+        else if(sscanf(cmd, "CFG:MIN_PYRO=%d", &int_val) == 1) {
+            current_config.min_needed_pyro_nb = (uint8_t)int_val;
+            HM11_SendString(hm11_dev, "ACK: MIN_PYRO UPDATED\r\n");
+            success = true;
+        }
+        // Maximum number of attempts to fire the drogue
+        else if(sscanf(cmd, "CFG:MAX_DROGUE=%d", &int_val) == 1) {
+            current_config.drogue_fire_attempt_max_nb = (uint8_t)int_val;
+            HM11_SendString(hm11_dev, "ACK: MAX_DROGUE UPDATED\r\n");
+            success = true;
+        }
+        // Maximum number of attempts to fire the main
+        else if(sscanf(cmd, "CFG:MAX_MAIN=%d", &int_val) == 1) {
+            current_config.main_fire_attempt_max_nb = (uint8_t)int_val;
+            HM11_SendString(hm11_dev, "ACK: MAX_MAIN UPDATED\r\n");
+            success = true;
+        }
+        // Threshold of vertical acceleration in m/s² to validate the launch phase
+        else if(sscanf(cmd, "CFG:ACC_LAUNCH=%f", &float_val) == 1) {
+            current_config.acc_z_launch_threshold = float_val;
+            HM11_SendString(hm11_dev, "ACK: ACC_LAUNCH UPDATED\r\n");
+            success = true;
+        }
+        // Threshold of velocity for validating the boost phase
+        else if(sscanf(cmd, "CFG:V_BOOST=%f", &float_val) == 1) {
+            current_config.boost_phase_v_threshold = float_val;
+            HM11_SendString(hm11_dev, "ACK: V_BOOST UPDATED\r\n");
+            success = true;
+        }
+        // Threshold of velocity to validate apogee
+        else if(sscanf(cmd, "CFG:V_APOGEE=%f", &float_val) == 1) {
+            current_config.apogee_detect_v_threshold = float_val;
+            HM11_SendString(hm11_dev, "ACK: V_APOGEE UPDATED\r\n");
+            success = true;
+        }
+        // Altitude of main parachute deployment in meters
+        else if(sscanf(cmd, "CFG:ALT_MAIN=%f", &float_val) == 1) {
+            current_config.main_deploy_altitude_threshold_m = float_val;
+            HM11_SendString(hm11_dev, "ACK: ALT_MAIN UPDATED\r\n");
+            success = true;
+        }
+        // Threshold of velocity to validate landing
+        else if(sscanf(cmd, "CFG:V_LAND=%f", &float_val) == 1) {
+            current_config.landing_detect_v_threshold = float_val;
+            HM11_SendString(hm11_dev, "ACK: V_LAND UPDATED\r\n");
+            success = true;
+        }
+        // Frequency of the buzzer tone in Hz (uint32_t)
+        else if(sscanf(cmd, "CFG:TONE=%d", &int_val) == 1) {
+            current_config.buzzer_report_tone_hz = (uint32_t)int_val;
+            HM11_SendString(hm11_dev, "ACK: TONE UPDATED\r\n");
+            success = true;
+        }
+        // Time threshold for landing detection in milliseconds (uint32_t)
+        else if(sscanf(cmd, "CFG:T_LAND=%lu", &uint32_val) == 1) {
+            current_config.landing_detect_threshold_ms = uint32_val;
+            HM11_SendString(hm11_dev, "ACK: T_LAND UPDATED\r\n");
+            success = true;
+        }
+        // Time delay between pyros firing attempts in milliseconds (uint32_t)
+        else if(sscanf(cmd, "CFG:DELAY_FIRE=%lu", &uint32_val) == 1) {
+            current_config.fire_attempt_delay_ms = uint32_val;
+            HM11_SendString(hm11_dev, "ACK: DELAY_FIRE UPDATED\r\n");
+            success = true;
+        }
+        // Maximum safety time for pyrotechnic arming in ticks (uint32_t)
+        else if(sscanf(cmd, "CFG:FAIL_ARM=%lu", &uint32_val) == 1) {
+            current_config.pyros_arming_failsafe_ticks = uint32_val;
+            HM11_SendString(hm11_dev, "ACK: FAIL_ARM UPDATED\r\n");
+            success = true;
+        }
+        // Maximum safety time for apogee detection in ticks (uint32_t)
+        else if(sscanf(cmd, "CFG:FAIL_APOGEE=%lu", &uint32_val) == 1) {
+            current_config.apogee_failsafe_ticks = uint32_val;
+            HM11_SendString(hm11_dev, "ACK: FAIL_APOGEE UPDATED\r\n");
+            success = true;
+        }
+        
+        // Save to flash
+        if(success) {
+            Config_SaveToFlash();
+            // Restart ODB
+            NVIC_SystemReset();
+        } else {
+            HM11_SendString(hm11_dev, "ERR: UNKNOWN CONFIG PARAMETER\r\n");
+        }
+    }
+    // Unknown command
     else {
         HM11_SendString(hm11_dev, "ERR: UNKNOWN CMD\r\n");
     }

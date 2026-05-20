@@ -41,7 +41,6 @@
 #include "GAUL_Drivers/system.h"
 #include "GAUL_Drivers/system_measurements.h"
 #include "GAUL_Drivers/w25q512jv.h"
-#include "Nexus/nexus.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -120,12 +119,10 @@ bno055_t bno055 = {
 };
 hm11_t hm11 = {
     .huart = &huart2,
-    .name = ODB_BLE_NAME,
     .baudrate = HM11_BAUD_9600,
 };
 l76lm33_t l76lm33 = {
 	.huart = &huart6,
-    .profile = CONFIG_GPS_PROFILE,
 };
 critical_led_t critical_led = {
 	.current_color = NONE,
@@ -187,11 +184,6 @@ system_measurements_t system_measurements = {
 buzzer_t buzzer = {
 	.htim = &htim4,
 	.channel = TIM_CHANNEL_1
-};
-nexus_t nexus = {
-    .is_enabled = true,
-    .period_ms = NEXUS_DEFAULT_PERIOD_MS,
-    .last_ms = 0,
 };
 volatile uint16_t adc_buffer[9];
 w25q_t w25q = {
@@ -309,10 +301,10 @@ int main(void)
     //Scheduler_Run();
 	ODB_Update(&flight_data);
 	Profiler_StartTask(PROFILE_TASK_BLE);
-    App_SendFrame(&nexus, &hm11, &flight_data);
-    App_HandleCommands(&nexus, &hm11);
+    App_SendFrame(&hm11, &flight_data);
+    App_HandleCommands(&hm11);
     Profiler_StopTask(PROFILE_TASK_BLE);
-    Telemetry_SendRocketData(&rfd900x, rocket_config.modem_id, &flight_data, HAL_GetTick());
+    Telemetry_SendRocketData(&rfd900x, current_config.stage_role, &flight_data, HAL_GetTick());
     HAL_Delay(250);
     Profiler_LogResults(1000);
   }
