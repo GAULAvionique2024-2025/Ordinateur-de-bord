@@ -53,5 +53,6 @@ extern odb_config_t current_config;
 void Config_Init(void);
 void Config_SaveToFlash(void);
 void Config_LoadDefaults(void);
+const odb_config_t* Config_Get(void);
 
 #endif /* INC_APP_CONFIG_H_ */

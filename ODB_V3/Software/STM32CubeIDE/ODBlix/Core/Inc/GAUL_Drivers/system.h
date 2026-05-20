@@ -21,7 +21,6 @@
 #include "system_measurements.h"
 #include "w25q512jv.h"
 #include "mavlink/odb_mavlink_v1/mavlink.h"
-#include "Nexus/nexus.h"
 #include "GAUL_Drivers/LowLevel/kalman_nav.h"
 #include "GAUL_Drivers/LowLevel/dwt.h"
 
@@ -134,6 +133,7 @@ typedef struct {
 } odb_stats_t;
 
 // Main ODB data structure to be sent via telemetry
+#define ODB_BLE_FRAME_VERSION "1.0"
 typedef struct __attribute__((packed)) {
     // Status
     uint32_t    time_boot_ms;       // Timestamp since system boot in milliseconds (ms)
@@ -199,6 +199,7 @@ void Telemetry_SendRocketData(rfd900x_t *rfd_dev, const mavlink_modem_id_t modem
 /* =========== */
 
 /* === BLUETOOTH APP === */
+#define APP_DELAY_REFRESH_MS 500
 void App_SendFrame(hm11_t *hm11_dev, const odb_data_t *data);
 void App_HandleCommands(hm11_t *hm11_dev);
 /* =========== */

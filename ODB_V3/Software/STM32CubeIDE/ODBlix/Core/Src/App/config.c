@@ -67,3 +67,7 @@ void Config_SaveToFlash(void) {
         printf("Config: ERROR saving to Flash.\r\n");
     }
 }
+
+const odb_config_t* Config_Get(void) {
+    return &current_config;
+}

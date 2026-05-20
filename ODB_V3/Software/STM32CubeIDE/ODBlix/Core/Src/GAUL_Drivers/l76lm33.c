@@ -101,36 +101,44 @@ l76lm33_state_t L76LM33_Init(l76lm33_t *dev) {
 	 * "$PMTK313,1*2E<CR><LF>"
 	 * "$PMTK301,2*2E<CR><LF>"
 	*/
+    /*
 	const char NMEA_SBAS[] = "$PMTK313,1*2E\r\n";
 	const char NMEA_DGPS[] = "$PMTK301,2*2E\r\n";
 	if(L76LM33_SendCommand(dev, NMEA_DGPS, strlen(NMEA_DGPS)) != L76LM33_OK) return L76LM33_ERROR;
 	HAL_Delay(10);
 	if(L76LM33_SendCommand(dev, NMEA_SBAS, strlen(NMEA_SBAS)) != L76LM33_OK) return L76LM33_ERROR;
 	HAL_Delay(10);
+    */
 
 	/*
 	 * Disable EASY
 	 * "$PMTK869,1,0*34<CR><LF>"
 	*/
+    /*
 	const char NMEA_EASY[] = "$PMTK869,1,0*34\r\n";
 	if(L76LM33_SendCommand(dev, NMEA_EASY, strlen(NMEA_EASY)) != L76LM33_OK) return L76LM33_ERROR;
 	HAL_Delay(10);
+    */
 
 	/*
 	 * Activate AIC (active interference canceller)
 	 * "$PMTK286,1*23<CR><LF>"
 	*/
+    /*
 	const char NMEA_AIC[] = "$PMTK286,1*23\r\n";
 	if(L76LM33_SendCommand(dev, NMEA_AIC, strlen(NMEA_AIC)) != L76LM33_OK) return L76LM33_ERROR;
 	HAL_Delay(10);
+    */
 
 	/*
 	 * Set Periodic mode (disable AlwayLocate)
 	 * "$PMTK225,0*2B<CR><LF>"
 	*/
+    /*
 	const char NMEA_PERIOD[] = "$PMTK225,0*2B\r\n";
 	if(L76LM33_SendCommand(dev, NMEA_PERIOD, strlen(NMEA_PERIOD)) != L76LM33_OK) return L76LM33_ERROR;
 	HAL_Delay(10);
+    */
 
     /*
      * Output RMC and GGA sentences only (once every one position fix) & altitude is given in WGS84 ellipsoid convention
@@ -145,9 +153,11 @@ l76lm33_state_t L76LM33_Init(l76lm33_t *dev) {
      * "$PMTK220,100*2F<CR><LF>"
      * "$PMTK220,200*2C<CR><LF>"
     */
+    /*
     const char NMEA_RATE[] = "$PMTK220,100*2F\r\n";
     if(L76LM33_SendCommand(dev, NMEA_RATE, strlen(NMEA_RATE)) != L76LM33_OK) return L76LM33_ERROR;
     HAL_Delay(10);
+    */
 
     // Navigation mode
     if(dev->profile == 0) {

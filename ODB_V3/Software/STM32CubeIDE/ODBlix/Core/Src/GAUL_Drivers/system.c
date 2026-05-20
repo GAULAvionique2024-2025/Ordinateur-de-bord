@@ -113,6 +113,7 @@ uint8_t ODB_SetEventStates(const odb_stats_t *stats) {
     return packed;
 }
 
+// TODO: add behavior with debug_mode (ifdef printf, ect...)
 odb_state_t ODB_Init(odb_data_t *data) {
     if(!data) {
         return ODB_ERROR;
@@ -559,6 +560,7 @@ void App_SendFrame(hm11_t *hm11_dev, const odb_data_t *data) {
     HM11_SendString(hm11_dev, buffer);
 }
 
+// TODO: use APP_DELAY_REFRESH_MS
 void App_HandleCommands(hm11_t *hm11_dev) {
     if(!hm11_dev) return;
 
@@ -571,6 +573,66 @@ void App_HandleCommands(hm11_t *hm11_dev) {
     for(int i = 0; cmd[i] && i < sizeof(cmd) - 1; i++) {
         cmd[i] = toupper((unsigned char)cmd[i]);
     }
+
+    // Hello ODB
+    if(strncmp(cmd, "HELLO", 5) == 0) {
+		const odb_config_t *actual_config = Config_Get();
+		char tx_buf[128];
+
+		snprintf(tx_buf, sizeof(tx_buf), "VERSION:%s\r\n", ODB_BLE_FRAME_VERSION);
+		HM11_SendString(hm11_dev, tx_buf);
+
+		snprintf(tx_buf, sizeof(tx_buf), "CFG:NAME=%s\r\n", actual_config->odb_name);
+		HM11_SendString(hm11_dev, tx_buf);
+
+		snprintf(tx_buf, sizeof(tx_buf), "CFG:ROLE=%u\r\n", actual_config->stage_role);
+		HM11_SendString(hm11_dev, tx_buf);
+
+		snprintf(tx_buf, sizeof(tx_buf), "CFG:DEBUG=%u\r\n", actual_config->debug_mode);
+		HM11_SendString(hm11_dev, tx_buf);
+
+		snprintf(tx_buf, sizeof(tx_buf), "CFG:BUZZER=%u\r\n", actual_config->enable_buzzer);
+		HM11_SendString(hm11_dev, tx_buf);
+
+		snprintf(tx_buf, sizeof(tx_buf), "CFG:MIN_PYRO=%u\r\n", actual_config->min_needed_pyro_nb);
+		HM11_SendString(hm11_dev, tx_buf);
+
+		snprintf(tx_buf, sizeof(tx_buf), "CFG:MAX_DROGUE=%u\r\n", actual_config->drogue_fire_attempt_max_nb);
+		HM11_SendString(hm11_dev, tx_buf);
+
+		snprintf(tx_buf, sizeof(tx_buf), "CFG:MAX_MAIN=%u\r\n", actual_config->main_fire_attempt_max_nb);
+		HM11_SendString(hm11_dev, tx_buf);
+
+		snprintf(tx_buf, sizeof(tx_buf), "CFG:ACC_LAUNCH=%.2f\r\n", actual_config->acc_z_launch_threshold);
+		HM11_SendString(hm11_dev, tx_buf);
+
+		snprintf(tx_buf, sizeof(tx_buf), "CFG:V_BOOST=%.2f\r\n", actual_config->boost_phase_v_threshold);
+		HM11_SendString(hm11_dev, tx_buf);
+
+		snprintf(tx_buf, sizeof(tx_buf), "CFG:V_APOGEE=%.2f\r\n", actual_config->apogee_detect_v_threshold);
+		HM11_SendString(hm11_dev, tx_buf);
+
+		snprintf(tx_buf, sizeof(tx_buf), "CFG:ALT_MAIN=%.2f\r\n", actual_config->main_deploy_altitude_threshold_m);
+		HM11_SendString(hm11_dev, tx_buf);
+
+		snprintf(tx_buf, sizeof(tx_buf), "CFG:V_LAND=%.2f\r\n", actual_config->landing_detect_v_threshold);
+		HM11_SendString(hm11_dev, tx_buf);
+
+		snprintf(tx_buf, sizeof(tx_buf), "CFG:TONE=%u\r\n", actual_config->buzzer_report_tone_hz);
+		HM11_SendString(hm11_dev, tx_buf);
+
+		snprintf(tx_buf, sizeof(tx_buf), "CFG:T_LAND=%lu\r\n", actual_config->landing_detect_threshold_ms);
+		HM11_SendString(hm11_dev, tx_buf);
+
+		snprintf(tx_buf, sizeof(tx_buf), "CFG:DELAY_FIRE=%lu\r\n", actual_config->fire_attempt_delay_ms);
+		HM11_SendString(hm11_dev, tx_buf);
+
+		snprintf(tx_buf, sizeof(tx_buf), "CFG:FAIL_ARM=%lu\r\n", actual_config->pyros_arming_failsafe_ticks);
+		HM11_SendString(hm11_dev, tx_buf);
+
+		snprintf(tx_buf, sizeof(tx_buf), "CFG:FAIL_APOGEE=%lu\r\n", actual_config->apogee_failsafe_ticks);
+		HM11_SendString(hm11_dev, tx_buf);
+	}
 
     // System & Security
     if(strncmp(cmd, "PING", 4) == 0) {
