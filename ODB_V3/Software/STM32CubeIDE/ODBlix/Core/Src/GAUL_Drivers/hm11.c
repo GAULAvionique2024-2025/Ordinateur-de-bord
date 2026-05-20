@@ -68,12 +68,26 @@ static bool HM11_TestUARTConnection(hm11_t *dev) {
     return HM11_SendATCommand(dev, "AT", "OK");
 }
 
+static bool HM11_EnableNotifications(hm11_t *dev) {
+    return HM11_SendATCommand(dev, "AT+NOTI1", "OK+Set:1");
+}
+
+
 bool HM11_Reset(hm11_t *dev) {
     return HM11_SendATCommand(dev, "AT+RESET", "OK+RESET");
 }
 
+bool HM11_SetTransmissionPower(hm11_t *dev, hm11_tx_power_t power_idx) {
+    if(power_idx > 3) return false;
+
+    char cmd[15];
+    sprintf(cmd, "AT+POWE%d", power_idx);
+
+    return HM11_SendATCommand(dev, cmd, "OK+Set");
+}
+
 hm11_state_t HM11_Init(hm11_t *dev) {
-    if(!dev || !dev->huart || dev->baudrate > 8 || !dev->name) return HM11_ERROR_INVALID_PARAM;
+    if(!dev || !dev->huart || dev->baudrate > 8 || !dev->name || !dev->tx_power) return HM11_ERROR_INVALID_PARAM;
 
     dev->name = current_config.odb_name;
 
@@ -88,6 +102,12 @@ hm11_state_t HM11_Init(hm11_t *dev) {
     }
     if(!HM11_SetBaudRate(dev, dev->baudrate)) {
         err = HM11_SETBAUD_FAILED; // Failed to set baud rate
+    }
+    if(!HM11_EnableNotifications(dev)) {
+		err = HM11_SETNOTIF_FAILED; // Failed to set notifications
+	}
+    if(HM11_SetTransmissionPower(dev, dev->tx_power)) {
+    	err = HM11_SETTXPOWER_FAILED;
     }
     if(!HM11_Reset(dev)) {
         err = HM11_ERROR; // Failed to reset
@@ -172,6 +192,16 @@ bool HM11_GetMessage(hm11_t *dev, char *out_buffer, uint16_t max_length) {
     }
 
     return false;
+}
+
+bool HM11_IsConnected(hm11_t *dev) {
+    if(HM11_SendATCommand(dev, "AT", "OK")) {
+        dev->is_connected = false;
+        return false;
+    } else {
+        dev->is_connected = true;
+        return true;
+    }
 }
 
 bool HM11_Sleep(hm11_t *dev) {

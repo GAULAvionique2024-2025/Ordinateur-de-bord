@@ -23,7 +23,9 @@ typedef enum {
     HM11_ERROR = -1,
     HM11_ERROR_INVALID_PARAM = -2,
     HM11_SETBAUD_FAILED = -3,
-    HM11_SETNAME_FAILED = -4
+    HM11_SETNAME_FAILED = -4,
+	HM11_SETNOTIF_FAILED = -5,
+	HM11_SETTXPOWER_FAILED = -6,
 } hm11_state_t;
 
 typedef enum {
@@ -39,25 +41,19 @@ typedef enum {
 } hm11_baudrate_t;
 
 typedef enum {
-    HM_PARSE_IDLE = 0,
-    HM_PARSE_O,
-    HM_PARSE_K,
-    HM_PARSE_PLUS,
-    HM_PARSE_C,
-    HM_PARSE_CO,
-    HM_PARSE_CON,
-    HM_PARSE_L,
-    HM_PARSE_LO,
-    HM_PARSE_LOS
-} hm11_parse_t;
+	HM11_MINIMAL_TX_POWER = 0,
+	HM11_LOW_TX_POWER,
+	HM11_NORMAL_TX_POWER,
+	HM11_MAXIMAL_TX_POWER
+} hm11_tx_power_t;
 
 typedef struct {
     UART_HandleTypeDef 	*huart;
     char				*name;
     hm11_baudrate_t     baudrate;
+    hm11_tx_power_t		tx_power;
     bool                is_connected;
 
-    hm11_parse_t        parse_state;
     char 				at_rx_buffer[HM11_RX_BUFFER_SIZE];
     uint16_t            at_rx_index;
     uint8_t             rx_byte;
@@ -71,6 +67,8 @@ hm11_state_t HM11_Init(hm11_t *dev);
 bool HM11_SendData(hm11_t *dev, uint8_t *data, uint16_t length);
 bool HM11_SendString(hm11_t *dev, const char *str);
 bool HM11_GetMessage(hm11_t *dev, char *out_buffer, uint16_t max_lenth);
+bool HM11_IsConnected(hm11_t *dev);
+bool HM11_SetTransmissionPower(hm11_t *dev, hm11_tx_power_t power_idx);
 
 bool HM11_Sleep(hm11_t *dev);
 bool HM11_WakeUp(hm11_t *dev);

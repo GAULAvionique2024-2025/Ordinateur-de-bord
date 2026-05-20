@@ -120,6 +120,7 @@ bno055_t bno055 = {
 hm11_t hm11 = {
     .huart = &huart2,
     .baudrate = HM11_BAUD_9600,
+	.tx_power = HM11_NORMAL_TX_POWER,
 };
 l76lm33_t l76lm33 = {
 	.huart = &huart6,

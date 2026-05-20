@@ -579,7 +579,7 @@ void App_HandleCommands(hm11_t *hm11_dev) {
 		const odb_config_t *actual_config = Config_Get();
 		char tx_buf[128];
 
-		snprintf(tx_buf, sizeof(tx_buf), "VERSION:%s\r\n", ODB_BLE_FRAME_VERSION);
+		snprintf(tx_buf, sizeof(tx_buf), "VER:%s\r\n", ODB_BLE_FRAME_VERSION);
 		HM11_SendString(hm11_dev, tx_buf);
 
 		snprintf(tx_buf, sizeof(tx_buf), "CFG:NAME=%s\r\n", actual_config->odb_name);
