@@ -1283,7 +1283,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                                 const EdgeInsetsDirectional.fromSTEB(
                                                     0.0, 0.0, 0.0, 4.0),
                                             child: Text(
-                                              'WF ACC',
+                                              'ACC',
                                               style: FlutterFlowTheme.of(
                                                       context)
                                                   .bodySmall
@@ -1688,7 +1688,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                               ),
                                         ),
                                         Text(
-                                          (connected && data.accHighGSensorState == SensorState.ok) ? 'WF ACC: ${data.highGAccVertical.toStringAsFixed(2)} m/s²' : '—',
+                                          (connected && data.accHighGSensorState == SensorState.ok) ? 'ACC: ${data.highGAccVertical.toStringAsFixed(2)} m/s²' : '—',
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
@@ -2031,10 +2031,20 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                                       .bodySmall
                                                       .fontStyle,
                                             ),
-                                      ),
-                                      Text(
-                                        connected ? (data.gpsSensorState == SensorState.ok ? 'Fix satellites - ${data.gpsFix}' : 'No fix') : '—',
-                                        style: FlutterFlowTheme.of(context)
+                                        ),
+                                        Text(
+                                          connected
+                                          ? (data.gpsSensorState == SensorState.ok
+                                            ? (data.gpsFix == 0
+                                              ? 'No fix'
+                                              : data.gpsFix == 1
+                                                  ? 'GPS fix'
+                                                : data.gpsFix == 2
+                                                    ? 'Differential fix'
+                                                    : 'Autre fix')
+                                            : 'No fix')
+                                          : '—',
+                                          style: FlutterFlowTheme.of(context)
                                             .bodySmall
                                             .override(
                                               font: GoogleFonts.inter(
@@ -2047,6 +2057,29 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .success,
+                                              letterSpacing: 0.0,
+                                              fontWeight: FontWeight.w500,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodySmall
+                                                      .fontStyle,
+                                            ),
+                                      ),
+                                      Text(
+                                        connected && data.gpsSensorState == SensorState.ok ? '${data.gpsSatellites} satellites' : '—',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodySmall
+                                            .override(
+                                              font: GoogleFonts.inter(
+                                                fontWeight: FontWeight.w500,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodySmall
+                                                        .fontStyle,
+                                              ),
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryText,
                                               letterSpacing: 0.0,
                                               fontWeight: FontWeight.w500,
                                               fontStyle:

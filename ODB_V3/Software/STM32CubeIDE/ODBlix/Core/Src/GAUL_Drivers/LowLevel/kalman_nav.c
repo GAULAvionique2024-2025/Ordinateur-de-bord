@@ -18,13 +18,13 @@ void KalmanNav_Init(kalman_nav_t *dev, float mean_alt, float *samples, uint8_t s
     dev->a_bias = 0.0f;
     // Calculate variance of the altitude measurements for initial noise estimation
     float variance = 0;
-    if(variance < 0.01f) {
-		variance = 0.01f;
-	}
     for(int i = 0; i < sample_count; i++) {
         variance += (samples[i] - mean_alt) * (samples[i] - mean_alt);
     }
     variance /= sample_count;
+    if(variance < 0.01f) {
+		variance = 0.01f;
+	}
 
     // Init covariance matrix P
     for(int i = 0; i < 3; i++) {
@@ -55,7 +55,8 @@ void KalmanNav_Predict(kalman_nav_t *dev, float acc_world_z) {
     if(dt <= 0.0f || dt > 0.5f) return; // Overflow security check
 
     // State prediction
-    float a = acc_world_z - dev->a_bias;
+    float acc_world_ms2 = acc_world_z * GRAVITY_MS2;
+    float a = acc_world_ms2 - dev->a_bias;
     dev->z += dev->v * dt + 0.5f * a * dt * dt;
     dev->v += a * dt;
 

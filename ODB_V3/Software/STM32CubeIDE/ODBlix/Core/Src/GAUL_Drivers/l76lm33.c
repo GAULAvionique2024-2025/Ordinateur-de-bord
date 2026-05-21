@@ -52,7 +52,7 @@ static l76lm33_state_t L76LM33_ReadSentence(l76lm33_t *dev, char *out_buffer, ui
 
     if(!start_found) return L76LM33_ERROR; 
 
-    for (uint16_t i = 1; i < max_len - 1; i++) {
+    for(uint16_t i = 1; i < max_len - 1; i++) {
         if(!RingBuffer_Dequeue(&(dev->UART_Buffer), &c)) {
             return L76LM33_EMPTY_BUFF;
         }
@@ -89,56 +89,47 @@ l76lm33_state_t L76LM33_Init(l76lm33_t *dev) {
     }
 
     /*
-     * Search GPS + GLONASS satellites only (disables BeiDou and Galileo to allow 10Hz)
-     * "$PMTK353,1,1,0,0,0*2B<CR><LF>"
+     * Search GPS + Galileo satellites only (disables BeiDou and GLONASS to allow 10Hz)
+     * "$PMTK353,1,0,1,0,0*2A<CR><LF>"
     */
-    const char NMEA_CONST[] = "$PMTK353,1,1,0,0,0*2B\r\n";
+    const char NMEA_CONST[] = "$PMTK353,1,0,1,0,0*2A\r\n";
     if(L76LM33_SendCommand(dev, NMEA_CONST, strlen(NMEA_CONST)) != L76LM33_OK) return L76LM33_ERROR;
     HAL_Delay(10);
-
     /*
 	 * Activate SBAS (Positioning correction) + DPGS Mode
 	 * "$PMTK313,1*2E<CR><LF>"
 	 * "$PMTK301,2*2E<CR><LF>"
 	*/
-    /*
 	const char NMEA_SBAS[] = "$PMTK313,1*2E\r\n";
 	const char NMEA_DGPS[] = "$PMTK301,2*2E\r\n";
 	if(L76LM33_SendCommand(dev, NMEA_DGPS, strlen(NMEA_DGPS)) != L76LM33_OK) return L76LM33_ERROR;
 	HAL_Delay(10);
 	if(L76LM33_SendCommand(dev, NMEA_SBAS, strlen(NMEA_SBAS)) != L76LM33_OK) return L76LM33_ERROR;
 	HAL_Delay(10);
-    */
 
 	/*
 	 * Disable EASY
 	 * "$PMTK869,1,0*34<CR><LF>"
 	*/
-    /*
 	const char NMEA_EASY[] = "$PMTK869,1,0*34\r\n";
 	if(L76LM33_SendCommand(dev, NMEA_EASY, strlen(NMEA_EASY)) != L76LM33_OK) return L76LM33_ERROR;
 	HAL_Delay(10);
-    */
 
 	/*
 	 * Activate AIC (active interference canceller)
 	 * "$PMTK286,1*23<CR><LF>"
 	*/
-    /*
 	const char NMEA_AIC[] = "$PMTK286,1*23\r\n";
 	if(L76LM33_SendCommand(dev, NMEA_AIC, strlen(NMEA_AIC)) != L76LM33_OK) return L76LM33_ERROR;
 	HAL_Delay(10);
-    */
 
 	/*
 	 * Set Periodic mode (disable AlwayLocate)
 	 * "$PMTK225,0*2B<CR><LF>"
 	*/
-    /*
 	const char NMEA_PERIOD[] = "$PMTK225,0*2B\r\n";
 	if(L76LM33_SendCommand(dev, NMEA_PERIOD, strlen(NMEA_PERIOD)) != L76LM33_OK) return L76LM33_ERROR;
 	HAL_Delay(10);
-    */
 
     /*
      * Output RMC and GGA sentences only (once every one position fix) & altitude is given in WGS84 ellipsoid convention
@@ -147,17 +138,14 @@ l76lm33_state_t L76LM33_Init(l76lm33_t *dev) {
     const char NMEA_OUTPUT[] = "$PMTK314,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*28\r\n";
     if(L76LM33_SendCommand(dev, NMEA_OUTPUT, strlen(NMEA_OUTPUT)) != L76LM33_OK) return L76LM33_ERROR;
     HAL_Delay(10);
-
     /*
      * Set position fix interval to 100ms (10Hz) TODO: 5Hz practical, but 10Hz theoretical
      * "$PMTK220,100*2F<CR><LF>"
      * "$PMTK220,200*2C<CR><LF>"
     */
-    /*
     const char NMEA_RATE[] = "$PMTK220,100*2F\r\n";
     if(L76LM33_SendCommand(dev, NMEA_RATE, strlen(NMEA_RATE)) != L76LM33_OK) return L76LM33_ERROR;
     HAL_Delay(10);
-    */
 
     // Navigation mode
     if(dev->profile == 0) {
@@ -178,7 +166,6 @@ l76lm33_state_t L76LM33_Init(l76lm33_t *dev) {
     /* Baudrate
      * "$PMTK251,115200*1F<CR><LF>"
     */
-    /*
     const char NMEA_BAUD[] = "$PMTK251,115200*1F\r\n";
     if(L76LM33_SendCommand(dev, NMEA_BAUD, strlen(NMEA_BAUD)) != L76LM33_OK) return L76LM33_ERROR;
     HAL_Delay(50);
@@ -195,7 +182,6 @@ l76lm33_state_t L76LM33_Init(l76lm33_t *dev) {
     if(HAL_UARTEx_ReceiveToIdle_DMA(dev->huart, dev->dma_buffer, L76LM33_BUFFER_SIZES) != HAL_OK) {
         return L76LM33_ERROR;
     }
-    */
 
     return L76LM33_OK;
 }

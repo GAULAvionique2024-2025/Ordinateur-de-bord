@@ -56,7 +56,6 @@ int8_t NMEA_ParseRMC(nmea_t *gps_data, const char *nmea_sentence) {
     char *token = copy;
     char *next_token;
 
-    // Mise à jour ici : NMEA_MAX_TOKEN_TO_READ_RMC
     while(token != NULL && token_idx < NMEA_MAX_TOKEN_TO_READ_RMC) {
         next_token = strchr(token, ',');
         if(next_token) {
@@ -82,10 +81,10 @@ int8_t NMEA_ParseRMC(nmea_t *gps_data, const char *nmea_sentence) {
                 gps_data->gps_fix = 1; // FIX MAVLink
             } else {
                 gps_data->gps_fix = 0; // NO FIX MAVLink
-                gps_data->lat = 0;
-                gps_data->lon = 0;
-                gps_data->vel = 0;
-                gps_data->cog = 0;
+                gps_data->lat = 0.0f;
+                gps_data->lon = 0.0f;
+                gps_data->vel = 0.0f;
+                gps_data->cog = 0.0f;
                 break;
             }   
         } else if(token_idx == 3) { // LATITUDE
@@ -93,7 +92,7 @@ int8_t NMEA_ParseRMC(nmea_t *gps_data, const char *nmea_sentence) {
                 char degrees[3] = {token[0], token[1], '\0'};
                 double deg = atof(degrees);
                 double min = atof(token + 2);
-                gps_data->lat = (int32_t)((deg + min / 60.0) * 10000000.0f);
+                gps_data->lat = (int32_t)((deg + min / 60.0f) * 10000000.0f);
             }  
         } else if(token_idx == 4) { // LAT INDICATOR
             if(token[0] == 'S') gps_data->lat = -gps_data->lat;
@@ -102,7 +101,7 @@ int8_t NMEA_ParseRMC(nmea_t *gps_data, const char *nmea_sentence) {
                 char degrees[4] = {token[0], token[1], token[2], '\0'};
                 double deg = atof(degrees);
                 double min = atof(token + 3);
-                gps_data->lon = (int32_t)((deg + min / 60.0) * 10000000.0f);
+                gps_data->lon = (int32_t)((deg + min / 60.0f) * 10000000.0f);
             }  
         } else if(token_idx == 6) { // LON INDICATOR
             if(token[0] == 'W') gps_data->lon = -gps_data->lon;

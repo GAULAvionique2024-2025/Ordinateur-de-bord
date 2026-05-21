@@ -522,40 +522,40 @@ void App_SendFrame(hm11_t *hm11_dev, const odb_data_t *data) {
 			"highg_acc_x=%ld,highg_acc_y=%ld,highg_acc_z=%ld,highg_acc_vertical=%ld,"
 			"gps_fix=%u,lat=%ld,lon=%ld,gps_alt=%ld,vel=%u,cog=%u,satellites_nb=%u,"
 			"kalman_z=%ld,kalman_v=%ld\r\n",
-			(unsigned long)data->time_boot_ms,
-			(unsigned)data->system_states,
-			(unsigned)data->event_states,
-			(unsigned)data->mission_state,
-			(unsigned)data->battery_mv,
-			(long)(data->roll * 100.0f),
-			(long)(data->pitch * 100.0f),
-			(long)(data->yaw * 100.0f),
-			(long)(data->imu_acc_x * 100.0f),
-			(long)(data->imu_acc_y * 100.0f),
-			(long)(data->imu_acc_z * 100.0f),
-			(long)(data->imu_gyro_x * 100.0f),
-			(long)(data->imu_gyro_y * 100.0f),
-			(long)(data->imu_gyro_z * 100.0f),
-			(long)(data->imu_mag_x * 100.0f),
-			(long)(data->imu_mag_y * 100.0f),
-			(long)(data->imu_mag_z * 100.0f),
-			(long)(data->imu_acc_vertical * 100.0f),
-			(long)(data->pressure_hpa * 100.0f),
-			(long)(data->altitude_msl_m * 100.0f),
-			(long)(data->temp_celsius * 100.0f),
-			(long)(data->highg_acc_x * 100.0f),
-			(long)(data->highg_acc_y * 100.0f),
-			(long)(data->highg_acc_z * 100.0f),
-			(long)(data->highg_acc_vertical * 100.0f),
-			(unsigned)data->gps_fix,
-			(long)data->lat,
-			(long)data->lon,
-			(long)data->gps_alt,
-			(unsigned)data->vel,
-			(unsigned)data->cog,
-			(unsigned)data->satellites_nb,
-			(long)(data->kalman_z * 100.0f),
-			(long)(data->kalman_v * 100.0f));
+            (unsigned long)data->time_boot_ms,           // (ms) - /1
+            (unsigned)data->system_states,                // (bitfield) - /1
+            (unsigned)data->event_states,                 // (bitfield) - /1
+            (unsigned)data->mission_state,                // (state) - /1
+            (unsigned)data->battery_mv,                   // (mV) - /1
+            (long)(data->roll * 100.0f),                  // (deg) - /100
+            (long)(data->pitch * 100.0f),                 // (deg) - /100
+            (long)(data->yaw * 100.0f),                   // (deg) - /100
+            (long)(data->imu_acc_x * 100.0f),             // (m/s^2) - /100
+            (long)(data->imu_acc_y * 100.0f),             // (m/s^2) - /100
+            (long)(data->imu_acc_z * 100.0f),             // (m/s^2) - /100
+            (long)(data->imu_gyro_x * 100.0f),            // (deg/s) - /100
+            (long)(data->imu_gyro_y * 100.0f),            // (deg/s) - /100
+            (long)(data->imu_gyro_z * 100.0f),            // (deg/s) - /100
+            (long)(data->imu_mag_x * 100.0f),             // (uT) - /100
+            (long)(data->imu_mag_y * 100.0f),             // (uT) - /100
+            (long)(data->imu_mag_z * 100.0f),             // (uT) - /100
+            (long)(data->imu_acc_vertical * 100.0f),      // (m/s^2) - /100
+            (long)(data->pressure_hpa * 100.0f),          // (hPa) - /100
+            (long)(data->altitude_msl_m * 100.0f),        // (m) - /100
+            (long)(data->temp_celsius * 100.0f),          // (°C) - /100
+            (long)(data->highg_acc_x * 100.0f),           // (m/s^2) - /100
+            (long)(data->highg_acc_y * 100.0f),           // (m/s^2) - /100
+            (long)(data->highg_acc_z * 100.0f),           // (m/s^2) - /100
+            (long)(data->highg_acc_vertical * 100.0f),    // (m/s^2) - /100
+            (unsigned)data->gps_fix,                      // (fix) - /1
+            (long)data->lat,                              // (degE7) - /10000000
+            (long)data->lon,                              // (degE7) - /10000000
+            (long)data->gps_alt,                          // (m) - /1000
+            (unsigned)data->vel,                          // (m/s) - /100
+            (unsigned)data->cog,                          // (deg) - /100
+            (unsigned)data->satellites_nb,                // (count) - /1
+            (long)(data->kalman_z * 100.0f),              // (m) - /100
+            (long)(data->kalman_v * 100.0f));             // (m/s) - /100
 
     HM11_SendString(hm11_dev, buffer);
 }

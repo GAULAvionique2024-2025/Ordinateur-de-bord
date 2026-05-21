@@ -229,6 +229,11 @@ class DataServiceManager with ChangeNotifier {
       }
       //ConsoleService().log('✅ Parsed ${entries.length} entries');
 
+      double? parseScaledDouble(String value, double factor) {
+        final parsed = double.tryParse(value);
+        return parsed == null ? null : parsed / factor;
+      }
+
       for (final entry in entries.entries) {
         final key = entry.key;
         final value = entry.value;
@@ -247,7 +252,7 @@ class DataServiceManager with ChangeNotifier {
             missionState = int.tryParse(value) ?? missionState;
             break;
           case 'temp_celsius':
-            temperature = double.tryParse(value) ?? temperature;
+            temperature = parseScaledDouble(value, 100) ?? temperature;
             if (temperature >= -55 && temperature <= 150) {
               temperatureSensorState = SensorState.ok;
             } else {
@@ -284,72 +289,72 @@ class DataServiceManager with ChangeNotifier {
             break;
 
           case 'roll':
-            roll = double.tryParse(value) ?? roll;
+            roll = parseScaledDouble(value, 100) ?? roll;
             imuSensorState = SensorState.ok;
             break;
           case 'pitch':
-            pitch = double.tryParse(value) ?? pitch;
+            pitch = parseScaledDouble(value, 100) ?? pitch;
             imuSensorState = SensorState.ok;
             break;
           case 'yaw':
-            yaw = double.tryParse(value) ?? yaw;
+            yaw = parseScaledDouble(value, 100) ?? yaw;
             imuSensorState = SensorState.ok;
             break;
           case 'imu_acc_x':
-            imuAccX = double.tryParse(value) ?? imuAccX;
+            imuAccX = parseScaledDouble(value, 100) ?? imuAccX;
             imuSensorState = SensorState.ok;
             break;
           case 'imu_acc_vertical':
-            imuAccVertical = double.tryParse(value) ?? imuAccVertical;
+            imuAccVertical = parseScaledDouble(value, 100) ?? imuAccVertical;
             imuSensorState = SensorState.ok;
             break;
           case 'imu_acc_y':
-            imuAccY = double.tryParse(value) ?? imuAccY;
+            imuAccY = parseScaledDouble(value, 100) ?? imuAccY;
             imuSensorState = SensorState.ok;
             break;
           case 'imu_acc_z':
-            imuAccZ = double.tryParse(value) ?? imuAccZ;
+            imuAccZ = parseScaledDouble(value, 100) ?? imuAccZ;
             imuSensorState = SensorState.ok;
             break;
           case 'imu_gyro_x':
-            imuGyroX = double.tryParse(value) ?? imuGyroX;
+            imuGyroX = parseScaledDouble(value, 100) ?? imuGyroX;
             imuSensorState = SensorState.ok;
             break;
           case 'imu_gyro_y':
-            imuGyroY = double.tryParse(value) ?? imuGyroY;
+            imuGyroY = parseScaledDouble(value, 100) ?? imuGyroY;
             imuSensorState = SensorState.ok;
             break;
           case 'imu_gyro_z':
-            imuGyroZ = double.tryParse(value) ?? imuGyroZ;
+            imuGyroZ = parseScaledDouble(value, 100) ?? imuGyroZ;
             imuSensorState = SensorState.ok;
             break;
           case 'imu_mag_x':
-            imuMagX = double.tryParse(value) ?? imuMagX;
+            imuMagX = parseScaledDouble(value, 100) ?? imuMagX;
             imuSensorState = SensorState.ok;
             break;
           case 'imu_mag_y':
-            imuMagY = double.tryParse(value) ?? imuMagY;
+            imuMagY = parseScaledDouble(value, 100) ?? imuMagY;
             imuSensorState = SensorState.ok;
             break;
           case 'imu_mag_z':
-            imuMagZ = double.tryParse(value) ?? imuMagZ;
+            imuMagZ = parseScaledDouble(value, 100) ?? imuMagZ;
             imuSensorState = SensorState.ok;
             break;
 
           case 'highg_acc_x':
-            accHighGX = double.tryParse(value) ?? accHighGX;
+            accHighGX = parseScaledDouble(value, 100) ?? accHighGX;
             accHighGSensorState = SensorState.ok;
             break;
           case 'highg_acc_vertical':
-            highGAccVertical = double.tryParse(value) ?? highGAccVertical;
+            highGAccVertical = parseScaledDouble(value, 100) ?? highGAccVertical;
             accHighGSensorState = SensorState.ok;
             break;
           case 'highg_acc_y':
-            accHighGY = double.tryParse(value) ?? accHighGY;
+            accHighGY = parseScaledDouble(value, 100) ?? accHighGY;
             accHighGSensorState = SensorState.ok;
             break;
           case 'highg_acc_z':
-            accHighGZ = double.tryParse(value) ?? accHighGZ;
+            accHighGZ = parseScaledDouble(value, 100) ?? accHighGZ;
             accHighGSensorState = SensorState.ok;
             break;
 
@@ -363,15 +368,15 @@ class DataServiceManager with ChangeNotifier {
             break;
 
           case 'lat':
-            gpsLat = (int.tryParse(value) ?? (gpsLat * 10000000).round()) / 10000000.0;
+            gpsLat = parseScaledDouble(value, 10000000) ?? gpsLat;
             gpsSensorState = SensorState.ok;
             break;
           case 'lon':
-            gpsLon = (int.tryParse(value) ?? (gpsLon * 10000000).round()) / 10000000.0;
+            gpsLon = parseScaledDouble(value, 10000000) ?? gpsLon;
             gpsSensorState = SensorState.ok;
             break;
           case 'gps_alt':
-            gpsAlt = int.tryParse(value)?.toDouble() ?? gpsAlt;
+            gpsAlt = parseScaledDouble(value, 1000) ?? gpsAlt;
             gpsSensorState = SensorState.ok;
             break;
           case 'satellites_nb':
@@ -383,30 +388,30 @@ class DataServiceManager with ChangeNotifier {
             gpsSensorState = SensorState.ok;
             break;
           case 'vel':
-            gpsVelocity = int.tryParse(value)?.toDouble() ?? gpsVelocity;
+            gpsVelocity = parseScaledDouble(value, 100) ?? gpsVelocity;
             gpsSensorState = SensorState.ok;
             break;
           case 'cog':
-            gpsCourse = int.tryParse(value)?.toDouble() ?? gpsCourse;
+            gpsCourse = parseScaledDouble(value, 100) ?? gpsCourse;
             gpsSensorState = SensorState.ok;
             break;
 
           case 'pressure_hpa':
-            barometerPressure = double.tryParse(value) ?? barometerPressure;
+            barometerPressure = parseScaledDouble(value, 100) ?? barometerPressure;
             barometerSensorState = SensorState.ok;
             break;
 
           case 'altitude_msl_m':
-            altitudeMslM = double.tryParse(value) ?? altitudeMslM;
+            altitudeMslM = parseScaledDouble(value, 100) ?? altitudeMslM;
             barometerSensorState = SensorState.ok;
             break;
 
           case 'kalman_z':
-            kalmanAltitudeM = double.tryParse(value) ?? kalmanAltitudeM;
+            kalmanAltitudeM = parseScaledDouble(value, 100) ?? kalmanAltitudeM;
             break;
 
           case 'kalman_v':
-            kalmanVelocityMS = double.tryParse(value) ?? kalmanVelocityMS;
+            kalmanVelocityMS = parseScaledDouble(value, 100) ?? kalmanVelocityMS;
             break;
 
           case 'radio':
