@@ -127,6 +127,7 @@ odb_state_t ODB_Init(odb_data_t *data) {
 
     // Load configuration from flash
     Config_Init();
+    Config_Get();
 
     uint16_t system_states = 0x0000;
     if(SystemMeasurements_Init(&system_measurements) == 0) {
@@ -250,11 +251,6 @@ odb_state_t ODB_Init(odb_data_t *data) {
     	printf("Erreur : HM-11 ne repond pas.\n");
     }
 
-    if(CriticalLed_Init(&critical_led) != 0) {
-        warning += 1;
-        printf("Erreur : Init Critical LED\n");
-    }
-
     // Kalman filter initialization -> calculate R_static
     if((system_states & FLAG_BARO_OK) && (system_states & FLAG_HIGHG_OK)) {
         float samples[KALMAN_NAV_SAMPLE_NB];
@@ -271,6 +267,12 @@ odb_state_t ODB_Init(odb_data_t *data) {
 
         KalmanNav_Init(&kalman_filter, sum/KALMAN_NAV_SAMPLE_NB, samples, KALMAN_NAV_SAMPLE_NB);
     }
+
+    if(CriticalLed_Init(&critical_led) != 0) {
+		warning += 1;
+		printf("Erreur : Init Critical LED\n");
+	}
+    // Sensors Init End
 
     odb_state_t odb_state = ODB_ERROR;
     if(alimentation_fault) {
@@ -514,50 +516,56 @@ void Telemetry_SendEventLog(rfd900x_t *rfd_dev, const mavlink_modem_id_t modem_i
 void App_SendFrame(hm11_t *hm11_dev, const odb_data_t *data) {
     if(!hm11_dev || !data) return;
 
-    static char buffer[512];
-    snprintf(buffer, sizeof(buffer),
-			"DATA,time_boot_ms=%lu,system_states=%u,event_states=%u,mission_state=%u,battery_mv=%u,"
-			"roll=%ld,pitch=%ld,yaw=%ld,imu_acc_x=%ld,imu_acc_y=%ld,imu_acc_z=%ld,imu_gyro_x=%ld,imu_gyro_y=%ld,imu_gyro_z=%ld,imu_mag_x=%ld,imu_mag_y=%ld,imu_mag_z=%ld,imu_acc_vertical=%ld,"
-			"pressure_hpa=%ld,altitude_msl_m=%ld,temp_celsius=%ld,"
-			"highg_acc_x=%ld,highg_acc_y=%ld,highg_acc_z=%ld,highg_acc_vertical=%ld,"
-			"gps_fix=%u,lat=%ld,lon=%ld,gps_alt=%ld,vel=%u,cog=%u,satellites_nb=%u,"
-			"kalman_z=%ld,kalman_v=%ld\r\n",
-            (unsigned long)data->time_boot_ms,           // (ms) - /1
-            (unsigned)data->system_states,                // (bitfield) - /1
-            (unsigned)data->event_states,                 // (bitfield) - /1
-            (unsigned)data->mission_state,                // (state) - /1
-            (unsigned)data->battery_mv,                   // (mV) - /1
-            (long)(data->roll * 100.0f),                  // (deg) - /100
-            (long)(data->pitch * 100.0f),                 // (deg) - /100
-            (long)(data->yaw * 100.0f),                   // (deg) - /100
-            (long)(data->imu_acc_x * 100.0f),             // (m/s^2) - /100
-            (long)(data->imu_acc_y * 100.0f),             // (m/s^2) - /100
-            (long)(data->imu_acc_z * 100.0f),             // (m/s^2) - /100
-            (long)(data->imu_gyro_x * 100.0f),            // (deg/s) - /100
-            (long)(data->imu_gyro_y * 100.0f),            // (deg/s) - /100
-            (long)(data->imu_gyro_z * 100.0f),            // (deg/s) - /100
-            (long)(data->imu_mag_x * 100.0f),             // (uT) - /100
-            (long)(data->imu_mag_y * 100.0f),             // (uT) - /100
-            (long)(data->imu_mag_z * 100.0f),             // (uT) - /100
-            (long)(data->imu_acc_vertical * 100.0f),      // (m/s^2) - /100
-            (long)(data->pressure_hpa * 100.0f),          // (hPa) - /100
-            (long)(data->altitude_msl_m * 100.0f),        // (m) - /100
-            (long)(data->temp_celsius * 100.0f),          // (°C) - /100
-            (long)(data->highg_acc_x * 100.0f),           // (m/s^2) - /100
-            (long)(data->highg_acc_y * 100.0f),           // (m/s^2) - /100
-            (long)(data->highg_acc_z * 100.0f),           // (m/s^2) - /100
-            (long)(data->highg_acc_vertical * 100.0f),    // (m/s^2) - /100
-            (unsigned)data->gps_fix,                      // (fix) - /1
-            (long)data->lat,                              // (degE7) - /10000000
-            (long)data->lon,                              // (degE7) - /10000000
-            (long)data->gps_alt,                          // (m) - /1000
-            (unsigned)data->vel,                          // (m/s) - /100
-            (unsigned)data->cog,                          // (deg) - /100
-            (unsigned)data->satellites_nb,                // (count) - /1
-            (long)(data->kalman_z * 100.0f),              // (m) - /100
-            (long)(data->kalman_v * 100.0f));             // (m/s) - /100
+    static uint32_t last_send_time = 0;
+    uint32_t current_time = HAL_GetTick();
+    if((current_time - last_send_time) >= APP_DELAY_REFRESH_MS) {
+		static char buffer[512];
+		snprintf(buffer, sizeof(buffer),
+				"DATA,time_boot_ms=%lu,system_states=%u,event_states=%u,mission_state=%u,battery_mv=%u,"
+				"roll=%ld,pitch=%ld,yaw=%ld,imu_acc_x=%ld,imu_acc_y=%ld,imu_acc_z=%ld,imu_gyro_x=%ld,imu_gyro_y=%ld,imu_gyro_z=%ld,imu_mag_x=%ld,imu_mag_y=%ld,imu_mag_z=%ld,imu_acc_vertical=%ld,"
+				"pressure_hpa=%ld,altitude_msl_m=%ld,temp_celsius=%ld,"
+				"highg_acc_x=%ld,highg_acc_y=%ld,highg_acc_z=%ld,highg_acc_vertical=%ld,"
+				"gps_fix=%u,lat=%ld,lon=%ld,gps_alt=%ld,vel=%u,cog=%u,satellites_nb=%u,"
+				"kalman_z=%ld,kalman_v=%ld\r\n",
+				(unsigned long)data->time_boot_ms,           // (ms) - /1
+				(unsigned)data->system_states,                // (bitfield) - /1
+				(unsigned)data->event_states,                 // (bitfield) - /1
+				(unsigned)data->mission_state,                // (state) - /1
+				(unsigned)data->battery_mv,                   // (mV) - /1
+				(long)(data->roll * 100.0f),                  // (deg) - /100
+				(long)(data->pitch * 100.0f),                 // (deg) - /100
+				(long)(data->yaw * 100.0f),                   // (deg) - /100
+				(long)(data->imu_acc_x * 100.0f),             // (m/s^2) - /100
+				(long)(data->imu_acc_y * 100.0f),             // (m/s^2) - /100
+				(long)(data->imu_acc_z * 100.0f),             // (m/s^2) - /100
+				(long)(data->imu_gyro_x * 100.0f),            // (deg/s) - /100
+				(long)(data->imu_gyro_y * 100.0f),            // (deg/s) - /100
+				(long)(data->imu_gyro_z * 100.0f),            // (deg/s) - /100
+				(long)(data->imu_mag_x * 100.0f),             // (uT) - /100
+				(long)(data->imu_mag_y * 100.0f),             // (uT) - /100
+				(long)(data->imu_mag_z * 100.0f),             // (uT) - /100
+				(long)(data->imu_acc_vertical * 100.0f),      // (m/s^2) - /100
+				(long)(data->pressure_hpa * 100.0f),          // (hPa) - /100
+				(long)(data->altitude_msl_m * 100.0f),        // (m) - /100
+				(long)(data->temp_celsius * 100.0f),          // (°C) - /100
+				(long)(data->highg_acc_x * 100.0f),           // (m/s^2) - /100
+				(long)(data->highg_acc_y * 100.0f),           // (m/s^2) - /100
+				(long)(data->highg_acc_z * 100.0f),           // (m/s^2) - /100
+				(long)(data->highg_acc_vertical * 100.0f),    // (m/s^2) - /100
+				(unsigned)data->gps_fix,                      // (fix) - /1
+				(long)data->lat,                              // (degE7) - /10000000
+				(long)data->lon,                              // (degE7) - /10000000
+				(long)data->gps_alt,                          // (m) - /1000
+				(unsigned)data->vel,                          // (m/s) - /100
+				(unsigned)data->cog,                          // (deg) - /100
+				(unsigned)data->satellites_nb,                // (count) - /1
+				(long)(data->kalman_z * 100.0f),              // (m) - /100
+				(long)(data->kalman_v * 100.0f));             // (m/s) - /100
 
-    HM11_SendString(hm11_dev, buffer);
+		HM11_SendString(hm11_dev, buffer);
+
+		last_send_time = current_time;
+    }
 }
 
 // TODO: use APP_DELAY_REFRESH_MS
@@ -569,104 +577,88 @@ void App_HandleCommands(hm11_t *hm11_dev) {
 		return;
 	}
 
-    // Uppercase conversion
+    // Upper case
     for(int i = 0; cmd[i] && i < sizeof(cmd) - 1; i++) {
+        if(cmd[i] == '=') break;
         cmd[i] = toupper((unsigned char)cmd[i]);
     }
 
     // Hello ODB
     if(strncmp(cmd, "HELLO", 5) == 0) {
-		const odb_config_t *actual_config = Config_Get();
-		char tx_buf[128];
+    	const odb_config_t *actual_config = Config_Get();
 
-		snprintf(tx_buf, sizeof(tx_buf), "VER:%s\r\n", ODB_BLE_FRAME_VERSION);
-		HM11_SendString(hm11_dev, tx_buf);
+		static char tx_buf[400];
+		snprintf(tx_buf, sizeof(tx_buf),
+			"VER:%s\r\n"
+			"CFG:NAME=%s\r\n"
+			"CFG:ROLE=%u\r\n"
+			"CFG:DEBUG=%u\r\n"
+			"CFG:BUZZER=%u\r\n"
+			"CFG:MIN_PYRO=%u\r\n"
+			"CFG:MAX_DROGUE=%u\r\n"
+			"CFG:MAX_MAIN=%u\r\n"
+			"CFG:ACC_LAUNCH=%.2f\r\n"
+			"CFG:V_BOOST=%.2f\r\n"
+			"CFG:V_APOGEE=%.2f\r\n"
+			"CFG:ALT_MAIN=%.2f\r\n"
+			"CFG:V_LAND=%.2f\r\n"
+			"CFG:TONE=%u\r\n"
+			"CFG:T_LAND=%lu\r\n"
+			"CFG:DELAY_FIRE=%lu\r\n"
+			"CFG:FAIL_ARM=%lu\r\n"
+			"CFG:FAIL_APOGEE=%lu\r\n",
+			ODB_BLE_FRAME_VERSION,
+			actual_config->odb_name,
+			actual_config->stage_role,
+			actual_config->debug_mode,
+			actual_config->enable_buzzer,
+			actual_config->min_needed_pyro_nb,
+			actual_config->drogue_fire_attempt_max_nb,
+			actual_config->main_fire_attempt_max_nb,
+			actual_config->acc_z_launch_threshold,
+			actual_config->boost_phase_v_threshold,
+			actual_config->apogee_detect_v_threshold,
+			actual_config->main_deploy_altitude_threshold_m,
+			actual_config->landing_detect_v_threshold,
+			actual_config->buzzer_report_tone_hz,
+			actual_config->landing_detect_threshold_ms,
+			actual_config->fire_attempt_delay_ms,
+			actual_config->pyros_arming_failsafe_ticks,
+			actual_config->apogee_failsafe_ticks
+		);
 
-		snprintf(tx_buf, sizeof(tx_buf), "CFG:NAME=%s\r\n", actual_config->odb_name);
-		HM11_SendString(hm11_dev, tx_buf);
-
-		snprintf(tx_buf, sizeof(tx_buf), "CFG:ROLE=%u\r\n", actual_config->stage_role);
-		HM11_SendString(hm11_dev, tx_buf);
-
-		snprintf(tx_buf, sizeof(tx_buf), "CFG:DEBUG=%u\r\n", actual_config->debug_mode);
-		HM11_SendString(hm11_dev, tx_buf);
-
-		snprintf(tx_buf, sizeof(tx_buf), "CFG:BUZZER=%u\r\n", actual_config->enable_buzzer);
-		HM11_SendString(hm11_dev, tx_buf);
-
-		snprintf(tx_buf, sizeof(tx_buf), "CFG:MIN_PYRO=%u\r\n", actual_config->min_needed_pyro_nb);
-		HM11_SendString(hm11_dev, tx_buf);
-
-		snprintf(tx_buf, sizeof(tx_buf), "CFG:MAX_DROGUE=%u\r\n", actual_config->drogue_fire_attempt_max_nb);
-		HM11_SendString(hm11_dev, tx_buf);
-
-		snprintf(tx_buf, sizeof(tx_buf), "CFG:MAX_MAIN=%u\r\n", actual_config->main_fire_attempt_max_nb);
-		HM11_SendString(hm11_dev, tx_buf);
-
-		snprintf(tx_buf, sizeof(tx_buf), "CFG:ACC_LAUNCH=%.2f\r\n", actual_config->acc_z_launch_threshold);
-		HM11_SendString(hm11_dev, tx_buf);
-
-		snprintf(tx_buf, sizeof(tx_buf), "CFG:V_BOOST=%.2f\r\n", actual_config->boost_phase_v_threshold);
-		HM11_SendString(hm11_dev, tx_buf);
-
-		snprintf(tx_buf, sizeof(tx_buf), "CFG:V_APOGEE=%.2f\r\n", actual_config->apogee_detect_v_threshold);
-		HM11_SendString(hm11_dev, tx_buf);
-
-		snprintf(tx_buf, sizeof(tx_buf), "CFG:ALT_MAIN=%.2f\r\n", actual_config->main_deploy_altitude_threshold_m);
-		HM11_SendString(hm11_dev, tx_buf);
-
-		snprintf(tx_buf, sizeof(tx_buf), "CFG:V_LAND=%.2f\r\n", actual_config->landing_detect_v_threshold);
-		HM11_SendString(hm11_dev, tx_buf);
-
-		snprintf(tx_buf, sizeof(tx_buf), "CFG:TONE=%u\r\n", actual_config->buzzer_report_tone_hz);
-		HM11_SendString(hm11_dev, tx_buf);
-
-		snprintf(tx_buf, sizeof(tx_buf), "CFG:T_LAND=%lu\r\n", actual_config->landing_detect_threshold_ms);
-		HM11_SendString(hm11_dev, tx_buf);
-
-		snprintf(tx_buf, sizeof(tx_buf), "CFG:DELAY_FIRE=%lu\r\n", actual_config->fire_attempt_delay_ms);
-		HM11_SendString(hm11_dev, tx_buf);
-
-		snprintf(tx_buf, sizeof(tx_buf), "CFG:FAIL_ARM=%lu\r\n", actual_config->pyros_arming_failsafe_ticks);
-		HM11_SendString(hm11_dev, tx_buf);
-
-		snprintf(tx_buf, sizeof(tx_buf), "CFG:FAIL_APOGEE=%lu\r\n", actual_config->apogee_failsafe_ticks);
 		HM11_SendString(hm11_dev, tx_buf);
 	}
-
     // System & Security
-    if(strncmp(cmd, "PING", 4) == 0) {
+    else if(strncmp(cmd, "PING", 4) == 0) {
         HM11_SendString(hm11_dev, "ACK: PONG\r\n");
         if(!critical_led.is_active) {
         	CriticalLED_SetColor(&critical_led, GREEN);
         } else {
         	CriticalLED_SetColor(&critical_led, NONE);
         }
-    } else if(strncmp(cmd, "ARM0", 4) == 0) {
+    }
+    // Pyros
+    // TODO: Check with system_measurements and ...
+    else if(strncmp(cmd, "ARM0", 4) == 0) {
     	Pyro_Arming(&pyro1, &system_measurements, false);
         HM11_SendString(hm11_dev, "ACK: DISARMED\r\n");
     } else if(strncmp(cmd, "ARM1", 4) == 0) {
     	Pyro_Arming(&pyro1, &system_measurements, true);
         HM11_SendString(hm11_dev, "ACK: ARMED\r\n");
-    }
-    // Pyros
-    else if(strncmp(cmd, "P", 1) == 0 && isdigit((unsigned char)cmd[1])) {
+    } else if(strncmp(cmd, "P", 1) == 0 && isdigit((unsigned char)cmd[1])) {
         if(system_measurements.pyros_arming) {
             if(cmd[1] == '1') {
                 Pyro_Fire(&pyro1, &system_measurements);
-                // TODO: Check with system_measurements and ...
                 HM11_SendString(hm11_dev, "ACK: P1 FIRED\r\n");
             } else if(cmd[1] == '2') {
                 Pyro_Fire(&pyro2, &system_measurements);
-                // TODO: Check with system_measurements and ...
                 HM11_SendString(hm11_dev, "ACK: P2 FIRED\r\n");
             } else if(cmd[1] == '3') {
                 Pyro_Fire(&pyro3, &system_measurements);
-                // TODO: Check with system_measurements and ...
                 HM11_SendString(hm11_dev, "ACK: P3 FIRED\r\n");
             } else if(cmd[1] == '4') {
                 Pyro_Fire(&pyro4, &system_measurements);
-                // TODO: Check with system_measurements and ...
                 HM11_SendString(hm11_dev, "ACK: P4 FIRED\r\n");
             } else {
                 HM11_SendString(hm11_dev, "ERR: UNKNOWN PYRO\r\n");
@@ -704,8 +696,29 @@ void App_HandleCommands(hm11_t *hm11_dev) {
         int int_val = 0;
         char str_val[32] = {0};
         bool success = false;        
+
+        // Apply new config
+        if(strncmp(cmd, "CFG:APPLY", 9) == 0) {
+            if(Config_SaveToFlash() == 0) {
+            	HM11_SendString(hm11_dev, "ACK: CONFIG SAVED, REBOOTING\r\n");
+            	NVIC_SystemReset();
+
+            	return;
+            }
+
+            HM11_SendString(hm11_dev, "ACK: FAILED CONFIG SAVE, REBOOTING\r\n");
+        }
+        // Reset conf
+        else if(strncmp(cmd, "CFG:RESET", 9) == 0) {
+        	Config_LoadDefaults();
+        	Config_SaveToFlash();
+        	HM11_SendString(hm11_dev, "ACK: CONFIG SAVED, REBOOTING\r\n");
+			NVIC_SystemReset();
+
+			return;
+        }
         // ODB name
-        if(sscanf(cmd, "CFG:NAME=%31s", str_val) == 1) {
+        else if(sscanf(cmd, "CFG:NAME=%31[^\r\n]", str_val) == 1) {
             strncpy(current_config.odb_name, str_val, sizeof(current_config.odb_name) - 1);
             current_config.odb_name[sizeof(current_config.odb_name) - 1] = '\0';
             HM11_SendString(hm11_dev, "ACK: NAME UPDATED\r\n");
@@ -747,7 +760,7 @@ void App_HandleCommands(hm11_t *hm11_dev) {
             HM11_SendString(hm11_dev, "ACK: MAX_MAIN UPDATED\r\n");
             success = true;
         }
-        // Threshold of vertical acceleration in m/s² to validate the launch phase
+        // Threshold of vertical acceleration in g to validate the launch phase
         else if(sscanf(cmd, "CFG:ACC_LAUNCH=%f", &float_val) == 1) {
             current_config.acc_z_launch_threshold = float_val;
             HM11_SendString(hm11_dev, "ACK: ACC_LAUNCH UPDATED\r\n");
@@ -777,43 +790,38 @@ void App_HandleCommands(hm11_t *hm11_dev) {
             HM11_SendString(hm11_dev, "ACK: V_LAND UPDATED\r\n");
             success = true;
         }
-        // Frequency of the buzzer tone in Hz (uint32_t)
+        // Frequency of the buzzer tone in Hz
         else if(sscanf(cmd, "CFG:TONE=%d", &int_val) == 1) {
             current_config.buzzer_report_tone_hz = (uint32_t)int_val;
             HM11_SendString(hm11_dev, "ACK: TONE UPDATED\r\n");
             success = true;
         }
-        // Time threshold for landing detection in milliseconds (uint32_t)
+        // Time threshold for landing detection in milliseconds
         else if(sscanf(cmd, "CFG:T_LAND=%lu", &uint32_val) == 1) {
             current_config.landing_detect_threshold_ms = uint32_val;
             HM11_SendString(hm11_dev, "ACK: T_LAND UPDATED\r\n");
             success = true;
         }
-        // Time delay between pyros firing attempts in milliseconds (uint32_t)
+        // Time delay between pyros firing attempts in milliseconds
         else if(sscanf(cmd, "CFG:DELAY_FIRE=%lu", &uint32_val) == 1) {
             current_config.fire_attempt_delay_ms = uint32_val;
             HM11_SendString(hm11_dev, "ACK: DELAY_FIRE UPDATED\r\n");
             success = true;
         }
-        // Maximum safety time for pyrotechnic arming in ticks (uint32_t)
+        // Maximum safety time for pyrotechnic arming in ticks
         else if(sscanf(cmd, "CFG:FAIL_ARM=%lu", &uint32_val) == 1) {
             current_config.pyros_arming_failsafe_ticks = uint32_val;
             HM11_SendString(hm11_dev, "ACK: FAIL_ARM UPDATED\r\n");
             success = true;
         }
-        // Maximum safety time for apogee detection in ticks (uint32_t)
+        // Maximum safety time for apogee detection in ticks
         else if(sscanf(cmd, "CFG:FAIL_APOGEE=%lu", &uint32_val) == 1) {
             current_config.apogee_failsafe_ticks = uint32_val;
             HM11_SendString(hm11_dev, "ACK: FAIL_APOGEE UPDATED\r\n");
             success = true;
         }
         
-        // Save to flash
-        if(success) {
-            Config_SaveToFlash();
-            // Restart ODB
-            NVIC_SystemReset();
-        } else {
+        if(!success) {
             HM11_SendString(hm11_dev, "ERR: UNKNOWN CONFIG PARAMETER\r\n");
         }
     }

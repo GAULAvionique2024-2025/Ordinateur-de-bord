@@ -107,8 +107,8 @@ adxl382_error_t ADXL382_Init(adxl382_t *dev) {
     
     // Enable XYZ & Temp
     if(ADXL382_WriteReg(dev->hi2c, ADXL382_REG_DIG_EN, 0xF0) != 0) {
-            return ADXL382_I2C_ERROR;
-        }
+		return ADXL382_I2C_ERROR;
+	}
     
     // Range
     if(ADXL382_SetRange(dev, dev->range) != 0) {

@@ -173,43 +173,6 @@ int8_t W25Q_WritePageNoWait(w25q_t *dev, uint8_t* data, uint32_t write_addr, uin
     return 0;
 }
 
-/*
-int8_t W25Q_SelfTest(w25q_t *dev) {
-    uint8_t write_buf[W25Q_SELFTEST_SIZE];
-    uint8_t read_buf[W25Q_SELFTEST_SIZE];
-
-    for(uint32_t i = 0; i < W25Q_SELFTEST_SIZE; i++) {
-        write_buf[i] = (uint16_t)i;
-        read_buf[i] = 0x00;
-    }
-
-    if(W25Q_EraseSector(dev, W25Q_SELFTEST_ADDR) != 0) {
-        return -1;
-    }
-
-    if(W25Q_WritePage(dev, write_buf, W25Q_SELFTEST_ADDR, W25Q_SELFTEST_SIZE) != 0) {
-        (void)W25Q_EraseSector(dev, W25Q_SELFTEST_ADDR);
-        return -1;
-    }
-
-    if(W25Q_Read(dev, read_buf, W25Q_SELFTEST_ADDR, W25Q_SELFTEST_SIZE) != 0) {
-        (void)W25Q_EraseSector(dev, W25Q_SELFTEST_ADDR);
-        return -1;
-    }
-
-    if(memcmp(write_buf, read_buf, W25Q_SELFTEST_SIZE) != 0) {
-        (void)W25Q_EraseSector(dev, W25Q_SELFTEST_ADDR);
-        return -1;
-    }
-
-    if(W25Q_EraseSector(dev, W25Q_SELFTEST_ADDR) != 0) {
-        return -1;
-    }
-
-    return 0;
-}
-*/
-
 int8_t W25Q_EraseSector(w25q_t *dev, uint32_t sector_addr) {
     if(W25Q_WriteEnable(dev->hqspi) != 0) return -1;
 

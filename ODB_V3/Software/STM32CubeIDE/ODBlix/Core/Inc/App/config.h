@@ -26,7 +26,7 @@
 typedef struct {
     uint32_t magic_number;
 
-    char odb_name[32];
+    char odb_name[32];			// max 12 char
     uint8_t stage_role;         // 0 = BOOSTER, 1 = SUSTAINER
     uint8_t debug_mode;
     uint8_t enable_buzzer;
@@ -51,7 +51,7 @@ extern odb_config_t current_config;
 
 
 void Config_Init(void);
-void Config_SaveToFlash(void);
+int8_t Config_SaveToFlash(void);
 void Config_LoadDefaults(void);
 const odb_config_t* Config_Get(void);
 

@@ -25,6 +25,25 @@ class DataServiceManager with ChangeNotifier {
   int eventStates = 0;
   int missionState = -1;
   String odbState = '';
+  String odbFrameVersion = '';
+  bool hasOdbConfig = false;
+  String odbName = '';
+  int stageRole = 0;
+  bool debugMode = false;
+  bool enableBuzzer = false;
+  int minNeededPyroNb = 0;
+  int drogueFireAttemptMaxNb = 0;
+  int mainFireAttemptMaxNb = 0;
+  double accZLaunchThreshold = 0.0;
+  double boostPhaseVThreshold = 0.0;
+  double apogeeDetectVThreshold = 0.0;
+  double mainDeployAltitudeThresholdM = 0.0;
+  double landingDetectVThreshold = 0.0;
+  int buzzerReportToneHz = 0;
+  int landingDetectThresholdMs = 0;
+  int fireAttemptDelayMs = 0;
+  int pyrosArmingFailsafeTicks = 0;
+  int apogeeFailsafeTicks = 0;
   int vinMv = 0;
   double batteryVoltage = 0.0;
   double batteryVoltageMax = 24.0;
@@ -200,6 +219,106 @@ class DataServiceManager with ChangeNotifier {
   bool get missionReady => odbSensorState && radioState == RadioState.connected;
   bool get hasConnection => btService.connectedDevice != null;
 
+  void resetOdbConfig() {
+    timeBootMs = 0;
+    systemStates = 0;
+    eventStates = 0;
+    missionState = -1;
+    odbState = '';
+    odbFrameVersion = '';
+    hasOdbConfig = false;
+    odbName = '';
+    stageRole = 0;
+    debugMode = false;
+    enableBuzzer = false;
+    minNeededPyroNb = 0;
+    drogueFireAttemptMaxNb = 0;
+    mainFireAttemptMaxNb = 0;
+    accZLaunchThreshold = 0.0;
+    boostPhaseVThreshold = 0.0;
+    apogeeDetectVThreshold = 0.0;
+    mainDeployAltitudeThresholdM = 0.0;
+    landingDetectVThreshold = 0.0;
+    buzzerReportToneHz = 0;
+    landingDetectThresholdMs = 0;
+    fireAttemptDelayMs = 0;
+    pyrosArmingFailsafeTicks = 0;
+    apogeeFailsafeTicks = 0;
+    _safeNotifyListeners();
+  }
+
+  int _parseInt(String value, int fallback) {
+    return int.tryParse(value.trim()) ?? fallback;
+  }
+
+  double _parseDouble(String value, double fallback) {
+    return double.tryParse(value.trim().replaceAll(',', '.')) ?? fallback;
+  }
+
+  Future<void> refreshOdb() async {
+    if (!hasConnection) {
+      ConsoleService().log('Aucune connexion Bluetooth avec l\'ODB');
+      return;
+    }
+
+    await btService.send('HELLO\r\n');
+  }
+
+  Future<void> applyOdbSettings({
+    required String odbName,
+    required String stageRole,
+    required bool debugMode,
+    required bool enableBuzzer,
+    required String minNeededPyroNb,
+    required String drogueFireAttemptMaxNb,
+    required String mainFireAttemptMaxNb,
+    required String accZLaunchThreshold,
+    required String boostPhaseVThreshold,
+    required String apogeeDetectVThreshold,
+    required String mainDeployAltitudeThresholdM,
+    required String landingDetectVThreshold,
+    required String buzzerReportToneHz,
+    required String landingDetectThresholdMs,
+    required String fireAttemptDelayMs,
+    required String pyrosArmingFailsafeTicks,
+    required String apogeeFailsafeTicks,
+  }) async {
+    if (!hasConnection) {
+      ConsoleService().log('Aucune connexion Bluetooth avec l\'ODB');
+      return;
+    }
+
+    final commands = <String>[
+      'CFG:NAME=${odbName.trim()}',
+      'CFG:ROLE=${_parseInt(stageRole, this.stageRole)}',
+      'CFG:DEBUG=${debugMode ? 1 : 0}',
+      'CFG:BUZZER=${enableBuzzer ? 1 : 0}',
+      'CFG:MIN_PYRO=${_parseInt(minNeededPyroNb, this.minNeededPyroNb)}',
+      'CFG:MAX_DROGUE=${_parseInt(drogueFireAttemptMaxNb, this.drogueFireAttemptMaxNb)}',
+      'CFG:MAX_MAIN=${_parseInt(mainFireAttemptMaxNb, this.mainFireAttemptMaxNb)}',
+      'CFG:ACC_LAUNCH=${_parseDouble(accZLaunchThreshold, this.accZLaunchThreshold).toStringAsFixed(2)}',
+      'CFG:V_BOOST=${_parseDouble(boostPhaseVThreshold, this.boostPhaseVThreshold).toStringAsFixed(2)}',
+      'CFG:V_APOGEE=${_parseDouble(apogeeDetectVThreshold, this.apogeeDetectVThreshold).toStringAsFixed(2)}',
+      'CFG:ALT_MAIN=${_parseDouble(mainDeployAltitudeThresholdM, this.mainDeployAltitudeThresholdM).toStringAsFixed(2)}',
+      'CFG:V_LAND=${_parseDouble(landingDetectVThreshold, this.landingDetectVThreshold).toStringAsFixed(2)}',
+      'CFG:TONE=${_parseInt(buzzerReportToneHz, this.buzzerReportToneHz)}',
+      'CFG:T_LAND=${_parseInt(landingDetectThresholdMs, this.landingDetectThresholdMs)}',
+      'CFG:DELAY_FIRE=${_parseInt(fireAttemptDelayMs, this.fireAttemptDelayMs)}',
+      'CFG:FAIL_ARM=${_parseInt(pyrosArmingFailsafeTicks, this.pyrosArmingFailsafeTicks)}',
+      'CFG:FAIL_APOGEE=${_parseInt(apogeeFailsafeTicks, this.apogeeFailsafeTicks)}',
+      'CFG:APPLY',
+    ];
+
+    for (final command in commands) {
+      await btService.send('$command\r\n');
+    }
+
+    // delay
+    await Future.delayed(const Duration(milliseconds: 1000));
+
+    await btService.send('HELLO\r\n');
+  }
+
   // ---------- PARSER ----------
   void parseMessage(String message) {
     if (_isDisposed) return;
@@ -215,6 +334,13 @@ class DataServiceManager with ChangeNotifier {
           final parts = entry.split('=');
           if (parts.length != 2) continue;
           entries[parts[0].trim().toLowerCase()] = parts[1].trim();
+        }
+      } else if (normalized.startsWith('CFG:')) {
+        final payload = normalized.substring(4);
+        final equalsIndex = payload.indexOf('=');
+        if (equalsIndex > 0 && equalsIndex < payload.length - 1) {
+          entries[payload.substring(0, equalsIndex).trim().toLowerCase()] =
+              payload.substring(equalsIndex + 1).trim();
         }
       } else {
         for (final match in RegExp(r'([A-Za-z0-9_]+)=([-+]?[0-9]*\.?[0-9]+)').allMatches(normalized)) {
@@ -250,6 +376,77 @@ class DataServiceManager with ChangeNotifier {
             break;
           case 'mission_state':
             missionState = int.tryParse(value) ?? missionState;
+            break;
+          case 'ver':
+            odbFrameVersion = value;
+            break;
+          case 'name':
+            odbName = value;
+            hasOdbConfig = true;
+            break;
+          case 'role':
+            stageRole = int.tryParse(value) ?? stageRole;
+            hasOdbConfig = true;
+            break;
+          case 'debug':
+            debugMode = value == '1' || value.toLowerCase() == 'true';
+            hasOdbConfig = true;
+            break;
+          case 'buzzer':
+            enableBuzzer = value == '1' || value.toLowerCase() == 'true';
+            hasOdbConfig = true;
+            break;
+          case 'min_pyro':
+            minNeededPyroNb = int.tryParse(value) ?? minNeededPyroNb;
+            hasOdbConfig = true;
+            break;
+          case 'max_drogue':
+            drogueFireAttemptMaxNb = int.tryParse(value) ?? drogueFireAttemptMaxNb;
+            hasOdbConfig = true;
+            break;
+          case 'max_main':
+            mainFireAttemptMaxNb = int.tryParse(value) ?? mainFireAttemptMaxNb;
+            hasOdbConfig = true;
+            break;
+          case 'acc_launch':
+            accZLaunchThreshold = double.tryParse(value) ?? accZLaunchThreshold;
+            hasOdbConfig = true;
+            break;
+          case 'v_boost':
+            boostPhaseVThreshold = double.tryParse(value) ?? boostPhaseVThreshold;
+            hasOdbConfig = true;
+            break;
+          case 'v_apogee':
+            apogeeDetectVThreshold = double.tryParse(value) ?? apogeeDetectVThreshold;
+            hasOdbConfig = true;
+            break;
+          case 'alt_main':
+            mainDeployAltitudeThresholdM = double.tryParse(value) ?? mainDeployAltitudeThresholdM;
+            hasOdbConfig = true;
+            break;
+          case 'v_land':
+            landingDetectVThreshold = double.tryParse(value) ?? landingDetectVThreshold;
+            hasOdbConfig = true;
+            break;
+          case 'tone':
+            buzzerReportToneHz = int.tryParse(value) ?? buzzerReportToneHz;
+            hasOdbConfig = true;
+            break;
+          case 't_land':
+            landingDetectThresholdMs = int.tryParse(value) ?? landingDetectThresholdMs;
+            hasOdbConfig = true;
+            break;
+          case 'delay_fire':
+            fireAttemptDelayMs = int.tryParse(value) ?? fireAttemptDelayMs;
+            hasOdbConfig = true;
+            break;
+          case 'fail_arm':
+            pyrosArmingFailsafeTicks = int.tryParse(value) ?? pyrosArmingFailsafeTicks;
+            hasOdbConfig = true;
+            break;
+          case 'fail_apogee':
+            apogeeFailsafeTicks = int.tryParse(value) ?? apogeeFailsafeTicks;
+            hasOdbConfig = true;
             break;
           case 'temp_celsius':
             temperature = parseScaledDouble(value, 100) ?? temperature;
@@ -429,7 +626,7 @@ class DataServiceManager with ChangeNotifier {
             break;
 
           default:
-            ConsoleService().log('Clé inconnue: $key -> $value');
+            //ConsoleService().log('Clé inconnue: $key -> $value');
         }
       }
 

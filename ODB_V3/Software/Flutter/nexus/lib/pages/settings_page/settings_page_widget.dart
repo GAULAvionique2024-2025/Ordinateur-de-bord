@@ -1,0 +1,1128 @@
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_util.dart';
+import 'package:expandable/expandable.dart';
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:provider/provider.dart';
+import 'package:nexus/services/data_service.dart';
+import 'settings_page_model.dart';
+export 'settings_page_model.dart';
+
+class SettingsPageWidget extends StatefulWidget {
+  const SettingsPageWidget({super.key});
+
+  static String routeName = 'SettingsPage';
+  static String routePath = '/settingsPage';
+
+  @override
+  State<SettingsPageWidget> createState() => _SettingsPageWidgetState();
+}
+
+class _SettingsPageWidgetState extends State<SettingsPageWidget> {
+  late SettingsPageModel _model;
+
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+  final TextEditingController _odbNameController = TextEditingController();
+  final TextEditingController _pyroDelayController = TextEditingController();
+  final TextEditingController _pyroFailsafeController = TextEditingController();
+  final TextEditingController _minPyrosController = TextEditingController();
+  final TextEditingController _accLaunchController = TextEditingController();
+  final TextEditingController _boostVoltageController = TextEditingController();
+  final TextEditingController _apogeeVoltageController = TextEditingController();
+  final TextEditingController _landingVoltageController = TextEditingController();
+  final TextEditingController _landingDelayController = TextEditingController();
+  final TextEditingController _apogeeFailsafeController = TextEditingController();
+  final TextEditingController _deployAltitudeController = TextEditingController();
+  final TextEditingController _maxDrogueController = TextEditingController();
+  final TextEditingController _maxMainController = TextEditingController();
+  bool _debugMode = false;
+  bool _enableBuzzer = false;
+  double _buzzerToneHz = 100.0;
+  int _stageRoleValue = 0;
+  String _appName = '';
+  String _packageName = '';
+  String _appVersion = '';
+  String _buildNumber = '';
+  String _lastHydratedConfigSignature = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _model = createModel(context, () => SettingsPageModel());
+    _loadPackageInfo();
+
+    _model.expandableExpandableController =
+        ExpandableController(initialExpanded: false)
+          ..addListener(() => safeSetState(() {}));
+    _model.pyrosExpandableController =
+        ExpandableController(initialExpanded: false)
+          ..addListener(() => safeSetState(() {}));
+    _model.phaseExpandableController =
+        ExpandableController(initialExpanded: false)
+          ..addListener(() => safeSetState(() {}));
+    _model.parachuteExpandableController =
+        ExpandableController(initialExpanded: false)
+          ..addListener(() => safeSetState(() {}));
+    _model.audioExpandableController =
+        ExpandableController(initialExpanded: false)
+          ..addListener(() => safeSetState(() {}));
+    _model.aProposExpandableController =
+        ExpandableController(initialExpanded: false)
+          ..addListener(() => safeSetState(() {}));
+  }
+
+  Future<void> _loadPackageInfo() async {
+    final info = await PackageInfo.fromPlatform();
+    if (!mounted) return;
+    safeSetState(() {
+      _appName = info.appName;
+      _packageName = info.packageName;
+      _appVersion = info.version;
+      _buildNumber = info.buildNumber;
+    });
+  }
+
+  @override
+  void dispose() {
+    _odbNameController.dispose();
+    _pyroDelayController.dispose();
+    _pyroFailsafeController.dispose();
+    _minPyrosController.dispose();
+    _accLaunchController.dispose();
+    _boostVoltageController.dispose();
+    _apogeeVoltageController.dispose();
+    _landingVoltageController.dispose();
+    _landingDelayController.dispose();
+    _apogeeFailsafeController.dispose();
+    _deployAltitudeController.dispose();
+    _maxDrogueController.dispose();
+    _maxMainController.dispose();
+    _model.dispose();
+
+    super.dispose();
+  }
+
+  String _buildOdbConfigSignature(DataServiceManager data) {
+    return [
+      data.odbName,
+      data.stageRole,
+      data.debugMode,
+      data.enableBuzzer,
+      data.minNeededPyroNb,
+      data.drogueFireAttemptMaxNb,
+      data.mainFireAttemptMaxNb,
+      data.accZLaunchThreshold,
+      data.boostPhaseVThreshold,
+      data.apogeeDetectVThreshold,
+      data.mainDeployAltitudeThresholdM,
+      data.landingDetectVThreshold,
+      data.buzzerReportToneHz,
+      data.landingDetectThresholdMs,
+      data.fireAttemptDelayMs,
+      data.pyrosArmingFailsafeTicks,
+      data.apogeeFailsafeTicks,
+    ].join('|');
+  }
+
+  void _syncOdbConfig(DataServiceManager data) {
+    if (!data.hasOdbConfig) {
+      if (_lastHydratedConfigSignature.isEmpty) {
+        return;
+      }
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted || data.hasOdbConfig) {
+          return;
+        }
+
+        _lastHydratedConfigSignature = '';
+        safeSetState(() {
+          _odbNameController.clear();
+          _stageRoleValue = 0;
+          _debugMode = false;
+          _enableBuzzer = false;
+          _buzzerToneHz = 100.0;
+          _pyroDelayController.clear();
+          _pyroFailsafeController.clear();
+          _minPyrosController.clear();
+          _accLaunchController.clear();
+          _boostVoltageController.clear();
+          _apogeeVoltageController.clear();
+          _landingVoltageController.clear();
+          _landingDelayController.clear();
+          _apogeeFailsafeController.clear();
+          _deployAltitudeController.clear();
+          _maxDrogueController.clear();
+          _maxMainController.clear();
+        });
+      });
+
+      return;
+    }
+
+    final configSignature = _buildOdbConfigSignature(data);
+    if (configSignature == _lastHydratedConfigSignature) {
+      return;
+    }
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted || !data.hasOdbConfig) {
+        return;
+      }
+
+      final hydratedSignature = _buildOdbConfigSignature(data);
+      if (hydratedSignature == _lastHydratedConfigSignature) {
+        return;
+      }
+
+      _lastHydratedConfigSignature = hydratedSignature;
+      safeSetState(() {
+        _odbNameController.text = data.odbName;
+        _stageRoleValue = data.stageRole;
+        _debugMode = data.debugMode;
+        _enableBuzzer = data.enableBuzzer;
+        _buzzerToneHz = data.buzzerReportToneHz > 0
+            ? data.buzzerReportToneHz.toDouble()
+            : _buzzerToneHz;
+        _pyroDelayController.text = data.fireAttemptDelayMs.toString();
+        _pyroFailsafeController.text = data.pyrosArmingFailsafeTicks.toString();
+        _minPyrosController.text = data.minNeededPyroNb.toString();
+        _accLaunchController.text = data.accZLaunchThreshold.toStringAsFixed(2);
+        _boostVoltageController.text = data.boostPhaseVThreshold.toStringAsFixed(2);
+        _apogeeVoltageController.text = data.apogeeDetectVThreshold.toStringAsFixed(2);
+        _landingVoltageController.text = data.landingDetectVThreshold.toStringAsFixed(2);
+        _landingDelayController.text = data.landingDetectThresholdMs.toString();
+        _apogeeFailsafeController.text = data.apogeeFailsafeTicks.toString();
+        _deployAltitudeController.text = data.mainDeployAltitudeThresholdM.toStringAsFixed(2);
+        _maxDrogueController.text = data.drogueFireAttemptMaxNb.toString();
+        _maxMainController.text = data.mainFireAttemptMaxNb.toString();
+      });
+    });
+  }
+
+  Widget _buildStageRoleDropdown(
+    BuildContext context, {
+    required DataServiceManager data,
+    required bool enabled,
+  }) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        SizedBox(
+          width: 180,
+          child: Text(
+            'Rôle de stage',
+            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                  font: GoogleFonts.inter(
+                    fontWeight: FontWeight.w600,
+                    fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                  ),
+                  fontSize: 14.0,
+                  letterSpacing: 0.0,
+                  fontWeight: FontWeight.w600,
+                  fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                ),
+          ),
+        ),
+        Expanded(
+          child: DropdownButtonFormField<int>(
+            value: _stageRoleValue == 1 ? 1 : 0,
+            onChanged: enabled
+                ? (value) {
+                    if (value == null) return;
+                    safeSetState(() {
+                      _stageRoleValue = value;
+                    });
+                    data.stageRole = value;
+                  }
+                : null,
+            decoration: InputDecoration(
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 12,
+                vertical: 14,
+              ),
+              filled: true,
+              fillColor: FlutterFlowTheme.of(context).secondaryBackground,
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: FlutterFlowTheme.of(context).alternate,
+                  width: 1,
+                ),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: FlutterFlowTheme.of(context).primary,
+                  width: 1,
+                ),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              disabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: FlutterFlowTheme.of(context).alternate,
+                  width: 1,
+                ),
+                borderRadius: BorderRadius.circular(12),
+              ),
+            ),
+            items: const [
+              DropdownMenuItem<int>(
+                value: 0,
+                child: Text('Booster'),
+              ),
+              DropdownMenuItem<int>(
+                value: 1,
+                child: Text('Sustainer'),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildLabeledSettingField(
+    BuildContext context, {
+    required String label,
+    required String hintText,
+    TextInputType keyboardType = TextInputType.text,
+    int? maxLength,
+    String? initialValue,
+    TextEditingController? controller,
+    ValueChanged<String>? onChanged,
+    bool enabled = true,
+  }) {
+    final field = TextFormField(
+      controller: controller,
+      initialValue: controller == null ? (initialValue ?? '') : null,
+      enabled: enabled,
+      keyboardType: keyboardType,
+      maxLength: maxLength,
+      onChanged: onChanged,
+      decoration: InputDecoration(
+        hintText: hintText,
+        counterText: '',
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 12,
+          vertical: 14,
+        ),
+        filled: true,
+        fillColor: FlutterFlowTheme.of(context).secondaryBackground,
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: FlutterFlowTheme.of(context).alternate,
+            width: 1,
+          ),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: FlutterFlowTheme.of(context).primary,
+            width: 1,
+          ),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderSide: const BorderSide(
+            color: Color(0x00000000),
+            width: 1,
+          ),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderSide: const BorderSide(
+            color: Color(0x00000000),
+            width: 1,
+          ),
+          borderRadius: BorderRadius.circular(12),
+        ),
+      ),
+      style: FlutterFlowTheme.of(context).bodyMedium.override(
+            font: GoogleFonts.inter(
+              fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
+              fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+            ),
+            letterSpacing: 0.0,
+            fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
+            fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+          ),
+    );
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: 180,
+              child: Text(
+                label,
+                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                      font: GoogleFonts.inter(
+                        fontWeight: FontWeight.w600,
+                        fontStyle:
+                            FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                      ),
+                      fontSize: 14.0,
+                      letterSpacing: 0.0,
+                      fontWeight: FontWeight.w600,
+                      fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                    ),
+              ),
+            ),
+            Expanded(child: field),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildBooleanSetting(
+    BuildContext context, {
+    required String title,
+    required String subtitle,
+    required bool value,
+    required ValueChanged<bool> onChanged,
+    bool enabled = true,
+  }) {
+    return SwitchListTile.adaptive(
+      value: value,
+      onChanged: enabled ? onChanged : null,
+      title: Text(
+        title,
+        style: FlutterFlowTheme.of(context).bodyLarge.override(
+              font: GoogleFonts.inter(
+                fontWeight: FlutterFlowTheme.of(context).bodyLarge.fontWeight,
+                fontStyle: FlutterFlowTheme.of(context).bodyLarge.fontStyle,
+              ),
+              letterSpacing: 0.0,
+              fontWeight: FlutterFlowTheme.of(context).bodyLarge.fontWeight,
+              fontStyle: FlutterFlowTheme.of(context).bodyLarge.fontStyle,
+            ),
+      ),
+      subtitle: Text(
+        subtitle,
+        style: FlutterFlowTheme.of(context).bodySmall.override(
+              font: GoogleFonts.inter(
+                fontWeight: FlutterFlowTheme.of(context).bodySmall.fontWeight,
+                fontStyle: FlutterFlowTheme.of(context).bodySmall.fontStyle,
+              ),
+              color: FlutterFlowTheme.of(context).secondaryText,
+              letterSpacing: 0.0,
+              fontWeight: FlutterFlowTheme.of(context).bodySmall.fontWeight,
+              fontStyle: FlutterFlowTheme.of(context).bodySmall.fontStyle,
+            ),
+      ),
+      activeThumbColor: FlutterFlowTheme.of(context).primary,
+      contentPadding: EdgeInsets.zero,
+    );
+  }
+
+  Widget _buildSliderSetting(
+    BuildContext context, {
+    required String label,
+    required double value,
+    required double min,
+    required double max,
+    required ValueChanged<double> onChanged,
+    bool enabled = true,
+  }) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        SizedBox(
+          width: 180,
+          child: Text(
+            '$label: ${value.round()}',
+            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                  font: GoogleFonts.inter(
+                    fontWeight: FontWeight.w600,
+                    fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                  ),
+                  fontSize: 14.0,
+                  letterSpacing: 0.0,
+                  fontWeight: FontWeight.w600,
+                  fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                ),
+          ),
+        ),
+        Expanded(
+          child: Slider(
+            value: value.clamp(min, max),
+            min: min,
+            max: max,
+            divisions: 260,
+            activeColor: FlutterFlowTheme.of(context).primary,
+            onChanged: enabled ? onChanged : null,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSectionCard(BuildContext context, Widget child) {
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: FlutterFlowTheme.of(context).secondaryBackground,
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 4,
+            color: const Color(0x33000000),
+            offset: const Offset(0, 2),
+          )
+        ],
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: child,
+      ),
+    );
+  }
+
+  Widget _buildProfileSection(
+    BuildContext context,
+    TextStyle headerStyle, {
+    required DataServiceManager data,
+    required bool enabled,
+  }) {
+    return _buildSectionCard(
+      context,
+      Column(
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Icon(
+                Icons.person,
+                color: FlutterFlowTheme.of(context).primary,
+                size: 24.0,
+              ),
+              Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
+                child: Text('Profile', style: headerStyle),
+              ),
+            ],
+          ),
+          _buildLabeledSettingField(
+            context,
+            label: 'Nom ODB',
+            hintText: '',
+            maxLength: 12,
+            controller: _odbNameController,
+            enabled: enabled,
+            onChanged: (value) {
+              data.odbName = value;
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildStageSection(
+    BuildContext context,
+    TextStyle headerStyle, {
+    required DataServiceManager data,
+    required bool enabled,
+  }) {
+    return _buildSectionCard(
+      context,
+      ExpandableNotifier(
+        controller: _model.expandableExpandableController,
+        child: ExpandablePanel(
+          header: Row(
+            children: [
+              Icon(
+                Icons.layers,
+                color: FlutterFlowTheme.of(context).primary,
+                size: 24,
+              ),
+              Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
+                child: Text('Stage', style: headerStyle),
+              ),
+            ],
+          ),
+          collapsed: const SizedBox.shrink(),
+          expanded: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildStageRoleDropdown(
+                context,
+                data: data,
+                enabled: enabled,
+              ),
+              _buildBooleanSetting(
+                context,
+                title: 'Mode debug',
+                subtitle: 'Activer le mode debug',
+                value: _debugMode,
+                enabled: enabled,
+                onChanged: (value) {
+                  safeSetState(() {
+                    _debugMode = value;
+                  });
+                  data.debugMode = value;
+                },
+              ),
+            ].divide(const SizedBox(height: 12.0)),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPyrosSection(
+    BuildContext context,
+    TextStyle headerStyle, {
+    required DataServiceManager data,
+    required bool enabled,
+  }) {
+    return _buildSectionCard(
+      context,
+      ExpandableNotifier(
+        controller: _model.pyrosExpandableController,
+        child: ExpandablePanel(
+          header: Row(
+            children: [
+              Icon(
+                Icons.local_fire_department,
+                color: FlutterFlowTheme.of(context).tertiary,
+                size: 24,
+              ),
+              Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
+                child: Text('Pyros', style: headerStyle),
+              ),
+            ],
+          ),
+          collapsed: const SizedBox.shrink(),
+          expanded: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildLabeledSettingField(
+                context,
+                label: 'Délai essais allumage (ms)',
+                hintText: '',
+                keyboardType: TextInputType.number,
+                controller: _pyroDelayController,
+                enabled: enabled,
+                onChanged: (value) {
+                  data.fireAttemptDelayMs = int.tryParse(value) ?? data.fireAttemptDelayMs;
+                },
+              ),
+              _buildLabeledSettingField(
+                context,
+                label: 'Délai failsafe armement pyros (ms)',
+                hintText: '',
+                keyboardType: TextInputType.number,
+                controller: _pyroFailsafeController,
+                enabled: enabled,
+                onChanged: (value) {
+                  data.pyrosArmingFailsafeTicks = int.tryParse(value) ?? data.pyrosArmingFailsafeTicks;
+                },
+              ),
+              _buildLabeledSettingField(
+                context,
+                label: 'Nombre minimal de pyros lancement',
+                hintText: '',
+                keyboardType: TextInputType.number,
+                controller: _minPyrosController,
+                enabled: enabled,
+                onChanged: (value) {
+                  data.minNeededPyroNb = int.tryParse(value) ?? data.minNeededPyroNb;
+                },
+              ),
+            ].divide(const SizedBox(height: 12.0)),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPhaseSection(
+    BuildContext context,
+    TextStyle headerStyle, {
+    required DataServiceManager data,
+    required bool enabled,
+  }) {
+    return _buildSectionCard(
+      context,
+      ExpandableNotifier(
+        controller: _model.phaseExpandableController,
+        child: ExpandablePanel(
+          header: Row(
+            children: [
+              Icon(
+                Icons.stacked_line_chart,
+                color: FlutterFlowTheme.of(context).warning,
+                size: 24,
+              ),
+              Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
+                child: Text('Phase', style: headerStyle),
+              ),
+            ],
+          ),
+          collapsed: const SizedBox.shrink(),
+          expanded: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildLabeledSettingField(
+                context,
+                label: 'Seuil accélération verticale lancement (g)',
+                hintText: '',
+                keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                controller: _accLaunchController,
+                enabled: enabled,
+                onChanged: (value) {
+                  data.accZLaunchThreshold = double.tryParse(value.replaceAll(',', '.')) ?? data.accZLaunchThreshold;
+                },
+              ),
+              _buildLabeledSettingField(
+                context,
+                label: 'Seuil vitesse boost (m/s)',
+                hintText: '',
+                keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                controller: _boostVoltageController,
+                enabled: enabled,
+                onChanged: (value) {
+                  data.boostPhaseVThreshold = double.tryParse(value.replaceAll(',', '.')) ?? data.boostPhaseVThreshold;
+                },
+              ),
+              _buildLabeledSettingField(
+                context,
+                label: 'Seuil vitesse détection apogée (m/s)',
+                hintText: '',
+                keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                controller: _apogeeVoltageController,
+                enabled: enabled,
+                onChanged: (value) {
+                  data.apogeeDetectVThreshold = double.tryParse(value.replaceAll(',', '.')) ?? data.apogeeDetectVThreshold;
+                },
+              ),
+              _buildLabeledSettingField(
+                context,
+                label: 'Seuil vitesse détection atterrissage (m/s)',
+                hintText: '',
+                keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                controller: _landingVoltageController,
+                enabled: enabled,
+                onChanged: (value) {
+                  data.landingDetectVThreshold = double.tryParse(value.replaceAll(',', '.')) ?? data.landingDetectVThreshold;
+                },
+              ),
+              _buildLabeledSettingField(
+                context,
+                label: 'Délai détection atterrissage (ms)',
+                hintText: '',
+                keyboardType: TextInputType.number,
+                controller: _landingDelayController,
+                enabled: enabled,
+                onChanged: (value) {
+                  data.landingDetectThresholdMs = int.tryParse(value) ?? data.landingDetectThresholdMs;
+                },
+              ),
+              _buildLabeledSettingField(
+                context,
+                label: 'Délai failsafe apogée (ms)',
+                hintText: '',
+                keyboardType: TextInputType.number,
+                controller: _apogeeFailsafeController,
+                enabled: enabled,
+                onChanged: (value) {
+                  data.apogeeFailsafeTicks = int.tryParse(value) ?? data.apogeeFailsafeTicks;
+                },
+              ),
+            ].divide(const SizedBox(height: 12.0)),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildParachuteSection(
+    BuildContext context,
+    TextStyle headerStyle, {
+    required DataServiceManager data,
+    required bool enabled,
+  }) {
+    return _buildSectionCard(
+      context,
+      ExpandableNotifier(
+        controller: _model.parachuteExpandableController,
+        child: ExpandablePanel(
+          header: Row(
+            children: [
+              Icon(
+                Icons.paragliding,
+                color: FlutterFlowTheme.of(context).secondary,
+                size: 24,
+              ),
+              Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
+                child: Text('Parachute', style: headerStyle),
+              ),
+            ],
+          ),
+          collapsed: const SizedBox.shrink(),
+          expanded: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildLabeledSettingField(
+                context,
+                label: 'Altitude déploiement main (m)',
+                hintText: '',
+                keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                controller: _deployAltitudeController,
+                enabled: enabled,
+                onChanged: (value) {
+                  data.mainDeployAltitudeThresholdM = double.tryParse(value.replaceAll(',', '.')) ?? data.mainDeployAltitudeThresholdM;
+                },
+              ),
+              _buildLabeledSettingField(
+                context,
+                label: 'Nombre max essais drogue',
+                hintText: '',
+                keyboardType: TextInputType.number,
+                controller: _maxDrogueController,
+                enabled: enabled,
+                onChanged: (value) {
+                  data.drogueFireAttemptMaxNb = int.tryParse(value) ?? data.drogueFireAttemptMaxNb;
+                },
+              ),
+              _buildLabeledSettingField(
+                context,
+                label: 'Nombre max essais main',
+                hintText: '',
+                keyboardType: TextInputType.number,
+                controller: _maxMainController,
+                enabled: enabled,
+                onChanged: (value) {
+                  data.mainFireAttemptMaxNb = int.tryParse(value) ?? data.mainFireAttemptMaxNb;
+                },
+              ),
+            ].divide(const SizedBox(height: 12.0)),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAudioSection(
+    BuildContext context,
+    TextStyle headerStyle, {
+    required DataServiceManager data,
+    required bool enabled,
+  }) {
+    return _buildSectionCard(
+      context,
+      ExpandableNotifier(
+        controller: _model.audioExpandableController,
+        child: ExpandablePanel(
+          header: Row(
+            children: [
+              Icon(
+                Icons.audiotrack,
+                color: FlutterFlowTheme.of(context).secondary,
+                size: 24,
+              ),
+              Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
+                child: Text('Audio', style: headerStyle),
+              ),
+            ],
+          ),
+          collapsed: const SizedBox.shrink(),
+          expanded: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildBooleanSetting(
+                context,
+                title: 'Buzzer',
+                subtitle: 'Activer le buzzer',
+                value: _enableBuzzer,
+                enabled: enabled,
+                onChanged: (value) {
+                  safeSetState(() {
+                    _enableBuzzer = value;
+                  });
+                  data.enableBuzzer = value;
+                },
+              ),
+              _buildSliderSetting(
+                context,
+                label: 'Tonalité buzzer (Hz)',
+                value: _buzzerToneHz,
+                min: 100.0,
+                max: 2700.0,
+                enabled: enabled,
+                onChanged: (value) {
+                  safeSetState(() {
+                    _buzzerToneHz = value;
+                  });
+                  data.buzzerReportToneHz = value.round();
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAboutSection(
+    BuildContext context,
+    TextStyle headerStyle,
+    DataServiceManager data,
+  ) {
+    return _buildSectionCard(
+      context,
+      ExpandableNotifier(
+        controller: _model.aProposExpandableController,
+        child: ExpandablePanel(
+          header: Row(
+            children: [
+              Icon(
+                Icons.info,
+                color: FlutterFlowTheme.of(context).secondaryText,
+                size: 24,
+              ),
+              Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
+                child: Text('À propos', style: headerStyle),
+              ),
+            ],
+          ),
+          collapsed: const SizedBox.shrink(),
+          expanded: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                title: const Text('Package'),
+                subtitle: Text(_packageName.isNotEmpty ? _packageName : 'Chargement...'),
+              ),
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                title: const Text('Version de l’application'),
+                subtitle: Text(
+                  _appVersion.isNotEmpty ? '$_appVersion+$_buildNumber' : 'Chargement...',
+                ),
+              ),
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                title: const Text('Version de la trame ODB'),
+                subtitle: Text(
+                  data.odbFrameVersion.isNotEmpty ? data.odbFrameVersion : 'Inconnue',
+                ),
+              ),
+              Align(
+                alignment: Alignment.centerRight,
+                child: ElevatedButton.icon(
+                  onPressed: data.hasConnection
+                      ? () async {
+                          await data.btService.send('CFG:RESET\r\n');
+                          if (!context.mounted) return;
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Réinitialisation configuration ODB demandée')),
+                          );
+                        }
+                      : null,
+                  icon: const Icon(Icons.restart_alt_rounded),
+                  label: const Text('Reset'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: FlutterFlowTheme.of(context).warning,
+                    foregroundColor: FlutterFlowTheme.of(context).primaryBackground,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildActionButtons(
+    BuildContext context,
+    DataServiceManager data,
+  ) {
+    final canSend = data.hasConnection;
+
+    return Row(
+      children: [
+        Expanded(
+          child: ElevatedButton.icon(
+            onPressed: canSend
+                ? () async {
+                    await data.refreshOdb();
+                    if (!context.mounted) return;
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Rafraîchissement configuration ODB demandé')),
+                    );
+                  }
+                : null,
+            icon: const Icon(Icons.refresh_rounded),
+            label: const Text('Refresh'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: FlutterFlowTheme.of(context).primary,
+              foregroundColor: FlutterFlowTheme.of(context).primaryBackground,
+            ),
+          ),
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: ElevatedButton.icon(
+            onPressed: canSend
+                ? () async {
+                    await data.applyOdbSettings(
+                      odbName: _odbNameController.text,
+                      stageRole: _stageRoleValue.toString(),
+                      debugMode: _debugMode,
+                      enableBuzzer: _enableBuzzer,
+                      minNeededPyroNb: _minPyrosController.text,
+                      drogueFireAttemptMaxNb: _maxDrogueController.text,
+                      mainFireAttemptMaxNb: _maxMainController.text,
+                      accZLaunchThreshold: _accLaunchController.text,
+                      boostPhaseVThreshold: _boostVoltageController.text,
+                      apogeeDetectVThreshold: _apogeeVoltageController.text,
+                      mainDeployAltitudeThresholdM: _deployAltitudeController.text,
+                      landingDetectVThreshold: _landingVoltageController.text,
+                      buzzerReportToneHz: _buzzerToneHz.round().toString(),
+                      landingDetectThresholdMs: _landingDelayController.text,
+                      fireAttemptDelayMs: _pyroDelayController.text,
+                      pyrosArmingFailsafeTicks: _pyroFailsafeController.text,
+                      apogeeFailsafeTicks: _apogeeFailsafeController.text,
+                    );
+                    if (!context.mounted) return;
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Paramètres ODB envoyés')),
+                    );
+                  }
+                : null,
+            icon: const Icon(Icons.check_circle_outline_rounded),
+            label: const Text('Appliquer'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: FlutterFlowTheme.of(context).error,
+              foregroundColor: FlutterFlowTheme.of(context).primaryBackground,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final data = context.watch<DataServiceManager>();
+    final odbConnected = data.hasConnection;
+    _syncOdbConfig(data);
+
+    final expandableHeaderStyle = FlutterFlowTheme.of(context).bodyMedium.override(
+          font: GoogleFonts.interTight(
+            fontWeight: FontWeight.w600,
+            fontStyle:
+                FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+          ),
+          fontSize: 16.0,
+          letterSpacing: 0.0,
+          fontWeight: FontWeight.w600,
+          fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+        );
+
+    final sections = <Widget>[
+      _buildProfileSection(context, expandableHeaderStyle, data: data, enabled: odbConnected),
+      _buildStageSection(context, expandableHeaderStyle, data: data, enabled: odbConnected),
+      _buildPyrosSection(context, expandableHeaderStyle, data: data, enabled: odbConnected),
+      _buildPhaseSection(context, expandableHeaderStyle, data: data, enabled: odbConnected),
+      _buildParachuteSection(context, expandableHeaderStyle, data: data, enabled: odbConnected),
+      _buildAudioSection(context, expandableHeaderStyle, data: data, enabled: odbConnected),
+      _buildActionButtons(context, data),
+      Text(
+        'Certains paramètres nécessitent le redémarrage de l\'alimentation pour prendre effet.',
+        style: FlutterFlowTheme.of(context).bodySmall.override(
+              font: GoogleFonts.inter(
+                fontWeight: FlutterFlowTheme.of(context).bodySmall.fontWeight,
+                fontStyle: FlutterFlowTheme.of(context).bodySmall.fontStyle,
+              ),
+              color: FlutterFlowTheme.of(context).warning,
+              letterSpacing: 0.0,
+              fontWeight: FlutterFlowTheme.of(context).bodySmall.fontWeight,
+              fontStyle: FlutterFlowTheme.of(context).bodySmall.fontStyle,
+            ),
+      ),
+      _buildAboutSection(context, expandableHeaderStyle, data),
+    ];
+
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      child: Scaffold(
+        key: scaffoldKey,
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        body: SafeArea(
+          top: true,
+          child: Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Settings',
+                    style: FlutterFlowTheme.of(context).displaySmall.override(
+                          font: GoogleFonts.interTight(
+                            fontWeight: FontWeight.bold,
+                            fontStyle: FlutterFlowTheme.of(context)
+                                .displaySmall
+                                .fontStyle,
+                          ),
+                          fontSize: 28.0,
+                          letterSpacing: 0.0,
+                          fontWeight: FontWeight.bold,
+                          fontStyle:
+                              FlutterFlowTheme.of(context).displaySmall.fontStyle,
+                        ),
+                  ),
+                  Text(
+                    'Paramètres Nexus & de l\'ordinateur de bord',
+                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                          font: GoogleFonts.inter(
+                            fontWeight: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .fontWeight,
+                            fontStyle: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .fontStyle,
+                          ),
+                          color: FlutterFlowTheme.of(context).secondaryText,
+                          letterSpacing: 0.0,
+                          fontWeight:
+                              FlutterFlowTheme.of(context).bodyMedium.fontWeight,
+                          fontStyle:
+                              FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                        ),
+                  ),
+                          ...sections,
+                ]
+                .divide(SizedBox(height: 16.0))
+                .addToStart(SizedBox(height: 16.0))
+                .addToEnd(SizedBox(height: 24.0)),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

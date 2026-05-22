@@ -1,11 +1,9 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import 'flutter_flow/flutter_flow_util.dart';
-import 'flutter_flow/nav/nav.dart';
 import 'index.dart';
 import 'package:provider/provider.dart';
 import 'services/bluetooth_service.dart';
@@ -114,7 +112,6 @@ class NavBarPage extends StatefulWidget {
 /// This is the private State class that goes with NavBarPage.
 class _NavBarPageState extends State<NavBarPage> {
   String _currentPageName = 'OverviewPage';
-  late Widget? _currentPage;
 
   // Transitio bidirectionnel
   int _previousIndex = 0;
@@ -124,7 +121,6 @@ class _NavBarPageState extends State<NavBarPage> {
   void initState() {
     super.initState();
     _currentPageName = widget.initialPage ?? _currentPageName;
-    _currentPage = widget.page;
   }
 
   @override
@@ -135,6 +131,7 @@ class _NavBarPageState extends State<NavBarPage> {
       'StatisticsPage': const StatisticsPageWidget(),
       'CommandsPage': const CommandsPageWidget(),
       'RSSIPage': const RSSIPageWidget(),
+      'SettingsPage': const SettingsPageWidget(),
     };
     _currentIndex = tabs.keys.toList().indexOf(_currentPageName);
 
@@ -148,8 +145,8 @@ class _NavBarPageState extends State<NavBarPage> {
           final isForward = _currentIndex >= _previousIndex;
 
           final beginOffset = isForward
-              ? const Offset(1.0, 0.0)   // slide depuis la droite
-              : const Offset(-1.0, 0.0); // slide depuis la gauche
+              ? const Offset(1.0, 0.0)
+              : const Offset(-1.0, 0.0);
 
           return SlideTransition(
             position: Tween<Offset>(
@@ -161,7 +158,7 @@ class _NavBarPageState extends State<NavBarPage> {
         },
         child: KeyedSubtree(
           key: ValueKey(_currentPageName),
-          child: _currentPage ?? tabs[_currentPageName]!,
+          child: tabs[_currentPageName]!,
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -170,7 +167,6 @@ class _NavBarPageState extends State<NavBarPage> {
           _previousIndex = _currentIndex;
           _currentIndex = i;
 
-          _currentPage = null;
           _currentPageName = tabs.keys.toList()[i];
         }),
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -238,6 +234,18 @@ class _NavBarPageState extends State<NavBarPage> {
               size: 24.0,
             ),
             label: 'RSSI',
+            tooltip: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.settings_outlined,
+              size: 24.0,
+            ),
+            activeIcon: Icon(
+              Icons.settings,
+              size: 24.0,
+            ),
+            label: 'Settings',
             tooltip: '',
           )
         ],

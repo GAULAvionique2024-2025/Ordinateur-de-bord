@@ -199,7 +199,7 @@ void Telemetry_SendRocketData(rfd900x_t *rfd_dev, const mavlink_modem_id_t modem
 /* =========== */
 
 /* === BLUETOOTH APP === */
-#define APP_DELAY_REFRESH_MS 500
+#define APP_DELAY_REFRESH_MS 1000
 void App_SendFrame(hm11_t *hm11_dev, const odb_data_t *data);
 void App_HandleCommands(hm11_t *hm11_dev);
 /* =========== */

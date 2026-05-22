@@ -22,7 +22,7 @@ const odb_config_t default_config = {
     .debug_mode = 1,
     .enable_buzzer = 0,
 
-    .acc_z_launch_threshold = G_TO_MS2(3.5f),
+    .acc_z_launch_threshold = 3.5f,
     .boost_phase_v_threshold = 200.0f,
     .apogee_detect_v_threshold = -2.0f,
     .main_deploy_altitude_threshold_m = 450.0f,
@@ -49,23 +49,22 @@ void Config_Init(void) {
     	// Check magic number
         if(temp_config.magic_number == CONFIG_MAGIC_NUMBER) {
             memcpy(&current_config, &temp_config, sizeof(odb_config_t));
-            printf("Config: Loaded from Flash successfully.\r\n");
-            return;
+            return; // success
         }
     }
-    printf("Config: Flash corrupted or empty. Loading default values.\r\n");
-    Config_LoadDefaults();
     Config_SaveToFlash();
 }
 
-void Config_SaveToFlash(void) {
-    W25Q_EraseSector(&w25q, FLASH_CONFIG_START_ADDRESS);
-
-    if(W25Q_WritePage(&w25q, (uint8_t*)&current_config, FLASH_CONFIG_START_ADDRESS, sizeof(odb_config_t)) == 0) {
-        printf("Config: Save to Flash successful.\r\n");
-    } else {
-        printf("Config: ERROR saving to Flash.\r\n");
+int8_t Config_SaveToFlash(void) {
+    if(W25Q_EraseSector(&w25q, FLASH_CONFIG_START_ADDRESS) != 0) {
+    	return -1; // failed
     }
+
+    if(W25Q_WritePage(&w25q, (uint8_t*)&current_config, FLASH_CONFIG_START_ADDRESS, sizeof(odb_config_t)) != 0) {
+        return -1; // failed
+    }
+
+    return 0; // success
 }
 
 const odb_config_t* Config_Get(void) {

@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
 import '/main.dart';
@@ -88,6 +87,15 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                 : const NavBarPage(
                     initialPage: 'RSSIPage',
                     page: RSSIPageWidget(),
+                  )),
+        FFRoute(
+            name: SettingsPageWidget.routeName,
+            path: SettingsPageWidget.routePath,
+            builder: (context, params) => params.isEmpty
+                ? const NavBarPage(initialPage: 'SettingsPage')
+                : const NavBarPage(
+                    initialPage: 'SettingsPage',
+                    page: SettingsPageWidget(),
                   ))
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
@@ -198,56 +206,52 @@ class FFRoute {
   final List<GoRoute> routes;
 
   GoRoute toRoute(AppStateNotifier appStateNotifier) => GoRoute(
-        name: name,
-        path: path,
-        pageBuilder: (context, state) {
-          fixStatusBarOniOS16AndBelow(context);
-          final ffParams = FFParameters(state, asyncParams);
-          final page = ffParams.hasFutures
-              ? FutureBuilder(
-                  future: ffParams.completeFutures(),
-                  builder: (context, _) => builder(context, ffParams),
-                )
-              : builder(context, ffParams);
-          final child = page;
+      name: name,
+      path: path,
+      pageBuilder: (context, state) {
+        fixStatusBarOniOS16AndBelow(context);
+        final ffParams = FFParameters(state, asyncParams);
+        final page = ffParams.hasFutures
+            ? FutureBuilder(
+                future: ffParams.completeFutures(),
+                builder: (context, _) => builder(context, ffParams),
+              )
+            : builder(context, ffParams);
+        
+        final child = page;
+        final transitionInfo = state.transitionInfo;
 
-          final transitionInfo = state.transitionInfo;
-          return transitionInfo.hasTransition
-              ? CustomTransitionPage(
-                  key: state.pageKey,
-                  child: child,
-                  transitionDuration: transitionInfo.duration,
-                  transitionsBuilder:
-                      (context, animation, secondaryAnimation, child) =>
-                          PageTransition(
-                    type: transitionInfo.transitionType,
-                    duration: transitionInfo.duration,
-                    reverseDuration: transitionInfo.duration,
-                    alignment: transitionInfo.alignment,
-                    child: child,
-                  ).buildTransitions(
-                    context,
-                    animation,
-                    secondaryAnimation,
-                    child,
-                  ),
-                )
-              : MaterialPage(key: state.pageKey, child: child);
-        },
-        routes: routes,
-      );
+        if (transitionInfo.hasTransition) {
+          return CustomTransitionPage(
+            key: state.pageKey,
+            child: child,
+            transitionDuration: transitionInfo.duration,
+            transitionsBuilder: (context, animation, secondaryAnimation, child) {
+              final tween = Tween(begin: const Offset(1, 0), end: Offset.zero)
+                  .chain(CurveTween(curve: Curves.easeOutCubic));
+
+              return SlideTransition(
+                position: animation.drive(tween),
+                child: child,
+              );
+            },
+          );
+        } else {
+          return MaterialPage(key: state.pageKey, child: child);
+        }
+      },
+      routes: routes,
+    );
 }
 
 class TransitionInfo {
   const TransitionInfo({
     required this.hasTransition,
-    this.transitionType = PageTransitionType.fade,
     this.duration = const Duration(milliseconds: 300),
     this.alignment,
   });
 
   final bool hasTransition;
-  final PageTransitionType transitionType;
   final Duration duration;
   final Alignment? alignment;
 

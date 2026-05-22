@@ -33,6 +33,7 @@ class BluetoothServiceManager with ChangeNotifier {
   final Map<Guid, String> _notifyBuffers = {};
   BluetoothCharacteristic? _writeCharacteristic;
   final List<BluetoothCharacteristic> _writeCandidates = [];
+  DataServiceManager? _dataService;
 
   // ---------- RSSI ----------
   /// stocke le dernier RSSI connu (-999 = inconnu)
@@ -128,6 +129,7 @@ class BluetoothServiceManager with ChangeNotifier {
     final name = device.platformName.isNotEmpty ? device.platformName : device.remoteId.str;
 
     try {
+      _dataService = dataService;
       ConsoleService().log('Connexion à $name');
 
       await connectionSubscription?.cancel();
@@ -155,6 +157,8 @@ class BluetoothServiceManager with ChangeNotifier {
       await discoverServices(dataService);
 
       ConsoleService().log('Connexion établie avec $name');
+
+      await send('HELLO\r\n');
     } catch (e) {
       ConsoleService().log('Erreur de connexion: $e');
       debugPrint('Erreur connexion: $e');
@@ -185,6 +189,7 @@ class BluetoothServiceManager with ChangeNotifier {
   }
 
   void _resetConnectionState() {
+    _dataService?.resetOdbConfig();
     connectedDevice = null;
     rssi = -999;
     _writeCharacteristic = null;
@@ -195,6 +200,7 @@ class BluetoothServiceManager with ChangeNotifier {
     }
     notifySubscriptions.clear();
     _notifyBuffers.clear();
+    _dataService = null;
 
     notifyListeners();
   }

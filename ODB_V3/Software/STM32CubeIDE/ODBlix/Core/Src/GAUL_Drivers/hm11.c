@@ -50,8 +50,9 @@ static bool HM11_SetName(hm11_t *dev, const char *name) {
 
     char cmd[20];
     sprintf(cmd, "AT+NAME%s", name);
-
-    return HM11_SendATCommand(dev, cmd, "OK+Set");
+    char expected[19];
+    sprintf(expected, "OK+Set:%s", name);
+    return HM11_SendATCommand(dev, cmd, expected);
 }
 
 
@@ -61,15 +62,20 @@ static bool HM11_SetBaudRate(hm11_t *dev, uint8_t baud_idx) {
     char cmd[10];
     sprintf(cmd, "AT+BAUD%d", baud_idx);
 
-    return HM11_SendATCommand(dev, cmd, "OK+Set");
+    return HM11_SendATCommand(dev, cmd, "OK+Set:");
 }
 
 static bool HM11_TestUARTConnection(hm11_t *dev) {
     return HM11_SendATCommand(dev, "AT", "OK");
 }
 
-static bool HM11_EnableNotifications(hm11_t *dev) {
-    return HM11_SendATCommand(dev, "AT+NOTI1", "OK+Set:1");
+static bool HM11_EnableNotifications(hm11_t *dev, bool enabled) {
+    bool success = false;
+    if(HM11_SendATCommand(dev, "AT+NOTI1", "OK+Set:")) {
+		success = true;
+	}
+
+	return success;
 }
 
 
@@ -83,11 +89,11 @@ bool HM11_SetTransmissionPower(hm11_t *dev, hm11_tx_power_t power_idx) {
     char cmd[15];
     sprintf(cmd, "AT+POWE%d", power_idx);
 
-    return HM11_SendATCommand(dev, cmd, "OK+Set");
+    return HM11_SendATCommand(dev, cmd, "OK+Set:");
 }
 
 hm11_state_t HM11_Init(hm11_t *dev) {
-    if(!dev || !dev->huart || dev->baudrate > 8 || !dev->name || !dev->tx_power) return HM11_ERROR_INVALID_PARAM;
+    if(!dev || !dev->huart || dev->baudrate > 8 || !dev->tx_power) return HM11_ERROR_INVALID_PARAM;
 
     dev->name = current_config.odb_name;
 
@@ -95,6 +101,16 @@ hm11_state_t HM11_Init(hm11_t *dev) {
 
     // Initialization ring buffer
     RingBuffer_Init(&dev->rx_ring, dev->rx_ring_data, HM11_RX_BUFFER_SIZE);
+    memset(dev->at_rx_buffer, 0, HM11_RX_BUFFER_SIZE);
+
+    // Wakeup
+    if(HM11_TestUARTConnection(dev) == false) {
+		HM11_WakeUp(dev);
+		HAL_Delay(100);
+		if(HM11_TestUARTConnection(dev) == false) {
+			err = HM11_ERROR;
+		}
+	}
 
     // Configuration
     if(!HM11_SetName(dev, dev->name)) {
@@ -103,12 +119,14 @@ hm11_state_t HM11_Init(hm11_t *dev) {
     if(!HM11_SetBaudRate(dev, dev->baudrate)) {
         err = HM11_SETBAUD_FAILED; // Failed to set baud rate
     }
-    if(!HM11_EnableNotifications(dev)) {
+    /*
+    if(!HM11_SetTransmissionPower(dev, dev->tx_power)) {
+		err = HM11_SETTXPOWER_FAILED; // Failed to set tx power
+	}
+	*/
+    if(!HM11_EnableNotifications(dev, true)) {
 		err = HM11_SETNOTIF_FAILED; // Failed to set notifications
 	}
-    if(HM11_SetTransmissionPower(dev, dev->tx_power)) {
-    	err = HM11_SETTXPOWER_FAILED;
-    }
     if(!HM11_Reset(dev)) {
         err = HM11_ERROR; // Failed to reset
     }
@@ -116,11 +134,6 @@ hm11_state_t HM11_Init(hm11_t *dev) {
 
     // Reset states
     memset(dev->at_rx_buffer, 0, HM11_RX_BUFFER_SIZE);
-
-    // Start receiving data asynchronously and test UART communication
-    if(HM11_TestUARTConnection(dev) == false) {
-    	err = HM11_ERROR;
-    }
 
     return err; // success
 }
@@ -132,7 +145,7 @@ bool HM11_SendData(hm11_t *dev, uint8_t *data, uint16_t length) {
         return false;
     }
 
-    if(HAL_UART_Transmit_IT(dev->huart, data, length) == HAL_OK) {
+    if(HAL_UART_Transmit_DMA(dev->huart, data, length) == HAL_OK) {
         return true;
     }
 
@@ -195,13 +208,13 @@ bool HM11_GetMessage(hm11_t *dev, char *out_buffer, uint16_t max_length) {
 }
 
 bool HM11_IsConnected(hm11_t *dev) {
-    if(HM11_SendATCommand(dev, "AT", "OK")) {
-        dev->is_connected = false;
-        return false;
-    } else {
-        dev->is_connected = true;
-        return true;
-    }
+	if(HM11_SendATCommand(dev, "AT", "OK")) {
+		dev->is_connected = false;
+		return false;
+	} else {
+		dev->is_connected = true;
+		return true;
+	}
 }
 
 bool HM11_Sleep(hm11_t *dev) {
@@ -210,6 +223,6 @@ bool HM11_Sleep(hm11_t *dev) {
 
 bool HM11_WakeUp(hm11_t *dev) {
 	const char wake_up_string[] = "wake up!, wake up!, wake up!, wake up!, wake up!, wake up!, wake up!, wake up!, wake up!";
-    
+
 	return HM11_SendATCommand(dev, wake_up_string, "OK+WAKE");
 }
