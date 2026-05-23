@@ -96,6 +96,10 @@ int8_t Logger_Init(void) {
     if(W25Q_WritePage(&w25q, (uint8_t*)&header, flash_current_address, sizeof(logger_header_t)) != 0) {
     	return LOGGER_ERROR_FLASH_WRITE;
     }
+
+    last_flight_header_addr = flash_current_address;
+    last_flight_id = next_id;
+
     flash_current_address += FLASH_SECTOR_SIZE_BYTE;
     stats_reserved_address = flash_current_address;
     flash_current_address += W25Q512_PAGE_SIZE;
