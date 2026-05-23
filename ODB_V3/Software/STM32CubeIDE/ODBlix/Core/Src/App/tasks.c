@@ -16,6 +16,7 @@
 
 
 extern odb_data_t flight_data;
+extern odb_stats_t flight_stats;
 extern hm11_t hm11;
 extern rfd900x_t rfd900x;
 
@@ -25,7 +26,7 @@ void Task_ExecuteFsm(void) {
 }
 
 void Task_UpdateData(void) {
-    ODB_Update(&flight_data);
+    ODB_Update(&flight_data, &flight_stats);
     Logger_PushData(&flight_data);
 }
 

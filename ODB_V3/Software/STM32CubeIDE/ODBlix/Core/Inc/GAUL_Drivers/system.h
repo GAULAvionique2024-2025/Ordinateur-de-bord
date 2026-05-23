@@ -184,9 +184,9 @@ typedef struct __attribute__((packed)) {
 //_Static_assert(sizeof(odb_data_t) == 128, "odb_data_t_size_error");
 
 // TODO: add functions to set system states and event states based on sensors data and pyros state to convert them into packed bitfields for telemetry transmission
-odb_state_t ODB_Init(odb_data_t *data);
-void ODB_Reset(odb_data_t *data);
-void ODB_Update(odb_data_t *data);
+odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats);
+void ODB_Reset(odb_data_t *data, odb_stats_t *stats);
+void ODB_Update(odb_data_t *data, odb_stats_t *stats);
 uint8_t ODB_SetEventStates(const odb_stats_t *stats);
 int8_t ODB_SetMissionState(odb_data_t *data, uint8_t mission_state);
 uint8_t ODB_GetPyroStates(const odb_data_t *data);

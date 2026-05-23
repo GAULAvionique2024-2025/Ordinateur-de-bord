@@ -192,6 +192,7 @@ w25q_t w25q = {
 	.hqspi = &hqspi,
 };
 odb_data_t flight_data = {0};
+odb_stats_t flight_stats = {0};
 
 /* USER CODE END PV */
 
@@ -273,7 +274,7 @@ int main(void)
   MX_TIM5_Init();
   /* USER CODE BEGIN 2 */
   DWT_Init();
-  ODB_Init(&flight_data);
+  ODB_Init(&flight_data, &flight_stats);
   /*
   Scheduler_Init();
   Logger_Init();
@@ -301,7 +302,7 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
     //Scheduler_Run();
-	ODB_Update(&flight_data);
+	ODB_Update(&flight_data, &flight_stats);
 	Profiler_StartTask(PROFILE_TASK_BLE);
     App_SendFrame(&hm11, &flight_data);
     App_HandleCommands(&hm11);

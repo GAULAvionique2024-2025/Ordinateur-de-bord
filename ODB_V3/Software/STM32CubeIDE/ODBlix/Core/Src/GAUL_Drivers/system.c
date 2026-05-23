@@ -32,12 +32,11 @@ extern buzzer_t buzzer;
 extern system_measurements_t system_measurements;
 extern w25q_t w25q;
 
-static odb_stats_t stats;
 static kalman_nav_t kalman_filter;
 
 
 /* === ODB === */
-void ODB_Reset(odb_data_t *data) {
+void ODB_Reset(odb_data_t *data, odb_stats_t *stats) {
     if(!data) {
         return;
     }
@@ -75,6 +74,48 @@ void ODB_Reset(odb_data_t *data) {
     data->highg_acc_vertical = 0.0f;
     data->kalman_z = 0.0f;
     data->kalman_v = 0.0f;
+
+    stats->pyro1.fired = false;
+    stats->pyro1.time_ms = 0;
+    stats->pyro2.fired = false;
+    stats->pyro2.time_ms = 0;
+    stats->pyro3.fired = false;
+    stats->pyro3.time_ms = 0;
+    stats->pyro4.fired = false;
+    stats->pyro4.time_ms = 0;
+    stats->mach_lock.fired = false;
+    stats->mach_lock.time_ms = 0;
+    stats->max_altitude_gps.valid = false;
+    stats->max_altitude_gps.value = 0.0f;
+    stats->max_altitude_gps.time_ms = 0;
+    stats->max_altitude_baro.valid = false;
+    stats->max_altitude_baro.value = 0.0f;
+    stats->max_altitude_baro.time_ms = 0;
+    stats->max_altitude_kalman.valid = false;
+    stats->max_altitude_kalman.value = 0.0f;
+    stats->max_altitude_kalman.time_ms = 0;
+    stats->apogee.valid = false;
+    stats->apogee.value = 0.0f;
+    stats->apogee.time_ms = 0;
+    stats->main_deploy.valid = false;
+    stats->main_deploy.value = 0.0f;
+    stats->main_deploy.time_ms = 0;
+    stats->drogue_deploy.valid = false;
+    stats->drogue_deploy.value = 0.0f;
+    stats->drogue_deploy.time_ms = 0;
+    stats->max_ascend_speed.valid = false;
+    stats->max_ascend_speed.value = 0.0f;
+    stats->max_ascend_speed.time_ms = 0;
+    stats->max_ascend_accel.valid = false;
+    stats->max_ascend_accel.value = 0.0f;
+    stats->max_ascend_accel.time_ms = 0;
+    stats->max_descend_speed.valid = false;
+    stats->max_descend_speed.value = 0.0f;
+    stats->max_descend_speed.time_ms = 0;
+    stats->max_descend_accel.valid = false;
+    stats->max_descend_accel.value = 0.0f;
+    stats->max_descend_accel.time_ms = 0;
+    stats->flight_time_ms = 0;
 }
 
 uint8_t ODB_SetEventStates(const odb_stats_t *stats) {
@@ -114,7 +155,7 @@ uint8_t ODB_SetEventStates(const odb_stats_t *stats) {
 }
 
 // TODO: add behavior with debug_mode (ifdef printf, ect...)
-odb_state_t ODB_Init(odb_data_t *data) {
+odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats) {
     if(!data) {
         return ODB_ERROR;
     }
@@ -123,7 +164,7 @@ odb_state_t ODB_Init(odb_data_t *data) {
     uint8_t error = 0;
     uint8_t warning = 0;
 
-    ODB_Reset(data);
+    ODB_Reset(data, stats);
 
     // Load configuration from flash
     Config_Init();
@@ -300,7 +341,7 @@ odb_state_t ODB_Init(odb_data_t *data) {
 }
 
 // TODO: add timestamp with RTC to all odb_stats_t data
-void ODB_Update(odb_data_t *data) {
+void ODB_Update(odb_data_t *data, odb_stats_t *stats) {
     if(!data) {
         return;
     }
@@ -386,10 +427,10 @@ void ODB_Update(odb_data_t *data) {
 
 
     if(system_measurements.pyros_arming) {
-    	stats.pyro1.fired = pyro1.is_fire;
-    	stats.pyro2.fired = pyro2.is_fire;
-    	stats.pyro3.fired = pyro3.is_fire;
-    	stats.pyro4.fired = pyro4.is_fire;
+    	stats->pyro1.fired = pyro1.is_fire;
+    	stats->pyro2.fired = pyro2.is_fire;
+    	stats->pyro3.fired = pyro3.is_fire;
+    	stats->pyro4.fired = pyro4.is_fire;
     }
 
     if(data->gps_fix > 1) {
@@ -398,7 +439,7 @@ void ODB_Update(odb_data_t *data) {
       data->system_states &= ~FLAG_GPS_OK;
     }
 
-    data->event_states = ODB_SetEventStates(&stats);
+    data->event_states = ODB_SetEventStates(stats);
 }
 
 int8_t ODB_SetMissionState(odb_data_t *data, uint8_t mission_state) {

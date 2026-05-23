@@ -11,6 +11,7 @@
 #include "GAUL_Drivers/utils.h"
 #include "App/config.h"
 #include "App/scheduler.h"
+#include "App/logger.h"
 
 #include <stdint.h>
 
@@ -34,6 +35,7 @@ typedef enum {
 } inflight_substate_t;
 
 extern odb_data_t flight_data;
+extern odb_stats_t flight_stats;
 extern system_measurements_t system_measurements;
 extern TIM_HandleTypeDef htim5;
 extern pyro_t pyro1;
@@ -189,6 +191,7 @@ void FSM_Update(void) {
         case STATE_POSTFLIGHT:
             // Handle landing timer conclusion, put in low power mode and handle IdeFIX communication
             ODB_SetMissionState(&flight_data, STATE_POSTFLIGHT);
+            Logger_SaveStats(&flight_stats);
             break;
     }
 }
