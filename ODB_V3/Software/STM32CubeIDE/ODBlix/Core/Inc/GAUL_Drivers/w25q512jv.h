@@ -50,6 +50,9 @@
 #define W25Q_TIMEOUT                        5000
 #define W25Q_ERASE_ALL_TIMEOUT              1000000
 
+#define W25Q512_FLASH_SIZE_BYTE         ((uint32_t)67108864)
+#define FLASH_SECTOR_SIZE_BYTE          ((uint32_t)4096)
+
 typedef struct {
 	QSPI_HandleTypeDef *hqspi;
 } w25q_t;

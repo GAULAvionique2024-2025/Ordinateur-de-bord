@@ -8,6 +8,7 @@
 #ifndef INC_APP_CONFIG_H_
 #define INC_APP_CONFIG_H_
 
+#include "GAUL_Drivers/w25q512jv.h"
 #include <stdint.h>
 
 /* === Constants === */
@@ -15,12 +16,13 @@
 #define G_TO_MS2(g) ((GRAVITY_MS2) * (g))
 
 /* === Flash Mapping Configuration === */
-#define W25Q512_FLASH_SIZE_BYTE         ((uint32_t)67108864)
-#define FLASH_SECTOR_SIZE_BYTE          ((uint32_t)4096)
 #define FLASH_CONFIG_START_ADDRESS      (W25Q512_FLASH_SIZE_BYTE - FLASH_SECTOR_SIZE_BYTE) // 0x03FFF000
 #define LOGGER_MAX_ALLOWED_ADDRESS      FLASH_CONFIG_START_ADDRESS
-#define CONFIG_MAGIC_NUMBER  			0xC0FFEE01
-#define LOGGER_MAGIC_NUMBER				0xABCD1234
+#define LOGGER_MAGIC_HEADER             0x48454144 // HEAD
+#define LOGGER_DATA_MAGIC_NUMBER	    0x44415441 // DATA
+#define LOGGER_STATS_MAGIC_NUMBER	    0x53544154 // STAT
+#define CONFIG_MAGIC_NUMBER  			0x434F4E46 // CONF
+/* =========== */
 
 /* === Configuration Structure === */
 typedef struct {

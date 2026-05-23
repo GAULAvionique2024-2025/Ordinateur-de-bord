@@ -7,7 +7,6 @@
 
 
 #include "App/config.h"
-#include "GAUL_Drivers/w25q512jv.h"
 #include <string.h>
 #include <stdio.h>
 
@@ -39,10 +38,6 @@ const odb_config_t default_config = {
     .buzzer_report_tone_hz = 500
 };
 
-void Config_LoadDefaults(void) {
-    memcpy(&current_config, &default_config, sizeof(odb_config_t));
-}
-
 void Config_Init(void) {
     odb_config_t temp_config;
     if(W25Q_Read(&w25q, (uint8_t*)&temp_config, FLASH_CONFIG_START_ADDRESS, sizeof(odb_config_t)) == 0) {
@@ -52,6 +47,9 @@ void Config_Init(void) {
             return; // success
         }
     }
+
+    // No valid config found in flash, load defaults and save to flash
+    Config_LoadDefaults();
     Config_SaveToFlash();
 }
 
@@ -65,6 +63,10 @@ int8_t Config_SaveToFlash(void) {
     }
 
     return 0; // success
+}
+
+void Config_LoadDefaults(void) {
+    memcpy(&current_config, &default_config, sizeof(odb_config_t));
 }
 
 const odb_config_t* Config_Get(void) {
