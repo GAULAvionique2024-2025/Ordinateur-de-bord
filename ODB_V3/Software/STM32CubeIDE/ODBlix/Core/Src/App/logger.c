@@ -233,3 +233,12 @@ odb_stats_t Logger_GetLastFlightStats(odb_stats_t *stats) {
 
     return empty_stats;
 }
+
+bool Logger_ResetFlightHistoric(void) {
+    for(uint32_t addr = 0; addr < FLASH_CONFIG_START_ADDRESS; addr += FLASH_SECTOR_SIZE_BYTE) {
+        if(W25Q_EraseSector(&w25q, addr) != 0) {
+            return false;
+        }
+    }
+    return true;
+}
