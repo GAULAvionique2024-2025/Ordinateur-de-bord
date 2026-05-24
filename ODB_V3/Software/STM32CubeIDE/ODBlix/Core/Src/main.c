@@ -265,7 +265,40 @@ int main(void)
   MX_USART2_UART_Init();
   MX_USART6_UART_Init();
   MX_QUADSPI_Init();
-  MX_USB_DEVICE_Init();
+    /** Initialize external W25Q flash early so Config can be read/written */
+    if(W25Q_Init(&w25q) != 0) {
+      printf("Erreur : Init W25Q failed\n");
+    } else {
+      printf("W25Q: init OK\n");
+    }
+      /* Diagnostic: read JEDEC id and first bytes to verify read path */
+      {
+        uint8_t idbuf[3] = {0};
+        uint8_t sample[256] = {0};
+        uint32_t jedec = 0;
+        jedec = W25Q_GetID(w25q.hqspi);
+        printf("W25Q JEDEC ID: 0x%06lX\n", jedec);
+        if(W25Q_Read(&w25q, idbuf, 0, 3) == 0) {
+          printf("read(0,3): %02X %02X %02X\n", idbuf[0], idbuf[1], idbuf[2]);
+        } else {
+          printf("read(0,3) failed\n");
+        }
+        /* read first sector */
+        if(W25Q_Read(&w25q, sample, 0, 256) == 0) {
+          printf("first 16 bytes: ");
+        } else {
+          printf("read sector failed\n");
+        }
+        /* peek config area */
+        if(W25Q_Read(&w25q, sample, FLASH_CONFIG_START_ADDRESS, 64) == 0) {
+          printf("config area first 8 bytes: ");
+          for(int i=0;i<8;i++) printf("%02X ", sample[i]);
+          printf("\n");
+        } else {
+          printf("read config area failed\n");
+        }
+      }
+    MX_USB_DEVICE_Init();
   MX_ADC1_Init();
   MX_I2C3_Init();
   MX_FATFS_Init();

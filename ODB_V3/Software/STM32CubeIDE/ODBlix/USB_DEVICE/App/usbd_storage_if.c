@@ -22,6 +22,28 @@
 #include "usbd_storage_if.h"
 
 /* USER CODE BEGIN INCLUDE */
+#include "GAUL_Drivers/w25q512jv.h"
+#include "App/config.h"
+#include <stdlib.h>
+#include <string.h>
+
+extern w25q_t w25q;
+
+/* Runtime write-enable flag. Default 0 = writes disabled (read-only).
+ * Call `STORAGE_SetWriteEnabled(1)` from a debug console / button handler
+ * to allow host writes. Always backup flash before enabling writes.
+ */
+static volatile uint8_t usb_write_enabled = 0;
+
+void STORAGE_SetWriteEnabled(uint8_t en)
+{
+  usb_write_enabled = en ? 1 : 0;
+}
+
+uint8_t STORAGE_GetWriteEnabled(void)
+{
+  return usb_write_enabled;
+}
 
 /* USER CODE END INCLUDE */
 
@@ -195,8 +217,9 @@ int8_t STORAGE_GetCapacity_FS(uint8_t lun, uint32_t *block_num, uint16_t *block_
   /* USER CODE BEGIN 3 */
   UNUSED(lun);
 
-  *block_num  = STORAGE_BLK_NBR;
+  /* Calculate capacity from W25Q constants */
   *block_size = STORAGE_BLK_SIZ;
+  *block_num = (uint32_t)(W25Q512_FLASH_SIZE_BYTE / (uint32_t)(*block_size));
   return (USBD_OK);
   /* USER CODE END 3 */
 }
@@ -225,6 +248,14 @@ int8_t STORAGE_IsWriteProtected_FS(uint8_t lun)
   /* USER CODE BEGIN 5 */
   UNUSED(lun);
 
+  /* Return write-protected state based on runtime flag:
+   * - When usb_write_enabled == 0 (default), report protected (USBD_OK)
+   * - When usb_write_enabled == 1, report not write-protected (USBD_FAIL)
+   * Note: ST example uses USBD_OK to mean protected in this project.
+   */
+  if (usb_write_enabled) {
+    return (USBD_FAIL);
+  }
   return (USBD_OK);
   /* USER CODE END 5 */
 }
@@ -241,11 +272,13 @@ int8_t STORAGE_Read_FS(uint8_t lun, uint8_t *buf, uint32_t blk_addr, uint16_t bl
 {
   /* USER CODE BEGIN 6 */
   UNUSED(lun);
-  UNUSED(buf);
-  UNUSED(blk_addr);
-  UNUSED(blk_len);
+  uint32_t addr = blk_addr * STORAGE_BLK_SIZ;
+  uint32_t size = (uint32_t)blk_len * STORAGE_BLK_SIZ;
 
-  return (USBD_OK);
+  if (W25Q_Read(&w25q, buf, addr, size) == 0) {
+    return (USBD_OK);
+  }
+  return (USBD_FAIL);
   /* USER CODE END 6 */
 }
 
@@ -261,9 +294,87 @@ int8_t STORAGE_Write_FS(uint8_t lun, uint8_t *buf, uint32_t blk_addr, uint16_t b
 {
   /* USER CODE BEGIN 7 */
   UNUSED(lun);
-  UNUSED(buf);
-  UNUSED(blk_addr);
-  UNUSED(blk_len);
+  uint32_t addr = blk_addr * STORAGE_BLK_SIZ;
+  uint32_t size = (uint32_t)blk_len * STORAGE_BLK_SIZ;
+
+  /* Special control block: allow host to toggle write-enable by writing
+   * an ASCII command into a reserved control LBA. This avoids needing CDC.
+   * Control LBA is placed immediately before the config sector.
+   */
+  const uint32_t CONTROL_LBA = (FLASH_CONFIG_START_ADDRESS / STORAGE_BLK_SIZ) - 1;
+  if (blk_addr == CONTROL_LBA && blk_len == 1) {
+    /* commands: "ODB_CMD:ENABLE" or "ODB_CMD:DISABLE" (prefix match) */
+    if (memcmp(buf, "ODB_CMD:ENABLE", 13) == 0) {
+      usb_write_enabled = 1;
+      return (USBD_OK);
+    }
+    if (memcmp(buf, "ODB_CMD:DISABLE", 14) == 0) {
+      usb_write_enabled = 0;
+      return (USBD_OK);
+    }
+    /* unknown command: ignore and fail */
+    return (USBD_FAIL);
+  }
+
+  /* Disallow writes unless explicitly enabled */
+  if (!usb_write_enabled) {
+    return (USBD_FAIL);
+  }
+
+  /* Protect config / reserved region at end of flash */
+  if (addr >= FLASH_CONFIG_START_ADDRESS) {
+    return (USBD_FAIL);
+  }
+  if ((addr + size) > FLASH_CONFIG_START_ADDRESS) {
+    return (USBD_FAIL);
+  }
+
+  /* Perform safe sector-level read-modify-write to handle partial-page writes.
+   * For each 4 KiB sector touched, read entire sector, apply updates, erase sector,
+   * then program the sector page-by-page (256 B pages).
+   */
+  uint32_t sector_size = FLASH_SECTOR_SIZE_BYTE;
+  uint32_t page_size = W25Q512_PAGE_SIZE;
+
+  uint32_t sector_start = (addr / sector_size) * sector_size;
+  uint32_t sector_end = ((addr + size + sector_size - 1) / sector_size) * sector_size;
+
+  uint32_t buf_off = 0;
+  for (uint32_t sector_addr = sector_start; sector_addr < sector_end; sector_addr += sector_size) {
+    uint8_t *sector_buf = malloc(sector_size);
+    if (!sector_buf) return (USBD_FAIL);
+
+    if (W25Q_Read(&w25q, sector_buf, sector_addr, sector_size) != 0) {
+      free(sector_buf);
+      return (USBD_FAIL);
+    }
+
+    /* compute overlap of [addr, addr+size) with this sector */
+    uint32_t overlap_start = (addr > sector_addr) ? (addr - sector_addr) : 0;
+    uint32_t overlap_end = (uint32_t)((addr + size > sector_addr + sector_size) ? sector_size : (addr + size - sector_addr));
+    if (overlap_end > overlap_start) {
+      /* copy data into sector buffer */
+      uint32_t copy_len = overlap_end - overlap_start;
+      memcpy(sector_buf + overlap_start, buf + buf_off, copy_len);
+      buf_off += copy_len;
+    }
+
+    /* Erase sector */
+    if (W25Q_EraseSector(&w25q, sector_addr) != 0) {
+      free(sector_buf);
+      return (USBD_FAIL);
+    }
+
+    /* Program sector page-by-page */
+    for (uint32_t p = 0; p < sector_size; p += page_size) {
+      if (W25Q_WritePage(&w25q, sector_buf + p, sector_addr + p, page_size) != 0) {
+        free(sector_buf);
+        return (USBD_FAIL);
+      }
+    }
+
+    free(sector_buf);
+  }
 
   return (USBD_OK);
   /* USER CODE END 7 */

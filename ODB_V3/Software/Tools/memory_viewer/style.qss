@@ -1,0 +1,65 @@
+QWidget {
+    background-color: #1e1e2e;
+    color: #cdd6f4;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 10pt;
+}
+
+QPushButton {
+    background-color: #89b4fa;
+    color: #11111b;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+QPushButton:hover { background-color: #b4befe; }
+QPushButton:disabled { background-color: #45475a; color: #a6adc8; }
+
+QComboBox {
+    background-color: #313244;
+    border: 1px solid #45475a;
+    padding: 6px;
+    border-radius: 4px;
+}
+
+QTableWidget {
+    background-color: #181825;
+    gridline-color: #313244;
+    border: 1px solid #45475a;
+    border-radius: 4px;
+}
+
+QHeaderView::section {
+    background-color: #313244;
+    padding: 6px;
+    border: none;
+    border-right: 1px solid #181825;
+    border-bottom: 1px solid #181825;
+    font-weight: bold;
+}
+
+QProgressBar {
+    border: 1px solid #45475a;
+    border-radius: 4px;
+    text-align: center;
+    background-color: #313244;
+    font-weight: bold;
+    color: white;
+}
+
+QProgressBar::chunk {
+    background-color: #a6e3a1;
+    border-radius: 3px;
+}
+
+QTabWidget::pane { border: 1px solid #45475a; border-radius: 4px; top: -1px; }
+QTabBar::tab {
+    background-color: #313244;
+    padding: 8px 16px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    margin-right: 2px;
+}
+QTabBar::tab:selected { background-color: #89b4fa; color: #11111b; font-weight: bold; }

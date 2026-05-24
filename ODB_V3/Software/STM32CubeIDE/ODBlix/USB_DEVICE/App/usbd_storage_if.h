@@ -105,6 +105,9 @@ extern USBD_StorageTypeDef USBD_Storage_Interface_fops_FS;
   */
 
 /* USER CODE BEGIN EXPORTED_FUNCTIONS */
+/* Runtime control to allow/forbid host writes. Call from main/console/button. */
+void STORAGE_SetWriteEnabled(uint8_t en);
+uint8_t STORAGE_GetWriteEnabled(void);
 
 /* USER CODE END EXPORTED_FUNCTIONS */
 
