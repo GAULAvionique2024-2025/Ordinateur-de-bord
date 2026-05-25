@@ -7,6 +7,7 @@ def create_spec_file(script_name, icon_path):
     Génère un fichier .spec pour PyInstaller avec une icône.
     """
     base_name = os.path.splitext(script_name)[0]
+    app_name = "Memory Viewer ODB"
     spec_content = f"""# -*- mode: python ; coding: utf-8 -*-
 
 import os
@@ -43,7 +44,7 @@ exe = EXE(
     a.zipfiles,
     a.datas,
     [],
-    name='{base_name}',
+    name='{app_name}',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
@@ -65,7 +66,11 @@ exe = EXE(
     print(f"Vous pouvez maintenant exécuter: pyinstaller {base_name}.spec")
 
 if __name__ == "__main__":
-    if len(sys.argv) < 3:
-        print("Usage: python generate_spec.py <mon_script.py> <mon_icone.ico>")
+    project_dir = os.path.dirname(os.path.abspath(__file__))
+    script_name = sys.argv[1] if len(sys.argv) >= 2 and sys.argv[1].lower().endswith('.py') else 'main.py'
+    icon_path = sys.argv[2] if len(sys.argv) >= 3 and sys.argv[2].lower().endswith('.ico') else os.path.join('Ressources', 'icon.ico')
+
+    if len(sys.argv) > 3:
+        print("Usage: python generate_spec.py [mon_script.py] [mon_icone.ico]")
     else:
-        create_spec_file(sys.argv[1], sys.argv[2])
+        create_spec_file(script_name, icon_path)

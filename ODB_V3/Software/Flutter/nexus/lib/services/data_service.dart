@@ -48,6 +48,7 @@ class DataServiceManager with ChangeNotifier {
   int fireAttemptDelayMs = 0;
   int pyrosArmingFailsafeTicks = 0;
   int apogeeFailsafeTicks = 0;
+  List<int> pyroRoles = List.filled(4, 0);
   int vinMv = 0;
   double batteryVoltage = 0.0;
   double batteryVoltageMax = 24.0;
@@ -257,6 +258,7 @@ class DataServiceManager with ChangeNotifier {
     fireAttemptDelayMs = 0;
     pyrosArmingFailsafeTicks = 0;
     apogeeFailsafeTicks = 0;
+    pyroRoles = List.filled(4, 0);
     _safeNotifyListeners();
   }
 
@@ -295,6 +297,7 @@ class DataServiceManager with ChangeNotifier {
     required String fireAttemptDelayMs,
     required String pyrosArmingFailsafeTicks,
     required String apogeeFailsafeTicks,
+    required List<int> pyroRoles,
   }) async {
     if (!hasConnection) {
       ConsoleService().log('Aucune connexion Bluetooth avec l\'ODB');
@@ -319,6 +322,8 @@ class DataServiceManager with ChangeNotifier {
       'CFG:DELAY_FIRE=${_parseInt(fireAttemptDelayMs, this.fireAttemptDelayMs)}',
       'CFG:FAIL_ARM=${_parseInt(pyrosArmingFailsafeTicks, this.pyrosArmingFailsafeTicks)}',
       'CFG:FAIL_APOGEE=${_parseInt(apogeeFailsafeTicks, this.apogeeFailsafeTicks)}',
+      for (var i = 0; i < 4; i++)
+        'CFG:PYRO_ROLE=$i,${i < pyroRoles.length ? pyroRoles[i] : 0}',
       'CFG:APPLY',
     ];
 
@@ -379,6 +384,25 @@ class DataServiceManager with ChangeNotifier {
       double? parseScaledDouble(String value, double factor) {
         final parsed = double.tryParse(value);
         return parsed == null ? null : parsed / factor;
+      }
+
+
+      void parseConfigPyroRole(String value) {
+        final parts = value.split(',');
+        if (parts.length != 2) {
+          return;
+        }
+
+        final pyroIndex = int.tryParse(parts[0].trim());
+        final pyroRole = int.tryParse(parts[1].trim());
+        if (pyroIndex == null || pyroRole == null) {
+          return;
+        }
+
+        if (pyroIndex >= 0 && pyroIndex < pyroRoles.length) {
+          pyroRoles[pyroIndex] = pyroRole;
+          hasOdbConfig = true;
+        }
       }
 
       for (final entry in entries.entries) {
@@ -475,6 +499,9 @@ class DataServiceManager with ChangeNotifier {
           case 'fail_apogee':
             apogeeFailsafeTicks = int.tryParse(value) ?? apogeeFailsafeTicks;
             hasOdbConfig = true;
+            break;
+          case 'pyro_role':
+            parseConfigPyroRole(value);
             break;
           case 'temp_celsius':
             temperature = parseScaledDouble(value, 100) ?? temperature;

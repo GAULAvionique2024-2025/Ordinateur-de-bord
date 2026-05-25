@@ -44,6 +44,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
   bool _enableBuzzer = false;
   double _buzzerToneHz = 100.0;
   int _stageRoleValue = DataServiceManager.stageRoleSustainer;
+  final List<int> _pyroRoleValues = List<int>.filled(4, 0);
   String _packageName = '';
   String _appVersion = '';
   String _buildNumber = '';
@@ -124,6 +125,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
       data.fireAttemptDelayMs,
       data.pyrosArmingFailsafeTicks,
       data.apogeeFailsafeTicks,
+      data.pyroRoles.join(','),
     ].join('|');
   }
 
@@ -157,6 +159,9 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
           _deployAltitudeController.clear();
           _maxDrogueController.clear();
           _maxMainController.clear();
+          for (var i = 0; i < _pyroRoleValues.length; i++) {
+            _pyroRoleValues[i] = 0;
+          }
         });
       });
 
@@ -203,6 +208,9 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
             .toStringAsFixed(2);
         _maxDrogueController.text = data.drogueFireAttemptMaxNb.toString();
         _maxMainController.text = data.mainFireAttemptMaxNb.toString();
+        for (var i = 0; i < _pyroRoleValues.length; i++) {
+          _pyroRoleValues[i] = i < data.pyroRoles.length ? data.pyroRoles[i] : 0;
+        }
       });
     });
   }
@@ -287,6 +295,110 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
           ),
         ),
       ],
+    );
+  }
+
+  static const List<String> _pyroRoleLabels = [
+    'NA',
+    'M1',
+    'D1',
+    'M2',
+    'D2',
+  ];
+
+  Widget _buildPyroRoleDropdown(
+    BuildContext context, {
+    required DataServiceManager data,
+    required int pyroIndex,
+    required bool enabled,
+  }) {
+    final currentValue = _pyroRoleValues[pyroIndex].clamp(0, 4).toInt();
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 0.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(
+            width: 180,
+            child: Text(
+              'Pyro ${pyroIndex + 1}',
+              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                font: GoogleFonts.inter(
+                  fontWeight: FontWeight.w600,
+                  fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                ),
+                fontSize: 14.0,
+                letterSpacing: 0.0,
+                fontWeight: FontWeight.w600,
+                fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+              ),
+            ),
+          ),
+          Expanded(
+            child: InputDecorator(
+              decoration: InputDecoration(
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 10,
+                ),
+                filled: true,
+                fillColor: FlutterFlowTheme.of(context).secondaryBackground,
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: FlutterFlowTheme.of(context).alternate,
+                    width: 1,
+                  ),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: FlutterFlowTheme.of(context).primary,
+                    width: 1,
+                  ),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                disabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: FlutterFlowTheme.of(context).alternate,
+                    width: 1,
+                  ),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton<int>(
+                  value: currentValue,
+                  isDense: true,
+                  isExpanded: true,
+                  iconSize: 20,
+                  padding: EdgeInsets.zero,
+                  menuMaxHeight: 280,
+                  borderRadius: BorderRadius.circular(12),
+                  dropdownColor:
+                      FlutterFlowTheme.of(context).secondaryBackground,
+                  onChanged: enabled
+                      ? (value) {
+                          if (value == null) return;
+                          safeSetState(() {
+                            _pyroRoleValues[pyroIndex] = value;
+                            data.pyroRoles[pyroIndex] = value;
+                          });
+                        }
+                      : null,
+                  items: List.generate(
+                    _pyroRoleLabels.length,
+                    (index) => DropdownMenuItem<int>(
+                      value: index,
+                      child: Text(_pyroRoleLabels[index]),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -607,6 +719,15 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
           expanded: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              ...List.generate(
+                4,
+                (index) => _buildPyroRoleDropdown(
+                  context,
+                  data: data,
+                  pyroIndex: index,
+                  enabled: enabled,
+                ),
+              ),
               _buildLabeledSettingField(
                 context,
                 label: 'Délai essais allumage (ms)',
@@ -1042,6 +1163,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                       fireAttemptDelayMs: _pyroDelayController.text,
                       pyrosArmingFailsafeTicks: _pyroFailsafeController.text,
                       apogeeFailsafeTicks: _apogeeFailsafeController.text,
+                      pyroRoles: _pyroRoleValues,
                     );
                     if (!context.mounted) return;
                     ScaffoldMessenger.of(context).showSnackBar(

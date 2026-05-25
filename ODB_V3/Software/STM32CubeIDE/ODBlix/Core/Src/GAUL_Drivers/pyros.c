@@ -11,6 +11,8 @@
 #include "GAUL_Drivers/pyros.h"
 #include <stddef.h>
 
+extern pyro_t pyros[4];
+
 // Pyros need to be armed for read status
 int8_t Pyro_Init(pyro_t *dev, system_measurements_t *measures) {
 	if(!dev || !measures || dev->channel < 0 || dev->channel > 3 || !dev->fire_port || !dev->arm_port) return -1; // failed
@@ -50,4 +52,13 @@ bool Pyro_Fire(pyro_t *dev, system_measurements_t *measures) {
 	HAL_GPIO_WritePin(dev->fire_port, dev->fire_pin, GPIO_PIN_RESET);
 
 	return true;
+}
+
+pyro_t* Pyro_GetByRole(pyro_role_t role) {
+    for (int i = 0; i < 4; i++) {
+        if (current_config.pyro_roles[i] == role) {
+            return &pyros[i];
+        }
+    }
+    return NULL;
 }

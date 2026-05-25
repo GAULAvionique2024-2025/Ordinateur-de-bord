@@ -13,6 +13,7 @@
 
 #include "stm32f4xx_hal.h"
 #include "system_measurements.h"
+#include "App/config.h"
 #include "main.h"
 #include <stdbool.h>
 
@@ -44,5 +45,6 @@ int8_t Pyro_Init(pyro_t *dev, system_measurements_t *measures);
 
 bool Pyro_Arming(pyro_t *dev, system_measurements_t *measures, bool arming);
 bool Pyro_Fire(pyro_t *dev, system_measurements_t *measures);
+pyro_t* Pyro_GetByRole(pyro_role_t role);
 
 #endif /* INC_GAUL_DRIVERS_PYROS_H_ */

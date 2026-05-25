@@ -3,6 +3,15 @@ import csv
 import numpy as np
 
 
+PYRO_ROLE_NAMES = {
+    0: 'Aucun',
+    1: 'Main',
+    2: 'Drogue',
+    3: 'Main backup',
+    4: 'Drogue backup',
+}
+
+
 class W25QParser:
     def __init__(self, data):
         self.data = data
@@ -58,34 +67,40 @@ class W25QParser:
 
     def _parse_config(self, off):
         try:
-            magic_number = int.from_bytes(self.data[off:off + 4], 'little')
             name = self.data[off + 4:off + 4 + 32].split(b'\x00', 1)[0].decode('ascii', errors='replace')
             stage_role = self.data[off + 36]
             debug_mode = self.data[off + 37]
-            enable_buzzer = self.data[off + 38]
-            floats = struct.unpack_from('<5f', self.data, off + 40)
-            u32_4 = struct.unpack_from('<4I', self.data, off + 60)
-            pyro_values = struct.unpack_from('<3B', self.data, off + 76)
-            buzzer_report_tone_hz = struct.unpack_from('<H', self.data, off + 80)[0]
+            fire_attempt_delay_ms = struct.unpack_from('<I', self.data, off + 40)[0]
+            pyros_arming_failsafe_ticks = struct.unpack_from('<I', self.data, off + 44)[0]
+            min_needed_pyro_nb = self.data[off + 48]
+            pyro_roles = struct.unpack_from('<4B', self.data, off + 49)
+            floats = struct.unpack_from('<4f', self.data, off + 56)
+            landing_detect_threshold_ms = struct.unpack_from('<I', self.data, off + 72)[0]
+            apogee_failsafe_ticks = struct.unpack_from('<I', self.data, off + 76)[0]
+            main_deploy_altitude_threshold_m = struct.unpack_from('<f', self.data, off + 80)[0]
+            drogue_fire_attempt_max_nb = self.data[off + 84]
+            main_fire_attempt_max_nb = self.data[off + 85]
+            enable_buzzer = self.data[off + 86]
+            buzzer_report_tone_hz = struct.unpack_from('<H', self.data, off + 88)[0]
 
             self.config_details = [
-                ("Magic number", f"0x{magic_number:08X}"),
                 ("Nom ODB", name),
                 ("Rôle", f"{stage_role} (2=BOOSTER, 3=SUSTAINER)"),
                 ("Mode Debug", str(debug_mode)),
-                ("Buzzer Activé", str(enable_buzzer)),
+                ("Délai Tentative Tir (ms)", str(fire_attempt_delay_ms)),
+                ("Failsafe Armement Pyro (ticks)", str(pyros_arming_failsafe_ticks)),
+                ("Pyros Min Requis", str(min_needed_pyro_nb)),
+                ("Rôles Pyro", ", ".join(PYRO_ROLE_NAMES.get(role, str(role)) for role in pyro_roles)),
                 ("Seuil Lancement (Acc Z)", f"{floats[0]:.3f}"),
                 ("Seuil Vitesse Boost", f"{floats[1]:.3f}"),
                 ("Seuil Détection Apogée", f"{floats[2]:.3f}"),
-                ("Seuil Déploiement Principal (m)", f"{floats[3]:.3f}"),
-                ("Seuil Vitesse Atterrissage", f"{floats[4]:.3f}"),
-                ("Seuil Détection Atterrissage (ms)", str(u32_4[0])),
-                ("Délai Tentative Tir (ms)", str(u32_4[1])),
-                ("Failsafe Armement Pyro (ticks)", str(u32_4[2])),
-                ("Failsafe Apogée (ticks)", str(u32_4[3])),
-                ("Pyros Min Requis", str(pyro_values[0])),
-                ("Tirs Drogue Max", str(pyro_values[1])),
-                ("Tirs Principal Max", str(pyro_values[2])),
+                ("Seuil Détection Atterrissage (V)", f"{floats[3]:.3f}"),
+                ("Seuil Détection Atterrissage (ms)", str(landing_detect_threshold_ms)),
+                ("Failsafe Apogée (ticks)", str(apogee_failsafe_ticks)),
+                ("Seuil Déploiement Principal (m)", f"{main_deploy_altitude_threshold_m:.3f}"),
+                ("Tirs Drogue Max", str(drogue_fire_attempt_max_nb)),
+                ("Tirs Principal Max", str(main_fire_attempt_max_nb)),
+                ("Buzzer Activé", str(enable_buzzer)),
                 ("Tonalité Buzzer (Hz)", str(buzzer_report_tone_hz)),
             ]
         except Exception as e:

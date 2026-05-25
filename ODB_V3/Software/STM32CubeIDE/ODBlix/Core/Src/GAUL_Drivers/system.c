@@ -21,12 +21,9 @@ extern adxl382_t adxl382;
 extern bno055_t bno055;
 extern hm11_t hm11;
 extern l76lm33_t l76lm33;
+extern pyro_t pyros[4];
 extern critical_led_t critical_led;
 extern ms5611_t ms5611;
-extern pyro_t pyro1;
-extern pyro_t pyro2;
-extern pyro_t pyro3;
-extern pyro_t pyro4;
 extern rfd900x_t rfd900x;
 extern buzzer_t buzzer;
 extern system_measurements_t system_measurements;
@@ -179,59 +176,44 @@ odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats) {
         }
 
         uint8_t pyros_connected = 0;
-        // Pyros need to be armed for read status
-        bool is_armed = Pyro_Arming(&pyro1, &system_measurements, true);
-        // Verify if arming is really enabled
-        if(is_armed) {
-            system_states |= FLAG_PYROS_ARMED_OK;
-        } else {
-            error += 1;
-            printf("Erreur : Armement des Pyros bloque\n");
-        }
-        // Check pyros continuity
-        if(Pyro_Init(&pyro1, &system_measurements) == 0) {
-            system_states |= FLAG_PYRO1_CONN;
-            pyros_connected++;
-        } else {
-            warning += 1;
-            printf("Erreur : Pyro 1 deconnecte\n");
-        }
-        if(Pyro_Init(&pyro2, &system_measurements) == 0) {
-            system_states |= FLAG_PYRO2_CONN;
-            pyros_connected++;
-        } else {
-            warning += 1;
-            printf("Erreur : Pyro 2 deconnecte\n");
-        }
-        if(Pyro_Init(&pyro3, &system_measurements) == 0) {
-            system_states |= FLAG_PYRO3_CONN;
-            pyros_connected++;
-        } else {
-            warning += 1;
-            printf("Erreur : Pyro 3 deconnecte\n");
-        }
-        if(Pyro_Init(&pyro4, &system_measurements) == 0) {
-            system_states |= FLAG_PYRO4_CONN;
-            pyros_connected++;
-        } else {
-            warning += 1;
-            printf("Erreur : Pyro 4 deconnecte\n");
-        }
+		const uint32_t FLAG_PYRO_CONN[4] = {FLAG_PYRO1_CONN, FLAG_PYRO2_CONN, FLAG_PYRO3_CONN, FLAG_PYRO4_CONN};
+		const char* role_names[] = {"NONE", "MAIN", "DROGUE", "MAIN_BACKUP", "DROGUE_BACKUP"};
+		bool is_armed = Pyro_Arming(&pyros[0], &system_measurements, true);
+		if(is_armed) {
+			system_states |= FLAG_PYROS_ARMED_OK;
+		} else {
+			error += 1;
+			printf("Erreur : Armement des Pyros bloque\n");
+		}
 
-        is_armed = Pyro_Arming(&pyro1, &system_measurements, false);
-        // Verify if arming is really disabled
+		for(int i = 0; i < 4; i++) {
+			pyro_role_t role = (pyro_role_t)current_config.pyro_roles[i];
+			int8_t init_res = Pyro_Init(&pyros[i], &system_measurements);
+			if(role != PYRO_ROLE_NONE) {
+				if (init_res == 0) {
+					system_states |= FLAG_PYRO_CONN[i];
+					pyros_connected++;
+				} else {
+					warning += 1;
+					printf("Erreur : Pyro %d (%s) deconnecte\n", i + 1, role_names[role]);
+				}
+			}
+		}
+
+		is_armed = Pyro_Arming(&pyros[0], &system_measurements, false);
 		if(!is_armed) {
 			system_states |= FLAG_PYROS_ARMED_OK;
 		} else {
-            system_states &= ~FLAG_PYROS_ARMED_OK;
+			system_states &= ~FLAG_PYROS_ARMED_OK;
 			error += 1;
-            printf("Erreur : Desarmement des Pyros bloque\n");
+			printf("Erreur : Desarmement des Pyros bloque\n");
 		}
-        // Protection
-        if(pyros_connected < current_config.min_needed_pyro_nb) {
-            error += 1;
-            printf("Erreur : Pas assez de pyros connectes !\n");
-        }
+
+		// Protection
+		if(pyros_connected < current_config.min_needed_pyro_nb) {
+			error += 1;
+			printf("Erreur : Pas assez de pyros connectes ! (%d/%d)\n", pyros_connected, current_config.min_needed_pyro_nb);
+		}
 
         SystemMeasurements_ComputeTemperature(&system_measurements);
         if(system_measurements.temperature < MAX6612MXK_MIN_TEMP_C || system_measurements.temperature > MAX6612MXK_MAX_TEMP_C) {
@@ -427,11 +409,11 @@ void ODB_Update(odb_data_t *data, odb_stats_t *stats) {
 
 
     if(system_measurements.pyros_arming) {
-    	stats->pyro1.fired = pyro1.is_fire;
-    	stats->pyro2.fired = pyro2.is_fire;
-    	stats->pyro3.fired = pyro3.is_fire;
-    	stats->pyro4.fired = pyro4.is_fire;
-    }
+		stats->pyro1.fired = pyros[0].is_fire;
+		stats->pyro2.fired = pyros[1].is_fire;
+		stats->pyro3.fired = pyros[2].is_fire;
+		stats->pyro4.fired = pyros[3].is_fire;
+	}
 
     if(data->gps_fix > 1) {
       data->system_states |= FLAG_GPS_OK;
@@ -481,7 +463,10 @@ static void Telemetry_TransmitMessage(rfd900x_t *rfd_dev, const mavlink_message_
 	if(!rfd_dev) return;
 
 	uint16_t len = mavlink_msg_to_send_buffer(mavlink_tx_buffer, msg);
-	RFD900x_Transmit(rfd_dev, mavlink_tx_buffer, len);
+	rfd900x_state_t err = RFD900x_Transmit(rfd_dev, mavlink_tx_buffer, len);
+	if(err == RFD_BUSY) {
+		// TODO: add missing transmit counter
+	}
 }
 
 void Telemetry_SendRocketData(rfd900x_t *rfd_dev, const mavlink_modem_id_t modem_id, odb_data_t *data, const uint32_t current_time_ms) {
@@ -572,7 +557,7 @@ void App_SendFrame(hm11_t *hm11_dev, const odb_data_t *data) {
 				"pressure_hpa=%ld,altitude_msl_m=%ld,temp_celsius=%ld,"
 				"highg_acc_x=%ld,highg_acc_y=%ld,highg_acc_z=%ld,highg_acc_vertical=%ld,"
 				"gps_fix=%u,lat=%ld,lon=%ld,gps_alt=%ld,vel=%u,cog=%u,satellites_nb=%u,"
-				"kalman_z=%ld,kalman_v=%ld\r\n",
+				"kalman_z=%ld,kalman_v=%ld,pyro_roles=%u:%u:%u:%u\r\n",
 				(unsigned long)data->time_boot_ms,           // (ms) - /1
 				(unsigned)data->system_states,                // (bitfield) - /1
 				(unsigned)data->event_states,                 // (bitfield) - /1
@@ -606,7 +591,11 @@ void App_SendFrame(hm11_t *hm11_dev, const odb_data_t *data) {
 				(unsigned)data->cog,                          // (deg) - /100
 				(unsigned)data->satellites_nb,                // (count) - /1
 				(long)(data->kalman_z * 100.0f),              // (m) - /100
-				(long)(data->kalman_v * 100.0f));             // (m/s) - /100
+				(long)(data->kalman_v * 100.0f),              // (m/s) - /100
+				(unsigned)current_config.pyro_roles[0],       // (role) - Pyro 1
+				(unsigned)current_config.pyro_roles[1],       // (role) - Pyro 2
+				(unsigned)current_config.pyro_roles[2],       // (role) - Pyro 3
+				(unsigned)current_config.pyro_roles[3]);      // (role) - Pyro 4
 
 		HM11_SendString(hm11_dev, buffer);
 
@@ -631,9 +620,9 @@ void App_HandleCommands(hm11_t *hm11_dev) {
 
     // Hello ODB
     if(strncmp(cmd, "HELLO", 5) == 0) {
-    	const odb_config_t *actual_config = Config_Get();
+		const odb_config_t *actual_config = Config_Get();
 
-		static char tx_buf[400];
+		static char tx_buf[512];
 		snprintf(tx_buf, sizeof(tx_buf),
 			"VER:%s\r\n"
 			"CFG:NAME=%s\r\n"
@@ -652,7 +641,11 @@ void App_HandleCommands(hm11_t *hm11_dev) {
 			"CFG:T_LAND=%lu\r\n"
 			"CFG:DELAY_FIRE=%lu\r\n"
 			"CFG:FAIL_ARM=%lu\r\n"
-			"CFG:FAIL_APOGEE=%lu\r\n",
+			"CFG:FAIL_APOGEE=%lu\r\n"
+			"CFG:PYRO_ROLE=0,%u\r\n"
+			"CFG:PYRO_ROLE=1,%u\r\n"
+			"CFG:PYRO_ROLE=2,%u\r\n"
+			"CFG:PYRO_ROLE=3,%u\r\n",
 			ODB_BLE_FRAME_VERSION,
 			actual_config->odb_name,
 			actual_config->stage_role,
@@ -670,7 +663,11 @@ void App_HandleCommands(hm11_t *hm11_dev) {
 			actual_config->landing_detect_threshold_ms,
 			actual_config->fire_attempt_delay_ms,
 			actual_config->pyros_arming_failsafe_ticks,
-			actual_config->apogee_failsafe_ticks
+			actual_config->apogee_failsafe_ticks,
+			actual_config->pyro_roles[0],
+			actual_config->pyro_roles[1],
+			actual_config->pyro_roles[2],
+			actual_config->pyro_roles[3]
 		);
 
 		HM11_SendString(hm11_dev, tx_buf);
@@ -687,31 +684,26 @@ void App_HandleCommands(hm11_t *hm11_dev) {
     // Pyros
     // TODO: Check with system_measurements and ...
     else if(strncmp(cmd, "ARM0", 4) == 0) {
-    	Pyro_Arming(&pyro1, &system_measurements, false);
+    	Pyro_Arming(&pyros[0], &system_measurements, false);
         HM11_SendString(hm11_dev, "ACK: DISARMED\r\n");
     } else if(strncmp(cmd, "ARM1", 4) == 0) {
-    	Pyro_Arming(&pyro1, &system_measurements, true);
+    	Pyro_Arming(&pyros[0], &system_measurements, true);
         HM11_SendString(hm11_dev, "ACK: ARMED\r\n");
     } else if(strncmp(cmd, "P", 1) == 0 && isdigit((unsigned char)cmd[1])) {
         if(system_measurements.pyros_arming) {
-            if(cmd[1] == '1') {
-                Pyro_Fire(&pyro1, &system_measurements);
-                HM11_SendString(hm11_dev, "ACK: P1 FIRED\r\n");
-            } else if(cmd[1] == '2') {
-                Pyro_Fire(&pyro2, &system_measurements);
-                HM11_SendString(hm11_dev, "ACK: P2 FIRED\r\n");
-            } else if(cmd[1] == '3') {
-                Pyro_Fire(&pyro3, &system_measurements);
-                HM11_SendString(hm11_dev, "ACK: P3 FIRED\r\n");
-            } else if(cmd[1] == '4') {
-                Pyro_Fire(&pyro4, &system_measurements);
-                HM11_SendString(hm11_dev, "ACK: P4 FIRED\r\n");
-            } else {
-                HM11_SendString(hm11_dev, "ERR: UNKNOWN PYRO\r\n");
-            }
-        } else {
-            HM11_SendString(hm11_dev, "ERR: REFUSED (NOT ARMED)\r\n");
-        }
+        	int pyro_idx = cmd[1] - '1';
+			if(pyro_idx >= 0 && pyro_idx < 4) {
+				Pyro_Fire(&pyros[pyro_idx], &system_measurements);
+
+				static char ack_buf[24];
+				snprintf(ack_buf, sizeof(ack_buf), "ACK: P%d FIRED\r\n", pyro_idx + 1);
+				HM11_SendString(hm11_dev, ack_buf);
+			} else {
+				HM11_SendString(hm11_dev, "ERR: UNKNOWN PYRO\r\n");
+			}
+		} else {
+			HM11_SendString(hm11_dev, "ERR: REFUSED (NOT ARMED)\r\n");
+		}
     }
     // Tests
     else if(strncmp(cmd, "TEST", 4) == 0) {
@@ -770,7 +762,7 @@ void App_HandleCommands(hm11_t *hm11_dev) {
             HM11_SendString(hm11_dev, "ACK: NAME UPDATED\r\n");
             success = true;
         }
-        // Rocket role : 0 = Booster, 1 = Sustainer
+        // Rocket role : 2 = Booster, 3 = Sustainer
         else if(sscanf(cmd, "CFG:ROLE=%d", &int_val) == 1) {
             current_config.stage_role = (uint8_t)int_val;
             HM11_SendString(hm11_dev, "ACK: ROLE UPDATED\r\n");
@@ -866,7 +858,22 @@ void App_HandleCommands(hm11_t *hm11_dev) {
             HM11_SendString(hm11_dev, "ACK: FAIL_APOGEE UPDATED\r\n");
             success = true;
         }
-        
+        // Pyro role
+        // id: 0
+        // role: 0=NONE, 1=MAIN, 2=DROGUE, 3=MAIN_BACKUP, 4=DROGUE_BACKUP
+        else if(strncmp(cmd, "CFG:PYRO_ROLE=", 14) == 0) {
+			int pyro_id = -1, pyro_role = -1;
+			if(sscanf(cmd, "CFG:PYRO_ROLE=%d,%d", &pyro_id, &pyro_role) == 2) {
+				if(pyro_id >= 0 && pyro_id < 4 && pyro_role >= 0 && pyro_role <= 4) {
+					current_config.pyro_roles[pyro_id] = (uint8_t)pyro_role;
+					HM11_SendString(hm11_dev, "ACK: PYRO_ROLE UPDATED\r\n");
+					success = true;
+				} else {
+					HM11_SendString(hm11_dev, "ERR: INVALID PYRO ID OR ROLE\r\n");
+				}
+			}
+		}
+
         if(!success) {
             HM11_SendString(hm11_dev, "ERR: UNKNOWN CONFIG PARAMETER\r\n");
         }

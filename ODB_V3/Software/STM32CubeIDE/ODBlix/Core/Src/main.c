@@ -138,41 +138,43 @@ ms5611_t ms5611 = {
     .cs_port = BARO_SPI1_CS_GPIO_Port,
     .cs_pin = BARO_SPI1_CS_Pin,
 };
-pyro_t pyro1 = {
-	.fire_port = Fire_1_GPIO_Port,
-	.fire_pin = Fire_1_Pin,
-	.arm_port = Pyros_Arm_GPIO_Port,
-	.arm_pin = Pyros_Arm_Pin,
-	.channel = PYRO_1,
-	.is_connected = false,
-	.is_fire = false,
-};
-pyro_t pyro2 = {
-	.fire_port = Fire_2_GPIO_Port,
-	.fire_pin = Fire_2_Pin,
-	.arm_port = Pyros_Arm_GPIO_Port,
-	.arm_pin = Pyros_Arm_Pin,
-	.channel = PYRO_2,
-	.is_connected = false,
-	.is_fire = false,
-};
-pyro_t pyro3 = {
-	.fire_port = Fire_3_GPIO_Port,
-	.fire_pin = Fire_3_Pin,
-	.arm_port = Pyros_Arm_GPIO_Port,
-	.arm_pin = Pyros_Arm_Pin,
-	.channel = PYRO_3,
-	.is_connected = false,
-	.is_fire = false,
-};
-pyro_t pyro4 = {
-	.fire_port = Fire_4_GPIO_Port,
-	.fire_pin = Fire_4_Pin,
-	.arm_port = Pyros_Arm_GPIO_Port,
-	.arm_pin = Pyros_Arm_Pin,
-	.channel = PYRO_4,
-	.is_connected = false,
-	.is_fire = false,
+pyro_t pyros[4] = {
+    {
+        .fire_port = Fire_1_GPIO_Port,
+        .fire_pin = Fire_1_Pin,
+        .arm_port = Pyros_Arm_GPIO_Port,
+        .arm_pin = Pyros_Arm_Pin,
+        .channel = PYRO_1,
+        .is_connected = false,
+        .is_fire = false,
+    },
+    {
+        .fire_port = Fire_2_GPIO_Port,
+        .fire_pin = Fire_2_Pin,
+        .arm_port = Pyros_Arm_GPIO_Port,
+        .arm_pin = Pyros_Arm_Pin,
+        .channel = PYRO_2,
+        .is_connected = false,
+        .is_fire = false,
+    },
+    {
+        .fire_port = Fire_3_GPIO_Port,
+        .fire_pin = Fire_3_Pin,
+        .arm_port = Pyros_Arm_GPIO_Port,
+        .arm_pin = Pyros_Arm_Pin,
+        .channel = PYRO_3,
+        .is_connected = false,
+        .is_fire = false,
+    },
+    {
+        .fire_port = Fire_4_GPIO_Port,
+        .fire_pin = Fire_4_Pin,
+        .arm_port = Pyros_Arm_GPIO_Port,
+        .arm_pin = Pyros_Arm_Pin,
+        .channel = PYRO_4,
+        .is_connected = false,
+        .is_fire = false,
+    }
 };
 rfd900x_t rfd900x = {
     .huart = &huart1,

@@ -16,25 +16,40 @@ odb_config_t current_config;
 // Default configuration
 const odb_config_t default_config = {
     .magic_number = CONFIG_MAGIC_NUMBER,
+
+    // Profile
     .odb_name = "ODB_1",
+
+    // Stage
     .stage_role = 2,
     .debug_mode = 1,
-    .enable_buzzer = 0,
 
+    // Pyros
+    .fire_attempt_delay_ms = 250,
+    .pyros_arming_failsafe_ticks = 40000,
+    .min_needed_pyro_nb = 2,
+    .pyro_roles = {
+        PYRO_ROLE_MAIN,          // Pyro 1
+        PYRO_ROLE_DROGUE,        // Pyro 2
+        PYRO_ROLE_MAIN_BACKUP,   // Pyro 3
+        PYRO_ROLE_DROGUE_BACKUP  // Pyro 4
+    },
+
+    // Phase
     .acc_z_launch_threshold = 3.5f,
     .boost_phase_v_threshold = 200.0f,
     .apogee_detect_v_threshold = -2.0f,
-    .main_deploy_altitude_threshold_m = 450.0f,
     .landing_detect_v_threshold = 0.5f,
-
     .landing_detect_threshold_ms = 10000,
-    .fire_attempt_delay_ms = 250,
-    .pyros_arming_failsafe_ticks = 40000,
     .apogee_failsafe_ticks = 60000,
 
-    .min_needed_pyro_nb = 2,
+    // Parachute
+    .main_deploy_altitude_threshold_m = 450.0f,
     .drogue_fire_attempt_max_nb = 3,
     .main_fire_attempt_max_nb = 3,
+
+    // Buzzer
+    .enable_buzzer = 0,
     .buzzer_report_tone_hz = 500
 };
 

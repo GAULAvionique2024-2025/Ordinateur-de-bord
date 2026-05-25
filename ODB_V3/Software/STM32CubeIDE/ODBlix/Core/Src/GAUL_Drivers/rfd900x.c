@@ -70,13 +70,18 @@ rfd900x_state_t RFD900x_Init(rfd900x_t *dev) {
 rfd900x_state_t RFD900x_Transmit(rfd900x_t *dev, uint8_t *payload, uint16_t length) {
     if(!dev || !payload || length == 0) return RFD_ERROR;
 
+    __disable_irq();
+
     if(RFD_TX_RING_SIZE - RingBuffer_NumItems(&dev->tx_ring) < length) {
+    	__enable_irq();
         return RFD_BUSY;
     }
 
     RingBuffer_Queue_Array(&dev->tx_ring, payload, length);
 
     RFD900x_ProcessTX(dev);
+
+    __enable_irq();
 
     return RFD_OK;
 }
