@@ -2984,6 +2984,15 @@ enums["MAV_CMD"][42600].param[4] = """Release rate (negative to wind)."""
 enums["MAV_CMD"][42600].param[5] = """Empty."""
 enums["MAV_CMD"][42600].param[6] = """Empty."""
 enums["MAV_CMD"][42600].param[7] = """Empty."""
+MAV_CMD_GUIDED_CHANGE_HEADING = 43002
+enums["MAV_CMD"][43002] = EnumEntry("MAV_CMD_GUIDED_CHANGE_HEADING", """Change to target direction at a given rate, overriding previous heading/s. This slews the vehicle at a controllable rate between its previous heading and the new one.""")
+enums["MAV_CMD"][43002].param[1] = """Course-over-ground or raw vehicle heading."""
+enums["MAV_CMD"][43002].param[2] = """Target heading."""
+enums["MAV_CMD"][43002].param[3] = """Maximum centripetal acceleration, i.e. rate of change toward new heading."""
+enums["MAV_CMD"][43002].param[4] = """Reserved (default:0)"""
+enums["MAV_CMD"][43002].param[5] = """Reserved (default:0)"""
+enums["MAV_CMD"][43002].param[6] = """Reserved (default:0)"""
+enums["MAV_CMD"][43002].param[7] = """Reserved (default:0)"""
 MAV_CMD_EXTERNAL_POSITION_ESTIMATE = 43003
 enums["MAV_CMD"][43003] = EnumEntry("MAV_CMD_EXTERNAL_POSITION_ESTIMATE", """Provide an external position estimate for use when dead-reckoning. This is meant to be used for occasional position resets that may be provided by a external system such as a remote pilot using landmarks over a video link.""")
 enums["MAV_CMD"][43003].has_location = True
@@ -3709,6 +3718,18 @@ enums["SPEED_TYPE"][3] = EnumEntry("SPEED_TYPE_DESCENT_SPEED", """Descent speed"
 SPEED_TYPE_ENUM_END = 4
 enums["SPEED_TYPE"][4] = EnumEntry("SPEED_TYPE_ENUM_END", """""")
 
+# HEADING_TYPE
+enums["HEADING_TYPE"] = Enum()
+enums["HEADING_TYPE"].bitmask = False
+HEADING_TYPE_COURSE_OVER_GROUND = 0
+enums["HEADING_TYPE"][0] = EnumEntry("HEADING_TYPE_COURSE_OVER_GROUND", """Course over ground.""")
+HEADING_TYPE_HEADING = 1
+enums["HEADING_TYPE"][1] = EnumEntry("HEADING_TYPE_HEADING", """Raw vehicle heading.""")
+HEADING_TYPE_DEFAULT = 2
+enums["HEADING_TYPE"][2] = EnumEntry("HEADING_TYPE_DEFAULT", """Default heading.""")
+HEADING_TYPE_ENUM_END = 3
+enums["HEADING_TYPE"][3] = EnumEntry("HEADING_TYPE_ENUM_END", """""")
+
 # ESTIMATOR_STATUS_FLAGS
 enums["ESTIMATOR_STATUS_FLAGS"] = Enum()
 enums["ESTIMATOR_STATUS_FLAGS"].bitmask = True
@@ -3950,8 +3971,10 @@ VIDEO_STREAM_TYPE_TCP_MPEG = 2
 enums["VIDEO_STREAM_TYPE"][2] = EnumEntry("VIDEO_STREAM_TYPE_TCP_MPEG", """Stream is MPEG on TCP""")
 VIDEO_STREAM_TYPE_MPEG_TS = 3
 enums["VIDEO_STREAM_TYPE"][3] = EnumEntry("VIDEO_STREAM_TYPE_MPEG_TS", """Stream is MPEG TS (URI gives the port number)""")
-VIDEO_STREAM_TYPE_ENUM_END = 4
-enums["VIDEO_STREAM_TYPE"][4] = EnumEntry("VIDEO_STREAM_TYPE_ENUM_END", """""")
+VIDEO_STREAM_TYPE_WHEP = 4
+enums["VIDEO_STREAM_TYPE"][4] = EnumEntry("VIDEO_STREAM_TYPE_WHEP", """Stream is WHEP (WebRTC-HTTP Egress Protocol)""")
+VIDEO_STREAM_TYPE_ENUM_END = 5
+enums["VIDEO_STREAM_TYPE"][5] = EnumEntry("VIDEO_STREAM_TYPE_ENUM_END", """""")
 
 # VIDEO_STREAM_ENCODING
 enums["VIDEO_STREAM_ENCODING"] = Enum()
@@ -5200,6 +5223,8 @@ MAV_FTP_OPCODE_CALCFILECRC = 14
 enums["MAV_FTP_OPCODE"][14] = EnumEntry("MAV_FTP_OPCODE_CALCFILECRC", """CalcFileCRC32: Calculate CRC32 for file at path""")
 MAV_FTP_OPCODE_BURSTREADFILE = 15
 enums["MAV_FTP_OPCODE"][15] = EnumEntry("MAV_FTP_OPCODE_BURSTREADFILE", """BurstReadFile: Burst download session file""")
+MAV_FTP_OPCODE_LISTDIRECTORYWITHTIME = 16
+enums["MAV_FTP_OPCODE"][16] = EnumEntry("MAV_FTP_OPCODE_LISTDIRECTORYWITHTIME", """ListDirectoryWithTime: List files and directories, along with last-modification timestamps, in path from offset. This is the same as ListDirectory except for the addition of timestamps. Servers that do not support this opcode respond with a NAK (MAV_FTP_ERR_UNKNOWNCOMMAND).""")
 MAV_FTP_OPCODE_ACK = 128
 enums["MAV_FTP_OPCODE"][128] = EnumEntry("MAV_FTP_OPCODE_ACK", """ACK: ACK response""")
 MAV_FTP_OPCODE_NAK = 129
@@ -15269,27 +15294,32 @@ setattr(MAVLink_trajectory_representation_bezier_message, "name", mavlink_msg_de
 
 class MAVLink_cellular_status_message(MAVLink_message):
     """
-    Report current used cellular network status
+    Cellular network status as reported by a particular modem.
+    This is primarily intended for logging, but a GCS may choose to
+    display link_tx_rate and link_rx_rate.                  Note that
+    a value of 0 in the id field indicates that the sender does not
+    support reporting of multiple modems.         Message data should
+    be from a single modem, but that is not guaranteed.
     """
 
     id = MAVLINK_MSG_ID_CELLULAR_STATUS
     msgname = "CELLULAR_STATUS"
-    fieldnames = ["status", "failure_reason", "type", "quality", "mcc", "mnc", "lac"]
-    ordered_fieldnames = ["mcc", "mnc", "lac", "status", "failure_reason", "type", "quality"]
-    fieldtypes = ["uint8_t", "uint8_t", "uint8_t", "uint8_t", "uint16_t", "uint16_t", "uint16_t"]
+    fieldnames = ["status", "failure_reason", "type", "quality", "mcc", "mnc", "lac", "id", "link_tx_rate", "link_rx_rate", "cell_tower_id", "band_number", "band_frequency", "channel_number", "rx_level", "tx_level", "rx_quality", "sinr"]
+    ordered_fieldnames = ["mcc", "mnc", "lac", "status", "failure_reason", "type", "quality", "id", "link_tx_rate", "link_rx_rate", "cell_tower_id", "band_number", "band_frequency", "channel_number", "rx_level", "tx_level", "rx_quality", "sinr"]
+    fieldtypes = ["uint8_t", "uint8_t", "uint8_t", "uint8_t", "uint16_t", "uint16_t", "uint16_t", "uint8_t", "uint32_t", "uint32_t", "char", "uint8_t", "float", "uint32_t", "float", "float", "float", "float"]
     fielddisplays_by_name: Dict[str, str] = {}
     fieldenums_by_name: Dict[str, str] = {"status": "CELLULAR_STATUS_FLAG", "failure_reason": "CELLULAR_NETWORK_FAILED_REASON", "type": "CELLULAR_NETWORK_RADIO_TYPE"}
-    fieldunits_by_name: Dict[str, str] = {}
-    native_format = bytearray(b"<HHHBBBB")
-    orders = [3, 4, 5, 6, 0, 1, 2]
-    lengths = [1, 1, 1, 1, 1, 1, 1]
-    array_lengths = [0, 0, 0, 0, 0, 0, 0]
+    fieldunits_by_name: Dict[str, str] = {"link_tx_rate": "KiB/s", "link_rx_rate": "KiB/s", "band_frequency": "MHz", "rx_level": "dBm", "tx_level": "dBm", "rx_quality": "dBm", "sinr": "dB"}
+    native_format = bytearray(b"<HHHBBBBBIIcBfIffff")
+    orders = [3, 4, 5, 6, 0, 1, 2, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
+    lengths = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    array_lengths = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0]
     crc_extra = 72
-    unpacker = struct.Struct("<HHHBBBB")
-    instance_field = None
-    instance_offset = -1
+    unpacker = struct.Struct("<HHHBBBBBII9sBfIffff")
+    instance_field = "id"
+    instance_offset = 10
 
-    def __init__(self, status: int, failure_reason: int, type: int, quality: int, mcc: int, mnc: int, lac: int):
+    def __init__(self, status: int, failure_reason: int, type: int, quality: int, mcc: int, mnc: int, lac: int, id: int = 0, link_tx_rate: int = 0, link_rx_rate: int = 0, cell_tower_id: bytes = b"", band_number: int = 0, band_frequency: float = 0, channel_number: int = 0, rx_level: float = 0, tx_level: float = 0, rx_quality: float = 0, sinr: float = 0):
         MAVLink_message.__init__(self, MAVLink_cellular_status_message.id, MAVLink_cellular_status_message.msgname)
         self._fieldnames = MAVLink_cellular_status_message.fieldnames
         self._instance_field = MAVLink_cellular_status_message.instance_field
@@ -15301,9 +15331,21 @@ class MAVLink_cellular_status_message(MAVLink_message):
         self.mcc = mcc
         self.mnc = mnc
         self.lac = lac
+        self.id = id
+        self.link_tx_rate = link_tx_rate
+        self.link_rx_rate = link_rx_rate
+        self._cell_tower_id_raw = cell_tower_id
+        self.cell_tower_id = cell_tower_id.split(b"\x00", 1)[0].decode("ascii", errors="replace")
+        self.band_number = band_number
+        self.band_frequency = band_frequency
+        self.channel_number = channel_number
+        self.rx_level = rx_level
+        self.tx_level = tx_level
+        self.rx_quality = rx_quality
+        self.sinr = sinr
 
     def pack(self, mav: "MAVLink", force_mavlink1: bool = False) -> bytes:
-        return self._pack(mav, self.crc_extra, self.unpacker.pack(self.mcc, self.mnc, self.lac, self.status, self.failure_reason, self.type, self.quality), force_mavlink1=force_mavlink1)
+        return self._pack(mav, self.crc_extra, self.unpacker.pack(self.mcc, self.mnc, self.lac, self.status, self.failure_reason, self.type, self.quality, self.id, self.link_tx_rate, self.link_rx_rate, self._cell_tower_id_raw, self.band_number, self.band_frequency, self.channel_number, self.rx_level, self.tx_level, self.rx_quality, self.sinr), force_mavlink1=force_mavlink1)
 
 
 # Define name on the class for backwards compatibility (it is now msgname).
@@ -25404,9 +25446,15 @@ class MAVLink(object):
         """
         self.send(self.trajectory_representation_bezier_encode(time_usec, valid_points, pos_x, pos_y, pos_z, delta, pos_yaw), force_mavlink1=force_mavlink1)
 
-    def cellular_status_encode(self, status: int, failure_reason: int, type: int, quality: int, mcc: int, mnc: int, lac: int) -> MAVLink_cellular_status_message:
+    def cellular_status_encode(self, status: int, failure_reason: int, type: int, quality: int, mcc: int, mnc: int, lac: int, id: int = 0, link_tx_rate: int = 0, link_rx_rate: int = 0, cell_tower_id: bytes = b"", band_number: int = 0, band_frequency: float = 0, channel_number: int = 0, rx_level: float = 0, tx_level: float = 0, rx_quality: float = 0, sinr: float = 0) -> MAVLink_cellular_status_message:
         """
-        Report current used cellular network status
+        Cellular network status as reported by a particular modem.
+        This is primarily intended for logging, but a GCS may choose
+        to display link_tx_rate and link_rx_rate.
+        Note that a value of 0 in the id field indicates that the
+        sender does not support reporting of multiple modems.
+        Message data should be from a single modem, but that is not
+        guaranteed.
 
         status                    : Cellular modem status (type:uint8_t, values:CELLULAR_STATUS_FLAG)
         failure_reason            : Failure reason when status in in CELLULAR_STATUS_FLAG_FAILED (type:uint8_t, values:CELLULAR_NETWORK_FAILED_REASON)
@@ -25415,13 +25463,30 @@ class MAVLink(object):
         mcc                       : Mobile country code. If unknown, set to UINT16_MAX (type:uint16_t)
         mnc                       : Mobile network code. If unknown, set to UINT16_MAX (type:uint16_t)
         lac                       : Location area code. If unknown, set to 0 (type:uint16_t)
+        id                        : Cellular modem instance number. Indexed from 1. (type:uint8_t)
+        link_tx_rate              : Download rate. [KiB/s] (type:uint32_t)
+        link_rx_rate              : Upload rate. [KiB/s] (type:uint32_t)
+        cell_tower_id             : ID of the currently connected cell tower. This must be NULL terminated if the length is less than 9 human-readable chars, and without the null termination (NULL) byte if the length is exactly 9 chars. (type:char)
+        band_number               : LTE frequency band number. (type:uint8_t)
+        band_frequency            : LTE radio frequency. [MHz] (type:float)
+        channel_number            : The channel number (CN). Absolute radio-frequency (ARFCN) / E-UTRA (EARFCN) / UTRA (UARFCN) / New radio (NR_CH). (type:uint32_t)
+        rx_level                  : On 3G is Received Signal Code Power (RSCP). On LTE is Reference Signal Received Power (RSRP). On 5G is New Radio Reference Signal Received Power (NR_RSRP). [dBm] (type:float)
+        tx_level                  : Transmitter (modem) signal absolute power level. [dBm] (type:float)
+        rx_quality                : On 3G is Receiver Quality (RxQual). On LTE is Reference Signal Received Quality (RSRQ). On 5G is New Radio Reference Signal Received Quality (NR_RSRQ). [dBm] (type:float)
+        sinr                      : Signal to interference plus noise ratio (SINR). [dB] (type:float)
 
         """
-        return MAVLink_cellular_status_message(status, failure_reason, type, quality, mcc, mnc, lac)
+        return MAVLink_cellular_status_message(status, failure_reason, type, quality, mcc, mnc, lac, id, link_tx_rate, link_rx_rate, cell_tower_id, band_number, band_frequency, channel_number, rx_level, tx_level, rx_quality, sinr)
 
-    def cellular_status_send(self, status: int, failure_reason: int, type: int, quality: int, mcc: int, mnc: int, lac: int, force_mavlink1: bool = False) -> None:
+    def cellular_status_send(self, status: int, failure_reason: int, type: int, quality: int, mcc: int, mnc: int, lac: int, id: int = 0, link_tx_rate: int = 0, link_rx_rate: int = 0, cell_tower_id: bytes = b"", band_number: int = 0, band_frequency: float = 0, channel_number: int = 0, rx_level: float = 0, tx_level: float = 0, rx_quality: float = 0, sinr: float = 0, force_mavlink1: bool = False) -> None:
         """
-        Report current used cellular network status
+        Cellular network status as reported by a particular modem.
+        This is primarily intended for logging, but a GCS may choose
+        to display link_tx_rate and link_rx_rate.
+        Note that a value of 0 in the id field indicates that the
+        sender does not support reporting of multiple modems.
+        Message data should be from a single modem, but that is not
+        guaranteed.
 
         status                    : Cellular modem status (type:uint8_t, values:CELLULAR_STATUS_FLAG)
         failure_reason            : Failure reason when status in in CELLULAR_STATUS_FLAG_FAILED (type:uint8_t, values:CELLULAR_NETWORK_FAILED_REASON)
@@ -25430,9 +25495,20 @@ class MAVLink(object):
         mcc                       : Mobile country code. If unknown, set to UINT16_MAX (type:uint16_t)
         mnc                       : Mobile network code. If unknown, set to UINT16_MAX (type:uint16_t)
         lac                       : Location area code. If unknown, set to 0 (type:uint16_t)
+        id                        : Cellular modem instance number. Indexed from 1. (type:uint8_t)
+        link_tx_rate              : Download rate. [KiB/s] (type:uint32_t)
+        link_rx_rate              : Upload rate. [KiB/s] (type:uint32_t)
+        cell_tower_id             : ID of the currently connected cell tower. This must be NULL terminated if the length is less than 9 human-readable chars, and without the null termination (NULL) byte if the length is exactly 9 chars. (type:char)
+        band_number               : LTE frequency band number. (type:uint8_t)
+        band_frequency            : LTE radio frequency. [MHz] (type:float)
+        channel_number            : The channel number (CN). Absolute radio-frequency (ARFCN) / E-UTRA (EARFCN) / UTRA (UARFCN) / New radio (NR_CH). (type:uint32_t)
+        rx_level                  : On 3G is Received Signal Code Power (RSCP). On LTE is Reference Signal Received Power (RSRP). On 5G is New Radio Reference Signal Received Power (NR_RSRP). [dBm] (type:float)
+        tx_level                  : Transmitter (modem) signal absolute power level. [dBm] (type:float)
+        rx_quality                : On 3G is Receiver Quality (RxQual). On LTE is Reference Signal Received Quality (RSRQ). On 5G is New Radio Reference Signal Received Quality (NR_RSRQ). [dBm] (type:float)
+        sinr                      : Signal to interference plus noise ratio (SINR). [dB] (type:float)
 
         """
-        self.send(self.cellular_status_encode(status, failure_reason, type, quality, mcc, mnc, lac), force_mavlink1=force_mavlink1)
+        self.send(self.cellular_status_encode(status, failure_reason, type, quality, mcc, mnc, lac, id, link_tx_rate, link_rx_rate, cell_tower_id, band_number, band_frequency, channel_number, rx_level, tx_level, rx_quality, sinr), force_mavlink1=force_mavlink1)
 
     def isbd_link_status_encode(self, timestamp: int, last_heartbeat: int, failed_sessions: int, successful_sessions: int, signal_quality: int, ring_pending: int, tx_session_pending: int, rx_session_pending: int) -> MAVLink_isbd_link_status_message:
         """

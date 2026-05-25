@@ -1,6 +1,5 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -8,7 +7,6 @@ import 'overview_page_model.dart';
 export 'overview_page_model.dart';
 import 'package:nexus/services/bluetooth_service.dart';
 import 'package:nexus/services/data_service.dart';
-import 'package:nexus/services/data_service.dart' show SensorState;
 import 'package:nexus/widgets/status_bluetooth_card.dart';
 
 /// Créer un homepage.
@@ -76,17 +74,20 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
             children: [
               Icon(icon, color: iconColor, size: 32.0),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 4.0),
+                padding:
+                    const EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 4.0),
                 child: Text(
                   title,
                   style: FlutterFlowTheme.of(context).titleSmall.override(
                         font: GoogleFonts.interTight(
                           fontWeight: FontWeight.w600,
-                          fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
+                          fontStyle:
+                              FlutterFlowTheme.of(context).titleSmall.fontStyle,
                         ),
                         letterSpacing: 0.0,
                         fontWeight: FontWeight.w600,
-                        fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
+                        fontStyle:
+                            FlutterFlowTheme.of(context).titleSmall.fontStyle,
                       ),
                 ),
               ),
@@ -95,12 +96,15 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                 style: FlutterFlowTheme.of(context).headlineSmall.override(
                       font: GoogleFonts.interTight(
                         fontWeight: FontWeight.bold,
-                        fontStyle: FlutterFlowTheme.of(context).headlineSmall.fontStyle,
+                        fontStyle: FlutterFlowTheme.of(context)
+                            .headlineSmall
+                            .fontStyle,
                       ),
                       color: iconColor,
                       letterSpacing: 0.0,
                       fontWeight: FontWeight.bold,
-                      fontStyle: FlutterFlowTheme.of(context).headlineSmall.fontStyle,
+                      fontStyle:
+                          FlutterFlowTheme.of(context).headlineSmall.fontStyle,
                     ),
               ),
             ],
@@ -128,11 +132,14 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
             label,
             style: FlutterFlowTheme.of(context).bodyMedium.override(
                   font: GoogleFonts.inter(
-                    fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                    fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                    fontWeight:
+                        FlutterFlowTheme.of(context).bodyMedium.fontWeight,
+                    fontStyle:
+                        FlutterFlowTheme.of(context).bodyMedium.fontStyle,
                   ),
                   letterSpacing: 0.0,
-                  fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
+                  fontWeight:
+                      FlutterFlowTheme.of(context).bodyMedium.fontWeight,
                   fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
                 ),
           ),
@@ -143,7 +150,9 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                 width: 8.0,
                 height: 8.0,
                 decoration: BoxDecoration(
-                  color: isActive ? activeColor : FlutterFlowTheme.of(context).secondaryText,
+                  color: isActive
+                      ? activeColor
+                      : FlutterFlowTheme.of(context).secondaryText,
                   shape: BoxShape.circle,
                 ),
               ),
@@ -152,12 +161,16 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                 style: FlutterFlowTheme.of(context).bodySmall.override(
                       font: GoogleFonts.inter(
                         fontWeight: FontWeight.w600,
-                        fontStyle: FlutterFlowTheme.of(context).bodySmall.fontStyle,
+                        fontStyle:
+                            FlutterFlowTheme.of(context).bodySmall.fontStyle,
                       ),
-                      color: isActive ? activeColor : FlutterFlowTheme.of(context).secondaryText,
+                      color: isActive
+                          ? activeColor
+                          : FlutterFlowTheme.of(context).secondaryText,
                       letterSpacing: 0.0,
                       fontWeight: FontWeight.w600,
-                      fontStyle: FlutterFlowTheme.of(context).bodySmall.fontStyle,
+                      fontStyle:
+                          FlutterFlowTheme.of(context).bodySmall.fontStyle,
                     ),
               ),
             ].divide(const SizedBox(width: 8.0)),
@@ -212,29 +225,42 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                       style: FlutterFlowTheme.of(context).titleMedium.override(
                             font: GoogleFonts.interTight(
                               fontWeight: FontWeight.w600,
-                              fontStyle: FlutterFlowTheme.of(context).titleMedium.fontStyle,
+                              fontStyle: FlutterFlowTheme.of(context)
+                                  .titleMedium
+                                  .fontStyle,
                             ),
                             color: Colors.white,
                             letterSpacing: 0.0,
                             fontWeight: FontWeight.w600,
-                            fontStyle: FlutterFlowTheme.of(context).titleMedium.fontStyle,
+                            fontStyle: FlutterFlowTheme.of(context)
+                                .titleMedium
+                                .fontStyle,
                           ),
                     ),
                     Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          0.0, 4.0, 0.0, 0.0),
                       child: Text(
                         connected
                             ? 'Appareil connecté: ${bt.connectedDevice?.platformName ?? bt.connectedDevice?.remoteId.str}\nMission: ${data.missionStatus}\n${data.timeBootFormatted}'
                             : 'En attente de connexion Bluetooth',
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               font: GoogleFonts.inter(
-                                fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                                fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                fontWeight: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .fontWeight,
+                                fontStyle: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .fontStyle,
                               ),
                               color: Colors.white,
                               letterSpacing: 0.0,
-                              fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                              fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                              fontWeight: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .fontWeight,
+                              fontStyle: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .fontStyle,
                             ),
                       ),
                     ),
@@ -243,7 +269,8 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
               ],
             ),
             Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+              padding:
+                  const EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 children: [
@@ -262,16 +289,21 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                             connected
                                 ? 'Appareil connecté: ${bt.connectedDevice?.platformName ?? bt.connectedDevice?.remoteId.str}'
                                 : 'Bluetooth déconnecté',
-                            style: FlutterFlowTheme.of(context).bodySmall.override(
-                                  font: GoogleFonts.inter(
-                                    fontWeight: FontWeight.w600,
-                                    fontStyle: FlutterFlowTheme.of(context).bodySmall.fontStyle,
-                                  ),
-                                  color: Colors.white,
-                                  letterSpacing: 0.0,
-                                  fontWeight: FontWeight.w600,
-                                  fontStyle: FlutterFlowTheme.of(context).bodySmall.fontStyle,
-                                ),
+                            style:
+                                FlutterFlowTheme.of(context).bodySmall.override(
+                                      font: GoogleFonts.inter(
+                                        fontWeight: FontWeight.w600,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .bodySmall
+                                            .fontStyle,
+                                      ),
+                                      color: Colors.white,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.w600,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .bodySmall
+                                          .fontStyle,
+                                    ),
                           ),
                         ),
                       ),
@@ -382,7 +414,7 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                       ),
                     ].divide(const SizedBox(width: 16.0)),
                   ),
-                 Container(
+                  Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).secondaryBackground,
@@ -390,10 +422,7 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                         BoxShadow(
                           blurRadius: 4.0,
                           color: Color(0x33000000),
-                          offset: Offset(
-                            0.0,
-                            2.0,
-                          ),
+                          offset: Offset(0.0, 2.0),
                         )
                       ],
                       borderRadius: BorderRadius.circular(16.0),
@@ -425,389 +454,59 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                                   ),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 8.0),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Ordinateur de vol',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        font: GoogleFonts.inter(
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
-                                        ),
-                                        letterSpacing: 0.0,
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontStyle,
-                                      ),
-                                ),
-                                Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Container(
-                                      width: 8.0,
-                                      height: 8.0,
-                                      decoration: BoxDecoration(
-                                        color: connected
-                                            ? FlutterFlowTheme.of(context).success
-                                            : FlutterFlowTheme.of(context).secondaryText,
-                                        shape: BoxShape.circle,
-                                      ),
-                                    ),
-                                    Text(
-                                      connected ? 'En ligne' : 'Hors ligne',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodySmall
-                                          .override(
-                                            font: GoogleFonts.inter(
-                                              fontWeight: FontWeight.w600,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodySmall
-                                                      .fontStyle,
-                                            ),
-                                            color: connected
-                                                ? FlutterFlowTheme.of(context)
-                                                    .success
-                                                : FlutterFlowTheme.of(context)
-                                                    .secondaryText,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w600,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodySmall
-                                                    .fontStyle,
-                                          ),
-                                    ),
-                                  ].divide(const SizedBox(width: 8.0)),
-                                ),
-                              ],
-                            ),
+                          _buildStatusRow(
+                            context,
+                            label: 'Ordinateur de vol',
+                            isActive: connected,
+                            activeText: 'En ligne',
+                            inactiveText: 'Hors ligne',
+                            activeColor: FlutterFlowTheme.of(context).success,
                           ),
-                          // Réseau de capteurs
-                          Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 8.0),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Réseau de capteurs',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium,
-                                ),
-                                Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Container(
-                                      width: 8.0,
-                                      height: 8.0,
-                                      decoration: BoxDecoration(
-                                        color: data.odbSensorState
-                                            ? FlutterFlowTheme.of(context).success
-                                            : FlutterFlowTheme.of(context).secondaryText,
-                                        shape: BoxShape.circle,
-                                      ),
-                                    ),
-                                    Text(
-                                      connected ? data.odbSensorState ? 'Actif' : 'Inactif / Partiel' : 'Inactif',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodySmall
-                                          .override(
-                                            font: GoogleFonts.inter(
-                                              fontWeight: FontWeight.w600,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodySmall
-                                                      .fontStyle,
-                                            ),
-                                            color: connected
-                                                ? (data.odbSensorState
-                                                    ? FlutterFlowTheme.of(context).success
-                                                    : FlutterFlowTheme.of(context).warning)
-                                                : FlutterFlowTheme.of(context).secondaryText,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w600,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodySmall
-                                                    .fontStyle,
-                                          ),
-                                    ),
-                                  ].divide(const SizedBox(width: 8.0)),
-                                ),
-                              ],
-                            ),
+                          _buildStatusRow(
+                            context,
+                            label: 'Réseau de capteurs',
+                            isActive: connected && data.odbSensorState,
+                            activeText: 'Actif',
+                            inactiveText:
+                                connected ? 'Inactif / Partiel' : 'Inactif',
+                            activeColor: connected
+                                ? (data.odbSensorState
+                                    ? FlutterFlowTheme.of(context).success
+                                    : FlutterFlowTheme.of(context).warning)
+                                : FlutterFlowTheme.of(context).secondaryText,
                           ),
-                          // Connexion télémétrie
-                          Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 8.0),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Connexion à la télémétrie',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium,
-                                ),
-                                Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Container(
-                                      width: 8.0,
-                                      height: 8.0,
-                                      decoration: BoxDecoration(
-                                        color: data.radioState == RadioState.connected
-                                            ? FlutterFlowTheme.of(context).success
-                                            : FlutterFlowTheme.of(context).secondaryText,
-                                        shape: BoxShape.circle,
-                                      ),
-                                    ),
-                                    Text(
-                                      (connected && data.radioState == RadioState.connected) ? 'Actif' : 'Inactif',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodySmall
-                                          .override(
-                                            font: GoogleFonts.inter(
-                                              fontWeight: FontWeight.w600,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodySmall
-                                                      .fontStyle,
-                                            ),
-                                            color: connected
-                                                ? FlutterFlowTheme.of(context)
-                                                    .success
-                                                : FlutterFlowTheme.of(context)
-                                                    .secondaryText,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w600,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodySmall
-                                                    .fontStyle,
-                                          ),
-                                    ),
-                                  ].divide(const SizedBox(width: 8.0)),
-                                ),
-                              ],
-                            ),
+                          _buildStatusRow(
+                            context,
+                            label: 'Connexion à la télémétrie',
+                            isActive: connected &&
+                                data.radioState == RadioState.connected,
+                            activeText: 'Actif',
+                            inactiveText: 'Inactif',
+                            activeColor: FlutterFlowTheme.of(context).success,
                           ),
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Niveau de batterie',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium,
-                              ),
-                              Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Container(
-                                    width: 8.0,
-                                    height: 8.0,
-                                    decoration: BoxDecoration(
-                                      color: data.batterySensorState == SensorState.ok
-                                          ? FlutterFlowTheme.of(context).primary
-                                          : FlutterFlowTheme.of(context).secondaryText,
-                                      shape: BoxShape.circle,
-                                    ),
-                                  ),
-                                  Text(
-                                    (connected && data.batterySensorState == SensorState.ok) ? '${data.batteryPercent.toStringAsFixed(1)}%' : '—',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodySmall
-                                        .override(
-                                          font: GoogleFonts.inter(
-                                            fontWeight: FontWeight.w600,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodySmall
-                                                    .fontStyle,
-                                          ),
-                                          color: data.batterySensorState == SensorState.ok
-                                                  ? (data.batteryPercent > 60
-                                                    ? FlutterFlowTheme.of(context).primary
-                                                    : (data.batteryPercent > 30
-                                                      ? FlutterFlowTheme.of(context).warning
-                                                      : FlutterFlowTheme.of(context).error))
-                                              : FlutterFlowTheme.of(context).secondaryText,
-                                          letterSpacing: 0.0,
-                                          fontWeight: FontWeight.w600,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodySmall
-                                                  .fontStyle,
-                                        ),
-                                  ),
-                                ].divide(const SizedBox(width: 8.0)),
-                              ),
-                            ],
+                          _buildStatusRow(
+                            context,
+                            label: 'Niveau de batterie',
+                            isActive: connected &&
+                                data.batterySensorState == SensorState.ok,
+                            activeText:
+                                '${data.batteryPercent.toStringAsFixed(1)}%',
+                            inactiveText: '—',
+                            activeColor: data.batteryPercent > 60
+                                ? FlutterFlowTheme.of(context).primary
+                                : (data.batteryPercent > 30
+                                    ? FlutterFlowTheme.of(context).warning
+                                    : FlutterFlowTheme.of(context).error),
                           ),
                         ],
                       ),
                     ),
                   ),
-                  Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      boxShadow: const [
-                        BoxShadow(
-                          blurRadius: 4.0,
-                          color: Color(0x33000000),
-                          offset: Offset(
-                            0.0,
-                            2.0,
-                          ),
-                        )
-                      ],
-                      gradient: LinearGradient(
-                        colors: [
-                          FlutterFlowTheme.of(context).primary,
-                          FlutterFlowTheme.of(context).accent1
-                        ],
-                        stops: const [0.0, 1.0],
-                        begin: const AlignmentDirectional(1.0, -1.0),
-                        end: const AlignmentDirectional(-1.0, 1.0),
-                      ),
-                      borderRadius: BorderRadius.circular(16.0),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                mainAxisSize: MainAxisSize.max,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Statut de mission',
-                                    style: FlutterFlowTheme.of(context)
-                                        .titleMedium
-                                        .override(
-                                          font: GoogleFonts.interTight(
-                                            fontWeight: FontWeight.w600,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .titleMedium
-                                                    .fontStyle,
-                                          ),
-                                          color:
-                                              FlutterFlowTheme.of(context).info,
-                                          letterSpacing: 0.0,
-                                          fontWeight: FontWeight.w600,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .titleMedium
-                                                  .fontStyle,
-                                        ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 4.0, 0.0, 0.0),
-                                    child: Text(
-                                      connected ? 'Appareil connecté: ${bt.connectedDevice?.platformName ?? bt.connectedDevice?.remoteId.str}\nMission: ${data.missionStatus}\n${data.timeBootFormatted}' : 'En attente de connexion Bluetooth',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            font: GoogleFonts.inter(
-                                              fontWeight: FontWeight.w600,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .fontStyle,
-                                            ),
-                                            color: FlutterFlowTheme.of(context)
-                                                .info,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w600,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMedium
-                                                    .fontStyle,
-                                          ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0.0, 16.0, 0.0, 0.0),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Expanded(
-                                  child: Container(
-                                    height: 40.0,
-                                    decoration: BoxDecoration(
-                                      color: const Color(0x40FFFFFF),
-                                      borderRadius: BorderRadius.circular(20.0),
-                                    ),
-                                    child: Align(
-                                      alignment: const AlignmentDirectional(0.0, 0.0),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          data.missionReady ? 'Prêt pour le lancement' : '-',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodySmall
-                                              .override(
-                                                font: GoogleFonts.inter(
-                                                  fontWeight: FontWeight.w600,
-                                                  fontStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodySmall
-                                                          .fontStyle,
-                                                ),
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .info,
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.w600,
-                                                fontStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodySmall
-                                                        .fontStyle,
-                                              ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ].divide(const SizedBox(width: 12.0)),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                  _buildMissionCard(
+                    context,
+                    connected: connected,
+                    bt: bt,
+                    data: data,
                   ),
                 ]
                     .divide(const SizedBox(height: 24.0))

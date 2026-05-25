@@ -4,9 +4,13 @@ import 'package:nexus/services/bluetooth_service.dart';
 import 'package:nexus/services/console_service.dart';
 
 enum SensorState { unknown, ok, error }
+
 enum RadioState { disconnected, connecting, connected }
 
 class DataServiceManager with ChangeNotifier {
+  static const int stageRoleBooster = 2;
+  static const int stageRoleSustainer = 3;
+
   final BluetoothServiceManager btService;
   DataServiceManager(this.btService);
   bool _isDisposed = false;
@@ -28,7 +32,7 @@ class DataServiceManager with ChangeNotifier {
   String odbFrameVersion = '';
   bool hasOdbConfig = false;
   String odbName = '';
-  int stageRole = 0;
+  int stageRole = stageRoleSustainer;
   bool debugMode = false;
   bool enableBuzzer = false;
   int minNeededPyroNb = 0;
@@ -82,15 +86,20 @@ class DataServiceManager with ChangeNotifier {
   double get batteryPercent => batteryVoltageMax > 0
       ? (batteryVoltage / batteryVoltageMax * 100).clamp(0, 100)
       : 0.0;
-  String get temperatureDisplay => temperature != 0.0 ? '${temperature.toStringAsFixed(1)}°C' : '—';
+  String get temperatureDisplay =>
+      temperature != 0.0 ? '${temperature.toStringAsFixed(1)}°C' : '—';
   double get sdUsagePercent =>
       sdMax > 0 ? (sdUsed / sdMax * 100).clamp(0, 100) : 0.0;
-  double pressureToAltitude(double pressureHpa, [double seaLevelHpa = 1013.25]) {
+  double pressureToAltitude(
+    double pressureHpa, [
+    double seaLevelHpa = 1013.25,
+  ]) {
     if (pressureHpa <= 0 || seaLevelHpa <= 0) return 0.0;
     final ratio = pressureHpa / seaLevelHpa;
     final alt = 44330.0 * (1 - pow(ratio, 1 / 5.255));
     return alt.isFinite ? alt.toDouble() : 0.0;
   }
+
   double get barometerAlt => pressureToAltitude(barometerPressure);
 
   String get altitudeDisplay {
@@ -103,6 +112,7 @@ class DataServiceManager with ChangeNotifier {
     }
     return '—';
   }
+
   int get pyrosActiveCount => pyros.where((p) => p).length;
   String get pyrosSummary => pyros.map((p) => p ? '1' : '0').join(',');
   String get missionStateDisplay {
@@ -119,15 +129,18 @@ class DataServiceManager with ChangeNotifier {
         return '—';
     }
   }
-  String get systemStateDisplay => systemStates > 0 ? 'Flags $systemStates' : '—';
+
+  String get systemStateDisplay =>
+      systemStates > 0 ? 'Flags $systemStates' : '—';
   String get eventStateDisplay => eventStates > 0 ? 'Events $eventStates' : '—';
   String get vinDisplay {
     if (vinMv > 0) return '$vinMv mV';
     if (batteryVoltage > 0) return '${(batteryVoltage * 1000).round()} mV';
     return '—';
   }
+
   String get timeBootDisplay => timeBootMs > 0 ? '$timeBootMs ms' : '—';
-  
+
   String get timeBootFormatted {
     if (timeBootMs <= 0) return '00h:00m:00s:00ms';
     final hours = timeBootMs ~/ 3600000;
@@ -136,7 +149,7 @@ class DataServiceManager with ChangeNotifier {
     final milliseconds = timeBootMs % 1000;
     return '${hours.toString().padLeft(2, '0')}h:${minutes.toString().padLeft(2, '0')}m:${seconds.toString().padLeft(2, '0')}s:${milliseconds.toString().padLeft(2, '0')}ms';
   }
-  
+
   String get attitudeDisplay => hasConnection
       ? 'R ${roll.toStringAsFixed(1)}°  P ${pitch.toStringAsFixed(1)}°  Y ${yaw.toStringAsFixed(1)}°'
       : '—';
@@ -151,7 +164,7 @@ class DataServiceManager with ChangeNotifier {
     if (odbState.isNotEmpty) return odbState;
     return systemStateDisplay;
   }
-  
+
   // --- IMU / Accelerations ---
   String get imuAccDisplay => hasConnection && imuSensorState == SensorState.ok
       ? 'X: ${imuAccX.toStringAsFixed(2)} | Y: ${imuAccY.toStringAsFixed(2)} | Z: ${imuAccZ.toStringAsFixed(2)} m/s²'
@@ -159,35 +172,36 @@ class DataServiceManager with ChangeNotifier {
   String get imuGyroDisplay => hasConnection && imuSensorState == SensorState.ok
       ? 'X: ${imuGyroX.toStringAsFixed(2)} | Y: ${imuGyroY.toStringAsFixed(2)} | Z: ${imuGyroZ.toStringAsFixed(2)} °/s'
       : '—';
-  String get highGAccDisplay => hasConnection && accHighGSensorState == SensorState.ok
+  String get highGAccDisplay =>
+      hasConnection && accHighGSensorState == SensorState.ok
       ? 'X: ${accHighGX.toStringAsFixed(2)} | Y: ${accHighGY.toStringAsFixed(2)} | Z: ${accHighGZ.toStringAsFixed(2)} m/s²'
       : '—';
 
-    String get imuAccVerticalDisplay => hasConnection && imuSensorState == SensorState.ok
+  String get imuAccVerticalDisplay =>
+      hasConnection && imuSensorState == SensorState.ok
       ? '${imuAccVertical.toStringAsFixed(2)} m/s²'
       : '—';
 
-    String get highGAccVerticalDisplay => hasConnection && accHighGSensorState == SensorState.ok
+  String get highGAccVerticalDisplay =>
+      hasConnection && accHighGSensorState == SensorState.ok
       ? '${highGAccVertical.toStringAsFixed(2)} m/s²'
       : '—';
-  
+
   // --- Barometer ---
-  String get pressureDisplay => hasConnection && barometerSensorState == SensorState.ok
+  String get pressureDisplay =>
+      hasConnection && barometerSensorState == SensorState.ok
       ? '${barometerPressure.toStringAsFixed(2)} hPa'
       : '—';
 
-    String get altitudeMslDisplay => hasConnection
-      ? '${altitudeMslM.toStringAsFixed(2)} m'
-      : '—';
+  String get altitudeMslDisplay =>
+      hasConnection ? '${altitudeMslM.toStringAsFixed(2)} m' : '—';
 
-  String get kalmanAltitudeDisplay => hasConnection
-      ? kalmanAltitudeM.toStringAsFixed(2)
-      : '—';
+  String get kalmanAltitudeDisplay =>
+      hasConnection ? kalmanAltitudeM.toStringAsFixed(2) : '—';
 
-  String get kalmanVelocityDisplay => hasConnection
-      ? kalmanVelocityMS.toStringAsFixed(2)
-      : '—';
-  
+  String get kalmanVelocityDisplay =>
+      hasConnection ? kalmanVelocityMS.toStringAsFixed(2) : '—';
+
   // --- GPS ---
   String get gpsLatDisplay => hasConnection && gpsSensorState == SensorState.ok
       ? '${gpsLat.toStringAsFixed(6)}°'
@@ -198,15 +212,15 @@ class DataServiceManager with ChangeNotifier {
   String get gpsAltDisplay => hasConnection && gpsSensorState == SensorState.ok
       ? '${gpsAlt.toStringAsFixed(1)} m'
       : '—';
-  String get gpsSatellitesDisplay => hasConnection && gpsSensorState == SensorState.ok
+  String get gpsSatellitesDisplay =>
+      hasConnection && gpsSensorState == SensorState.ok
       ? '$gpsSatellites satellites'
       : '—';
-  String get gpsFixDisplay => hasConnection 
-      ? (gpsFix > 0 ? '✓ Actif' : '✗ Aucun fix')
-      : '—';
+  String get gpsFixDisplay =>
+      hasConnection ? (gpsFix > 0 ? '✓ Actif' : '✗ Aucun fix') : '—';
 
-  bool get odbSensorState => (
-      temperatureSensorState == SensorState.ok &&
+  bool get odbSensorState =>
+      (temperatureSensorState == SensorState.ok &&
       imuSensorState == SensorState.ok &&
       accHighGSensorState == SensorState.ok &&
       sdSensorState == SensorState.ok &&
@@ -214,8 +228,7 @@ class DataServiceManager with ChangeNotifier {
       gpsFix >= 1 &&
       barometerSensorState == SensorState.ok &&
       goodPowerState == true &&
-      pyrosActiveCount >= 0
-    );
+      pyrosActiveCount >= 0);
   bool get missionReady => odbSensorState && radioState == RadioState.connected;
   bool get hasConnection => btService.connectedDevice != null;
 
@@ -228,7 +241,7 @@ class DataServiceManager with ChangeNotifier {
     odbFrameVersion = '';
     hasOdbConfig = false;
     odbName = '';
-    stageRole = 0;
+    stageRole = stageRoleSustainer;
     debugMode = false;
     enableBuzzer = false;
     minNeededPyroNb = 0;
@@ -343,13 +356,21 @@ class DataServiceManager with ChangeNotifier {
               payload.substring(equalsIndex + 1).trim();
         }
       } else {
-        for (final match in RegExp(r'([A-Za-z0-9_]+)=([-+]?[0-9]*\.?[0-9]+)').allMatches(normalized)) {
-          entries[match.group(1)!.trim().toLowerCase()] = match.group(2)!.trim();
+        for (final match in RegExp(
+          r'([A-Za-z0-9_]+)=([-+]?[0-9]*\.?[0-9]+)',
+        ).allMatches(normalized)) {
+          entries[match.group(1)!.trim().toLowerCase()] = match
+              .group(2)!
+              .trim();
         }
 
         if (entries.isEmpty) {
-          for (final match in RegExp(r'([A-Za-z0-9_]+):\s*([^,;\r\n]+)').allMatches(normalized)) {
-            entries[match.group(1)!.trim().toLowerCase()] = match.group(2)!.trim();
+          for (final match in RegExp(
+            r'([A-Za-z0-9_]+):\s*([^,;\r\n]+)',
+          ).allMatches(normalized)) {
+            entries[match.group(1)!.trim().toLowerCase()] = match
+                .group(2)!
+                .trim();
           }
         }
       }
@@ -401,7 +422,8 @@ class DataServiceManager with ChangeNotifier {
             hasOdbConfig = true;
             break;
           case 'max_drogue':
-            drogueFireAttemptMaxNb = int.tryParse(value) ?? drogueFireAttemptMaxNb;
+            drogueFireAttemptMaxNb =
+                int.tryParse(value) ?? drogueFireAttemptMaxNb;
             hasOdbConfig = true;
             break;
           case 'max_main':
@@ -413,19 +435,23 @@ class DataServiceManager with ChangeNotifier {
             hasOdbConfig = true;
             break;
           case 'v_boost':
-            boostPhaseVThreshold = double.tryParse(value) ?? boostPhaseVThreshold;
+            boostPhaseVThreshold =
+                double.tryParse(value) ?? boostPhaseVThreshold;
             hasOdbConfig = true;
             break;
           case 'v_apogee':
-            apogeeDetectVThreshold = double.tryParse(value) ?? apogeeDetectVThreshold;
+            apogeeDetectVThreshold =
+                double.tryParse(value) ?? apogeeDetectVThreshold;
             hasOdbConfig = true;
             break;
           case 'alt_main':
-            mainDeployAltitudeThresholdM = double.tryParse(value) ?? mainDeployAltitudeThresholdM;
+            mainDeployAltitudeThresholdM =
+                double.tryParse(value) ?? mainDeployAltitudeThresholdM;
             hasOdbConfig = true;
             break;
           case 'v_land':
-            landingDetectVThreshold = double.tryParse(value) ?? landingDetectVThreshold;
+            landingDetectVThreshold =
+                double.tryParse(value) ?? landingDetectVThreshold;
             hasOdbConfig = true;
             break;
           case 'tone':
@@ -433,7 +459,8 @@ class DataServiceManager with ChangeNotifier {
             hasOdbConfig = true;
             break;
           case 't_land':
-            landingDetectThresholdMs = int.tryParse(value) ?? landingDetectThresholdMs;
+            landingDetectThresholdMs =
+                int.tryParse(value) ?? landingDetectThresholdMs;
             hasOdbConfig = true;
             break;
           case 'delay_fire':
@@ -441,7 +468,8 @@ class DataServiceManager with ChangeNotifier {
             hasOdbConfig = true;
             break;
           case 'fail_arm':
-            pyrosArmingFailsafeTicks = int.tryParse(value) ?? pyrosArmingFailsafeTicks;
+            pyrosArmingFailsafeTicks =
+                int.tryParse(value) ?? pyrosArmingFailsafeTicks;
             hasOdbConfig = true;
             break;
           case 'fail_apogee':
@@ -461,8 +489,11 @@ class DataServiceManager with ChangeNotifier {
             vinMv = int.tryParse(value) ?? vinMv;
             batteryVoltage = vinMv > 0
                 ? vinMv / 1000.0
-                : (int.tryParse(value) ?? (batteryVoltage * 1000).round()) / 1000.0;
-            batterySensorState = batteryVoltage > 0 ? SensorState.ok : SensorState.error;
+                : (int.tryParse(value) ?? (batteryVoltage * 1000).round()) /
+                      1000.0;
+            batterySensorState = batteryVoltage > 0
+                ? SensorState.ok
+                : SensorState.error;
             goodPowerState = batteryVoltage >= 5.06;
             break;
           case 'bat_max':
@@ -543,7 +574,8 @@ class DataServiceManager with ChangeNotifier {
             accHighGSensorState = SensorState.ok;
             break;
           case 'highg_acc_vertical':
-            highGAccVertical = parseScaledDouble(value, 100) ?? highGAccVertical;
+            highGAccVertical =
+                parseScaledDouble(value, 100) ?? highGAccVertical;
             accHighGSensorState = SensorState.ok;
             break;
           case 'highg_acc_y':
@@ -594,7 +626,8 @@ class DataServiceManager with ChangeNotifier {
             break;
 
           case 'pressure_hpa':
-            barometerPressure = parseScaledDouble(value, 100) ?? barometerPressure;
+            barometerPressure =
+                parseScaledDouble(value, 100) ?? barometerPressure;
             barometerSensorState = SensorState.ok;
             break;
 
@@ -608,15 +641,16 @@ class DataServiceManager with ChangeNotifier {
             break;
 
           case 'kalman_v':
-            kalmanVelocityMS = parseScaledDouble(value, 100) ?? kalmanVelocityMS;
+            kalmanVelocityMS =
+                parseScaledDouble(value, 100) ?? kalmanVelocityMS;
             break;
 
           case 'radio':
             radioState = value.toLowerCase() == 'connected'
                 ? RadioState.connected
                 : value.toLowerCase() == 'connecting'
-                    ? RadioState.connecting
-                    : RadioState.disconnected;
+                ? RadioState.connecting
+                : RadioState.disconnected;
             break;
 
           case 'ack':
@@ -626,7 +660,7 @@ class DataServiceManager with ChangeNotifier {
             break;
 
           default:
-            //ConsoleService().log('Clé inconnue: $key -> $value');
+          //ConsoleService().log('Clé inconnue: $key -> $value');
         }
       }
 

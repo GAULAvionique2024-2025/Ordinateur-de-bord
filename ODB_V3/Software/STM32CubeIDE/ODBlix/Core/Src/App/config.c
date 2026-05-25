@@ -17,7 +17,7 @@ odb_config_t current_config;
 const odb_config_t default_config = {
     .magic_number = CONFIG_MAGIC_NUMBER,
     .odb_name = "ODB_1",
-    .stage_role = 0,
+    .stage_role = 2,
     .debug_mode = 1,
     .enable_buzzer = 0,
 

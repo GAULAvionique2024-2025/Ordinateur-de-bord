@@ -530,8 +530,8 @@ void Telemetry_SendRocketData(rfd900x_t *rfd_dev, const mavlink_modem_id_t modem
 			data_temp->kalman_v
         );
 
-        Telemetry_TransmitMessage(rfd_dev, &msg);
-    }
+	Telemetry_TransmitMessage(rfd_dev, &msg);
+}
 
 /*
 void Telemetry_SendEventLog(rfd900x_t *rfd_dev, const mavlink_modem_id_t modem_id, const mavlink_event_severity_t severity, const char *text) {

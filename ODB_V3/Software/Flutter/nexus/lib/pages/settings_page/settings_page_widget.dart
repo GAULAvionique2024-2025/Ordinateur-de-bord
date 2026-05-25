@@ -29,18 +29,21 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
   final TextEditingController _minPyrosController = TextEditingController();
   final TextEditingController _accLaunchController = TextEditingController();
   final TextEditingController _boostVoltageController = TextEditingController();
-  final TextEditingController _apogeeVoltageController = TextEditingController();
-  final TextEditingController _landingVoltageController = TextEditingController();
+  final TextEditingController _apogeeVoltageController =
+      TextEditingController();
+  final TextEditingController _landingVoltageController =
+      TextEditingController();
   final TextEditingController _landingDelayController = TextEditingController();
-  final TextEditingController _apogeeFailsafeController = TextEditingController();
-  final TextEditingController _deployAltitudeController = TextEditingController();
+  final TextEditingController _apogeeFailsafeController =
+      TextEditingController();
+  final TextEditingController _deployAltitudeController =
+      TextEditingController();
   final TextEditingController _maxDrogueController = TextEditingController();
   final TextEditingController _maxMainController = TextEditingController();
   bool _debugMode = false;
   bool _enableBuzzer = false;
   double _buzzerToneHz = 100.0;
-  int _stageRoleValue = 0;
-  String _appName = '';
+  int _stageRoleValue = DataServiceManager.stageRoleSustainer;
   String _packageName = '';
   String _appVersion = '';
   String _buildNumber = '';
@@ -52,31 +55,30 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
     _model = createModel(context, () => SettingsPageModel());
     _loadPackageInfo();
 
-    _model.expandableExpandableController =
-        ExpandableController(initialExpanded: false)
-          ..addListener(() => safeSetState(() {}));
-    _model.pyrosExpandableController =
-        ExpandableController(initialExpanded: false)
-          ..addListener(() => safeSetState(() {}));
-    _model.phaseExpandableController =
-        ExpandableController(initialExpanded: false)
-          ..addListener(() => safeSetState(() {}));
-    _model.parachuteExpandableController =
-        ExpandableController(initialExpanded: false)
-          ..addListener(() => safeSetState(() {}));
-    _model.audioExpandableController =
-        ExpandableController(initialExpanded: false)
-          ..addListener(() => safeSetState(() {}));
-    _model.aProposExpandableController =
-        ExpandableController(initialExpanded: false)
-          ..addListener(() => safeSetState(() {}));
+    _model.expandableExpandableController = ExpandableController(
+      initialExpanded: false,
+    )..addListener(() => safeSetState(() {}));
+    _model.pyrosExpandableController = ExpandableController(
+      initialExpanded: false,
+    )..addListener(() => safeSetState(() {}));
+    _model.phaseExpandableController = ExpandableController(
+      initialExpanded: false,
+    )..addListener(() => safeSetState(() {}));
+    _model.parachuteExpandableController = ExpandableController(
+      initialExpanded: false,
+    )..addListener(() => safeSetState(() {}));
+    _model.audioExpandableController = ExpandableController(
+      initialExpanded: false,
+    )..addListener(() => safeSetState(() {}));
+    _model.aProposExpandableController = ExpandableController(
+      initialExpanded: false,
+    )..addListener(() => safeSetState(() {}));
   }
 
   Future<void> _loadPackageInfo() async {
     final info = await PackageInfo.fromPlatform();
     if (!mounted) return;
     safeSetState(() {
-      _appName = info.appName;
       _packageName = info.packageName;
       _appVersion = info.version;
       _buildNumber = info.buildNumber;
@@ -139,7 +141,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
         _lastHydratedConfigSignature = '';
         safeSetState(() {
           _odbNameController.clear();
-          _stageRoleValue = 0;
+          _stageRoleValue = DataServiceManager.stageRoleSustainer;
           _debugMode = false;
           _enableBuzzer = false;
           _buzzerToneHz = 100.0;
@@ -189,12 +191,16 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
         _pyroFailsafeController.text = data.pyrosArmingFailsafeTicks.toString();
         _minPyrosController.text = data.minNeededPyroNb.toString();
         _accLaunchController.text = data.accZLaunchThreshold.toStringAsFixed(2);
-        _boostVoltageController.text = data.boostPhaseVThreshold.toStringAsFixed(2);
-        _apogeeVoltageController.text = data.apogeeDetectVThreshold.toStringAsFixed(2);
-        _landingVoltageController.text = data.landingDetectVThreshold.toStringAsFixed(2);
+        _boostVoltageController.text = data.boostPhaseVThreshold
+            .toStringAsFixed(2);
+        _apogeeVoltageController.text = data.apogeeDetectVThreshold
+            .toStringAsFixed(2);
+        _landingVoltageController.text = data.landingDetectVThreshold
+            .toStringAsFixed(2);
         _landingDelayController.text = data.landingDetectThresholdMs.toString();
         _apogeeFailsafeController.text = data.apogeeFailsafeTicks.toString();
-        _deployAltitudeController.text = data.mainDeployAltitudeThresholdM.toStringAsFixed(2);
+        _deployAltitudeController.text = data.mainDeployAltitudeThresholdM
+            .toStringAsFixed(2);
         _maxDrogueController.text = data.drogueFireAttemptMaxNb.toString();
         _maxMainController.text = data.mainFireAttemptMaxNb.toString();
       });
@@ -214,20 +220,22 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
           child: Text(
             'Rôle de stage',
             style: FlutterFlowTheme.of(context).bodyMedium.override(
-                  font: GoogleFonts.inter(
-                    fontWeight: FontWeight.w600,
-                    fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                  ),
-                  fontSize: 14.0,
-                  letterSpacing: 0.0,
-                  fontWeight: FontWeight.w600,
-                  fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                ),
+              font: GoogleFonts.inter(
+                fontWeight: FontWeight.w600,
+                fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+              ),
+              fontSize: 14.0,
+              letterSpacing: 0.0,
+              fontWeight: FontWeight.w600,
+              fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+            ),
           ),
         ),
         Expanded(
           child: DropdownButtonFormField<int>(
-            value: _stageRoleValue == 1 ? 1 : 0,
+            initialValue: _stageRoleValue == DataServiceManager.stageRoleBooster
+                ? DataServiceManager.stageRoleBooster
+                : DataServiceManager.stageRoleSustainer,
             onChanged: enabled
                 ? (value) {
                     if (value == null) return;
@@ -268,11 +276,11 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
             ),
             items: const [
               DropdownMenuItem<int>(
-                value: 0,
+                value: DataServiceManager.stageRoleBooster,
                 child: Text('Booster'),
               ),
               DropdownMenuItem<int>(
-                value: 1,
+                value: DataServiceManager.stageRoleSustainer,
                 child: Text('Sustainer'),
               ),
             ],
@@ -324,29 +332,23 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
           borderRadius: BorderRadius.circular(12),
         ),
         errorBorder: OutlineInputBorder(
-          borderSide: const BorderSide(
-            color: Color(0x00000000),
-            width: 1,
-          ),
+          borderSide: const BorderSide(color: Color(0x00000000), width: 1),
           borderRadius: BorderRadius.circular(12),
         ),
         focusedErrorBorder: OutlineInputBorder(
-          borderSide: const BorderSide(
-            color: Color(0x00000000),
-            width: 1,
-          ),
+          borderSide: const BorderSide(color: Color(0x00000000), width: 1),
           borderRadius: BorderRadius.circular(12),
         ),
       ),
       style: FlutterFlowTheme.of(context).bodyMedium.override(
-            font: GoogleFonts.inter(
-              fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-              fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-            ),
-            letterSpacing: 0.0,
-            fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-            fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-          ),
+        font: GoogleFonts.inter(
+          fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
+          fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+        ),
+        letterSpacing: 0.0,
+        fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
+        fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+      ),
     );
 
     return Column(
@@ -360,16 +362,17 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
               child: Text(
                 label,
                 style: FlutterFlowTheme.of(context).bodyMedium.override(
-                      font: GoogleFonts.inter(
-                        fontWeight: FontWeight.w600,
-                        fontStyle:
-                            FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                      ),
-                      fontSize: 14.0,
-                      letterSpacing: 0.0,
-                      fontWeight: FontWeight.w600,
-                      fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                    ),
+                  font: GoogleFonts.inter(
+                    fontWeight: FontWeight.w600,
+                    fontStyle: FlutterFlowTheme.of(
+                      context,
+                    ).bodyMedium.fontStyle,
+                  ),
+                  fontSize: 14.0,
+                  letterSpacing: 0.0,
+                  fontWeight: FontWeight.w600,
+                  fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                ),
               ),
             ),
             Expanded(child: field),
@@ -393,27 +396,27 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
       title: Text(
         title,
         style: FlutterFlowTheme.of(context).bodyLarge.override(
-              font: GoogleFonts.inter(
-                fontWeight: FlutterFlowTheme.of(context).bodyLarge.fontWeight,
-                fontStyle: FlutterFlowTheme.of(context).bodyLarge.fontStyle,
-              ),
-              letterSpacing: 0.0,
-              fontWeight: FlutterFlowTheme.of(context).bodyLarge.fontWeight,
-              fontStyle: FlutterFlowTheme.of(context).bodyLarge.fontStyle,
-            ),
+          font: GoogleFonts.inter(
+            fontWeight: FlutterFlowTheme.of(context).bodyLarge.fontWeight,
+            fontStyle: FlutterFlowTheme.of(context).bodyLarge.fontStyle,
+          ),
+          letterSpacing: 0.0,
+          fontWeight: FlutterFlowTheme.of(context).bodyLarge.fontWeight,
+          fontStyle: FlutterFlowTheme.of(context).bodyLarge.fontStyle,
+        ),
       ),
       subtitle: Text(
         subtitle,
         style: FlutterFlowTheme.of(context).bodySmall.override(
-              font: GoogleFonts.inter(
-                fontWeight: FlutterFlowTheme.of(context).bodySmall.fontWeight,
-                fontStyle: FlutterFlowTheme.of(context).bodySmall.fontStyle,
-              ),
-              color: FlutterFlowTheme.of(context).secondaryText,
-              letterSpacing: 0.0,
-              fontWeight: FlutterFlowTheme.of(context).bodySmall.fontWeight,
-              fontStyle: FlutterFlowTheme.of(context).bodySmall.fontStyle,
-            ),
+          font: GoogleFonts.inter(
+            fontWeight: FlutterFlowTheme.of(context).bodySmall.fontWeight,
+            fontStyle: FlutterFlowTheme.of(context).bodySmall.fontStyle,
+          ),
+          color: FlutterFlowTheme.of(context).secondaryText,
+          letterSpacing: 0.0,
+          fontWeight: FlutterFlowTheme.of(context).bodySmall.fontWeight,
+          fontStyle: FlutterFlowTheme.of(context).bodySmall.fontStyle,
+        ),
       ),
       activeThumbColor: FlutterFlowTheme.of(context).primary,
       contentPadding: EdgeInsets.zero,
@@ -437,15 +440,15 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
           child: Text(
             '$label: ${value.round()}',
             style: FlutterFlowTheme.of(context).bodyMedium.override(
-                  font: GoogleFonts.inter(
-                    fontWeight: FontWeight.w600,
-                    fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                  ),
-                  fontSize: 14.0,
-                  letterSpacing: 0.0,
-                  fontWeight: FontWeight.w600,
-                  fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                ),
+              font: GoogleFonts.inter(
+                fontWeight: FontWeight.w600,
+                fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+              ),
+              fontSize: 14.0,
+              letterSpacing: 0.0,
+              fontWeight: FontWeight.w600,
+              fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+            ),
           ),
         ),
         Expanded(
@@ -472,14 +475,11 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
             blurRadius: 4,
             color: const Color(0x33000000),
             offset: const Offset(0, 2),
-          )
+          ),
         ],
         borderRadius: BorderRadius.circular(12),
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(12),
-        child: child,
-      ),
+      child: Padding(padding: const EdgeInsets.all(12), child: child),
     );
   }
 
@@ -504,7 +504,12 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                 size: 24.0,
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
+                padding: const EdgeInsetsDirectional.fromSTEB(
+                  16.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                ),
                 child: Text('Profile', style: headerStyle),
               ),
             ],
@@ -553,11 +558,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
           expanded: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildStageRoleDropdown(
-                context,
-                data: data,
-                enabled: enabled,
-              ),
+              _buildStageRoleDropdown(context, data: data, enabled: enabled),
               _buildBooleanSetting(
                 context,
                 title: 'Mode debug',
@@ -614,7 +615,8 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                 controller: _pyroDelayController,
                 enabled: enabled,
                 onChanged: (value) {
-                  data.fireAttemptDelayMs = int.tryParse(value) ?? data.fireAttemptDelayMs;
+                  data.fireAttemptDelayMs =
+                      int.tryParse(value) ?? data.fireAttemptDelayMs;
                 },
               ),
               _buildLabeledSettingField(
@@ -625,7 +627,8 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                 controller: _pyroFailsafeController,
                 enabled: enabled,
                 onChanged: (value) {
-                  data.pyrosArmingFailsafeTicks = int.tryParse(value) ?? data.pyrosArmingFailsafeTicks;
+                  data.pyrosArmingFailsafeTicks =
+                      int.tryParse(value) ?? data.pyrosArmingFailsafeTicks;
                 },
               ),
               _buildLabeledSettingField(
@@ -636,7 +639,8 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                 controller: _minPyrosController,
                 enabled: enabled,
                 onChanged: (value) {
-                  data.minNeededPyroNb = int.tryParse(value) ?? data.minNeededPyroNb;
+                  data.minNeededPyroNb =
+                      int.tryParse(value) ?? data.minNeededPyroNb;
                 },
               ),
             ].divide(const SizedBox(height: 12.0)),
@@ -678,44 +682,60 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                 context,
                 label: 'Seuil accélération verticale lancement (g)',
                 hintText: '',
-                keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                keyboardType: const TextInputType.numberWithOptions(
+                  decimal: true,
+                ),
                 controller: _accLaunchController,
                 enabled: enabled,
                 onChanged: (value) {
-                  data.accZLaunchThreshold = double.tryParse(value.replaceAll(',', '.')) ?? data.accZLaunchThreshold;
+                  data.accZLaunchThreshold =
+                      double.tryParse(value.replaceAll(',', '.')) ??
+                      data.accZLaunchThreshold;
                 },
               ),
               _buildLabeledSettingField(
                 context,
                 label: 'Seuil vitesse boost (m/s)',
                 hintText: '',
-                keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                keyboardType: const TextInputType.numberWithOptions(
+                  decimal: true,
+                ),
                 controller: _boostVoltageController,
                 enabled: enabled,
                 onChanged: (value) {
-                  data.boostPhaseVThreshold = double.tryParse(value.replaceAll(',', '.')) ?? data.boostPhaseVThreshold;
+                  data.boostPhaseVThreshold =
+                      double.tryParse(value.replaceAll(',', '.')) ??
+                      data.boostPhaseVThreshold;
                 },
               ),
               _buildLabeledSettingField(
                 context,
                 label: 'Seuil vitesse détection apogée (m/s)',
                 hintText: '',
-                keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                keyboardType: const TextInputType.numberWithOptions(
+                  decimal: true,
+                ),
                 controller: _apogeeVoltageController,
                 enabled: enabled,
                 onChanged: (value) {
-                  data.apogeeDetectVThreshold = double.tryParse(value.replaceAll(',', '.')) ?? data.apogeeDetectVThreshold;
+                  data.apogeeDetectVThreshold =
+                      double.tryParse(value.replaceAll(',', '.')) ??
+                      data.apogeeDetectVThreshold;
                 },
               ),
               _buildLabeledSettingField(
                 context,
                 label: 'Seuil vitesse détection atterrissage (m/s)',
                 hintText: '',
-                keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                keyboardType: const TextInputType.numberWithOptions(
+                  decimal: true,
+                ),
                 controller: _landingVoltageController,
                 enabled: enabled,
                 onChanged: (value) {
-                  data.landingDetectVThreshold = double.tryParse(value.replaceAll(',', '.')) ?? data.landingDetectVThreshold;
+                  data.landingDetectVThreshold =
+                      double.tryParse(value.replaceAll(',', '.')) ??
+                      data.landingDetectVThreshold;
                 },
               ),
               _buildLabeledSettingField(
@@ -726,7 +746,8 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                 controller: _landingDelayController,
                 enabled: enabled,
                 onChanged: (value) {
-                  data.landingDetectThresholdMs = int.tryParse(value) ?? data.landingDetectThresholdMs;
+                  data.landingDetectThresholdMs =
+                      int.tryParse(value) ?? data.landingDetectThresholdMs;
                 },
               ),
               _buildLabeledSettingField(
@@ -737,7 +758,8 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                 controller: _apogeeFailsafeController,
                 enabled: enabled,
                 onChanged: (value) {
-                  data.apogeeFailsafeTicks = int.tryParse(value) ?? data.apogeeFailsafeTicks;
+                  data.apogeeFailsafeTicks =
+                      int.tryParse(value) ?? data.apogeeFailsafeTicks;
                 },
               ),
             ].divide(const SizedBox(height: 12.0)),
@@ -779,11 +801,15 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                 context,
                 label: 'Altitude déploiement main (m)',
                 hintText: '',
-                keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                keyboardType: const TextInputType.numberWithOptions(
+                  decimal: true,
+                ),
                 controller: _deployAltitudeController,
                 enabled: enabled,
                 onChanged: (value) {
-                  data.mainDeployAltitudeThresholdM = double.tryParse(value.replaceAll(',', '.')) ?? data.mainDeployAltitudeThresholdM;
+                  data.mainDeployAltitudeThresholdM =
+                      double.tryParse(value.replaceAll(',', '.')) ??
+                      data.mainDeployAltitudeThresholdM;
                 },
               ),
               _buildLabeledSettingField(
@@ -794,7 +820,8 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                 controller: _maxDrogueController,
                 enabled: enabled,
                 onChanged: (value) {
-                  data.drogueFireAttemptMaxNb = int.tryParse(value) ?? data.drogueFireAttemptMaxNb;
+                  data.drogueFireAttemptMaxNb =
+                      int.tryParse(value) ?? data.drogueFireAttemptMaxNb;
                 },
               ),
               _buildLabeledSettingField(
@@ -805,7 +832,8 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                 controller: _maxMainController,
                 enabled: enabled,
                 onChanged: (value) {
-                  data.mainFireAttemptMaxNb = int.tryParse(value) ?? data.mainFireAttemptMaxNb;
+                  data.mainFireAttemptMaxNb =
+                      int.tryParse(value) ?? data.mainFireAttemptMaxNb;
                 },
               ),
             ].divide(const SizedBox(height: 12.0)),
@@ -907,20 +935,26 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
               ListTile(
                 contentPadding: EdgeInsets.zero,
                 title: const Text('Package'),
-                subtitle: Text(_packageName.isNotEmpty ? _packageName : 'Chargement...'),
+                subtitle: Text(
+                  _packageName.isNotEmpty ? _packageName : 'Chargement...',
+                ),
               ),
               ListTile(
                 contentPadding: EdgeInsets.zero,
                 title: const Text('Version de l’application'),
                 subtitle: Text(
-                  _appVersion.isNotEmpty ? '$_appVersion+$_buildNumber' : 'Chargement...',
+                  _appVersion.isNotEmpty
+                      ? '$_appVersion+$_buildNumber'
+                      : 'Chargement...',
                 ),
               ),
               ListTile(
                 contentPadding: EdgeInsets.zero,
                 title: const Text('Version de la trame ODB'),
                 subtitle: Text(
-                  data.odbFrameVersion.isNotEmpty ? data.odbFrameVersion : 'Inconnue',
+                  data.odbFrameVersion.isNotEmpty
+                      ? data.odbFrameVersion
+                      : 'Inconnue',
                 ),
               ),
               Align(
@@ -931,7 +965,11 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                           await data.btService.send('CFG:RESET\r\n');
                           if (!context.mounted) return;
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Réinitialisation configuration ODB demandée')),
+                            const SnackBar(
+                              content: Text(
+                                'Réinitialisation configuration ODB demandée',
+                              ),
+                            ),
                           );
                         }
                       : null,
@@ -939,7 +977,9 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                   label: const Text('Reset'),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: FlutterFlowTheme.of(context).warning,
-                    foregroundColor: FlutterFlowTheme.of(context).primaryBackground,
+                    foregroundColor: FlutterFlowTheme.of(
+                      context,
+                    ).primaryBackground,
                   ),
                 ),
               ),
@@ -950,10 +990,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
     );
   }
 
-  Widget _buildActionButtons(
-    BuildContext context,
-    DataServiceManager data,
-  ) {
+  Widget _buildActionButtons(BuildContext context, DataServiceManager data) {
     final canSend = data.hasConnection;
 
     return Row(
@@ -965,7 +1002,11 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                     await data.refreshOdb();
                     if (!context.mounted) return;
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Rafraîchissement configuration ODB demandé')),
+                      const SnackBar(
+                        content: Text(
+                          'Rafraîchissement configuration ODB demandé',
+                        ),
+                      ),
                     );
                   }
                 : null,
@@ -993,7 +1034,8 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                       accZLaunchThreshold: _accLaunchController.text,
                       boostPhaseVThreshold: _boostVoltageController.text,
                       apogeeDetectVThreshold: _apogeeVoltageController.text,
-                      mainDeployAltitudeThresholdM: _deployAltitudeController.text,
+                      mainDeployAltitudeThresholdM:
+                          _deployAltitudeController.text,
                       landingDetectVThreshold: _landingVoltageController.text,
                       buzzerReportToneHz: _buzzerToneHz.round().toString(),
                       landingDetectThresholdMs: _landingDelayController.text,
@@ -1025,11 +1067,11 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
     final odbConnected = data.hasConnection;
     _syncOdbConfig(data);
 
-    final expandableHeaderStyle = FlutterFlowTheme.of(context).bodyMedium.override(
+    final expandableHeaderStyle = FlutterFlowTheme.of(context).bodyMedium
+        .override(
           font: GoogleFonts.interTight(
             fontWeight: FontWeight.w600,
-            fontStyle:
-                FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+            fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
           ),
           fontSize: 16.0,
           letterSpacing: 0.0,
@@ -1038,25 +1080,55 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
         );
 
     final sections = <Widget>[
-      _buildProfileSection(context, expandableHeaderStyle, data: data, enabled: odbConnected),
-      _buildStageSection(context, expandableHeaderStyle, data: data, enabled: odbConnected),
-      _buildPyrosSection(context, expandableHeaderStyle, data: data, enabled: odbConnected),
-      _buildPhaseSection(context, expandableHeaderStyle, data: data, enabled: odbConnected),
-      _buildParachuteSection(context, expandableHeaderStyle, data: data, enabled: odbConnected),
-      _buildAudioSection(context, expandableHeaderStyle, data: data, enabled: odbConnected),
+      _buildProfileSection(
+        context,
+        expandableHeaderStyle,
+        data: data,
+        enabled: odbConnected,
+      ),
+      _buildStageSection(
+        context,
+        expandableHeaderStyle,
+        data: data,
+        enabled: odbConnected,
+      ),
+      _buildPyrosSection(
+        context,
+        expandableHeaderStyle,
+        data: data,
+        enabled: odbConnected,
+      ),
+      _buildPhaseSection(
+        context,
+        expandableHeaderStyle,
+        data: data,
+        enabled: odbConnected,
+      ),
+      _buildParachuteSection(
+        context,
+        expandableHeaderStyle,
+        data: data,
+        enabled: odbConnected,
+      ),
+      _buildAudioSection(
+        context,
+        expandableHeaderStyle,
+        data: data,
+        enabled: odbConnected,
+      ),
       _buildActionButtons(context, data),
       Text(
         'Certains paramètres nécessitent le redémarrage de l\'alimentation pour prendre effet.',
         style: FlutterFlowTheme.of(context).bodySmall.override(
-              font: GoogleFonts.inter(
-                fontWeight: FlutterFlowTheme.of(context).bodySmall.fontWeight,
-                fontStyle: FlutterFlowTheme.of(context).bodySmall.fontStyle,
-              ),
-              color: FlutterFlowTheme.of(context).warning,
-              letterSpacing: 0.0,
-              fontWeight: FlutterFlowTheme.of(context).bodySmall.fontWeight,
-              fontStyle: FlutterFlowTheme.of(context).bodySmall.fontStyle,
-            ),
+          font: GoogleFonts.inter(
+            fontWeight: FlutterFlowTheme.of(context).bodySmall.fontWeight,
+            fontStyle: FlutterFlowTheme.of(context).bodySmall.fontStyle,
+          ),
+          color: FlutterFlowTheme.of(context).warning,
+          letterSpacing: 0.0,
+          fontWeight: FlutterFlowTheme.of(context).bodySmall.fontWeight,
+          fontStyle: FlutterFlowTheme.of(context).bodySmall.fontStyle,
+        ),
       ),
       _buildAboutSection(context, expandableHeaderStyle, data),
     ];
@@ -1077,47 +1149,55 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Settings',
-                    style: FlutterFlowTheme.of(context).displaySmall.override(
-                          font: GoogleFonts.interTight(
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FlutterFlowTheme.of(context)
-                                .displaySmall
-                                .fontStyle,
+                children:
+                    [
+                          Text(
+                            'Settings',
+                            style: FlutterFlowTheme.of(context).displaySmall
+                                .override(
+                                  font: GoogleFonts.interTight(
+                                    fontWeight: FontWeight.bold,
+                                    fontStyle: FlutterFlowTheme.of(
+                                      context,
+                                    ).displaySmall.fontStyle,
+                                  ),
+                                  fontSize: 28.0,
+                                  letterSpacing: 0.0,
+                                  fontWeight: FontWeight.bold,
+                                  fontStyle: FlutterFlowTheme.of(
+                                    context,
+                                  ).displaySmall.fontStyle,
+                                ),
                           ),
-                          fontSize: 28.0,
-                          letterSpacing: 0.0,
-                          fontWeight: FontWeight.bold,
-                          fontStyle:
-                              FlutterFlowTheme.of(context).displaySmall.fontStyle,
-                        ),
-                  ),
-                  Text(
-                    'Paramètres Nexus & de l\'ordinateur de bord',
-                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          font: GoogleFonts.inter(
-                            fontWeight: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .fontWeight,
-                            fontStyle: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .fontStyle,
+                          Text(
+                            'Paramètres Nexus & de l\'ordinateur de bord',
+                            style: FlutterFlowTheme.of(context).bodyMedium
+                                .override(
+                                  font: GoogleFonts.inter(
+                                    fontWeight: FlutterFlowTheme.of(
+                                      context,
+                                    ).bodyMedium.fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(
+                                      context,
+                                    ).bodyMedium.fontStyle,
+                                  ),
+                                  color: FlutterFlowTheme.of(
+                                    context,
+                                  ).secondaryText,
+                                  letterSpacing: 0.0,
+                                  fontWeight: FlutterFlowTheme.of(
+                                    context,
+                                  ).bodyMedium.fontWeight,
+                                  fontStyle: FlutterFlowTheme.of(
+                                    context,
+                                  ).bodyMedium.fontStyle,
+                                ),
                           ),
-                          color: FlutterFlowTheme.of(context).secondaryText,
-                          letterSpacing: 0.0,
-                          fontWeight:
-                              FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                          fontStyle:
-                              FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                        ),
-                  ),
                           ...sections,
-                ]
-                .divide(SizedBox(height: 16.0))
-                .addToStart(SizedBox(height: 16.0))
-                .addToEnd(SizedBox(height: 24.0)),
+                        ]
+                        .divide(SizedBox(height: 16.0))
+                        .addToStart(SizedBox(height: 16.0))
+                        .addToEnd(SizedBox(height: 24.0)),
               ),
             ),
           ),

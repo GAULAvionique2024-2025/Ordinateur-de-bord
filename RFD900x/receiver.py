@@ -6,8 +6,11 @@ import time
 from pymavlink import mavutil
 import odb_mavlink_v1 as mavlink_dialect
 
+mavutil.mavlink = mavlink_dialect
+mavutil.current_dialect = "odb_mavlink_v1"
+
 # --- CONFIGURATION ---
-SERIAL_PORT = "COM14"
+SERIAL_PORT = "COM15"
 #SERIAL_PORT = "udpin:0.0.0.0:14550"
 BAUD_RATE = 115200
 SOURCE_SYSTEM = 1
@@ -22,7 +25,6 @@ def run_receiver():
             baud=BAUD_RATE,
             source_system=SOURCE_SYSTEM,
         )
-        master.mav = mavlink_dialect.MAVLink(master, srcSystem=SOURCE_SYSTEM, srcComponent=1)
         master.mav.robust_parsing = True
         print(f"Station Sol active sur {SERIAL_PORT}")
 

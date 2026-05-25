@@ -291,7 +291,9 @@ class _ConnectionPageWidgetState extends State<ConnectionPageWidget> {
                             if (state != BluetoothAdapterState.on) {
                               _showBluetoothDisabledDialog();
                             } else {
-                              await context.read<BluetoothServiceManager>().refreshScan(timeout: const Duration(seconds: 15));
+                              if(mounted) {
+                                await context.read<BluetoothServiceManager>().refreshScan(timeout: const Duration(seconds: 15));
+                              }
                             }
                           } catch (e) {
                             debugPrint('Erreur lecture état Bluetooth: $e');
