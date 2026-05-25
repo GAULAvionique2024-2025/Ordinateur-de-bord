@@ -5,40 +5,40 @@
 
 
 typedef struct __mavlink_rocket_telemetry_t {
- uint32_t time_boot_ms; /*< [ms] Timestamp since system boot in milliseconds.*/
+ uint32_t time_boot_ms; /*< [ms] Timestamp in milliseconds.*/
  float roll; /*< [deg] Roll angle in degrees.*/
  float pitch; /*< [deg] Pitch angle in degrees.*/
- float yaw; /*< [deg] Yaw angle in degrees between -180 and 180.*/
- float imu_acc_x; /*< [m/s/s] IMU acceleration X in m/s^2.*/
- float imu_acc_y; /*< [m/s/s] IMU acceleration Y in m/s^2.*/
- float imu_acc_z; /*< [m/s/s] IMU acceleration Z in m/s^2.*/
- float imu_gyro_x; /*< [deg/s] IMU angular rate X in deg/s.*/
- float imu_gyro_y; /*< [deg/s] IMU angular rate Y in deg/s.*/
- float imu_gyro_z; /*< [deg/s] IMU angular rate Z in deg/s.*/
- float imu_mag_x; /*< [uT] IMU magnetometer X in uT.*/
- float imu_mag_y; /*< [uT] IMU magnetometer Y in uT.*/
- float imu_mag_z; /*< [uT] IMU magnetometer Z in uT.*/
- float altitude_msl_m; /*< [m] Altitude in meters from barometer referenced to sea level.*/
- float pressure_hpa; /*< [hPa] Atmospheric pressure in hectopascals.*/
- float temp_celsius; /*< [degC] Board or environment temperature in Celsius.*/
- float highg_acc_x; /*< [m/s/s] High-G acceleration X in m/s^2.*/
- float highg_acc_y; /*< [m/s/s] High-G acceleration Y in m/s^2.*/
- float highg_acc_z; /*< [m/s/s] High-G acceleration Z in m/s^2.*/
- int32_t lat; /*< [degE7] Latitude in degrees times 1E7.*/
- int32_t lon; /*< [degE7] Longitude in degrees times 1E7.*/
- int32_t gps_alt; /*< [mm] GPS altitude MSL in millimeters.*/
- float imu_acc_vertical; /*< [m/s/s] Vertical acceleration in the world frame from the IMU.*/
- float highg_acc_vertical; /*< [m/s/s] Vertical acceleration in the world frame from the high-G accelerometer.*/
- float kalman_z; /*< [m] Filtered altitude from the Kalman filter.*/
- float kalman_v; /*< [m/s] Filtered velocity from the Kalman filter.*/
- uint16_t system_states; /*<  System component health flags.*/
- uint16_t battery_mv; /*< [mV] Main battery voltage in millivolts.*/
- uint16_t vel; /*< [cm/s] Ground speed in cm/s.*/
- uint16_t cog; /*< [cdeg] Course over ground in cdeg.*/
- uint8_t event_states; /*<  Flight events such as pyros and apogee.*/
- uint8_t mission_state; /*<  Mission state linked with the FSM.*/
- uint8_t gps_fix; /*<  GPS fix type.*/
- uint8_t satellites_nb; /*<  Number of satellites.*/
+ float yaw; /*< [deg] Yaw angle in degrees.*/
+ float imu_acc_x; /*< [g] IMU Acceleration X in g.*/
+ float imu_acc_y; /*< [g] IMU Acceleration Y in g.*/
+ float imu_acc_z; /*< [g] IMU Acceleration Z in g.*/
+ float imu_gyro_x; /*< [deg/s] IMU Gyro X in degrees per second.*/
+ float imu_gyro_y; /*< [deg/s] IMU Gyro Y in degrees per second.*/
+ float imu_gyro_z; /*< [deg/s] IMU Gyro Z in degrees per second.*/
+ float imu_mag_x; /*< [uT] IMU Mag X in microTesla.*/
+ float imu_mag_y; /*< [uT] IMU Mag Y in microTesla.*/
+ float imu_mag_z; /*< [uT] IMU Mag Z in microTesla.*/
+ float altitude_msl_m; /*< [m] Altitude (MSL) from barometer in meters.*/
+ float pressure_hpa; /*< [hPa] Pressure in hectopascals.*/
+ float temp_celsius; /*< [degC] Temperature in Celsius.*/
+ float highg_acc_x; /*< [g] High-G Acceleration X in g.*/
+ float highg_acc_y; /*< [g] High-G Acceleration Y in g.*/
+ float highg_acc_z; /*< [g] High-G Acceleration Z in g.*/
+ int32_t lat; /*< [degE7] Latitude in degrees * 1E7.*/
+ int32_t lon; /*< [degE7] Longitude in degrees * 1E7.*/
+ int32_t gps_alt; /*< [mm] Altitude (MSL) from GPS in millimeters.*/
+ float imu_acc_vertical; /*< [g] Vertical acceleration from IMU in g.*/
+ float highg_acc_vertical; /*< [g] Vertical acceleration from High-G in g.*/
+ float kalman_z; /*< [m] Filtered altitude from Kalman filter in meters.*/
+ float kalman_v; /*< [m/s] Filtered velocity from Kalman filter in m/s.*/
+ uint16_t system_states; /*<  Current system state bitfield.*/
+ uint16_t battery_mv; /*< [mV] Battery voltage in millivolts.*/
+ uint16_t vel; /*< [cm/s] Ground speed in centimeters per second.*/
+ uint16_t cog; /*< [cdeg] Course over ground (centi-degrees).*/
+ uint8_t event_states; /*<  Current events states (pyros fired, apogee, etc.).*/
+ uint8_t mission_state; /*<  Mission state.*/
+ uint8_t gps_fix; /*<  GPS fix type (0: No fix, 1: Active fix, etc.).*/
+ uint8_t satellites_nb; /*<  Number of visible satellites.*/
 } mavlink_rocket_telemetry_t;
 
 #define MAVLINK_MSG_ID_ROCKET_TELEMETRY_LEN 116
@@ -140,40 +140,40 @@ typedef struct __mavlink_rocket_telemetry_t {
  * @param component_id ID of this component (e.g. 200 for IMU)
  * @param msg The MAVLink message to compress the data into
  *
- * @param time_boot_ms [ms] Timestamp since system boot in milliseconds.
- * @param system_states  System component health flags.
- * @param event_states  Flight events such as pyros and apogee.
- * @param mission_state  Mission state linked with the FSM.
- * @param battery_mv [mV] Main battery voltage in millivolts.
+ * @param time_boot_ms [ms] Timestamp in milliseconds.
+ * @param system_states  Current system state bitfield.
+ * @param event_states  Current events states (pyros fired, apogee, etc.).
+ * @param mission_state  Mission state.
+ * @param battery_mv [mV] Battery voltage in millivolts.
  * @param roll [deg] Roll angle in degrees.
  * @param pitch [deg] Pitch angle in degrees.
- * @param yaw [deg] Yaw angle in degrees between -180 and 180.
- * @param imu_acc_x [m/s/s] IMU acceleration X in m/s^2.
- * @param imu_acc_y [m/s/s] IMU acceleration Y in m/s^2.
- * @param imu_acc_z [m/s/s] IMU acceleration Z in m/s^2.
- * @param imu_gyro_x [deg/s] IMU angular rate X in deg/s.
- * @param imu_gyro_y [deg/s] IMU angular rate Y in deg/s.
- * @param imu_gyro_z [deg/s] IMU angular rate Z in deg/s.
- * @param imu_mag_x [uT] IMU magnetometer X in uT.
- * @param imu_mag_y [uT] IMU magnetometer Y in uT.
- * @param imu_mag_z [uT] IMU magnetometer Z in uT.
- * @param altitude_msl_m [m] Altitude in meters from barometer referenced to sea level.
- * @param pressure_hpa [hPa] Atmospheric pressure in hectopascals.
- * @param temp_celsius [degC] Board or environment temperature in Celsius.
- * @param highg_acc_x [m/s/s] High-G acceleration X in m/s^2.
- * @param highg_acc_y [m/s/s] High-G acceleration Y in m/s^2.
- * @param highg_acc_z [m/s/s] High-G acceleration Z in m/s^2.
- * @param gps_fix  GPS fix type.
- * @param lat [degE7] Latitude in degrees times 1E7.
- * @param lon [degE7] Longitude in degrees times 1E7.
- * @param gps_alt [mm] GPS altitude MSL in millimeters.
- * @param vel [cm/s] Ground speed in cm/s.
- * @param cog [cdeg] Course over ground in cdeg.
- * @param satellites_nb  Number of satellites.
- * @param imu_acc_vertical [m/s/s] Vertical acceleration in the world frame from the IMU.
- * @param highg_acc_vertical [m/s/s] Vertical acceleration in the world frame from the high-G accelerometer.
- * @param kalman_z [m] Filtered altitude from the Kalman filter.
- * @param kalman_v [m/s] Filtered velocity from the Kalman filter.
+ * @param yaw [deg] Yaw angle in degrees.
+ * @param imu_acc_x [g] IMU Acceleration X in g.
+ * @param imu_acc_y [g] IMU Acceleration Y in g.
+ * @param imu_acc_z [g] IMU Acceleration Z in g.
+ * @param imu_gyro_x [deg/s] IMU Gyro X in degrees per second.
+ * @param imu_gyro_y [deg/s] IMU Gyro Y in degrees per second.
+ * @param imu_gyro_z [deg/s] IMU Gyro Z in degrees per second.
+ * @param imu_mag_x [uT] IMU Mag X in microTesla.
+ * @param imu_mag_y [uT] IMU Mag Y in microTesla.
+ * @param imu_mag_z [uT] IMU Mag Z in microTesla.
+ * @param altitude_msl_m [m] Altitude (MSL) from barometer in meters.
+ * @param pressure_hpa [hPa] Pressure in hectopascals.
+ * @param temp_celsius [degC] Temperature in Celsius.
+ * @param highg_acc_x [g] High-G Acceleration X in g.
+ * @param highg_acc_y [g] High-G Acceleration Y in g.
+ * @param highg_acc_z [g] High-G Acceleration Z in g.
+ * @param gps_fix  GPS fix type (0: No fix, 1: Active fix, etc.).
+ * @param lat [degE7] Latitude in degrees * 1E7.
+ * @param lon [degE7] Longitude in degrees * 1E7.
+ * @param gps_alt [mm] Altitude (MSL) from GPS in millimeters.
+ * @param vel [cm/s] Ground speed in centimeters per second.
+ * @param cog [cdeg] Course over ground (centi-degrees).
+ * @param satellites_nb  Number of visible satellites.
+ * @param imu_acc_vertical [g] Vertical acceleration from IMU in g.
+ * @param highg_acc_vertical [g] Vertical acceleration from High-G in g.
+ * @param kalman_z [m] Filtered altitude from Kalman filter in meters.
+ * @param kalman_v [m/s] Filtered velocity from Kalman filter in m/s.
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_rocket_telemetry_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg,
@@ -268,40 +268,40 @@ static inline uint16_t mavlink_msg_rocket_telemetry_pack(uint8_t system_id, uint
  * @param status MAVLink status structure
  * @param msg The MAVLink message to compress the data into
  *
- * @param time_boot_ms [ms] Timestamp since system boot in milliseconds.
- * @param system_states  System component health flags.
- * @param event_states  Flight events such as pyros and apogee.
- * @param mission_state  Mission state linked with the FSM.
- * @param battery_mv [mV] Main battery voltage in millivolts.
+ * @param time_boot_ms [ms] Timestamp in milliseconds.
+ * @param system_states  Current system state bitfield.
+ * @param event_states  Current events states (pyros fired, apogee, etc.).
+ * @param mission_state  Mission state.
+ * @param battery_mv [mV] Battery voltage in millivolts.
  * @param roll [deg] Roll angle in degrees.
  * @param pitch [deg] Pitch angle in degrees.
- * @param yaw [deg] Yaw angle in degrees between -180 and 180.
- * @param imu_acc_x [m/s/s] IMU acceleration X in m/s^2.
- * @param imu_acc_y [m/s/s] IMU acceleration Y in m/s^2.
- * @param imu_acc_z [m/s/s] IMU acceleration Z in m/s^2.
- * @param imu_gyro_x [deg/s] IMU angular rate X in deg/s.
- * @param imu_gyro_y [deg/s] IMU angular rate Y in deg/s.
- * @param imu_gyro_z [deg/s] IMU angular rate Z in deg/s.
- * @param imu_mag_x [uT] IMU magnetometer X in uT.
- * @param imu_mag_y [uT] IMU magnetometer Y in uT.
- * @param imu_mag_z [uT] IMU magnetometer Z in uT.
- * @param altitude_msl_m [m] Altitude in meters from barometer referenced to sea level.
- * @param pressure_hpa [hPa] Atmospheric pressure in hectopascals.
- * @param temp_celsius [degC] Board or environment temperature in Celsius.
- * @param highg_acc_x [m/s/s] High-G acceleration X in m/s^2.
- * @param highg_acc_y [m/s/s] High-G acceleration Y in m/s^2.
- * @param highg_acc_z [m/s/s] High-G acceleration Z in m/s^2.
- * @param gps_fix  GPS fix type.
- * @param lat [degE7] Latitude in degrees times 1E7.
- * @param lon [degE7] Longitude in degrees times 1E7.
- * @param gps_alt [mm] GPS altitude MSL in millimeters.
- * @param vel [cm/s] Ground speed in cm/s.
- * @param cog [cdeg] Course over ground in cdeg.
- * @param satellites_nb  Number of satellites.
- * @param imu_acc_vertical [m/s/s] Vertical acceleration in the world frame from the IMU.
- * @param highg_acc_vertical [m/s/s] Vertical acceleration in the world frame from the high-G accelerometer.
- * @param kalman_z [m] Filtered altitude from the Kalman filter.
- * @param kalman_v [m/s] Filtered velocity from the Kalman filter.
+ * @param yaw [deg] Yaw angle in degrees.
+ * @param imu_acc_x [g] IMU Acceleration X in g.
+ * @param imu_acc_y [g] IMU Acceleration Y in g.
+ * @param imu_acc_z [g] IMU Acceleration Z in g.
+ * @param imu_gyro_x [deg/s] IMU Gyro X in degrees per second.
+ * @param imu_gyro_y [deg/s] IMU Gyro Y in degrees per second.
+ * @param imu_gyro_z [deg/s] IMU Gyro Z in degrees per second.
+ * @param imu_mag_x [uT] IMU Mag X in microTesla.
+ * @param imu_mag_y [uT] IMU Mag Y in microTesla.
+ * @param imu_mag_z [uT] IMU Mag Z in microTesla.
+ * @param altitude_msl_m [m] Altitude (MSL) from barometer in meters.
+ * @param pressure_hpa [hPa] Pressure in hectopascals.
+ * @param temp_celsius [degC] Temperature in Celsius.
+ * @param highg_acc_x [g] High-G Acceleration X in g.
+ * @param highg_acc_y [g] High-G Acceleration Y in g.
+ * @param highg_acc_z [g] High-G Acceleration Z in g.
+ * @param gps_fix  GPS fix type (0: No fix, 1: Active fix, etc.).
+ * @param lat [degE7] Latitude in degrees * 1E7.
+ * @param lon [degE7] Longitude in degrees * 1E7.
+ * @param gps_alt [mm] Altitude (MSL) from GPS in millimeters.
+ * @param vel [cm/s] Ground speed in centimeters per second.
+ * @param cog [cdeg] Course over ground (centi-degrees).
+ * @param satellites_nb  Number of visible satellites.
+ * @param imu_acc_vertical [g] Vertical acceleration from IMU in g.
+ * @param highg_acc_vertical [g] Vertical acceleration from High-G in g.
+ * @param kalman_z [m] Filtered altitude from Kalman filter in meters.
+ * @param kalman_v [m/s] Filtered velocity from Kalman filter in m/s.
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_rocket_telemetry_pack_status(uint8_t system_id, uint8_t component_id, mavlink_status_t *_status, mavlink_message_t* msg,
@@ -399,40 +399,40 @@ static inline uint16_t mavlink_msg_rocket_telemetry_pack_status(uint8_t system_i
  * @param component_id ID of this component (e.g. 200 for IMU)
  * @param chan The MAVLink channel this message will be sent over
  * @param msg The MAVLink message to compress the data into
- * @param time_boot_ms [ms] Timestamp since system boot in milliseconds.
- * @param system_states  System component health flags.
- * @param event_states  Flight events such as pyros and apogee.
- * @param mission_state  Mission state linked with the FSM.
- * @param battery_mv [mV] Main battery voltage in millivolts.
+ * @param time_boot_ms [ms] Timestamp in milliseconds.
+ * @param system_states  Current system state bitfield.
+ * @param event_states  Current events states (pyros fired, apogee, etc.).
+ * @param mission_state  Mission state.
+ * @param battery_mv [mV] Battery voltage in millivolts.
  * @param roll [deg] Roll angle in degrees.
  * @param pitch [deg] Pitch angle in degrees.
- * @param yaw [deg] Yaw angle in degrees between -180 and 180.
- * @param imu_acc_x [m/s/s] IMU acceleration X in m/s^2.
- * @param imu_acc_y [m/s/s] IMU acceleration Y in m/s^2.
- * @param imu_acc_z [m/s/s] IMU acceleration Z in m/s^2.
- * @param imu_gyro_x [deg/s] IMU angular rate X in deg/s.
- * @param imu_gyro_y [deg/s] IMU angular rate Y in deg/s.
- * @param imu_gyro_z [deg/s] IMU angular rate Z in deg/s.
- * @param imu_mag_x [uT] IMU magnetometer X in uT.
- * @param imu_mag_y [uT] IMU magnetometer Y in uT.
- * @param imu_mag_z [uT] IMU magnetometer Z in uT.
- * @param altitude_msl_m [m] Altitude in meters from barometer referenced to sea level.
- * @param pressure_hpa [hPa] Atmospheric pressure in hectopascals.
- * @param temp_celsius [degC] Board or environment temperature in Celsius.
- * @param highg_acc_x [m/s/s] High-G acceleration X in m/s^2.
- * @param highg_acc_y [m/s/s] High-G acceleration Y in m/s^2.
- * @param highg_acc_z [m/s/s] High-G acceleration Z in m/s^2.
- * @param gps_fix  GPS fix type.
- * @param lat [degE7] Latitude in degrees times 1E7.
- * @param lon [degE7] Longitude in degrees times 1E7.
- * @param gps_alt [mm] GPS altitude MSL in millimeters.
- * @param vel [cm/s] Ground speed in cm/s.
- * @param cog [cdeg] Course over ground in cdeg.
- * @param satellites_nb  Number of satellites.
- * @param imu_acc_vertical [m/s/s] Vertical acceleration in the world frame from the IMU.
- * @param highg_acc_vertical [m/s/s] Vertical acceleration in the world frame from the high-G accelerometer.
- * @param kalman_z [m] Filtered altitude from the Kalman filter.
- * @param kalman_v [m/s] Filtered velocity from the Kalman filter.
+ * @param yaw [deg] Yaw angle in degrees.
+ * @param imu_acc_x [g] IMU Acceleration X in g.
+ * @param imu_acc_y [g] IMU Acceleration Y in g.
+ * @param imu_acc_z [g] IMU Acceleration Z in g.
+ * @param imu_gyro_x [deg/s] IMU Gyro X in degrees per second.
+ * @param imu_gyro_y [deg/s] IMU Gyro Y in degrees per second.
+ * @param imu_gyro_z [deg/s] IMU Gyro Z in degrees per second.
+ * @param imu_mag_x [uT] IMU Mag X in microTesla.
+ * @param imu_mag_y [uT] IMU Mag Y in microTesla.
+ * @param imu_mag_z [uT] IMU Mag Z in microTesla.
+ * @param altitude_msl_m [m] Altitude (MSL) from barometer in meters.
+ * @param pressure_hpa [hPa] Pressure in hectopascals.
+ * @param temp_celsius [degC] Temperature in Celsius.
+ * @param highg_acc_x [g] High-G Acceleration X in g.
+ * @param highg_acc_y [g] High-G Acceleration Y in g.
+ * @param highg_acc_z [g] High-G Acceleration Z in g.
+ * @param gps_fix  GPS fix type (0: No fix, 1: Active fix, etc.).
+ * @param lat [degE7] Latitude in degrees * 1E7.
+ * @param lon [degE7] Longitude in degrees * 1E7.
+ * @param gps_alt [mm] Altitude (MSL) from GPS in millimeters.
+ * @param vel [cm/s] Ground speed in centimeters per second.
+ * @param cog [cdeg] Course over ground (centi-degrees).
+ * @param satellites_nb  Number of visible satellites.
+ * @param imu_acc_vertical [g] Vertical acceleration from IMU in g.
+ * @param highg_acc_vertical [g] Vertical acceleration from High-G in g.
+ * @param kalman_z [m] Filtered altitude from Kalman filter in meters.
+ * @param kalman_v [m/s] Filtered velocity from Kalman filter in m/s.
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_rocket_telemetry_pack_chan(uint8_t system_id, uint8_t component_id, uint8_t chan,
@@ -566,40 +566,40 @@ static inline uint16_t mavlink_msg_rocket_telemetry_encode_status(uint8_t system
  * @brief Send a rocket_telemetry message
  * @param chan MAVLink channel to send the message
  *
- * @param time_boot_ms [ms] Timestamp since system boot in milliseconds.
- * @param system_states  System component health flags.
- * @param event_states  Flight events such as pyros and apogee.
- * @param mission_state  Mission state linked with the FSM.
- * @param battery_mv [mV] Main battery voltage in millivolts.
+ * @param time_boot_ms [ms] Timestamp in milliseconds.
+ * @param system_states  Current system state bitfield.
+ * @param event_states  Current events states (pyros fired, apogee, etc.).
+ * @param mission_state  Mission state.
+ * @param battery_mv [mV] Battery voltage in millivolts.
  * @param roll [deg] Roll angle in degrees.
  * @param pitch [deg] Pitch angle in degrees.
- * @param yaw [deg] Yaw angle in degrees between -180 and 180.
- * @param imu_acc_x [m/s/s] IMU acceleration X in m/s^2.
- * @param imu_acc_y [m/s/s] IMU acceleration Y in m/s^2.
- * @param imu_acc_z [m/s/s] IMU acceleration Z in m/s^2.
- * @param imu_gyro_x [deg/s] IMU angular rate X in deg/s.
- * @param imu_gyro_y [deg/s] IMU angular rate Y in deg/s.
- * @param imu_gyro_z [deg/s] IMU angular rate Z in deg/s.
- * @param imu_mag_x [uT] IMU magnetometer X in uT.
- * @param imu_mag_y [uT] IMU magnetometer Y in uT.
- * @param imu_mag_z [uT] IMU magnetometer Z in uT.
- * @param altitude_msl_m [m] Altitude in meters from barometer referenced to sea level.
- * @param pressure_hpa [hPa] Atmospheric pressure in hectopascals.
- * @param temp_celsius [degC] Board or environment temperature in Celsius.
- * @param highg_acc_x [m/s/s] High-G acceleration X in m/s^2.
- * @param highg_acc_y [m/s/s] High-G acceleration Y in m/s^2.
- * @param highg_acc_z [m/s/s] High-G acceleration Z in m/s^2.
- * @param gps_fix  GPS fix type.
- * @param lat [degE7] Latitude in degrees times 1E7.
- * @param lon [degE7] Longitude in degrees times 1E7.
- * @param gps_alt [mm] GPS altitude MSL in millimeters.
- * @param vel [cm/s] Ground speed in cm/s.
- * @param cog [cdeg] Course over ground in cdeg.
- * @param satellites_nb  Number of satellites.
- * @param imu_acc_vertical [m/s/s] Vertical acceleration in the world frame from the IMU.
- * @param highg_acc_vertical [m/s/s] Vertical acceleration in the world frame from the high-G accelerometer.
- * @param kalman_z [m] Filtered altitude from the Kalman filter.
- * @param kalman_v [m/s] Filtered velocity from the Kalman filter.
+ * @param yaw [deg] Yaw angle in degrees.
+ * @param imu_acc_x [g] IMU Acceleration X in g.
+ * @param imu_acc_y [g] IMU Acceleration Y in g.
+ * @param imu_acc_z [g] IMU Acceleration Z in g.
+ * @param imu_gyro_x [deg/s] IMU Gyro X in degrees per second.
+ * @param imu_gyro_y [deg/s] IMU Gyro Y in degrees per second.
+ * @param imu_gyro_z [deg/s] IMU Gyro Z in degrees per second.
+ * @param imu_mag_x [uT] IMU Mag X in microTesla.
+ * @param imu_mag_y [uT] IMU Mag Y in microTesla.
+ * @param imu_mag_z [uT] IMU Mag Z in microTesla.
+ * @param altitude_msl_m [m] Altitude (MSL) from barometer in meters.
+ * @param pressure_hpa [hPa] Pressure in hectopascals.
+ * @param temp_celsius [degC] Temperature in Celsius.
+ * @param highg_acc_x [g] High-G Acceleration X in g.
+ * @param highg_acc_y [g] High-G Acceleration Y in g.
+ * @param highg_acc_z [g] High-G Acceleration Z in g.
+ * @param gps_fix  GPS fix type (0: No fix, 1: Active fix, etc.).
+ * @param lat [degE7] Latitude in degrees * 1E7.
+ * @param lon [degE7] Longitude in degrees * 1E7.
+ * @param gps_alt [mm] Altitude (MSL) from GPS in millimeters.
+ * @param vel [cm/s] Ground speed in centimeters per second.
+ * @param cog [cdeg] Course over ground (centi-degrees).
+ * @param satellites_nb  Number of visible satellites.
+ * @param imu_acc_vertical [g] Vertical acceleration from IMU in g.
+ * @param highg_acc_vertical [g] Vertical acceleration from High-G in g.
+ * @param kalman_z [m] Filtered altitude from Kalman filter in meters.
+ * @param kalman_v [m/s] Filtered velocity from Kalman filter in m/s.
  */
 #ifdef MAVLINK_USE_CONVENIENCE_FUNCTIONS
 
@@ -796,7 +796,7 @@ static inline void mavlink_msg_rocket_telemetry_send_buf(mavlink_message_t *msgb
 /**
  * @brief Get field time_boot_ms from rocket_telemetry message
  *
- * @return [ms] Timestamp since system boot in milliseconds.
+ * @return [ms] Timestamp in milliseconds.
  */
 static inline uint32_t mavlink_msg_rocket_telemetry_get_time_boot_ms(const mavlink_message_t* msg)
 {
@@ -806,7 +806,7 @@ static inline uint32_t mavlink_msg_rocket_telemetry_get_time_boot_ms(const mavli
 /**
  * @brief Get field system_states from rocket_telemetry message
  *
- * @return  System component health flags.
+ * @return  Current system state bitfield.
  */
 static inline uint16_t mavlink_msg_rocket_telemetry_get_system_states(const mavlink_message_t* msg)
 {
@@ -816,7 +816,7 @@ static inline uint16_t mavlink_msg_rocket_telemetry_get_system_states(const mavl
 /**
  * @brief Get field event_states from rocket_telemetry message
  *
- * @return  Flight events such as pyros and apogee.
+ * @return  Current events states (pyros fired, apogee, etc.).
  */
 static inline uint8_t mavlink_msg_rocket_telemetry_get_event_states(const mavlink_message_t* msg)
 {
@@ -826,7 +826,7 @@ static inline uint8_t mavlink_msg_rocket_telemetry_get_event_states(const mavlin
 /**
  * @brief Get field mission_state from rocket_telemetry message
  *
- * @return  Mission state linked with the FSM.
+ * @return  Mission state.
  */
 static inline uint8_t mavlink_msg_rocket_telemetry_get_mission_state(const mavlink_message_t* msg)
 {
@@ -836,7 +836,7 @@ static inline uint8_t mavlink_msg_rocket_telemetry_get_mission_state(const mavli
 /**
  * @brief Get field battery_mv from rocket_telemetry message
  *
- * @return [mV] Main battery voltage in millivolts.
+ * @return [mV] Battery voltage in millivolts.
  */
 static inline uint16_t mavlink_msg_rocket_telemetry_get_battery_mv(const mavlink_message_t* msg)
 {
@@ -866,7 +866,7 @@ static inline float mavlink_msg_rocket_telemetry_get_pitch(const mavlink_message
 /**
  * @brief Get field yaw from rocket_telemetry message
  *
- * @return [deg] Yaw angle in degrees between -180 and 180.
+ * @return [deg] Yaw angle in degrees.
  */
 static inline float mavlink_msg_rocket_telemetry_get_yaw(const mavlink_message_t* msg)
 {
@@ -876,7 +876,7 @@ static inline float mavlink_msg_rocket_telemetry_get_yaw(const mavlink_message_t
 /**
  * @brief Get field imu_acc_x from rocket_telemetry message
  *
- * @return [m/s/s] IMU acceleration X in m/s^2.
+ * @return [g] IMU Acceleration X in g.
  */
 static inline float mavlink_msg_rocket_telemetry_get_imu_acc_x(const mavlink_message_t* msg)
 {
@@ -886,7 +886,7 @@ static inline float mavlink_msg_rocket_telemetry_get_imu_acc_x(const mavlink_mes
 /**
  * @brief Get field imu_acc_y from rocket_telemetry message
  *
- * @return [m/s/s] IMU acceleration Y in m/s^2.
+ * @return [g] IMU Acceleration Y in g.
  */
 static inline float mavlink_msg_rocket_telemetry_get_imu_acc_y(const mavlink_message_t* msg)
 {
@@ -896,7 +896,7 @@ static inline float mavlink_msg_rocket_telemetry_get_imu_acc_y(const mavlink_mes
 /**
  * @brief Get field imu_acc_z from rocket_telemetry message
  *
- * @return [m/s/s] IMU acceleration Z in m/s^2.
+ * @return [g] IMU Acceleration Z in g.
  */
 static inline float mavlink_msg_rocket_telemetry_get_imu_acc_z(const mavlink_message_t* msg)
 {
@@ -906,7 +906,7 @@ static inline float mavlink_msg_rocket_telemetry_get_imu_acc_z(const mavlink_mes
 /**
  * @brief Get field imu_gyro_x from rocket_telemetry message
  *
- * @return [deg/s] IMU angular rate X in deg/s.
+ * @return [deg/s] IMU Gyro X in degrees per second.
  */
 static inline float mavlink_msg_rocket_telemetry_get_imu_gyro_x(const mavlink_message_t* msg)
 {
@@ -916,7 +916,7 @@ static inline float mavlink_msg_rocket_telemetry_get_imu_gyro_x(const mavlink_me
 /**
  * @brief Get field imu_gyro_y from rocket_telemetry message
  *
- * @return [deg/s] IMU angular rate Y in deg/s.
+ * @return [deg/s] IMU Gyro Y in degrees per second.
  */
 static inline float mavlink_msg_rocket_telemetry_get_imu_gyro_y(const mavlink_message_t* msg)
 {
@@ -926,7 +926,7 @@ static inline float mavlink_msg_rocket_telemetry_get_imu_gyro_y(const mavlink_me
 /**
  * @brief Get field imu_gyro_z from rocket_telemetry message
  *
- * @return [deg/s] IMU angular rate Z in deg/s.
+ * @return [deg/s] IMU Gyro Z in degrees per second.
  */
 static inline float mavlink_msg_rocket_telemetry_get_imu_gyro_z(const mavlink_message_t* msg)
 {
@@ -936,7 +936,7 @@ static inline float mavlink_msg_rocket_telemetry_get_imu_gyro_z(const mavlink_me
 /**
  * @brief Get field imu_mag_x from rocket_telemetry message
  *
- * @return [uT] IMU magnetometer X in uT.
+ * @return [uT] IMU Mag X in microTesla.
  */
 static inline float mavlink_msg_rocket_telemetry_get_imu_mag_x(const mavlink_message_t* msg)
 {
@@ -946,7 +946,7 @@ static inline float mavlink_msg_rocket_telemetry_get_imu_mag_x(const mavlink_mes
 /**
  * @brief Get field imu_mag_y from rocket_telemetry message
  *
- * @return [uT] IMU magnetometer Y in uT.
+ * @return [uT] IMU Mag Y in microTesla.
  */
 static inline float mavlink_msg_rocket_telemetry_get_imu_mag_y(const mavlink_message_t* msg)
 {
@@ -956,7 +956,7 @@ static inline float mavlink_msg_rocket_telemetry_get_imu_mag_y(const mavlink_mes
 /**
  * @brief Get field imu_mag_z from rocket_telemetry message
  *
- * @return [uT] IMU magnetometer Z in uT.
+ * @return [uT] IMU Mag Z in microTesla.
  */
 static inline float mavlink_msg_rocket_telemetry_get_imu_mag_z(const mavlink_message_t* msg)
 {
@@ -966,7 +966,7 @@ static inline float mavlink_msg_rocket_telemetry_get_imu_mag_z(const mavlink_mes
 /**
  * @brief Get field altitude_msl_m from rocket_telemetry message
  *
- * @return [m] Altitude in meters from barometer referenced to sea level.
+ * @return [m] Altitude (MSL) from barometer in meters.
  */
 static inline float mavlink_msg_rocket_telemetry_get_altitude_msl_m(const mavlink_message_t* msg)
 {
@@ -976,7 +976,7 @@ static inline float mavlink_msg_rocket_telemetry_get_altitude_msl_m(const mavlin
 /**
  * @brief Get field pressure_hpa from rocket_telemetry message
  *
- * @return [hPa] Atmospheric pressure in hectopascals.
+ * @return [hPa] Pressure in hectopascals.
  */
 static inline float mavlink_msg_rocket_telemetry_get_pressure_hpa(const mavlink_message_t* msg)
 {
@@ -986,7 +986,7 @@ static inline float mavlink_msg_rocket_telemetry_get_pressure_hpa(const mavlink_
 /**
  * @brief Get field temp_celsius from rocket_telemetry message
  *
- * @return [degC] Board or environment temperature in Celsius.
+ * @return [degC] Temperature in Celsius.
  */
 static inline float mavlink_msg_rocket_telemetry_get_temp_celsius(const mavlink_message_t* msg)
 {
@@ -996,7 +996,7 @@ static inline float mavlink_msg_rocket_telemetry_get_temp_celsius(const mavlink_
 /**
  * @brief Get field highg_acc_x from rocket_telemetry message
  *
- * @return [m/s/s] High-G acceleration X in m/s^2.
+ * @return [g] High-G Acceleration X in g.
  */
 static inline float mavlink_msg_rocket_telemetry_get_highg_acc_x(const mavlink_message_t* msg)
 {
@@ -1006,7 +1006,7 @@ static inline float mavlink_msg_rocket_telemetry_get_highg_acc_x(const mavlink_m
 /**
  * @brief Get field highg_acc_y from rocket_telemetry message
  *
- * @return [m/s/s] High-G acceleration Y in m/s^2.
+ * @return [g] High-G Acceleration Y in g.
  */
 static inline float mavlink_msg_rocket_telemetry_get_highg_acc_y(const mavlink_message_t* msg)
 {
@@ -1016,7 +1016,7 @@ static inline float mavlink_msg_rocket_telemetry_get_highg_acc_y(const mavlink_m
 /**
  * @brief Get field highg_acc_z from rocket_telemetry message
  *
- * @return [m/s/s] High-G acceleration Z in m/s^2.
+ * @return [g] High-G Acceleration Z in g.
  */
 static inline float mavlink_msg_rocket_telemetry_get_highg_acc_z(const mavlink_message_t* msg)
 {
@@ -1026,7 +1026,7 @@ static inline float mavlink_msg_rocket_telemetry_get_highg_acc_z(const mavlink_m
 /**
  * @brief Get field gps_fix from rocket_telemetry message
  *
- * @return  GPS fix type.
+ * @return  GPS fix type (0: No fix, 1: Active fix, etc.).
  */
 static inline uint8_t mavlink_msg_rocket_telemetry_get_gps_fix(const mavlink_message_t* msg)
 {
@@ -1036,7 +1036,7 @@ static inline uint8_t mavlink_msg_rocket_telemetry_get_gps_fix(const mavlink_mes
 /**
  * @brief Get field lat from rocket_telemetry message
  *
- * @return [degE7] Latitude in degrees times 1E7.
+ * @return [degE7] Latitude in degrees * 1E7.
  */
 static inline int32_t mavlink_msg_rocket_telemetry_get_lat(const mavlink_message_t* msg)
 {
@@ -1046,7 +1046,7 @@ static inline int32_t mavlink_msg_rocket_telemetry_get_lat(const mavlink_message
 /**
  * @brief Get field lon from rocket_telemetry message
  *
- * @return [degE7] Longitude in degrees times 1E7.
+ * @return [degE7] Longitude in degrees * 1E7.
  */
 static inline int32_t mavlink_msg_rocket_telemetry_get_lon(const mavlink_message_t* msg)
 {
@@ -1056,7 +1056,7 @@ static inline int32_t mavlink_msg_rocket_telemetry_get_lon(const mavlink_message
 /**
  * @brief Get field gps_alt from rocket_telemetry message
  *
- * @return [mm] GPS altitude MSL in millimeters.
+ * @return [mm] Altitude (MSL) from GPS in millimeters.
  */
 static inline int32_t mavlink_msg_rocket_telemetry_get_gps_alt(const mavlink_message_t* msg)
 {
@@ -1066,7 +1066,7 @@ static inline int32_t mavlink_msg_rocket_telemetry_get_gps_alt(const mavlink_mes
 /**
  * @brief Get field vel from rocket_telemetry message
  *
- * @return [cm/s] Ground speed in cm/s.
+ * @return [cm/s] Ground speed in centimeters per second.
  */
 static inline uint16_t mavlink_msg_rocket_telemetry_get_vel(const mavlink_message_t* msg)
 {
@@ -1076,7 +1076,7 @@ static inline uint16_t mavlink_msg_rocket_telemetry_get_vel(const mavlink_messag
 /**
  * @brief Get field cog from rocket_telemetry message
  *
- * @return [cdeg] Course over ground in cdeg.
+ * @return [cdeg] Course over ground (centi-degrees).
  */
 static inline uint16_t mavlink_msg_rocket_telemetry_get_cog(const mavlink_message_t* msg)
 {
@@ -1086,7 +1086,7 @@ static inline uint16_t mavlink_msg_rocket_telemetry_get_cog(const mavlink_messag
 /**
  * @brief Get field satellites_nb from rocket_telemetry message
  *
- * @return  Number of satellites.
+ * @return  Number of visible satellites.
  */
 static inline uint8_t mavlink_msg_rocket_telemetry_get_satellites_nb(const mavlink_message_t* msg)
 {
@@ -1096,7 +1096,7 @@ static inline uint8_t mavlink_msg_rocket_telemetry_get_satellites_nb(const mavli
 /**
  * @brief Get field imu_acc_vertical from rocket_telemetry message
  *
- * @return [m/s/s] Vertical acceleration in the world frame from the IMU.
+ * @return [g] Vertical acceleration from IMU in g.
  */
 static inline float mavlink_msg_rocket_telemetry_get_imu_acc_vertical(const mavlink_message_t* msg)
 {
@@ -1106,7 +1106,7 @@ static inline float mavlink_msg_rocket_telemetry_get_imu_acc_vertical(const mavl
 /**
  * @brief Get field highg_acc_vertical from rocket_telemetry message
  *
- * @return [m/s/s] Vertical acceleration in the world frame from the high-G accelerometer.
+ * @return [g] Vertical acceleration from High-G in g.
  */
 static inline float mavlink_msg_rocket_telemetry_get_highg_acc_vertical(const mavlink_message_t* msg)
 {
@@ -1116,7 +1116,7 @@ static inline float mavlink_msg_rocket_telemetry_get_highg_acc_vertical(const ma
 /**
  * @brief Get field kalman_z from rocket_telemetry message
  *
- * @return [m] Filtered altitude from the Kalman filter.
+ * @return [m] Filtered altitude from Kalman filter in meters.
  */
 static inline float mavlink_msg_rocket_telemetry_get_kalman_z(const mavlink_message_t* msg)
 {
@@ -1126,7 +1126,7 @@ static inline float mavlink_msg_rocket_telemetry_get_kalman_z(const mavlink_mess
 /**
  * @brief Get field kalman_v from rocket_telemetry message
  *
- * @return [m/s] Filtered velocity from the Kalman filter.
+ * @return [m/s] Filtered velocity from Kalman filter in m/s.
  */
 static inline float mavlink_msg_rocket_telemetry_get_kalman_v(const mavlink_message_t* msg)
 {

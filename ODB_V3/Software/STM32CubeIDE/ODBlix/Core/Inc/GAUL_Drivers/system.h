@@ -193,7 +193,7 @@ uint8_t ODB_GetPyroStates(const odb_data_t *data);
 /* =========== */
 
 /* === TELEMETRY === */
-
+#define TELEMETRY_DELAY_REFRESH_MS 100
 void Telemetry_SendRocketData(rfd900x_t *rfd_dev, const mavlink_modem_id_t modem_id, odb_data_t *data, const uint32_t current_time_ms);
 //void Telemetry_SendEventLog(rfd900x_t *rfd_dev, const mavlink_modem_id_t modem_id, const mavlink_event_severity_t severity, const char *text);
 /* =========== */

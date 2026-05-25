@@ -396,7 +396,7 @@ void ODB_Update(odb_data_t *data, odb_stats_t *stats) {
       data->highg_acc_z = adxl382.acc_z;
       data->highg_acc_vertical = adxl382.acc_vertical;
     }
-    Profiler_StartTask(PROFILE_TASK_HIGHG);
+    Profiler_StopTask(PROFILE_TASK_HIGHG);
 
     // Kalman filter update with dynamic R_alt
     float raw_accel_z = data->highg_acc_vertical;
@@ -487,50 +487,55 @@ static void Telemetry_TransmitMessage(rfd900x_t *rfd_dev, const mavlink_message_
 void Telemetry_SendRocketData(rfd900x_t *rfd_dev, const mavlink_modem_id_t modem_id, odb_data_t *data, const uint32_t current_time_ms) {
     if(!rfd_dev || !data) return;
 
-    odb_data_t *data_temp = data;
+    static uint32_t last_send_time = 0;
+    uint32_t current_time = HAL_GetTick();
+    if((current_time - last_send_time) >= TELEMETRY_DELAY_REFRESH_MS) {
+		odb_data_t *data_temp = data;
+		mavlink_message_t msg;
+		mavlink_msg_rocket_telemetry_pack(
+				modem_id,
+				MAVLINK_COMPONENT_ID,
+				&msg,
+				current_time_ms,
+				data_temp->system_states,
+				data_temp->event_states,
+				data_temp->mission_state,
+				data_temp->battery_mv,
+				data_temp->roll,
+				data_temp->pitch,
+				data_temp->yaw,
+				data_temp->imu_acc_x,
+				data_temp->imu_acc_y,
+				data_temp->imu_acc_z,
+				data_temp->imu_gyro_x,
+				data_temp->imu_gyro_y,
+				data_temp->imu_gyro_z,
+				data_temp->imu_mag_x,
+				data_temp->imu_mag_y,
+				data_temp->imu_mag_z,
+				data_temp->altitude_msl_m,
+				data_temp->pressure_hpa,
+				data_temp->temp_celsius,
+				data_temp->highg_acc_x,
+				data_temp->highg_acc_y,
+				data_temp->highg_acc_z,
+				data_temp->gps_fix,
+				data_temp->lat,
+				data_temp->lon,
+				data_temp->gps_alt,
+				data_temp->vel,
+				data_temp->cog,
+				data_temp->satellites_nb,
+				data_temp->imu_acc_vertical,
+				data_temp->highg_acc_vertical,
+				data_temp->kalman_z,
+				data_temp->kalman_v
+			);
 
-    mavlink_message_t msg;
-    mavlink_msg_rocket_telemetry_pack(
-            modem_id,
-            MAVLINK_COMPONENT_ID,
-            &msg,
-            current_time_ms,
-			data_temp->system_states,
-			data_temp->event_states,
-			data_temp->mission_state,
-			data_temp->battery_mv,
-			data_temp->roll,
-			data_temp->pitch,
-			data_temp->yaw,
-			data_temp->imu_acc_x,
-			data_temp->imu_acc_y,
-			data_temp->imu_acc_z,
-			data_temp->imu_gyro_x,
-			data_temp->imu_gyro_y,
-			data_temp->imu_gyro_z,
-			data_temp->imu_mag_x,
-			data_temp->imu_mag_y,
-			data_temp->imu_mag_z,
-			data_temp->altitude_msl_m,
-			data_temp->pressure_hpa,
-			data_temp->temp_celsius,
-			data_temp->highg_acc_x,
-			data_temp->highg_acc_y,
-			data_temp->highg_acc_z,
-			data_temp->gps_fix,
-			data_temp->lat,
-			data_temp->lon,
-			data_temp->gps_alt,
-			data_temp->vel,
-			data_temp->cog,
-			data_temp->satellites_nb,
-			data_temp->imu_acc_vertical,
-			data_temp->highg_acc_vertical,
-			data_temp->kalman_z,
-			data_temp->kalman_v
-        );
+		Telemetry_TransmitMessage(rfd_dev, &msg);
 
-	Telemetry_TransmitMessage(rfd_dev, &msg);
+		last_send_time = current_time;
+    }
 }
 
 /*

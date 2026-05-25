@@ -1,12 +1,20 @@
 # -*- mode: python ; coding: utf-8 -*-
 
+import os
+
 block_cipher = None
+project_dir = os.path.abspath(os.getcwd())
 
 a = Analysis(
     ['main.py'],
-    pathex=[],
+    pathex=[project_dir],
     binaries=[],
-    datas=[],
+    datas=[
+        (os.path.join(project_dir, 'Ressources', 'style.qss'), 'Ressources'),
+        (os.path.join(project_dir, 'Ressources', 'echarts.min.js'), 'Ressources'),
+        (os.path.join(project_dir, 'Ressources', 'three.min.js'), 'Ressources'),
+        (os.path.join(project_dir, 'Ressources', 'icon.ico'), 'Ressources'),
+    ],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
@@ -39,5 +47,5 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    icon='./Ressouces/icon.ico',
+    icon=os.path.join(project_dir, 'Ressources', 'icon.ico'),
 )

@@ -3,9 +3,13 @@ import sys
 
 import psutil
 from PyQt5 import QtWidgets, QtCore
-from PyQt5.QtWebEngineWidgets import QWebEngineView
 
-from flash_reader import FlashReaderThread
+try:
+    from PyQt5.QtWebEngineWidgets import QWebEngineView
+except Exception:
+    QWebEngineView = None
+
+from Domain.flash_reader import FlashReaderThread
 from Domain.data_parser import W25QParser
 
 
@@ -90,10 +94,24 @@ class MainWindow(QtWidgets.QMainWindow):
         mem_group = QtWidgets.QGroupBox("Occupation de la Mémoire Flash")
         mem_layout = QtWidgets.QVBoxLayout(mem_group)
 
-        self.web_view = QWebEngineView()
-        self.web_view.setHtml("<body style='background-color: #181825; color: white; display: flex; align-items: center; justify-content: center; font-family: sans-serif;'>Veuillez lire la mémoire pour afficher le graphique.</body>")
+        self.web_view = None
+        if QWebEngineView is not None:
+            try:
+                self.web_view = QWebEngineView()
+                self.web_view.setHtml("<body style='background-color: #181825; color: white; display: flex; align-items: center; justify-content: center; font-family: sans-serif;'>Veuillez lire la mémoire pour afficher le graphique.</body>")
+            except Exception:
+                self.web_view = None
 
-        mem_layout.addWidget(self.web_view)
+        if self.web_view is None:
+            fallback = QtWidgets.QLabel("Le moteur Web n'est pas disponible dans ce build. Le graphique ne peut pas être affiché.")
+            fallback.setWordWrap(True)
+            fallback.setAlignment(QtCore.Qt.AlignCenter)
+            fallback.setMinimumHeight(240)
+            fallback.setStyleSheet("color: #cdd6f4; background-color: #181825; border: 1px solid #313244; padding: 16px;")
+            mem_layout.addWidget(fallback)
+        else:
+            mem_layout.addWidget(self.web_view)
+
         self.memory_info_label = QtWidgets.QLabel("")
         self.memory_info_label.setWordWrap(True)
         self.memory_info_label.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
@@ -192,6 +210,13 @@ class MainWindow(QtWidgets.QMainWindow):
             self.flight_list.setCurrentRow(0)
 
     def draw_sunburst_chart(self):
+        if self.web_view is None:
+            self.memory_info_label.setText(
+                "<b>Occupation:</b> graphique indisponible dans ce build PyInstaller. "
+                "Les données mémoire restent accessibles dans les tableaux."
+            )
+            return
+
         summary = self.parser.get_memory_summary()
         total_size = len(self.parser.data)
         empty_size = summary['empty']
