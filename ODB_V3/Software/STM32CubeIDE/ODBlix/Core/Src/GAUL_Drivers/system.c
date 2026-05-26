@@ -190,7 +190,7 @@ odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats) {
 			pyro_role_t role = (pyro_role_t)current_config.pyro_roles[i];
 			int8_t init_res = Pyro_Init(&pyros[i], &system_measurements);
 			if(role != PYRO_ROLE_NONE) {
-				if (init_res == 0) {
+				if(init_res == 0) {
 					system_states |= FLAG_PYRO_CONN[i];
 					pyros_connected++;
 				} else {

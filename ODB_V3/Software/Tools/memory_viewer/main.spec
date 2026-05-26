@@ -21,7 +21,7 @@ exe = EXE(
     a.scripts,
     [],
     exclude_binaries=True,
-    name='main',
+    name='Memory Viewer ODB',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
