@@ -28,9 +28,12 @@ extern rfd900x_t rfd900x;
 extern buzzer_t buzzer;
 extern system_measurements_t system_measurements;
 extern w25q_t w25q;
+extern idefix_t idefix;
 
 static kalman_nav_t kalman_filter;
 
+
+// TODO: scheduler not need no-blocking delay, only ajust the refresh rate of the task
 
 /* === ODB === */
 void ODB_Reset(odb_data_t *data, odb_stats_t *stats) {
@@ -289,6 +292,13 @@ odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats) {
         }
 
         KalmanNav_Init(&kalman_filter, sum/KALMAN_NAV_SAMPLE_NB, samples, KALMAN_NAV_SAMPLE_NB);
+    }
+
+    if(Idefix_Init(&idefix) == IDEFIX_OK) {
+        system_states |= FLAG_IDEFIX_OK;
+    } else {
+        warning += 1;
+        printf("Erreur : Init IdeFIX\n");
     }
 
     if(CriticalLed_Init(&critical_led) != 0) {
@@ -881,6 +891,36 @@ void App_HandleCommands(hm11_t *hm11_dev) {
     // Unknown command
     else {
         HM11_SendString(hm11_dev, "ERR: UNKNOWN CMD\r\n");
+    }
+}
+/* =========== */
+
+
+/* === BEACON INTEGRATION === */
+void Beacon_SendCoordinates(idefix_t *idefix_dev, const int32_t lat_e7, const int32_t lon_e7) {
+    if(!idefix_dev) return;
+
+    static uint32_t last_send_time = 0;
+    uint32_t current_time = HAL_GetTick();
+    if((current_time - last_send_time) >= BEACON_DELAY_REFRESH_MS) {
+        if(Idefix_SendCommand(idefix_dev, IDEFIX_CMD_SET_COORD) != IDEFIX_OK) {
+            return;
+        }
+
+        uint8_t payload[8];
+        payload[0] = (uint8_t)(lat_e7 & 0xFF);
+        payload[1] = (uint8_t)((lat_e7 >> 8) & 0xFF);
+        payload[2] = (uint8_t)((lat_e7 >> 16) & 0xFF);
+        payload[3] = (uint8_t)((lat_e7 >> 24) & 0xFF);
+        
+        payload[4] = (uint8_t)(lon_e7 & 0xFF);
+        payload[5] = (uint8_t)((lon_e7 >> 8) & 0xFF);
+        payload[6] = (uint8_t)((lon_e7 >> 16) & 0xFF);
+        payload[7] = (uint8_t)((lon_e7 >> 24) & 0xFF);
+
+        Idefix_SendData(idefix_dev, payload, 8);
+
+        last_send_time = current_time;
     }
 }
 /* =========== */

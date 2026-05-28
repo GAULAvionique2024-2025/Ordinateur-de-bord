@@ -193,6 +193,9 @@ volatile uint16_t adc_buffer[9];
 w25q_t w25q = {
 	.hqspi = &hqspi,
 };
+idefix_t idefix = {
+	.hi2c = &hi2c2,
+};
 odb_data_t flight_data = {0};
 odb_stats_t flight_stats = {0};
 

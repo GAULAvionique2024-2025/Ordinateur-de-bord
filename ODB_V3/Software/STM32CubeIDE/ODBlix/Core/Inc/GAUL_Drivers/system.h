@@ -23,6 +23,7 @@
 #include "mavlink/odb_mavlink_v1/mavlink.h"
 #include "GAUL_Drivers/LowLevel/kalman_nav.h"
 #include "GAUL_Drivers/LowLevel/dwt.h"
+#include "GAUL_Drivers/idefix.h"
 
 #include <stdint.h>
 #include <stdio.h>
@@ -202,6 +203,11 @@ void Telemetry_SendRocketData(rfd900x_t *rfd_dev, const mavlink_modem_id_t modem
 #define APP_DELAY_REFRESH_MS 1000
 void App_SendFrame(hm11_t *hm11_dev, const odb_data_t *data);
 void App_HandleCommands(hm11_t *hm11_dev);
+/* =========== */
+
+/* === BEACON INTEGRATION === */
+#define IDEFIX_DELAY_TRANSMIT_MS 30000
+void Beacon_SendCoordinates(idefix_t *idefix_dev, const int32_t lat_e7, const int32_t lon_e7);
 /* =========== */
 
 #endif /* INC_GAUL_DRIVERS_SYSTEM_H_ */
