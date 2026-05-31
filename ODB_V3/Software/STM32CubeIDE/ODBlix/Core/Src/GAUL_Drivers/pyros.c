@@ -14,7 +14,7 @@
 
 
 #define DMA_RISING_TIME_MS 	10000
-#define PYRO_THRESHOLD 		75
+#define PYRO_THRESHOLD_CONN 150
 
 extern pyro_t pyros[PYRO_MAX];
 extern bool is_pyros_armed;
@@ -39,7 +39,7 @@ int8_t Pyro_Init(pyro_t *dev, system_measurements_t *measures) {
 
 	SystemMeasurements_ComputePyros(measures);
 
-	dev->is_connected = (measures->pyro_status[dev->channel] >= PYRO_THRESHOLD);
+	dev->is_connected = (measures->pyro_status[dev->channel] >= PYRO_THRESHOLD_CONN);
 	dev->is_fire = false;
 
 	return (dev->is_connected) ? 0 : -1;
@@ -73,7 +73,7 @@ bool Pyro_Fire(pyro_t *dev, system_measurements_t *measures) {
 
 	SystemMeasurements_ComputePyros(measures);
 
-	if(measures->pyro_status[dev->channel] < PYRO_THRESHOLD) {
+	if(measures->pyro_status[dev->channel] < PYRO_THRESHOLD_CONN) {
 		dev->is_fire = true;
 	}
 
