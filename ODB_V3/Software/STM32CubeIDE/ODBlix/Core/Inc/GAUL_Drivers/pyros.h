@@ -18,21 +18,17 @@
 #include <stdbool.h>
 
 
-#define PYRO_THRESHOLD		800
-//#define ARM_THRESHOLD		800
-
 typedef enum {
-	PYRO_1 = 0,
-	PYRO_2 = 1,
-	PYRO_3 = 2,
-	PYRO_4 = 3
+	PYRO_1 		= 0,
+	PYRO_2 		= 1,
+	PYRO_3 		= 2,
+	PYRO_4 		= 3,
+	PYRO_MAX 	= 4
 } pyro_channel_t;
 
 typedef struct {
 	GPIO_TypeDef 	*fire_port;
 	uint16_t		fire_pin;
-	GPIO_TypeDef 	*arm_port;
-	uint16_t		arm_pin;
 
 	pyro_channel_t  channel;
 
@@ -40,11 +36,11 @@ typedef struct {
 	bool			is_fire;
 } pyro_t;
 
-
 int8_t Pyro_Init(pyro_t *dev, system_measurements_t *measures);
 
-bool Pyro_Arming(pyro_t *dev, system_measurements_t *measures, bool arming);
+bool Pyro_Arming(system_measurements_t *measures, bool arming);
 bool Pyro_Fire(pyro_t *dev, system_measurements_t *measures);
+
 pyro_t* Pyro_GetByRole(pyro_role_t role);
 
 #endif /* INC_GAUL_DRIVERS_PYROS_H_ */

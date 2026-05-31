@@ -110,12 +110,12 @@ void FSM_Update(void) {
                         // Arming Drogue
                         pyro_t *drogue = Pyro_GetByRole(PYRO_ROLE_DROGUE);
 						if(drogue) {
-							Pyro_Arming(drogue, &system_measurements, true);
+							Pyro_Arming(&system_measurements, true);
 						}
 
 						pyro_t *drogue_backup = Pyro_GetByRole(PYRO_ROLE_DROGUE_BACKUP);
 						if(drogue_backup) {
-							Pyro_Arming(drogue_backup, &system_measurements, true);
+							Pyro_Arming(&system_measurements, true);
 						}
                     }
                     break;
@@ -154,12 +154,12 @@ void FSM_Update(void) {
 						// Arming Main
 						pyro_t *main_pyro = Pyro_GetByRole(PYRO_ROLE_MAIN);
 						if(main_pyro) {
-							Pyro_Arming(main_pyro, &system_measurements, true);
+							Pyro_Arming(&system_measurements, true);
 						}
 
 						pyro_t *main_backup = Pyro_GetByRole(PYRO_ROLE_MAIN_BACKUP);
 						if(main_backup) {
-							Pyro_Arming(main_backup, &system_measurements, true);
+							Pyro_Arming(&system_measurements, true);
 						}
 					}
 					break;
@@ -197,9 +197,7 @@ void FSM_Update(void) {
 							current_substate = SUB_LANDED;
 							current_global_state = STATE_POSTFLIGHT;
 
-							for(int i = 0; i < 4; i++) {
-								Pyro_Arming(&pyros[i], &system_measurements, false);
-							}
+							Pyro_Arming(&system_measurements, false);
 						}
 					} else {
 						landing_timer = 0;

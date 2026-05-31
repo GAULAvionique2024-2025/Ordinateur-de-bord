@@ -32,6 +32,8 @@ extern idefix_t idefix;
 
 static kalman_nav_t kalman_filter;
 
+bool is_pyros_armed = false;		// TODO: Temporaire before v2
+
 
 // TODO: scheduler not need no-blocking delay, only ajust the refresh rate of the task
 
@@ -181,35 +183,44 @@ odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats) {
         uint8_t pyros_connected = 0;
 		const uint32_t FLAG_PYRO_CONN[4] = {FLAG_PYRO1_CONN, FLAG_PYRO2_CONN, FLAG_PYRO3_CONN, FLAG_PYRO4_CONN};
 		const char* role_names[] = {"NONE", "MAIN", "DROGUE", "MAIN_BACKUP", "DROGUE_BACKUP"};
-		bool is_armed = Pyro_Arming(&pyros[0], &system_measurements, true);
+
+		SystemMeasurements_ComputePyros(&system_measurements);
+		bool is_armed = Pyro_Arming(&system_measurements, true);
 		if(is_armed) {
+			is_pyros_armed = true;
 			system_states |= FLAG_PYROS_ARMED_OK;
 		} else {
 			error += 1;
 			printf("Erreur : Armement des Pyros bloque\n");
 		}
 
-		for(int i = 0; i < 4; i++) {
-			pyro_role_t role = (pyro_role_t)current_config.pyro_roles[i];
-			int8_t init_res = Pyro_Init(&pyros[i], &system_measurements);
-			if(role != PYRO_ROLE_NONE) {
-				if(init_res == 0) {
-					system_states |= FLAG_PYRO_CONN[i];
-					pyros_connected++;
-				} else {
-					warning += 1;
-					printf("Erreur : Pyro %d (%s) deconnecte\n", i + 1, role_names[role]);
-				}
-			}
-		}
-
-		is_armed = Pyro_Arming(&pyros[0], &system_measurements, false);
+		is_armed = Pyro_Arming(&system_measurements, false);
 		if(!is_armed) {
+			is_pyros_armed = false;
 			system_states |= FLAG_PYROS_ARMED_OK;
 		} else {
 			system_states &= ~FLAG_PYROS_ARMED_OK;
 			error += 1;
 			printf("Erreur : Desarmement des Pyros bloque\n");
+		}
+
+		for(int i = 0; i < PYRO_MAX; i++) {
+			pyro_role_t role = (pyro_role_t)current_config.pyro_roles[i];
+			int8_t init_res = Pyro_Init(&pyros[i], &system_measurements);
+
+			if(init_res == 0) {
+				system_states |= FLAG_PYRO_CONN[i];
+				printf("Pyro %i connecte", i);
+
+				if(role != PYRO_ROLE_NONE) {
+					pyros_connected++;
+				}
+			} else {
+				if(role != PYRO_ROLE_NONE) {
+					warning += 1;
+					printf("Erreur : Pyro %d (%s) deconnecte\n", i + 1, role_names[role]);
+				}
+			}
 		}
 
 		// Protection
@@ -338,6 +349,7 @@ void ODB_Update(odb_data_t *data, odb_stats_t *stats) {
         return;
     }
 
+    SystemMeasurements_UpdateInternalCalibration(&system_measurements);
     SystemMeasurements_ComputeTemperature(&system_measurements);
     SystemMeasurements_ComputePower(&system_measurements);
     SystemMeasurements_ComputePyros(&system_measurements);
@@ -418,7 +430,7 @@ void ODB_Update(odb_data_t *data, odb_stats_t *stats) {
     data->battery_mv = (uint16_t)(system_measurements.vin_batt);
 
 
-    if(system_measurements.pyros_arming) {
+    if(is_pyros_armed) {
 		stats->pyro1.fired = pyros[0].is_fire;
 		stats->pyro2.fired = pyros[1].is_fire;
 		stats->pyro3.fired = pyros[2].is_fire;
@@ -479,6 +491,7 @@ static void Telemetry_TransmitMessage(rfd900x_t *rfd_dev, const mavlink_message_
 	}
 }
 
+// TODO: Remove non-blocking and use scheduler instead
 void Telemetry_SendRocketData(rfd900x_t *rfd_dev, const mavlink_modem_id_t modem_id, odb_data_t *data, const uint32_t current_time_ms) {
     if(!rfd_dev || !data) return;
 
@@ -554,6 +567,7 @@ void Telemetry_SendEventLog(rfd900x_t *rfd_dev, const mavlink_modem_id_t modem_i
 /* =========== */
 
 /* === BLUETOOTH APP PACKAGING === */
+// TODO: Remove non-blocking and use scheduler instead
 void App_SendFrame(hm11_t *hm11_dev, const odb_data_t *data) {
     if(!hm11_dev || !data) return;
 
@@ -613,7 +627,7 @@ void App_SendFrame(hm11_t *hm11_dev, const odb_data_t *data) {
     }
 }
 
-// TODO: use APP_DELAY_REFRESH_MS
+// TODO: Use scheduler instead
 void App_HandleCommands(hm11_t *hm11_dev) {
     if(!hm11_dev) return;
 
@@ -694,15 +708,17 @@ void App_HandleCommands(hm11_t *hm11_dev) {
     // Pyros
     // TODO: Check with system_measurements and ...
     else if(strncmp(cmd, "ARM0", 4) == 0) {
-    	Pyro_Arming(&pyros[0], &system_measurements, false);
+    	Pyro_Arming(&system_measurements, false);
+    	is_pyros_armed = false;
         HM11_SendString(hm11_dev, "ACK: DISARMED\r\n");
     } else if(strncmp(cmd, "ARM1", 4) == 0) {
-    	Pyro_Arming(&pyros[0], &system_measurements, true);
+    	Pyro_Arming(&system_measurements, true);
+    	is_pyros_armed = true;
         HM11_SendString(hm11_dev, "ACK: ARMED\r\n");
     } else if(strncmp(cmd, "P", 1) == 0 && isdigit((unsigned char)cmd[1])) {
-        if(system_measurements.pyros_arming) {
+        if(is_pyros_armed) {
         	int pyro_idx = cmd[1] - '1';
-			if(pyro_idx >= 0 && pyro_idx < 4) {
+			if(pyro_idx >= 0 && pyro_idx < PYRO_MAX) {
 				Pyro_Fire(&pyros[pyro_idx], &system_measurements);
 
 				static char ack_buf[24];
@@ -897,12 +913,13 @@ void App_HandleCommands(hm11_t *hm11_dev) {
 
 
 /* === BEACON INTEGRATION === */
+// TODO: Remove non-blocking and use scheduler instead
 void Beacon_SendCoordinates(idefix_t *idefix_dev, const int32_t lat_e7, const int32_t lon_e7) {
     if(!idefix_dev) return;
 
     static uint32_t last_send_time = 0;
     uint32_t current_time = HAL_GetTick();
-    if((current_time - last_send_time) >= BEACON_DELAY_REFRESH_MS) {
+    if((current_time - last_send_time) >= IDEFIX_DELAY_TRANSMIT_MS) {
         if(Idefix_SendCommand(idefix_dev, IDEFIX_CMD_SET_COORD) != IDEFIX_OK) {
             return;
         }

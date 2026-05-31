@@ -142,8 +142,6 @@ pyro_t pyros[4] = {
     {
         .fire_port = Fire_1_GPIO_Port,
         .fire_pin = Fire_1_Pin,
-        .arm_port = Pyros_Arm_GPIO_Port,
-        .arm_pin = Pyros_Arm_Pin,
         .channel = PYRO_1,
         .is_connected = false,
         .is_fire = false,
@@ -151,8 +149,6 @@ pyro_t pyros[4] = {
     {
         .fire_port = Fire_2_GPIO_Port,
         .fire_pin = Fire_2_Pin,
-        .arm_port = Pyros_Arm_GPIO_Port,
-        .arm_pin = Pyros_Arm_Pin,
         .channel = PYRO_2,
         .is_connected = false,
         .is_fire = false,
@@ -160,8 +156,6 @@ pyro_t pyros[4] = {
     {
         .fire_port = Fire_3_GPIO_Port,
         .fire_pin = Fire_3_Pin,
-        .arm_port = Pyros_Arm_GPIO_Port,
-        .arm_pin = Pyros_Arm_Pin,
         .channel = PYRO_3,
         .is_connected = false,
         .is_fire = false,
@@ -169,8 +163,6 @@ pyro_t pyros[4] = {
     {
         .fire_port = Fire_4_GPIO_Port,
         .fire_pin = Fire_4_Pin,
-        .arm_port = Pyros_Arm_GPIO_Port,
-        .arm_pin = Pyros_Arm_Pin,
         .channel = PYRO_4,
         .is_connected = false,
         .is_fire = false,
@@ -189,7 +181,7 @@ buzzer_t buzzer = {
 	.htim = &htim4,
 	.channel = TIM_CHANNEL_1
 };
-volatile uint16_t adc_buffer[9];
+volatile uint16_t adc_buffer[DMA_INDEX_SIZE];
 w25q_t w25q = {
 	.hqspi = &hqspi,
 };
@@ -270,40 +262,7 @@ int main(void)
   MX_USART2_UART_Init();
   MX_USART6_UART_Init();
   MX_QUADSPI_Init();
-    /** Initialize external W25Q flash early so Config can be read/written */
-    if(W25Q_Init(&w25q) != 0) {
-      printf("Erreur : Init W25Q failed\n");
-    } else {
-      printf("W25Q: init OK\n");
-    }
-      /* Diagnostic: read JEDEC id and first bytes to verify read path */
-      {
-        uint8_t idbuf[3] = {0};
-        uint8_t sample[256] = {0};
-        uint32_t jedec = 0;
-        jedec = W25Q_GetID(w25q.hqspi);
-        printf("W25Q JEDEC ID: 0x%06lX\n", jedec);
-        if(W25Q_Read(&w25q, idbuf, 0, 3) == 0) {
-          printf("read(0,3): %02X %02X %02X\n", idbuf[0], idbuf[1], idbuf[2]);
-        } else {
-          printf("read(0,3) failed\n");
-        }
-        /* read first sector */
-        if(W25Q_Read(&w25q, sample, 0, 256) == 0) {
-          printf("first 16 bytes: ");
-        } else {
-          printf("read sector failed\n");
-        }
-        /* peek config area */
-        if(W25Q_Read(&w25q, sample, FLASH_CONFIG_START_ADDRESS, 64) == 0) {
-          printf("config area first 8 bytes: ");
-          for(int i=0;i<8;i++) printf("%02X ", sample[i]);
-          printf("\n");
-        } else {
-          printf("read config area failed\n");
-        }
-      }
-    MX_USB_DEVICE_Init();
+  MX_USB_DEVICE_Init();
   MX_ADC1_Init();
   MX_I2C3_Init();
   MX_FATFS_Init();
@@ -430,7 +389,7 @@ static void MX_ADC1_Init(void)
   hadc1.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_RISING;
   hadc1.Init.ExternalTrigConv = ADC_EXTERNALTRIGCONV_T2_TRGO;
   hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
-  hadc1.Init.NbrOfConversion = 9;
+  hadc1.Init.NbrOfConversion = 10;
   hadc1.Init.DMAContinuousRequests = ENABLE;
   hadc1.Init.EOCSelection = ADC_EOC_SINGLE_CONV;
   if (HAL_ADC_Init(&hadc1) != HAL_OK)
@@ -440,7 +399,7 @@ static void MX_ADC1_Init(void)
 
   /** Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
   */
-  sConfig.Channel = ADC_CHANNEL_0;
+  sConfig.Channel = ADC_CHANNEL_1;
   sConfig.Rank = 1;
   sConfig.SamplingTime = ADC_SAMPLETIME_480CYCLES;
   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
@@ -450,7 +409,7 @@ static void MX_ADC1_Init(void)
 
   /** Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
   */
-  sConfig.Channel = ADC_CHANNEL_1;
+  sConfig.Channel = ADC_CHANNEL_8;
   sConfig.Rank = 2;
   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
   {
@@ -459,7 +418,7 @@ static void MX_ADC1_Init(void)
 
   /** Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
   */
-  sConfig.Channel = ADC_CHANNEL_8;
+  sConfig.Channel = ADC_CHANNEL_10;
   sConfig.Rank = 3;
   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
   {
@@ -468,7 +427,7 @@ static void MX_ADC1_Init(void)
 
   /** Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
   */
-  sConfig.Channel = ADC_CHANNEL_10;
+  sConfig.Channel = ADC_CHANNEL_11;
   sConfig.Rank = 4;
   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
   {
@@ -477,7 +436,7 @@ static void MX_ADC1_Init(void)
 
   /** Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
   */
-  sConfig.Channel = ADC_CHANNEL_11;
+  sConfig.Channel = ADC_CHANNEL_12;
   sConfig.Rank = 5;
   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
   {
@@ -486,7 +445,7 @@ static void MX_ADC1_Init(void)
 
   /** Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
   */
-  sConfig.Channel = ADC_CHANNEL_12;
+  sConfig.Channel = ADC_CHANNEL_13;
   sConfig.Rank = 6;
   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
   {
@@ -495,7 +454,7 @@ static void MX_ADC1_Init(void)
 
   /** Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
   */
-  sConfig.Channel = ADC_CHANNEL_13;
+  sConfig.Channel = ADC_CHANNEL_14;
   sConfig.Rank = 7;
   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
   {
@@ -504,7 +463,7 @@ static void MX_ADC1_Init(void)
 
   /** Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
   */
-  sConfig.Channel = ADC_CHANNEL_14;
+  sConfig.Channel = ADC_CHANNEL_15;
   sConfig.Rank = 8;
   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
   {
@@ -513,8 +472,17 @@ static void MX_ADC1_Init(void)
 
   /** Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
   */
-  sConfig.Channel = ADC_CHANNEL_15;
+  sConfig.Channel = ADC_CHANNEL_TEMPSENSOR;
   sConfig.Rank = 9;
+  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  /** Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
+  */
+  sConfig.Channel = ADC_CHANNEL_VREFINT;
+  sConfig.Rank = 10;
   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
   {
     Error_Handler();
@@ -1048,7 +1016,7 @@ static void MX_GPIO_Init(void)
                           |Fire_3_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(BARO_SPI1_CS_GPIO_Port, BARO_SPI1_CS_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, PA_An_Pin|BARO_SPI1_CS_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOG, Fire_2_Pin|Fire_1_Pin, GPIO_PIN_RESET);
@@ -1068,12 +1036,12 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : BARO_SPI1_CS_Pin */
-  GPIO_InitStruct.Pin = BARO_SPI1_CS_Pin;
+  /*Configure GPIO pins : PA_An_Pin BARO_SPI1_CS_Pin */
+  GPIO_InitStruct.Pin = PA_An_Pin|BARO_SPI1_CS_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(BARO_SPI1_CS_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /*Configure GPIO pins : Fire_2_Pin Fire_1_Pin */
   GPIO_InitStruct.Pin = Fire_2_Pin|Fire_1_Pin;
