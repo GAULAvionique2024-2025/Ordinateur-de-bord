@@ -434,7 +434,7 @@ void ODB_Update(odb_data_t *data, odb_stats_t *stats) {
 		stats->pyro4.fired = pyros[3].is_fire;
 	}
 
-    if(data->gps_fix > 1) {
+    if(data->gps_fix >= 1) {
       data->system_states |= FLAG_GPS_OK;
     } else {
       data->system_states &= ~FLAG_GPS_OK;

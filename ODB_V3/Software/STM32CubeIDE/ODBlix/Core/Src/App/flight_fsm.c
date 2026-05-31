@@ -215,7 +215,7 @@ void FSM_Update(void) {
         case STATE_POSTFLIGHT:
             // Handle landing timer conclusion, put in low power mode and handle IdeFIX communication
             ODB_SetMissionState(&flight_data, STATE_POSTFLIGHT);
-            Logger_SaveStats(&flight_stats);
+            Logger_SaveStats(&flight_stats); // TODO: save only one time (not in loop)
             break;
     }
 }

@@ -69,7 +69,7 @@ static bool HM11_TestUARTConnection(hm11_t *dev) {
     return HM11_SendATCommand(dev, "AT", "OK");
 }
 
-static bool HM11_EnableNotifications(hm11_t *dev, bool enabled) {
+static bool HM11_EnableNotifications(hm11_t *dev) {
     bool success = false;
     if(HM11_SendATCommand(dev, "AT+NOTI1", "OK+Set:")) {
 		success = true;
@@ -124,7 +124,7 @@ hm11_state_t HM11_Init(hm11_t *dev) {
 		err = HM11_SETTXPOWER_FAILED; // Failed to set tx power
 	}
 	*/
-    if(!HM11_EnableNotifications(dev, true)) {
+    if(!HM11_EnableNotifications(dev)) {
 		err = HM11_SETNOTIF_FAILED; // Failed to set notifications
 	}
     if(!HM11_Reset(dev)) {
@@ -209,11 +209,11 @@ bool HM11_GetMessage(hm11_t *dev, char *out_buffer, uint16_t max_length) {
 
 bool HM11_IsConnected(hm11_t *dev) {
 	if(HM11_SendATCommand(dev, "AT", "OK")) {
-		dev->is_connected = false;
-		return false;
-	} else {
 		dev->is_connected = true;
 		return true;
+	} else {
+		dev->is_connected = false;
+		return false;
 	}
 }
 

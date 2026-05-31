@@ -280,7 +280,7 @@ int main(void)
   Scheduler_AddTask("Telemetry", Task_Telemetry, TASK_TELEMETRY_FREQ_MS);
   Scheduler_AddTask("BTRx", Task_BluetoothAppRx, TASK_BLUETOOTH_APP_RX_FREQ_MS);
   Scheduler_AddTask("BTTx", Task_BluetoothAppTx, TASK_BLUETOOTH_APP_TX_FREQ_MS);
-  Scheduler_SetActive("UpdateData", true);
+  Scheduler_SetActive("Data_Update", true);
   Scheduler_SetActive("FSM", true);
   Scheduler_SetActive("Logger", true);
   Scheduler_SetActive("Telemetry", true);
