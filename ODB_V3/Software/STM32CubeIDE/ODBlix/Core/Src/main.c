@@ -274,7 +274,7 @@ int main(void)
   ODB_Init(&flight_data, &flight_stats);
   Scheduler_Init();
   Logger_Init();
-  Scheduler_AddTask("UpdateData", Task_DataUpdate, TASK_DATA_UPDATE_FREQ_MS);
+  Scheduler_AddTask("Data_Update", Task_DataUpdate, TASK_DATA_UPDATE_FREQ_MS);
   Scheduler_AddTask("FSM", Task_ExecuteFsm, TASK_FSM_FREQ_MS);
   Scheduler_AddTask("Logger", Task_Logger, TASK_LOGGER_FREQ_MS);
   Scheduler_AddTask("Telemetry", Task_Telemetry, TASK_TELEMETRY_FREQ_MS);
