@@ -296,14 +296,7 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    //Scheduler_Run();
-	ODB_Update(&flight_data, &flight_stats);
-	Profiler_StartTask(PROFILE_TASK_BLE);
-    App_SendFrame(&hm11, &flight_data);
-    App_HandleCommands(&hm11);
-    Profiler_StopTask(PROFILE_TASK_BLE);
-    Telemetry_SendRocketData(&rfd900x, current_config.stage_role, &flight_data, HAL_GetTick());
-    //Profiler_LogResults(1000);
+    Scheduler_Run();
   }
   /* USER CODE END 3 */
 }
