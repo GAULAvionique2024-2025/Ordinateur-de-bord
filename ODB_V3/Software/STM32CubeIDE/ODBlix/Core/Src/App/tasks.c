@@ -36,7 +36,7 @@ void Task_Logger(void) {
 
 void Task_Telemetry(void) {
     if((flight_data.system_states & FLAG_RADIO_OK) == 0U) return;
-    Telemetry_SendRocketData(&rfd900x, current_config.stage_role + 2, &flight_data, HAL_GetTick());
+    Telemetry_SendRocketData(&rfd900x, current_config.stage_role, &flight_data, HAL_GetTick());
 }
 
 void Task_BluetoothRx(void) {
