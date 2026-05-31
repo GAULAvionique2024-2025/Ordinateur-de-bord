@@ -11,19 +11,21 @@
 #include <stdint.h>
 
 // TODO: Check viability of frequencies
-#define TASK_FSM_FREQ_HZ              	(200U)
-#define TASK_DATA_UPDATE_FREQ_HZ      	(100U)
-#define TASK_LOGGER_FREQ_HZ           	(50U)
-#define TASK_TELEMETRY_FREQ_HZ        	(10U)
-#define TASK_BLUETOOTH_RX_FREQ_HZ     	(20U)
-#define TASK_BLUETOOTH_FRAME_FREQ_HZ	(10U)
+#define TASK_FSM_FREQ_MS              	5       // 200Hz
+#define TASK_DATA_UPDATE_FREQ_MS      	10      // 100Hz
+#define TASK_LOGGER_FREQ_MS           	20      // 50Hz
+#define TASK_TELEMETRY_FREQ_MS        	100     // 10Hz
+#define TASK_IDEFIX_FREQ_MS        		30000   // 0.033Hz
+#define TASK_BLUETOOTH_APP_RX_FREQ_MS   200     // 5Hz
+#define TASK_BLUETOOTH_APP_TX_FREQ_MS	1000    // 1Hz
 
 void Tasks_Init(void);
 void Task_ExecuteFsm(void);
-void Task_UpdateData(void);
+void Task_DataUpdate(void);
 void Task_Logger(void);
 void Task_Telemetry(void);
-void Task_BluetoothRx(void);
-void Task_BluetoothTx(void);
+void Task_Idefix(void);
+void Task_BluetoothAppRx(void);
+void Task_BluetoothAppTx(void);
 
 #endif /* INC_APP_TASKS_H_ */

@@ -337,9 +337,6 @@ odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats) {
         Buzzer_ReportStatus(&buzzer, current_config.buzzer_report_tone_hz, system_measurements.vin_batt, (bool[]){(system_states & FLAG_PYRO1_CONN) != 0U, (system_states & FLAG_PYRO2_CONN) != 0U, (system_states & FLAG_PYRO3_CONN) != 0U, (system_states & FLAG_PYRO4_CONN) != 0U}, odb_state);
     }
 
-    //Scheduler_AddTask(ODB_Update, 100);
-    //...
-
     return odb_state;
 }
 
@@ -491,59 +488,52 @@ static void Telemetry_TransmitMessage(rfd900x_t *rfd_dev, const mavlink_message_
 	}
 }
 
-// TODO: Remove non-blocking and use scheduler instead
 void Telemetry_SendRocketData(rfd900x_t *rfd_dev, const mavlink_modem_id_t modem_id, odb_data_t *data, const uint32_t current_time_ms) {
     if(!rfd_dev || !data) return;
 
-    static uint32_t last_send_time = 0;
-    uint32_t current_time = HAL_GetTick();
-    if((current_time - last_send_time) >= TELEMETRY_DELAY_REFRESH_MS) {
-		odb_data_t *data_temp = data;
-		mavlink_message_t msg;
-		mavlink_msg_rocket_telemetry_pack(
-				modem_id,
-				MAVLINK_COMPONENT_ID,
-				&msg,
-				current_time_ms,
-				data_temp->system_states,
-				data_temp->event_states,
-				data_temp->mission_state,
-				data_temp->battery_mv,
-				data_temp->roll,
-				data_temp->pitch,
-				data_temp->yaw,
-				data_temp->imu_acc_x,
-				data_temp->imu_acc_y,
-				data_temp->imu_acc_z,
-				data_temp->imu_gyro_x,
-				data_temp->imu_gyro_y,
-				data_temp->imu_gyro_z,
-				data_temp->imu_mag_x,
-				data_temp->imu_mag_y,
-				data_temp->imu_mag_z,
-				data_temp->altitude_msl_m,
-				data_temp->pressure_hpa,
-				data_temp->temp_celsius,
-				data_temp->highg_acc_x,
-				data_temp->highg_acc_y,
-				data_temp->highg_acc_z,
-				data_temp->gps_fix,
-				data_temp->lat,
-				data_temp->lon,
-				data_temp->gps_alt,
-				data_temp->vel,
-				data_temp->cog,
-				data_temp->satellites_nb,
-				data_temp->imu_acc_vertical,
-				data_temp->highg_acc_vertical,
-				data_temp->kalman_z,
-				data_temp->kalman_v
-			);
+    odb_data_t *data_temp = data;
+	mavlink_message_t msg;
+	mavlink_msg_rocket_telemetry_pack(
+			modem_id,
+			MAVLINK_COMPONENT_ID,
+			&msg,
+			current_time_ms,
+			data_temp->system_states,
+			data_temp->event_states,
+			data_temp->mission_state,
+			data_temp->battery_mv,
+			data_temp->roll,
+			data_temp->pitch,
+			data_temp->yaw,
+			data_temp->imu_acc_x,
+			data_temp->imu_acc_y,
+			data_temp->imu_acc_z,
+			data_temp->imu_gyro_x,
+			data_temp->imu_gyro_y,
+			data_temp->imu_gyro_z,
+			data_temp->imu_mag_x,
+			data_temp->imu_mag_y,
+			data_temp->imu_mag_z,
+			data_temp->altitude_msl_m,
+			data_temp->pressure_hpa,
+			data_temp->temp_celsius,
+			data_temp->highg_acc_x,
+			data_temp->highg_acc_y,
+			data_temp->highg_acc_z,
+			data_temp->gps_fix,
+			data_temp->lat,
+			data_temp->lon,
+			data_temp->gps_alt,
+			data_temp->vel,
+			data_temp->cog,
+			data_temp->satellites_nb,
+			data_temp->imu_acc_vertical,
+			data_temp->highg_acc_vertical,
+			data_temp->kalman_z,
+			data_temp->kalman_v
+		);
 
-		Telemetry_TransmitMessage(rfd_dev, &msg);
-
-		last_send_time = current_time;
-    }
+	Telemetry_TransmitMessage(rfd_dev, &msg);
 }
 
 /*
@@ -571,63 +561,56 @@ void Telemetry_SendEventLog(rfd900x_t *rfd_dev, const mavlink_modem_id_t modem_i
 void App_SendFrame(hm11_t *hm11_dev, const odb_data_t *data) {
     if(!hm11_dev || !data) return;
 
-    static uint32_t last_send_time = 0;
-    uint32_t current_time = HAL_GetTick();
-    if((current_time - last_send_time) >= APP_DELAY_REFRESH_MS) {
-		static char buffer[512];
-		snprintf(buffer, sizeof(buffer),
-				"DATA,time_boot_ms=%lu,system_states=%u,event_states=%u,mission_state=%u,battery_mv=%u,"
-				"roll=%ld,pitch=%ld,yaw=%ld,imu_acc_x=%ld,imu_acc_y=%ld,imu_acc_z=%ld,imu_gyro_x=%ld,imu_gyro_y=%ld,imu_gyro_z=%ld,imu_mag_x=%ld,imu_mag_y=%ld,imu_mag_z=%ld,imu_acc_vertical=%ld,"
-				"pressure_hpa=%ld,altitude_msl_m=%ld,temp_celsius=%ld,"
-				"highg_acc_x=%ld,highg_acc_y=%ld,highg_acc_z=%ld,highg_acc_vertical=%ld,"
-				"gps_fix=%u,lat=%ld,lon=%ld,gps_alt=%ld,vel=%u,cog=%u,satellites_nb=%u,"
-				"kalman_z=%ld,kalman_v=%ld,pyro_roles=%u:%u:%u:%u\r\n",
-				(unsigned long)data->time_boot_ms,           // (ms) - /1
-				(unsigned)data->system_states,                // (bitfield) - /1
-				(unsigned)data->event_states,                 // (bitfield) - /1
-				(unsigned)data->mission_state,                // (state) - /1
-				(unsigned)data->battery_mv,                   // (mV) - /1
-				(long)(data->roll * 100.0f),                  // (deg) - /100
-				(long)(data->pitch * 100.0f),                 // (deg) - /100
-				(long)(data->yaw * 100.0f),                   // (deg) - /100
-				(long)(data->imu_acc_x * 100.0f),             // (m/s^2) - /100
-				(long)(data->imu_acc_y * 100.0f),             // (m/s^2) - /100
-				(long)(data->imu_acc_z * 100.0f),             // (m/s^2) - /100
-				(long)(data->imu_gyro_x * 100.0f),            // (deg/s) - /100
-				(long)(data->imu_gyro_y * 100.0f),            // (deg/s) - /100
-				(long)(data->imu_gyro_z * 100.0f),            // (deg/s) - /100
-				(long)(data->imu_mag_x * 100.0f),             // (uT) - /100
-				(long)(data->imu_mag_y * 100.0f),             // (uT) - /100
-				(long)(data->imu_mag_z * 100.0f),             // (uT) - /100
-				(long)(data->imu_acc_vertical * 100.0f),      // (m/s^2) - /100
-				(long)(data->pressure_hpa * 100.0f),          // (hPa) - /100
-				(long)(data->altitude_msl_m * 100.0f),        // (m) - /100
-				(long)(data->temp_celsius * 100.0f),          // (°C) - /100
-				(long)(data->highg_acc_x * 100.0f),           // (m/s^2) - /100
-				(long)(data->highg_acc_y * 100.0f),           // (m/s^2) - /100
-				(long)(data->highg_acc_z * 100.0f),           // (m/s^2) - /100
-				(long)(data->highg_acc_vertical * 100.0f),    // (m/s^2) - /100
-				(unsigned)data->gps_fix,                      // (fix) - /1
-				(long)data->lat,                              // (degE7) - /10000000
-				(long)data->lon,                              // (degE7) - /10000000
-				(long)data->gps_alt,                          // (m) - /1000
-				(unsigned)data->vel,                          // (m/s) - /100
-				(unsigned)data->cog,                          // (deg) - /100
-				(unsigned)data->satellites_nb,                // (count) - /1
-				(long)(data->kalman_z * 100.0f),              // (m) - /100
-				(long)(data->kalman_v * 100.0f),              // (m/s) - /100
-				(unsigned)current_config.pyro_roles[0],       // (role) - Pyro 1
-				(unsigned)current_config.pyro_roles[1],       // (role) - Pyro 2
-				(unsigned)current_config.pyro_roles[2],       // (role) - Pyro 3
-				(unsigned)current_config.pyro_roles[3]);      // (role) - Pyro 4
+    static char buffer[512];
+	snprintf(buffer, sizeof(buffer),
+			"DATA,time_boot_ms=%lu,system_states=%u,event_states=%u,mission_state=%u,battery_mv=%u,"
+			"roll=%ld,pitch=%ld,yaw=%ld,imu_acc_x=%ld,imu_acc_y=%ld,imu_acc_z=%ld,imu_gyro_x=%ld,imu_gyro_y=%ld,imu_gyro_z=%ld,imu_mag_x=%ld,imu_mag_y=%ld,imu_mag_z=%ld,imu_acc_vertical=%ld,"
+			"pressure_hpa=%ld,altitude_msl_m=%ld,temp_celsius=%ld,"
+			"highg_acc_x=%ld,highg_acc_y=%ld,highg_acc_z=%ld,highg_acc_vertical=%ld,"
+			"gps_fix=%u,lat=%ld,lon=%ld,gps_alt=%ld,vel=%u,cog=%u,satellites_nb=%u,"
+			"kalman_z=%ld,kalman_v=%ld,pyro_roles=%u:%u:%u:%u\r\n",
+			(unsigned long)data->time_boot_ms,           // (ms) - /1
+			(unsigned)data->system_states,                // (bitfield) - /1
+			(unsigned)data->event_states,                 // (bitfield) - /1
+			(unsigned)data->mission_state,                // (state) - /1
+			(unsigned)data->battery_mv,                   // (mV) - /1
+			(long)(data->roll * 100.0f),                  // (deg) - /100
+			(long)(data->pitch * 100.0f),                 // (deg) - /100
+			(long)(data->yaw * 100.0f),                   // (deg) - /100
+			(long)(data->imu_acc_x * 100.0f),             // (m/s^2) - /100
+			(long)(data->imu_acc_y * 100.0f),             // (m/s^2) - /100
+			(long)(data->imu_acc_z * 100.0f),             // (m/s^2) - /100
+			(long)(data->imu_gyro_x * 100.0f),            // (deg/s) - /100
+			(long)(data->imu_gyro_y * 100.0f),            // (deg/s) - /100
+			(long)(data->imu_gyro_z * 100.0f),            // (deg/s) - /100
+			(long)(data->imu_mag_x * 100.0f),             // (uT) - /100
+			(long)(data->imu_mag_y * 100.0f),             // (uT) - /100
+			(long)(data->imu_mag_z * 100.0f),             // (uT) - /100
+			(long)(data->imu_acc_vertical * 100.0f),      // (m/s^2) - /100
+			(long)(data->pressure_hpa * 100.0f),          // (hPa) - /100
+			(long)(data->altitude_msl_m * 100.0f),        // (m) - /100
+			(long)(data->temp_celsius * 100.0f),          // (°C) - /100
+			(long)(data->highg_acc_x * 100.0f),           // (m/s^2) - /100
+			(long)(data->highg_acc_y * 100.0f),           // (m/s^2) - /100
+			(long)(data->highg_acc_z * 100.0f),           // (m/s^2) - /100
+			(long)(data->highg_acc_vertical * 100.0f),    // (m/s^2) - /100
+			(unsigned)data->gps_fix,                      // (fix) - /1
+			(long)data->lat,                              // (degE7) - /10000000
+			(long)data->lon,                              // (degE7) - /10000000
+			(long)data->gps_alt,                          // (m) - /1000
+			(unsigned)data->vel,                          // (m/s) - /100
+			(unsigned)data->cog,                          // (deg) - /100
+			(unsigned)data->satellites_nb,                // (count) - /1
+			(long)(data->kalman_z * 100.0f),              // (m) - /100
+			(long)(data->kalman_v * 100.0f),              // (m/s) - /100
+			(unsigned)current_config.pyro_roles[0],       // (role) - Pyro 1
+			(unsigned)current_config.pyro_roles[1],       // (role) - Pyro 2
+			(unsigned)current_config.pyro_roles[2],       // (role) - Pyro 3
+			(unsigned)current_config.pyro_roles[3]);      // (role) - Pyro 4
 
-		HM11_SendString(hm11_dev, buffer);
-
-		last_send_time = current_time;
-    }
+	HM11_SendString(hm11_dev, buffer);
 }
 
-// TODO: Use scheduler instead
 void App_HandleCommands(hm11_t *hm11_dev) {
     if(!hm11_dev) return;
 
@@ -913,31 +896,24 @@ void App_HandleCommands(hm11_t *hm11_dev) {
 
 
 /* === BEACON INTEGRATION === */
-// TODO: Remove non-blocking and use scheduler instead
 void Beacon_SendCoordinates(idefix_t *idefix_dev, const int32_t lat_e7, const int32_t lon_e7) {
     if(!idefix_dev) return;
 
-    static uint32_t last_send_time = 0;
-    uint32_t current_time = HAL_GetTick();
-    if((current_time - last_send_time) >= IDEFIX_DELAY_TRANSMIT_MS) {
-        if(Idefix_SendCommand(idefix_dev, IDEFIX_CMD_SET_COORD) != IDEFIX_OK) {
-            return;
-        }
-
-        uint8_t payload[8];
-        payload[0] = (uint8_t)(lat_e7 & 0xFF);
-        payload[1] = (uint8_t)((lat_e7 >> 8) & 0xFF);
-        payload[2] = (uint8_t)((lat_e7 >> 16) & 0xFF);
-        payload[3] = (uint8_t)((lat_e7 >> 24) & 0xFF);
-        
-        payload[4] = (uint8_t)(lon_e7 & 0xFF);
-        payload[5] = (uint8_t)((lon_e7 >> 8) & 0xFF);
-        payload[6] = (uint8_t)((lon_e7 >> 16) & 0xFF);
-        payload[7] = (uint8_t)((lon_e7 >> 24) & 0xFF);
-
-        Idefix_SendData(idefix_dev, payload, 8);
-
-        last_send_time = current_time;
+    if(Idefix_SendCommand(idefix_dev, IDEFIX_CMD_SET_COORD) != IDEFIX_OK) {
+        return;
     }
+
+    uint8_t payload[8];
+    payload[0] = (uint8_t)(lat_e7 & 0xFF);
+    payload[1] = (uint8_t)((lat_e7 >> 8) & 0xFF);
+    payload[2] = (uint8_t)((lat_e7 >> 16) & 0xFF);
+    payload[3] = (uint8_t)((lat_e7 >> 24) & 0xFF);
+    
+    payload[4] = (uint8_t)(lon_e7 & 0xFF);
+    payload[5] = (uint8_t)((lon_e7 >> 8) & 0xFF);
+    payload[6] = (uint8_t)((lon_e7 >> 16) & 0xFF);
+    payload[7] = (uint8_t)((lon_e7 >> 24) & 0xFF);
+
+    Idefix_SendData(idefix_dev, payload, 8);
 }
 /* =========== */

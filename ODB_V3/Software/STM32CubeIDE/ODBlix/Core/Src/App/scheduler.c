@@ -11,7 +11,6 @@
 #include <string.h>
 
 
-#define FREQ_TO_PERIOD_MS(hz)   		(1000U / (hz))
 
 static task_t tasks[MAX_TASKS];
 static uint8_t task_count = 0;
@@ -41,14 +40,14 @@ bool Scheduler_SetActive(const char *name, bool active) {
     return false;
 }
 
-bool Scheduler_AddTask(char *name, void (*func)(void), uint32_t period_hz) {
-    if(task_count >= MAX_TASKS || func == NULL) {
+bool Scheduler_AddTask(char *name, void (*func)(void), uint32_t period_ms) {
+    if(task_count >= MAX_TASKS || func == NULL || period_ms <= 0) {
         return false;
     }
     
     tasks[task_count].name = name;
     tasks[task_count].task_func = func;
-    tasks[task_count].period_ms = FREQ_TO_PERIOD_MS(period_hz);
+    tasks[task_count].period_ms = period_ms;
     tasks[task_count].last_run_ms = HAL_GetTick();
     tasks[task_count].is_active = false;
     
