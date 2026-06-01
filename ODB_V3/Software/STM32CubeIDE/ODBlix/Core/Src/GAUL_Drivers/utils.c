@@ -39,7 +39,7 @@ float Math_ComputeWorldVerticalAcc(const float accel[3], const float quat[4], bo
     // Rotate accelerometer vector to world frame and extract vertical component
     float a_world_z = (2.0f * (qx * qz - qw * qy)) * ax + (2.0f * (qy * qz + qw * qx)) * ay + (qw * qw - qx * qx - qy * qy + qz * qz) * az;
     if(gravity_compensation) {
-        a_world_z -= 1.0f;
+        a_world_z -= GRAVITY_MS2;
     }
 
     return a_world_z;

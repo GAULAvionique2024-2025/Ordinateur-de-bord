@@ -44,7 +44,7 @@ void KalmanNav_Init(kalman_nav_t *dev, float mean_alt, float *samples, uint8_t s
 }
 
 /*
- * acc_world_z should be the vertical acceleration in the world frame (after removing gravity and transforming from body frame using IMU gyro/mag data)
+ * acc_world_z should be the vertical acceleration in the world frame (m/s2) (after removing gravity and transforming from body frame using IMU gyro/mag data)
  * > 200Hz
 */
 void KalmanNav_Predict(kalman_nav_t *dev, float acc_world_z) {
@@ -55,8 +55,7 @@ void KalmanNav_Predict(kalman_nav_t *dev, float acc_world_z) {
     if(dt <= 0.0f || dt > 0.5f) return; // Overflow security check
 
     // State prediction
-    float acc_world_ms2 = acc_world_z * GRAVITY_MS2;
-    float a = acc_world_ms2 - dev->a_bias;
+    float a = acc_world_z - dev->a_bias;
     dev->z += dev->v * dt + 0.5f * a * dt * dt;
     dev->v += a * dt;
 

@@ -165,9 +165,9 @@ adxl382_error_t ADXL382_ReadData(adxl382_t *dev, const float current_quat[4]) {
         float offset_y = Thermal_ComputeOffset(dev->y_axis_offset, t);
         float offset_z = Thermal_ComputeOffset(dev->z_axis_offset, t);
 
-        dev->acc_x = acc_x_raw - offset_x;
-        dev->acc_y = acc_y_raw - offset_y;
-        dev->acc_z = acc_z_raw - offset_z;
+        dev->acc_x = (acc_x_raw - offset_x) * GRAVITY_MS2;
+		dev->acc_y = (acc_y_raw - offset_y) * GRAVITY_MS2;
+		dev->acc_z = (acc_z_raw - offset_z) * GRAVITY_MS2;
 
         float compensated_accel[3] = {dev->acc_x, dev->acc_y, dev->acc_z};
         dev->acc_vertical = Math_ComputeWorldVerticalAcc(compensated_accel, current_quat, true);

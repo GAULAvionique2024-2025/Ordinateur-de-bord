@@ -146,9 +146,9 @@ typedef struct __attribute__((packed)) {
     float       roll;               // Roll angle in degrees (converted to cdeg for MAVLink) -> Linked with BNO055
     float       pitch;              // Pitch angle in degrees (converted to cdeg for MAVLink) -> Linked with BNO055
     float       yaw;                // Yaw angle in degrees between -180 and 180 (converted to cdeg for MAVLink) -> Linked with BNO055
-    float       imu_acc_x;          // IMU Acceleration X in g (converted to cg for MAVLink) -> Linked with BNO055
-    float       imu_acc_y;          // IMU Acceleration Y in g (converted to cg for MAVLink) -> Linked with BNO055
-    float       imu_acc_z;          // IMU Acceleration Z in g (converted to cg for MAVLink) -> Linked with BNO055
+    float       imu_acc_x;          // IMU Acceleration X in m/s2 (converted to cm/s2 for MAVLink) -> Linked with BNO055
+    float       imu_acc_y;          // IMU Acceleration Y in m/s2 (converted to cm/s2 for MAVLink) -> Linked with BNO055
+    float       imu_acc_z;          // IMU Acceleration Z in m/s2 (converted to cm/s2 for MAVLink) -> Linked with BNO055
     float       imu_gyro_x;         // IMU Angular rate X in deg/s (converted to cdeg/s for MAVLink) -> Linked with BNO055
     float       imu_gyro_y;         // IMU Angular rate Y in deg/s (converted to cdeg/s for MAVLink) -> Linked with BNO055
     float       imu_gyro_z;         // IMU Angular rate Z in deg/s (converted to cdeg/s for MAVLink) -> Linked with BNO055
@@ -160,9 +160,9 @@ typedef struct __attribute__((packed)) {
     float       pressure_hpa;       // Atmospheric pressure in hectopascals (hPa) -> Linked with MS5611
     float       temp_celsius;       // Board or environment temperature in Celsius (°C) -> Linked with MAX6612MXK
     // High-G Acclerometer
-    float       highg_acc_x;        // High-G Acceleration X in g (converted to cg for MAVLink) -> Linked with ADXL382
-    float       highg_acc_y;        // High-G Acceleration Y in g (converted to cg for MAVLink) -> Linked with ADXL382
-    float       highg_acc_z;        // High-G Acceleration Z in g (converted to cg for MAVLink) -> Linked with ADXL382
+    float       highg_acc_x;        // High-G Acceleration X in m/s2 (converted to cm/s2 for MAVLink) -> Linked with ADXL382
+    float       highg_acc_y;        // High-G Acceleration Y in m/s2 (converted to cm/s2 for MAVLink) -> Linked with ADXL382
+    float       highg_acc_z;        // High-G Acceleration Z in m/s2 (converted to cm/s2 for MAVLink) -> Linked with ADXL382
     // GPS
     uint8_t     gps_fix;            // 1 = Active fix, 0 = Void/No fix, 2 = ... -> Linked with L76LM33
     int32_t     lat;                // Latitude in degE7 (MAVLink format: deg * 10^7) -> Linked with L76LM33
@@ -173,8 +173,8 @@ typedef struct __attribute__((packed)) {
     uint8_t     satellites_nb;      // Number of satellites used for the fix -> Linked with L76LM33
 
     // Statistics
-    float       imu_acc_vertical;   // Vertical acceleration (World frame) from IMU in g -> Linked with BNO055
-    float       highg_acc_vertical; // Vertical acceleration (World frame) from High-G Accelerometer in g -> Linked with ADXL382
+    float       imu_acc_vertical;   // Vertical acceleration (World frame) from IMU in m/s2 -> Linked with BNO055
+    float       highg_acc_vertical; // Vertical acceleration (World frame) from High-G Accelerometer in m/s2 -> Linked with ADXL382
     float       kalman_z;           // filtered altitude from Kalman filter in m (converted to cm for MAVLink)
     float       kalman_v;           // filtered velocity from Kalman filter in m/s (converted to cm/s for MAVLink)
 

@@ -65,10 +65,10 @@ typedef struct {
     adxl382_range_t                 range;
     coeff_poly3_t					x_axis_offset, y_axis_offset, z_axis_offset;
 
-    float             				acc_x;	        // g, after thermal compensation and local frame transformation
-    float             				acc_y;	        // g, after thermal compensation and local frame transformation
-    float             				acc_z;	        // g, after thermal compensation and local frame transformation
-    float            				acc_vertical;   // g, vertical acceleration after world frame transformation and gravity compensation (effective acceleration)
+    float             				acc_x;	        // m/s2, after thermal compensation and local frame transformation
+    float             				acc_y;	        // m/s2, after thermal compensation and local frame transformation
+    float             				acc_z;	        // m/s2, after thermal compensation and local frame transformation
+    float            				acc_vertical;   // m/s2, vertical acceleration after world frame transformation and gravity compensation (effective acceleration)
     float               			temp;	        // C
 } adxl382_t;
 
