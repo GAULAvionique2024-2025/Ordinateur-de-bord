@@ -11,6 +11,7 @@
 #include "GAUL_Drivers/utils.h"
 #include "App/config.h"
 #include "App/scheduler.h"
+#include "App/tasks.h"
 #include "App/logger.h"
 
 #include <stdint.h>
@@ -227,6 +228,14 @@ void FSM_Update(void) {
 			// Handle landing timer conclusion, put in low power mode and handle IdeFIX communication
 			ODB_SetMissionState(&flight_data, STATE_POSTFLIGHT);
 			Logger_SaveStats(&flight_stats); // TODO: save only one time (not in loop)
+
+			// Low power
+			// TODO: add low power sensor states and logger
+			Scheduler_RemoveTask("Data_Update");
+			Scheduler_RemoveTask("FSM");
+			Scheduler_RemoveTask("Logger");
+			Scheduler_RemoveTask("Telemetry");
+			Scheduler_SetActive("Idefix", true);
 			break;
 	}
 }

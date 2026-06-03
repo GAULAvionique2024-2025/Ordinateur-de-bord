@@ -65,6 +65,9 @@ typedef struct {
     // Buzzer
     uint8_t enable_buzzer;
     uint16_t buzzer_report_tone_hz;
+
+    // IdeFIX
+    uint32_t idefix_frequency_hz;
 } odb_config_t;
 extern odb_config_t current_config;
 

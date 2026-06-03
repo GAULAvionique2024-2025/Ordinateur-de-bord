@@ -83,3 +83,17 @@ void Scheduler_Run(void) {
         }
     }
 }
+
+bool Scheduler_SetPeriod(const char *name, uint32_t period_ms) {
+    for(uint8_t i = 0; i < task_count; i++) {
+        if(tasks[i].is_active && tasks[i].name != NULL) {
+            if(strcmp(tasks[i].name, name) == 0) {
+            	tasks[i].period_ms = period_ms;
+
+                return true;
+            }
+        }
+    }
+
+    return false;
+}

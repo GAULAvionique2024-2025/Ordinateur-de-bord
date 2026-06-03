@@ -130,6 +130,8 @@ typedef struct {
     metric_t max_descend_speed;     // internal event for POSTFLIGHT reporting (save in FLASH/SD)
     metric_t max_descend_accel;     // internal event for POSTFLIGHT reporting (save in FLASH/SD)
 
+    int32_t	 last_lat;              // internal event for POSTFLIGHT reporting (save in FLASH/SD)
+    int32_t  last_lon;              // internal event for POSTFLIGHT reporting (save in FLASH/SD)
     uint32_t flight_time_ms;        // internal event for POSTFLIGHT reporting (save in FLASH/SD)
 } odb_stats_t;
 
@@ -204,8 +206,8 @@ void App_HandleCommands(hm11_t *hm11_dev);
 /* =========== */
 
 /* === BEACON INTEGRATION === */
-#define IDEFIX_DELAY_TRANSMIT_MS 30000
 void Beacon_SendCoordinates(idefix_t *idefix_dev, const int32_t lat_e7, const int32_t lon_e7);
+void Beacon_SetFrequency(idefix_t *idefix_dev);
 /* =========== */
 
 #endif /* INC_GAUL_DRIVERS_SYSTEM_H_ */

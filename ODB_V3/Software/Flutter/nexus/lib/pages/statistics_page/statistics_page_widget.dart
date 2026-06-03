@@ -981,7 +981,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                             ),
                                           ),
                                           Text(
-                                            (connected && data.imuSensorState == SensorState.ok) ? 'X: ${data.imuAccX.toStringAsFixed(2)} g' : '—',
+                                            (connected && data.imuSensorState == SensorState.ok) ? 'X: ${data.imuAccX.toStringAsFixed(2)} m/s²' : '—',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -1003,7 +1003,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                                 ),
                                           ),
                                           Text(
-                                            (connected && data.imuSensorState == SensorState.ok) ? 'Y: ${data.imuAccY.toStringAsFixed(2)} g' : '—',
+                                            (connected && data.imuSensorState == SensorState.ok) ? 'Z: ${data.imuAccZ.toStringAsFixed(2)} m/s²' : '—',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -1025,7 +1025,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                                 ),
                                           ),
                                           Text(
-                                            (connected && data.imuSensorState == SensorState.ok) ? 'Z: ${data.imuAccZ.toStringAsFixed(2)} g' : '—',
+                                            (connected && data.imuSensorState == SensorState.ok) ? 'Z: ${data.imuAccZ.toStringAsFixed(2)} m/s²' : '—',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -1625,7 +1625,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          (connected && data.accHighGSensorState == SensorState.ok) ? 'X: ${data.accHighGX.toStringAsFixed(2)} g' : '—',
+                                          (connected && data.accHighGSensorState == SensorState.ok) ? 'X: ${data.accHighGX.toStringAsFixed(2)} m/s²' : '—',
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
@@ -1646,7 +1646,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                               ),
                                         ),
                                         Text(
-                                          (connected && data.accHighGSensorState == SensorState.ok) ? 'Y: ${data.accHighGY.toStringAsFixed(2)} g' : '—',
+                                          (connected && data.accHighGSensorState == SensorState.ok) ? 'Y: ${data.accHighGY.toStringAsFixed(2)} m/s²' : '—',
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
@@ -1667,7 +1667,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                               ),
                                         ),
                                         Text(
-                                          (connected && data.accHighGSensorState == SensorState.ok) ? 'Z: ${data.accHighGZ.toStringAsFixed(2)} g' : '—',
+                                          (connected && data.accHighGSensorState == SensorState.ok) ? 'Z: ${data.accHighGZ.toStringAsFixed(2)} m/s²' : '—',
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(

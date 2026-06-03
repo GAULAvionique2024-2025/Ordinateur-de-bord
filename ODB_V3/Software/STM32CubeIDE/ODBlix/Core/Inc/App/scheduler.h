@@ -27,6 +27,7 @@ void Scheduler_Init(void);
 bool Scheduler_SetActive(const char *name, bool active);
 bool Scheduler_AddTask(char *name, void (*func)(void), uint32_t period_ms);
 bool Scheduler_RemoveTask(const char *name);
+bool Scheduler_SetPeriod(const char *name, uint32_t period_ms);
 void Scheduler_Run(void);
 
 #endif /* INC_APP_SCHEDULER_H_ */

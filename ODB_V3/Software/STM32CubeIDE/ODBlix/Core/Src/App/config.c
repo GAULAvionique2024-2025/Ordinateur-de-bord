@@ -50,7 +50,10 @@ const odb_config_t default_config = {
 
     // Buzzer
     .enable_buzzer = 0,
-    .buzzer_report_tone_hz = 500
+    .buzzer_report_tone_hz = 500,
+
+	// IdeFIX
+	.idefix_frequency_hz = 433,
 };
 
 void Config_Init(void) {
@@ -69,7 +72,7 @@ void Config_Init(void) {
 }
 
 int8_t Config_SaveToFlash(void) {
-    if(W25Q_EraseSector(&w25q, FLASH_CONFIG_START_ADDRESS) != 0) {
+	if(W25Q_EraseSector(&w25q, FLASH_CONFIG_START_ADDRESS) != 0) {
     	return -1; // failed
     }
 

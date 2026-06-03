@@ -168,11 +168,18 @@ odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats) {
 
     ODB_Reset(data, stats);
 
-    // Load configuration from flash
-    Config_Init();
-    Config_Get();
+    //W25Q_EraseChip(&w25q);
 
     uint16_t system_states = 0x0000;
+
+    if(W25Q_Init(&w25q) == 0) {
+        system_states |= FLAG_FLASH_OK;
+        Config_Init();
+    } else {
+        error += 1;
+        printf("Erreur : Init W25Q\n");
+    }
+
     if(SystemMeasurements_Init(&system_measurements) == 0) {
         SystemMeasurements_ComputePower(&system_measurements);
         if(system_measurements.vin_batt <= VIN_BATT_MIN_MV || system_measurements.vin_batt >= VIN_BATT_MAX_MV || system_measurements.v5_buck <= V5_MIN_MV || system_measurements.v5_buck >= V5_MAX_MV || system_measurements.v3_buck <= V3_MIN_MV || system_measurements.v3_buck >= V3_MAX_MV || system_measurements.pg_v5 == false) {
@@ -274,16 +281,10 @@ odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats) {
         printf("Erreur : Init RFD900x\n");
     }
 
-    if(W25Q_Init(&w25q) == 0) {
-        system_states |= FLAG_FLASH_OK;
-    } else {
-        warning += 1;
-        printf("Erreur : Init W25Q\n");
-    }
-    
     if(HM11_Init(&hm11) == HM11_OK) {
     	system_states |= FLAG_BT_OK;
     } else {
+    	system_states |= FLAG_BT_OK; // If already connected for task tx
     	warning += 1;
     	printf("Erreur : HM-11 ne repond pas.\n");
     }
@@ -307,6 +308,7 @@ odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats) {
 
     if(Idefix_Init(&idefix) == IDEFIX_OK) {
         system_states |= FLAG_IDEFIX_OK;
+
     } else {
         warning += 1;
         printf("Erreur : Init IdeFIX\n");
@@ -426,7 +428,6 @@ void ODB_Update(odb_data_t *data, odb_stats_t *stats) {
     data->time_boot_ms = HAL_GetTick();
     data->battery_mv = (uint16_t)(system_measurements.vin_batt);
 
-
     if(is_pyros_armed) {
 		stats->pyro1.fired = pyros[0].is_fire;
 		stats->pyro2.fired = pyros[1].is_fire;
@@ -436,6 +437,8 @@ void ODB_Update(odb_data_t *data, odb_stats_t *stats) {
 
     if(data->gps_fix >= 1) {
       data->system_states |= FLAG_GPS_OK;
+      stats->last_lat = data->lat;
+      stats->last_lon = data->lon;
     } else {
       data->system_states &= ~FLAG_GPS_OK;
     }
@@ -557,9 +560,10 @@ void Telemetry_SendEventLog(rfd900x_t *rfd_dev, const mavlink_modem_id_t modem_i
 /* =========== */
 
 /* === BLUETOOTH APP PACKAGING === */
-// TODO: Remove non-blocking and use scheduler instead
 void App_SendFrame(hm11_t *hm11_dev, const odb_data_t *data) {
     if(!hm11_dev || !data) return;
+
+    //if(!HM11_IsConnected(hm11_dev)) return;
 
     static char buffer[512];
 	snprintf(buffer, sizeof(buffer),
@@ -568,7 +572,7 @@ void App_SendFrame(hm11_t *hm11_dev, const odb_data_t *data) {
 			"pressure_hpa=%ld,altitude_msl_m=%ld,temp_celsius=%ld,"
 			"highg_acc_x=%ld,highg_acc_y=%ld,highg_acc_z=%ld,highg_acc_vertical=%ld,"
 			"gps_fix=%u,lat=%ld,lon=%ld,gps_alt=%ld,vel=%u,cog=%u,satellites_nb=%u,"
-			"kalman_z=%ld,kalman_v=%ld,pyro_roles=%u:%u:%u:%u\r\n",
+			"kalman_z=%ld,kalman_v=%ld\r\n",
 			(unsigned long)data->time_boot_ms,           // (ms) - /1
 			(unsigned)data->system_states,                // (bitfield) - /1
 			(unsigned)data->event_states,                 // (bitfield) - /1
@@ -602,17 +606,15 @@ void App_SendFrame(hm11_t *hm11_dev, const odb_data_t *data) {
 			(unsigned)data->cog,                          // (deg) - /100
 			(unsigned)data->satellites_nb,                // (count) - /1
 			(long)(data->kalman_z * 100.0f),              // (m) - /100
-			(long)(data->kalman_v * 100.0f),              // (m/s) - /100
-			(unsigned)current_config.pyro_roles[0],       // (role) - Pyro 1
-			(unsigned)current_config.pyro_roles[1],       // (role) - Pyro 2
-			(unsigned)current_config.pyro_roles[2],       // (role) - Pyro 3
-			(unsigned)current_config.pyro_roles[3]);      // (role) - Pyro 4
+			(long)(data->kalman_v * 100.0f));             // (m/s) - /100
 
 	HM11_SendString(hm11_dev, buffer);
 }
 
 void App_HandleCommands(hm11_t *hm11_dev) {
     if(!hm11_dev) return;
+
+    //if(!HM11_IsConnected(hm11_dev)) return;
 
     char cmd[HM11_RX_BUFFER_SIZE] = {0};
     if(!HM11_GetMessage(hm11_dev, cmd, sizeof(cmd))) {
@@ -649,6 +651,7 @@ void App_HandleCommands(hm11_t *hm11_dev) {
 			"CFG:DELAY_FIRE=%lu\r\n"
 			"CFG:FAIL_ARM=%lu\r\n"
 			"CFG:FAIL_APOGEE=%lu\r\n"
+			"CFG:IDEFIX_FREQ=%lu\r\n"
 			"CFG:PYRO_ROLE=0,%u\r\n"
 			"CFG:PYRO_ROLE=1,%u\r\n"
 			"CFG:PYRO_ROLE=2,%u\r\n"
@@ -671,6 +674,7 @@ void App_HandleCommands(hm11_t *hm11_dev) {
 			actual_config->fire_attempt_delay_ms,
 			actual_config->pyros_arming_failsafe_ticks,
 			actual_config->apogee_failsafe_ticks,
+			actual_config->idefix_frequency_hz,
 			actual_config->pyro_roles[0],
 			actual_config->pyro_roles[1],
 			actual_config->pyro_roles[2],
@@ -883,6 +887,13 @@ void App_HandleCommands(hm11_t *hm11_dev) {
 			}
 		}
 
+        // Idefix
+        else if(sscanf(cmd, "CFG:IDEFIX_FREQ=%lu", &uint32_val) == 1) {
+			current_config.idefix_frequency_hz = uint32_val;
+			HM11_SendString(hm11_dev, "ACK: IDEFIX_FREQ UPDATED\r\n");
+			success = true;
+		}
+
         if(!success) {
             HM11_SendString(hm11_dev, "ERR: UNKNOWN CONFIG PARAMETER\r\n");
         }
@@ -915,5 +926,19 @@ void Beacon_SendCoordinates(idefix_t *idefix_dev, const int32_t lat_e7, const in
     payload[7] = (uint8_t)((lon_e7 >> 24) & 0xFF);
 
     Idefix_SendData(idefix_dev, payload, 8);
+}
+
+void Beacon_SetFrequency(idefix_t *idefix_dev) {
+	if(Idefix_SendCommand(idefix_dev, IDEFIX_CMD_SET_FREQ) != IDEFIX_OK) {
+		return;
+    }
+
+    uint8_t payload[4];
+    payload[0] = (uint8_t)(current_config.idefix_frequency_hz & 0xFF);
+    payload[1] = (uint8_t)((current_config.idefix_frequency_hz >> 8) & 0xFF);
+    payload[2] = (uint8_t)((current_config.idefix_frequency_hz >> 16) & 0xFF);
+    payload[3] = (uint8_t)((current_config.idefix_frequency_hz >> 24) & 0xFF);
+
+    Idefix_SendData(idefix_dev, payload, 4);
 }
 /* =========== */

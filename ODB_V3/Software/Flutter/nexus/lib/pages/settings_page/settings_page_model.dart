@@ -16,6 +16,7 @@ class SettingsPageModel extends FlutterFlowModel<SettingsPageWidget> {
   late ExpandableController pyrosExpandableController;
   late ExpandableController phaseExpandableController;
   late ExpandableController parachuteExpandableController;
+  late ExpandableController idefixExpandableController;
   late ExpandableController audioExpandableController;
   late ExpandableController aProposExpandableController;
 
@@ -28,6 +29,7 @@ class SettingsPageModel extends FlutterFlowModel<SettingsPageWidget> {
     pyrosExpandableController.dispose();
     phaseExpandableController.dispose();
     parachuteExpandableController.dispose();
+    idefixExpandableController.dispose();
     audioExpandableController.dispose();
     aProposExpandableController.dispose();
   }

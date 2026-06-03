@@ -48,6 +48,7 @@ class DataServiceManager with ChangeNotifier {
   int fireAttemptDelayMs = 0;
   int pyrosArmingFailsafeTicks = 0;
   int apogeeFailsafeTicks = 0;
+  int idefixFrequencyHz = 0;
   List<int> pyroRoles = List.filled(4, 0);
   int vinMv = 0;
   double batteryVoltage = 0.0;
@@ -258,6 +259,7 @@ class DataServiceManager with ChangeNotifier {
     fireAttemptDelayMs = 0;
     pyrosArmingFailsafeTicks = 0;
     apogeeFailsafeTicks = 0;
+    idefixFrequencyHz = 0;
     pyroRoles = List.filled(4, 0);
     _safeNotifyListeners();
   }
@@ -297,6 +299,7 @@ class DataServiceManager with ChangeNotifier {
     required String fireAttemptDelayMs,
     required String pyrosArmingFailsafeTicks,
     required String apogeeFailsafeTicks,
+    required String idefixFrequencyHz,
     required List<int> pyroRoles,
   }) async {
     if (!hasConnection) {
@@ -322,6 +325,7 @@ class DataServiceManager with ChangeNotifier {
       'CFG:DELAY_FIRE=${_parseInt(fireAttemptDelayMs, this.fireAttemptDelayMs)}',
       'CFG:FAIL_ARM=${_parseInt(pyrosArmingFailsafeTicks, this.pyrosArmingFailsafeTicks)}',
       'CFG:FAIL_APOGEE=${_parseInt(apogeeFailsafeTicks, this.apogeeFailsafeTicks)}',
+      'CFG:IDEFIX_FREQ=${_parseInt(idefixFrequencyHz, this.idefixFrequencyHz)}',
       for (var i = 0; i < 4; i++)
         'CFG:PYRO_ROLE=$i,${i < pyroRoles.length ? pyroRoles[i] : 0}',
       'CFG:APPLY',
@@ -500,6 +504,10 @@ class DataServiceManager with ChangeNotifier {
             apogeeFailsafeTicks = int.tryParse(value) ?? apogeeFailsafeTicks;
             hasOdbConfig = true;
             break;
+          case 'idefix_freq':
+            idefixFrequencyHz = int.tryParse(value) ?? idefixFrequencyHz;
+            hasOdbConfig = true;
+            break;
           case 'pyro_role':
             parseConfigPyroRole(value);
             break;
@@ -522,9 +530,6 @@ class DataServiceManager with ChangeNotifier {
                 ? SensorState.ok
                 : SensorState.error;
             goodPowerState = batteryVoltage >= 5.06;
-            break;
-          case 'bat_max':
-            batteryVoltageMax = double.tryParse(value) ?? batteryVoltageMax;
             break;
 
           case 'pyro1':

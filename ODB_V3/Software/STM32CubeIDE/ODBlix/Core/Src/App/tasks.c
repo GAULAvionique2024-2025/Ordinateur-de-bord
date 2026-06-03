@@ -42,7 +42,7 @@ void Task_Telemetry(void) {
 
 void Task_Idefix(void) {
     if((flight_data.system_states & FLAG_IDEFIX_OK) == 0U) return;
-    Beacon_SendCoordinates(&idefix, flight_data.lat, flight_data.lon);
+    Beacon_SendCoordinates(&idefix, flight_stats.last_lat, flight_stats.last_lon);
 }
 
 void Task_BluetoothAppRx(void) {

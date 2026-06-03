@@ -40,6 +40,8 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
       TextEditingController();
   final TextEditingController _maxDrogueController = TextEditingController();
   final TextEditingController _maxMainController = TextEditingController();
+  final TextEditingController _idefixFrequencyController =
+      TextEditingController();
   bool _debugMode = false;
   bool _enableBuzzer = false;
   double _buzzerToneHz = 100.0;
@@ -66,6 +68,9 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
       initialExpanded: false,
     )..addListener(() => safeSetState(() {}));
     _model.parachuteExpandableController = ExpandableController(
+      initialExpanded: false,
+    )..addListener(() => safeSetState(() {}));
+    _model.idefixExpandableController = ExpandableController(
       initialExpanded: false,
     )..addListener(() => safeSetState(() {}));
     _model.audioExpandableController = ExpandableController(
@@ -101,6 +106,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
     _deployAltitudeController.dispose();
     _maxDrogueController.dispose();
     _maxMainController.dispose();
+    _idefixFrequencyController.dispose();
     _model.dispose();
 
     super.dispose();
@@ -125,6 +131,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
       data.fireAttemptDelayMs,
       data.pyrosArmingFailsafeTicks,
       data.apogeeFailsafeTicks,
+      data.idefixFrequencyHz,
       data.pyroRoles.join(','),
     ].join('|');
   }
@@ -159,6 +166,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
           _deployAltitudeController.clear();
           _maxDrogueController.clear();
           _maxMainController.clear();
+          _idefixFrequencyController.clear();
           for (var i = 0; i < _pyroRoleValues.length; i++) {
             _pyroRoleValues[i] = 0;
           }
@@ -208,6 +216,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
             .toStringAsFixed(2);
         _maxDrogueController.text = data.drogueFireAttemptMaxNb.toString();
         _maxMainController.text = data.mainFireAttemptMaxNb.toString();
+        _idefixFrequencyController.text = data.idefixFrequencyHz.toString();
         for (var i = 0; i < _pyroRoleValues.length; i++) {
           _pyroRoleValues[i] = i < data.pyroRoles.length ? data.pyroRoles[i] : 0;
         }
@@ -801,7 +810,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
             children: [
               _buildLabeledSettingField(
                 context,
-                label: 'Seuil accélération verticale lancement (g)',
+                label: 'Seuil accélération verticale lancement (m/s²)',
                 hintText: '',
                 keyboardType: const TextInputType.numberWithOptions(
                   decimal: true,
@@ -884,6 +893,55 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                 },
               ),
             ].divide(const SizedBox(height: 12.0)),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildIdefixSection(
+    BuildContext context,
+    TextStyle headerStyle, {
+    required DataServiceManager data,
+    required bool enabled,
+  }) {
+    return _buildSectionCard(
+      context,
+      ExpandableNotifier(
+        controller: _model.idefixExpandableController,
+        child: ExpandablePanel(
+          header: Row(
+            children: [
+              Icon(
+                Icons.memory,
+                color: FlutterFlowTheme.of(context).secondary,
+                size: 24,
+              ),
+              Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
+                child: Text('Idefix', style: headerStyle),
+              ),
+            ],
+          ),
+          collapsed: const SizedBox.shrink(),
+          expanded: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildLabeledSettingField(
+                context,
+                label: 'Fréquence Idefix (Hz)',
+                hintText: '',
+                keyboardType: TextInputType.number,
+                controller: _idefixFrequencyController,
+                enabled: enabled,
+                onChanged: (value) {
+                  final parsed = int.tryParse(value);
+                  if (parsed == null) return;
+
+                  data.idefixFrequencyHz = parsed;
+                },
+              ),
+            ],
           ),
         ),
       ),
@@ -1163,6 +1221,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                       fireAttemptDelayMs: _pyroDelayController.text,
                       pyrosArmingFailsafeTicks: _pyroFailsafeController.text,
                       apogeeFailsafeTicks: _apogeeFailsafeController.text,
+                      idefixFrequencyHz: _idefixFrequencyController.text,
                       pyroRoles: _pyroRoleValues,
                     );
                     if (!context.mounted) return;
@@ -1227,6 +1286,12 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
         enabled: odbConnected,
       ),
       _buildParachuteSection(
+        context,
+        expandableHeaderStyle,
+        data: data,
+        enabled: odbConnected,
+      ),
+      _buildIdefixSection(
         context,
         expandableHeaderStyle,
         data: data,
