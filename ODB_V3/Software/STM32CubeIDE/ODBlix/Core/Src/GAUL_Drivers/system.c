@@ -308,7 +308,7 @@ odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats) {
 
     if(Idefix_Init(&idefix) == IDEFIX_OK) {
         system_states |= FLAG_IDEFIX_OK;
-
+        Beacon_SetFrequency(&idefix);
     } else {
         warning += 1;
         printf("Erreur : Init IdeFIX\n");
@@ -565,7 +565,7 @@ void App_SendFrame(hm11_t *hm11_dev, const odb_data_t *data) {
 
     //if(!HM11_IsConnected(hm11_dev)) return;
 
-    static char buffer[512];
+    static char buffer[1024];
 	snprintf(buffer, sizeof(buffer),
 			"DATA,time_boot_ms=%lu,system_states=%u,event_states=%u,mission_state=%u,battery_mv=%u,"
 			"roll=%ld,pitch=%ld,yaw=%ld,imu_acc_x=%ld,imu_acc_y=%ld,imu_acc_z=%ld,imu_gyro_x=%ld,imu_gyro_y=%ld,imu_gyro_z=%ld,imu_mag_x=%ld,imu_mag_y=%ld,imu_mag_z=%ld,imu_acc_vertical=%ld,"
@@ -631,7 +631,7 @@ void App_HandleCommands(hm11_t *hm11_dev) {
     if(strncmp(cmd, "HELLO", 5) == 0) {
 		const odb_config_t *actual_config = Config_Get();
 
-		static char tx_buf[512];
+		static char tx_buf[1024];
 		snprintf(tx_buf, sizeof(tx_buf),
 			"VER:%s\r\n"
 			"CFG:NAME=%s\r\n"

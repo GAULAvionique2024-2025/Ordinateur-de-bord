@@ -347,7 +347,7 @@ class BluetoothServiceManager with ChangeNotifier {
       return;
     }
 
-    final payload = message.codeUnits;
+    final payload = utf8.encode(message);
     try {
       for (final c in preferred) {
         final withoutResponse = c.properties.writeWithoutResponse && !c.properties.write;
