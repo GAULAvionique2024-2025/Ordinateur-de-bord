@@ -138,7 +138,7 @@ typedef struct {
 typedef struct __attribute__((packed)) {
     // Status
     uint32_t    time_boot_ms;       // Timestamp since system boot in milliseconds (ms)
-    uint16_t    system_states;      // Current system/component states -> linked with odb_stats_t
+    uint16_t    system_states;      // Current system/component states
     uint8_t     event_states;       // Current events states (pyros fired, apogee detected, etc.) -> linked with odb_stats_t
     uint8_t     mission_state;      // Mission state (preflight, inflight, postflight) -> Linked with FSM
     uint16_t    battery_mv;         // Main battery voltage in millivolts (mV)

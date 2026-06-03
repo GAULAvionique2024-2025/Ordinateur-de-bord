@@ -42,6 +42,6 @@ typedef struct {
 void KalmanNav_Init(kalman_nav_t *dev, float mean_alt, float *samples, uint8_t sample_count);
 
 void KalmanNav_Predict(kalman_nav_t *dev, float acc_world_z);
-void KalmanNav_Update(kalman_nav_t *dev, float measured_alt);
+void KalmanNav_Update(kalman_nav_t *dev, float measured_alt, bool is_machlock);
 
 #endif /* INC_GAUL_DRIVERS_LOWLEVEL_KALMAN_NAV_H_ */

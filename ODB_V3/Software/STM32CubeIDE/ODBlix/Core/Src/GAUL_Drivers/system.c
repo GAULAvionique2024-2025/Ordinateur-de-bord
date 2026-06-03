@@ -402,11 +402,11 @@ void ODB_Update(odb_data_t *data, odb_stats_t *stats) {
     // Kalman filter update with dynamic R_alt
     float raw_accel_z = data->highg_acc_vertical;
     Profiler_StartTask(PROFILE_TASK_KALMAN);
-    if(fabs(raw_accel_z) < current_config.acc_z_launch_threshold * GRAVITY_MS2) {
+    if(fabs(raw_accel_z) < current_config.acc_z_launch_threshold) {
         raw_accel_z = data->imu_acc_vertical;
     }
     KalmanNav_Predict(&kalman_filter, raw_accel_z);
-    KalmanNav_Update(&kalman_filter, data->altitude_msl_m);
+    KalmanNav_Update(&kalman_filter, data->altitude_msl_m, data->event_states & FLAG_MACH_LOCK_ENABLED);
     data->kalman_z = (float)kalman_filter.z;
     data->kalman_v = (float)kalman_filter.v;
     Profiler_StopTask(PROFILE_TASK_KALMAN);

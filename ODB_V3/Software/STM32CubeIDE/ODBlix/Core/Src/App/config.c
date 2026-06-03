@@ -36,12 +36,12 @@ const odb_config_t default_config = {
     },
 
     // Phase
-    .acc_z_launch_threshold = 3.5f,
-    .boost_phase_v_threshold = 200.0f,
-    .apogee_detect_v_threshold = -2.0f,
-    .landing_detect_v_threshold = 0.5f,
-    .landing_detect_threshold_ms = 10000,
-    .apogee_failsafe_ticks = 60000,
+    .acc_z_launch_threshold = 29.42f, 				// m/s2 (3.0G)
+    .boost_phase_v_threshold = 100.0f,				// m/s
+    .apogee_detect_v_threshold = -2.0f,				// m/s
+    .landing_detect_v_threshold = 0.5f,				// m/s
+    .landing_detect_threshold_ms = 10000,			// ms
+    .apogee_failsafe_ticks = 60000,					// tick
 
     // Parachute
     .main_deploy_altitude_threshold_m = 450.0f,
