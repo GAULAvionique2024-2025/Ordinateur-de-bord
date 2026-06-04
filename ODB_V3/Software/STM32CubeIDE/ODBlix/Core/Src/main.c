@@ -28,6 +28,7 @@
 #include "App/logger.h"
 #include "App/profiler.h"
 #include "App/config.h"
+#include "App/flight_fsm.h"
 #include "GAUL_Drivers/adxl382.h"
 #include "GAUL_Drivers/bno055.h"
 #include "GAUL_Drivers/hm11.h"
@@ -270,6 +271,7 @@ int main(void)
   MX_TIM4_Init();
   MX_TIM5_Init();
   /* USER CODE BEGIN 2 */
+  /*
   DWT_Init();
   ODB_Init(&flight_data, &flight_stats);
   Scheduler_Init();
@@ -288,7 +290,12 @@ int main(void)
   Scheduler_SetActive("Idefix", false);
   Scheduler_SetActive("BTRx", true);
   Scheduler_SetActive("BTTx", true);
-
+  */
+  DWT_Init();
+  ODB_Init(&flight_data, &flight_stats);
+  Logger_Init();
+  Scheduler_Init();
+  Profiler_Init();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -296,9 +303,39 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
+	  /* === TESTS === */
+	  Profiler_StartTask(PROFILE_DATAUPDATE);
+	  ODB_Update(&flight_data, &flight_stats);
+	  Profiler_StopTask(PROFILE_DATAUPDATE);
+
+	  Profiler_StartTask(PROFILE_FSM);
+	  FSM_Update();
+	  Profiler_StopTask(PROFILE_FSM);
+
+	  Profiler_StartTask(PROFILE_LOGGER);
+	  Logger_Task();
+	  Profiler_StopTask(PROFILE_LOGGER);
+
+	  Profiler_StartTask(PROFILE_TELEMETRY);
+	  Telemetry_SendRocketData(&rfd900x, 2, &flight_data, HAL_GetTick());
+	  Profiler_StopTask(PROFILE_TELEMETRY);
+
+	  Profiler_StartTask(PROFILE_IDEFIX);
+	  Beacon_SendCoordinates(&idefix, 10000000, 10000000);
+	  Profiler_StopTask(PROFILE_IDEFIX);
+
+	  Profiler_StartTask(PROFILE_BTRX);
+	  App_SendFrame(&hm11, &flight_data);
+	  Profiler_StopTask(PROFILE_BTRX);
+
+	  Profiler_StartTask(PROFILE_BTTX);
+	  App_HandleCommands(&hm11);
+	  Profiler_StopTask(PROFILE_BTTX);
+
+	  Profiler_LogResults(1000);
 
     /* USER CODE BEGIN 3 */
-    Scheduler_Run();
+    //Scheduler_Run();
   }
   /* USER CODE END 3 */
 }

@@ -348,13 +348,15 @@ void ODB_Update(odb_data_t *data, odb_stats_t *stats) {
         return;
     }
 
+    Profiler_StartTask(PROFILE_TASK_ADC);
     SystemMeasurements_UpdateInternalCalibration(&system_measurements);
     SystemMeasurements_ComputeTemperature(&system_measurements);
     SystemMeasurements_ComputePower(&system_measurements);
     SystemMeasurements_ComputePyros(&system_measurements);
+    Profiler_StopTask(PROFILE_TASK_ADC);
 
-    float temperature, pressure;
     Profiler_StartTask(PROFILE_TASK_BARO);
+    float temperature, pressure;
     MS5611_Update(&ms5611);
     if(MS5611_Compute(&ms5611, &temperature, &pressure) == MS5611_OK) {
     	data->pressure_hpa = pressure;
@@ -391,8 +393,8 @@ void ODB_Update(odb_data_t *data, odb_stats_t *stats) {
     BNO055_ReadTemperature(&bno055);
     Profiler_StopTask(PROFILE_TASK_IMU);
 
-    const float current_quat[4] = {bno055.quat.w, bno055.quat.x, bno055.quat.y, bno055.quat.z};
     Profiler_StartTask(PROFILE_TASK_HIGHG);
+    const float current_quat[4] = {bno055.quat.w, bno055.quat.x, bno055.quat.y, bno055.quat.z};
     if(ADXL382_ReadData(&adxl382, current_quat) == ADXL382_OK) {
       data->highg_acc_x = adxl382.acc_x;
       data->highg_acc_y = adxl382.acc_y;
@@ -402,8 +404,8 @@ void ODB_Update(odb_data_t *data, odb_stats_t *stats) {
     Profiler_StopTask(PROFILE_TASK_HIGHG);
 
     // Kalman filter update with dynamic R_alt
-    float raw_accel_z = data->highg_acc_vertical;
     Profiler_StartTask(PROFILE_TASK_KALMAN);
+    float raw_accel_z = data->highg_acc_vertical;
     if(fabs(raw_accel_z) < current_config.acc_z_launch_threshold) {
         raw_accel_z = data->imu_acc_vertical;
     }

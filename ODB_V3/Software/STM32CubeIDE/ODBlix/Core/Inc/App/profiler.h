@@ -19,14 +19,24 @@ typedef enum {
     PROFILE_TASK_KALMAN,
     PROFILE_TASK_TELEMETRY,
 	PROFILE_TASK_BLE,
-    PROFILE_MAX_TASKS,
+	PROFILE_TASK_ADC,
+
+	PROFILE_DATAUPDATE,
+	PROFILE_FSM,
+	PROFILE_LOGGER,
+	PROFILE_TELEMETRY,
+	PROFILE_IDEFIX,
+	PROFILE_BTRX,
+	PROFILE_BTTX,
 	// ...
+
+    PROFILE_MAX_TASKS
 } profiler_task_id_t;
 
 typedef struct {
     uint32_t start_cycles;
-    float    current_time_ms;
-    float    max_time_ms;
+	uint32_t current_time_us;
+	uint32_t max_time_us;
 } task_metrics_t;
 
 
