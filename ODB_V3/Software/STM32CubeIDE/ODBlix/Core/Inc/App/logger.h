@@ -50,4 +50,6 @@ odb_data_t Logger_GetLastFlightData(void);
 odb_stats_t Logger_GetLastFlightStats(odb_stats_t *stats);
 bool Logger_ResetFlightHistoric(void);
 
+int8_t Logger_Erase(void);
+
 #endif /* INC_APP_LOGGER_H_ */

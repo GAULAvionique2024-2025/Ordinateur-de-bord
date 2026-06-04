@@ -242,3 +242,22 @@ bool Logger_ResetFlightHistoric(void) {
     }
     return true;
 }
+
+int8_t Logger_Erase(void) {
+	uint32_t current_addr = 0;
+
+	while(current_addr < LOGGER_MAX_ALLOWED_ADDRESS) {
+		if((current_addr + W25Q512_BLOCK_SIZE) > LOGGER_MAX_ALLOWED_ADDRESS) {
+			if(W25Q_EraseSector(&w25q, current_addr) != 0) {
+				return -1;
+			}
+			current_addr += W25Q512_SECTOR_SIZE;
+		} else {
+			if(W25Q_EraseBlock(&w25q, current_addr) != 0) {
+				return -1;
+			}
+			current_addr += W25Q512_BLOCK_SIZE;
+		}
+	}
+	return 0;
+}

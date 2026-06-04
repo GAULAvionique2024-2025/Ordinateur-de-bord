@@ -77,4 +77,6 @@ int8_t Config_SaveToFlash(void);
 void Config_LoadDefaults(void);
 const odb_config_t* Config_Get(void);
 
+int Config_Erase(void);
+
 #endif /* INC_APP_CONFIG_H_ */

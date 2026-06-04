@@ -90,3 +90,12 @@ void Config_LoadDefaults(void) {
 const odb_config_t* Config_Get(void) {
     return &current_config;
 }
+
+int Config_Erase(void) {
+	if(W25Q_EraseSector(&w25q, FLASH_CONFIG_START_ADDRESS) != 0) {
+		return -1;
+	}
+	Config_LoadDefaults();
+
+	return 0;
+}
