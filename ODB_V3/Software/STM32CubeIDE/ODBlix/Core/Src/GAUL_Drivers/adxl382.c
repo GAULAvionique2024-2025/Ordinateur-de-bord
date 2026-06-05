@@ -132,49 +132,57 @@ bool ADXL382_IsDataReady(adxl382_t *dev) {
     return false; // failure
 }
 
-// TODO: seperate compute + read reg (like baro)
-adxl382_error_t ADXL382_ReadData(adxl382_t *dev, const float current_quat[4]) {
-    uint8_t buffer[8];
-    if(ADXL382_ReadRegs(dev->hi2c, ADXL382_REG_XDATA_H, buffer, 8) == 0) {
-        int16_t x = (int16_t)(((uint16_t)buffer[0] << 8) | buffer[1]);
-        int16_t y = (int16_t)(((uint16_t)buffer[2] << 8) | buffer[3]);
-        int16_t z = (int16_t)(((uint16_t)buffer[4] << 8) | buffer[5]);
-        int16_t t_brut = (int16_t)(((uint16_t)buffer[6] << 8) | buffer[7]);
-        t_brut >>= 4; // 16 bits -> 12 bits adc
+adxl382_error_t ADXL382_ReadData(adxl382_t *dev) {
+    if(!dev || !dev->hi2c) return ADXL382_ERROR;
 
-        dev->temp = 25.0f + ((float)t_brut - 550.0f) / 10.2f;
-
-        float t = dev->temp;
-        float delta_t = dev->temp - 25.0f;
-
-        float scale_factor_25c = 2000.0f;
-        if(dev->range == ADXL382_RANGE_30G) {
-            scale_factor_25c = 1000.0f;
-        } else if(dev->range == ADXL382_RANGE_60G) {
-            scale_factor_25c = 500.0f;
-        }
-
-        // Datasheet Compensation (+0.02%/C)
-        float current_scale_factor = scale_factor_25c * (1.0f + (0.0002f * delta_t));
-        float acc_x_raw = (float)x / current_scale_factor;
-        float acc_y_raw = (float)y / current_scale_factor;
-        float acc_z_raw = (float)z / current_scale_factor;
-
-        // Chip Thermal Compensation
-        float offset_x = Thermal_ComputeOffset(dev->x_axis_offset, t);
-        float offset_y = Thermal_ComputeOffset(dev->y_axis_offset, t);
-        float offset_z = Thermal_ComputeOffset(dev->z_axis_offset, t);
-
-        dev->acc_x = (acc_x_raw - offset_x) * GRAVITY_MS2;
-		dev->acc_y = (acc_y_raw - offset_y) * GRAVITY_MS2;
-		dev->acc_z = (acc_z_raw - offset_z) * GRAVITY_MS2;
-
-        float compensated_accel[3] = {dev->acc_x, dev->acc_y, dev->acc_z};
-        dev->acc_vertical = Math_ComputeWorldVerticalAcc(compensated_accel, current_quat, true);
-
-    } else {
-        return ADXL382_I2C_ERROR;
+    if(ADXL382_ReadRegs(dev->hi2c, ADXL382_REG_XDATA_H, dev->raw_buffer, 8) != 0) {
+    	return ADXL382_I2C_ERROR;
     }
 
-    return ADXL382_OK; // success
+    return ADXL382_OK;
+}
+
+void ADXL382_Compute(adxl382_t *dev, const float current_quat[4]) {
+    if(!dev) return;
+
+    int16_t x = (int16_t)(((uint16_t)dev->raw_buffer[0] << 8) | dev->raw_buffer[1]);
+    int16_t y = (int16_t)(((uint16_t)dev->raw_buffer[2] << 8) | dev->raw_buffer[3]);
+    int16_t z = (int16_t)(((uint16_t)dev->raw_buffer[4] << 8) | dev->raw_buffer[5]);
+
+    int16_t t_brut = (int16_t)(((uint16_t)dev->raw_buffer[6] << 8) | dev->raw_buffer[7]);
+    t_brut >>= 4; // 16 bits -> 12 bits adc
+
+    dev->temp = 25.0f + ((float)t_brut - 550.0f) * 0.098039215f;
+
+    float t = dev->temp;
+    float delta_t = dev->temp - 25.0f;
+
+    float scale_factor_25c = 2000.0f;
+    if (dev->range == ADXL382_RANGE_30G) {
+        scale_factor_25c = 1000.0f;
+    } else if (dev->range == ADXL382_RANGE_60G) {
+        scale_factor_25c = 500.0f;
+    }
+
+    // Datasheet Compensation (+0.02%/C)
+    float current_scale_factor =  1.0f / (scale_factor_25c * (1.0f + (0.0002f * delta_t)));
+    float acc_x_raw = (float)x * current_scale_factor;
+    float acc_y_raw = (float)y * current_scale_factor;
+    float acc_z_raw = (float)z * current_scale_factor;
+
+    // Chip Thermal Compensation
+    float offset_x = Thermal_ComputeOffset(dev->x_axis_offset, t);
+    float offset_y = Thermal_ComputeOffset(dev->y_axis_offset, t);
+    float offset_z = Thermal_ComputeOffset(dev->z_axis_offset, t);
+
+    float accel[3];
+    accel[0] = acc_x_raw - offset_x;
+    accel[1] = acc_y_raw - offset_y;
+    accel[2] = acc_z_raw - offset_z;
+
+    dev->acc_x = accel[0];
+    dev->acc_y = accel[1];
+    dev->acc_z = accel[2];
+
+    dev->acc_vertical = Math_ComputeWorldVerticalAcc(accel, current_quat, false);
 }

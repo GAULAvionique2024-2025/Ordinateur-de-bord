@@ -65,6 +65,7 @@ typedef struct {
     adxl382_range_t                 range;
     coeff_poly3_t					x_axis_offset, y_axis_offset, z_axis_offset;
 
+    uint8_t                         raw_buffer[8];	// Data stored by registers
     float             				acc_x;	        // m/s2, after thermal compensation and local frame transformation
     float             				acc_y;	        // m/s2, after thermal compensation and local frame transformation
     float             				acc_z;	        // m/s2, after thermal compensation and local frame transformation
@@ -75,8 +76,9 @@ typedef struct {
 
 adxl382_error_t ADXL382_Init(adxl382_t *dev);
 
-adxl382_error_t ADXL382_ReadData(adxl382_t *dev, const float current_quat[4]);
 bool ADXL382_IsDataReady(adxl382_t *dev);
 int8_t ADXL382_SetMode(adxl382_t *dev, adxl382_mode_t mode);
+adxl382_error_t ADXL382_ReadData(adxl382_t *dev);
+void ADXL382_Compute(adxl382_t *dev, const float current_quat[4]);
 
 #endif /* INC_GAUL_DRIVERS_ADXL382_H_ */

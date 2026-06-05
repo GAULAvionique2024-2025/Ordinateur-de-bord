@@ -395,11 +395,12 @@ void ODB_Update(odb_data_t *data, odb_stats_t *stats) {
 
     Profiler_StartTask(PROFILE_TASK_HIGHG);
     const float current_quat[4] = {bno055.quat.w, bno055.quat.x, bno055.quat.y, bno055.quat.z};
-    if(ADXL382_ReadData(&adxl382, current_quat) == ADXL382_OK) {
-      data->highg_acc_x = adxl382.acc_x;
-      data->highg_acc_y = adxl382.acc_y;
-      data->highg_acc_z = adxl382.acc_z;
-      data->highg_acc_vertical = adxl382.acc_vertical;
+    if(ADXL382_ReadData(&adxl382) == ADXL382_OK) {
+    	ADXL382_Compute(&adxl382, current_quat);
+		data->highg_acc_x = adxl382.acc_x;
+		data->highg_acc_y = adxl382.acc_y;
+		data->highg_acc_z = adxl382.acc_z;
+		data->highg_acc_vertical = adxl382.acc_vertical;
     }
     Profiler_StopTask(PROFILE_TASK_HIGHG);
 

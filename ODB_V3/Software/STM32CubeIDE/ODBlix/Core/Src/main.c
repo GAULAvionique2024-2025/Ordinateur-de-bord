@@ -320,9 +320,11 @@ int main(void)
 	  Telemetry_SendRocketData(&rfd900x, 2, &flight_data, HAL_GetTick());
 	  Profiler_StopTask(PROFILE_TELEMETRY);
 
+	  /*
 	  Profiler_StartTask(PROFILE_IDEFIX);
 	  Beacon_SendCoordinates(&idefix, 10000000, 10000000);
 	  Profiler_StopTask(PROFILE_IDEFIX);
+	  */
 
 	  Profiler_StartTask(PROFILE_BTRX);
 	  App_SendFrame(&hm11, &flight_data);
