@@ -1136,12 +1136,21 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                       : 'Inconnue',
                 ),
               ),
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                title: const Text('Version de la trame Config ODB'),
+                subtitle: Text(
+                  data.odbConfigFrameVersion.isNotEmpty
+                      ? data.odbConfigFrameVersion
+                      : 'Inconnue',
+                ),
+              ),
               Align(
                 alignment: Alignment.centerRight,
                 child: ElevatedButton.icon(
                   onPressed: data.hasConnection
                       ? () async {
-                          await data.btService.send('CFG:RESET\r\n');
+                          await data.resetOdbSettingsToDefault();
                           if (!context.mounted) return;
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(

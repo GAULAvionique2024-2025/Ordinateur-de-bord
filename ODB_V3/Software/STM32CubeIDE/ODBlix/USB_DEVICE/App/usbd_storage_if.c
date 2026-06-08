@@ -22,8 +22,8 @@
 #include "usbd_storage_if.h"
 
 /* USER CODE BEGIN INCLUDE */
-#include "GAUL_Drivers/w25q512jv.h"
-#include "App/config.h"
+#include "Systems/config.h"
+#include "Drivers/w25q512jv.h"
 #include <stdlib.h>
 #include <string.h>
 

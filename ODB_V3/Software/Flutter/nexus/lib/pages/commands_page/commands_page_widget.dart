@@ -11,7 +11,6 @@ import 'package:nexus/services/data_service.dart';
 import 'package:nexus/services/console_service.dart';
 import 'package:nexus/widgets/status_bluetooth_card.dart';
 
-
 class CommandsPageWidget extends StatefulWidget {
   const CommandsPageWidget({super.key});
 
@@ -317,9 +316,9 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                           description: 'Vérification de la connectivité',
                           buttonText: 'Exécuter',
                           buttonColor: connected ? FlutterFlowTheme.of(context).primary : FlutterFlowTheme.of(context).secondaryText,
-                          onPressed: connected ? () {
+                          onPressed: connected ? () async {
                             ConsoleService().log('Test Ping demandé');
-                            bt.send('PING\r\n');
+                            await data.commandPing();
                           } : null,
                         ),
                         _buildActionRow(
@@ -329,8 +328,8 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                           buttonText: 'Exécuter',
                           buttonColor: connected ? FlutterFlowTheme.of(context).primary : FlutterFlowTheme.of(context).secondaryText,
                           onPressed: connected ? () {
-                            ConsoleService().log('Test Capteurs demandé');
-                            bt.send('TEST1\r\n');
+                            ConsoleService().log('Test Capteurs demandé (Pas encore implémenté)');
+                            //bt.send('TEST1\r\n');
                           } : null,
                         ),
                         _buildActionRow(
@@ -340,8 +339,8 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                           buttonText: 'Exécuter',
                           buttonColor: connected ? FlutterFlowTheme.of(context).primary : FlutterFlowTheme.of(context).secondaryText,
                           onPressed: connected ? () {
-                            ConsoleService().log('Test Communication demandé');
-                            bt.send('TEST2\r\n');
+                            ConsoleService().log('Test Communication demandé (Pas encore implémenté)');
+                            //bt.send('TEST2\r\n');
                           } : null,
                         ),
                         _buildActionRow(
@@ -351,8 +350,8 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                           buttonText: 'Exécuter',
                           buttonColor: connected ? FlutterFlowTheme.of(context).primary : FlutterFlowTheme.of(context).secondaryText,
                           onPressed: connected ? () {
-                            ConsoleService().log('Test Mémoire demandé');
-                            bt.send('TEST3\r\n');
+                            ConsoleService().log('Test Mémoire demandé (Pas encore implémenté)');
+                            //bt.send('TEST3\r\n');
                           } : null,
                         ),
                       ].divide(const SizedBox(height: 12.0)),
@@ -371,8 +370,8 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                           buttonText: 'Calibrer',
                           buttonColor: connected ? FlutterFlowTheme.of(context).tertiary : FlutterFlowTheme.of(context).secondaryText,
                           onPressed: connected ? () {
-                            ConsoleService().log('Calibration Accéléromètre demandé');
-                            bt.send('CALIB1\r\n');
+                            ConsoleService().log('Calibration Accéléromètre demandé (Pas encore implémenté)');
+                            //bt.send('CALIB1\r\n');
                           } : null,
                         ),
                         _buildActionRow(
@@ -382,8 +381,8 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                           buttonText: 'Calibrer',
                           buttonColor: connected ? FlutterFlowTheme.of(context).tertiary : FlutterFlowTheme.of(context).secondaryText,
                           onPressed: connected ? () {
-                            ConsoleService().log('Calibration Baromètre demandé');
-                            bt.send('CALIB2\r\n');
+                            ConsoleService().log('Calibration Baromètre demandé (Pas encore implémenté)');
+                            //bt.send('CALIB2\r\n');
                           } : null,
                         ),
                       ].divide(const SizedBox(height: 12.0)),
@@ -400,11 +399,11 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                           child: Padding(
                             padding: const EdgeInsets.all(12.0),
                             child: FFButtonWidget(
-                              onPressed: connected ? () {
-                                ConsoleService().log('Verrouiller demandé');
-                                bt.send(data.pyrosArmed ? 'ARM0\r\n' : 'ARM1\r\n');
+                              onPressed: connected ? () async {
+                                ConsoleService().log(data.eventPyrosArmed ? 'Désarmement demandé' : 'Armement demandé');
+                                await data.commandArm(!data.eventPyrosArmed);
                               } : null,
-                              text: (connected && data.pyrosArmed) ? 'Armé' : 'Désarmé',
+                              text: (connected && data.eventPyrosArmed) ? 'Désarmer' : 'Armer',
                               options: FFButtonOptions(
                                 width: 150.0,
                                 height: 48.0,
@@ -441,45 +440,45 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                             _buildPyroTile(
                               context,
                               title: 'Pyro 1',
-                              subtitle: 'Main Parachute',
-                              enabled: connected && data.pyrosArmed && data.pyros[0],
-                              buttonLabel: connected ? ((data.pyrosArmed && data.pyros[0]) ? 'Déclencher' : 'Désarmé / Déconnecté') : 'Inconnu',
-                              onPressed: (connected && data.pyrosArmed && data.pyros[0]) ? () {
+                              subtitle: data.pyroRoleLabel(0, connected: connected),
+                              enabled: connected && data.eventPyrosArmed && data.pyros[0],
+                              buttonLabel: connected ? ((data.eventPyrosArmed && data.pyros[0]) ? 'Déclencher' : 'Désarmé / Déconnecté') : 'Inconnu',
+                              onPressed: (connected && data.eventPyrosArmed && data.pyros[0]) ? () async {
                                 ConsoleService().log('Déclenchement pyro 1 demandé');
-                                bt.send('P1\r\n');
+                                await data.commandFire(0);
                               } : null,
                             ),
                             _buildPyroTile(
                               context,
                               title: 'Pyro 2',
-                              subtitle: 'Drogue Parachute',
-                              enabled: connected && data.pyrosArmed && data.pyros[1],
-                              buttonLabel: connected ? ((data.pyrosArmed && data.pyros[1]) ? 'Déclencher' : 'Désarmé / Déconnecté') : 'Inconnu',
-                              onPressed: (connected && data.pyrosArmed && data.pyros[1]) ? () {
+                              subtitle: data.pyroRoleLabel(1, connected: connected),
+                              enabled: connected && data.eventPyrosArmed && data.pyros[1],
+                              buttonLabel: connected ? ((data.eventPyrosArmed && data.pyros[1]) ? 'Déclencher' : 'Désarmé / Déconnecté') : 'Inconnu',
+                              onPressed: (connected && data.eventPyrosArmed && data.pyros[1]) ? () async {
                                 ConsoleService().log('Déclenchement pyro 2 demandé');
-                                bt.send('P2\r\n');
+                                await data.commandFire(1);
                               } : null,
                             ),
                             _buildPyroTile(
                               context,
                               title: 'Pyro 3',
-                              subtitle: 'Auxilliaire',
-                              enabled: connected && data.pyrosArmed && data.pyros[2],
-                              buttonLabel: connected ? ((data.pyrosArmed && data.pyros[2]) ? 'Déclencher' : 'Désarmé / Déconnecté') : 'Inconnu',
-                              onPressed: (connected && data.pyrosArmed && data.pyros[2]) ? () {
+                              subtitle: data.pyroRoleLabel(2, connected: connected),
+                              enabled: connected && data.eventPyrosArmed && data.pyros[2],
+                              buttonLabel: connected ? ((data.eventPyrosArmed && data.pyros[2]) ? 'Déclencher' : 'Désarmé / Déconnecté') : 'Inconnu',
+                              onPressed: (connected && data.eventPyrosArmed && data.pyros[2]) ? () async {
                                 ConsoleService().log('Déclenchement pyro 3 demandé');
-                                bt.send('P3\r\n');
+                                await data.commandFire(2);
                               } : null,
                             ),
                             _buildPyroTile(
                               context,
                               title: 'Pyro 4',
-                              subtitle: 'Auxilliaire',
-                              enabled: connected && data.pyrosArmed && data.pyros[3],
-                              buttonLabel: connected ? ((data.pyrosArmed && data.pyros[3]) ? 'Déclencher' : 'Désarmé / Déconnecté') : 'Inconnu',
-                              onPressed: (connected && data.pyrosArmed && data.pyros[3]) ? () {
+                              subtitle: data.pyroRoleLabel(3, connected: connected),
+                              enabled: connected && data.eventPyrosArmed && data.pyros[3],
+                              buttonLabel: connected ? ((data.eventPyrosArmed && data.pyros[3]) ? 'Déclencher' : 'Désarmé / Déconnecté') : 'Inconnu',
+                              onPressed: (connected && data.eventPyrosArmed && data.pyros[3]) ? () async {
                                 ConsoleService().log('Déclenchement pyro 4 demandé');
-                                bt.send('P4\r\n');
+                                await data.commandFire(3);
                               } : null,
                             ),
                           ],

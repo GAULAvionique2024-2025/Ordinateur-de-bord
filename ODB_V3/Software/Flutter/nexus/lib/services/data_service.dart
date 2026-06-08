@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'dart:math';
+import 'dart:convert';
 import 'package:nexus/services/bluetooth_service.dart';
 import 'package:nexus/services/console_service.dart';
 
@@ -10,6 +11,15 @@ enum RadioState { disconnected, connecting, connected }
 class DataServiceManager with ChangeNotifier {
   static const int stageRoleBooster = 2;
   static const int stageRoleSustainer = 3;
+  static const int eventFlagPyrosArmed = 1 << 0;
+  static const int eventFlagPyro1Fired = 1 << 1;
+  static const int eventFlagPyro2Fired = 1 << 2;
+  static const int eventFlagPyro3Fired = 1 << 3;
+  static const int eventFlagPyro4Fired = 1 << 4;
+  static const int eventFlagApogeeDetected = 1 << 5;
+  static const int eventFlagMainDeployed = 1 << 6;
+  static const int eventFlagDrogueDeployed = 1 << 7;
+  static const int eventFlagMachLockEnabled = 1 << 8;
 
   final BluetoothServiceManager btService;
   DataServiceManager(this.btService);
@@ -30,6 +40,7 @@ class DataServiceManager with ChangeNotifier {
   int missionState = -1;
   String odbState = '';
   String odbFrameVersion = '';
+  String odbConfigFrameVersion = '';
   bool hasOdbConfig = false;
   String odbName = '';
   int stageRole = stageRoleSustainer;
@@ -117,6 +128,29 @@ class DataServiceManager with ChangeNotifier {
 
   int get pyrosActiveCount => pyros.where((p) => p).length;
   String get pyrosSummary => pyros.map((p) => p ? '1' : '0').join(',');
+  static const List<String> _pyroRoleNames = [
+    'None',
+    'Main',
+    'Drogue',
+    'Main #2',
+    'Drogue #1',
+  ];
+
+  String pyroRoleLabel(int pyroIndex, {bool connected = true}) {
+    if (!connected) return '-';
+    final roleIndex = pyroIndex < pyroRoles.length ? pyroRoles[pyroIndex] : 0;
+    if (roleIndex < 0 || roleIndex >= _pyroRoleNames.length) {
+      return _pyroRoleNames.first;
+    }
+    return _pyroRoleNames[roleIndex];
+  }
+
+  String pyroDisplayLabel(int pyroIndex, {required bool connected}) {
+    return connected
+        ? 'Pyro ${pyroIndex + 1} (${pyroRoleLabel(pyroIndex, connected: connected)})'
+        : 'Pyro ${pyroIndex + 1} (-)';
+  }
+
   String get missionStateDisplay {
     switch (missionState) {
       case 0:
@@ -134,7 +168,32 @@ class DataServiceManager with ChangeNotifier {
 
   String get systemStateDisplay =>
       systemStates > 0 ? 'Flags $systemStates' : '—';
-  String get eventStateDisplay => eventStates > 0 ? 'Events $eventStates' : '—';
+  String get eventStateDisplay {
+    if (eventStates <= 0) return '—';
+
+    final activeFlags = <String>[];
+    if (eventPyrosArmed) activeFlags.add('Pyros armed');
+    if (eventPyro1Fired) activeFlags.add('Pyro 1 fired');
+    if (eventPyro2Fired) activeFlags.add('Pyro 2 fired');
+    if (eventPyro3Fired) activeFlags.add('Pyro 3 fired');
+    if (eventPyro4Fired) activeFlags.add('Pyro 4 fired');
+    if (eventApogeeDetected) activeFlags.add('Apogee detected');
+    if (eventMainDeployed) activeFlags.add('Main deployed');
+    if (eventDrogueDeployed) activeFlags.add('Drogue deployed');
+    if (eventMachLockEnabled) activeFlags.add('Mach lock enabled');
+
+    return activeFlags.isEmpty ? 'Events $eventStates' : activeFlags.join(', ');
+  }
+
+  bool get eventPyrosArmed => (eventStates & eventFlagPyrosArmed) != 0;
+  bool get eventPyro1Fired => (eventStates & eventFlagPyro1Fired) != 0;
+  bool get eventPyro2Fired => (eventStates & eventFlagPyro2Fired) != 0;
+  bool get eventPyro3Fired => (eventStates & eventFlagPyro3Fired) != 0;
+  bool get eventPyro4Fired => (eventStates & eventFlagPyro4Fired) != 0;
+  bool get eventApogeeDetected => (eventStates & eventFlagApogeeDetected) != 0;
+  bool get eventMainDeployed => (eventStates & eventFlagMainDeployed) != 0;
+  bool get eventDrogueDeployed => (eventStates & eventFlagDrogueDeployed) != 0;
+  bool get eventMachLockEnabled => (eventStates & eventFlagMachLockEnabled) != 0;
   String get vinDisplay {
     if (vinMv > 0) return '$vinMv mV';
     if (batteryVoltage > 0) return '${(batteryVoltage * 1000).round()} mV';
@@ -241,6 +300,7 @@ class DataServiceManager with ChangeNotifier {
     missionState = -1;
     odbState = '';
     odbFrameVersion = '';
+    odbConfigFrameVersion = '';
     hasOdbConfig = false;
     odbName = '';
     stageRole = stageRoleSustainer;
@@ -277,8 +337,31 @@ class DataServiceManager with ChangeNotifier {
       ConsoleService().log('Aucune connexion Bluetooth avec l\'ODB');
       return;
     }
+    await btService.sendBinary(0x03, [0x06]);
+  }
 
-    await btService.send('HELLO\r\n');
+  Future<void> commandPing() async {
+    if (!hasConnection) {
+      ConsoleService().log('Aucune connexion Bluetooth avec l\'ODB');
+      return;
+    }
+    await btService.sendBinary(0x03, [0x01]);
+  }
+
+  Future<void> commandArm(bool arm) async {
+    if (!hasConnection) {
+      ConsoleService().log('Aucune connexion Bluetooth avec l\'ODB');
+      return;
+    }
+    await btService.sendBinary(0x03, [0x02, arm ? 1 : 0]);
+  }
+
+  Future<void> commandFire(int pyroIndex) async {
+    if (!hasConnection) {
+      ConsoleService().log('Aucune connexion Bluetooth avec l\'ODB');
+      return;
+    }
+    await btService.sendBinary(0x03, [0x03, pyroIndex]);
   }
 
   Future<void> applyOdbSettings({
@@ -307,399 +390,286 @@ class DataServiceManager with ChangeNotifier {
       return;
     }
 
-    final commands = <String>[
-      'CFG:NAME=${odbName.trim()}',
-      'CFG:ROLE=${_parseInt(stageRole, this.stageRole)}',
-      'CFG:DEBUG=${debugMode ? 1 : 0}',
-      'CFG:BUZZER=${enableBuzzer ? 1 : 0}',
-      'CFG:MIN_PYRO=${_parseInt(minNeededPyroNb, this.minNeededPyroNb)}',
-      'CFG:MAX_DROGUE=${_parseInt(drogueFireAttemptMaxNb, this.drogueFireAttemptMaxNb)}',
-      'CFG:MAX_MAIN=${_parseInt(mainFireAttemptMaxNb, this.mainFireAttemptMaxNb)}',
-      'CFG:ACC_LAUNCH=${_parseDouble(accZLaunchThreshold, this.accZLaunchThreshold).toStringAsFixed(2)}',
-      'CFG:V_BOOST=${_parseDouble(boostPhaseVThreshold, this.boostPhaseVThreshold).toStringAsFixed(2)}',
-      'CFG:V_APOGEE=${_parseDouble(apogeeDetectVThreshold, this.apogeeDetectVThreshold).toStringAsFixed(2)}',
-      'CFG:ALT_MAIN=${_parseDouble(mainDeployAltitudeThresholdM, this.mainDeployAltitudeThresholdM).toStringAsFixed(2)}',
-      'CFG:V_LAND=${_parseDouble(landingDetectVThreshold, this.landingDetectVThreshold).toStringAsFixed(2)}',
-      'CFG:TONE=${_parseInt(buzzerReportToneHz, this.buzzerReportToneHz)}',
-      'CFG:T_LAND=${_parseInt(landingDetectThresholdMs, this.landingDetectThresholdMs)}',
-      'CFG:DELAY_FIRE=${_parseInt(fireAttemptDelayMs, this.fireAttemptDelayMs)}',
-      'CFG:FAIL_ARM=${_parseInt(pyrosArmingFailsafeTicks, this.pyrosArmingFailsafeTicks)}',
-      'CFG:FAIL_APOGEE=${_parseInt(apogeeFailsafeTicks, this.apogeeFailsafeTicks)}',
-      'CFG:IDEFIX_FREQ=${_parseInt(idefixFrequencyHz, this.idefixFrequencyHz)}',
-      for (var i = 0; i < 4; i++)
-        'CFG:PYRO_ROLE=$i,${i < pyroRoles.length ? pyroRoles[i] : 0}',
-      'CFG:APPLY',
-    ];
+    final byteData = ByteData(92);
+    int offset = 0;
 
-    for (final command in commands) {
-      await btService.send('$command\r\n');
+    // 1. magic_number & Header
+    byteData.setUint32(offset, 0x434F4E46, Endian.little); 
+    offset += 4;
+
+    byteData.setUint8(offset, 1);
+    offset += 1;
+    byteData.setUint8(offset, 0);
+    offset += 1;
+    byteData.setUint16(offset, 92, Endian.little);
+    offset += 2;
+
+    // 2. odb_name[32]
+    final nameBytes = utf8.encode(odbName.trim());
+    for (int i = 0; i < 32; i++) {
+      // On remplit avec le nom et on padde avec des zéros (null-terminator)
+      byteData.setUint8(offset + i, i < nameBytes.length && i < 31 ? nameBytes[i] : 0);
     }
+    offset += 32;
 
-    // delay
-    await Future.delayed(const Duration(milliseconds: 1000));
+    // 3. stage_role (2 = BOOSTER, 3 = SUSTAINER)
+    byteData.setUint8(offset, _parseInt(stageRole, this.stageRole)); 
+    offset += 1;
 
-    await btService.send('HELLO\r\n');
+    // 4. debug_mode
+    byteData.setUint8(offset, debugMode ? 1 : 0); 
+    offset += 1;
+
+    // 5. fire_attempt_delay_ms
+    byteData.setUint32(offset, _parseInt(fireAttemptDelayMs, this.fireAttemptDelayMs), Endian.little); 
+    offset += 4;
+
+    // 6. pyros_arming_failsafe_ticks
+    byteData.setUint32(offset, _parseInt(pyrosArmingFailsafeTicks, this.pyrosArmingFailsafeTicks), Endian.little); 
+    offset += 4;
+
+    // 7. min_needed_pyro_nb
+    byteData.setUint8(offset, _parseInt(minNeededPyroNb, this.minNeededPyroNb)); 
+    offset += 1;
+
+    // 8. pyro_roles[4]
+    for (int i = 0; i < 4; i++) {
+      byteData.setUint8(offset + i, i < pyroRoles.length ? pyroRoles[i] : 0);
+    }
+    offset += 4;
+
+    // 9. acc_z_launch_threshold
+    byteData.setFloat32(offset, _parseDouble(accZLaunchThreshold, this.accZLaunchThreshold), Endian.little); 
+    offset += 4;
+
+    // 10. boost_phase_v_threshold
+    byteData.setFloat32(offset, _parseDouble(boostPhaseVThreshold, this.boostPhaseVThreshold), Endian.little); 
+    offset += 4;
+
+    // 11. apogee_detect_v_threshold
+    byteData.setFloat32(offset, _parseDouble(apogeeDetectVThreshold, this.apogeeDetectVThreshold), Endian.little); 
+    offset += 4;
+
+    // 12. landing_detect_v_threshold
+    byteData.setFloat32(offset, _parseDouble(landingDetectVThreshold, this.landingDetectVThreshold), Endian.little); 
+    offset += 4;
+
+    // 13. landing_detect_threshold_ms
+    byteData.setUint32(offset, _parseInt(landingDetectThresholdMs, this.landingDetectThresholdMs), Endian.little); 
+    offset += 4;
+
+    // 14. apogee_failsafe_ticks
+    byteData.setUint32(offset, _parseInt(apogeeFailsafeTicks, this.apogeeFailsafeTicks), Endian.little); 
+    offset += 4;
+
+    // 15. main_deploy_altitude_threshold_m
+    byteData.setFloat32(offset, _parseDouble(mainDeployAltitudeThresholdM, this.mainDeployAltitudeThresholdM), Endian.little); 
+    offset += 4;
+
+    // 16. drogue_fire_attempt_max_nb
+    byteData.setUint8(offset, _parseInt(drogueFireAttemptMaxNb, this.drogueFireAttemptMaxNb)); 
+    offset += 1;
+
+    // 17. main_fire_attempt_max_nb
+    byteData.setUint8(offset, _parseInt(mainFireAttemptMaxNb, this.mainFireAttemptMaxNb)); 
+    offset += 1;
+
+    // 18. enable_buzzer
+    byteData.setUint8(offset, enableBuzzer ? 1 : 0); 
+    offset += 1;
+
+    // 19. buzzer_report_tone_hz
+    byteData.setUint16(offset, _parseInt(buzzerReportToneHz, this.buzzerReportToneHz), Endian.little); 
+    offset += 2;
+
+    // 20. idefix_frequency_hz
+    byteData.setUint32(offset, _parseInt(idefixFrequencyHz, this.idefixFrequencyHz), Endian.little); 
+    offset += 4;
+
+    await btService.sendBinary(0x02, byteData.buffer.asUint8List());
+    ConsoleService().log('Envoi de la nouvelle configuration ...');
+
+    await Future.delayed(const Duration(milliseconds: 200)); 
+
+    await btService.sendBinary(0x03, [0x04]);
+    ConsoleService().log('Demande de sauvegarde Flash et de redémarrage envoyée.');
+  }
+
+  Future<void> resetOdbSettingsToDefault() async {
+    if (!hasConnection) {
+      ConsoleService().log('Aucune connexion Bluetooth avec l\'ODB');
+      return;
+    }
+    
+    await btService.sendBinary(0x03, [0x05]);
+    ConsoleService().log('Demande de réinitialisation usine envoyée.');
   }
 
   // ---------- PARSER ----------
-  void parseMessage(String message) {
+  void parseBinaryMessage(int type, List<int> payload) {
     if (_isDisposed) return;
+    final ByteData view = ByteData.sublistView(Uint8List.fromList(payload));
 
     try {
-      final normalized = message.trim();
-      final entries = <String, String>{};
+      if (type == 0x01) { // MSG_TELEMETRY
+        int offset = 0;
+        
+        int versionMajor = view.getUint8(offset); offset += 1;
+        int versionMinor = view.getUint8(offset); offset += 1;
+        int payloadSize = view.getUint16(offset, Endian.little); offset += 2;
+        odbFrameVersion = 'v$versionMajor.$versionMinor';
 
-      if (normalized.startsWith('DATA,')) {
-        final payload = normalized.substring(5);
-        for (final entry in payload.split(',')) {
-          if (entry.isEmpty) continue;
-          final parts = entry.split('=');
-          if (parts.length != 2) continue;
-          entries[parts[0].trim().toLowerCase()] = parts[1].trim();
-        }
-      } else if (normalized.startsWith('CFG:')) {
-        final payload = normalized.substring(4);
-        final equalsIndex = payload.indexOf('=');
-        if (equalsIndex > 0 && equalsIndex < payload.length - 1) {
-          entries[payload.substring(0, equalsIndex).trim().toLowerCase()] =
-              payload.substring(equalsIndex + 1).trim();
-        }
-      } else {
-        for (final match in RegExp(
-          r'([A-Za-z0-9_]+)=([-+]?[0-9]*\.?[0-9]+)',
-        ).allMatches(normalized)) {
-          entries[match.group(1)!.trim().toLowerCase()] = match
-              .group(2)!
-              .trim();
+        if (versionMajor == 1 && versionMinor == 0) {
+          // --- Status ---
+          timeBootMs = view.getUint32(offset, Endian.little); offset += 4;
+          systemStates = view.getUint16(offset, Endian.little); offset += 2;
+          eventStates = view.getUint16(offset, Endian.little); offset += 2;
+          missionState = view.getUint8(offset); offset += 1;
+          vinMv = view.getUint16(offset, Endian.little); offset += 2;
+          batteryVoltage = vinMv / 1000.0;
+          
+          // --- IMU ---
+          roll = view.getFloat32(offset, Endian.little); offset += 4;
+          pitch = view.getFloat32(offset, Endian.little); offset += 4;
+          yaw = view.getFloat32(offset, Endian.little); offset += 4;
+          
+          imuAccX = view.getFloat32(offset, Endian.little); offset += 4;
+          imuAccY = view.getFloat32(offset, Endian.little); offset += 4;
+          imuAccZ = view.getFloat32(offset, Endian.little); offset += 4;
+          
+          imuGyroX = view.getFloat32(offset, Endian.little); offset += 4;
+          imuGyroY = view.getFloat32(offset, Endian.little); offset += 4;
+          imuGyroZ = view.getFloat32(offset, Endian.little); offset += 4;
+          
+          imuMagX = view.getFloat32(offset, Endian.little); offset += 4;
+          imuMagY = view.getFloat32(offset, Endian.little); offset += 4;
+          imuMagZ = view.getFloat32(offset, Endian.little); offset += 4;
+          
+          // --- Pressure & Temp ---
+          altitudeMslM = view.getFloat32(offset, Endian.little); offset += 4;
+          barometerPressure = view.getFloat32(offset, Endian.little); offset += 4;
+          temperature = view.getFloat32(offset, Endian.little); offset += 4;
+          
+          // --- High-G ---
+          accHighGX = view.getFloat32(offset, Endian.little); offset += 4;
+          accHighGY = view.getFloat32(offset, Endian.little); offset += 4;
+          accHighGZ = view.getFloat32(offset, Endian.little); offset += 4;
+          
+          // --- GPS ---
+          gpsFix = view.getUint8(offset); offset += 1;
+          gpsLat = view.getInt32(offset, Endian.little) / 10000000.0; offset += 4; // Format degE7
+          gpsLon = view.getInt32(offset, Endian.little) / 10000000.0; offset += 4; // Format degE7
+          gpsAlt = view.getInt32(offset, Endian.little) / 1000.0; offset += 4;     // Format mm -> m
+          gpsVelocity = view.getUint16(offset, Endian.little) / 100.0; offset += 2; // Format cm/s -> m/s
+          gpsCourse = view.getUint16(offset, Endian.little) / 100.0; offset += 2;   // Format cdeg -> deg
+          gpsSatellites = view.getUint8(offset); offset += 1;
+          
+          // --- Statistics ---
+          imuAccVertical = view.getFloat32(offset, Endian.little); offset += 4;
+          highGAccVertical = view.getFloat32(offset, Endian.little); offset += 4;
+          kalmanAltitudeM = view.getFloat32(offset, Endian.little); offset += 4;
+          kalmanVelocityMS = view.getFloat32(offset, Endian.little); offset += 4;
+          
+          gpsSensorState = (systemStates & (1 << 8)) != 0 ? SensorState.ok : SensorState.error;
+          barometerSensorState = (systemStates & (1 << 7)) != 0 ? SensorState.ok : SensorState.error;
+          imuSensorState = (systemStates & (1 << 6)) != 0 ? SensorState.ok : SensorState.error;
+          accHighGSensorState = (systemStates & (1 << 9)) != 0 ? SensorState.ok : SensorState.error;
+          temperatureSensorState = (systemStates & (1 << 10)) != 0 ? SensorState.ok : SensorState.error;
+          sdSensorState = (systemStates & (1 << 11)) != 0 ? SensorState.ok : SensorState.error;
+          
+          batterySensorState = batteryVoltage > 0 ? SensorState.ok : SensorState.error;
+          goodPowerState = batteryVoltage >= 7.0;
+          
+          pyrosArmed = eventPyrosArmed;
+
+          bool pyro1Conn = (systemStates & (1 << 3)) != 0;
+          bool pyro1Fired = eventPyro1Fired;
+          pyros[0] = pyro1Conn && !pyro1Fired;
+
+          bool pyro2Conn = (systemStates & (1 << 2)) != 0;
+          bool pyro2Fired = eventPyro2Fired;
+          pyros[1] = pyro2Conn && !pyro2Fired;
+
+          bool pyro3Conn = (systemStates & (1 << 1)) != 0;
+          bool pyro3Fired = eventPyro3Fired;
+          pyros[2] = pyro3Conn && !pyro3Fired;
+
+          bool pyro4Conn = (systemStates & (1 << 0)) != 0;
+          bool pyro4Fired = eventPyro4Fired;
+          pyros[3] = pyro4Conn && !pyro4Fired;
+
+          _safeNotifyListeners();
+
+        } else {
+          ConsoleService().log('Erreur: Télémétrie v$versionMajor.$versionMinor non supportée.');
         }
 
-        if (entries.isEmpty) {
-          for (final match in RegExp(
-            r'([A-Za-z0-9_]+):\s*([^,;\r\n]+)',
-          ).allMatches(normalized)) {
-            entries[match.group(1)!.trim().toLowerCase()] = match
-                .group(2)!
-                .trim();
-          }
+      } else if (type == 0x02) { // MSG_CONFIG_SET
+        int offset = 0;
+        int magicNumber = view.getUint32(offset, Endian.little); offset += 4;
+        
+        if (magicNumber == 0x434F4E46) {
+           int versionMajor = view.getUint8(offset); offset += 1;
+           int versionMinor = view.getUint8(offset); offset += 1;
+           int payloadSize = view.getUint16(offset, Endian.little); offset += 2;
+           odbConfigFrameVersion = 'v$versionMajor.$versionMinor';
+           
+           if (versionMajor == 1 && versionMinor == 0) {
+             // 1. Extraction du nom
+             List<int> nameBytes = [];
+             for (int i = 0; i < 32; i++) {
+               int b = view.getUint8(offset + i);
+               if (b != 0) nameBytes.add(b);
+             }
+             odbName = utf8.decode(nameBytes);
+             offset += 32;
+
+             // 2. Variables simples
+             stageRole = view.getUint8(offset); offset += 1;
+             debugMode = view.getUint8(offset) == 1; offset += 1;
+             fireAttemptDelayMs = view.getUint32(offset, Endian.little); offset += 4;
+             pyrosArmingFailsafeTicks = view.getUint32(offset, Endian.little); offset += 4;
+             minNeededPyroNb = view.getUint8(offset); offset += 1;
+
+             // 3. Tableau des rôles pyros
+             pyroRoles = [];
+             for (int i = 0; i < 4; i++) {
+               pyroRoles.add(view.getUint8(offset + i));
+             }
+             offset += 4;
+
+             // 4. Seuils
+             accZLaunchThreshold = view.getFloat32(offset, Endian.little); offset += 4;
+             boostPhaseVThreshold = view.getFloat32(offset, Endian.little); offset += 4;
+             apogeeDetectVThreshold = view.getFloat32(offset, Endian.little); offset += 4;
+             landingDetectVThreshold = view.getFloat32(offset, Endian.little); offset += 4;
+             landingDetectThresholdMs = view.getUint32(offset, Endian.little); offset += 4;
+             apogeeFailsafeTicks = view.getUint32(offset, Endian.little); offset += 4;
+             mainDeployAltitudeThresholdM = view.getFloat32(offset, Endian.little); offset += 4;
+             drogueFireAttemptMaxNb = view.getUint8(offset); offset += 1;
+             mainFireAttemptMaxNb = view.getUint8(offset); offset += 1;
+             enableBuzzer = view.getUint8(offset) == 1; offset += 1;
+             buzzerReportToneHz = view.getUint16(offset, Endian.little); offset += 2;
+             idefixFrequencyHz = view.getUint32(offset, Endian.little); offset += 4;
+
+             // 5. Validation et réveil de l'Interface UI
+             hasOdbConfig = true;
+             _safeNotifyListeners();
+             ConsoleService().log('Configuration ODB lue et synchronisée avec succès !');
+           } else {
+             ConsoleService().log('Erreur: Configuration ODB v$versionMajor.$versionMinor non supportée.');
+           }
+        } else {
+          ConsoleService().log('Erreur: Magic Number invalide lors de la réception de la configuration.');
         }
+
+      } else if (type == 0x04) { // MSG_ACK
+        int cmdAcked = view.getUint8(0);
+        int status = view.getUint8(1);
+        ConsoleService().log('ACK Reçu (CMD: 0x${cmdAcked.toRadixString(16)}, Status: ${status == 1 ? "OK" : "FAIL"})');
       }
-      //ConsoleService().log('✅ Parsed ${entries.length} entries');
-
-      double? parseScaledDouble(String value, double factor) {
-        final parsed = double.tryParse(value);
-        return parsed == null ? null : parsed / factor;
-      }
-
-
-      void parseConfigPyroRole(String value) {
-        final parts = value.split(',');
-        if (parts.length != 2) {
-          return;
-        }
-
-        final pyroIndex = int.tryParse(parts[0].trim());
-        final pyroRole = int.tryParse(parts[1].trim());
-        if (pyroIndex == null || pyroRole == null) {
-          return;
-        }
-
-        if (pyroIndex >= 0 && pyroIndex < pyroRoles.length) {
-          pyroRoles[pyroIndex] = pyroRole;
-          hasOdbConfig = true;
-        }
-      }
-
-      for (final entry in entries.entries) {
-        final key = entry.key;
-        final value = entry.value;
-
-        switch (key) {
-          case 'time_boot_ms':
-            timeBootMs = int.tryParse(value) ?? timeBootMs;
-            break;
-          case 'system_states':
-            systemStates = int.tryParse(value) ?? systemStates;
-            break;
-          case 'event_states':
-            eventStates = int.tryParse(value) ?? eventStates;
-            break;
-          case 'mission_state':
-            missionState = int.tryParse(value) ?? missionState;
-            break;
-          case 'ver':
-            odbFrameVersion = value;
-            break;
-          case 'name':
-            odbName = value;
-            hasOdbConfig = true;
-            break;
-          case 'role':
-            stageRole = int.tryParse(value) ?? stageRole;
-            hasOdbConfig = true;
-            break;
-          case 'debug':
-            debugMode = value == '1' || value.toLowerCase() == 'true';
-            hasOdbConfig = true;
-            break;
-          case 'buzzer':
-            enableBuzzer = value == '1' || value.toLowerCase() == 'true';
-            hasOdbConfig = true;
-            break;
-          case 'min_pyro':
-            minNeededPyroNb = int.tryParse(value) ?? minNeededPyroNb;
-            hasOdbConfig = true;
-            break;
-          case 'max_drogue':
-            drogueFireAttemptMaxNb =
-                int.tryParse(value) ?? drogueFireAttemptMaxNb;
-            hasOdbConfig = true;
-            break;
-          case 'max_main':
-            mainFireAttemptMaxNb = int.tryParse(value) ?? mainFireAttemptMaxNb;
-            hasOdbConfig = true;
-            break;
-          case 'acc_launch':
-            accZLaunchThreshold = double.tryParse(value) ?? accZLaunchThreshold;
-            hasOdbConfig = true;
-            break;
-          case 'v_boost':
-            boostPhaseVThreshold =
-                double.tryParse(value) ?? boostPhaseVThreshold;
-            hasOdbConfig = true;
-            break;
-          case 'v_apogee':
-            apogeeDetectVThreshold =
-                double.tryParse(value) ?? apogeeDetectVThreshold;
-            hasOdbConfig = true;
-            break;
-          case 'alt_main':
-            mainDeployAltitudeThresholdM =
-                double.tryParse(value) ?? mainDeployAltitudeThresholdM;
-            hasOdbConfig = true;
-            break;
-          case 'v_land':
-            landingDetectVThreshold =
-                double.tryParse(value) ?? landingDetectVThreshold;
-            hasOdbConfig = true;
-            break;
-          case 'tone':
-            buzzerReportToneHz = int.tryParse(value) ?? buzzerReportToneHz;
-            hasOdbConfig = true;
-            break;
-          case 't_land':
-            landingDetectThresholdMs =
-                int.tryParse(value) ?? landingDetectThresholdMs;
-            hasOdbConfig = true;
-            break;
-          case 'delay_fire':
-            fireAttemptDelayMs = int.tryParse(value) ?? fireAttemptDelayMs;
-            hasOdbConfig = true;
-            break;
-          case 'fail_arm':
-            pyrosArmingFailsafeTicks =
-                int.tryParse(value) ?? pyrosArmingFailsafeTicks;
-            hasOdbConfig = true;
-            break;
-          case 'fail_apogee':
-            apogeeFailsafeTicks = int.tryParse(value) ?? apogeeFailsafeTicks;
-            hasOdbConfig = true;
-            break;
-          case 'idefix_freq':
-            idefixFrequencyHz = int.tryParse(value) ?? idefixFrequencyHz;
-            hasOdbConfig = true;
-            break;
-          case 'pyro_role':
-            parseConfigPyroRole(value);
-            break;
-          case 'temp_celsius':
-            temperature = parseScaledDouble(value, 100) ?? temperature;
-            if (temperature >= -55 && temperature <= 150) {
-              temperatureSensorState = SensorState.ok;
-            } else {
-              temperatureSensorState = SensorState.error;
-            }
-            break;
-
-          case 'battery_mv':
-            vinMv = int.tryParse(value) ?? vinMv;
-            batteryVoltage = vinMv > 0
-                ? vinMv / 1000.0
-                : (int.tryParse(value) ?? (batteryVoltage * 1000).round()) /
-                      1000.0;
-            batterySensorState = batteryVoltage > 0
-                ? SensorState.ok
-                : SensorState.error;
-            goodPowerState = batteryVoltage >= 5.06;
-            break;
-
-          case 'pyro1':
-            pyros[0] = value == '1';
-            break;
-          case 'pyro2':
-            pyros[1] = value == '1';
-            break;
-          case 'pyro3':
-            pyros[2] = value == '1';
-            break;
-          case 'pyro4':
-            pyros[3] = value == '1';
-            break;
-          case 'armed':
-            pyrosArmed = value == '1';
-            break;
-
-          case 'roll':
-            roll = parseScaledDouble(value, 100) ?? roll;
-            imuSensorState = SensorState.ok;
-            break;
-          case 'pitch':
-            pitch = parseScaledDouble(value, 100) ?? pitch;
-            imuSensorState = SensorState.ok;
-            break;
-          case 'yaw':
-            yaw = parseScaledDouble(value, 100) ?? yaw;
-            imuSensorState = SensorState.ok;
-            break;
-          case 'imu_acc_x':
-            imuAccX = parseScaledDouble(value, 100) ?? imuAccX;
-            imuSensorState = SensorState.ok;
-            break;
-          case 'imu_acc_vertical':
-            imuAccVertical = parseScaledDouble(value, 100) ?? imuAccVertical;
-            imuSensorState = SensorState.ok;
-            break;
-          case 'imu_acc_y':
-            imuAccY = parseScaledDouble(value, 100) ?? imuAccY;
-            imuSensorState = SensorState.ok;
-            break;
-          case 'imu_acc_z':
-            imuAccZ = parseScaledDouble(value, 100) ?? imuAccZ;
-            imuSensorState = SensorState.ok;
-            break;
-          case 'imu_gyro_x':
-            imuGyroX = parseScaledDouble(value, 100) ?? imuGyroX;
-            imuSensorState = SensorState.ok;
-            break;
-          case 'imu_gyro_y':
-            imuGyroY = parseScaledDouble(value, 100) ?? imuGyroY;
-            imuSensorState = SensorState.ok;
-            break;
-          case 'imu_gyro_z':
-            imuGyroZ = parseScaledDouble(value, 100) ?? imuGyroZ;
-            imuSensorState = SensorState.ok;
-            break;
-          case 'imu_mag_x':
-            imuMagX = parseScaledDouble(value, 100) ?? imuMagX;
-            imuSensorState = SensorState.ok;
-            break;
-          case 'imu_mag_y':
-            imuMagY = parseScaledDouble(value, 100) ?? imuMagY;
-            imuSensorState = SensorState.ok;
-            break;
-          case 'imu_mag_z':
-            imuMagZ = parseScaledDouble(value, 100) ?? imuMagZ;
-            imuSensorState = SensorState.ok;
-            break;
-
-          case 'highg_acc_x':
-            accHighGX = parseScaledDouble(value, 100) ?? accHighGX;
-            accHighGSensorState = SensorState.ok;
-            break;
-          case 'highg_acc_vertical':
-            highGAccVertical =
-                parseScaledDouble(value, 100) ?? highGAccVertical;
-            accHighGSensorState = SensorState.ok;
-            break;
-          case 'highg_acc_y':
-            accHighGY = parseScaledDouble(value, 100) ?? accHighGY;
-            accHighGSensorState = SensorState.ok;
-            break;
-          case 'highg_acc_z':
-            accHighGZ = parseScaledDouble(value, 100) ?? accHighGZ;
-            accHighGSensorState = SensorState.ok;
-            break;
-
-          case 'sd_used':
-            sdUsed = double.tryParse(value) ?? sdUsed;
-            sdSensorState = SensorState.ok;
-            break;
-          case 'sd_max':
-            sdMax = double.tryParse(value) ?? sdMax;
-            sdSensorState = SensorState.ok;
-            break;
-
-          case 'lat':
-            gpsLat = parseScaledDouble(value, 10000000) ?? gpsLat;
-            gpsSensorState = SensorState.ok;
-            break;
-          case 'lon':
-            gpsLon = parseScaledDouble(value, 10000000) ?? gpsLon;
-            gpsSensorState = SensorState.ok;
-            break;
-          case 'gps_alt':
-            gpsAlt = parseScaledDouble(value, 1000) ?? gpsAlt;
-            gpsSensorState = SensorState.ok;
-            break;
-          case 'satellites_nb':
-            gpsSatellites = int.tryParse(value) ?? gpsSatellites;
-            gpsSensorState = SensorState.ok;
-            break;
-          case 'gps_fix':
-            gpsFix = int.tryParse(value) ?? gpsFix;
-            gpsSensorState = SensorState.ok;
-            break;
-          case 'vel':
-            gpsVelocity = parseScaledDouble(value, 100) ?? gpsVelocity;
-            gpsSensorState = SensorState.ok;
-            break;
-          case 'cog':
-            gpsCourse = parseScaledDouble(value, 100) ?? gpsCourse;
-            gpsSensorState = SensorState.ok;
-            break;
-
-          case 'pressure_hpa':
-            barometerPressure =
-                parseScaledDouble(value, 100) ?? barometerPressure;
-            barometerSensorState = SensorState.ok;
-            break;
-
-          case 'altitude_msl_m':
-            altitudeMslM = parseScaledDouble(value, 100) ?? altitudeMslM;
-            barometerSensorState = SensorState.ok;
-            break;
-
-          case 'kalman_z':
-            kalmanAltitudeM = parseScaledDouble(value, 100) ?? kalmanAltitudeM;
-            break;
-
-          case 'kalman_v':
-            kalmanVelocityMS =
-                parseScaledDouble(value, 100) ?? kalmanVelocityMS;
-            break;
-
-          case 'radio':
-            radioState = value.toLowerCase() == 'connected'
-                ? RadioState.connected
-                : value.toLowerCase() == 'connecting'
-                ? RadioState.connecting
-                : RadioState.disconnected;
-            break;
-
-          case 'ack':
-          case 'res':
-          case 'err':
-            ConsoleService().log('Réponse STM32: $value');
-            break;
-
-          default:
-          //ConsoleService().log('Clé inconnue: $key -> $value');
-        }
-      }
-
-      _safeNotifyListeners();
     } catch (e) {
-      if (_isDisposed) return;
-      ConsoleService().log('Erreur parseMessage: $e');
+      ConsoleService().log('Erreur parsing binaire (Type $type): $e');
     }
   }
 

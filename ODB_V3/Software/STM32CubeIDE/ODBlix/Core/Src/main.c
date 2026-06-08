@@ -23,25 +23,26 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "App/tasks.h"
-#include "App/scheduler.h"
-#include "App/logger.h"
-#include "App/profiler.h"
-#include "App/config.h"
-#include "App/flight_fsm.h"
-#include "GAUL_Drivers/adxl382.h"
-#include "GAUL_Drivers/bno055.h"
-#include "GAUL_Drivers/hm11.h"
-#include "GAUL_Drivers/ms5611.h"
-#include "GAUL_Drivers/bno055.h"
-#include "GAUL_Drivers/l76lm33.h"
-#include "GAUL_Drivers/ltste682krkgwt.h"
-#include "GAUL_Drivers/pyros.h"
-#include "GAUL_Drivers/rfd900x.h"
-#include "GAUL_Drivers/smtb0927twr.h"
-#include "GAUL_Drivers/system.h"
-#include "GAUL_Drivers/system_measurements.h"
-#include "GAUL_Drivers/w25q512jv.h"
+#include "odb.h"
+#include "Systems/tasks.h"
+#include "Systems/scheduler.h"
+#include "Systems/logger.h"
+#include "Tools/profiler.h"
+#include "Systems/config.h"
+#include "Systems/flight_fsm.h"
+#include "Drivers/adxl382.h"
+#include "Drivers/bno055.h"
+#include "Drivers/hm11.h"
+#include "Drivers/ms5611.h"
+#include "Drivers/bno055.h"
+#include "Drivers/l76lm33.h"
+#include "Drivers/ltste682krkgwt.h"
+#include "Drivers/pyros.h"
+#include "Drivers/rfd900x.h"
+#include "Drivers/smtb0927twr.h"
+#include "Drivers/system_measurements.h"
+#include "Drivers/w25q512jv.h"
+#include "Utils/reboot_manager.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -121,7 +122,7 @@ bno055_t bno055 = {
 };
 hm11_t hm11 = {
     .huart = &huart2,
-    .baudrate = HM11_BAUD_9600,
+    .baudrate = HM11_BAUD_115200,
 	.tx_power = HM11_NORMAL_TX_POWER,
 };
 l76lm33_t l76lm33 = {
@@ -271,11 +272,12 @@ int main(void)
   MX_TIM4_Init();
   MX_TIM5_Init();
   /* USER CODE BEGIN 2 */
-  /*
   DWT_Init();
   ODB_Init(&flight_data, &flight_stats);
-  Scheduler_Init();
+  RebootManager_Init();
   Logger_Init();
+  Scheduler_Init();
+  Scheduler_AddTask("Reboot", Task_RebootManager, TASK_REBOOT_MANAGER_FREQ_MS);
   Scheduler_AddTask("Data_Update", Task_DataUpdate, TASK_DATA_UPDATE_FREQ_MS);
   Scheduler_AddTask("FSM", Task_ExecuteFsm, TASK_FSM_FREQ_MS);
   Scheduler_AddTask("Logger", Task_Logger, TASK_LOGGER_FREQ_MS);
@@ -283,6 +285,7 @@ int main(void)
   Scheduler_AddTask("Idefix", Task_Idefix, TASK_IDEFIX_FREQ_MS);
   Scheduler_AddTask("BTRx", Task_BluetoothAppRx, TASK_BLUETOOTH_APP_RX_FREQ_MS);
   Scheduler_AddTask("BTTx", Task_BluetoothAppTx, TASK_BLUETOOTH_APP_TX_FREQ_MS);
+  Scheduler_SetActive("Reboot", true);
   Scheduler_SetActive("Data_Update", true);
   Scheduler_SetActive("FSM", true);
   Scheduler_SetActive("Logger", true);
@@ -290,12 +293,6 @@ int main(void)
   Scheduler_SetActive("Idefix", false);
   Scheduler_SetActive("BTRx", true);
   Scheduler_SetActive("BTTx", true);
-  */
-  DWT_Init();
-  ODB_Init(&flight_data, &flight_stats);
-  Logger_Init();
-  Scheduler_Init();
-  Profiler_Init();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -303,41 +300,9 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-	  /* === TESTS === */
-	  Profiler_StartTask(PROFILE_DATAUPDATE);
-	  ODB_Update(&flight_data, &flight_stats);
-	  Profiler_StopTask(PROFILE_DATAUPDATE);
-
-	  Profiler_StartTask(PROFILE_FSM);
-	  FSM_Update();
-	  Profiler_StopTask(PROFILE_FSM);
-
-	  Profiler_StartTask(PROFILE_LOGGER);
-	  Logger_Task();
-	  Profiler_StopTask(PROFILE_LOGGER);
-
-	  Profiler_StartTask(PROFILE_TELEMETRY);
-	  Telemetry_SendRocketData(&rfd900x, 2, &flight_data, HAL_GetTick());
-	  Profiler_StopTask(PROFILE_TELEMETRY);
-
-	  /*
-	  Profiler_StartTask(PROFILE_IDEFIX);
-	  Beacon_SendCoordinates(&idefix, 10000000, 10000000);
-	  Profiler_StopTask(PROFILE_IDEFIX);
-	  */
-
-	  Profiler_StartTask(PROFILE_BTRX);
-	  App_SendFrame(&hm11, &flight_data);
-	  Profiler_StopTask(PROFILE_BTRX);
-
-	  Profiler_StartTask(PROFILE_BTTX);
-	  App_HandleCommands(&hm11);
-	  Profiler_StopTask(PROFILE_BTTX);
-
-	  Profiler_LogResults(1000);
 
     /* USER CODE BEGIN 3 */
-    //Scheduler_Run();
+    Scheduler_Run();
   }
   /* USER CODE END 3 */
 }
@@ -936,7 +901,7 @@ static void MX_USART2_UART_Init(void)
 
   /* USER CODE END USART2_Init 1 */
   huart2.Instance = USART2;
-  huart2.Init.BaudRate = 9600;
+  huart2.Init.BaudRate = 115200;
   huart2.Init.WordLength = UART_WORDLENGTH_8B;
   huart2.Init.StopBits = UART_STOPBITS_1;
   huart2.Init.Parity = UART_PARITY_NONE;

@@ -447,7 +447,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                     children: [
                                       Icon(
                                         Icons.battery_charging_full,
-                                        color: FlutterFlowTheme.of(context).success,
+                                        color: FlutterFlowTheme.of(context).warning,
                                         size: 24.0,
                                       ),
                                       Container(
@@ -455,7 +455,9 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                         height: 12.0,
                                         decoration: BoxDecoration(
                                           color: data.batterySensorState == SensorState.ok
-                                              ? FlutterFlowTheme.of(context).primary
+                                              ? (data.goodPowerState 
+                                                  ? FlutterFlowTheme.of(context).success 
+                                                  : FlutterFlowTheme.of(context).error)
                                               : FlutterFlowTheme.of(context).secondaryText,
                                           shape: BoxShape.circle,
                                         ),
@@ -640,9 +642,9 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Icon(
-                                        Icons.flash_on,
+                                        Icons.local_fire_department,
                                         color: FlutterFlowTheme.of(context)
-                                            .warning,
+                                            .error,
                                         size: 24.0,
                                       ),
                                       Text(
@@ -670,7 +672,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                       ),
                                       Text(
                                         connected
-                                            ? (data.pyrosArmed ? 'Armé' : 'Désarmé')
+                                            ? (data.eventPyrosArmed ? 'Armé' : 'Désarmé')
                                             : 'Non connecté',
                                         style: FlutterFlowTheme.of(context)
                                             .bodySmall
@@ -683,7 +685,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                                         .fontStyle,
                                               ),
                                               color: connected
-                                                  ? (data.pyrosArmed ? FlutterFlowTheme.of(context).success : FlutterFlowTheme.of(context).error)
+                                                  ? (data.eventPyrosArmed ? FlutterFlowTheme.of(context).success : FlutterFlowTheme.of(context).error)
                                                   : FlutterFlowTheme.of(context).secondaryText,
                                               letterSpacing: 0.0,
                                               fontWeight: FontWeight.w600,
@@ -716,7 +718,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                             ),
                                           ),
                                           Text(
-                                            'Pyro 1',
+                                            data.pyroDisplayLabel(0, connected: connected),
                                             style: FlutterFlowTheme.of(context)
                                                 .bodySmall
                                                 .override(
@@ -753,7 +755,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                             ),
                                           ),
                                           Text(
-                                            'Pyro 2',
+                                            data.pyroDisplayLabel(1, connected: connected),
                                             style: FlutterFlowTheme.of(context)
                                                 .bodySmall
                                                 .override(
@@ -792,7 +794,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                             ),
                                           ),
                                           Text(
-                                            'Pyro 3',
+                                            data.pyroDisplayLabel(2, connected: connected),
                                             style: FlutterFlowTheme.of(context)
                                                 .bodySmall
                                                 .override(
@@ -831,7 +833,7 @@ class _StatisticsPageWidgetState extends State<StatisticsPageWidget> {
                                             ),
                                           ),
                                           Text(
-                                            'Pyro 4',
+                                            data.pyroDisplayLabel(3, connected: connected),
                                             style: FlutterFlowTheme.of(context)
                                                 .bodySmall
                                                 .override(

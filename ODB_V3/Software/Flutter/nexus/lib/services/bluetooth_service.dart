@@ -126,8 +126,9 @@ class BluetoothServiceManager with ChangeNotifier {
 
   // ---------- CONNECT ----------
   Future<void> connect(BluetoothDevice device, DataServiceManager dataService) async {
+    dataService.resetOdbConfig();
+    
     final name = device.platformName.isNotEmpty ? device.platformName : device.remoteId.str;
-
     try {
       _dataService = dataService;
       ConsoleService().log('Connexion à $name');
@@ -158,7 +159,9 @@ class BluetoothServiceManager with ChangeNotifier {
 
       ConsoleService().log('Connexion établie avec $name');
 
-      await send('HELLO\r\n');
+
+      await Future.delayed(const Duration(milliseconds: 500)); 
+      await dataService.refreshOdb();
     } catch (e) {
       ConsoleService().log('Erreur de connexion: $e');
       debugPrint('Erreur connexion: $e');
@@ -288,45 +291,94 @@ class BluetoothServiceManager with ChangeNotifier {
     return uuid.endsWith(_bluetoothBaseUuidSuffix);
   }
 
-  Future<void> enableNotifications(BluetoothCharacteristic c, DataServiceManager dataService,
-  ) async {
+  final List<int> _rxBuffer = [];
+
+  Future<void> enableNotifications(BluetoothCharacteristic c, DataServiceManager dataService) async {
     try {
-      if (notifySubscriptions.containsKey(c.uuid)) {
-        ConsoleService().log('Notifications déjà actives pour ${c.uuid}');
-        return;
-      }
+      if (notifySubscriptions.containsKey(c.uuid)) return;
       await c.setNotifyValue(true);
-      _notifyBuffers[c.uuid] = '';
 
       var sub = c.lastValueStream.listen((data) {
-        final chunk = utf8.decode(data, allowMalformed: true);
-        final existing = _notifyBuffers[c.uuid] ?? '';
-        var buffer = '$existing$chunk';
+        if (data.isEmpty) return;
+        _rxBuffer.addAll(data);
 
-        while (true) {
-          final newlineIndex = buffer.indexOf('\n');
-          if (newlineIndex < 0) {
+        while (_rxBuffer.length >= 5) {
+          if (_rxBuffer[0] != 0xAB || _rxBuffer[1] != 0xCD) {
+            _rxBuffer.removeAt(0);
+            continue;
+          }
+
+          int type = _rxBuffer[2];
+          int length = _rxBuffer[3];
+
+          if (_rxBuffer.length < length + 5) {
             break;
           }
 
-          final frame = buffer.substring(0, newlineIndex).trim();
-          buffer = buffer.substring(newlineIndex + 1);
-
-          if (frame.isNotEmpty && !dataService.isDisposed) {
-            dataService.parseMessage(frame);
+          int expectedChecksum = type ^ length;
+          for (int i = 0; i < length; i++) {
+            expectedChecksum ^= _rxBuffer[4 + i];
           }
-        }
 
-        if (buffer.length > 4096) {
-          buffer = buffer.substring(buffer.length - 4096);
-        }
+          int receivedChecksum = _rxBuffer[4 + length];
 
-        _notifyBuffers[c.uuid] = buffer;
+          if (expectedChecksum == receivedChecksum) {
+            final payload = _rxBuffer.sublist(4, 4 + length);
+            if (!dataService.isDisposed) {
+              dataService.parseBinaryMessage(type, payload);
+            }
+          } else {
+            ConsoleService().log('Erreur CRC Trame binaire (Type: $type)');
+          }
+
+          // Retire la trame traitée du buffer
+          _rxBuffer.removeRange(0, length + 5);
+        }
       });
 
       notifySubscriptions[c.uuid] = sub;
     } catch (e) {
       ConsoleService().log("Erreur enableNotifications: $e");
+    }
+  }
+
+  Future<void> sendBinary(int type, List<int> payload, {BluetoothCharacteristic? characteristic}) async {
+    List<int> frame = [0xAB, 0xCD, type, payload.length];
+    int checksum = type ^ payload.length;
+    for (int byte in payload) {
+      frame.add(byte);
+      checksum ^= byte;
+    }
+    frame.add(checksum);
+
+    await _sendRawBytes(frame, characteristic: characteristic);
+  }
+
+  Future<void> _sendRawBytes(List<int> bytes, {BluetoothCharacteristic? characteristic}) async {
+    final preferred = characteristic != null
+        ? [characteristic]
+        : [if (_writeCharacteristic != null) _writeCharacteristic!, ..._writeCandidates];
+        
+    if (preferred.isEmpty) return;
+
+    try {
+      for (final c in preferred) {
+        try {
+          bool withoutResp = c.properties.writeWithoutResponse && !c.properties.write;
+          int chunkSize = 20;
+          for (int i = 0; i < bytes.length; i += chunkSize) {
+            int end = (i + chunkSize < bytes.length) ? i + chunkSize : bytes.length;
+            List<int> chunk = bytes.sublist(i, end);
+            
+            await c.write(chunk, withoutResponse: withoutResp);
+            await Future.delayed(const Duration(milliseconds: 20));
+          }
+          return;
+        } catch (_) {
+        }
+      }
+    } catch (e) {
+      ConsoleService().log('Erreur TX Binaire: $e');
     }
   }
 

@@ -22,11 +22,11 @@
 #include "stm32f4xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "Drivers/hm11.h"
+#include "Drivers/l76lm33.h"
+#include "Drivers/rfd900x.h"
+#include "Drivers/bno055.h"
 #include <stdbool.h>
-#include "GAUL_Drivers/hm11.h"
-#include "GAUL_Drivers/l76lm33.h"
-#include "GAUL_Drivers/rfd900x.h"
-#include "GAUL_Drivers/bno055.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
