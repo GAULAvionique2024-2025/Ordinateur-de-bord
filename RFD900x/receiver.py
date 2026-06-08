@@ -106,12 +106,15 @@ def run_receiver():
                     print(f"  GPS altitude   : {gps_alt / 1000.0:.2f} m")
 
                 if altitude_msl_m is not None:
-                    print(f"  Altitude MSL   : {altitude_msl_m:.2f} m")
+                    # altitude_msl_m sent as cm in MAVLink XML -> convert to meters
+                    print(f"  Altitude MSL   : {altitude_msl_m / 100.0:.2f} m")
 
                 if roll is not None and pitch is not None and yaw is not None:
-                    print(f"  Attitude       : roll {roll:.2f} deg | pitch {pitch:.2f} deg | yaw {yaw:.2f} deg")
+                    # roll/pitch/yaw are sent as cdeg (centi-degrees)
+                    print(f"  Attitude       : roll {roll/100.0:.2f} deg | pitch {pitch/100.0:.2f} deg | yaw {yaw/100.0:.2f} deg")
 
                 if vel is not None:
+                    # vel is in cm/s
                     print(f"  Vitesse sol    : {vel / 100.0:.2f} m/s")
 
                 if battery_mv is not None:
@@ -127,37 +130,44 @@ def run_receiver():
                     print(f"  System states  : 0x{system_states:04X}")
 
                 if event_states is not None:
-                    print(f"  Event states   : 0x{event_states:02X}")
+                    print(f"  Event states   : 0x{event_states:04X}")
 
                 if pressure_hpa is not None:
                     print(f"  Pression       : {pressure_hpa:.2f} hPa")
 
                 if temp_celsius is not None:
-                    print(f"  Température    : {temp_celsius:.2f} °C")
+                    # temp_celsius sent as cdegC (centi-degrees C)
+                    print(f"  Température    : {temp_celsius / 100.0:.2f} °C")
 
                 if imu_acc_x is not None and imu_acc_y is not None and imu_acc_z is not None:
-                    print(f"  IMU Acc        : x={imu_acc_x:.2f} y={imu_acc_y:.2f} z={imu_acc_z:.2f} m/s²")
+                    # imu accelerations sent as cm/s/s -> convert to m/s^2
+                    print(f"  IMU Acc        : x={imu_acc_x/100.0:.2f} y={imu_acc_y/100.0:.2f} z={imu_acc_z/100.0:.2f} m/s²")
 
                 if imu_gyro_x is not None and imu_gyro_y is not None and imu_gyro_z is not None:
-                    print(f"  IMU Gyro       : x={imu_gyro_x:.2f} y={imu_gyro_y:.2f} z={imu_gyro_z:.2f} deg/s")
+                    # gyro sent as cdeg/s -> convert to deg/s
+                    print(f"  IMU Gyro       : x={imu_gyro_x/100.0:.2f} y={imu_gyro_y/100.0:.2f} z={imu_gyro_z/100.0:.2f} deg/s")
 
                 if imu_mag_x is not None and imu_mag_y is not None and imu_mag_z is not None:
-                    print(f"  IMU Mag        : x={imu_mag_x:.2f} y={imu_mag_y:.2f} z={imu_mag_z:.2f} uT")
+                    # magnetometer sent as cuT -> convert to uT
+                    print(f"  IMU Mag        : x={imu_mag_x/100.0:.2f} y={imu_mag_y/100.0:.2f} z={imu_mag_z/100.0:.2f} uT")
 
                 if highg_acc_x is not None and highg_acc_y is not None and highg_acc_z is not None:
-                    print(f"  High-G Acc     : x={highg_acc_x:.2f} y={highg_acc_y:.2f} z={highg_acc_z:.2f} m/s²")
+                    # high-g accelerations in cm/s/s -> convert to m/s^2
+                    print(f"  High-G Acc     : x={highg_acc_x/100.0:.2f} y={highg_acc_y/100.0:.2f} z={highg_acc_z/100.0:.2f} m/s²")
 
                 if imu_acc_vertical is not None:
-                    print(f"  IMU vert       : {imu_acc_vertical:.2f} m/s²")
+                    print(f"  IMU vert       : {imu_acc_vertical/100.0:.2f} m/s²")
 
                 if highg_acc_vertical is not None:
-                    print(f"  High-G vert    : {highg_acc_vertical:.2f} m/s²")
+                    print(f"  High-G vert    : {highg_acc_vertical/100.0:.2f} m/s²")
 
                 if kalman_z is not None:
-                    print(f"  Kalman Z       : {kalman_z:.2f} m")
+                    # kalman_z sent as cm -> convert to meters
+                    print(f"  Kalman Z       : {kalman_z/100.0:.2f} m")
 
                 if kalman_v is not None:
-                    print(f"  Kalman V       : {kalman_v:.2f} m/s")
+                    # kalman_v sent as cm/s -> convert to m/s
+                    print(f"  Kalman V       : {kalman_v/100.0:.2f} m/s")
 
                 print(f"{color}{'='*52}\033[0m")
                 continue

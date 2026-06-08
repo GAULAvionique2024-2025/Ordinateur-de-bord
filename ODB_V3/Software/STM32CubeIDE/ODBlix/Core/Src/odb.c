@@ -86,7 +86,7 @@ void ODB_Reset(odb_data_t *data, odb_stats_t *stats) {
     data->imu_mag_y = 0.0f;
     data->imu_mag_z = 0.0f;
     data->altitude_msl_m = 0.0f;
-    data->pressure_hpa = 0.0f;
+    data->pressure_pa = 0.0f;
     data->temp_celsius = 0.0f;
     data->highg_acc_x = 0.0f;
     data->highg_acc_y = 0.0f;
@@ -364,7 +364,7 @@ void ODB_Update(odb_data_t *data, odb_stats_t *stats) {
     float temperature, pressure;
     MS5611_Update(&ms5611);
     if(MS5611_Compute(&ms5611, &temperature, &pressure) == MS5611_OK) {
-    	data->pressure_hpa = pressure;
+    	data->pressure_pa = pressure;
     	data->temp_celsius = temperature;
         data->altitude_msl_m = Math_ComputeAltitudeMSL(pressure);
     }
@@ -579,35 +579,35 @@ void Telemetry_SendRocketData(rfd900x_t *rfd_dev, const mavlink_modem_id_t modem
 			data_temp->event_states,
 			data_temp->mission_state,
 			data_temp->battery_mv,
-			data_temp->roll,
-			data_temp->pitch,
-			data_temp->yaw,
-			data_temp->imu_acc_x,
-			data_temp->imu_acc_y,
-			data_temp->imu_acc_z,
-			data_temp->imu_gyro_x,
-			data_temp->imu_gyro_y,
-			data_temp->imu_gyro_z,
-			data_temp->imu_mag_x,
-			data_temp->imu_mag_y,
-			data_temp->imu_mag_z,
-			data_temp->altitude_msl_m,
-			data_temp->pressure_hpa,
-			data_temp->temp_celsius,
-			data_temp->highg_acc_x,
-			data_temp->highg_acc_y,
-			data_temp->highg_acc_z,
-			data_temp->gps_fix,
+			data_temp->roll * 100,
+			data_temp->pitch * 100,
+			data_temp->yaw * 100,
+			data_temp->imu_acc_x * 100,
+			data_temp->imu_acc_y * 100,
+			data_temp->imu_acc_z * 100,
+			data_temp->imu_gyro_x * 100,
+			data_temp->imu_gyro_y * 100,
+			data_temp->imu_gyro_z * 100,
+			data_temp->imu_mag_x * 100,
+			data_temp->imu_mag_y * 100,
+			data_temp->imu_mag_z * 100,
+			data_temp->altitude_msl_m * 100,
+			data_temp->pressure_pa * 100,
+			data_temp->temp_celsius * 100,
+			data_temp->highg_acc_x * 100,
+			data_temp->highg_acc_y * 100,
+			data_temp->highg_acc_z * 100,
+			data_temp->gps_fix * 100,
 			data_temp->lat,
 			data_temp->lon,
 			data_temp->gps_alt,
 			data_temp->vel,
 			data_temp->cog,
 			data_temp->satellites_nb,
-			data_temp->imu_acc_vertical,
-			data_temp->highg_acc_vertical,
-			data_temp->kalman_z,
-			data_temp->kalman_v
+			data_temp->imu_acc_vertical * 100,
+			data_temp->highg_acc_vertical * 100,
+			data_temp->kalman_z * 100,
+			data_temp->kalman_v * 100
 		);
 
 	Telemetry_TransmitMessage(rfd_dev, &msg);

@@ -147,9 +147,9 @@ typedef struct __attribute__((packed)) {
     float		imu_mag_y;			// IMU Magnetometer Y in uT (converted to cuT for MAVLink) -> Linked with BNO055
     float		imu_mag_z;			// IMU Magnetometer Z in uT (converted to cuT for MAVLink) -> Linked with BNO055
     // Pressure & Temp
-    float		altitude_msl_m;		// Altitude in meters (m) from barometer referenced with the sea level (MLS)-> Linked with MS5611
-    float       pressure_hpa;       // Atmospheric pressure in hectopascals (hPa) -> Linked with MS5611
-    float       temp_celsius;       // Board or environment temperature in Celsius (°C) -> Linked with MAX6612MXK
+    float		altitude_msl_m;		// Altitude in m (converted to cm for MAVLink) from barometer referenced with the sea level (MLS)-> Linked with MS5611
+    float       pressure_pa;       // Atmospheric pressure in Pa (converted to hPa for MAVLink) -> Linked with MS5611
+    float       temp_celsius;       // Board or environment temperature in °C (converted to °cC for MAVLink) -> Linked with MAX6612MXK
     // High-G Acclerometer
     float       highg_acc_x;        // High-G Acceleration X in m/s2 (converted to cm/s2 for MAVLink) -> Linked with ADXL382
     float       highg_acc_y;        // High-G Acceleration Y in m/s2 (converted to cm/s2 for MAVLink) -> Linked with ADXL382
@@ -158,20 +158,20 @@ typedef struct __attribute__((packed)) {
     uint8_t     gps_fix;            // 1 = Active fix, 0 = Void/No fix, 2 = ... -> Linked with L76LM33
     int32_t     lat;                // Latitude in degE7 (MAVLink format: deg * 10^7) -> Linked with L76LM33
     int32_t     lon;                // Longitude in degE7 (MAVLink format: deg * 10^7) -> Linked with L76LM33
-    int32_t     gps_alt;            // Altitude (MSL) based on GPS in millimeters (mm) -> Linked with L76LM33
-    uint16_t    vel;                // Ground velocity in centimeters per second (cm/s) -> Linked with L76LM33
-    uint16_t    cog;                // Course Over Ground in centi-degrees (cdeg) -> Linked with L76LM33
+    int32_t     gps_alt;            // Altitude (MSL) based on GPS in mm -> Linked with L76LM33
+    uint16_t    vel;                // Ground velocity in cm/s -> Linked with L76LM33
+    uint16_t    cog;                // Course Over Ground in centi-degrees -> Linked with L76LM33
     uint8_t     satellites_nb;      // Number of satellites used for the fix -> Linked with L76LM33
 
     // Statistics
-    float       imu_acc_vertical;   // Vertical acceleration (World frame) from IMU in m/s2 -> Linked with BNO055
-    float       highg_acc_vertical; // Vertical acceleration (World frame) from High-G Accelerometer in m/s2 -> Linked with ADXL382
+    float       imu_acc_vertical;   // Vertical acceleration (World frame) from IMU in m/s2 (converted to cm/s2 for MAVLink) -> Linked with BNO055
+    float       highg_acc_vertical; // Vertical acceleration (World frame) from High-G Accelerometer in m/s2 (converted to cm/s2 for MAVLink) -> Linked with ADXL382
     float       kalman_z;           // filtered altitude from Kalman filter in m (converted to cm for MAVLink)
     float       kalman_v;           // filtered velocity from Kalman filter in m/s (converted to cm/s for MAVLink)
 
-    // TOTAL 116
+    // TOTAL 117
     // Empty data to reach 128 bytes
-    uint8_t padding[12];
+    uint8_t padding[11];
 } odb_data_t;
 #define ODB_DATA_SIZE sizeof(odb_data_t)
 //_Static_assert(sizeof(odb_data_t) == 128, "odb_data_t_size_error");
