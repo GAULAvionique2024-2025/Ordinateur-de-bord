@@ -22,6 +22,8 @@
 #include "stm32f4xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "usbd_conf.h"
+#include "usb_device.h"
 #include "Drivers/hm11.h"
 #include "Drivers/l76lm33.h"
 #include "Drivers/rfd900x.h"

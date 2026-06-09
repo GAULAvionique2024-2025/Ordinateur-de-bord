@@ -204,6 +204,13 @@ class MainWindow(QtWidgets.QMainWindow):
         for f in self.parser.flights:
             self.flight_list.addItem(f"Vol #{f['id']} (0x{f['header_addr']:X})")
 
+        if not self.parser.flights:
+            self.stats_table.clearContents()
+            self.stats_table.setRowCount(0)
+            self.packet_table.clearContents()
+            self.packet_table.setRowCount(0)
+            self.packet_table.setColumnCount(0)
+
         self.draw_sunburst_chart()
 
         if self.parser.flights:
@@ -359,6 +366,10 @@ class MainWindow(QtWidgets.QMainWindow):
                 for col_idx, key in enumerate(headers):
                     self.packet_table.setItem(row_idx, col_idx, QtWidgets.QTableWidgetItem(str(pkt[key])))
             self.packet_table.resizeColumnsToContents()
+        else:
+            self.packet_table.clearContents()
+            self.packet_table.setRowCount(0)
+            self.packet_table.setColumnCount(0)
 
     def _get_selected_flight(self):
         if not self.parser or not self.parser.flights:
