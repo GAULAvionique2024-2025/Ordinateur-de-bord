@@ -57,8 +57,8 @@ class DataServiceManager with ChangeNotifier {
   int buzzerReportToneHz = 0;
   int landingDetectThresholdMs = 0;
   int fireAttemptDelayMs = 0;
-  int pyrosArmingFailsafeTicks = 0;
-  int apogeeFailsafeTicks = 0;
+  int pyrosArmingFailsafeMs = 0;
+  int apogeeFailsafeMs = 0;
   int idefixFrequencyHz = 0;
   List<int> pyroRoles = List.filled(4, 0);
   int vinMv = 0;
@@ -120,7 +120,7 @@ class DataServiceManager with ChangeNotifier {
     if (barometerSensorState == SensorState.ok) {
       return '${barometerAlt.toStringAsFixed(0)} m';
     }
-    if (gpsSensorState == SensorState.ok) {
+    if (hasValidGpsFix) {
       return '${gpsAlt.toStringAsFixed(0)} m';
     }
     return '—';
@@ -214,10 +214,10 @@ class DataServiceManager with ChangeNotifier {
   String get attitudeDisplay => hasConnection
       ? 'R ${roll.toStringAsFixed(1)}°  P ${pitch.toStringAsFixed(1)}°  Y ${yaw.toStringAsFixed(1)}°'
       : '—';
-  String get gpsVelocityDisplay => gpsSensorState == SensorState.ok
+    String get gpsVelocityDisplay => hasValidGpsFix
       ? '${gpsVelocity.toStringAsFixed(1)} m/s'
       : '—';
-  String get gpsCourseDisplay => gpsSensorState == SensorState.ok
+    String get gpsCourseDisplay => hasValidGpsFix
       ? '${gpsCourse.toStringAsFixed(0)}°'
       : '—';
   String get missionStatus {
@@ -264,17 +264,17 @@ class DataServiceManager with ChangeNotifier {
       hasConnection ? kalmanVelocityMS.toStringAsFixed(2) : '—';
 
   // --- GPS ---
-  String get gpsLatDisplay => hasConnection && gpsSensorState == SensorState.ok
+    String get gpsLatDisplay => hasValidGpsFix
       ? '${gpsLat.toStringAsFixed(6)}°'
       : '—';
-  String get gpsLonDisplay => hasConnection && gpsSensorState == SensorState.ok
+    String get gpsLonDisplay => hasValidGpsFix
       ? '${gpsLon.toStringAsFixed(6)}°'
       : '—';
-  String get gpsAltDisplay => hasConnection && gpsSensorState == SensorState.ok
+    String get gpsAltDisplay => hasValidGpsFix
       ? '${gpsAlt.toStringAsFixed(1)} m'
       : '—';
   String get gpsSatellitesDisplay =>
-      hasConnection && gpsSensorState == SensorState.ok
+      hasValidGpsFix
       ? '$gpsSatellites satellites'
       : '—';
   String get gpsFixDisplay =>
@@ -292,6 +292,7 @@ class DataServiceManager with ChangeNotifier {
       pyrosActiveCount >= 0);
   bool get missionReady => odbSensorState && radioState == RadioState.connected;
   bool get hasConnection => btService.connectedDevice != null;
+  bool get hasValidGpsFix => hasConnection && gpsSensorState == SensorState.ok && gpsFix > 0;
 
   void resetOdbConfig() {
     timeBootMs = 0;
@@ -317,8 +318,8 @@ class DataServiceManager with ChangeNotifier {
     buzzerReportToneHz = 0;
     landingDetectThresholdMs = 0;
     fireAttemptDelayMs = 0;
-    pyrosArmingFailsafeTicks = 0;
-    apogeeFailsafeTicks = 0;
+    pyrosArmingFailsafeMs = 0;
+    apogeeFailsafeMs = 0;
     idefixFrequencyHz = 0;
     pyroRoles = List.filled(4, 0);
     _safeNotifyListeners();
@@ -380,8 +381,8 @@ class DataServiceManager with ChangeNotifier {
     required String buzzerReportToneHz,
     required String landingDetectThresholdMs,
     required String fireAttemptDelayMs,
-    required String pyrosArmingFailsafeTicks,
-    required String apogeeFailsafeTicks,
+    required String pyrosArmingFailsafeMs,
+    required String apogeeFailsafeMs,
     required String idefixFrequencyHz,
     required List<int> pyroRoles,
   }) async {
@@ -424,8 +425,8 @@ class DataServiceManager with ChangeNotifier {
     byteData.setUint32(offset, _parseInt(fireAttemptDelayMs, this.fireAttemptDelayMs), Endian.little); 
     offset += 4;
 
-    // 6. pyros_arming_failsafe_ticks
-    byteData.setUint32(offset, _parseInt(pyrosArmingFailsafeTicks, this.pyrosArmingFailsafeTicks), Endian.little); 
+    // 6. pyros_arming_failsafe_ms
+    byteData.setUint32(offset, _parseInt(pyrosArmingFailsafeMs, this.pyrosArmingFailsafeMs), Endian.little); 
     offset += 4;
 
     // 7. min_needed_pyro_nb
@@ -458,8 +459,8 @@ class DataServiceManager with ChangeNotifier {
     byteData.setUint32(offset, _parseInt(landingDetectThresholdMs, this.landingDetectThresholdMs), Endian.little); 
     offset += 4;
 
-    // 14. apogee_failsafe_ticks
-    byteData.setUint32(offset, _parseInt(apogeeFailsafeTicks, this.apogeeFailsafeTicks), Endian.little); 
+    // 14. apogee_failsafe_ms
+    byteData.setUint32(offset, _parseInt(apogeeFailsafeMs, this.apogeeFailsafeMs), Endian.little); 
     offset += 4;
 
     // 15. main_deploy_altitude_threshold_m
@@ -503,6 +504,16 @@ class DataServiceManager with ChangeNotifier {
     
     await btService.sendBinary(0x03, [0x05]);
     ConsoleService().log('Demande de réinitialisation usine envoyée.');
+  }
+
+  Future<void> resetOdbMemory() async {
+    if (!hasConnection) {
+      ConsoleService().log('Aucune connexion Bluetooth avec l\'ODB');
+      return;
+    }
+
+    await btService.sendBinary(0x03, [0x07]);
+    ConsoleService().log('Demande de réinitialisation mémoire envoyée.');
   }
 
   // ---------- PARSER ----------
@@ -628,7 +639,7 @@ class DataServiceManager with ChangeNotifier {
              stageRole = view.getUint8(offset); offset += 1;
              debugMode = view.getUint8(offset) == 1; offset += 1;
              fireAttemptDelayMs = view.getUint32(offset, Endian.little); offset += 4;
-             pyrosArmingFailsafeTicks = view.getUint32(offset, Endian.little); offset += 4;
+             pyrosArmingFailsafeMs = view.getUint32(offset, Endian.little); offset += 4;
              minNeededPyroNb = view.getUint8(offset); offset += 1;
 
              // 3. Tableau des rôles pyros
@@ -644,7 +655,7 @@ class DataServiceManager with ChangeNotifier {
              apogeeDetectVThreshold = view.getFloat32(offset, Endian.little); offset += 4;
              landingDetectVThreshold = view.getFloat32(offset, Endian.little); offset += 4;
              landingDetectThresholdMs = view.getUint32(offset, Endian.little); offset += 4;
-             apogeeFailsafeTicks = view.getUint32(offset, Endian.little); offset += 4;
+             apogeeFailsafeMs = view.getUint32(offset, Endian.little); offset += 4;
              mainDeployAltitudeThresholdM = view.getFloat32(offset, Endian.little); offset += 4;
              drogueFireAttemptMaxNb = view.getUint8(offset); offset += 1;
              mainFireAttemptMaxNb = view.getUint8(offset); offset += 1;

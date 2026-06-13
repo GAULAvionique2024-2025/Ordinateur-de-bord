@@ -10,6 +10,7 @@
 #include "Utils/reboot_manager.h"
 #include <string.h>
 
+extern w25q_t w25q;
 extern critical_led_t critical_led;
 extern system_measurements_t system_measurements;
 extern pyro_t pyros[4];
@@ -133,11 +134,22 @@ void AppComm_ProcessRx(hm11_t *hm11_dev) {
                     } else if(cmd == CMD_RESET_CFG) {
                         Config_LoadDefaults();
                         if(Config_SaveToFlash() == 0) {
+                        	CriticalLED_SetColor(&critical_led, GREEN);
                             AppComm_SendAck(hm11_dev, CMD_RESET_CFG, 1);
                             RebootManager_RequestReboot();
                         } else {
                             AppComm_SendAck(hm11_dev, CMD_RESET_CFG, 0);
                         }
+                    } else if(cmd == CMD_RESET_MEM) {
+                    	while(W25Q_EraseChip(&w25q) != 0) {}
+                    	Config_LoadDefaults();
+                    	if(Config_SaveToFlash() == 0) {
+                    		CriticalLED_SetColor(&critical_led, GREEN);
+							AppComm_SendAck(hm11_dev, CMD_RESET_MEM, 1);
+							RebootManager_RequestReboot();
+                    	} else {
+                    		AppComm_SendAck(hm11_dev, CMD_RESET_MEM, 0);
+                    	}
                     } else if(cmd == CMD_REQ_CFG) {
                         const odb_config_t *actual_config = Config_Get();
                         AppComm_SendFrame(hm11_dev, MSG_CONFIG_SET, (uint8_t*)actual_config, 92);

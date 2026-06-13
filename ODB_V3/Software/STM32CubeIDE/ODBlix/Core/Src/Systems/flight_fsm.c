@@ -5,33 +5,17 @@
  *      Author: gagno
  */
 
-#include <Protocols/odb_protocol.h>
 #include "Systems/flight_fsm.h"
 #include "Utils/utils.h"
 #include "Systems/config.h"
 #include "Systems/scheduler.h"
 #include "Systems/tasks.h"
 #include "Systems/logger.h"
+#include "Protocols/odb_protocol.h"
 #include "stm32f4xx_hal.h"
 
 #include <stdint.h>
 
-
-typedef enum {
-    STATE_PREFLIGHT,
-    STATE_ARMED,
-    STATE_INFLIGHT,
-    STATE_POSTFLIGHT
-} global_state_t;
-
-typedef enum {
-    SUB_BOOST,
-    SUB_FAST,
-    SUB_COAST,
-    SUB_DROGUE,
-    SUB_MAIN,
-    SUB_LANDED
-} inflight_substate_t;
 
 extern odb_data_t flight_data;
 extern odb_stats_t flight_stats;
@@ -46,11 +30,12 @@ static uint32_t fire_timer = 0;
 static uint32_t flight_duration = 0;
 static uint32_t landing_timer = 0;
 static uint8_t fire_attempt_count = 0;
+static bool sustainer_ignited = false;
 static bool backup_active = false;
 
 // TODO: check pyro number to adapt target attempt
 void FSM_Update(void) {
-    flight_duration = __HAL_TIM_GET_COUNTER(&htim5); // Failsafe apogee timeout
+	flight_duration = __HAL_TIM_GET_COUNTER(&htim5) / 1000; // Failsafe apogee timeout (us)
     switch(current_global_state) {
         case STATE_PREFLIGHT:
             // Security : Continuity pyros and stability check
@@ -94,8 +79,9 @@ void FSM_Update(void) {
 
                 case SUB_COAST:
                     // Wait for apogee detection
-                	if(current_config.stage_role == 3 && flight_data.highg_acc_z > current_config.acc_z_launch_threshold) {
+                	if(current_config.stage_role == 3 && !sustainer_ignited && flight_data.highg_acc_z > current_config.acc_z_launch_threshold) {
                 		// cyclic inflight substate for sustainer
+                		sustainer_ignited = true;
 						current_substate = SUB_BOOST;
 						break;
 					}
@@ -105,8 +91,8 @@ void FSM_Update(void) {
 					 * 2. Failsafe timeout : if apogee not detected after a maximum time
 					 */
 					bool mach_lock_enabled = ((flight_data.event_states & FLAG_MACH_LOCK_ENABLED) != 0U);
-                	bool nominal_apogee = (flight_data.kalman_v < current_config.apogee_detect_v_threshold) && (flight_duration > current_config.pyros_arming_failsafe_ticks);
-					bool failsafe_timeout = (flight_duration > current_config.apogee_failsafe_ticks);
+                	bool nominal_apogee = (flight_data.kalman_v < current_config.apogee_detect_v_threshold) && (flight_duration > current_config.pyros_arming_failsafe_ms);
+					bool failsafe_timeout = (flight_duration > current_config.apogee_failsafe_ms);
 
 					if(mach_lock_enabled) {
 						// Turbulence window: keep estimation running but forbid deployment transition.
@@ -162,7 +148,7 @@ void FSM_Update(void) {
 						}
 					}
 
-					if(flight_data.kalman_z <= current_config.main_deploy_altitude_threshold_m) {
+					if(flight_data.kalman_z <= current_config.main_deploy_altitude_threshold_m && fire_attempt_count >= 1) {
 						if(!flight_stats.main_deploy.valid) {
 							flight_stats.main_deploy.valid = true;
 							flight_stats.main_deploy.value = flight_data.kalman_z;

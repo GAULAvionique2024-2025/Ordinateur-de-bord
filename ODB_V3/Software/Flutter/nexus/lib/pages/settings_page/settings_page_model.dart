@@ -1,18 +1,14 @@
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
-import 'dart:ui';
 import 'settings_page_widget.dart' show SettingsPageWidget;
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 
 class SettingsPageModel extends FlutterFlowModel<SettingsPageWidget> {
   ///  State fields for stateful widgets in this page.
 
   // State field(s) for Expandable widget.
   late ExpandableController expandableExpandableController;
+  late ExpandableController resetExpandableController;
   late ExpandableController pyrosExpandableController;
   late ExpandableController phaseExpandableController;
   late ExpandableController parachuteExpandableController;
@@ -26,6 +22,7 @@ class SettingsPageModel extends FlutterFlowModel<SettingsPageWidget> {
   @override
   void dispose() {
     expandableExpandableController.dispose();
+    resetExpandableController.dispose();
     pyrosExpandableController.dispose();
     phaseExpandableController.dispose();
     parachuteExpandableController.dispose();

@@ -30,7 +30,8 @@ typedef enum {
     CMD_FIRE_PYRO  = 0x03,
     CMD_APPLY_CFG  = 0x04,
     CMD_RESET_CFG  = 0x05,
-    CMD_REQ_CFG    = 0x06
+    CMD_REQ_CFG    = 0x06,
+	CMD_RESET_MEM  = 0x07
 } app_cmd_id_t;
 
 void AppComm_SendTelemetry(hm11_t *hm11_dev, const odb_data_t *data);

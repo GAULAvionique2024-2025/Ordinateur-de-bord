@@ -30,7 +30,7 @@ const odb_config_t default_config = {
 
     // Pyros
     .fire_attempt_delay_ms = 250,
-    .pyros_arming_failsafe_ticks = 40000,
+    .pyros_arming_failsafe_ms = 40000,
     .min_needed_pyro_nb = 2,
     .pyro_roles = {
         PYRO_ROLE_MAIN,          // Pyro 1
@@ -45,7 +45,7 @@ const odb_config_t default_config = {
     .apogee_detect_v_threshold = -2.0f,				// m/s
     .landing_detect_v_threshold = 0.5f,				// m/s
     .landing_detect_threshold_ms = 10000,			// ms
-    .apogee_failsafe_ticks = 60000,					// tick
+    .apogee_failsafe_ms = 60000,					// ms
 
     // Parachute
     .main_deploy_altitude_threshold_m = 450.0f,

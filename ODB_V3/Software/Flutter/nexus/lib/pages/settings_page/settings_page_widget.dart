@@ -61,6 +61,9 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
     _model.expandableExpandableController = ExpandableController(
       initialExpanded: false,
     )..addListener(() => safeSetState(() {}));
+    _model.resetExpandableController = ExpandableController(
+      initialExpanded: false,
+    )..addListener(() => safeSetState(() {}));
     _model.pyrosExpandableController = ExpandableController(
       initialExpanded: false,
     )..addListener(() => safeSetState(() {}));
@@ -129,8 +132,8 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
       data.buzzerReportToneHz,
       data.landingDetectThresholdMs,
       data.fireAttemptDelayMs,
-      data.pyrosArmingFailsafeTicks,
-      data.apogeeFailsafeTicks,
+      data.pyrosArmingFailsafeMs,
+      data.apogeeFailsafeMs,
       data.idefixFrequencyHz,
       data.pyroRoles.join(','),
     ].join('|');
@@ -201,7 +204,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
             ? data.buzzerReportToneHz.toDouble()
             : _buzzerToneHz;
         _pyroDelayController.text = data.fireAttemptDelayMs.toString();
-        _pyroFailsafeController.text = data.pyrosArmingFailsafeTicks.toString();
+        _pyroFailsafeController.text = data.pyrosArmingFailsafeMs.toString();
         _minPyrosController.text = data.minNeededPyroNb.toString();
         _accLaunchController.text = data.accZLaunchThreshold.toStringAsFixed(2);
         _boostVoltageController.text = data.boostPhaseVThreshold
@@ -211,7 +214,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
         _landingVoltageController.text = data.landingDetectVThreshold
             .toStringAsFixed(2);
         _landingDelayController.text = data.landingDetectThresholdMs.toString();
-        _apogeeFailsafeController.text = data.apogeeFailsafeTicks.toString();
+        _apogeeFailsafeController.text = data.apogeeFailsafeMs.toString();
         _deployAltitudeController.text = data.mainDeployAltitudeThresholdM
             .toStringAsFixed(2);
         _maxDrogueController.text = data.drogueFireAttemptMaxNb.toString();
@@ -660,7 +663,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
     return _buildSectionCard(
       context,
       ExpandableNotifier(
-        controller: _model.expandableExpandableController,
+        controller: _model.resetExpandableController,
         child: ExpandablePanel(
           header: Row(
             children: [
@@ -757,8 +760,8 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                 controller: _pyroFailsafeController,
                 enabled: enabled,
                 onChanged: (value) {
-                  data.pyrosArmingFailsafeTicks =
-                      int.tryParse(value) ?? data.pyrosArmingFailsafeTicks;
+                  data.pyrosArmingFailsafeMs =
+                      int.tryParse(value) ?? data.pyrosArmingFailsafeMs;
                 },
               ),
               _buildLabeledSettingField(
@@ -800,7 +803,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
               ),
               Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
-                child: Text('Phase', style: headerStyle),
+                child: Text('Phases', style: headerStyle),
               ),
             ],
           ),
@@ -888,8 +891,8 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                 controller: _apogeeFailsafeController,
                 enabled: enabled,
                 onChanged: (value) {
-                  data.apogeeFailsafeTicks =
-                      int.tryParse(value) ?? data.apogeeFailsafeTicks;
+                  data.apogeeFailsafeMs =
+                      int.tryParse(value) ?? data.apogeeFailsafeMs;
                 },
               ),
             ].divide(const SizedBox(height: 12.0)),
@@ -1145,8 +1148,57 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                       : 'Inconnue',
                 ),
               ),
-              Align(
-                alignment: Alignment.centerRight,
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildResetSection(
+    BuildContext context,
+    TextStyle headerStyle,
+    DataServiceManager data,
+  ) {
+    return _buildSectionCard(
+      context,
+      ExpandableNotifier(
+        controller: _model.expandableExpandableController,
+        child: ExpandablePanel(
+          header: Row(
+            children: [
+              Icon(
+                Icons.restart_alt_rounded,
+                color: FlutterFlowTheme.of(context).warning,
+                size: 24,
+              ),
+              Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
+                child: Text('Réinitialisation', style: headerStyle),
+              ),
+            ],
+          ),
+          collapsed: const SizedBox.shrink(),
+          expanded: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Attention : ces actions réinitialisent la configuration ou la mémoire complète de l\'ODB.',
+                textAlign: TextAlign.center,
+                style: FlutterFlowTheme.of(context).bodySmall.override(
+                  font: GoogleFonts.inter(
+                    fontWeight:
+                        FlutterFlowTheme.of(context).bodySmall.fontWeight,
+                    fontStyle:
+                        FlutterFlowTheme.of(context).bodySmall.fontStyle,
+                  ),
+                  color: FlutterFlowTheme.of(context).warning,
+                  letterSpacing: 0.0,
+                  fontWeight: FlutterFlowTheme.of(context).bodySmall.fontWeight,
+                  fontStyle: FlutterFlowTheme.of(context).bodySmall.fontStyle,
+                ),
+              ),
+              Center(
                 child: ElevatedButton.icon(
                   onPressed: data.hasConnection
                       ? () async {
@@ -1155,14 +1207,14 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text(
-                                'Réinitialisation configuration ODB demandée',
+                                'Réinitialisation de la configuration ODB demandée',
                               ),
                             ),
                           );
                         }
                       : null,
                   icon: const Icon(Icons.restart_alt_rounded),
-                  label: const Text('Reset'),
+                  label: const Text('Reset config'),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: FlutterFlowTheme.of(context).warning,
                     foregroundColor: FlutterFlowTheme.of(
@@ -1171,7 +1223,32 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                   ),
                 ),
               ),
-            ],
+              Center(
+                child: ElevatedButton.icon(
+                  onPressed: data.hasConnection
+                      ? () async {
+                          await data.resetOdbMemory();
+                          if (!context.mounted) return;
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                'Réinitialisation mémoire ODB demandée',
+                              ),
+                            ),
+                          );
+                        }
+                      : null,
+                  icon: const Icon(Icons.restart_alt_rounded),
+                  label: const Text('Reset mémoire'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: FlutterFlowTheme.of(context).warning,
+                    foregroundColor: FlutterFlowTheme.of(
+                      context,
+                    ).primaryBackground,
+                  ),
+                ),
+              ),
+            ].divide(const SizedBox(height: 12.0)),
           ),
         ),
       ),
@@ -1228,8 +1305,8 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                       buzzerReportToneHz: _buzzerToneHz.round().toString(),
                       landingDetectThresholdMs: _landingDelayController.text,
                       fireAttemptDelayMs: _pyroDelayController.text,
-                      pyrosArmingFailsafeTicks: _pyroFailsafeController.text,
-                      apogeeFailsafeTicks: _apogeeFailsafeController.text,
+                      pyrosArmingFailsafeMs: _pyroFailsafeController.text,
+                      apogeeFailsafeMs: _apogeeFailsafeController.text,
                       idefixFrequencyHz: _idefixFrequencyController.text,
                       pyroRoles: _pyroRoleValues,
                     );
@@ -1312,6 +1389,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
         data: data,
         enabled: odbConnected,
       ),
+      _buildResetSection(context, expandableHeaderStyle, data),
       _buildActionButtons(context, data),
       Text(
         'Certains paramètres nécessitent le redémarrage de l\'alimentation pour prendre effet.',

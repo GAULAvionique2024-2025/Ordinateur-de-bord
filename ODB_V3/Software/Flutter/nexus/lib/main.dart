@@ -9,6 +9,7 @@ import 'index.dart';
 import 'package:provider/provider.dart';
 import 'services/bluetooth_service.dart';
 import 'services/data_service.dart';
+import 'services/location_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,6 +25,7 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => BluetoothServiceManager()),
+        ChangeNotifierProvider(create: (_) => LocationServiceManager()),
         ChangeNotifierProxyProvider<BluetoothServiceManager, DataServiceManager>(
           create: (ctx) => DataServiceManager(ctx.read<BluetoothServiceManager>()),
           update: (ctx, bt, prev) => prev ?? DataServiceManager(bt),
@@ -134,7 +136,7 @@ class _NavBarPageState extends State<NavBarPage> {
       'ConnectionPage': const ConnectionPageWidget(),
       'StatisticsPage': const StatisticsPageWidget(),
       'CommandsPage': const CommandsPageWidget(),
-      'RSSIPage': const RSSIPageWidget(),
+      // 'RSSIPage': const RSSIPageWidget(),
       'SettingsPage': const SettingsPageWidget(),
     };
     _currentIndex = tabs.keys.toList().indexOf(_currentPageName);
@@ -228,18 +230,18 @@ class _NavBarPageState extends State<NavBarPage> {
             label: 'Commands',
             tooltip: '',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.compass_calibration_outlined,
-              size: 24.0,
-            ),
-            activeIcon: Icon(
-              Icons.compass_calibration,
-              size: 24.0,
-            ),
-            label: 'RSSI',
-            tooltip: '',
-          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(
+          //     Icons.compass_calibration_outlined,
+          //     size: 24.0,
+          //   ),
+          //   activeIcon: Icon(
+          //     Icons.compass_calibration,
+          //     size: 24.0,
+          //   ),
+          //   label: 'RSSI',
+          //   tooltip: '',
+          // ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.settings_outlined,

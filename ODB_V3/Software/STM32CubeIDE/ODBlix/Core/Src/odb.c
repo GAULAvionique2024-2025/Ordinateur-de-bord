@@ -166,8 +166,6 @@ odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats) {
 
     ODB_Reset(data, stats);
 
-    W25Q_EraseChip(&w25q);
-
     uint16_t system_states = 0x0000;
 
     if(W25Q_Init(&w25q) == 0) {

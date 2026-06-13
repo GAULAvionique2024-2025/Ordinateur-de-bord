@@ -40,7 +40,7 @@ typedef struct __attribute__((packed)) {
 
     // Pyros
     uint32_t 	fire_attempt_delay_ms;
-    uint32_t 	pyros_arming_failsafe_ticks;
+    uint32_t 	pyros_arming_failsafe_ms;
     uint8_t 	min_needed_pyro_nb;
     uint8_t 	pyro_roles[4];
 
@@ -50,7 +50,7 @@ typedef struct __attribute__((packed)) {
     float 		apogee_detect_v_threshold;
     float 		landing_detect_v_threshold;
     uint32_t 	landing_detect_threshold_ms;
-    uint32_t 	apogee_failsafe_ticks;
+    uint32_t 	apogee_failsafe_ms;
 
     // Parachute
     float 		main_deploy_altitude_threshold_m;

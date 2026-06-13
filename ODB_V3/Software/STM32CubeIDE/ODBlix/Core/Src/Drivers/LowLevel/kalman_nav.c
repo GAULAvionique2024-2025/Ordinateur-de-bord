@@ -11,6 +11,8 @@
 #include "Systems/config.h"
 #include "stm32f4xx_hal.h"
 
+extern uint32_t SystemCoreClock;
+
 
 void KalmanNav_Init(kalman_nav_t *dev, float mean_alt, float *samples, uint8_t sample_count) {
     dev->z = mean_alt;
@@ -52,7 +54,7 @@ void KalmanNav_Predict(kalman_nav_t *dev, float acc_world_z) {
     uint32_t diff_cycles = now_cycles - dev->last_cycles;
     float dt = (float)diff_cycles / (float)SystemCoreClock;
     dev->last_cycles = now_cycles;
-    if(dt <= 0.0f || dt > 0.5f) return; // Overflow security check
+    //if(dt <= 0.0f || dt > 0.5f) return; // Overflow security check
 
     // State prediction
     float a = acc_world_z - dev->a_bias;
@@ -104,7 +106,7 @@ void KalmanNav_Update(kalman_nav_t *dev, float measured_alt, bool is_machlock) {
     // Kalman scale K = PH' (HPH' + R)^-1
     float S = dev->P[0][0] + dev->R_alt;
     // Spikes protection: 3.0f * sqrtf(S) for respect the 3-sigma rule
-    if (y*y > 9.0f * S) {
+    if(y*y > 9.0f * S && y*y > 25.0f) {
         return;
     }
     float K[3];
