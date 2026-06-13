@@ -68,7 +68,7 @@ int8_t W25Q_WritePage(w25q_t *dev, uint8_t *pData, uint32_t WriteAddr, uint32_t 
 // ==========================================
 // OUTILS D'ANALYSE DE VOL
 // ==========================================
-typedef struct { uint32_t time_ms; char type[32]; char detail[128]; } sim_event_t;
+typedef struct { uint32_t time_ms; char type[64]; char detail[128]; } sim_event_t;
 #define MAX_EVENTS 200
 sim_event_t events[MAX_EVENTS];
 int event_count = 0;
@@ -87,8 +87,16 @@ const char* Get_GlobalState_Name(global_state_t state) {
 const char* Get_SubState_Name(inflight_substate_t state) {
     switch(state) { case SUB_BOOST: return "BOOST"; case SUB_FAST: return "FAST"; case SUB_COAST: return "COAST"; case SUB_DROGUE: return "DROGUE"; case SUB_MAIN: return "MAIN"; case SUB_LANDED: return "LANDED"; default: return "-"; }
 }
+const char* Get_PyroRole_Name(pyro_role_t role) {
+    if (role == PYRO_ROLE_MAIN) return "MAIN";
+    if (role == PYRO_ROLE_DROGUE) return "DROGUE";
+    if (role == PYRO_ROLE_MAIN_BACKUP) return "MAIN BKP";
+    if (role == PYRO_ROLE_DROGUE_BACKUP) return "DROGUE BKP";
+    return "NONE";
+}
+
 void Add_Event(const char* type, const char* detail) {
-    if (event_count < MAX_EVENTS) { events[event_count].time_ms = simulated_ms; strncpy(events[event_count].type, type, 31); strncpy(events[event_count].detail, detail, 127); event_count++; }
+    if (event_count < MAX_EVENTS) { events[event_count].time_ms = simulated_ms; strncpy(events[event_count].type, type, 63); strncpy(events[event_count].detail, detail, 127); event_count++; }
 }
 void FormatTime(uint32_t ms, char* buf) {
     if (ms == 0) { strcpy(buf, "Not reached"); return; }
@@ -109,21 +117,36 @@ bool Pyro_Arming(system_measurements_t *measures, bool arming) {
 uint8_t ODB_GetPyroStates(const odb_data_t *data) { return 0x0F; }
 
 pyro_t* Pyro_GetByRole(pyro_role_t role) {
-    static pyro_t pyros_mock[4] = { { .is_connected = true, .is_fire = false, .channel = PYRO_1 }, { .is_connected = true, .is_fire = false, .channel = PYRO_2 }, { .is_connected = true, .is_fire = false, .channel = PYRO_3 }, { .is_connected = true, .is_fire = false, .channel = PYRO_4 } };
-    if (role == PYRO_ROLE_MAIN) return &pyros_mock[0];
-    if (role == PYRO_ROLE_DROGUE) return &pyros_mock[1];
-    if (role == PYRO_ROLE_MAIN_BACKUP) return &pyros_mock[2];
-    if (role == PYRO_ROLE_DROGUE_BACKUP) return &pyros_mock[3];
+    static pyro_t pyros_mock[4] = {
+        { .is_connected = true, .is_fire = false, .channel = PYRO_1 },
+        { .is_connected = true, .is_fire = false, .channel = PYRO_2 },
+        { .is_connected = true, .is_fire = false, .channel = PYRO_3 },
+        { .is_connected = true, .is_fire = false, .channel = PYRO_4 }
+    };
+
+    // Recherche dynamique du pyro assigné à ce rôle dans la configuration
+    for (int i = 0; i < 4; i++) {
+        if (current_config.pyro_roles[i] == role) {
+            return &pyros_mock[i];
+        }
+    }
     return NULL;
 }
 
 bool Pyro_Fire(pyro_t *dev, system_measurements_t *measures) {
     if(dev && !dev->is_fire) {
         dev->is_fire = true;
-        char msg[64], evt_type[32]; snprintf(msg, sizeof(msg), "pyro%d fired", dev->channel + 1); snprintf(evt_type, sizeof(evt_type), "pyro%d", dev->channel + 1);
+        char msg[64], evt_type[64];
+        pyro_role_t role = current_config.pyro_roles[dev->channel];
+
+        snprintf(msg, sizeof(msg), "pyro%d fired", dev->channel + 1);
+        // Ajout du rôle directement dans l'étiquette de l'événement
+        snprintf(evt_type, sizeof(evt_type), "pyro%d (%s)", dev->channel + 1, Get_PyroRole_Name(role));
         Add_Event(evt_type, msg);
-        if (dev->channel == PYRO_2 && first_drogue_fire_ms == 0) first_drogue_fire_ms = simulated_ms;
-        if (dev->channel == PYRO_1 && first_main_fire_ms == 0) first_main_fire_ms = simulated_ms;
+
+        // Validation FSM basée dynamiquement sur les rôles et non plus sur des canaux codés en dur
+        if (role == PYRO_ROLE_DROGUE && first_drogue_fire_ms == 0) first_drogue_fire_ms = simulated_ms;
+        if (role == PYRO_ROLE_MAIN && first_main_fire_ms == 0) first_main_fire_ms = simulated_ms;
     }
     return true;
 }
@@ -179,6 +202,32 @@ void Load_Config_From_File(bool is_sustainer) {
             else if (strcmp(key, "drogue_fire_attempt_max_nb") == 0) current_config.drogue_fire_attempt_max_nb = atoi(value);
             else if (strcmp(key, "main_fire_attempt_max_nb") == 0) current_config.main_fire_attempt_max_nb = atoi(value);
             else if (strcmp(key, "fire_attempt_delay_ms") == 0) current_config.fire_attempt_delay_ms = atoi(value);
+
+            // Nouveau: Décodage des rôles pyros depuis le fichier .cfg
+            else if (strcmp(key, "pyro1_role") == 0) {
+                if (strstr(value, "MAIN_BKP")) current_config.pyro_roles[0] = PYRO_ROLE_MAIN_BACKUP;
+                else if (strstr(value, "DROGUE_BKP")) current_config.pyro_roles[0] = PYRO_ROLE_DROGUE_BACKUP;
+                else if (strstr(value, "MAIN")) current_config.pyro_roles[0] = PYRO_ROLE_MAIN;
+                else if (strstr(value, "DROGUE")) current_config.pyro_roles[0] = PYRO_ROLE_DROGUE;
+            }
+            else if (strcmp(key, "pyro2_role") == 0) {
+                if (strstr(value, "MAIN_BKP")) current_config.pyro_roles[1] = PYRO_ROLE_MAIN_BACKUP;
+                else if (strstr(value, "DROGUE_BKP")) current_config.pyro_roles[1] = PYRO_ROLE_DROGUE_BACKUP;
+                else if (strstr(value, "MAIN")) current_config.pyro_roles[1] = PYRO_ROLE_MAIN;
+                else if (strstr(value, "DROGUE")) current_config.pyro_roles[1] = PYRO_ROLE_DROGUE;
+            }
+            else if (strcmp(key, "pyro3_role") == 0) {
+                if (strstr(value, "MAIN_BKP")) current_config.pyro_roles[2] = PYRO_ROLE_MAIN_BACKUP;
+                else if (strstr(value, "DROGUE_BKP")) current_config.pyro_roles[2] = PYRO_ROLE_DROGUE_BACKUP;
+                else if (strstr(value, "MAIN")) current_config.pyro_roles[2] = PYRO_ROLE_MAIN;
+                else if (strstr(value, "DROGUE")) current_config.pyro_roles[2] = PYRO_ROLE_DROGUE;
+            }
+            else if (strcmp(key, "pyro4_role") == 0) {
+                if (strstr(value, "MAIN_BKP")) current_config.pyro_roles[3] = PYRO_ROLE_MAIN_BACKUP;
+                else if (strstr(value, "DROGUE_BKP")) current_config.pyro_roles[3] = PYRO_ROLE_DROGUE_BACKUP;
+                else if (strstr(value, "MAIN")) current_config.pyro_roles[3] = PYRO_ROLE_MAIN;
+                else if (strstr(value, "DROGUE")) current_config.pyro_roles[3] = PYRO_ROLE_DROGUE;
+            }
         }
     }
     fclose(f);
@@ -236,7 +285,8 @@ int main(int argc, char** argv) {
     fprintf(html, "<script src='https://cdn.jsdelivr.net/npm/chart.js'></script>");
     fprintf(html, "<script src='https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@2.1.0/dist/chartjs-plugin-annotation.min.js'></script>");
     fprintf(html, "<style>body{font-family:Segoe UI,sans-serif;margin:20px;background:#f0f2f5;} .container{max-width:1200px;margin:auto;} .card{background:#fff;padding:20px;border-radius:8px;box-shadow:0 2px 4px rgba(0,0,0,0.1);margin-bottom:20px;} h1,h2{color:#2c3e50;margin-top:0;} table{width:100%%;border-collapse:collapse;margin-bottom:15px;} th,td{padding:8px 12px;text-align:left;border-bottom:1px solid #ddd;} th{background:#f8f9fa;width:30%%;} .pass{color:#27ae60;font-weight:bold;} .fail{color:#c0392b;font-weight:bold;} .warn{color:#e67e22;font-weight:bold;}</style></head><body><div class='container'>\n");
-    fprintf(html, "<script>\nconst l_time=[], l_alt=[], l_vel=[], l_state=[], l_sub=[], l_err=[], l_err_v=[];\n");
+
+    fprintf(html, "<script>\nconst l_time=[], l_alt=[], l_vel=[], l_raw_alt=[], l_raw_vel=[], l_state=[], l_sub=[], l_err=[], l_err_v=[], l_mach_lock=[];\n");
 
     for (float t_pre = -5.0f; t_pre < 0.0f; t_pre += 0.1f) {
 		simulated_ms = 0;
@@ -251,8 +301,8 @@ int main(int argc, char** argv) {
 
 		FSM_Update();
 
-		fprintf(html, "l_time.push(%.3f); l_alt.push(%.2f); l_vel.push(%.2f); l_state.push(%d); l_sub.push(%d); l_err.push(0.0); l_err_v.push(0.0);\n",
-				t_pre, flight_data.kalman_z, flight_data.kalman_v, current_global_state, current_substate);
+		fprintf(html, "l_time.push(%.3f); l_alt.push(%.2f); l_vel.push(%.2f); l_raw_alt.push(%.2f); l_raw_vel.push(%.2f); l_state.push(%d); l_sub.push(%d); l_err.push(0.0); l_err_v.push(0.0); l_mach_lock.push(0);\n",
+				t_pre, flight_data.kalman_z, flight_data.kalman_v, 0.0f, 0.0f, current_global_state, current_substate);
 	}
 
     do {
@@ -284,8 +334,10 @@ int main(int argc, char** argv) {
             flight_data.pressure_pa = 101325.0f * powf((1.0f - 0.0000225577f * raw_z_m), 5.25588f);
             ms5611.raw_pressure = (uint32_t)(flight_data.pressure_pa * 100.0f);
 
+            bool mach_lock_active = (flight_data.event_states & FLAG_MACH_LOCK_ENABLED);
+
             KalmanNav_Predict(&kalman_filter, acc_z);
-            KalmanNav_Update(&kalman_filter, raw_z_m, flight_data.event_states & FLAG_MACH_LOCK_ENABLED);
+            KalmanNav_Update(&kalman_filter, raw_z_m, mach_lock_active);
             flight_data.kalman_z = kalman_filter.z;
             flight_data.kalman_v = kalman_filter.v;
 
@@ -316,8 +368,8 @@ int main(int argc, char** argv) {
                 prev_sub = current_substate;
             }
 
-            fprintf(html, "l_time.push(%.3f); l_alt.push(%.2f); l_vel.push(%.2f); l_state.push(%d); l_sub.push(%d); l_err.push(%.2f); l_err_v.push(%.2f);\n",
-                    t, flight_data.kalman_z, flight_data.kalman_v, current_global_state, current_substate, res_z, res_v);
+            fprintf(html, "l_time.push(%.3f); l_alt.push(%.2f); l_vel.push(%.2f); l_raw_alt.push(%.2f); l_raw_vel.push(%.2f); l_state.push(%d); l_sub.push(%d); l_err.push(%.2f); l_err_v.push(%.2f); l_mach_lock.push(%d);\n",
+                    t, flight_data.kalman_z, flight_data.kalman_v, raw_z_m, raw_vel, current_global_state, current_substate, res_z, res_v, mach_lock_active ? 1 : 0);
         }
     } while (fgets(line, sizeof(line), csv));
 
@@ -354,8 +406,8 @@ int main(int argc, char** argv) {
         }
 		if (current_substate != prev_sub) { prev_sub = current_substate; }
 
-		fprintf(html, "l_time.push(%.3f); l_alt.push(%.2f); l_vel.push(%.2f); l_state.push(%d); l_sub.push(%d); l_err.push(0.0); l_err_v.push(0.0);\n",
-				t_post, flight_data.kalman_z, flight_data.kalman_v, current_global_state, current_substate);
+		fprintf(html, "l_time.push(%.3f); l_alt.push(%.2f); l_vel.push(%.2f); l_raw_alt.push(%.2f); l_raw_vel.push(%.2f); l_state.push(%d); l_sub.push(%d); l_err.push(0.0); l_err_v.push(0.0); l_mach_lock.push(0);\n",
+				t_post, flight_data.kalman_z, flight_data.kalman_v, landed_altitude, 0.0f, current_global_state, current_substate);
 	}
 
     float rmse_z = kalman_sample_count > 0 ? sqrt(sum_sq_err_z / kalman_sample_count) : 0.0f;
@@ -422,16 +474,40 @@ int main(int argc, char** argv) {
 			// La valeur négative fait monter l'étiquette le long de la ligne (de -20px à -300px).
 			int y_adjust = -((ann_id % 8) * 40 + 20);
 
-			// Ajout de font: {size: 11} et padding: 4 pour affiner les boîtes
-			fprintf(html, "  line%d: { type: 'line', xMin: %s, xMax: %s, borderColor: 'rgba(231, 76, 60, 0.8)', borderWidth: 2, borderDash: [4, 4], label: { content: '%s', display: true, position: 'start', yAdjust: %d, backgroundColor: 'rgba(231, 76, 60, 0.9)', font: {size: 11}, padding: 4 } },\n",
+			// ÉTIQUETTES VERTES (rgba(46, 204, 113)) POUR LES ÉVÉNEMENTS FSM SIMULÉS
+			fprintf(html, "  line%d: { type: 'line', xMin: %s, xMax: %s, borderColor: 'rgba(46, 204, 113, 0.8)', borderWidth: 2, borderDash: [4, 4], label: { content: '%s', display: true, position: 'start', yAdjust: %d, backgroundColor: 'rgba(46, 204, 113, 0.9)', font: {size: 11}, padding: 4 } },\n",
 					ann_id, time_str, time_str, events[i].type, y_adjust);
 			ann_id++;
 		}
 	}
+
+    // NOUVEAU: AJOUT DES ÉTIQUETTES THÉORIQUES EN GRIS FONCÉ (Ardoise)
+    if (theo_apogee_ms > 0) {
+        char time_str[16];
+        snprintf(time_str, sizeof(time_str), "%.3f", theo_apogee_ms / 1000.0f);
+        for(int j=0; j<strlen(time_str); j++) if(time_str[j] == ',') time_str[j] = '.';
+        int y_adjust = -((ann_id % 8) * 40 + 20);
+
+        fprintf(html, "  line%d: { type: 'line', xMin: %s, xMax: %s, borderColor: 'rgba(52, 73, 94, 0.8)', borderWidth: 2, borderDash: [2, 2], label: { content: 'Theo: Apogée', display: true, position: 'start', yAdjust: %d, backgroundColor: 'rgba(52, 73, 94, 0.9)', font: {size: 11}, padding: 4 } },\n",
+                ann_id, time_str, time_str, y_adjust);
+        ann_id++;
+    }
+
+    if (theo_main_ms > 0) {
+        char time_str[16];
+        snprintf(time_str, sizeof(time_str), "%.3f", theo_main_ms / 1000.0f);
+        for(int j=0; j<strlen(time_str); j++) if(time_str[j] == ',') time_str[j] = '.';
+        int y_adjust = -((ann_id % 8) * 40 + 20);
+
+        fprintf(html, "  line%d: { type: 'line', xMin: %s, xMax: %s, borderColor: 'rgba(52, 73, 94, 0.8)', borderWidth: 2, borderDash: [2, 2], label: { content: 'Theo: Main', display: true, position: 'start', yAdjust: %d, backgroundColor: 'rgba(52, 73, 94, 0.9)', font: {size: 11}, padding: 4 } },\n",
+                ann_id, time_str, time_str, y_adjust);
+        ann_id++;
+    }
+
 	fprintf(html, "};\n</script>\n");
 
     // ==========================================
-    // GÉNÉRATION DES TABLEAUX HTML (CORRIGÉE)
+    // GÉNÉRATION DES TABLEAUX HTML
     // ==========================================
 
     // Tableau 1: Summary
@@ -450,70 +526,119 @@ int main(int argc, char** argv) {
 	fprintf(html, "<tr><th>Failsafe Apogée (ms)</th><td>%d</td></tr>", current_config.apogee_failsafe_ms);
 	fprintf(html, "<tr><th>Altitude Main (m)</th><td>%.1f</td></tr>", current_config.main_deploy_altitude_threshold_m);
 	fprintf(html, "<tr><th>Seuil Accel (m/s2)</th><td>%.2f</td></tr>", current_config.acc_z_launch_threshold);
+
+    // Ajout de l'affichage des rôles Pyro configurés
+    fprintf(html, "<tr><th>Rôles Pyros</th><td>P1: <b>%s</b> &nbsp;|&nbsp; P2: <b>%s</b> &nbsp;|&nbsp; P3: <b>%s</b> &nbsp;|&nbsp; P4: <b>%s</b></td></tr>",
+        Get_PyroRole_Name(current_config.pyro_roles[0]),
+        Get_PyroRole_Name(current_config.pyro_roles[1]),
+        Get_PyroRole_Name(current_config.pyro_roles[2]),
+        Get_PyroRole_Name(current_config.pyro_roles[3]));
+
 	fprintf(html, "</table></div>");
 
 	// Tableau 3: Findings
 	fprintf(html, "<div class='card'><h2>Findings</h2><table>%s</table></div>", findings_html);
 
+	// SCRIPT DE SYNCHRONISATION ROBUSTE
+	fprintf(html, "<script>\nlet isSyncing = false;\nfunction syncScroll(source) {\n");
+	fprintf(html, "  if (isSyncing) return;\n  isSyncing = true;\n");
+	fprintf(html, "  let scrollers = document.querySelectorAll('.scroll-sync');\n");
+	fprintf(html, "  scrollers.forEach(s => { if(s !== source) s.scrollLeft = source.scrollLeft; });\n");
+	fprintf(html, "  setTimeout(() => { isSyncing = false; }, 10);\n"); // Retire le verrou après 10ms
+	fprintf(html, "}\n");
+
+    // NOUVEAU SCRIPT : Fonction updateZoom
+    fprintf(html, "function updateZoom(width) {\n");
+    fprintf(html, "  document.querySelectorAll('.chart-wrapper').forEach(w => w.style.width = width + 'px');\n");
+    fprintf(html, "  document.getElementById('zoomVal').innerText = (width/3000).toFixed(1) + 'x';\n");
+    fprintf(html, "}\n</script>\n");
+
     // ==========================================
-    // CONTENEURS DES GRAPHIQUES
+    // CONTENEURS DES GRAPHIQUES (Modifiés pour le Zoom)
     // ==========================================
 
-	// Télémétrie (Hauteur 500px, Largeur 3000px)
+	// Télémétrie (Hauteur 500px)
 	fprintf(html, "<div class='card'><h2>Télémétrie & Événements</h2>");
-	fprintf(html, "<div style='margin-bottom: 15px;'><button onclick='toggleUnits(\"metric\")' style='padding: 6px 12px; margin-right: 10px; cursor: pointer;'>Métrique (m, m/s)</button>");
-	fprintf(html, "<button onclick='toggleUnits(\"imperial\")' style='padding: 6px 12px; cursor: pointer;'>Impérial (ft, ft/s)</button></div>");
-	fprintf(html, "<div class='scroll-sync' style='width: 100%%; overflow-x: auto;'><div style='width: 3000px; height: 500px;'><canvas id='chartVol'></canvas></div></div></div>");
+    // Barre d'outils avec le Slider de Zoom
+    fprintf(html, "<div style='margin-bottom: 15px; display: flex; align-items: center; gap: 15px; flex-wrap: wrap;'>");
+	fprintf(html, "  <div><button onclick='toggleUnits(\"metric\")' style='padding: 6px 12px; cursor: pointer;'>Métrique (m, m/s)</button> ");
+	fprintf(html, "  <button onclick='toggleUnits(\"imperial\")' style='padding: 6px 12px; cursor: pointer;'>Impérial (ft, ft/s)</button></div>");
+    fprintf(html, "  <div style='display: flex; align-items: center; gap: 10px; background: #f8f9fa; padding: 5px 15px; border-radius: 5px; border: 1px solid #ddd;'>");
+    fprintf(html, "    <label for='zoomSlider' style='font-weight: bold; font-size: 14px;'>Zoom Horizontal :</label>");
+    fprintf(html, "    <input type='range' id='zoomSlider' min='1000' max='15000' value='3000' step='500' oninput='updateZoom(this.value)' style='width: 200px;'>");
+    fprintf(html, "    <span id='zoomVal' style='font-weight: bold; font-family: monospace;'>1.0x</span>");
+    fprintf(html, "  </div>");
+    fprintf(html, "</div>");
 
-	// FSM (Hauteur 150px, Largeur 3000px)
+	fprintf(html, "<div class='scroll-sync' onscroll='syncScroll(this)' style='width: 100%%; overflow-x: auto;'><div class='chart-wrapper' style='width: 3000px; height: 500px;'><canvas id='chartVol'></canvas></div></div></div>");
+
+	// FSM (Hauteur 150px)
 	fprintf(html, "<div class='card'><h2>FSM Timeline (Déroulement des États)</h2>");
-	fprintf(html, "<div class='scroll-sync' style='width: 100%%; overflow-x: auto;'><div style='width: 3000px; height: 150px;'><canvas id='chartFSM'></canvas></div></div></div>");
+	fprintf(html, "<div class='scroll-sync' onscroll='syncScroll(this)' style='width: 100%%; overflow-x: auto;'><div class='chart-wrapper' style='width: 3000px; height: 150px;'><canvas id='chartFSM'></canvas></div></div></div>");
 
-	// Erreur Kalman Alt (Hauteur 250px, Largeur 3000px)
+	// Erreur Kalman Alt (Hauteur 250px)
 	fprintf(html, "<div class='card'><h2>Erreur Absolue (Kalman) - Altitude</h2>");
-	fprintf(html, "<div class='scroll-sync' style='width: 100%%; overflow-x: auto;'><div style='width: 3000px; height: 250px;'><canvas id='chartKalman'></canvas></div></div></div>");
+	fprintf(html, "<div class='scroll-sync' onscroll='syncScroll(this)' style='width: 100%%; overflow-x: auto;'><div class='chart-wrapper' style='width: 3000px; height: 250px;'><canvas id='chartKalman'></canvas></div></div></div>");
 
-	// Erreur Kalman Vel (Hauteur 250px, Largeur 3000px)
+	// Erreur Kalman Vel (Hauteur 250px)
 	fprintf(html, "<div class='card'><h2>Erreur Absolue (Kalman) - Vitesse</h2>");
-	fprintf(html, "<div class='scroll-sync' style='width: 100%%; overflow-x: auto;'><div style='width: 3000px; height: 250px;'><canvas id='chartKalmanVel'></canvas></div></div></div>");
+	fprintf(html, "<div class='scroll-sync' onscroll='syncScroll(this)' style='width: 100%%; overflow-x: auto;'><div class='chart-wrapper' style='width: 3000px; height: 250px;'><canvas id='chartKalmanVel'></canvas></div></div></div>");
 
     // ==========================================
     // SCRIPTS JAVASCRIPT : CHARTS & SYNC
     // ==========================================
 	fprintf(html, "<script>\nChart.register(window['chartjs-plugin-annotation']);\n");
 
-	// Instanciation Télémétrie
-	fprintf(html, "window.chartVol = new Chart(document.getElementById('chartVol').getContext('2d'), { type: 'line', data: { labels: l_time, datasets: [{ label: 'Altitude (m)', data: l_alt, borderColor: '#3498db', yAxisID: 'y1', pointRadius: 0 }, { label: 'Vitesse (m/s)', data: l_vel, borderColor: '#e67e22', yAxisID: 'y2', pointRadius: 0 }]}, options: { maintainAspectRatio: false, plugins: { annotation: { annotations: annotationsList } }, scales: { x: { type: 'linear', min: l_time[0], max: l_time[l_time.length-1], ticks: { stepSize: 5 } }, y1: { type: 'linear', position: 'left', title: {display: true, text: 'Altitude (m)'} }, y2: { type: 'linear', position: 'right', grid: { drawOnChartArea: false }, title: {display: true, text: 'Vitesse (m/s)'} } } } });\n");
+	// Instanciation Télémétrie avec les courbes RAW, KALMAN et le fond MACH LOCK
+	fprintf(html, "window.chartVol = new Chart(document.getElementById('chartVol').getContext('2d'), { type: 'line', data: { labels: l_time, datasets: ["
+                  "{ label: 'Altitude Brute (m)', data: l_raw_alt, borderColor: 'rgba(52, 152, 219, 0.4)', yAxisID: 'y1', pointRadius: 0, borderDash: [5, 5], borderWidth: 1 }, "
+                  "{ label: 'Altitude Kalman (m)', data: l_alt, borderColor: '#9b59b6', yAxisID: 'y1', pointRadius: 0, borderWidth: 2 }, " // Mauve
+                  "{ label: 'Vitesse Brute (m/s)', data: l_raw_vel, borderColor: 'rgba(230, 126, 34, 0.4)', yAxisID: 'y2', pointRadius: 0, borderDash: [5, 5], borderWidth: 1 }, "
+                  "{ label: 'Vitesse Kalman (m/s)', data: l_vel, borderColor: '#e74c3c', yAxisID: 'y2', pointRadius: 0, borderWidth: 2 }, " // Rouge
+                  "{ label: 'Mach Lock', data: l_mach_lock.map(v => v ? 100 : 0), borderColor: 'rgba(241, 196, 15, 0.5)', backgroundColor: 'rgba(241, 196, 15, 0.15)', fill: true, yAxisID: 'y3', pointRadius: 0, stepped: true, borderWidth: 1 } "
+                  "]}, options: { maintainAspectRatio: false, plugins: { annotation: { annotations: annotationsList } }, scales: { "
+                  "x: { type: 'linear', min: l_time[0], max: l_time[l_time.length-1], ticks: { stepSize: 5 } }, "
+                  "y1: { type: 'linear', position: 'left', title: {display: true, text: 'Altitude (m)'} }, "
+                  "y2: { type: 'linear', position: 'right', grid: { drawOnChartArea: false }, title: {display: true, text: 'Vitesse (m/s)'} }, "
+                  "y3: { type: 'linear', position: 'right', display: false, min: 0, max: 100 } "
+                  "} } });\n");
 
-    // Instanciation FSM
 	fprintf(html, "const globalNames = ['PREFLIGHT', 'ARMED', 'INFLIGHT', 'POSTFLIGHT'];\nconst subNames = ['BOOST', 'FAST', 'COAST', 'DROGUE', 'MAIN', 'LANDED'];\n");
 	fprintf(html, "const globalBg = ['rgba(149, 165, 166, 0.8)', 'rgba(241, 196, 15, 0.8)', 'rgba(46, 204, 113, 0.8)', 'rgba(52, 152, 219, 0.8)'];\nconst globalBd = ['#7f8c8d', '#f39c12', '#27ae60', '#2980b9'];\n");
 	fprintf(html, "const subBg = ['rgba(231, 76, 60, 0.8)', 'rgba(230, 126, 34, 0.8)', 'rgba(26, 188, 156, 0.8)', 'rgba(52, 152, 219, 0.8)', 'rgba(155, 89, 182, 0.8)', 'rgba(46, 204, 113, 0.8)'];\nconst subBd = ['#c0392b', '#d35400', '#16a085', '#2980b9', '#8e44ad', '#27ae60'];\n");
 	fprintf(html, "function buildBlocks(times, values, names, yLabel) { let blocks = []; if(times.length === 0) return blocks; let startT = times[0]; let currentVal = values[0]; for(let i = 1; i < times.length; i++) { if(values[i] !== currentVal) { blocks.push({ x: [startT, times[i]], y: yLabel, stateName: names[currentVal], v: currentVal }); startT = times[i]; currentVal = values[i]; } } blocks.push({ x: [startT, times[times.length-1]], y: yLabel, stateName: names[currentVal], v: currentVal }); return blocks; }\n");
 	fprintf(html, "const globalBlocks = buildBlocks(l_time, l_state, globalNames, 'État Global');\nconst subBlocks = buildBlocks(l_time, l_sub, subNames, 'Sous-État');\n");
+
+	// Instanciation FSM
 	fprintf(html, "window.chartFSM = new Chart(document.getElementById('chartFSM').getContext('2d'), { type: 'bar', data: { datasets: [ { label: 'Global State', data: globalBlocks, backgroundColor: (ctx) => ctx.raw ? globalBg[ctx.raw.v] : '#000', borderColor: (ctx) => ctx.raw ? globalBd[ctx.raw.v] : '#000', borderWidth: 2, borderSkipped: false, barPercentage: 0.7 }, { label: 'Sub State', data: subBlocks, backgroundColor: (ctx) => ctx.raw ? subBg[ctx.raw.v] : '#000', borderColor: (ctx) => ctx.raw ? subBd[ctx.raw.v] : '#000', borderWidth: 2, borderSkipped: false, barPercentage: 0.7 } ] }, options: { maintainAspectRatio: false, indexAxis: 'y', responsive: true, scales: { x: { type: 'linear', min: l_time[0], max: l_time[l_time.length-1], ticks: { stepSize: 5 } } }, plugins: { tooltip: { callbacks: { label: function(ctx) { let b = ctx.raw; return b.stateName + ' : ' + b.x[0].toFixed(2) + 's \\u2192 ' + b.x[1].toFixed(2) + 's'; } } } } } });\n");
 
-	// Instanciation Kalman Alt & Vel
+	// Instanciation Kalman Alt
 	fprintf(html, "window.chartKalman = new Chart(document.getElementById('chartKalman').getContext('2d'), { type: 'line', data: { labels: l_time, datasets: [{ label: 'Erreur Altitude (m)', data: l_err, borderColor: '#e74c3c', backgroundColor: 'rgba(231, 76, 60, 0.2)', fill: true, pointRadius: 0, borderWidth: 1 }]}, options: { maintainAspectRatio: false, scales: { x: { type: 'linear', min: l_time[0], max: l_time[l_time.length-1], ticks: { stepSize: 5 } }, y: { title: { display: true, text: 'Erreur (m)' } } } } });\n");
+
+	// Instanciation Kalman Vel
 	fprintf(html, "window.chartKalmanVel = new Chart(document.getElementById('chartKalmanVel').getContext('2d'), { type: 'line', data: { labels: l_time, datasets: [{ label: 'Erreur Vitesse (m/s)', data: l_err_v, borderColor: '#8e44ad', backgroundColor: 'rgba(142, 68, 173, 0.2)', fill: true, pointRadius: 0, borderWidth: 1 }]}, options: { maintainAspectRatio: false, scales: { x: { type: 'linear', min: l_time[0], max: l_time[l_time.length-1], ticks: { stepSize: 5 } }, y: { title: { display: true, text: 'Erreur (m/s)' } } } } });\n");
 
-	// Script JS de conversion d'unités
+	// Script JS pour la conversion d'unités
 	fprintf(html, "let currentUnit = 'metric';\n");
-	fprintf(html, "const alt_metric = [...l_alt]; const vel_metric = [...l_vel]; const err_metric = [...l_err]; const err_v_metric = [...l_err_v];\n");
+	fprintf(html, "const raw_alt_metric = [...l_raw_alt]; const raw_vel_metric = [...l_raw_vel]; const alt_metric = [...l_alt]; const vel_metric = [...l_vel]; const err_metric = [...l_err]; const err_v_metric = [...l_err_v];\n");
 	fprintf(html, "function toggleUnits(unit) {\n");
 	fprintf(html, "    if(currentUnit === unit) return;\n");
 	fprintf(html, "    currentUnit = unit;\n");
 	fprintf(html, "    const multiplier = (unit === 'imperial') ? 3.28084 : 1.0;\n");
 	fprintf(html, "    for(let i=0; i<l_alt.length; i++) {\n");
-	fprintf(html, "        window.chartVol.data.datasets[0].data[i] = alt_metric[i] * multiplier;\n");
-	fprintf(html, "        window.chartVol.data.datasets[1].data[i] = vel_metric[i] * multiplier;\n");
+	fprintf(html, "        window.chartVol.data.datasets[0].data[i] = raw_alt_metric[i] * multiplier;\n");
+	fprintf(html, "        window.chartVol.data.datasets[1].data[i] = alt_metric[i] * multiplier;\n");
+	fprintf(html, "        window.chartVol.data.datasets[2].data[i] = raw_vel_metric[i] * multiplier;\n");
+	fprintf(html, "        window.chartVol.data.datasets[3].data[i] = vel_metric[i] * multiplier;\n");
 	fprintf(html, "        window.chartKalman.data.datasets[0].data[i] = err_metric[i] * multiplier;\n");
 	fprintf(html, "        window.chartKalmanVel.data.datasets[0].data[i] = err_v_metric[i] * multiplier;\n");
 	fprintf(html, "    }\n");
 	fprintf(html, "    window.chartVol.options.scales.y1.title.text = unit === 'imperial' ? 'Altitude (ft)' : 'Altitude (m)';\n");
 	fprintf(html, "    window.chartVol.options.scales.y2.title.text = unit === 'imperial' ? 'Vitesse (ft/s)' : 'Vitesse (m/s)';\n");
-	fprintf(html, "    window.chartVol.data.datasets[0].label = unit === 'imperial' ? 'Altitude (ft)' : 'Altitude (m)';\n");
-	fprintf(html, "    window.chartVol.data.datasets[1].label = unit === 'imperial' ? 'Vitesse (ft/s)' : 'Vitesse (m/s)';\n");
+	fprintf(html, "    window.chartVol.data.datasets[0].label = unit === 'imperial' ? 'Altitude Brute (ft)' : 'Altitude Brute (m)';\n");
+	fprintf(html, "    window.chartVol.data.datasets[1].label = unit === 'imperial' ? 'Altitude Kalman (ft)' : 'Altitude Kalman (m)';\n");
+	fprintf(html, "    window.chartVol.data.datasets[2].label = unit === 'imperial' ? 'Vitesse Brute (ft/s)' : 'Vitesse Brute (m/s)';\n");
+	fprintf(html, "    window.chartVol.data.datasets[3].label = unit === 'imperial' ? 'Vitesse Kalman (ft/s)' : 'Vitesse Kalman (m/s)';\n");
 	fprintf(html, "    window.chartKalman.options.scales.y.title.text = unit === 'imperial' ? 'Erreur (ft)' : 'Erreur (m)';\n");
 	fprintf(html, "    window.chartKalman.data.datasets[0].label = unit === 'imperial' ? 'Erreur Altitude (ft)' : 'Erreur Altitude (m)';\n");
 	fprintf(html, "    window.chartKalmanVel.options.scales.y.title.text = unit === 'imperial' ? 'Erreur Vitesse (ft/s)' : 'Erreur Vitesse (m/s)';\n");
@@ -521,7 +646,7 @@ int main(int argc, char** argv) {
 	fprintf(html, "    window.chartVol.update(); window.chartKalman.update(); window.chartKalmanVel.update();\n");
 	fprintf(html, "}\n");
 
-    // Script JS de Synchronisation de Scroll Parfaite (Sans saccades)
+    // Script JS de Synchronisation de Scroll
     fprintf(html, "const scrollers = document.querySelectorAll('.scroll-sync');\n");
     fprintf(html, "let activeScroller = null;\n");
     fprintf(html, "scrollers.forEach(scroller => {\n");
