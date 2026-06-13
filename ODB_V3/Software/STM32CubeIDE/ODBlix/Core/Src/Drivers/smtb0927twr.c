@@ -38,8 +38,8 @@ static void Buzzer_SetFreq(TIM_HandleTypeDef *htim, uint32_t channel, uint16_t f
     __HAL_TIM_SET_COMPARE(htim, channel, (arr + 1) / 2);
 }
 
-static void Buzzer_PlayTone(buzzer_t *dev, uint16_t freq, uint32_t duration) {
-    Buzzer_SetFreq(dev->htim, dev->channel, freq);
+static void Buzzer_PlayTone(buzzer_t *dev, uint16_t freq_hz, uint32_t duration) {
+    Buzzer_SetFreq(dev->htim, dev->channel, freq_hz);
     HAL_TIM_PWM_Start(dev->htim, dev->channel);
     HAL_Delay(duration);
 }
@@ -106,7 +106,8 @@ void Buzzer_RunRoutine(buzzer_t *dev, buzzer_routines_t routine) {
  * Pause 1s
  * Start Bip -> 5s biiiiip...
 */
-void Buzzer_ReportStatus(buzzer_t *dev, uint16_t freq, uint16_t battery_dv, bool pyros_continuity[4], uint8_t global_state) {
+void Buzzer_ReportStatus(buzzer_t *dev, uint16_t freq_hz, uint16_t battery_dv, bool pyros_continuity[4], uint8_t global_state) {
+	if(freq_hz > BUZZER_MAX_FREQ) return;
     // Battery voltage
     uint16_t temp = battery_dv;
     uint8_t digits[5];
@@ -121,7 +122,7 @@ void Buzzer_ReportStatus(buzzer_t *dev, uint16_t freq, uint16_t battery_dv, bool
         uint8_t d = digits[i];
         uint8_t bipCount = (d == 0) ? 10 : d;
 
-        Buzzer_Bip(dev, bipCount, 250, 250, freq);
+        Buzzer_Bip(dev, bipCount, 250, 250, freq_hz);
         if(i > 0) Buzzer_Pause(1000);
     }
 
@@ -130,9 +131,9 @@ void Buzzer_ReportStatus(buzzer_t *dev, uint16_t freq, uint16_t battery_dv, bool
     // Pyros continuity
     for(int i = 0; i < 4; i++) {
         if(pyros_continuity[i]) {
-            Buzzer_Bip(dev, 2, 250, 250, freq);
+            Buzzer_Bip(dev, 2, 250, 250, freq_hz);
         } else {
-            Buzzer_Bip(dev, 1, 250, 250, freq);
+            Buzzer_Bip(dev, 1, 250, 250, freq_hz);
         }
         if(i < 3) Buzzer_Pause(1000);
     }
@@ -143,12 +144,52 @@ void Buzzer_ReportStatus(buzzer_t *dev, uint16_t freq, uint16_t battery_dv, bool
     if(global_state < 1) global_state = 1;
     if(global_state > 8) global_state = 8;
 
-    Buzzer_Bip(dev, global_state, 250, 250, freq);
+    Buzzer_Bip(dev, global_state, 250, 250, freq_hz);
 
     Buzzer_Pause(3000);
 
     // Start Bip
     if(global_state == 1) {
-    	Buzzer_Bip(dev, global_state, 5000, 250, freq);
+    	Buzzer_Bip(dev, global_state, 5000, 250, freq_hz);
+    }
+}
+
+void Buzzer_StartPeriodicBip(buzzer_t *dev, uint16_t freq_hz, uint32_t on_time_ms, uint32_t off_time_ms) {
+	if(freq_hz > BUZZER_MAX_FREQ) return;
+
+    dev->inf_bip_active = true;
+    dev->inf_bip_freq_hz = freq_hz;
+    dev->inf_bip_on_time_ms = on_time_ms;
+    dev->inf_bip_off_time_ms = off_time_ms;
+    dev->inf_bip_state = true;
+    dev->inf_bip_last_tick = HAL_GetTick();
+
+    Buzzer_SetFreq(dev->htim, dev->channel, dev->inf_bip_freq_hz);
+    HAL_TIM_PWM_Start(dev->htim, dev->channel);
+}
+
+void Buzzer_StopPeriodicBip(buzzer_t *dev) {
+    dev->inf_bip_active = false;
+    HAL_TIM_PWM_Stop(dev->htim, dev->channel);
+}
+
+void Buzzer_ProcessPeriodicBip(buzzer_t *dev) {
+    if(!dev->inf_bip_active) {
+        return;
+    }
+
+    uint32_t current_tick = HAL_GetTick();
+    uint32_t target_delay = dev->inf_bip_state ? dev->inf_bip_on_time_ms : dev->inf_bip_off_time_ms;
+
+    if((current_tick - dev->inf_bip_last_tick) >= target_delay) {
+        dev->inf_bip_last_tick = current_tick;
+        dev->inf_bip_state = !dev->inf_bip_state;
+
+        if(dev->inf_bip_state) {
+            Buzzer_SetFreq(dev->htim, dev->channel, dev->inf_bip_freq_hz);
+            HAL_TIM_PWM_Start(dev->htim, dev->channel);
+        } else {
+            HAL_TIM_PWM_Stop(dev->htim, dev->channel);
+        }
     }
 }

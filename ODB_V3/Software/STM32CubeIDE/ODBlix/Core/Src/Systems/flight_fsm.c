@@ -12,11 +12,13 @@
 #include "Systems/tasks.h"
 #include "Systems/logger.h"
 #include "Protocols/odb_protocol.h"
+#include "Drivers/smtb0927twr.h"
 #include "stm32f4xx_hal.h"
 
 #include <stdint.h>
 
 
+extern buzzer_t buzzer;
 extern odb_data_t flight_data;
 extern odb_stats_t flight_stats;
 extern system_measurements_t system_measurements;
@@ -217,22 +219,25 @@ void FSM_Update(void) {
 					flight_stats.flight_time_ms = flight_duration;
 					ODB_SetMissionState(&flight_data, STATE_POSTFLIGHT);
 					current_global_state = STATE_POSTFLIGHT;
+
+					Logger_SaveStats(&flight_stats);
+
+					// Low power
+					// TODO: add low power sensor states and logger
+					Scheduler_RemoveTask("Data_Update");
+					Scheduler_RemoveTask("FSM");
+					Scheduler_RemoveTask("Logger");
+					Scheduler_RemoveTask("Telemetry");
+					Scheduler_SetActive("Idefix", true);
+
+					Buzzer_StartPeriodicBip(&buzzer, current_config.buzzer_report_tone_hz, 500, 500);
+
 					break;
 			}
 			break;
 
 		case STATE_POSTFLIGHT:
-			// Handle landing timer conclusion, put in low power mode and handle IdeFIX communication
-			ODB_SetMissionState(&flight_data, STATE_POSTFLIGHT);
-			Logger_SaveStats(&flight_stats); // TODO: save only one time (not in loop)
-
-			// Low power
-			// TODO: add low power sensor states and logger
-			Scheduler_RemoveTask("Data_Update");
-			Scheduler_RemoveTask("FSM");
-			Scheduler_RemoveTask("Logger");
-			Scheduler_RemoveTask("Telemetry");
-			Scheduler_SetActive("Idefix", true);
+			Buzzer_ProcessPeriodicBip(&buzzer);
 			break;
 	}
 }

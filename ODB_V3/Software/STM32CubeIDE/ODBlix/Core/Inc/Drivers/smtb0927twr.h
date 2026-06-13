@@ -35,9 +35,19 @@ typedef struct {
 typedef struct {
     TIM_HandleTypeDef *htim;
     uint32_t channel;
+
+    bool     inf_bip_active;
+	bool     inf_bip_state;
+	uint16_t inf_bip_freq_hz;
+	uint32_t inf_bip_on_time_ms;
+	uint32_t inf_bip_off_time_ms;
+	uint32_t inf_bip_last_tick;
 } buzzer_t;
 
 void Buzzer_RunRoutine(buzzer_t *dev, buzzer_routines_t routine);
-void Buzzer_ReportStatus(buzzer_t *dev, uint16_t freq, uint16_t battery_dv, bool pyros_continuity[4], uint8_t global_state);
+void Buzzer_ReportStatus(buzzer_t *dev, uint16_t freq_hz, uint16_t battery_dv, bool pyros_continuity[4], uint8_t global_state);
+void Buzzer_StartPeriodicBip(buzzer_t *dev, uint16_t freq_hz, uint32_t on_time_ms, uint32_t off_time_ms);
+void Buzzer_StopPeriodicBip(buzzer_t *dev);
+void Buzzer_ProcessPeriodicBip(buzzer_t *dev);
 
 #endif /* INC_DRIVERS_SMTB0927TWR_H_ */
