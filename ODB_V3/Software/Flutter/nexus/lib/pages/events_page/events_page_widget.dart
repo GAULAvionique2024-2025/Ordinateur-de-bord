@@ -42,7 +42,7 @@ class _EventsPageWidgetState extends State<EventsPageWidget> {
   Widget build(BuildContext context) {
     final data = context.watch<DataServiceManager>();
     final connected = data.hasConnection;
-    final stats = data.lastFlightStats;
+    final stats = connected ? data.lastFlightStats : null;
 
     return GestureDetector(
       onTap: () {

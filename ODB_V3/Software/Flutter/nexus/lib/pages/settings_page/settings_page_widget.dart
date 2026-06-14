@@ -1331,7 +1331,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
   @override
   Widget build(BuildContext context) {
     final data = context.watch<DataServiceManager>();
-    final odbConnected = data.hasConnection;
+    final connected = data.hasConnection;
     _syncOdbConfig(data);
 
     final expandableHeaderStyle = FlutterFlowTheme.of(context).bodyMedium
@@ -1351,43 +1351,43 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
         context,
         expandableHeaderStyle,
         data: data,
-        enabled: odbConnected,
+        enabled: connected,
       ),
       _buildStageSection(
         context,
         expandableHeaderStyle,
         data: data,
-        enabled: odbConnected,
+        enabled: connected,
       ),
       _buildPyrosSection(
         context,
         expandableHeaderStyle,
         data: data,
-        enabled: odbConnected,
+        enabled: connected,
       ),
       _buildPhaseSection(
         context,
         expandableHeaderStyle,
         data: data,
-        enabled: odbConnected,
+        enabled: connected,
       ),
       _buildParachuteSection(
         context,
         expandableHeaderStyle,
         data: data,
-        enabled: odbConnected,
+        enabled: connected,
       ),
       _buildIdefixSection(
         context,
         expandableHeaderStyle,
         data: data,
-        enabled: odbConnected,
+        enabled: connected,
       ),
       _buildAudioSection(
         context,
         expandableHeaderStyle,
         data: data,
-        enabled: odbConnected,
+        enabled: connected,
       ),
       _buildResetSection(context, expandableHeaderStyle, data),
       _buildActionButtons(context, data),

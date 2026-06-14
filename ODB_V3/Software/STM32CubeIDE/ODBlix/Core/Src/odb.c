@@ -177,7 +177,6 @@ odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats) {
         system_states |= FLAG_FLASH_OK;
         Config_Init();
         Logger_Init();
-        Test_W25Q_Logging();
     } else {
         error += 1;
         DEBUG_PRINTF("Erreur : Init W25Q\n");

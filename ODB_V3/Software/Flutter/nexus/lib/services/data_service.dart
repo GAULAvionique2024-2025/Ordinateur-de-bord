@@ -460,6 +460,7 @@ class DataServiceManager with ChangeNotifier {
     apogeeFailsafeMs = 0;
     idefixFrequencyHz = 0;
     pyroRoles = List.filled(4, 0);
+    lastFlightStats = null;
     _safeNotifyListeners();
   }
 
