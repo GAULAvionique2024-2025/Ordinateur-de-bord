@@ -105,8 +105,14 @@ void FSM_Update(void) {
 						if(!flight_stats.apogee.valid) {
 							flight_stats.apogee.valid = true;
 							flight_stats.apogee.value = flight_data.kalman_z;
-							flight_stats.apogee.time_ms = flight_duration;
+							flight_stats.apogee.time_ms = HAL_GetTick();
 						}
+						if(!flight_stats.drogue_deploy.valid) {
+							flight_stats.drogue_deploy.valid = true;
+							flight_stats.drogue_deploy.value = flight_data.kalman_z;
+							flight_stats.drogue_deploy.time_ms = HAL_GetTick();
+						}
+
 						current_substate = SUB_DROGUE;
 						fire_timer = 0;
 						fire_attempt_count = 0;
@@ -126,7 +132,11 @@ void FSM_Update(void) {
 					break;
 
 				case SUB_DROGUE:
-				{
+					extern bool is_pyros_armed;
+					if(!is_pyros_armed) {
+						Pyro_Arming(&system_measurements, true);
+					}
+
 					pyro_t *drogue = Pyro_GetByRole(PYRO_ROLE_DROGUE);
 					pyro_t *drogue_backup = Pyro_GetByRole(PYRO_ROLE_DROGUE_BACKUP);
 					// Wait for drogue deployment detection
@@ -154,7 +164,7 @@ void FSM_Update(void) {
 						if(!flight_stats.main_deploy.valid) {
 							flight_stats.main_deploy.valid = true;
 							flight_stats.main_deploy.value = flight_data.kalman_z;
-							flight_stats.main_deploy.time_ms = flight_duration;
+							flight_stats.main_deploy.time_ms = HAL_GetTick();
 						}
 						current_substate = SUB_MAIN;
 						fire_timer = 0;
@@ -173,10 +183,8 @@ void FSM_Update(void) {
 						}
 					}
 					break;
-				}
 
 				case SUB_MAIN:
-				{
 					pyro_t *main_pyro = Pyro_GetByRole(PYRO_ROLE_MAIN);
 					pyro_t *main_backup = Pyro_GetByRole(PYRO_ROLE_MAIN_BACKUP);
 
@@ -213,7 +221,6 @@ void FSM_Update(void) {
 						landing_timer = 0;
 					}
 					break;
-				}
 
 				case SUB_LANDED:
 					flight_stats.flight_time_ms = flight_duration;
@@ -244,11 +251,25 @@ void FSM_Update(void) {
 
 // Callback for failsafe timer (TIM5)
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
-	if(htim->Instance == TIM5) {
-		bool mach_lock_enabled = ((flight_data.event_states & FLAG_MACH_LOCK_ENABLED) != 0U);
-		if(current_global_state == STATE_INFLIGHT && current_substate < SUB_DROGUE && !mach_lock_enabled) {
-			current_substate = SUB_DROGUE;
-			//Pyro_Fire(&pyro1, &system_measurements);
-		}
-	}
+    if(htim->Instance == TIM5) {
+        bool mach_lock_enabled = ((flight_data.event_states & FLAG_MACH_LOCK_ENABLED) != 0U);
+        if(current_global_state == STATE_INFLIGHT && current_substate < SUB_DROGUE && !mach_lock_enabled) {
+            if(!flight_stats.apogee.valid) {
+                flight_stats.apogee.valid = true;
+                flight_stats.apogee.value = flight_data.kalman_z;
+                flight_stats.apogee.time_ms = HAL_GetTick();
+            }
+            if(!flight_stats.drogue_deploy.valid) {
+                flight_stats.drogue_deploy.valid = true;
+                flight_stats.drogue_deploy.value = flight_data.kalman_z;
+                flight_stats.drogue_deploy.time_ms = HAL_GetTick();
+            }
+
+            current_substate = SUB_DROGUE;
+
+            fire_timer = 0;
+            fire_attempt_count = 0;
+            backup_active = false;
+        }
+    }
 }

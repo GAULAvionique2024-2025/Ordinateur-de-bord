@@ -6,16 +6,17 @@
  */
 
 
-#include <odb.h>
-#include <Protocols/odb_protocol.h>
 #include "Systems/tasks.h"
-
+#include "Comm/app_comm.h"
+#include "Comm/telemetry_comm.h"
+#include "Comm/beacon_comm.h"
+#include "odb.h"
+#include "Protocols/odb_protocol.h"
 #include "Systems/config.h"
 #include "Systems/flight_fsm.h"
 #include "Systems/logger.h"
 #include "Systems/scheduler.h"
 #include "Utils/reboot_manager.h"
-#include "App/app_comm.h"
 #include "stm32f4xx_hal.h"
 
 

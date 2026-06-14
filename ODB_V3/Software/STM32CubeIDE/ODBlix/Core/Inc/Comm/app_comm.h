@@ -5,8 +5,8 @@
  *      Author: gagno
  */
 
-#ifndef INC_APP_APP_COMM_H_
-#define INC_APP_APP_COMM_H_
+#ifndef INC_COMM_APP_COMM_H_
+#define INC_COMM_APP_COMM_H_
 
 
 #include <odb.h>
@@ -39,4 +39,4 @@ typedef enum {
 void AppComm_SendTelemetry(hm11_t *hm11_dev, const odb_data_t *data);
 void AppComm_ProcessRx(hm11_t *hm11_dev);
 
-#endif /* INC_APP_APP_COMM_H_ */
+#endif /* INC_COMM_APP_COMM_H_ */

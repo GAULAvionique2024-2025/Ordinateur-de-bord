@@ -20,8 +20,6 @@
 
 #define RFD_TX_RING_SIZE 2048
 
-#define MAVLINK_COMPONENT_ID 1
-
 
 typedef enum {
     RFD_OK,

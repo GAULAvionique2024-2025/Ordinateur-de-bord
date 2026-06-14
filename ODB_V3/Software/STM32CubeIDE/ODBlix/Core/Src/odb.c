@@ -8,12 +8,12 @@
 
 // Apogee Detection & Pyros Firing logic: https://www.rocketryforum.com/threads/most-accurate-way-to-measure-velocity-accelerometer-vs-barometer-vs.157866/page-2
 
+#include "odb.h"
 #include "Systems/config.h"
 #include "Systems/logger.h"
 #include "tools/profiler.h"
-#include "Utils/reboot_manager.h"
+#include "Comm/beacon_comm.h"
 #include <ctype.h>
-#include <odb.h>
 
 #define DEBUG_PRINTF(...) do { \
     if(current_config.debug_mode) { \
@@ -21,7 +21,6 @@
     } \
 } while(0)
 
-#define KALMAN_NAV_SAMPLE_NB 	50
 
 extern adxl382_t adxl382;
 extern bno055_t bno055;
@@ -69,7 +68,6 @@ static void ODB_UpdateWindowEvent(window_event_t *event, bool active, uint32_t t
 }
 
 
-/* === ODB === */
 void ODB_Reset(odb_data_t *data, odb_stats_t *stats) {
     if(!data) {
         return;
@@ -562,123 +560,3 @@ uint8_t ODB_GetPyroStates(const odb_data_t *data) {
 
     return pyro_continuity;
 }
-/* =========== */
-
-/* === TELEMETRY === */
-static uint8_t mavlink_tx_buffer[MAVLINK_MAX_PACKET_LEN]; // DMA TX buffer
-
-static void Telemetry_TransmitMessage(rfd900x_t *rfd_dev, const mavlink_message_t *msg) {
-	if(!rfd_dev) return;
-
-	uint16_t len = mavlink_msg_to_send_buffer(mavlink_tx_buffer, msg);
-	rfd900x_state_t err = RFD900x_Transmit(rfd_dev, mavlink_tx_buffer, len);
-	if(err == RFD_BUSY) {
-		// TODO: add missing transmit counter
-	}
-}
-
-void Telemetry_SendRocketData(rfd900x_t *rfd_dev, const mavlink_modem_id_t modem_id, odb_data_t *data, const uint32_t current_time_ms) {
-    if(!rfd_dev || !data) return;
-
-    odb_data_t *data_temp = data;
-	mavlink_message_t msg;
-	mavlink_msg_rocket_telemetry_pack(
-			modem_id,
-			MAVLINK_COMPONENT_ID,
-			&msg,
-			current_time_ms,
-			data_temp->system_states,
-			data_temp->event_states,
-			data_temp->mission_state,
-			data_temp->battery_mv,
-			data_temp->roll * 100,
-			data_temp->pitch * 100,
-			data_temp->yaw * 100,
-			data_temp->imu_acc_x * 100,
-			data_temp->imu_acc_y * 100,
-			data_temp->imu_acc_z * 100,
-			data_temp->imu_gyro_x * 100,
-			data_temp->imu_gyro_y * 100,
-			data_temp->imu_gyro_z * 100,
-			data_temp->imu_mag_x * 100,
-			data_temp->imu_mag_y * 100,
-			data_temp->imu_mag_z * 100,
-			data_temp->altitude_msl_m * 100,
-			data_temp->pressure_pa * 100,
-			data_temp->temp_celsius * 100,
-			data_temp->highg_acc_x * 100,
-			data_temp->highg_acc_y * 100,
-			data_temp->highg_acc_z * 100,
-			data_temp->gps_fix * 100,
-			data_temp->lat,
-			data_temp->lon,
-			data_temp->gps_alt,
-			data_temp->vel,
-			data_temp->cog,
-			data_temp->satellites_nb,
-			data_temp->imu_acc_vertical * 100,
-			data_temp->highg_acc_vertical * 100,
-			data_temp->kalman_z * 100,
-			data_temp->kalman_v * 100
-		);
-
-	Telemetry_TransmitMessage(rfd_dev, &msg);
-}
-
-/*
-void Telemetry_SendEventLog(rfd900x_t *rfd_dev, const mavlink_modem_id_t modem_id, const mavlink_event_severity_t severity, const char *text) {
-    if (!rfd_dev || !text || text[0] == '\0' || strlen(text) > 50) return;
-
-    mavlink_message_t msg;
-    mavlink_msg_statustext_pack(
-        modem_id,
-        MAVLINK_COMPONENT_ID,
-        &msg,
-        severity,
-        text,
-        0,
-        0
-    );
-
-    Telemetry_TransmitMessage(rfd_dev, &msg);
-}
-*/
-/* =========== */
-
-
-/* === BEACON INTEGRATION === */
-void Beacon_SendCoordinates(idefix_t *idefix_dev, const int32_t lat_e7, const int32_t lon_e7) {
-    if(!idefix_dev) return;
-
-    if(Idefix_SendCommand(idefix_dev, IDEFIX_CMD_SET_COORD) != IDEFIX_OK) {
-        return;
-    }
-
-    uint8_t payload[8];
-    payload[0] = (uint8_t)(lat_e7 & 0xFF);
-    payload[1] = (uint8_t)((lat_e7 >> 8) & 0xFF);
-    payload[2] = (uint8_t)((lat_e7 >> 16) & 0xFF);
-    payload[3] = (uint8_t)((lat_e7 >> 24) & 0xFF);
-    
-    payload[4] = (uint8_t)(lon_e7 & 0xFF);
-    payload[5] = (uint8_t)((lon_e7 >> 8) & 0xFF);
-    payload[6] = (uint8_t)((lon_e7 >> 16) & 0xFF);
-    payload[7] = (uint8_t)((lon_e7 >> 24) & 0xFF);
-
-    Idefix_SendData(idefix_dev, payload, 8);
-}
-
-void Beacon_SetFrequency(idefix_t *idefix_dev) {
-	if(Idefix_SendCommand(idefix_dev, IDEFIX_CMD_SET_FREQ) != IDEFIX_OK) {
-		return;
-    }
-
-    uint8_t payload[4];
-    payload[0] = (uint8_t)(current_config.idefix_frequency_hz & 0xFF);
-    payload[1] = (uint8_t)((current_config.idefix_frequency_hz >> 8) & 0xFF);
-    payload[2] = (uint8_t)((current_config.idefix_frequency_hz >> 16) & 0xFF);
-    payload[3] = (uint8_t)((current_config.idefix_frequency_hz >> 24) & 0xFF);
-
-    Idefix_SendData(idefix_dev, payload, 4);
-}
-/* =========== */

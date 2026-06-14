@@ -41,23 +41,14 @@ typedef enum {
     ODB_ERROR               = -3,
 } odb_state_t;
 
-// TODO: add functions to set system states and event states based on sensors data and pyros state to convert them into packed bitfields for telemetry transmission
+
 odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats);
+
 void ODB_Reset(odb_data_t *data, odb_stats_t *stats);
 void ODB_Update(odb_data_t *data, odb_stats_t *stats);
 uint16_t ODB_SetEventStates(const odb_stats_t *stats);
 int8_t ODB_SetMissionState(odb_data_t *data, uint8_t mission_state);
 uint8_t ODB_GetPyroStates(const odb_data_t *data);
-/* =========== */
 
-/* === TELEMETRY === */
-void Telemetry_SendRocketData(rfd900x_t *rfd_dev, const mavlink_modem_id_t modem_id, odb_data_t *data, const uint32_t current_time_ms);
-//void Telemetry_SendEventLog(rfd900x_t *rfd_dev, const mavlink_modem_id_t modem_id, const mavlink_event_severity_t severity, const char *text);
-/* =========== */
-
-/* === BEACON INTEGRATION === */
-void Beacon_SendCoordinates(idefix_t *idefix_dev, const int32_t lat_e7, const int32_t lon_e7);
-void Beacon_SetFrequency(idefix_t *idefix_dev);
-/* =========== */
 
 #endif /* INC_ODB_H_ */

@@ -6,7 +6,7 @@
  */
 
 
-#include "App/app_comm.h"
+#include <Comm/app_comm.h>
 #include "Utils/reboot_manager.h"
 #include <string.h>
 

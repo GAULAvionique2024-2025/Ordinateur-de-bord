@@ -21,6 +21,8 @@
 
 #define R_PENALTY   1000.0f
 
+#define KALMAN_NAV_SAMPLE_NB 50
+
 
 typedef struct {
     // State variables
