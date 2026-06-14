@@ -318,12 +318,12 @@ void Test_W25Q_Logging(void) {
     Logger_SaveStats(&mock_stats);
 
     DEBUG_PRINTF("[TEST] Relecture des données depuis la W25Q...\n");
-    odb_stats_t read_stats = Logger_GetLastFlightStats();
+    const odb_stats_t* read_stats = Logger_GetLastFlightStats();
 
-    if (read_stats.max_altitude_kalman.valid && read_stats.max_altitude_kalman.value == 1250.5f) {
-    	DEBUG_PRINTF("[TEST] SUCCÈS : Les statistiques ont été lues correctement (%.1f m) !\n", read_stats.max_altitude_kalman.value);
+    if (read_stats->max_altitude_kalman.valid && read_stats->max_altitude_kalman.value == 1250.5f) {
+    	DEBUG_PRINTF("[TEST] SUCCÈS : Les statistiques ont été lues correctement (%.1f m) !\n", read_stats->max_altitude_kalman.value);
     } else {
-    	DEBUG_PRINTF("[TEST] ÉCHEC : Statistiques corrompues ou non trouvées (Valeur lue: %.1f m).\n", read_stats.max_altitude_kalman.value);
+    	DEBUG_PRINTF("[TEST] ÉCHEC : Statistiques corrompues ou non trouvées (Valeur lue: %.1f m).\n", read_stats->max_altitude_kalman.value);
     }
 
     DEBUG_PRINTF("=== [TEST] FIN DU TEST ===\n\n");
