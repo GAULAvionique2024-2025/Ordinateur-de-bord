@@ -1,6 +1,6 @@
 /*
  * flight_sitl.c
- * Simulateur SITL & Générateur de Rapport de Vol Avancé
+ * Simulateur SITL
  */
 
 #include "Drivers/adxl382.h"
@@ -77,7 +77,7 @@ uint32_t launch_time_ms = 0, apogee_time_ms = 0, main_deploy_time_ms = 0, landin
 uint32_t first_drogue_fire_ms = 0, first_main_fire_ms = 0, pyro_arm_start_ms = 0;
 float peak_altitude = 0.0f, max_alt_residual = 0.0f, max_vel_residual = 0.0f;
 int unstable_kalman_windows = 0;
-bool is_pyro_armed = false;
+bool is_pyros_armed = false;
 double sum_sq_err_z = 0.0;
 uint32_t kalman_sample_count = 0;
 
@@ -109,10 +109,18 @@ int8_t ODB_SetMissionState(odb_data_t *data, uint8_t mission_state) { return 0; 
 void Logger_SaveStats(odb_stats_t *stats) {}
 void Scheduler_RemoveTask(const char* task_name) {}
 void Scheduler_SetActive(const char* task_name, bool state) {}
+void Buzzer_StartPeriodicBip(buzzer_t *dev, uint16_t freq_hz, uint32_t on_time_ms, uint32_t off_time_ms) {}
+void Buzzer_ProcessPeriodicBip(buzzer_t *dev) {}
 
 bool Pyro_Arming(system_measurements_t *measures, bool arming) {
-    if (arming && !is_pyro_armed) { Add_Event("pyros_arm_on", "pyros arming window opened"); } else if (!arming && is_pyro_armed) { Add_Event("pyros_arm_off", "pyros arming window closed"); }
-    is_pyro_armed = arming; return true;
+    if (arming && !is_pyros_armed) {
+    	Add_Event("pyros_arm_on", "pyros arming window opened");
+    } else if (!arming && is_pyros_armed) {
+    	Add_Event("pyros_arm_off", "pyros arming window closed");
+    }
+    is_pyros_armed = arming;
+
+    return true;
 }
 uint8_t ODB_GetPyroStates(const odb_data_t *data) { return 0x0F; }
 

@@ -24,6 +24,7 @@ extern odb_stats_t flight_stats;
 extern system_measurements_t system_measurements;
 extern TIM_HandleTypeDef htim5;
 extern pyro_t pyros[4];
+extern bool is_pyros_armed;
 
 global_state_t current_global_state = STATE_PREFLIGHT;
 volatile inflight_substate_t current_substate = SUB_BOOST;
@@ -132,7 +133,6 @@ void FSM_Update(void) {
 					break;
 
 				case SUB_DROGUE:
-					extern bool is_pyros_armed;
 					if(!is_pyros_armed) {
 						Pyro_Arming(&system_measurements, true);
 					}
