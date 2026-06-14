@@ -12,16 +12,17 @@
 #include <odb.h>
 #include "Drivers/hm11.h"
 #include "Systems/config.h"
+#include "Systems/logger.h"
 
 
 #define APP_SYNC_1 0xAB
 #define APP_SYNC_2 0xCD
 
 typedef enum {
-    MSG_TELEMETRY  = 0x01,
-    MSG_CONFIG_SET = 0x02,
-    MSG_CMD        = 0x03,
-    MSG_ACK        = 0x04
+    MSG_TELEMETRY  		= 0x01,
+	MSG_GENERIC_DATA 	= 0x02,
+    MSG_CMD        		= 0x03,
+    MSG_ACK        		= 0x04
 } app_msg_type_t;
 
 typedef enum {
@@ -31,7 +32,8 @@ typedef enum {
     CMD_APPLY_CFG  = 0x04,
     CMD_RESET_CFG  = 0x05,
     CMD_REQ_CFG    = 0x06,
-	CMD_RESET_MEM  = 0x07
+	CMD_RESET_MEM  = 0x07,
+	CMD_REQ_EVENTS = 0x08
 } app_cmd_id_t;
 
 void AppComm_SendTelemetry(hm11_t *hm11_dev, const odb_data_t *data);

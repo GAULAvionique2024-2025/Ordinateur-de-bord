@@ -122,7 +122,10 @@ typedef struct __attribute__((packed)) {
     int32_t	 last_lat;              // internal event for POSTFLIGHT reporting (save in FLASH/SD)
     int32_t  last_lon;              // internal event for POSTFLIGHT reporting (save in FLASH/SD)
     uint32_t flight_time_ms;		// internal event for POSTFLIGHT reporting (save in FLASH/SD)
+
+    // TOTAL 144
 } odb_stats_t;
+#define ODB_STATS_SIZE sizeof(odb_stats_t)
 
 // Main ODB data structure
 typedef struct __attribute__((packed)) {

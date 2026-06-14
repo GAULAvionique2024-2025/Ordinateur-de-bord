@@ -202,50 +202,48 @@ void Logger_SaveStats(const odb_stats_t *stats) {
     previous_flight_header_addr = last_flight_header_addr;
 }
 
-odb_data_t Logger_GetLastFlightData(void) {
-    odb_data_t last_valid_packet = {0};
-
+const odb_data_t* Logger_GetLastFlightData(void) {
     if(previous_flight_header_addr == 0xFFFFFFFF) {
-        return last_valid_packet;
+        return NULL;
     }
 
     uint32_t read_addr = previous_flight_header_addr + FLASH_SECTOR_SIZE_BYTE + W25Q512_PAGE_SIZE;
     logger_data_t temp_packet;
+
+    static odb_data_t last_valid_packet;
+    memset(&last_valid_packet, 0, sizeof(odb_data_t));
+    bool found = false;
 
     while(read_addr < LOGGER_MAX_ALLOWED_ADDRESS) {
         W25Q_Read(&w25q, (uint8_t*)&temp_packet, read_addr, sizeof(logger_data_t));
         
         if(temp_packet.magic_number == LOGGER_DATA_MAGIC_NUMBER) {
             last_valid_packet = temp_packet.data;
+            found = true;
             read_addr += sizeof(logger_data_t);
         } else {
             break; // No more valid packets
         }
     }
 
-    return last_valid_packet;
+    return found ? &last_valid_packet : NULL;
 }
 
-odb_stats_t Logger_GetLastFlightStats(odb_stats_t *stats) {
-    odb_stats_t empty_stats = {0};
-
+const odb_stats_t* Logger_GetLastFlightStats(void) {
     if(previous_flight_header_addr == 0xFFFFFFFF) {
-        if(stats) *stats = empty_stats;
-        return empty_stats;
+        return NULL;
     }
 
     uint32_t read_addr = previous_flight_header_addr + FLASH_SECTOR_SIZE_BYTE;
-    logger_stats_t temp_stats;
+    static logger_stats_t temp_stats;
 
     W25Q_Read(&w25q, (uint8_t*)&temp_stats, read_addr, sizeof(logger_stats_t));
 
     if(temp_stats.magic_number == LOGGER_STATS_MAGIC_NUMBER) {
-        if(stats) *stats = temp_stats.stats;
-        return temp_stats.stats;
+        return &temp_stats.stats;
     }
 
-    if(stats) *stats = empty_stats;
-    return empty_stats;
+    return NULL;
 }
 
 bool Logger_ResetFlightHistoric(void) {
@@ -278,13 +276,13 @@ int8_t Logger_Erase(void) {
 
 /*
 void Test_W25Q_Logging(void) {
-    printf("\n=== [TEST] DÉBUT DU TEST D'ENREGISTREMENT W25Q512 ===\n");
+	DEBUG_PRINTF("\n=== [TEST] DÉBUT DU TEST D'ENREGISTREMENT W25Q512 ===\n");
 
     odb_data_t mock_data;
     ODB_Reset(&mock_data, NULL);
     mock_data.version_major = ODB_PROTOCOL_VERSION_MAJOR;
 
-    printf("[TEST] Génération et écriture de 500 frames en Flash...\n");
+    DEBUG_PRINTF("[TEST] Génération et écriture de 500 frames en Flash...\n");
     for (int i = 0; i < 500; i++) {
         mock_data.time_boot_ms = i * 20;
         mock_data.altitude_msl_m = (float)i * 2.5f;
@@ -304,7 +302,7 @@ void Test_W25Q_Logging(void) {
             HAL_Delay(1);
         }
     }
-    printf("[TEST] Écriture des frames terminée.\n");
+    DEBUG_PRINTF("[TEST] Écriture des frames terminée.\n");
 
     odb_stats_t mock_stats;
     ODB_Reset(NULL, &mock_stats);
@@ -316,19 +314,18 @@ void Test_W25Q_Logging(void) {
     mock_stats.apogee.valid = true;
     mock_stats.apogee.value = 1250.5f;
 
-    printf("[TEST] Écriture des Stats...\n");
+    DEBUG_PRINTF("[TEST] Écriture des Stats...\n");
     Logger_SaveStats(&mock_stats);
 
-    printf("[TEST] Relecture des données depuis la W25Q...\n");
-    odb_stats_t read_stats;
-    Logger_GetLastFlightStats(&read_stats);
+    DEBUG_PRINTF("[TEST] Relecture des données depuis la W25Q...\n");
+    odb_stats_t read_stats = Logger_GetLastFlightStats();
 
     if (read_stats.max_altitude_kalman.valid && read_stats.max_altitude_kalman.value == 1250.5f) {
-        printf("[TEST] SUCCÈS : Les statistiques ont été lues correctement (%.1f m) !\n", read_stats.max_altitude_kalman.value);
+    	DEBUG_PRINTF("[TEST] SUCCÈS : Les statistiques ont été lues correctement (%.1f m) !\n", read_stats.max_altitude_kalman.value);
     } else {
-        printf("[TEST] ÉCHEC : Statistiques corrompues ou non trouvées (Valeur lue: %.1f m).\n", read_stats.max_altitude_kalman.value);
+    	DEBUG_PRINTF("[TEST] ÉCHEC : Statistiques corrompues ou non trouvées (Valeur lue: %.1f m).\n", read_stats.max_altitude_kalman.value);
     }
 
-    printf("=== [TEST] FIN DU TEST ===\n\n");
+    DEBUG_PRINTF("=== [TEST] FIN DU TEST ===\n\n");
 }
 */

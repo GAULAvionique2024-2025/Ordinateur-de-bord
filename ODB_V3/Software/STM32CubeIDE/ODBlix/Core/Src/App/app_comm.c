@@ -102,13 +102,15 @@ void AppComm_ProcessRx(hm11_t *hm11_dev) {
             app_msg_type_t type = (app_msg_type_t)rx_buf[2];
             uint8_t *payload = &rx_buf[4];
 
-            if(calc_crc == recv_crc || (type == MSG_CONFIG_SET && expected_len == 92)) {
-                CriticalLED_SetColor(&critical_led, GREEN);
+            if(calc_crc == recv_crc || (type == MSG_GENERIC_DATA && expected_len == CONFIG_DATA_SIZE)) {
+				CriticalLED_SetColor(&critical_led, GREEN);
 
-                if(type == MSG_CONFIG_SET) {
-                    memcpy(&current_config, payload, 92);
-                    AppComm_SendAck(hm11_dev, CMD_REQ_CFG, (calc_crc == recv_crc) ? 1 : 2);
-                } else if (type == MSG_CMD) {
+				if(type == MSG_GENERIC_DATA) {
+					if(expected_len == CONFIG_DATA_SIZE) {
+						memcpy(&current_config, payload, expected_len);
+						AppComm_SendAck(hm11_dev, CMD_REQ_CFG, (calc_crc == recv_crc) ? 1 : 2);
+					}
+				} else if (type == MSG_CMD) {
                     app_cmd_id_t cmd = (app_cmd_id_t)payload[0];
                     if(cmd == CMD_PING) {
                         AppComm_SendAck(hm11_dev, CMD_PING, 1);
@@ -152,8 +154,15 @@ void AppComm_ProcessRx(hm11_t *hm11_dev) {
                     	}
                     } else if(cmd == CMD_REQ_CFG) {
                         const odb_config_t *actual_config = Config_Get();
-                        AppComm_SendFrame(hm11_dev, MSG_CONFIG_SET, (uint8_t*)actual_config, 92);
-                    }
+                        AppComm_SendFrame(hm11_dev, MSG_GENERIC_DATA, (uint8_t*)actual_config, CONFIG_DATA_SIZE);
+                    } else if (cmd == CMD_REQ_EVENTS) {
+						const odb_stats_t *last_flight_stats = Logger_GetLastFlightStats();
+						if (last_flight_stats != NULL) {
+							AppComm_SendFrame(hm11_dev, MSG_GENERIC_DATA, (uint8_t*)last_flight_stats, ODB_STATS_SIZE);
+						} else {
+							AppComm_SendAck(hm11_dev, CMD_REQ_EVENTS, 0);
+						}
+					}
                 }
                 CriticalLED_SetColor(&critical_led, NONE);
             } else {

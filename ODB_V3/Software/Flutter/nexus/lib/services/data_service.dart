@@ -1,8 +1,146 @@
 import 'package:flutter/foundation.dart';
 import 'dart:math';
 import 'dart:convert';
+import 'dart:typed_data';
 import 'package:nexus/services/bluetooth_service.dart';
 import 'package:nexus/services/console_service.dart';
+
+// ---------- ODB Stats parsing structures ----------
+class PyroEvent {
+  final bool fired;
+  final int timeMs;
+  PyroEvent(this.fired, this.timeMs);
+}
+
+class WindowEvent {
+  final bool activated;
+  final int startTimeMs;
+  final int endTimeMs;
+  WindowEvent(this.activated, this.startTimeMs, this.endTimeMs);
+}
+
+class Metric {
+  final bool valid;
+  final double value;
+  final int timeMs;
+  Metric(this.valid, this.value, this.timeMs);
+}
+
+class OdbStats {
+  final int date;
+  final List<PyroEvent> pyroEvents;
+  final WindowEvent pyrosArm;
+  final WindowEvent machLock;
+  final Metric maxAltitudeGps;
+  final Metric maxAltitudeBaro;
+  final Metric maxAltitudeKalman;
+  final Metric apogee;
+  final Metric mainDeploy;
+  final Metric drogueDeploy;
+  final Metric maxAscendSpeed;
+  final Metric maxAscendAccel;
+  final Metric maxDescendSpeed;
+  final Metric maxDescendAccel;
+  final int lastLat;
+  final int lastLon;
+  final int flightTimeMs;
+
+  OdbStats({
+    required this.date,
+    required this.pyroEvents,
+    required this.pyrosArm,
+    required this.machLock,
+    required this.maxAltitudeGps,
+    required this.maxAltitudeBaro,
+    required this.maxAltitudeKalman,
+    required this.apogee,
+    required this.mainDeploy,
+    required this.drogueDeploy,
+    required this.maxAscendSpeed,
+    required this.maxAscendAccel,
+    required this.maxDescendSpeed,
+    required this.maxDescendAccel,
+    required this.lastLat,
+    required this.lastLon,
+    required this.flightTimeMs,
+  });
+
+  factory OdbStats.fromBytes(Uint8List data) {
+    final view = ByteData.sublistView(data);
+    int off = 0;
+    final date = view.getUint32(off, Endian.little);
+    off += 4;
+
+    List<PyroEvent> pyros = [];
+    for (int i = 0; i < 4; i++) {
+      final fired = view.getUint8(off) != 0;
+      off += 1;
+      final time = view.getUint32(off, Endian.little);
+      off += 4;
+      pyros.add(PyroEvent(fired, time));
+    }
+
+    final pyrosArm = WindowEvent(
+      view.getUint8(off) != 0,
+      view.getUint32(off + 1, Endian.little),
+      view.getUint32(off + 5, Endian.little),
+    );
+    off += 9;
+
+    final machLock = WindowEvent(
+      view.getUint8(off) != 0,
+      view.getUint32(off + 1, Endian.little),
+      view.getUint32(off + 5, Endian.little),
+    );
+    off += 9;
+
+    Metric readMetric() {
+      final valid = view.getUint8(off) != 0;
+      final value = view.getFloat32(off + 1, Endian.little);
+      final t = view.getUint32(off + 5, Endian.little);
+      off += 9;
+      return Metric(valid, value, t);
+    }
+
+    final maxAltGps = readMetric();
+    final maxAltBaro = readMetric();
+    final maxAltKalman = readMetric();
+    final apogee = readMetric();
+    final mainDeploy = readMetric();
+    final drogueDeploy = readMetric();
+    final maxAscendSpeed = readMetric();
+    final maxAscendAccel = readMetric();
+    final maxDescendSpeed = readMetric();
+    final maxDescendAccel = readMetric();
+
+    final lastLat = view.getInt32(off, Endian.little);
+    off += 4;
+    final lastLon = view.getInt32(off, Endian.little);
+    off += 4;
+    final flightTime = view.getUint32(off, Endian.little);
+    off += 4;
+
+    return OdbStats(
+      date: date,
+      pyroEvents: pyros,
+      pyrosArm: pyrosArm,
+      machLock: machLock,
+      maxAltitudeGps: maxAltGps,
+      maxAltitudeBaro: maxAltBaro,
+      maxAltitudeKalman: maxAltKalman,
+      apogee: apogee,
+      mainDeploy: mainDeploy,
+      drogueDeploy: drogueDeploy,
+      maxAscendSpeed: maxAscendSpeed,
+      maxAscendAccel: maxAscendAccel,
+      maxDescendSpeed: maxDescendSpeed,
+      maxDescendAccel: maxDescendAccel,
+      lastLat: lastLat,
+      lastLon: lastLon,
+      flightTimeMs: flightTime,
+    );
+  }
+}
 
 enum SensorState { unknown, ok, error }
 
@@ -516,6 +654,18 @@ class DataServiceManager with ChangeNotifier {
     ConsoleService().log('Demande de réinitialisation mémoire envoyée.');
   }
 
+  // ---------- EVENTS (Last flight stats) ----------
+  OdbStats? lastFlightStats;
+
+  Future<void> requestLastFlightEvents() async {
+    if (!hasConnection) {
+      ConsoleService().log('Aucune connexion Bluetooth avec l\'ODB');
+      return;
+    }
+    ConsoleService().log('Demande des événements du dernier vol...');
+    await btService.sendBinary(0x03, [0x08]);
+  }
+
   // ---------- PARSER ----------
   void parseBinaryMessage(int type, List<int> payload) {
     if (_isDisposed) return;
@@ -615,65 +765,80 @@ class DataServiceManager with ChangeNotifier {
           ConsoleService().log('Erreur: Télémétrie v$versionMajor.$versionMinor non supportée.');
         }
 
-      } else if (type == 0x02) { // MSG_CONFIG_SET
+      } else if (type == 0x02) { // MSG_GENERIC_DATA
         int offset = 0;
-        int magicNumber = view.getUint32(offset, Endian.little); offset += 4;
         
-        if (magicNumber == 0x434F4E46) {
-           int versionMajor = view.getUint8(offset); offset += 1;
-           int versionMinor = view.getUint8(offset); offset += 1;
-           int payloadSize = view.getUint16(offset, Endian.little); offset += 2;
-           odbConfigFrameVersion = 'v$versionMajor.$versionMinor';
-           
-           if (versionMajor == 1 && versionMinor == 0) {
-             // 1. Extraction du nom
-             List<int> nameBytes = [];
-             for (int i = 0; i < 32; i++) {
-               int b = view.getUint8(offset + i);
-               if (b != 0) nameBytes.add(b);
-             }
-             odbName = utf8.decode(nameBytes);
-             offset += 32;
+        if (payload.length >= 4) {
+          int magicNumber = view.getUint32(offset, Endian.little); 
+          
+          if (magicNumber == 0x434F4E46) { // 'CONF'
+            offset += 4;
+            int versionMajor = view.getUint8(offset); offset += 1;
+            int versionMinor = view.getUint8(offset); offset += 1;
+            int payloadSize = view.getUint16(offset, Endian.little); offset += 2;
+             
+            odbConfigFrameVersion = 'v$versionMajor.$versionMinor';
+             
+            if (versionMajor == 1 && versionMinor == 0) {
+              // 1. Extraction du nom
+              List<int> nameBytes = [];
+              for (int i = 0; i < 32; i++) {
+                int b = view.getUint8(offset + i);
+                if (b != 0) nameBytes.add(b);
+              }
+              odbName = utf8.decode(nameBytes);
+              offset += 32;
 
-             // 2. Variables simples
-             stageRole = view.getUint8(offset); offset += 1;
-             debugMode = view.getUint8(offset) == 1; offset += 1;
-             fireAttemptDelayMs = view.getUint32(offset, Endian.little); offset += 4;
-             pyrosArmingFailsafeMs = view.getUint32(offset, Endian.little); offset += 4;
-             minNeededPyroNb = view.getUint8(offset); offset += 1;
+              // 2. Variables simples
+              stageRole = view.getUint8(offset); offset += 1;
+              debugMode = view.getUint8(offset) == 1; offset += 1;
+              fireAttemptDelayMs = view.getUint32(offset, Endian.little); offset += 4;
+              pyrosArmingFailsafeMs = view.getUint32(offset, Endian.little); offset += 4;
+              minNeededPyroNb = view.getUint8(offset); offset += 1;
 
-             // 3. Tableau des rôles pyros
-             pyroRoles = [];
-             for (int i = 0; i < 4; i++) {
-               pyroRoles.add(view.getUint8(offset + i));
-             }
-             offset += 4;
+              // 3. Tableau des rôles pyros
+              pyroRoles = [];
+              for (int i = 0; i < 4; i++) {
+                pyroRoles.add(view.getUint8(offset + i));
+              }
+              offset += 4;
 
-             // 4. Seuils
-             accZLaunchThreshold = view.getFloat32(offset, Endian.little); offset += 4;
-             boostPhaseVThreshold = view.getFloat32(offset, Endian.little); offset += 4;
-             apogeeDetectVThreshold = view.getFloat32(offset, Endian.little); offset += 4;
-             landingDetectVThreshold = view.getFloat32(offset, Endian.little); offset += 4;
-             landingDetectThresholdMs = view.getUint32(offset, Endian.little); offset += 4;
-             apogeeFailsafeMs = view.getUint32(offset, Endian.little); offset += 4;
-             mainDeployAltitudeThresholdM = view.getFloat32(offset, Endian.little); offset += 4;
-             drogueFireAttemptMaxNb = view.getUint8(offset); offset += 1;
-             mainFireAttemptMaxNb = view.getUint8(offset); offset += 1;
-             enableBuzzer = view.getUint8(offset) == 1; offset += 1;
-             buzzerReportToneHz = view.getUint16(offset, Endian.little); offset += 2;
-             idefixFrequencyHz = view.getUint32(offset, Endian.little); offset += 4;
+              // 4. Seuils
+              accZLaunchThreshold = view.getFloat32(offset, Endian.little); offset += 4;
+              boostPhaseVThreshold = view.getFloat32(offset, Endian.little); offset += 4;
+              apogeeDetectVThreshold = view.getFloat32(offset, Endian.little); offset += 4;
+              landingDetectVThreshold = view.getFloat32(offset, Endian.little); offset += 4;
+              landingDetectThresholdMs = view.getUint32(offset, Endian.little); offset += 4;
+              apogeeFailsafeMs = view.getUint32(offset, Endian.little); offset += 4;
+              mainDeployAltitudeThresholdM = view.getFloat32(offset, Endian.little); offset += 4;
+              drogueFireAttemptMaxNb = view.getUint8(offset); offset += 1;
+              mainFireAttemptMaxNb = view.getUint8(offset); offset += 1;
+              enableBuzzer = view.getUint8(offset) == 1; offset += 1;
+              buzzerReportToneHz = view.getUint16(offset, Endian.little); offset += 2;
+              idefixFrequencyHz = view.getUint32(offset, Endian.little); offset += 4;
 
-             // 5. Validation et réveil de l'Interface UI
-             hasOdbConfig = true;
-             _safeNotifyListeners();
-             ConsoleService().log('Configuration ODB lue et synchronisée avec succès !');
-           } else {
-             ConsoleService().log('Erreur: Configuration ODB v$versionMajor.$versionMinor non supportée.');
-           }
+              hasOdbConfig = true;
+              _safeNotifyListeners();
+              ConsoleService().log('Configuration ODB lue et synchronisée avec succès !');
+            } else {
+              ConsoleService().log('Erreur: Configuration ODB v$versionMajor.$versionMinor non supportée.');
+            }
+          } else {
+            if (payload.length == 144) {
+              try {
+                lastFlightStats = OdbStats.fromBytes(Uint8List.fromList(payload));
+                _safeNotifyListeners();
+                ConsoleService().log('Événements du dernier vol reçus (${payload.length} octets).');
+              } catch (e) {
+                ConsoleService().log('Erreur parsing stats ODB: $e');
+              }
+            } else {
+              ConsoleService().log('Erreur: Magic Number inconnu ou taille invalide (${payload.length} octets).');
+            }
+          }
         } else {
-          ConsoleService().log('Erreur: Magic Number invalide lors de la réception de la configuration.');
+          ConsoleService().log('Erreur: Payload MSG_GENERIC_DATA trop petit (${payload.length} octets).');
         }
-
       } else if (type == 0x04) { // MSG_ACK
         int cmdAcked = view.getUint8(0);
         int status = view.getUint8(1);

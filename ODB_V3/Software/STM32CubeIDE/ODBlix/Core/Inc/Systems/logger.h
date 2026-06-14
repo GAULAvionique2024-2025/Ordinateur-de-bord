@@ -46,8 +46,8 @@ int8_t Logger_Init(void);
 void Logger_PushData(odb_data_t *new_data);
 void Logger_Task(void);
 void Logger_SaveStats(const odb_stats_t *stats);
-odb_data_t Logger_GetLastFlightData(void);
-odb_stats_t Logger_GetLastFlightStats(odb_stats_t *stats);
+const odb_data_t* Logger_GetLastFlightData(void);
+const odb_stats_t* Logger_GetLastFlightStats(void);
 bool Logger_ResetFlightHistoric(void);
 
 int8_t Logger_Erase(void);

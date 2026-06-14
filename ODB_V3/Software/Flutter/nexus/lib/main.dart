@@ -135,6 +135,7 @@ class _NavBarPageState extends State<NavBarPage> {
       'OverviewPage': const OverviewPageWidget(),
       'ConnectionPage': const ConnectionPageWidget(),
       'StatisticsPage': const StatisticsPageWidget(),
+      'EventsPage': const EventsPageWidget(),
       'CommandsPage': const CommandsPageWidget(),
       // 'RSSIPage': const RSSIPageWidget(),
       'SettingsPage': const SettingsPageWidget(),
@@ -216,6 +217,18 @@ class _NavBarPageState extends State<NavBarPage> {
               size: 24.0,
             ),
             label: 'Statistics',
+            tooltip: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.event_outlined,
+              size: 24.0,
+            ),
+            activeIcon: Icon(
+              Icons.event,
+              size: 24.0,
+            ),
+            label: 'Events',
             tooltip: '',
           ),
           BottomNavigationBarItem(

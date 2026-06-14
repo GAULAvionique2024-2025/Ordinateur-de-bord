@@ -71,6 +71,15 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                     page: CommandsPageWidget(),
                   )),
         FFRoute(
+          name: EventsPageWidget.routeName,
+          path: EventsPageWidget.routePath,
+          builder: (context, params) => params.isEmpty
+            ? const NavBarPage(initialPage: 'EventsPage')
+            : const NavBarPage(
+              initialPage: 'EventsPage',
+              page: EventsPageWidget(),
+              )),
+        FFRoute(
             name: ConnectionPageWidget.routeName,
             path: ConnectionPageWidget.routePath,
             builder: (context, params) => params.isEmpty

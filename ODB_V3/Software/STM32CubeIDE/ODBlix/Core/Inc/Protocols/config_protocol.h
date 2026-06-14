@@ -33,9 +33,9 @@ typedef struct __attribute__((packed)) {
 	uint16_t 	payload_size;
 
     // Profile
-    char 		odb_name[32];			// max 12 char
+    char 		odb_name[32];				// max 12 char
     // Stage
-    uint8_t 	stage_role;         // 2 = BOOSTER, 3 = SUSTAINER
+    uint8_t 	stage_role;         		// 2 = BOOSTER, 3 = SUSTAINER
     uint8_t 	debug_mode;
 
     // Pyros
@@ -63,6 +63,8 @@ typedef struct __attribute__((packed)) {
 
     // IdeFIX
     uint32_t 	idefix_frequency_hz;
+
+    // TOTAL 92
 } odb_config_t;
 #define CONFIG_DATA_SIZE sizeof(odb_config_t)
 
