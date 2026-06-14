@@ -478,6 +478,9 @@ void ODB_Update(odb_data_t *data, odb_stats_t *stats) {
         if(data->gps_fix >= 1) {
             stats->last_lat = data->lat;
             stats->last_lon = data->lon;
+            if(stats->date != l76lm33.gps_data.date_raw) {
+            	stats->date = l76lm33.gps_data.date_raw;
+            }
         }
 
         data->event_states = ODB_SetEventStates(stats);

@@ -19,7 +19,7 @@
 
 #define NODE_TO_CMPS 51.444f
 
-#define NMEA_MAX_TOKEN_TO_READ_RMC  9
+#define NMEA_MAX_TOKEN_TO_READ_RMC  10
 #define NMEA_MAX_RMC_LENGTH         90
 
 #define NMEA_MAX_TOKEN_TO_READ_GGA  10
@@ -121,13 +121,27 @@ int8_t NMEA_ParseRMC(nmea_t *gps_data, const char *nmea_sentence) {
                 gps_data->vel = 0;
             }
         } else if(token_idx == 8) { // COURSE OVER GROUND (degrees -> centi-degrees)
-            if(token[0] != '\0') {
-                double degrees = atof(token);
-                gps_data->cog = (uint16_t)(degrees * 100.0f);
-            } else {
-                gps_data->cog = 0;
-            }
-        }
+			if(token[0] != '\0') {
+				double degrees = atof(token);
+				gps_data->cog = (uint16_t)(degrees * 100.0f);
+			} else {
+				gps_data->cog = 0;
+			}
+		} else if(token_idx == 9) { // DATE (DDMMYY)
+			if(gps_data->gps_fix == 1 && gps_data->date.year == 0) {
+				if(strlen(token) >= 6) {
+					char day_str[3]   = {token[0], token[1], '\0'};
+					char month_str[3] = {token[2], token[3], '\0'};
+					char year_str[3]  = {token[4], token[5], '\0'};
+
+					gps_data->date.day   = (uint8_t)atoi(day_str);
+					gps_data->date.month = (uint8_t)atoi(month_str);
+					gps_data->date.year  = (uint8_t)atoi(year_str);
+
+					gps_data->date_raw = ((uint32_t)gps_data->date.day << 16) | ((uint32_t)gps_data->date.month << 8) | (uint32_t)gps_data->date.day;
+				}
+			}
+		}
 
         token = next_token;
         token_idx++;

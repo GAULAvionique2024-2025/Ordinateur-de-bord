@@ -22,12 +22,21 @@
 typedef struct {
     uint8_t hours;      // Hours when GPS fix acquired (two digits)
     uint8_t minutes;    // Minutes when GPS fix acquired (two digits)
-    float seconds;      // Seconds when GPS fix acquired
+    float 	seconds;	// Seconds when GPS fix acquired (two digits)
 } nmea_time_t;
+
+
+typedef struct {
+    uint8_t year;	// Year when GPS fix acquired (two digits)
+    uint8_t month;	// Month when GPS fix acquired (two digits)
+    uint8_t day;	// Day when GPS fix acquired (two digits)
+} nmea_date_t;
 
 typedef struct {
     uint32_t    time_raw;       // HHMMSS raw format
+    uint32_t	date_raw;		// DDMMYYYY raw format (hex format: 0x0010061A = 0x00 -> none, 0x10 -> 16, 0x06 -> June, 1A -> 2026)
     nmea_time_t time;           // Time when GPS fix acquired
+    nmea_date_t date;           // Date when GPS fix acquired
     uint8_t     gps_fix;        // 1 = Active fix, 0 = Void/No fix
     int32_t     lat;            // Latitude in degE7 (MAVLink format: deg * 10^7)
     int32_t     lon;            // Longitude in degE7 (MAVLink format: deg * 10^7)

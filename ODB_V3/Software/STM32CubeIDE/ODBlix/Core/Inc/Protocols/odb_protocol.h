@@ -97,7 +97,7 @@ typedef struct __attribute__((packed)) {
 
 // states of the events for statistics reporting
 typedef struct __attribute__((packed)) {
-    uint32_t posix_timestamp;       // internal event for POSTFLIGHT reporting (save in FLASH/SD)
+    uint32_t date;       			// internal event for POSTFLIGHT reporting (save in FLASH/SD)
 
     pyro_event_t pyro1;				// in event state
     pyro_event_t pyro2;				// in event state

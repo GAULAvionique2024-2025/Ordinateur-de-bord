@@ -134,7 +134,7 @@ void AppComm_ProcessRx(hm11_t *hm11_dev) {
                     } else if(cmd == CMD_RESET_CFG) {
                         Config_LoadDefaults();
                         if(Config_SaveToFlash() == 0) {
-                        	CriticalLED_SetColor(&critical_led, GREEN);
+                        	CriticalLED_SetColor(&critical_led, RED);
                             AppComm_SendAck(hm11_dev, CMD_RESET_CFG, 1);
                             RebootManager_RequestReboot();
                         } else {
@@ -144,7 +144,7 @@ void AppComm_ProcessRx(hm11_t *hm11_dev) {
                     	while(W25Q_EraseChip(&w25q) != 0) {}
                     	Config_LoadDefaults();
                     	if(Config_SaveToFlash() == 0) {
-                    		CriticalLED_SetColor(&critical_led, GREEN);
+                    		CriticalLED_SetColor(&critical_led, RED);
 							AppComm_SendAck(hm11_dev, CMD_RESET_MEM, 1);
 							RebootManager_RequestReboot();
                     	} else {
