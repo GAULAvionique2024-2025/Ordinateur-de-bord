@@ -56,6 +56,7 @@ bool Scheduler_AddTask(char *name, void (*func)(void), uint32_t period_ms) {
     return true;
 }
 
+// TODO: add sleep/low energy mode of target chip of task
 bool Scheduler_RemoveTask(const char *name) {
     for(uint8_t i = 0; i < task_count; i++) {
         if(tasks[i].is_active && tasks[i].name != NULL) {

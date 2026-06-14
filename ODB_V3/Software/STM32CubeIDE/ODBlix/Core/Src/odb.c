@@ -58,7 +58,9 @@ static void ODB_UpdateWindowEvent(window_event_t *event, bool active, uint32_t t
     if(active) {
         if(!event->activated) {
             event->activated = true;
-            event->start_time_ms = time_ms;
+            if(event->start_time_ms == 0) {
+                event->start_time_ms = time_ms;
+            }
             event->end_time_ms = 0;
         }
     } else if(event->activated) {
@@ -352,7 +354,6 @@ odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats) {
     return odb_state;
 }
 
-// TODO: add timestamp with RTC to all odb_stats_t data
 void ODB_Update(odb_data_t *data, odb_stats_t *stats) {
     if(!data) {
         return;
@@ -365,6 +366,13 @@ void ODB_Update(odb_data_t *data, odb_stats_t *stats) {
     SystemMeasurements_ComputeTemperature(&system_measurements);
     SystemMeasurements_ComputePower(&system_measurements);
     SystemMeasurements_ComputePyros(&system_measurements);
+
+    data->temp_celsius = system_measurements.temperature;
+    data->system_states &= ~(FLAG_PYRO1_CONN | FLAG_PYRO2_CONN | FLAG_PYRO3_CONN | FLAG_PYRO4_CONN);
+	if(pyros[0].is_connected) data->system_states |= FLAG_PYRO1_CONN;
+	if(pyros[1].is_connected) data->system_states |= FLAG_PYRO2_CONN;
+	if(pyros[2].is_connected) data->system_states |= FLAG_PYRO3_CONN;
+	if(pyros[3].is_connected) data->system_states |= FLAG_PYRO4_CONN;
     //Profiler_StopTask(PROFILE_TASK_ADC);
 
     //Profiler_StartTask(PROFILE_TASK_BARO);
@@ -372,8 +380,10 @@ void ODB_Update(odb_data_t *data, odb_stats_t *stats) {
     MS5611_Update(&ms5611);
     if(MS5611_Compute(&ms5611, &temperature, &pressure) == MS5611_OK) {
     	data->pressure_pa = pressure;
-    	data->temp_celsius = temperature;
-        data->altitude_msl_m = Math_ComputeAltitudeMSL(pressure);
+		data->altitude_msl_m = Math_ComputeAltitudeMSL(pressure);
+		data->system_states |= FLAG_BARO_OK;
+    } else {
+        data->system_states &= ~FLAG_BARO_OK;
     }
     //Profiler_StopTask(PROFILE_TASK_BARO);
 
@@ -401,8 +411,16 @@ void ODB_Update(odb_data_t *data, odb_stats_t *stats) {
 
 		BNO055_ComputeVerticalAcc(&bno055);
 		data->imu_acc_vertical = bno055.acc_vertical;
-	}
-    BNO055_ReadTemperature(&bno055);
+
+		data->system_states |= FLAG_IMU_OK;
+	} else {
+        data->system_states &= ~FLAG_IMU_OK;
+    }
+    if(BNO055_ReadTemperature(&bno055) == BNO055_OK) {
+    	data->system_states |= FLAG_IMU_OK;
+    } else {
+    	data->system_states &= ~FLAG_IMU_OK;
+    }
     //Profiler_StopTask(PROFILE_TASK_IMU);
 
     //Profiler_StartTask(PROFILE_TASK_HIGHG);
@@ -413,6 +431,10 @@ void ODB_Update(odb_data_t *data, odb_stats_t *stats) {
 		data->highg_acc_y = adxl382.acc_y;
 		data->highg_acc_z = adxl382.acc_z;
 		data->highg_acc_vertical = adxl382.acc_vertical;
+
+		data->system_states |= FLAG_HIGHG_OK;
+    } else {
+    	data->system_states &= ~FLAG_HIGHG_OK;
     }
     //Profiler_StopTask(PROFILE_TASK_HIGHG);
 
@@ -437,6 +459,10 @@ void ODB_Update(odb_data_t *data, odb_stats_t *stats) {
       data->vel             = l76lm33.gps_data.vel;
       data->cog             = l76lm33.gps_data.cog;
       data->satellites_nb   = l76lm33.gps_data.satellites_nb;
+
+      data->system_states |= FLAG_GPS_OK;
+    } else {
+    	data->system_states &= ~FLAG_GPS_OK;
     }
     //Profiler_StopTask(PROFILE_TASK_GPS);
 

@@ -24,6 +24,7 @@ static logger_data_t *current_flush_buf = NULL;
 
 static uint8_t write_index = 0;
 static uint32_t flash_current_address = 0;
+static uint32_t flush_bytes_written = 0;
 static bool flush_pending = false;
 
 static uint32_t last_flight_header_addr = 0; 
@@ -154,12 +155,21 @@ void Logger_PushData(odb_data_t *new_data) {
 void Logger_Task(void) {
     switch(logger_state) {
         case LOGGER_IDLE:
-            if(flush_pending) logger_state = LOGGER_START_WRITE;
+            if(flush_pending) {
+                flush_bytes_written = 0;
+                logger_state = LOGGER_START_WRITE;
+            }
             break;
 
-        case LOGGER_START_WRITE: {
-            uint32_t size = LOG_BUFFER_SIZE * sizeof(logger_data_t);
-            if((flash_current_address + size) > LOGGER_MAX_ALLOWED_ADDRESS) {
+        case LOGGER_START_WRITE:
+            uint32_t total_size = LOG_BUFFER_SIZE * sizeof(logger_data_t);
+            uint32_t bytes_to_write = total_size - flush_bytes_written;
+
+            if(bytes_to_write > W25Q512_PAGE_SIZE) {
+                bytes_to_write = W25Q512_PAGE_SIZE;
+            }
+
+            if((flash_current_address + bytes_to_write) > LOGGER_MAX_ALLOWED_ADDRESS) {
                 flush_pending = false;
                 current_flush_buf = NULL;
                 logger_state = LOGGER_IDLE;
@@ -170,21 +180,29 @@ void Logger_Task(void) {
                 W25Q_EraseSector(&w25q, flash_current_address);
             }
 
-            if(W25Q_WritePageNoWait(&w25q, (uint8_t*)current_flush_buf, flash_current_address, size) == 0) {
-                flash_current_address += size;
+            uint8_t *write_ptr = ((uint8_t*)current_flush_buf) + flush_bytes_written;
+            if(W25Q_WritePageNoWait(&w25q, write_ptr, flash_current_address, bytes_to_write) == 0) {
+                flash_current_address += bytes_to_write;
+                flush_bytes_written += bytes_to_write;
+
                 if(flash_current_address % W25Q512_PAGE_SIZE != 0) {
                     flash_current_address = ((flash_current_address / W25Q512_PAGE_SIZE) + 1) * W25Q512_PAGE_SIZE;
                 }
                 logger_state = LOGGER_WAIT_FLASH_BUSY;
             }
             break;
-        }
 
         case LOGGER_WAIT_FLASH_BUSY:
             if(!W25Q_IsBusy(w25q.hqspi)) {
-                flush_pending = false;
-                current_flush_buf = NULL;
-                logger_state = LOGGER_IDLE;
+                uint32_t total_size = LOG_BUFFER_SIZE * sizeof(logger_data_t);
+
+                if(flush_bytes_written < total_size) {
+                    logger_state = LOGGER_START_WRITE;
+                } else {
+                    flush_pending = false;
+                    current_flush_buf = NULL;
+                    logger_state = LOGGER_IDLE;
+                }
             }
             break;
     }

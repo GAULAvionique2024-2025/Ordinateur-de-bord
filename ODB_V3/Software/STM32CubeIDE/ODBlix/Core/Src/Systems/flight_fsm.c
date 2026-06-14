@@ -53,8 +53,8 @@ void FSM_Update(void) {
                 ODB_SetMissionState(&flight_data, STATE_INFLIGHT);
                 Scheduler_RemoveTask("BTRx");
                 Scheduler_RemoveTask("BTTx");
-                //HM11_Sleep(&hm11);
-                HAL_TIM_Base_Start_IT(&htim5);      // Start timer to measure time since launch
+
+                HAL_TIM_Base_Start(&htim5);      	// Start timer to measure time since launch
                 __HAL_TIM_SET_COUNTER(&htim5, 0);   // Reset timer counter
                 current_global_state = STATE_INFLIGHT;
                 current_substate = SUB_BOOST;
@@ -249,27 +249,3 @@ void FSM_Update(void) {
 	}
 }
 
-// Callback for failsafe timer (TIM5)
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
-    if(htim->Instance == TIM5) {
-        bool mach_lock_enabled = ((flight_data.event_states & FLAG_MACH_LOCK_ENABLED) != 0U);
-        if(current_global_state == STATE_INFLIGHT && current_substate < SUB_DROGUE && !mach_lock_enabled) {
-            if(!flight_stats.apogee.valid) {
-                flight_stats.apogee.valid = true;
-                flight_stats.apogee.value = flight_data.kalman_z;
-                flight_stats.apogee.time_ms = HAL_GetTick();
-            }
-            if(!flight_stats.drogue_deploy.valid) {
-                flight_stats.drogue_deploy.valid = true;
-                flight_stats.drogue_deploy.value = flight_data.kalman_z;
-                flight_stats.drogue_deploy.time_ms = HAL_GetTick();
-            }
-
-            current_substate = SUB_DROGUE;
-
-            fire_timer = 0;
-            fire_attempt_count = 0;
-            backup_active = false;
-        }
-    }
-}
