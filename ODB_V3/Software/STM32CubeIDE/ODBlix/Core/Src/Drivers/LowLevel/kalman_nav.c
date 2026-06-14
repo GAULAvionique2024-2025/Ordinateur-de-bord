@@ -124,4 +124,9 @@ void KalmanNav_Update(kalman_nav_t *dev, float measured_alt, bool is_machlock) {
     dev->P[0][0] -= K[0] * p00; dev->P[0][1] -= K[0] * p01; dev->P[0][2] -= K[0] * p02;
     dev->P[1][0] -= K[1] * p00; dev->P[1][1] -= K[1] * p01; dev->P[1][2] -= K[1] * p02;
     dev->P[2][0] -= K[2] * p00; dev->P[2][1] -= K[2] * p01; dev->P[2][2] -= K[2] * p02;
+
+    // Symetrie
+    dev->P[0][1] = dev->P[1][0] = (dev->P[0][1] + dev->P[1][0]) * 0.5f;
+    dev->P[0][2] = dev->P[2][0] = (dev->P[0][2] + dev->P[2][0]) * 0.5f;
+    dev->P[1][2] = dev->P[2][1] = (dev->P[1][2] + dev->P[2][1]) * 0.5f;
 }

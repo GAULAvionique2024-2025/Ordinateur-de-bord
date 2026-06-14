@@ -97,6 +97,8 @@ typedef struct __attribute__((packed)) {
 
 // states of the events for statistics reporting
 typedef struct __attribute__((packed)) {
+    uint32_t posix_timestamp;       // internal event for POSTFLIGHT reporting (save in FLASH/SD)
+
     pyro_event_t pyro1;				// in event state
     pyro_event_t pyro2;				// in event state
     pyro_event_t pyro3;				// in event state
@@ -119,7 +121,7 @@ typedef struct __attribute__((packed)) {
 
     int32_t	 last_lat;              // internal event for POSTFLIGHT reporting (save in FLASH/SD)
     int32_t  last_lon;              // internal event for POSTFLIGHT reporting (save in FLASH/SD)
-    uint32_t flight_time_ms;        // internal event for POSTFLIGHT reporting (save in FLASH/SD)
+    uint32_t flight_time_ms;		// internal event for POSTFLIGHT reporting (save in FLASH/SD)
 } odb_stats_t;
 
 // Main ODB data structure

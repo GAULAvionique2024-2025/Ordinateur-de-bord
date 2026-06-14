@@ -9,11 +9,17 @@
 // Apogee Detection & Pyros Firing logic: https://www.rocketryforum.com/threads/most-accurate-way-to-measure-velocity-accelerometer-vs-barometer-vs.157866/page-2
 
 #include "Systems/config.h"
+#include "Systems/logger.h"
 #include "tools/profiler.h"
 #include "Utils/reboot_manager.h"
 #include <ctype.h>
 #include <odb.h>
 
+#define DEBUG_PRINTF(...) do { \
+    if(current_config.debug_mode) { \
+        printf(__VA_ARGS__); \
+    } \
+} while(0)
 
 #define KALMAN_NAV_SAMPLE_NB 	50
 
@@ -154,7 +160,7 @@ void ODB_Reset(odb_data_t *data, odb_stats_t *stats) {
     stats->flight_time_ms = 0;
 }
 
-// TODO: add behavior with debug_mode (ifdef printf, ect...)
+// TODO: add behavior with debug_mode (ifdef DEBUG_PRINTF, ect...)
 odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats) {
     if(!data) {
         return ODB_ERROR;
@@ -171,16 +177,17 @@ odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats) {
     if(W25Q_Init(&w25q) == 0) {
         system_states |= FLAG_FLASH_OK;
         Config_Init();
+        Logger_Init();
     } else {
         error += 1;
-        printf("Erreur : Init W25Q\n");
+        DEBUG_PRINTF("Erreur : Init W25Q\n");
     }
 
     if(SystemMeasurements_Init(&system_measurements) == 0) {
         SystemMeasurements_ComputePower(&system_measurements);
         if(system_measurements.vin_batt <= VIN_BATT_MIN_MV || system_measurements.vin_batt >= VIN_BATT_MAX_MV || system_measurements.v5_buck <= V5_MIN_MV || system_measurements.v5_buck >= V5_MAX_MV || system_measurements.v3_buck <= V3_MIN_MV || system_measurements.v3_buck >= V3_MAX_MV || system_measurements.pg_v5 == false) {
             alimentation_fault = true;
-            printf("Erreur : Batterie trop faible ou batterie defaillante\n");
+            DEBUG_PRINTF("Erreur : Batterie trop faible ou batterie defaillante\n");
         }
 
         uint8_t pyros_connected = 0;
@@ -193,7 +200,7 @@ odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats) {
 			system_states |= FLAG_PYROS_ARMED_OK;
 		} else {
 			error += 1;
-			printf("Erreur : Armement des Pyros bloque\n");
+			DEBUG_PRINTF("Erreur : Armement des Pyros bloque\n");
 		}
 
 		is_armed = Pyro_Arming(&system_measurements, false);
@@ -202,7 +209,7 @@ odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats) {
 		} else {
 			system_states &= ~FLAG_PYROS_ARMED_OK;
 			error += 1;
-			printf("Erreur : Desarmement des Pyros bloque\n");
+			DEBUG_PRINTF("Erreur : Desarmement des Pyros bloque\n");
 		}
 
 		for(int i = 0; i < PYRO_MAX; i++) {
@@ -211,7 +218,7 @@ odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats) {
 
 			if(init_res == 0) {
 				system_states |= FLAG_PYRO_CONN[i];
-				printf("Pyro %i connecte", i);
+				DEBUG_PRINTF("Pyro %i connecte", i);
 
 				if(role != PYRO_ROLE_NONE) {
 					pyros_connected++;
@@ -219,7 +226,7 @@ odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats) {
 			} else {
 				if(role != PYRO_ROLE_NONE) {
 					warning += 1;
-					printf("Erreur : Pyro %d (%s) deconnecte\n", i + 1, role_names[role]);
+					DEBUG_PRINTF("Erreur : Pyro %d (%s) deconnecte\n", i + 1, role_names[role]);
 				}
 			}
 		}
@@ -227,61 +234,61 @@ odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats) {
 		// Protection
 		if(pyros_connected < current_config.min_needed_pyro_nb) {
 			error += 1;
-			printf("Erreur : Pas assez de pyros connectes ! (%d/%d)\n", pyros_connected, current_config.min_needed_pyro_nb);
+			DEBUG_PRINTF("Erreur : Pas assez de pyros connectes ! (%d/%d)\n", pyros_connected, current_config.min_needed_pyro_nb);
 		}
 
         SystemMeasurements_ComputeTemperature(&system_measurements);
         if(system_measurements.temperature < MAX6612MXK_MIN_TEMP_C || system_measurements.temperature > MAX6612MXK_MAX_TEMP_C) {
             error += 1;
-            printf("Erreur : Temperature hors limites !\n");
+            DEBUG_PRINTF("Erreur : Temperature hors limites !\n");
         } else {
         	system_states |= FLAG_TEMP_OK;
         }
     } else {
         error += 1;
-        printf("Erreur : Init SystemMeasurements\n");
+        DEBUG_PRINTF("Erreur : Init SystemMeasurements\n");
     }
 
     if(BNO055_Init(&bno055) == BNO055_OK) {
         system_states |= FLAG_IMU_OK;
     } else {
         error += 1;
-        printf("Erreur : Init BNO055\n");
+        DEBUG_PRINTF("Erreur : Init BNO055\n");
     }
 
     if(MS5611_Init(&ms5611, OSR1024, OSR1024) == MS5611_OK) {
         system_states |= FLAG_BARO_OK;
     } else {
         error += 1;
-        printf("Erreur : Init MS5611\n");
+        DEBUG_PRINTF("Erreur : Init MS5611\n");
     }
 
     if(ADXL382_Init(&adxl382) == ADXL382_OK) {
         system_states |= FLAG_HIGHG_OK;
     } else {
         error += 1;
-        printf("Erreur : Init ADXL382\n");
+        DEBUG_PRINTF("Erreur : Init ADXL382\n");
     }
 
     if(L76LM33_Init(&l76lm33) == L76LM33_OK) {
         system_states |= FLAG_GPS_OK;
     } else {
         error += 1;
-        printf("Erreur : Init L76LM33\n");
+        DEBUG_PRINTF("Erreur : Init L76LM33\n");
     }
 
     if(RFD900x_Init(&rfd900x) == RFD_OK) {
         system_states |= FLAG_RADIO_OK;
     } else {
         error += 1;
-        printf("Erreur : Init RFD900x\n");
+        DEBUG_PRINTF("Erreur : Init RFD900x\n");
     }
 
     if(HM11_Init(&hm11) == HM11_OK) {
     	system_states |= FLAG_BT_OK;
     } else {
     	warning += 1;
-    	printf("Erreur : HM-11 ne repond pas ou possede une connexion active.\n");
+    	DEBUG_PRINTF("Erreur : HM-11 ne repond pas ou possede une connexion active.\n");
     }
 
     // Kalman filter initialization -> calculate R_static
@@ -306,22 +313,22 @@ odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats) {
         Beacon_SetFrequency(&idefix);
     } else {
         warning += 1;
-        printf("Erreur : Init IdeFIX\n");
+        DEBUG_PRINTF("Erreur : Init IdeFIX\n");
     }
 
     if(CriticalLed_Init(&critical_led) != 0) {
 		warning += 1;
-		printf("Erreur : Init Critical LED\n");
+		DEBUG_PRINTF("Erreur : Init Critical LED\n");
 	}
     // Sensors Init End
 
     odb_state_t odb_state = ODB_ERROR;
     if(alimentation_fault) {
         odb_state = ODB_ALIMENTATION_ERROR;
-        printf("Erreur : Alimentation non conforme !\n");
+        DEBUG_PRINTF("Erreur : Alimentation non conforme !\n");
     } else if(error > 0) {
         odb_state = ODB_ERROR;
-        printf("Erreur : %d erreur(s) detectee(s) lors de l'initialisation du systeme.\n", error);
+        DEBUG_PRINTF("Erreur : %d erreur(s) detectee(s) lors de l'initialisation du systeme.\n", error);
     } else {
         odb_state = ODB_OK;
     }
@@ -334,7 +341,9 @@ odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats) {
 
     // Buzzer report
     if(current_config.enable_buzzer) {
-        Buzzer_ReportStatus(&buzzer, current_config.buzzer_report_tone_hz, system_measurements.vin_batt, (bool[]){(system_states & FLAG_PYRO1_CONN) != 0U, (system_states & FLAG_PYRO2_CONN) != 0U, (system_states & FLAG_PYRO3_CONN) != 0U, (system_states & FLAG_PYRO4_CONN) != 0U}, odb_state);
+    	odb_stats_t last_stats;
+    	Logger_GetLastFlightStats(&last_stats);
+        Buzzer_ReportStatus(&buzzer, current_config.buzzer_report_tone_hz, system_measurements.vin_batt, (bool[]){(system_states & FLAG_PYRO1_CONN) != 0U, (system_states & FLAG_PYRO2_CONN) != 0U, (system_states & FLAG_PYRO3_CONN) != 0U, (system_states & FLAG_PYRO4_CONN) != 0U}, odb_state, last_stats.flight_time_ms, last_stats.max_altitude_kalman.value, last_stats.max_altitude_kalman.valid);
     }
 
     // Security

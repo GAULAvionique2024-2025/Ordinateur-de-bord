@@ -95,19 +95,21 @@ void Buzzer_RunRoutine(buzzer_t *dev, buzzer_routines_t routine) {
     }
 }
 
-// TODO: add latest max altitude reached (in FLASH)
 /*
  * Exemple of status report:
  * Battery: 12.0V (1200mV) -> bip / pause / bip bip / pause / bip bip bip bip bip bip bip bip bip bip x2 (10 bips = 0)
- * Pause 1s
+ * Pause 3s
  * Pyros [true, true, false, false] -> bip bip / pause / bip bip / pause / bip / pause / bip
- * Pause 1s
+ * Pause 3s
+ * Max altitude (4502m): 4 short / pause / 5 short / pause / 1 long / pause / 2 short.
+ * Pause 3s
  * Global state [OK]: bip
- * Pause 1s
+ * Pause 3s
  * Start Bip -> 5s biiiiip...
 */
-void Buzzer_ReportStatus(buzzer_t *dev, uint16_t freq_hz, uint16_t battery_dv, bool pyros_continuity[4], uint8_t global_state) {
+void Buzzer_ReportStatus(buzzer_t *dev, uint16_t freq_hz, uint16_t battery_dv, bool pyros_continuity[4], uint8_t global_state, const uint32_t flight_time_ms, const float max_altitude, bool valid) {
 	if(freq_hz > BUZZER_MAX_FREQ) return;
+
     // Battery voltage
     uint16_t temp = battery_dv;
     uint8_t digits[5];
@@ -140,6 +142,35 @@ void Buzzer_ReportStatus(buzzer_t *dev, uint16_t freq_hz, uint16_t battery_dv, b
 
     Buzzer_Pause(3000);
 
+    // Max altitude last flight
+    if(flight_time_ms > 0 && valid) {
+		uint32_t alt_m = max_altitude;
+		uint8_t thousands = alt_m / 1000;
+		uint8_t hundreds  = (alt_m % 1000) / 100;
+
+        if(thousands > 0) {
+            Buzzer_Bip(dev, thousands, 800, 300, freq_hz);
+            Buzzer_Pause(1000);
+        }
+
+        if(hundreds > 0) {
+            Buzzer_Bip(dev, hundreds, 250, 250, freq_hz);
+        }
+
+        if(thousands == 0 && hundreds == 0) {
+            uint8_t tens = (alt_m % 100) / 10;
+            if(tens > 0) {
+                Buzzer_Bip(dev, tens, 250, 250, freq_hz);
+            } else {
+                Buzzer_Bip(dev, 1, 1000, 250, freq_hz);
+            }
+        }
+    } else {
+        Buzzer_Bip(dev, 3, 100, 100, freq_hz);
+    }
+
+    Buzzer_Pause(3000);
+
     // Global state
     if(global_state < 1) global_state = 1;
     if(global_state > 8) global_state = 8;
@@ -150,7 +181,7 @@ void Buzzer_ReportStatus(buzzer_t *dev, uint16_t freq_hz, uint16_t battery_dv, b
 
     // Start Bip
     if(global_state == 1) {
-    	Buzzer_Bip(dev, global_state, 5000, 250, freq_hz);
+        Buzzer_Bip(dev, 1, 5000, 250, freq_hz);
     }
 }
 

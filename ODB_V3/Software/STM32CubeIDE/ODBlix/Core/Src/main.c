@@ -26,7 +26,6 @@
 #include "odb.h"
 #include "Systems/tasks.h"
 #include "Systems/scheduler.h"
-#include "Systems/logger.h"
 #include "Tools/profiler.h"
 #include "Systems/config.h"
 #include "Systems/flight_fsm.h"
@@ -275,7 +274,6 @@ int main(void)
   DWT_Init();
   ODB_Init(&flight_data, &flight_stats);
   RebootManager_Init();
-  Logger_Init();
   Scheduler_Init();
   Scheduler_AddTask("Reboot", Task_RebootManager, TASK_REBOOT_MANAGER_FREQ_MS);
   Scheduler_AddTask("Data_Update", Task_DataUpdate, TASK_DATA_UPDATE_FREQ_MS);
