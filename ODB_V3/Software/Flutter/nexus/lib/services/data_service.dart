@@ -642,7 +642,17 @@ class DataServiceManager with ChangeNotifier {
     }
     
     await btService.sendBinary(0x03, [0x05]);
-    ConsoleService().log('Demande de réinitialisation usine envoyée.');
+    ConsoleService().log('Demande de réinitialisation de la configuration envoyée.');
+  }
+
+  Future<void> resetOdbFlights() async {
+    if (!hasConnection) {
+      ConsoleService().log('Aucune connexion Bluetooth avec l\'ODB');
+      return;
+    }
+    
+    await btService.sendBinary(0x03, [0x09]);
+    ConsoleService().log('Demande de réinitialisation des données de vol envoyée.');
   }
 
   Future<void> resetOdbMemory() async {
@@ -652,7 +662,7 @@ class DataServiceManager with ChangeNotifier {
     }
 
     await btService.sendBinary(0x03, [0x07]);
-    ConsoleService().log('Demande de réinitialisation mémoire envoyée.');
+    ConsoleService().log('Demande de réinitialisation usine envoyée.');
   }
 
   // ---------- EVENTS (Last flight stats) ----------

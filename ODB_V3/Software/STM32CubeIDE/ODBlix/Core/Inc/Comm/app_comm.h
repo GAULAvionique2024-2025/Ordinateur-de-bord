@@ -26,14 +26,15 @@ typedef enum {
 } app_msg_type_t;
 
 typedef enum {
-    CMD_PING       = 0x01,
-    CMD_ARM_DISARM = 0x02,
-    CMD_FIRE_PYRO  = 0x03,
-    CMD_APPLY_CFG  = 0x04,
-    CMD_RESET_CFG  = 0x05,
-    CMD_REQ_CFG    = 0x06,
-	CMD_RESET_MEM  = 0x07,
-	CMD_REQ_EVENTS = 0x08
+    CMD_PING       		= 0x01,
+    CMD_ARM_DISARM 		= 0x02,
+    CMD_FIRE_PYRO  		= 0x03,
+    CMD_APPLY_CFG  		= 0x04,
+    CMD_RESET_CFG  		= 0x05,
+    CMD_REQ_CFG    		= 0x06,
+	CMD_RESET_MEM  		= 0x07,
+	CMD_REQ_EVENTS 		= 0x08,
+	CMD_RESET_FLIGHTS 	= 0x09
 } app_cmd_id_t;
 
 void AppComm_SendTelemetry(hm11_t *hm11_dev, const odb_data_t *data);

@@ -48,7 +48,6 @@ void Logger_Task(void);
 void Logger_SaveStats(const odb_stats_t *stats);
 const odb_data_t* Logger_GetLastFlightData(void);
 const odb_stats_t* Logger_GetLastFlightStats(void);
-bool Logger_ResetFlightHistoric(void);
 
 bool Logger_Erase(void);
 

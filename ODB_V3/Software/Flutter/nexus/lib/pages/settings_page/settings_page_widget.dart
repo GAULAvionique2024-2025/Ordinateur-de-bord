@@ -1202,6 +1202,31 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                 child: ElevatedButton.icon(
                   onPressed: data.hasConnection
                       ? () async {
+                          await data.resetOdbFlights();
+                          if (!context.mounted) return;
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                'Réinitialisation des données de vol ODB demandée',
+                              ),
+                            ),
+                          );
+                        }
+                      : null,
+                  icon: const Icon(Icons.restart_alt_rounded),
+                  label: const Text('Reset vols'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: FlutterFlowTheme.of(context).warning,
+                    foregroundColor: FlutterFlowTheme.of(
+                      context,
+                    ).primaryBackground,
+                  ),
+                ),
+              ),
+              Center(
+                child: ElevatedButton.icon(
+                  onPressed: data.hasConnection
+                      ? () async {
                           await data.resetOdbSettingsToDefault();
                           if (!context.mounted) return;
                           ScaffoldMessenger.of(context).showSnackBar(

@@ -156,6 +156,13 @@ void AppComm_ProcessRx(hm11_t *hm11_dev) {
                     	} else {
                     		AppComm_SendAck(hm11_dev, CMD_RESET_MEM, 0);
                     	}
+                    } else if(cmd == CMD_RESET_FLIGHTS) {
+						if(Logger_Erase()) {
+							CriticalLED_SetColor(&critical_led, RED);
+							AppComm_SendAck(hm11_dev, CMD_RESET_FLIGHTS, 1);
+						} else {
+							AppComm_SendAck(hm11_dev, CMD_RESET_FLIGHTS, 0);
+						}
                     } else if(cmd == CMD_REQ_CFG) {
                         const odb_config_t *actual_config = Config_Get();
                         AppComm_SendFrame(hm11_dev, MSG_GENERIC_DATA, (uint8_t*)actual_config, CONFIG_DATA_SIZE);
