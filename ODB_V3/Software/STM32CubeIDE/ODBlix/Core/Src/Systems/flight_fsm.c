@@ -37,6 +37,7 @@ static bool sustainer_ignited = false;
 static bool backup_active = false;
 
 // TODO: check pyro number to adapt target attempt
+// TODO: use dedicated timer to failsafe drogue fire
 void FSM_Update(void) {
 	flight_duration = __HAL_TIM_GET_COUNTER(&htim5) / 1000; // Failsafe apogee timeout (us)
     switch(current_global_state) {
@@ -248,4 +249,3 @@ void FSM_Update(void) {
 			break;
 	}
 }
-
