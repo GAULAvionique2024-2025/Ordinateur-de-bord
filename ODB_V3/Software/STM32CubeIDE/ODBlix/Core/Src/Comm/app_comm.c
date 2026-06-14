@@ -6,13 +6,15 @@
  */
 
 
-#include <Comm/app_comm.h>
+#include "Comm/app_comm.h"
+#include "Comm/beacon_comm.h"
 #include "Utils/reboot_manager.h"
 #include <string.h>
 
 extern w25q_t w25q;
 extern critical_led_t critical_led;
 extern system_measurements_t system_measurements;
+extern idefix_t idefix;
 extern pyro_t pyros[4];
 extern bool is_pyros_armed;
 
@@ -128,6 +130,8 @@ void AppComm_ProcessRx(hm11_t *hm11_dev) {
                         }
                     } else if(cmd == CMD_APPLY_CFG) {
                         if(Config_SaveToFlash() == 0) {
+                        	Beacon_SetFrequency(&idefix);
+
                             AppComm_SendAck(hm11_dev, CMD_APPLY_CFG, 1);
                             RebootManager_RequestReboot();
                         } else {

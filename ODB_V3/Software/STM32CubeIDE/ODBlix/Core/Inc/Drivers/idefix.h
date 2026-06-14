@@ -19,12 +19,12 @@ typedef enum {
 	IDEFIX_CMD_ERROR = -4
 } idefix_status_t;
 
-typedef const char* idefix_command_t;
-
-#define IDEFIX_CMD_SET_COORD   "COORD"
-#define IDEFIX_CMD_SET_FREQ    "FREQ"
-#define IDEFIX_CMD_SET_CHANNEL "CHANNEL"
-#define IDEFIX_CMD_STATUS      "STATUS"
+typedef enum {
+    IDEFIX_CMD_PING    = 0x01,
+    IDEFIX_CMD_COORD   = 0x02,
+    IDEFIX_CMD_FREQ    = 0x03,
+    IDEFIX_CMD_CHANNEL = 0x04
+} idefix_command_t;
 
 typedef struct {
 	I2C_HandleTypeDef *hi2c;
@@ -32,8 +32,7 @@ typedef struct {
 
 
 idefix_status_t Idefix_Init(idefix_t *dev);
-idefix_status_t Idefix_SendCommand(idefix_t *dev, idefix_command_t command);
 
-void Idefix_SendData(idefix_t *dev, uint8_t *data, uint16_t size);
+idefix_status_t Idefix_TransmitData(idefix_t *dev, idefix_command_t cmd, const uint8_t *payload, uint16_t size);
 
 #endif /* INC_DRIVERS_IDEFIX_H_ */

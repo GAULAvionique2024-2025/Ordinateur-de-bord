@@ -12,34 +12,33 @@
 void Beacon_SendCoordinates(idefix_t *idefix_dev, const int32_t lat_e7, const int32_t lon_e7) {
     if(!idefix_dev) return;
 
-    if(Idefix_SendCommand(idefix_dev, IDEFIX_CMD_SET_COORD) != IDEFIX_OK) {
-        return;
-    }
-
     uint8_t payload[8];
-    payload[0] = (uint8_t)(lat_e7 & 0xFF);
-    payload[1] = (uint8_t)((lat_e7 >> 8) & 0xFF);
-    payload[2] = (uint8_t)((lat_e7 >> 16) & 0xFF);
-    payload[3] = (uint8_t)((lat_e7 >> 24) & 0xFF);
+    uint32_t u_lat = (uint32_t)lat_e7;
+    uint32_t u_lon = (uint32_t)lon_e7;
 
-    payload[4] = (uint8_t)(lon_e7 & 0xFF);
-    payload[5] = (uint8_t)((lon_e7 >> 8) & 0xFF);
-    payload[6] = (uint8_t)((lon_e7 >> 16) & 0xFF);
-    payload[7] = (uint8_t)((lon_e7 >> 24) & 0xFF);
+    payload[0] = (uint8_t)(u_lat & 0xFF);
+    payload[1] = (uint8_t)((u_lat >> 8) & 0xFF);
+    payload[2] = (uint8_t)((u_lat >> 16) & 0xFF);
+    payload[3] = (uint8_t)((u_lat >> 24) & 0xFF);
 
-    Idefix_SendData(idefix_dev, payload, 8);
+    payload[4] = (uint8_t)(u_lon & 0xFF);
+    payload[5] = (uint8_t)((u_lon >> 8) & 0xFF);
+    payload[6] = (uint8_t)((u_lon >> 16) & 0xFF);
+    payload[7] = (uint8_t)((u_lon >> 24) & 0xFF);
+
+    Idefix_TransmitData(idefix_dev, IDEFIX_CMD_COORD, payload, 8);
 }
 
 void Beacon_SetFrequency(idefix_t *idefix_dev) {
-	if(Idefix_SendCommand(idefix_dev, IDEFIX_CMD_SET_FREQ) != IDEFIX_OK) {
-		return;
-    }
+    if(!idefix_dev) return;
 
     uint8_t payload[4];
-    payload[0] = (uint8_t)(current_config.idefix_frequency_hz & 0xFF);
-    payload[1] = (uint8_t)((current_config.idefix_frequency_hz >> 8) & 0xFF);
-    payload[2] = (uint8_t)((current_config.idefix_frequency_hz >> 16) & 0xFF);
-    payload[3] = (uint8_t)((current_config.idefix_frequency_hz >> 24) & 0xFF);
+    uint32_t freq = current_config.idefix_frequency_hz;
 
-    Idefix_SendData(idefix_dev, payload, 4);
+    payload[0] = (uint8_t)(freq & 0xFF);
+    payload[1] = (uint8_t)((freq >> 8) & 0xFF);
+    payload[2] = (uint8_t)((freq >> 16) & 0xFF);
+    payload[3] = (uint8_t)((freq >> 24) & 0xFF);
+
+    Idefix_TransmitData(idefix_dev, IDEFIX_CMD_FREQ, payload, 4);
 }
