@@ -29,10 +29,12 @@ idefix_status_t Idefix_Init(idefix_t *dev) {
     return IDEFIX_OK;
 }
 
+#define IDEFIX_I2C_PACKET_SIZE 16
+
 idefix_status_t Idefix_TransmitData(idefix_t *dev, idefix_command_t cmd, const uint8_t *payload, uint16_t size) {
     if(!dev) return IDEFIX_ERROR;
 
-    uint8_t buffer[16];
+    uint8_t buffer[IDEFIX_I2C_PACKET_SIZE] = {0};
     if(size + 1 > sizeof(buffer)) return IDEFIX_ERROR;
 
     buffer[0] = (uint8_t)cmd;
@@ -40,7 +42,7 @@ idefix_status_t Idefix_TransmitData(idefix_t *dev, idefix_command_t cmd, const u
         memcpy(&buffer[1], payload, size);
     }
 
-    if(HAL_I2C_Master_Transmit(dev->hi2c, IDEFIX_SLAVE_ADDRESS, buffer, size + 1, 100) != HAL_OK) {
+    if(HAL_I2C_Master_Transmit(dev->hi2c, IDEFIX_SLAVE_ADDRESS, buffer, IDEFIX_I2C_PACKET_SIZE, 100) != HAL_OK) {
         return IDEFIX_I2C_ERROR;
     }
 
