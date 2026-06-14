@@ -46,7 +46,7 @@ uint32_t HAL_GetTick(void);
 // Les macros pour manipuler le Timer
 #define __HAL_TIM_GET_COUNTER(__HANDLE__)          ((__HANDLE__)->Instance->CNT)
 #define __HAL_TIM_SET_COUNTER(__HANDLE__, __VALUE__) ((__HANDLE__)->Instance->CNT = (__VALUE__))
-#define HAL_TIM_Base_Start_IT(__HANDLE__)          /* Désactivé en simulation */
+#define HAL_TIM_Base_Start(__HANDLE__)          	/* Désactivé en simulation */
 
 #define HAL_Delay(delay)                           /* Désactivé en simulation */
 
