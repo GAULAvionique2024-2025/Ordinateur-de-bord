@@ -14,7 +14,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#define LOG_BUFFER_SIZE 2 // Number of stored data (2 x 118 bytes -> near to 256)
+#define LOG_BUFFER_SIZE	32 // 400 ms (max wait erase sector w25q) / TASK_LOGGER_FREQ_MS = 20 frames + security
 
 
 typedef enum {
@@ -50,6 +50,6 @@ const odb_data_t* Logger_GetLastFlightData(void);
 const odb_stats_t* Logger_GetLastFlightStats(void);
 bool Logger_ResetFlightHistoric(void);
 
-int8_t Logger_Erase(void);
+bool Logger_Erase(void);
 
 #endif /* INC_SYSTEMS_LOGGER_H_ */

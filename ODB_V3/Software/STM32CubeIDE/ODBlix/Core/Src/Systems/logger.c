@@ -89,6 +89,7 @@ int8_t Logger_Init(void) {
     if(flash_current_address >= (LOGGER_MAX_ALLOWED_ADDRESS - FLASH_SECTOR_SIZE_BYTE)) {
         flash_current_address = 0;
         next_id = 1;
+        Logger_Erase();
     }
 
     if(W25Q_EraseSector(&w25q, flash_current_address) != 0) {
@@ -110,6 +111,7 @@ int8_t Logger_Init(void) {
     last_flight_id = next_id;
 
     flash_current_address += FLASH_SECTOR_SIZE_BYTE;
+
     W25Q_EraseSector(&w25q, flash_current_address);
 
     stats_reserved_address = flash_current_address;
@@ -161,7 +163,7 @@ void Logger_Task(void) {
             }
             break;
 
-        case LOGGER_START_WRITE:
+        case LOGGER_START_WRITE: {
             uint32_t total_size = LOG_BUFFER_SIZE * sizeof(logger_data_t);
             uint32_t bytes_to_write = total_size - flush_bytes_written;
 
@@ -176,10 +178,6 @@ void Logger_Task(void) {
                 break;
             }
 
-            if(flash_current_address % FLASH_SECTOR_SIZE_BYTE == 0) {
-                W25Q_EraseSector(&w25q, flash_current_address);
-            }
-
             uint8_t *write_ptr = ((uint8_t*)current_flush_buf) + flush_bytes_written;
             if(W25Q_WritePageNoWait(&w25q, write_ptr, flash_current_address, bytes_to_write) == 0) {
                 flash_current_address += bytes_to_write;
@@ -191,6 +189,7 @@ void Logger_Task(void) {
                 logger_state = LOGGER_WAIT_FLASH_BUSY;
             }
             break;
+        }
 
         case LOGGER_WAIT_FLASH_BUSY:
             if(!W25Q_IsBusy(w25q.hqspi)) {
@@ -264,32 +263,23 @@ const odb_stats_t* Logger_GetLastFlightStats(void) {
     return NULL;
 }
 
-bool Logger_ResetFlightHistoric(void) {
-    for(uint32_t addr = 0; addr < FLASH_CONFIG_START_ADDRESS; addr += FLASH_SECTOR_SIZE_BYTE) {
-        if(W25Q_EraseSector(&w25q, addr) != 0) {
-            return false;
-        }
-    }
-    return true;
-}
-
-int8_t Logger_Erase(void) {
+bool Logger_Erase(void) {
 	uint32_t current_addr = 0;
-
 	while(current_addr < LOGGER_MAX_ALLOWED_ADDRESS) {
 		if((current_addr + W25Q512_BLOCK_SIZE) > LOGGER_MAX_ALLOWED_ADDRESS) {
 			if(W25Q_EraseSector(&w25q, current_addr) != 0) {
-				return -1;
+				return false;
 			}
 			current_addr += W25Q512_SECTOR_SIZE;
 		} else {
 			if(W25Q_EraseBlock(&w25q, current_addr) != 0) {
-				return -1;
+				return false;
 			}
 			current_addr += W25Q512_BLOCK_SIZE;
 		}
 	}
-	return 0;
+
+	return true;
 }
 
 /*
