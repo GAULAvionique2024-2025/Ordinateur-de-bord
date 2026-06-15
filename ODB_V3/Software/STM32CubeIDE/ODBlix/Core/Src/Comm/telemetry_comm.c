@@ -46,6 +46,8 @@ void Telemetry_SendRocketData(rfd900x_t *rfd_dev, const mavlink_modem_id_t modem
 		(int32_t)(data->highg_acc_vertical * 100.0f),       // highg_acc_vertical: Vert acc from High-G (m/s2 -> cm/s2) -> Linked with ADXL382
 		(int32_t)(data->imu_acc_vertical * 100.0f),         // imu_acc_vertical: Vert acc from IMU (m/s2 -> cm/s2) -> Linked with BNO055
 
+		(uint32_t)(data->pressure_pa),						// pressure_pa: Atmospheric pressure (Pa) -> Linked with MS5611
+
 		(int16_t)(data->roll * 100.0f),                     // roll: Roll angle in degrees (deg -> cdeg) -> Linked with BNO055
 		(int16_t)(data->pitch * 100.0f),                    // pitch: Pitch angle in degrees (deg -> cdeg) -> Linked with BNO055
 		(int16_t)(data->yaw * 100.0f),                      // yaw: Yaw angle between -180 and 180 (deg -> cdeg) -> Linked with BNO055
@@ -55,7 +57,6 @@ void Telemetry_SendRocketData(rfd900x_t *rfd_dev, const mavlink_modem_id_t modem
 		(int16_t)(data->imu_mag_x * 100.0f),                // imu_mag_x: IMU Magnetometer X (uT -> cuT) -> Linked with BNO055
 		(int16_t)(data->imu_mag_y * 100.0f),                // imu_mag_y: IMU Magnetometer Y (uT -> cuT) -> Linked with BNO055
 		(int16_t)(data->imu_mag_z * 100.0f),                // imu_mag_z: IMU Magnetometer Z (uT -> cuT) -> Linked with BNO055
-		(uint16_t)(data->pressure_pa / 100.0f),             // pressure_hpa: Atmospheric pressure (Pa -> hPa) -> Linked with MS5611
 		(int16_t)(data->temp_celsius * 100.0f),             // temp_celsius: Environment temp (°C -> cdegC) -> Linked with MAX6612MXK
 		data->system_states,                                // system_states: Current system/component states
 		data->event_states,                                 // event_states: Current events states (pyros fired, apogee) -> linked with odb_stats_t

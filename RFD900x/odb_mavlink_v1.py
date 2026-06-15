@@ -6352,22 +6352,22 @@ class MAVLink_rocket_telemetry_message(MAVLink_message):
 
     id = MAVLINK_MSG_ID_ROCKET_TELEMETRY
     msgname = "ROCKET_TELEMETRY"
-    fieldnames = ["time_boot_ms", "lat", "lon", "gps_alt", "altitude_msl_cm", "kalman_z", "kalman_v", "imu_gyro_x", "imu_gyro_y", "imu_gyro_z", "highg_acc_x", "highg_acc_y", "highg_acc_z", "highg_acc_vertical", "imu_acc_vertical", "roll", "pitch", "yaw", "imu_acc_x", "imu_acc_y", "imu_acc_z", "imu_mag_x", "imu_mag_y", "imu_mag_z", "pressure_hpa", "temp_celsius", "system_states", "event_states", "battery_mv", "vel", "cog", "mission_state", "gps_fix", "satellites_nb"]
-    ordered_fieldnames = ["time_boot_ms", "lat", "lon", "gps_alt", "altitude_msl_cm", "kalman_z", "kalman_v", "imu_gyro_x", "imu_gyro_y", "imu_gyro_z", "highg_acc_x", "highg_acc_y", "highg_acc_z", "highg_acc_vertical", "imu_acc_vertical", "roll", "pitch", "yaw", "imu_acc_x", "imu_acc_y", "imu_acc_z", "imu_mag_x", "imu_mag_y", "imu_mag_z", "pressure_hpa", "temp_celsius", "system_states", "event_states", "battery_mv", "vel", "cog", "mission_state", "gps_fix", "satellites_nb"]
-    fieldtypes = ["uint32_t", "int32_t", "int32_t", "int32_t", "int32_t", "int32_t", "int32_t", "int32_t", "int32_t", "int32_t", "int32_t", "int32_t", "int32_t", "int32_t", "int32_t", "int16_t", "int16_t", "int16_t", "int16_t", "int16_t", "int16_t", "int16_t", "int16_t", "int16_t", "uint16_t", "int16_t", "uint16_t", "uint16_t", "uint16_t", "uint16_t", "uint16_t", "uint8_t", "uint8_t", "uint8_t"]
+    fieldnames = ["time_boot_ms", "lat", "lon", "gps_alt", "altitude_msl_cm", "kalman_z", "kalman_v", "imu_gyro_x", "imu_gyro_y", "imu_gyro_z", "highg_acc_x", "highg_acc_y", "highg_acc_z", "highg_acc_vertical", "imu_acc_vertical", "pressure_pa", "roll", "pitch", "yaw", "imu_acc_x", "imu_acc_y", "imu_acc_z", "imu_mag_x", "imu_mag_y", "imu_mag_z", "temp_celsius", "system_states", "event_states", "battery_mv", "vel", "cog", "mission_state", "gps_fix", "satellites_nb"]
+    ordered_fieldnames = ["time_boot_ms", "lat", "lon", "gps_alt", "altitude_msl_cm", "kalman_z", "kalman_v", "imu_gyro_x", "imu_gyro_y", "imu_gyro_z", "highg_acc_x", "highg_acc_y", "highg_acc_z", "highg_acc_vertical", "imu_acc_vertical", "pressure_pa", "roll", "pitch", "yaw", "imu_acc_x", "imu_acc_y", "imu_acc_z", "imu_mag_x", "imu_mag_y", "imu_mag_z", "temp_celsius", "system_states", "event_states", "battery_mv", "vel", "cog", "mission_state", "gps_fix", "satellites_nb"]
+    fieldtypes = ["uint32_t", "int32_t", "int32_t", "int32_t", "int32_t", "int32_t", "int32_t", "int32_t", "int32_t", "int32_t", "int32_t", "int32_t", "int32_t", "int32_t", "int32_t", "uint32_t", "int16_t", "int16_t", "int16_t", "int16_t", "int16_t", "int16_t", "int16_t", "int16_t", "int16_t", "int16_t", "uint16_t", "uint16_t", "uint16_t", "uint16_t", "uint16_t", "uint8_t", "uint8_t", "uint8_t"]
     fielddisplays_by_name: Dict[str, str] = {}
     fieldenums_by_name: Dict[str, str] = {}
-    fieldunits_by_name: Dict[str, str] = {"time_boot_ms": "ms", "lat": "degE7", "lon": "degE7", "gps_alt": "mm", "altitude_msl_cm": "cm", "kalman_z": "cm", "kalman_v": "cm/s", "imu_gyro_x": "cdeg/s", "imu_gyro_y": "cdeg/s", "imu_gyro_z": "cdeg/s", "highg_acc_x": "cm/s/s", "highg_acc_y": "cm/s/s", "highg_acc_z": "cm/s/s", "highg_acc_vertical": "cm/s/s", "imu_acc_vertical": "cm/s/s", "roll": "cdeg", "pitch": "cdeg", "yaw": "cdeg", "imu_acc_x": "cm/s/s", "imu_acc_y": "cm/s/s", "imu_acc_z": "cm/s/s", "imu_mag_x": "cuT", "imu_mag_y": "cuT", "imu_mag_z": "cuT", "pressure_hpa": "hPa", "temp_celsius": "cdegC", "battery_mv": "mV", "vel": "cm/s", "cog": "cdeg"}
-    native_format = bytearray(b"<IiiiiiiiiiiiiiihhhhhhhhhHhHHHHHBBB")
+    fieldunits_by_name: Dict[str, str] = {"time_boot_ms": "ms", "lat": "degE7", "lon": "degE7", "gps_alt": "mm", "altitude_msl_cm": "cm", "kalman_z": "cm", "kalman_v": "cm/s", "imu_gyro_x": "cdeg/s", "imu_gyro_y": "cdeg/s", "imu_gyro_z": "cdeg/s", "highg_acc_x": "cm/s/s", "highg_acc_y": "cm/s/s", "highg_acc_z": "cm/s/s", "highg_acc_vertical": "cm/s/s", "imu_acc_vertical": "cm/s/s", "pressure_pa": "Pa", "roll": "cdeg", "pitch": "cdeg", "yaw": "cdeg", "imu_acc_x": "cm/s/s", "imu_acc_y": "cm/s/s", "imu_acc_z": "cm/s/s", "imu_mag_x": "cuT", "imu_mag_y": "cuT", "imu_mag_z": "cuT", "temp_celsius": "cdegC", "battery_mv": "mV", "vel": "cm/s", "cog": "cdeg"}
+    native_format = bytearray(b"<IiiiiiiiiiiiiiiIhhhhhhhhhhHHHHHBBB")
     orders = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33]
     lengths = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
     array_lengths = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    crc_extra = 94
-    unpacker = struct.Struct("<IiiiiiiiiiiiiiihhhhhhhhhHhHHHHHBBB")
+    crc_extra = 10
+    unpacker = struct.Struct("<IiiiiiiiiiiiiiiIhhhhhhhhhhHHHHHBBB")
     instance_field = None
     instance_offset = -1
 
-    def __init__(self, time_boot_ms: int, lat: int, lon: int, gps_alt: int, altitude_msl_cm: int, kalman_z: int, kalman_v: int, imu_gyro_x: int, imu_gyro_y: int, imu_gyro_z: int, highg_acc_x: int, highg_acc_y: int, highg_acc_z: int, highg_acc_vertical: int, imu_acc_vertical: int, roll: int, pitch: int, yaw: int, imu_acc_x: int, imu_acc_y: int, imu_acc_z: int, imu_mag_x: int, imu_mag_y: int, imu_mag_z: int, pressure_hpa: int, temp_celsius: int, system_states: int, event_states: int, battery_mv: int, vel: int, cog: int, mission_state: int, gps_fix: int, satellites_nb: int):
+    def __init__(self, time_boot_ms: int, lat: int, lon: int, gps_alt: int, altitude_msl_cm: int, kalman_z: int, kalman_v: int, imu_gyro_x: int, imu_gyro_y: int, imu_gyro_z: int, highg_acc_x: int, highg_acc_y: int, highg_acc_z: int, highg_acc_vertical: int, imu_acc_vertical: int, pressure_pa: int, roll: int, pitch: int, yaw: int, imu_acc_x: int, imu_acc_y: int, imu_acc_z: int, imu_mag_x: int, imu_mag_y: int, imu_mag_z: int, temp_celsius: int, system_states: int, event_states: int, battery_mv: int, vel: int, cog: int, mission_state: int, gps_fix: int, satellites_nb: int):
         MAVLink_message.__init__(self, MAVLink_rocket_telemetry_message.id, MAVLink_rocket_telemetry_message.msgname)
         self._fieldnames = MAVLink_rocket_telemetry_message.fieldnames
         self._instance_field = MAVLink_rocket_telemetry_message.instance_field
@@ -6387,6 +6387,7 @@ class MAVLink_rocket_telemetry_message(MAVLink_message):
         self.highg_acc_z = highg_acc_z
         self.highg_acc_vertical = highg_acc_vertical
         self.imu_acc_vertical = imu_acc_vertical
+        self.pressure_pa = pressure_pa
         self.roll = roll
         self.pitch = pitch
         self.yaw = yaw
@@ -6396,7 +6397,6 @@ class MAVLink_rocket_telemetry_message(MAVLink_message):
         self.imu_mag_x = imu_mag_x
         self.imu_mag_y = imu_mag_y
         self.imu_mag_z = imu_mag_z
-        self.pressure_hpa = pressure_hpa
         self.temp_celsius = temp_celsius
         self.system_states = system_states
         self.event_states = event_states
@@ -6408,7 +6408,7 @@ class MAVLink_rocket_telemetry_message(MAVLink_message):
         self.satellites_nb = satellites_nb
 
     def pack(self, mav: "MAVLink", force_mavlink1: bool = False) -> bytes:
-        return self._pack(mav, self.crc_extra, self.unpacker.pack(self.time_boot_ms, self.lat, self.lon, self.gps_alt, self.altitude_msl_cm, self.kalman_z, self.kalman_v, self.imu_gyro_x, self.imu_gyro_y, self.imu_gyro_z, self.highg_acc_x, self.highg_acc_y, self.highg_acc_z, self.highg_acc_vertical, self.imu_acc_vertical, self.roll, self.pitch, self.yaw, self.imu_acc_x, self.imu_acc_y, self.imu_acc_z, self.imu_mag_x, self.imu_mag_y, self.imu_mag_z, self.pressure_hpa, self.temp_celsius, self.system_states, self.event_states, self.battery_mv, self.vel, self.cog, self.mission_state, self.gps_fix, self.satellites_nb), force_mavlink1=force_mavlink1)
+        return self._pack(mav, self.crc_extra, self.unpacker.pack(self.time_boot_ms, self.lat, self.lon, self.gps_alt, self.altitude_msl_cm, self.kalman_z, self.kalman_v, self.imu_gyro_x, self.imu_gyro_y, self.imu_gyro_z, self.highg_acc_x, self.highg_acc_y, self.highg_acc_z, self.highg_acc_vertical, self.imu_acc_vertical, self.pressure_pa, self.roll, self.pitch, self.yaw, self.imu_acc_x, self.imu_acc_y, self.imu_acc_z, self.imu_mag_x, self.imu_mag_y, self.imu_mag_z, self.temp_celsius, self.system_states, self.event_states, self.battery_mv, self.vel, self.cog, self.mission_state, self.gps_fix, self.satellites_nb), force_mavlink1=force_mavlink1)
 
 
 # Define name on the class for backwards compatibility (it is now msgname).
@@ -18307,7 +18307,7 @@ class MAVLink(object):
         m._header = MAVLink_header(msgId, incompat_flags, compat_flags, mlen, seq, srcSystem, srcComponent)
         return m
 
-    def rocket_telemetry_encode(self, time_boot_ms: int, lat: int, lon: int, gps_alt: int, altitude_msl_cm: int, kalman_z: int, kalman_v: int, imu_gyro_x: int, imu_gyro_y: int, imu_gyro_z: int, highg_acc_x: int, highg_acc_y: int, highg_acc_z: int, highg_acc_vertical: int, imu_acc_vertical: int, roll: int, pitch: int, yaw: int, imu_acc_x: int, imu_acc_y: int, imu_acc_z: int, imu_mag_x: int, imu_mag_y: int, imu_mag_z: int, pressure_hpa: int, temp_celsius: int, system_states: int, event_states: int, battery_mv: int, vel: int, cog: int, mission_state: int, gps_fix: int, satellites_nb: int) -> MAVLink_rocket_telemetry_message:
+    def rocket_telemetry_encode(self, time_boot_ms: int, lat: int, lon: int, gps_alt: int, altitude_msl_cm: int, kalman_z: int, kalman_v: int, imu_gyro_x: int, imu_gyro_y: int, imu_gyro_z: int, highg_acc_x: int, highg_acc_y: int, highg_acc_z: int, highg_acc_vertical: int, imu_acc_vertical: int, pressure_pa: int, roll: int, pitch: int, yaw: int, imu_acc_x: int, imu_acc_y: int, imu_acc_z: int, imu_mag_x: int, imu_mag_y: int, imu_mag_z: int, temp_celsius: int, system_states: int, event_states: int, battery_mv: int, vel: int, cog: int, mission_state: int, gps_fix: int, satellites_nb: int) -> MAVLink_rocket_telemetry_message:
         """
         ODB Rocket Telemetry
 
@@ -18326,6 +18326,7 @@ class MAVLink(object):
         highg_acc_z               : High-G Acceleration Z. [cm/s/s] (type:int32_t)
         highg_acc_vertical        : Vertical High-G acceleration. [cm/s/s] (type:int32_t)
         imu_acc_vertical          : Vertical IMU acceleration. [cm/s/s] (type:int32_t)
+        pressure_pa               : Pressure in pascals. [Pa] (type:uint32_t)
         roll                      : Roll angle in centi-degrees. [cdeg] (type:int16_t)
         pitch                     : Pitch angle in centi-degrees. [cdeg] (type:int16_t)
         yaw                       : Yaw angle in centi-degrees. [cdeg] (type:int16_t)
@@ -18335,7 +18336,6 @@ class MAVLink(object):
         imu_mag_x                 : IMU Mag X in centi-microTesla. [cuT] (type:int16_t)
         imu_mag_y                 : IMU Mag Y in centi-microTesla. [cuT] (type:int16_t)
         imu_mag_z                 : IMU Mag Z in centi-microTesla. [cuT] (type:int16_t)
-        pressure_hpa              : Pressure in hectopascals. [hPa] (type:uint16_t)
         temp_celsius              : Temperature in centi-degrees Celsius. [cdegC] (type:int16_t)
         system_states             : Current system state bitfield. (type:uint16_t)
         event_states              : Current events states. (type:uint16_t)
@@ -18347,9 +18347,9 @@ class MAVLink(object):
         satellites_nb             : Number of visible satellites. (type:uint8_t)
 
         """
-        return MAVLink_rocket_telemetry_message(time_boot_ms, lat, lon, gps_alt, altitude_msl_cm, kalman_z, kalman_v, imu_gyro_x, imu_gyro_y, imu_gyro_z, highg_acc_x, highg_acc_y, highg_acc_z, highg_acc_vertical, imu_acc_vertical, roll, pitch, yaw, imu_acc_x, imu_acc_y, imu_acc_z, imu_mag_x, imu_mag_y, imu_mag_z, pressure_hpa, temp_celsius, system_states, event_states, battery_mv, vel, cog, mission_state, gps_fix, satellites_nb)
+        return MAVLink_rocket_telemetry_message(time_boot_ms, lat, lon, gps_alt, altitude_msl_cm, kalman_z, kalman_v, imu_gyro_x, imu_gyro_y, imu_gyro_z, highg_acc_x, highg_acc_y, highg_acc_z, highg_acc_vertical, imu_acc_vertical, pressure_pa, roll, pitch, yaw, imu_acc_x, imu_acc_y, imu_acc_z, imu_mag_x, imu_mag_y, imu_mag_z, temp_celsius, system_states, event_states, battery_mv, vel, cog, mission_state, gps_fix, satellites_nb)
 
-    def rocket_telemetry_send(self, time_boot_ms: int, lat: int, lon: int, gps_alt: int, altitude_msl_cm: int, kalman_z: int, kalman_v: int, imu_gyro_x: int, imu_gyro_y: int, imu_gyro_z: int, highg_acc_x: int, highg_acc_y: int, highg_acc_z: int, highg_acc_vertical: int, imu_acc_vertical: int, roll: int, pitch: int, yaw: int, imu_acc_x: int, imu_acc_y: int, imu_acc_z: int, imu_mag_x: int, imu_mag_y: int, imu_mag_z: int, pressure_hpa: int, temp_celsius: int, system_states: int, event_states: int, battery_mv: int, vel: int, cog: int, mission_state: int, gps_fix: int, satellites_nb: int, force_mavlink1: bool = False) -> None:
+    def rocket_telemetry_send(self, time_boot_ms: int, lat: int, lon: int, gps_alt: int, altitude_msl_cm: int, kalman_z: int, kalman_v: int, imu_gyro_x: int, imu_gyro_y: int, imu_gyro_z: int, highg_acc_x: int, highg_acc_y: int, highg_acc_z: int, highg_acc_vertical: int, imu_acc_vertical: int, pressure_pa: int, roll: int, pitch: int, yaw: int, imu_acc_x: int, imu_acc_y: int, imu_acc_z: int, imu_mag_x: int, imu_mag_y: int, imu_mag_z: int, temp_celsius: int, system_states: int, event_states: int, battery_mv: int, vel: int, cog: int, mission_state: int, gps_fix: int, satellites_nb: int, force_mavlink1: bool = False) -> None:
         """
         ODB Rocket Telemetry
 
@@ -18368,6 +18368,7 @@ class MAVLink(object):
         highg_acc_z               : High-G Acceleration Z. [cm/s/s] (type:int32_t)
         highg_acc_vertical        : Vertical High-G acceleration. [cm/s/s] (type:int32_t)
         imu_acc_vertical          : Vertical IMU acceleration. [cm/s/s] (type:int32_t)
+        pressure_pa               : Pressure in pascals. [Pa] (type:uint32_t)
         roll                      : Roll angle in centi-degrees. [cdeg] (type:int16_t)
         pitch                     : Pitch angle in centi-degrees. [cdeg] (type:int16_t)
         yaw                       : Yaw angle in centi-degrees. [cdeg] (type:int16_t)
@@ -18377,7 +18378,6 @@ class MAVLink(object):
         imu_mag_x                 : IMU Mag X in centi-microTesla. [cuT] (type:int16_t)
         imu_mag_y                 : IMU Mag Y in centi-microTesla. [cuT] (type:int16_t)
         imu_mag_z                 : IMU Mag Z in centi-microTesla. [cuT] (type:int16_t)
-        pressure_hpa              : Pressure in hectopascals. [hPa] (type:uint16_t)
         temp_celsius              : Temperature in centi-degrees Celsius. [cdegC] (type:int16_t)
         system_states             : Current system state bitfield. (type:uint16_t)
         event_states              : Current events states. (type:uint16_t)
@@ -18389,7 +18389,7 @@ class MAVLink(object):
         satellites_nb             : Number of visible satellites. (type:uint8_t)
 
         """
-        self.send(self.rocket_telemetry_encode(time_boot_ms, lat, lon, gps_alt, altitude_msl_cm, kalman_z, kalman_v, imu_gyro_x, imu_gyro_y, imu_gyro_z, highg_acc_x, highg_acc_y, highg_acc_z, highg_acc_vertical, imu_acc_vertical, roll, pitch, yaw, imu_acc_x, imu_acc_y, imu_acc_z, imu_mag_x, imu_mag_y, imu_mag_z, pressure_hpa, temp_celsius, system_states, event_states, battery_mv, vel, cog, mission_state, gps_fix, satellites_nb), force_mavlink1=force_mavlink1)
+        self.send(self.rocket_telemetry_encode(time_boot_ms, lat, lon, gps_alt, altitude_msl_cm, kalman_z, kalman_v, imu_gyro_x, imu_gyro_y, imu_gyro_z, highg_acc_x, highg_acc_y, highg_acc_z, highg_acc_vertical, imu_acc_vertical, pressure_pa, roll, pitch, yaw, imu_acc_x, imu_acc_y, imu_acc_z, imu_mag_x, imu_mag_y, imu_mag_z, temp_celsius, system_states, event_states, battery_mv, vel, cog, mission_state, gps_fix, satellites_nb), force_mavlink1=force_mavlink1)
 
     def sys_status_encode(self, onboard_control_sensors_present: int, onboard_control_sensors_enabled: int, onboard_control_sensors_health: int, load: int, voltage_battery: int, current_battery: int, battery_remaining: int, drop_rate_comm: int, errors_comm: int, errors_count1: int, errors_count2: int, errors_count3: int, errors_count4: int, onboard_control_sensors_present_extended: int = 0, onboard_control_sensors_enabled_extended: int = 0, onboard_control_sensors_health_extended: int = 0) -> MAVLink_sys_status_message:
         """

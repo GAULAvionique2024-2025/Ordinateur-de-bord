@@ -20,6 +20,7 @@ typedef struct __mavlink_rocket_telemetry_t {
  int32_t highg_acc_z; /*< [cm/s/s] High-G Acceleration Z.*/
  int32_t highg_acc_vertical; /*< [cm/s/s] Vertical High-G acceleration.*/
  int32_t imu_acc_vertical; /*< [cm/s/s] Vertical IMU acceleration.*/
+ uint32_t pressure_pa; /*< [Pa] Pressure in pascals.*/
  int16_t roll; /*< [cdeg] Roll angle in centi-degrees.*/
  int16_t pitch; /*< [cdeg] Pitch angle in centi-degrees.*/
  int16_t yaw; /*< [cdeg] Yaw angle in centi-degrees.*/
@@ -29,7 +30,6 @@ typedef struct __mavlink_rocket_telemetry_t {
  int16_t imu_mag_x; /*< [cuT] IMU Mag X in centi-microTesla.*/
  int16_t imu_mag_y; /*< [cuT] IMU Mag Y in centi-microTesla.*/
  int16_t imu_mag_z; /*< [cuT] IMU Mag Z in centi-microTesla.*/
- uint16_t pressure_hpa; /*< [hPa] Pressure in hectopascals.*/
  int16_t temp_celsius; /*< [cdegC] Temperature in centi-degrees Celsius.*/
  uint16_t system_states; /*<  Current system state bitfield.*/
  uint16_t event_states; /*<  Current events states.*/
@@ -41,13 +41,13 @@ typedef struct __mavlink_rocket_telemetry_t {
  uint8_t satellites_nb; /*<  Number of visible satellites.*/
 } mavlink_rocket_telemetry_t;
 
-#define MAVLINK_MSG_ID_ROCKET_TELEMETRY_LEN 95
-#define MAVLINK_MSG_ID_ROCKET_TELEMETRY_MIN_LEN 95
-#define MAVLINK_MSG_ID_1350_LEN 95
-#define MAVLINK_MSG_ID_1350_MIN_LEN 95
+#define MAVLINK_MSG_ID_ROCKET_TELEMETRY_LEN 97
+#define MAVLINK_MSG_ID_ROCKET_TELEMETRY_MIN_LEN 97
+#define MAVLINK_MSG_ID_1350_LEN 97
+#define MAVLINK_MSG_ID_1350_MIN_LEN 97
 
-#define MAVLINK_MSG_ID_ROCKET_TELEMETRY_CRC 94
-#define MAVLINK_MSG_ID_1350_CRC 94
+#define MAVLINK_MSG_ID_ROCKET_TELEMETRY_CRC 10
+#define MAVLINK_MSG_ID_1350_CRC 10
 
 
 
@@ -71,25 +71,25 @@ typedef struct __mavlink_rocket_telemetry_t {
          { "highg_acc_z", NULL, MAVLINK_TYPE_INT32_T, 0, 48, offsetof(mavlink_rocket_telemetry_t, highg_acc_z) }, \
          { "highg_acc_vertical", NULL, MAVLINK_TYPE_INT32_T, 0, 52, offsetof(mavlink_rocket_telemetry_t, highg_acc_vertical) }, \
          { "imu_acc_vertical", NULL, MAVLINK_TYPE_INT32_T, 0, 56, offsetof(mavlink_rocket_telemetry_t, imu_acc_vertical) }, \
-         { "roll", NULL, MAVLINK_TYPE_INT16_T, 0, 60, offsetof(mavlink_rocket_telemetry_t, roll) }, \
-         { "pitch", NULL, MAVLINK_TYPE_INT16_T, 0, 62, offsetof(mavlink_rocket_telemetry_t, pitch) }, \
-         { "yaw", NULL, MAVLINK_TYPE_INT16_T, 0, 64, offsetof(mavlink_rocket_telemetry_t, yaw) }, \
-         { "imu_acc_x", NULL, MAVLINK_TYPE_INT16_T, 0, 66, offsetof(mavlink_rocket_telemetry_t, imu_acc_x) }, \
-         { "imu_acc_y", NULL, MAVLINK_TYPE_INT16_T, 0, 68, offsetof(mavlink_rocket_telemetry_t, imu_acc_y) }, \
-         { "imu_acc_z", NULL, MAVLINK_TYPE_INT16_T, 0, 70, offsetof(mavlink_rocket_telemetry_t, imu_acc_z) }, \
-         { "imu_mag_x", NULL, MAVLINK_TYPE_INT16_T, 0, 72, offsetof(mavlink_rocket_telemetry_t, imu_mag_x) }, \
-         { "imu_mag_y", NULL, MAVLINK_TYPE_INT16_T, 0, 74, offsetof(mavlink_rocket_telemetry_t, imu_mag_y) }, \
-         { "imu_mag_z", NULL, MAVLINK_TYPE_INT16_T, 0, 76, offsetof(mavlink_rocket_telemetry_t, imu_mag_z) }, \
-         { "pressure_hpa", NULL, MAVLINK_TYPE_UINT16_T, 0, 78, offsetof(mavlink_rocket_telemetry_t, pressure_hpa) }, \
-         { "temp_celsius", NULL, MAVLINK_TYPE_INT16_T, 0, 80, offsetof(mavlink_rocket_telemetry_t, temp_celsius) }, \
-         { "system_states", NULL, MAVLINK_TYPE_UINT16_T, 0, 82, offsetof(mavlink_rocket_telemetry_t, system_states) }, \
-         { "event_states", NULL, MAVLINK_TYPE_UINT16_T, 0, 84, offsetof(mavlink_rocket_telemetry_t, event_states) }, \
-         { "battery_mv", NULL, MAVLINK_TYPE_UINT16_T, 0, 86, offsetof(mavlink_rocket_telemetry_t, battery_mv) }, \
-         { "vel", NULL, MAVLINK_TYPE_UINT16_T, 0, 88, offsetof(mavlink_rocket_telemetry_t, vel) }, \
-         { "cog", NULL, MAVLINK_TYPE_UINT16_T, 0, 90, offsetof(mavlink_rocket_telemetry_t, cog) }, \
-         { "mission_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 92, offsetof(mavlink_rocket_telemetry_t, mission_state) }, \
-         { "gps_fix", NULL, MAVLINK_TYPE_UINT8_T, 0, 93, offsetof(mavlink_rocket_telemetry_t, gps_fix) }, \
-         { "satellites_nb", NULL, MAVLINK_TYPE_UINT8_T, 0, 94, offsetof(mavlink_rocket_telemetry_t, satellites_nb) }, \
+         { "pressure_pa", NULL, MAVLINK_TYPE_UINT32_T, 0, 60, offsetof(mavlink_rocket_telemetry_t, pressure_pa) }, \
+         { "roll", NULL, MAVLINK_TYPE_INT16_T, 0, 64, offsetof(mavlink_rocket_telemetry_t, roll) }, \
+         { "pitch", NULL, MAVLINK_TYPE_INT16_T, 0, 66, offsetof(mavlink_rocket_telemetry_t, pitch) }, \
+         { "yaw", NULL, MAVLINK_TYPE_INT16_T, 0, 68, offsetof(mavlink_rocket_telemetry_t, yaw) }, \
+         { "imu_acc_x", NULL, MAVLINK_TYPE_INT16_T, 0, 70, offsetof(mavlink_rocket_telemetry_t, imu_acc_x) }, \
+         { "imu_acc_y", NULL, MAVLINK_TYPE_INT16_T, 0, 72, offsetof(mavlink_rocket_telemetry_t, imu_acc_y) }, \
+         { "imu_acc_z", NULL, MAVLINK_TYPE_INT16_T, 0, 74, offsetof(mavlink_rocket_telemetry_t, imu_acc_z) }, \
+         { "imu_mag_x", NULL, MAVLINK_TYPE_INT16_T, 0, 76, offsetof(mavlink_rocket_telemetry_t, imu_mag_x) }, \
+         { "imu_mag_y", NULL, MAVLINK_TYPE_INT16_T, 0, 78, offsetof(mavlink_rocket_telemetry_t, imu_mag_y) }, \
+         { "imu_mag_z", NULL, MAVLINK_TYPE_INT16_T, 0, 80, offsetof(mavlink_rocket_telemetry_t, imu_mag_z) }, \
+         { "temp_celsius", NULL, MAVLINK_TYPE_INT16_T, 0, 82, offsetof(mavlink_rocket_telemetry_t, temp_celsius) }, \
+         { "system_states", NULL, MAVLINK_TYPE_UINT16_T, 0, 84, offsetof(mavlink_rocket_telemetry_t, system_states) }, \
+         { "event_states", NULL, MAVLINK_TYPE_UINT16_T, 0, 86, offsetof(mavlink_rocket_telemetry_t, event_states) }, \
+         { "battery_mv", NULL, MAVLINK_TYPE_UINT16_T, 0, 88, offsetof(mavlink_rocket_telemetry_t, battery_mv) }, \
+         { "vel", NULL, MAVLINK_TYPE_UINT16_T, 0, 90, offsetof(mavlink_rocket_telemetry_t, vel) }, \
+         { "cog", NULL, MAVLINK_TYPE_UINT16_T, 0, 92, offsetof(mavlink_rocket_telemetry_t, cog) }, \
+         { "mission_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 94, offsetof(mavlink_rocket_telemetry_t, mission_state) }, \
+         { "gps_fix", NULL, MAVLINK_TYPE_UINT8_T, 0, 95, offsetof(mavlink_rocket_telemetry_t, gps_fix) }, \
+         { "satellites_nb", NULL, MAVLINK_TYPE_UINT8_T, 0, 96, offsetof(mavlink_rocket_telemetry_t, satellites_nb) }, \
          } \
 }
 #else
@@ -111,25 +111,25 @@ typedef struct __mavlink_rocket_telemetry_t {
          { "highg_acc_z", NULL, MAVLINK_TYPE_INT32_T, 0, 48, offsetof(mavlink_rocket_telemetry_t, highg_acc_z) }, \
          { "highg_acc_vertical", NULL, MAVLINK_TYPE_INT32_T, 0, 52, offsetof(mavlink_rocket_telemetry_t, highg_acc_vertical) }, \
          { "imu_acc_vertical", NULL, MAVLINK_TYPE_INT32_T, 0, 56, offsetof(mavlink_rocket_telemetry_t, imu_acc_vertical) }, \
-         { "roll", NULL, MAVLINK_TYPE_INT16_T, 0, 60, offsetof(mavlink_rocket_telemetry_t, roll) }, \
-         { "pitch", NULL, MAVLINK_TYPE_INT16_T, 0, 62, offsetof(mavlink_rocket_telemetry_t, pitch) }, \
-         { "yaw", NULL, MAVLINK_TYPE_INT16_T, 0, 64, offsetof(mavlink_rocket_telemetry_t, yaw) }, \
-         { "imu_acc_x", NULL, MAVLINK_TYPE_INT16_T, 0, 66, offsetof(mavlink_rocket_telemetry_t, imu_acc_x) }, \
-         { "imu_acc_y", NULL, MAVLINK_TYPE_INT16_T, 0, 68, offsetof(mavlink_rocket_telemetry_t, imu_acc_y) }, \
-         { "imu_acc_z", NULL, MAVLINK_TYPE_INT16_T, 0, 70, offsetof(mavlink_rocket_telemetry_t, imu_acc_z) }, \
-         { "imu_mag_x", NULL, MAVLINK_TYPE_INT16_T, 0, 72, offsetof(mavlink_rocket_telemetry_t, imu_mag_x) }, \
-         { "imu_mag_y", NULL, MAVLINK_TYPE_INT16_T, 0, 74, offsetof(mavlink_rocket_telemetry_t, imu_mag_y) }, \
-         { "imu_mag_z", NULL, MAVLINK_TYPE_INT16_T, 0, 76, offsetof(mavlink_rocket_telemetry_t, imu_mag_z) }, \
-         { "pressure_hpa", NULL, MAVLINK_TYPE_UINT16_T, 0, 78, offsetof(mavlink_rocket_telemetry_t, pressure_hpa) }, \
-         { "temp_celsius", NULL, MAVLINK_TYPE_INT16_T, 0, 80, offsetof(mavlink_rocket_telemetry_t, temp_celsius) }, \
-         { "system_states", NULL, MAVLINK_TYPE_UINT16_T, 0, 82, offsetof(mavlink_rocket_telemetry_t, system_states) }, \
-         { "event_states", NULL, MAVLINK_TYPE_UINT16_T, 0, 84, offsetof(mavlink_rocket_telemetry_t, event_states) }, \
-         { "battery_mv", NULL, MAVLINK_TYPE_UINT16_T, 0, 86, offsetof(mavlink_rocket_telemetry_t, battery_mv) }, \
-         { "vel", NULL, MAVLINK_TYPE_UINT16_T, 0, 88, offsetof(mavlink_rocket_telemetry_t, vel) }, \
-         { "cog", NULL, MAVLINK_TYPE_UINT16_T, 0, 90, offsetof(mavlink_rocket_telemetry_t, cog) }, \
-         { "mission_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 92, offsetof(mavlink_rocket_telemetry_t, mission_state) }, \
-         { "gps_fix", NULL, MAVLINK_TYPE_UINT8_T, 0, 93, offsetof(mavlink_rocket_telemetry_t, gps_fix) }, \
-         { "satellites_nb", NULL, MAVLINK_TYPE_UINT8_T, 0, 94, offsetof(mavlink_rocket_telemetry_t, satellites_nb) }, \
+         { "pressure_pa", NULL, MAVLINK_TYPE_UINT32_T, 0, 60, offsetof(mavlink_rocket_telemetry_t, pressure_pa) }, \
+         { "roll", NULL, MAVLINK_TYPE_INT16_T, 0, 64, offsetof(mavlink_rocket_telemetry_t, roll) }, \
+         { "pitch", NULL, MAVLINK_TYPE_INT16_T, 0, 66, offsetof(mavlink_rocket_telemetry_t, pitch) }, \
+         { "yaw", NULL, MAVLINK_TYPE_INT16_T, 0, 68, offsetof(mavlink_rocket_telemetry_t, yaw) }, \
+         { "imu_acc_x", NULL, MAVLINK_TYPE_INT16_T, 0, 70, offsetof(mavlink_rocket_telemetry_t, imu_acc_x) }, \
+         { "imu_acc_y", NULL, MAVLINK_TYPE_INT16_T, 0, 72, offsetof(mavlink_rocket_telemetry_t, imu_acc_y) }, \
+         { "imu_acc_z", NULL, MAVLINK_TYPE_INT16_T, 0, 74, offsetof(mavlink_rocket_telemetry_t, imu_acc_z) }, \
+         { "imu_mag_x", NULL, MAVLINK_TYPE_INT16_T, 0, 76, offsetof(mavlink_rocket_telemetry_t, imu_mag_x) }, \
+         { "imu_mag_y", NULL, MAVLINK_TYPE_INT16_T, 0, 78, offsetof(mavlink_rocket_telemetry_t, imu_mag_y) }, \
+         { "imu_mag_z", NULL, MAVLINK_TYPE_INT16_T, 0, 80, offsetof(mavlink_rocket_telemetry_t, imu_mag_z) }, \
+         { "temp_celsius", NULL, MAVLINK_TYPE_INT16_T, 0, 82, offsetof(mavlink_rocket_telemetry_t, temp_celsius) }, \
+         { "system_states", NULL, MAVLINK_TYPE_UINT16_T, 0, 84, offsetof(mavlink_rocket_telemetry_t, system_states) }, \
+         { "event_states", NULL, MAVLINK_TYPE_UINT16_T, 0, 86, offsetof(mavlink_rocket_telemetry_t, event_states) }, \
+         { "battery_mv", NULL, MAVLINK_TYPE_UINT16_T, 0, 88, offsetof(mavlink_rocket_telemetry_t, battery_mv) }, \
+         { "vel", NULL, MAVLINK_TYPE_UINT16_T, 0, 90, offsetof(mavlink_rocket_telemetry_t, vel) }, \
+         { "cog", NULL, MAVLINK_TYPE_UINT16_T, 0, 92, offsetof(mavlink_rocket_telemetry_t, cog) }, \
+         { "mission_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 94, offsetof(mavlink_rocket_telemetry_t, mission_state) }, \
+         { "gps_fix", NULL, MAVLINK_TYPE_UINT8_T, 0, 95, offsetof(mavlink_rocket_telemetry_t, gps_fix) }, \
+         { "satellites_nb", NULL, MAVLINK_TYPE_UINT8_T, 0, 96, offsetof(mavlink_rocket_telemetry_t, satellites_nb) }, \
          } \
 }
 #endif
@@ -155,6 +155,7 @@ typedef struct __mavlink_rocket_telemetry_t {
  * @param highg_acc_z [cm/s/s] High-G Acceleration Z.
  * @param highg_acc_vertical [cm/s/s] Vertical High-G acceleration.
  * @param imu_acc_vertical [cm/s/s] Vertical IMU acceleration.
+ * @param pressure_pa [Pa] Pressure in pascals.
  * @param roll [cdeg] Roll angle in centi-degrees.
  * @param pitch [cdeg] Pitch angle in centi-degrees.
  * @param yaw [cdeg] Yaw angle in centi-degrees.
@@ -164,7 +165,6 @@ typedef struct __mavlink_rocket_telemetry_t {
  * @param imu_mag_x [cuT] IMU Mag X in centi-microTesla.
  * @param imu_mag_y [cuT] IMU Mag Y in centi-microTesla.
  * @param imu_mag_z [cuT] IMU Mag Z in centi-microTesla.
- * @param pressure_hpa [hPa] Pressure in hectopascals.
  * @param temp_celsius [cdegC] Temperature in centi-degrees Celsius.
  * @param system_states  Current system state bitfield.
  * @param event_states  Current events states.
@@ -177,7 +177,7 @@ typedef struct __mavlink_rocket_telemetry_t {
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_rocket_telemetry_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg,
-                               uint32_t time_boot_ms, int32_t lat, int32_t lon, int32_t gps_alt, int32_t altitude_msl_cm, int32_t kalman_z, int32_t kalman_v, int32_t imu_gyro_x, int32_t imu_gyro_y, int32_t imu_gyro_z, int32_t highg_acc_x, int32_t highg_acc_y, int32_t highg_acc_z, int32_t highg_acc_vertical, int32_t imu_acc_vertical, int16_t roll, int16_t pitch, int16_t yaw, int16_t imu_acc_x, int16_t imu_acc_y, int16_t imu_acc_z, int16_t imu_mag_x, int16_t imu_mag_y, int16_t imu_mag_z, uint16_t pressure_hpa, int16_t temp_celsius, uint16_t system_states, uint16_t event_states, uint16_t battery_mv, uint16_t vel, uint16_t cog, uint8_t mission_state, uint8_t gps_fix, uint8_t satellites_nb)
+                               uint32_t time_boot_ms, int32_t lat, int32_t lon, int32_t gps_alt, int32_t altitude_msl_cm, int32_t kalman_z, int32_t kalman_v, int32_t imu_gyro_x, int32_t imu_gyro_y, int32_t imu_gyro_z, int32_t highg_acc_x, int32_t highg_acc_y, int32_t highg_acc_z, int32_t highg_acc_vertical, int32_t imu_acc_vertical, uint32_t pressure_pa, int16_t roll, int16_t pitch, int16_t yaw, int16_t imu_acc_x, int16_t imu_acc_y, int16_t imu_acc_z, int16_t imu_mag_x, int16_t imu_mag_y, int16_t imu_mag_z, int16_t temp_celsius, uint16_t system_states, uint16_t event_states, uint16_t battery_mv, uint16_t vel, uint16_t cog, uint8_t mission_state, uint8_t gps_fix, uint8_t satellites_nb)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_ROCKET_TELEMETRY_LEN];
@@ -196,25 +196,25 @@ static inline uint16_t mavlink_msg_rocket_telemetry_pack(uint8_t system_id, uint
     _mav_put_int32_t(buf, 48, highg_acc_z);
     _mav_put_int32_t(buf, 52, highg_acc_vertical);
     _mav_put_int32_t(buf, 56, imu_acc_vertical);
-    _mav_put_int16_t(buf, 60, roll);
-    _mav_put_int16_t(buf, 62, pitch);
-    _mav_put_int16_t(buf, 64, yaw);
-    _mav_put_int16_t(buf, 66, imu_acc_x);
-    _mav_put_int16_t(buf, 68, imu_acc_y);
-    _mav_put_int16_t(buf, 70, imu_acc_z);
-    _mav_put_int16_t(buf, 72, imu_mag_x);
-    _mav_put_int16_t(buf, 74, imu_mag_y);
-    _mav_put_int16_t(buf, 76, imu_mag_z);
-    _mav_put_uint16_t(buf, 78, pressure_hpa);
-    _mav_put_int16_t(buf, 80, temp_celsius);
-    _mav_put_uint16_t(buf, 82, system_states);
-    _mav_put_uint16_t(buf, 84, event_states);
-    _mav_put_uint16_t(buf, 86, battery_mv);
-    _mav_put_uint16_t(buf, 88, vel);
-    _mav_put_uint16_t(buf, 90, cog);
-    _mav_put_uint8_t(buf, 92, mission_state);
-    _mav_put_uint8_t(buf, 93, gps_fix);
-    _mav_put_uint8_t(buf, 94, satellites_nb);
+    _mav_put_uint32_t(buf, 60, pressure_pa);
+    _mav_put_int16_t(buf, 64, roll);
+    _mav_put_int16_t(buf, 66, pitch);
+    _mav_put_int16_t(buf, 68, yaw);
+    _mav_put_int16_t(buf, 70, imu_acc_x);
+    _mav_put_int16_t(buf, 72, imu_acc_y);
+    _mav_put_int16_t(buf, 74, imu_acc_z);
+    _mav_put_int16_t(buf, 76, imu_mag_x);
+    _mav_put_int16_t(buf, 78, imu_mag_y);
+    _mav_put_int16_t(buf, 80, imu_mag_z);
+    _mav_put_int16_t(buf, 82, temp_celsius);
+    _mav_put_uint16_t(buf, 84, system_states);
+    _mav_put_uint16_t(buf, 86, event_states);
+    _mav_put_uint16_t(buf, 88, battery_mv);
+    _mav_put_uint16_t(buf, 90, vel);
+    _mav_put_uint16_t(buf, 92, cog);
+    _mav_put_uint8_t(buf, 94, mission_state);
+    _mav_put_uint8_t(buf, 95, gps_fix);
+    _mav_put_uint8_t(buf, 96, satellites_nb);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_ROCKET_TELEMETRY_LEN);
 #else
@@ -234,6 +234,7 @@ static inline uint16_t mavlink_msg_rocket_telemetry_pack(uint8_t system_id, uint
     packet.highg_acc_z = highg_acc_z;
     packet.highg_acc_vertical = highg_acc_vertical;
     packet.imu_acc_vertical = imu_acc_vertical;
+    packet.pressure_pa = pressure_pa;
     packet.roll = roll;
     packet.pitch = pitch;
     packet.yaw = yaw;
@@ -243,7 +244,6 @@ static inline uint16_t mavlink_msg_rocket_telemetry_pack(uint8_t system_id, uint
     packet.imu_mag_x = imu_mag_x;
     packet.imu_mag_y = imu_mag_y;
     packet.imu_mag_z = imu_mag_z;
-    packet.pressure_hpa = pressure_hpa;
     packet.temp_celsius = temp_celsius;
     packet.system_states = system_states;
     packet.event_states = event_states;
@@ -283,6 +283,7 @@ static inline uint16_t mavlink_msg_rocket_telemetry_pack(uint8_t system_id, uint
  * @param highg_acc_z [cm/s/s] High-G Acceleration Z.
  * @param highg_acc_vertical [cm/s/s] Vertical High-G acceleration.
  * @param imu_acc_vertical [cm/s/s] Vertical IMU acceleration.
+ * @param pressure_pa [Pa] Pressure in pascals.
  * @param roll [cdeg] Roll angle in centi-degrees.
  * @param pitch [cdeg] Pitch angle in centi-degrees.
  * @param yaw [cdeg] Yaw angle in centi-degrees.
@@ -292,7 +293,6 @@ static inline uint16_t mavlink_msg_rocket_telemetry_pack(uint8_t system_id, uint
  * @param imu_mag_x [cuT] IMU Mag X in centi-microTesla.
  * @param imu_mag_y [cuT] IMU Mag Y in centi-microTesla.
  * @param imu_mag_z [cuT] IMU Mag Z in centi-microTesla.
- * @param pressure_hpa [hPa] Pressure in hectopascals.
  * @param temp_celsius [cdegC] Temperature in centi-degrees Celsius.
  * @param system_states  Current system state bitfield.
  * @param event_states  Current events states.
@@ -305,7 +305,7 @@ static inline uint16_t mavlink_msg_rocket_telemetry_pack(uint8_t system_id, uint
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_rocket_telemetry_pack_status(uint8_t system_id, uint8_t component_id, mavlink_status_t *_status, mavlink_message_t* msg,
-                               uint32_t time_boot_ms, int32_t lat, int32_t lon, int32_t gps_alt, int32_t altitude_msl_cm, int32_t kalman_z, int32_t kalman_v, int32_t imu_gyro_x, int32_t imu_gyro_y, int32_t imu_gyro_z, int32_t highg_acc_x, int32_t highg_acc_y, int32_t highg_acc_z, int32_t highg_acc_vertical, int32_t imu_acc_vertical, int16_t roll, int16_t pitch, int16_t yaw, int16_t imu_acc_x, int16_t imu_acc_y, int16_t imu_acc_z, int16_t imu_mag_x, int16_t imu_mag_y, int16_t imu_mag_z, uint16_t pressure_hpa, int16_t temp_celsius, uint16_t system_states, uint16_t event_states, uint16_t battery_mv, uint16_t vel, uint16_t cog, uint8_t mission_state, uint8_t gps_fix, uint8_t satellites_nb)
+                               uint32_t time_boot_ms, int32_t lat, int32_t lon, int32_t gps_alt, int32_t altitude_msl_cm, int32_t kalman_z, int32_t kalman_v, int32_t imu_gyro_x, int32_t imu_gyro_y, int32_t imu_gyro_z, int32_t highg_acc_x, int32_t highg_acc_y, int32_t highg_acc_z, int32_t highg_acc_vertical, int32_t imu_acc_vertical, uint32_t pressure_pa, int16_t roll, int16_t pitch, int16_t yaw, int16_t imu_acc_x, int16_t imu_acc_y, int16_t imu_acc_z, int16_t imu_mag_x, int16_t imu_mag_y, int16_t imu_mag_z, int16_t temp_celsius, uint16_t system_states, uint16_t event_states, uint16_t battery_mv, uint16_t vel, uint16_t cog, uint8_t mission_state, uint8_t gps_fix, uint8_t satellites_nb)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_ROCKET_TELEMETRY_LEN];
@@ -324,25 +324,25 @@ static inline uint16_t mavlink_msg_rocket_telemetry_pack_status(uint8_t system_i
     _mav_put_int32_t(buf, 48, highg_acc_z);
     _mav_put_int32_t(buf, 52, highg_acc_vertical);
     _mav_put_int32_t(buf, 56, imu_acc_vertical);
-    _mav_put_int16_t(buf, 60, roll);
-    _mav_put_int16_t(buf, 62, pitch);
-    _mav_put_int16_t(buf, 64, yaw);
-    _mav_put_int16_t(buf, 66, imu_acc_x);
-    _mav_put_int16_t(buf, 68, imu_acc_y);
-    _mav_put_int16_t(buf, 70, imu_acc_z);
-    _mav_put_int16_t(buf, 72, imu_mag_x);
-    _mav_put_int16_t(buf, 74, imu_mag_y);
-    _mav_put_int16_t(buf, 76, imu_mag_z);
-    _mav_put_uint16_t(buf, 78, pressure_hpa);
-    _mav_put_int16_t(buf, 80, temp_celsius);
-    _mav_put_uint16_t(buf, 82, system_states);
-    _mav_put_uint16_t(buf, 84, event_states);
-    _mav_put_uint16_t(buf, 86, battery_mv);
-    _mav_put_uint16_t(buf, 88, vel);
-    _mav_put_uint16_t(buf, 90, cog);
-    _mav_put_uint8_t(buf, 92, mission_state);
-    _mav_put_uint8_t(buf, 93, gps_fix);
-    _mav_put_uint8_t(buf, 94, satellites_nb);
+    _mav_put_uint32_t(buf, 60, pressure_pa);
+    _mav_put_int16_t(buf, 64, roll);
+    _mav_put_int16_t(buf, 66, pitch);
+    _mav_put_int16_t(buf, 68, yaw);
+    _mav_put_int16_t(buf, 70, imu_acc_x);
+    _mav_put_int16_t(buf, 72, imu_acc_y);
+    _mav_put_int16_t(buf, 74, imu_acc_z);
+    _mav_put_int16_t(buf, 76, imu_mag_x);
+    _mav_put_int16_t(buf, 78, imu_mag_y);
+    _mav_put_int16_t(buf, 80, imu_mag_z);
+    _mav_put_int16_t(buf, 82, temp_celsius);
+    _mav_put_uint16_t(buf, 84, system_states);
+    _mav_put_uint16_t(buf, 86, event_states);
+    _mav_put_uint16_t(buf, 88, battery_mv);
+    _mav_put_uint16_t(buf, 90, vel);
+    _mav_put_uint16_t(buf, 92, cog);
+    _mav_put_uint8_t(buf, 94, mission_state);
+    _mav_put_uint8_t(buf, 95, gps_fix);
+    _mav_put_uint8_t(buf, 96, satellites_nb);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_ROCKET_TELEMETRY_LEN);
 #else
@@ -362,6 +362,7 @@ static inline uint16_t mavlink_msg_rocket_telemetry_pack_status(uint8_t system_i
     packet.highg_acc_z = highg_acc_z;
     packet.highg_acc_vertical = highg_acc_vertical;
     packet.imu_acc_vertical = imu_acc_vertical;
+    packet.pressure_pa = pressure_pa;
     packet.roll = roll;
     packet.pitch = pitch;
     packet.yaw = yaw;
@@ -371,7 +372,6 @@ static inline uint16_t mavlink_msg_rocket_telemetry_pack_status(uint8_t system_i
     packet.imu_mag_x = imu_mag_x;
     packet.imu_mag_y = imu_mag_y;
     packet.imu_mag_z = imu_mag_z;
-    packet.pressure_hpa = pressure_hpa;
     packet.temp_celsius = temp_celsius;
     packet.system_states = system_states;
     packet.event_states = event_states;
@@ -414,6 +414,7 @@ static inline uint16_t mavlink_msg_rocket_telemetry_pack_status(uint8_t system_i
  * @param highg_acc_z [cm/s/s] High-G Acceleration Z.
  * @param highg_acc_vertical [cm/s/s] Vertical High-G acceleration.
  * @param imu_acc_vertical [cm/s/s] Vertical IMU acceleration.
+ * @param pressure_pa [Pa] Pressure in pascals.
  * @param roll [cdeg] Roll angle in centi-degrees.
  * @param pitch [cdeg] Pitch angle in centi-degrees.
  * @param yaw [cdeg] Yaw angle in centi-degrees.
@@ -423,7 +424,6 @@ static inline uint16_t mavlink_msg_rocket_telemetry_pack_status(uint8_t system_i
  * @param imu_mag_x [cuT] IMU Mag X in centi-microTesla.
  * @param imu_mag_y [cuT] IMU Mag Y in centi-microTesla.
  * @param imu_mag_z [cuT] IMU Mag Z in centi-microTesla.
- * @param pressure_hpa [hPa] Pressure in hectopascals.
  * @param temp_celsius [cdegC] Temperature in centi-degrees Celsius.
  * @param system_states  Current system state bitfield.
  * @param event_states  Current events states.
@@ -437,7 +437,7 @@ static inline uint16_t mavlink_msg_rocket_telemetry_pack_status(uint8_t system_i
  */
 static inline uint16_t mavlink_msg_rocket_telemetry_pack_chan(uint8_t system_id, uint8_t component_id, uint8_t chan,
                                mavlink_message_t* msg,
-                                   uint32_t time_boot_ms,int32_t lat,int32_t lon,int32_t gps_alt,int32_t altitude_msl_cm,int32_t kalman_z,int32_t kalman_v,int32_t imu_gyro_x,int32_t imu_gyro_y,int32_t imu_gyro_z,int32_t highg_acc_x,int32_t highg_acc_y,int32_t highg_acc_z,int32_t highg_acc_vertical,int32_t imu_acc_vertical,int16_t roll,int16_t pitch,int16_t yaw,int16_t imu_acc_x,int16_t imu_acc_y,int16_t imu_acc_z,int16_t imu_mag_x,int16_t imu_mag_y,int16_t imu_mag_z,uint16_t pressure_hpa,int16_t temp_celsius,uint16_t system_states,uint16_t event_states,uint16_t battery_mv,uint16_t vel,uint16_t cog,uint8_t mission_state,uint8_t gps_fix,uint8_t satellites_nb)
+                                   uint32_t time_boot_ms,int32_t lat,int32_t lon,int32_t gps_alt,int32_t altitude_msl_cm,int32_t kalman_z,int32_t kalman_v,int32_t imu_gyro_x,int32_t imu_gyro_y,int32_t imu_gyro_z,int32_t highg_acc_x,int32_t highg_acc_y,int32_t highg_acc_z,int32_t highg_acc_vertical,int32_t imu_acc_vertical,uint32_t pressure_pa,int16_t roll,int16_t pitch,int16_t yaw,int16_t imu_acc_x,int16_t imu_acc_y,int16_t imu_acc_z,int16_t imu_mag_x,int16_t imu_mag_y,int16_t imu_mag_z,int16_t temp_celsius,uint16_t system_states,uint16_t event_states,uint16_t battery_mv,uint16_t vel,uint16_t cog,uint8_t mission_state,uint8_t gps_fix,uint8_t satellites_nb)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_ROCKET_TELEMETRY_LEN];
@@ -456,25 +456,25 @@ static inline uint16_t mavlink_msg_rocket_telemetry_pack_chan(uint8_t system_id,
     _mav_put_int32_t(buf, 48, highg_acc_z);
     _mav_put_int32_t(buf, 52, highg_acc_vertical);
     _mav_put_int32_t(buf, 56, imu_acc_vertical);
-    _mav_put_int16_t(buf, 60, roll);
-    _mav_put_int16_t(buf, 62, pitch);
-    _mav_put_int16_t(buf, 64, yaw);
-    _mav_put_int16_t(buf, 66, imu_acc_x);
-    _mav_put_int16_t(buf, 68, imu_acc_y);
-    _mav_put_int16_t(buf, 70, imu_acc_z);
-    _mav_put_int16_t(buf, 72, imu_mag_x);
-    _mav_put_int16_t(buf, 74, imu_mag_y);
-    _mav_put_int16_t(buf, 76, imu_mag_z);
-    _mav_put_uint16_t(buf, 78, pressure_hpa);
-    _mav_put_int16_t(buf, 80, temp_celsius);
-    _mav_put_uint16_t(buf, 82, system_states);
-    _mav_put_uint16_t(buf, 84, event_states);
-    _mav_put_uint16_t(buf, 86, battery_mv);
-    _mav_put_uint16_t(buf, 88, vel);
-    _mav_put_uint16_t(buf, 90, cog);
-    _mav_put_uint8_t(buf, 92, mission_state);
-    _mav_put_uint8_t(buf, 93, gps_fix);
-    _mav_put_uint8_t(buf, 94, satellites_nb);
+    _mav_put_uint32_t(buf, 60, pressure_pa);
+    _mav_put_int16_t(buf, 64, roll);
+    _mav_put_int16_t(buf, 66, pitch);
+    _mav_put_int16_t(buf, 68, yaw);
+    _mav_put_int16_t(buf, 70, imu_acc_x);
+    _mav_put_int16_t(buf, 72, imu_acc_y);
+    _mav_put_int16_t(buf, 74, imu_acc_z);
+    _mav_put_int16_t(buf, 76, imu_mag_x);
+    _mav_put_int16_t(buf, 78, imu_mag_y);
+    _mav_put_int16_t(buf, 80, imu_mag_z);
+    _mav_put_int16_t(buf, 82, temp_celsius);
+    _mav_put_uint16_t(buf, 84, system_states);
+    _mav_put_uint16_t(buf, 86, event_states);
+    _mav_put_uint16_t(buf, 88, battery_mv);
+    _mav_put_uint16_t(buf, 90, vel);
+    _mav_put_uint16_t(buf, 92, cog);
+    _mav_put_uint8_t(buf, 94, mission_state);
+    _mav_put_uint8_t(buf, 95, gps_fix);
+    _mav_put_uint8_t(buf, 96, satellites_nb);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_ROCKET_TELEMETRY_LEN);
 #else
@@ -494,6 +494,7 @@ static inline uint16_t mavlink_msg_rocket_telemetry_pack_chan(uint8_t system_id,
     packet.highg_acc_z = highg_acc_z;
     packet.highg_acc_vertical = highg_acc_vertical;
     packet.imu_acc_vertical = imu_acc_vertical;
+    packet.pressure_pa = pressure_pa;
     packet.roll = roll;
     packet.pitch = pitch;
     packet.yaw = yaw;
@@ -503,7 +504,6 @@ static inline uint16_t mavlink_msg_rocket_telemetry_pack_chan(uint8_t system_id,
     packet.imu_mag_x = imu_mag_x;
     packet.imu_mag_y = imu_mag_y;
     packet.imu_mag_z = imu_mag_z;
-    packet.pressure_hpa = pressure_hpa;
     packet.temp_celsius = temp_celsius;
     packet.system_states = system_states;
     packet.event_states = event_states;
@@ -531,7 +531,7 @@ static inline uint16_t mavlink_msg_rocket_telemetry_pack_chan(uint8_t system_id,
  */
 static inline uint16_t mavlink_msg_rocket_telemetry_encode(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, const mavlink_rocket_telemetry_t* rocket_telemetry)
 {
-    return mavlink_msg_rocket_telemetry_pack(system_id, component_id, msg, rocket_telemetry->time_boot_ms, rocket_telemetry->lat, rocket_telemetry->lon, rocket_telemetry->gps_alt, rocket_telemetry->altitude_msl_cm, rocket_telemetry->kalman_z, rocket_telemetry->kalman_v, rocket_telemetry->imu_gyro_x, rocket_telemetry->imu_gyro_y, rocket_telemetry->imu_gyro_z, rocket_telemetry->highg_acc_x, rocket_telemetry->highg_acc_y, rocket_telemetry->highg_acc_z, rocket_telemetry->highg_acc_vertical, rocket_telemetry->imu_acc_vertical, rocket_telemetry->roll, rocket_telemetry->pitch, rocket_telemetry->yaw, rocket_telemetry->imu_acc_x, rocket_telemetry->imu_acc_y, rocket_telemetry->imu_acc_z, rocket_telemetry->imu_mag_x, rocket_telemetry->imu_mag_y, rocket_telemetry->imu_mag_z, rocket_telemetry->pressure_hpa, rocket_telemetry->temp_celsius, rocket_telemetry->system_states, rocket_telemetry->event_states, rocket_telemetry->battery_mv, rocket_telemetry->vel, rocket_telemetry->cog, rocket_telemetry->mission_state, rocket_telemetry->gps_fix, rocket_telemetry->satellites_nb);
+    return mavlink_msg_rocket_telemetry_pack(system_id, component_id, msg, rocket_telemetry->time_boot_ms, rocket_telemetry->lat, rocket_telemetry->lon, rocket_telemetry->gps_alt, rocket_telemetry->altitude_msl_cm, rocket_telemetry->kalman_z, rocket_telemetry->kalman_v, rocket_telemetry->imu_gyro_x, rocket_telemetry->imu_gyro_y, rocket_telemetry->imu_gyro_z, rocket_telemetry->highg_acc_x, rocket_telemetry->highg_acc_y, rocket_telemetry->highg_acc_z, rocket_telemetry->highg_acc_vertical, rocket_telemetry->imu_acc_vertical, rocket_telemetry->pressure_pa, rocket_telemetry->roll, rocket_telemetry->pitch, rocket_telemetry->yaw, rocket_telemetry->imu_acc_x, rocket_telemetry->imu_acc_y, rocket_telemetry->imu_acc_z, rocket_telemetry->imu_mag_x, rocket_telemetry->imu_mag_y, rocket_telemetry->imu_mag_z, rocket_telemetry->temp_celsius, rocket_telemetry->system_states, rocket_telemetry->event_states, rocket_telemetry->battery_mv, rocket_telemetry->vel, rocket_telemetry->cog, rocket_telemetry->mission_state, rocket_telemetry->gps_fix, rocket_telemetry->satellites_nb);
 }
 
 /**
@@ -545,7 +545,7 @@ static inline uint16_t mavlink_msg_rocket_telemetry_encode(uint8_t system_id, ui
  */
 static inline uint16_t mavlink_msg_rocket_telemetry_encode_chan(uint8_t system_id, uint8_t component_id, uint8_t chan, mavlink_message_t* msg, const mavlink_rocket_telemetry_t* rocket_telemetry)
 {
-    return mavlink_msg_rocket_telemetry_pack_chan(system_id, component_id, chan, msg, rocket_telemetry->time_boot_ms, rocket_telemetry->lat, rocket_telemetry->lon, rocket_telemetry->gps_alt, rocket_telemetry->altitude_msl_cm, rocket_telemetry->kalman_z, rocket_telemetry->kalman_v, rocket_telemetry->imu_gyro_x, rocket_telemetry->imu_gyro_y, rocket_telemetry->imu_gyro_z, rocket_telemetry->highg_acc_x, rocket_telemetry->highg_acc_y, rocket_telemetry->highg_acc_z, rocket_telemetry->highg_acc_vertical, rocket_telemetry->imu_acc_vertical, rocket_telemetry->roll, rocket_telemetry->pitch, rocket_telemetry->yaw, rocket_telemetry->imu_acc_x, rocket_telemetry->imu_acc_y, rocket_telemetry->imu_acc_z, rocket_telemetry->imu_mag_x, rocket_telemetry->imu_mag_y, rocket_telemetry->imu_mag_z, rocket_telemetry->pressure_hpa, rocket_telemetry->temp_celsius, rocket_telemetry->system_states, rocket_telemetry->event_states, rocket_telemetry->battery_mv, rocket_telemetry->vel, rocket_telemetry->cog, rocket_telemetry->mission_state, rocket_telemetry->gps_fix, rocket_telemetry->satellites_nb);
+    return mavlink_msg_rocket_telemetry_pack_chan(system_id, component_id, chan, msg, rocket_telemetry->time_boot_ms, rocket_telemetry->lat, rocket_telemetry->lon, rocket_telemetry->gps_alt, rocket_telemetry->altitude_msl_cm, rocket_telemetry->kalman_z, rocket_telemetry->kalman_v, rocket_telemetry->imu_gyro_x, rocket_telemetry->imu_gyro_y, rocket_telemetry->imu_gyro_z, rocket_telemetry->highg_acc_x, rocket_telemetry->highg_acc_y, rocket_telemetry->highg_acc_z, rocket_telemetry->highg_acc_vertical, rocket_telemetry->imu_acc_vertical, rocket_telemetry->pressure_pa, rocket_telemetry->roll, rocket_telemetry->pitch, rocket_telemetry->yaw, rocket_telemetry->imu_acc_x, rocket_telemetry->imu_acc_y, rocket_telemetry->imu_acc_z, rocket_telemetry->imu_mag_x, rocket_telemetry->imu_mag_y, rocket_telemetry->imu_mag_z, rocket_telemetry->temp_celsius, rocket_telemetry->system_states, rocket_telemetry->event_states, rocket_telemetry->battery_mv, rocket_telemetry->vel, rocket_telemetry->cog, rocket_telemetry->mission_state, rocket_telemetry->gps_fix, rocket_telemetry->satellites_nb);
 }
 
 /**
@@ -559,7 +559,7 @@ static inline uint16_t mavlink_msg_rocket_telemetry_encode_chan(uint8_t system_i
  */
 static inline uint16_t mavlink_msg_rocket_telemetry_encode_status(uint8_t system_id, uint8_t component_id, mavlink_status_t* _status, mavlink_message_t* msg, const mavlink_rocket_telemetry_t* rocket_telemetry)
 {
-    return mavlink_msg_rocket_telemetry_pack_status(system_id, component_id, _status, msg,  rocket_telemetry->time_boot_ms, rocket_telemetry->lat, rocket_telemetry->lon, rocket_telemetry->gps_alt, rocket_telemetry->altitude_msl_cm, rocket_telemetry->kalman_z, rocket_telemetry->kalman_v, rocket_telemetry->imu_gyro_x, rocket_telemetry->imu_gyro_y, rocket_telemetry->imu_gyro_z, rocket_telemetry->highg_acc_x, rocket_telemetry->highg_acc_y, rocket_telemetry->highg_acc_z, rocket_telemetry->highg_acc_vertical, rocket_telemetry->imu_acc_vertical, rocket_telemetry->roll, rocket_telemetry->pitch, rocket_telemetry->yaw, rocket_telemetry->imu_acc_x, rocket_telemetry->imu_acc_y, rocket_telemetry->imu_acc_z, rocket_telemetry->imu_mag_x, rocket_telemetry->imu_mag_y, rocket_telemetry->imu_mag_z, rocket_telemetry->pressure_hpa, rocket_telemetry->temp_celsius, rocket_telemetry->system_states, rocket_telemetry->event_states, rocket_telemetry->battery_mv, rocket_telemetry->vel, rocket_telemetry->cog, rocket_telemetry->mission_state, rocket_telemetry->gps_fix, rocket_telemetry->satellites_nb);
+    return mavlink_msg_rocket_telemetry_pack_status(system_id, component_id, _status, msg,  rocket_telemetry->time_boot_ms, rocket_telemetry->lat, rocket_telemetry->lon, rocket_telemetry->gps_alt, rocket_telemetry->altitude_msl_cm, rocket_telemetry->kalman_z, rocket_telemetry->kalman_v, rocket_telemetry->imu_gyro_x, rocket_telemetry->imu_gyro_y, rocket_telemetry->imu_gyro_z, rocket_telemetry->highg_acc_x, rocket_telemetry->highg_acc_y, rocket_telemetry->highg_acc_z, rocket_telemetry->highg_acc_vertical, rocket_telemetry->imu_acc_vertical, rocket_telemetry->pressure_pa, rocket_telemetry->roll, rocket_telemetry->pitch, rocket_telemetry->yaw, rocket_telemetry->imu_acc_x, rocket_telemetry->imu_acc_y, rocket_telemetry->imu_acc_z, rocket_telemetry->imu_mag_x, rocket_telemetry->imu_mag_y, rocket_telemetry->imu_mag_z, rocket_telemetry->temp_celsius, rocket_telemetry->system_states, rocket_telemetry->event_states, rocket_telemetry->battery_mv, rocket_telemetry->vel, rocket_telemetry->cog, rocket_telemetry->mission_state, rocket_telemetry->gps_fix, rocket_telemetry->satellites_nb);
 }
 
 /**
@@ -581,6 +581,7 @@ static inline uint16_t mavlink_msg_rocket_telemetry_encode_status(uint8_t system
  * @param highg_acc_z [cm/s/s] High-G Acceleration Z.
  * @param highg_acc_vertical [cm/s/s] Vertical High-G acceleration.
  * @param imu_acc_vertical [cm/s/s] Vertical IMU acceleration.
+ * @param pressure_pa [Pa] Pressure in pascals.
  * @param roll [cdeg] Roll angle in centi-degrees.
  * @param pitch [cdeg] Pitch angle in centi-degrees.
  * @param yaw [cdeg] Yaw angle in centi-degrees.
@@ -590,7 +591,6 @@ static inline uint16_t mavlink_msg_rocket_telemetry_encode_status(uint8_t system
  * @param imu_mag_x [cuT] IMU Mag X in centi-microTesla.
  * @param imu_mag_y [cuT] IMU Mag Y in centi-microTesla.
  * @param imu_mag_z [cuT] IMU Mag Z in centi-microTesla.
- * @param pressure_hpa [hPa] Pressure in hectopascals.
  * @param temp_celsius [cdegC] Temperature in centi-degrees Celsius.
  * @param system_states  Current system state bitfield.
  * @param event_states  Current events states.
@@ -603,7 +603,7 @@ static inline uint16_t mavlink_msg_rocket_telemetry_encode_status(uint8_t system
  */
 #ifdef MAVLINK_USE_CONVENIENCE_FUNCTIONS
 
-static inline void mavlink_msg_rocket_telemetry_send(mavlink_channel_t chan, uint32_t time_boot_ms, int32_t lat, int32_t lon, int32_t gps_alt, int32_t altitude_msl_cm, int32_t kalman_z, int32_t kalman_v, int32_t imu_gyro_x, int32_t imu_gyro_y, int32_t imu_gyro_z, int32_t highg_acc_x, int32_t highg_acc_y, int32_t highg_acc_z, int32_t highg_acc_vertical, int32_t imu_acc_vertical, int16_t roll, int16_t pitch, int16_t yaw, int16_t imu_acc_x, int16_t imu_acc_y, int16_t imu_acc_z, int16_t imu_mag_x, int16_t imu_mag_y, int16_t imu_mag_z, uint16_t pressure_hpa, int16_t temp_celsius, uint16_t system_states, uint16_t event_states, uint16_t battery_mv, uint16_t vel, uint16_t cog, uint8_t mission_state, uint8_t gps_fix, uint8_t satellites_nb)
+static inline void mavlink_msg_rocket_telemetry_send(mavlink_channel_t chan, uint32_t time_boot_ms, int32_t lat, int32_t lon, int32_t gps_alt, int32_t altitude_msl_cm, int32_t kalman_z, int32_t kalman_v, int32_t imu_gyro_x, int32_t imu_gyro_y, int32_t imu_gyro_z, int32_t highg_acc_x, int32_t highg_acc_y, int32_t highg_acc_z, int32_t highg_acc_vertical, int32_t imu_acc_vertical, uint32_t pressure_pa, int16_t roll, int16_t pitch, int16_t yaw, int16_t imu_acc_x, int16_t imu_acc_y, int16_t imu_acc_z, int16_t imu_mag_x, int16_t imu_mag_y, int16_t imu_mag_z, int16_t temp_celsius, uint16_t system_states, uint16_t event_states, uint16_t battery_mv, uint16_t vel, uint16_t cog, uint8_t mission_state, uint8_t gps_fix, uint8_t satellites_nb)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_ROCKET_TELEMETRY_LEN];
@@ -622,25 +622,25 @@ static inline void mavlink_msg_rocket_telemetry_send(mavlink_channel_t chan, uin
     _mav_put_int32_t(buf, 48, highg_acc_z);
     _mav_put_int32_t(buf, 52, highg_acc_vertical);
     _mav_put_int32_t(buf, 56, imu_acc_vertical);
-    _mav_put_int16_t(buf, 60, roll);
-    _mav_put_int16_t(buf, 62, pitch);
-    _mav_put_int16_t(buf, 64, yaw);
-    _mav_put_int16_t(buf, 66, imu_acc_x);
-    _mav_put_int16_t(buf, 68, imu_acc_y);
-    _mav_put_int16_t(buf, 70, imu_acc_z);
-    _mav_put_int16_t(buf, 72, imu_mag_x);
-    _mav_put_int16_t(buf, 74, imu_mag_y);
-    _mav_put_int16_t(buf, 76, imu_mag_z);
-    _mav_put_uint16_t(buf, 78, pressure_hpa);
-    _mav_put_int16_t(buf, 80, temp_celsius);
-    _mav_put_uint16_t(buf, 82, system_states);
-    _mav_put_uint16_t(buf, 84, event_states);
-    _mav_put_uint16_t(buf, 86, battery_mv);
-    _mav_put_uint16_t(buf, 88, vel);
-    _mav_put_uint16_t(buf, 90, cog);
-    _mav_put_uint8_t(buf, 92, mission_state);
-    _mav_put_uint8_t(buf, 93, gps_fix);
-    _mav_put_uint8_t(buf, 94, satellites_nb);
+    _mav_put_uint32_t(buf, 60, pressure_pa);
+    _mav_put_int16_t(buf, 64, roll);
+    _mav_put_int16_t(buf, 66, pitch);
+    _mav_put_int16_t(buf, 68, yaw);
+    _mav_put_int16_t(buf, 70, imu_acc_x);
+    _mav_put_int16_t(buf, 72, imu_acc_y);
+    _mav_put_int16_t(buf, 74, imu_acc_z);
+    _mav_put_int16_t(buf, 76, imu_mag_x);
+    _mav_put_int16_t(buf, 78, imu_mag_y);
+    _mav_put_int16_t(buf, 80, imu_mag_z);
+    _mav_put_int16_t(buf, 82, temp_celsius);
+    _mav_put_uint16_t(buf, 84, system_states);
+    _mav_put_uint16_t(buf, 86, event_states);
+    _mav_put_uint16_t(buf, 88, battery_mv);
+    _mav_put_uint16_t(buf, 90, vel);
+    _mav_put_uint16_t(buf, 92, cog);
+    _mav_put_uint8_t(buf, 94, mission_state);
+    _mav_put_uint8_t(buf, 95, gps_fix);
+    _mav_put_uint8_t(buf, 96, satellites_nb);
 
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_ROCKET_TELEMETRY, buf, MAVLINK_MSG_ID_ROCKET_TELEMETRY_MIN_LEN, MAVLINK_MSG_ID_ROCKET_TELEMETRY_LEN, MAVLINK_MSG_ID_ROCKET_TELEMETRY_CRC);
 #else
@@ -660,6 +660,7 @@ static inline void mavlink_msg_rocket_telemetry_send(mavlink_channel_t chan, uin
     packet.highg_acc_z = highg_acc_z;
     packet.highg_acc_vertical = highg_acc_vertical;
     packet.imu_acc_vertical = imu_acc_vertical;
+    packet.pressure_pa = pressure_pa;
     packet.roll = roll;
     packet.pitch = pitch;
     packet.yaw = yaw;
@@ -669,7 +670,6 @@ static inline void mavlink_msg_rocket_telemetry_send(mavlink_channel_t chan, uin
     packet.imu_mag_x = imu_mag_x;
     packet.imu_mag_y = imu_mag_y;
     packet.imu_mag_z = imu_mag_z;
-    packet.pressure_hpa = pressure_hpa;
     packet.temp_celsius = temp_celsius;
     packet.system_states = system_states;
     packet.event_states = event_states;
@@ -692,7 +692,7 @@ static inline void mavlink_msg_rocket_telemetry_send(mavlink_channel_t chan, uin
 static inline void mavlink_msg_rocket_telemetry_send_struct(mavlink_channel_t chan, const mavlink_rocket_telemetry_t* rocket_telemetry)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
-    mavlink_msg_rocket_telemetry_send(chan, rocket_telemetry->time_boot_ms, rocket_telemetry->lat, rocket_telemetry->lon, rocket_telemetry->gps_alt, rocket_telemetry->altitude_msl_cm, rocket_telemetry->kalman_z, rocket_telemetry->kalman_v, rocket_telemetry->imu_gyro_x, rocket_telemetry->imu_gyro_y, rocket_telemetry->imu_gyro_z, rocket_telemetry->highg_acc_x, rocket_telemetry->highg_acc_y, rocket_telemetry->highg_acc_z, rocket_telemetry->highg_acc_vertical, rocket_telemetry->imu_acc_vertical, rocket_telemetry->roll, rocket_telemetry->pitch, rocket_telemetry->yaw, rocket_telemetry->imu_acc_x, rocket_telemetry->imu_acc_y, rocket_telemetry->imu_acc_z, rocket_telemetry->imu_mag_x, rocket_telemetry->imu_mag_y, rocket_telemetry->imu_mag_z, rocket_telemetry->pressure_hpa, rocket_telemetry->temp_celsius, rocket_telemetry->system_states, rocket_telemetry->event_states, rocket_telemetry->battery_mv, rocket_telemetry->vel, rocket_telemetry->cog, rocket_telemetry->mission_state, rocket_telemetry->gps_fix, rocket_telemetry->satellites_nb);
+    mavlink_msg_rocket_telemetry_send(chan, rocket_telemetry->time_boot_ms, rocket_telemetry->lat, rocket_telemetry->lon, rocket_telemetry->gps_alt, rocket_telemetry->altitude_msl_cm, rocket_telemetry->kalman_z, rocket_telemetry->kalman_v, rocket_telemetry->imu_gyro_x, rocket_telemetry->imu_gyro_y, rocket_telemetry->imu_gyro_z, rocket_telemetry->highg_acc_x, rocket_telemetry->highg_acc_y, rocket_telemetry->highg_acc_z, rocket_telemetry->highg_acc_vertical, rocket_telemetry->imu_acc_vertical, rocket_telemetry->pressure_pa, rocket_telemetry->roll, rocket_telemetry->pitch, rocket_telemetry->yaw, rocket_telemetry->imu_acc_x, rocket_telemetry->imu_acc_y, rocket_telemetry->imu_acc_z, rocket_telemetry->imu_mag_x, rocket_telemetry->imu_mag_y, rocket_telemetry->imu_mag_z, rocket_telemetry->temp_celsius, rocket_telemetry->system_states, rocket_telemetry->event_states, rocket_telemetry->battery_mv, rocket_telemetry->vel, rocket_telemetry->cog, rocket_telemetry->mission_state, rocket_telemetry->gps_fix, rocket_telemetry->satellites_nb);
 #else
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_ROCKET_TELEMETRY, (const char *)rocket_telemetry, MAVLINK_MSG_ID_ROCKET_TELEMETRY_MIN_LEN, MAVLINK_MSG_ID_ROCKET_TELEMETRY_LEN, MAVLINK_MSG_ID_ROCKET_TELEMETRY_CRC);
 #endif
@@ -706,7 +706,7 @@ static inline void mavlink_msg_rocket_telemetry_send_struct(mavlink_channel_t ch
   is usually the receive buffer for the channel, and allows a reply to an
   incoming message with minimum stack space usage.
  */
-static inline void mavlink_msg_rocket_telemetry_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint32_t time_boot_ms, int32_t lat, int32_t lon, int32_t gps_alt, int32_t altitude_msl_cm, int32_t kalman_z, int32_t kalman_v, int32_t imu_gyro_x, int32_t imu_gyro_y, int32_t imu_gyro_z, int32_t highg_acc_x, int32_t highg_acc_y, int32_t highg_acc_z, int32_t highg_acc_vertical, int32_t imu_acc_vertical, int16_t roll, int16_t pitch, int16_t yaw, int16_t imu_acc_x, int16_t imu_acc_y, int16_t imu_acc_z, int16_t imu_mag_x, int16_t imu_mag_y, int16_t imu_mag_z, uint16_t pressure_hpa, int16_t temp_celsius, uint16_t system_states, uint16_t event_states, uint16_t battery_mv, uint16_t vel, uint16_t cog, uint8_t mission_state, uint8_t gps_fix, uint8_t satellites_nb)
+static inline void mavlink_msg_rocket_telemetry_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint32_t time_boot_ms, int32_t lat, int32_t lon, int32_t gps_alt, int32_t altitude_msl_cm, int32_t kalman_z, int32_t kalman_v, int32_t imu_gyro_x, int32_t imu_gyro_y, int32_t imu_gyro_z, int32_t highg_acc_x, int32_t highg_acc_y, int32_t highg_acc_z, int32_t highg_acc_vertical, int32_t imu_acc_vertical, uint32_t pressure_pa, int16_t roll, int16_t pitch, int16_t yaw, int16_t imu_acc_x, int16_t imu_acc_y, int16_t imu_acc_z, int16_t imu_mag_x, int16_t imu_mag_y, int16_t imu_mag_z, int16_t temp_celsius, uint16_t system_states, uint16_t event_states, uint16_t battery_mv, uint16_t vel, uint16_t cog, uint8_t mission_state, uint8_t gps_fix, uint8_t satellites_nb)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char *buf = (char *)msgbuf;
@@ -725,25 +725,25 @@ static inline void mavlink_msg_rocket_telemetry_send_buf(mavlink_message_t *msgb
     _mav_put_int32_t(buf, 48, highg_acc_z);
     _mav_put_int32_t(buf, 52, highg_acc_vertical);
     _mav_put_int32_t(buf, 56, imu_acc_vertical);
-    _mav_put_int16_t(buf, 60, roll);
-    _mav_put_int16_t(buf, 62, pitch);
-    _mav_put_int16_t(buf, 64, yaw);
-    _mav_put_int16_t(buf, 66, imu_acc_x);
-    _mav_put_int16_t(buf, 68, imu_acc_y);
-    _mav_put_int16_t(buf, 70, imu_acc_z);
-    _mav_put_int16_t(buf, 72, imu_mag_x);
-    _mav_put_int16_t(buf, 74, imu_mag_y);
-    _mav_put_int16_t(buf, 76, imu_mag_z);
-    _mav_put_uint16_t(buf, 78, pressure_hpa);
-    _mav_put_int16_t(buf, 80, temp_celsius);
-    _mav_put_uint16_t(buf, 82, system_states);
-    _mav_put_uint16_t(buf, 84, event_states);
-    _mav_put_uint16_t(buf, 86, battery_mv);
-    _mav_put_uint16_t(buf, 88, vel);
-    _mav_put_uint16_t(buf, 90, cog);
-    _mav_put_uint8_t(buf, 92, mission_state);
-    _mav_put_uint8_t(buf, 93, gps_fix);
-    _mav_put_uint8_t(buf, 94, satellites_nb);
+    _mav_put_uint32_t(buf, 60, pressure_pa);
+    _mav_put_int16_t(buf, 64, roll);
+    _mav_put_int16_t(buf, 66, pitch);
+    _mav_put_int16_t(buf, 68, yaw);
+    _mav_put_int16_t(buf, 70, imu_acc_x);
+    _mav_put_int16_t(buf, 72, imu_acc_y);
+    _mav_put_int16_t(buf, 74, imu_acc_z);
+    _mav_put_int16_t(buf, 76, imu_mag_x);
+    _mav_put_int16_t(buf, 78, imu_mag_y);
+    _mav_put_int16_t(buf, 80, imu_mag_z);
+    _mav_put_int16_t(buf, 82, temp_celsius);
+    _mav_put_uint16_t(buf, 84, system_states);
+    _mav_put_uint16_t(buf, 86, event_states);
+    _mav_put_uint16_t(buf, 88, battery_mv);
+    _mav_put_uint16_t(buf, 90, vel);
+    _mav_put_uint16_t(buf, 92, cog);
+    _mav_put_uint8_t(buf, 94, mission_state);
+    _mav_put_uint8_t(buf, 95, gps_fix);
+    _mav_put_uint8_t(buf, 96, satellites_nb);
 
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_ROCKET_TELEMETRY, buf, MAVLINK_MSG_ID_ROCKET_TELEMETRY_MIN_LEN, MAVLINK_MSG_ID_ROCKET_TELEMETRY_LEN, MAVLINK_MSG_ID_ROCKET_TELEMETRY_CRC);
 #else
@@ -763,6 +763,7 @@ static inline void mavlink_msg_rocket_telemetry_send_buf(mavlink_message_t *msgb
     packet->highg_acc_z = highg_acc_z;
     packet->highg_acc_vertical = highg_acc_vertical;
     packet->imu_acc_vertical = imu_acc_vertical;
+    packet->pressure_pa = pressure_pa;
     packet->roll = roll;
     packet->pitch = pitch;
     packet->yaw = yaw;
@@ -772,7 +773,6 @@ static inline void mavlink_msg_rocket_telemetry_send_buf(mavlink_message_t *msgb
     packet->imu_mag_x = imu_mag_x;
     packet->imu_mag_y = imu_mag_y;
     packet->imu_mag_z = imu_mag_z;
-    packet->pressure_hpa = pressure_hpa;
     packet->temp_celsius = temp_celsius;
     packet->system_states = system_states;
     packet->event_states = event_states;
@@ -944,13 +944,23 @@ static inline int32_t mavlink_msg_rocket_telemetry_get_imu_acc_vertical(const ma
 }
 
 /**
+ * @brief Get field pressure_pa from rocket_telemetry message
+ *
+ * @return [Pa] Pressure in pascals.
+ */
+static inline uint32_t mavlink_msg_rocket_telemetry_get_pressure_pa(const mavlink_message_t* msg)
+{
+    return _MAV_RETURN_uint32_t(msg,  60);
+}
+
+/**
  * @brief Get field roll from rocket_telemetry message
  *
  * @return [cdeg] Roll angle in centi-degrees.
  */
 static inline int16_t mavlink_msg_rocket_telemetry_get_roll(const mavlink_message_t* msg)
 {
-    return _MAV_RETURN_int16_t(msg,  60);
+    return _MAV_RETURN_int16_t(msg,  64);
 }
 
 /**
@@ -960,7 +970,7 @@ static inline int16_t mavlink_msg_rocket_telemetry_get_roll(const mavlink_messag
  */
 static inline int16_t mavlink_msg_rocket_telemetry_get_pitch(const mavlink_message_t* msg)
 {
-    return _MAV_RETURN_int16_t(msg,  62);
+    return _MAV_RETURN_int16_t(msg,  66);
 }
 
 /**
@@ -970,7 +980,7 @@ static inline int16_t mavlink_msg_rocket_telemetry_get_pitch(const mavlink_messa
  */
 static inline int16_t mavlink_msg_rocket_telemetry_get_yaw(const mavlink_message_t* msg)
 {
-    return _MAV_RETURN_int16_t(msg,  64);
+    return _MAV_RETURN_int16_t(msg,  68);
 }
 
 /**
@@ -980,7 +990,7 @@ static inline int16_t mavlink_msg_rocket_telemetry_get_yaw(const mavlink_message
  */
 static inline int16_t mavlink_msg_rocket_telemetry_get_imu_acc_x(const mavlink_message_t* msg)
 {
-    return _MAV_RETURN_int16_t(msg,  66);
+    return _MAV_RETURN_int16_t(msg,  70);
 }
 
 /**
@@ -990,7 +1000,7 @@ static inline int16_t mavlink_msg_rocket_telemetry_get_imu_acc_x(const mavlink_m
  */
 static inline int16_t mavlink_msg_rocket_telemetry_get_imu_acc_y(const mavlink_message_t* msg)
 {
-    return _MAV_RETURN_int16_t(msg,  68);
+    return _MAV_RETURN_int16_t(msg,  72);
 }
 
 /**
@@ -1000,7 +1010,7 @@ static inline int16_t mavlink_msg_rocket_telemetry_get_imu_acc_y(const mavlink_m
  */
 static inline int16_t mavlink_msg_rocket_telemetry_get_imu_acc_z(const mavlink_message_t* msg)
 {
-    return _MAV_RETURN_int16_t(msg,  70);
+    return _MAV_RETURN_int16_t(msg,  74);
 }
 
 /**
@@ -1010,7 +1020,7 @@ static inline int16_t mavlink_msg_rocket_telemetry_get_imu_acc_z(const mavlink_m
  */
 static inline int16_t mavlink_msg_rocket_telemetry_get_imu_mag_x(const mavlink_message_t* msg)
 {
-    return _MAV_RETURN_int16_t(msg,  72);
+    return _MAV_RETURN_int16_t(msg,  76);
 }
 
 /**
@@ -1020,7 +1030,7 @@ static inline int16_t mavlink_msg_rocket_telemetry_get_imu_mag_x(const mavlink_m
  */
 static inline int16_t mavlink_msg_rocket_telemetry_get_imu_mag_y(const mavlink_message_t* msg)
 {
-    return _MAV_RETURN_int16_t(msg,  74);
+    return _MAV_RETURN_int16_t(msg,  78);
 }
 
 /**
@@ -1030,17 +1040,7 @@ static inline int16_t mavlink_msg_rocket_telemetry_get_imu_mag_y(const mavlink_m
  */
 static inline int16_t mavlink_msg_rocket_telemetry_get_imu_mag_z(const mavlink_message_t* msg)
 {
-    return _MAV_RETURN_int16_t(msg,  76);
-}
-
-/**
- * @brief Get field pressure_hpa from rocket_telemetry message
- *
- * @return [hPa] Pressure in hectopascals.
- */
-static inline uint16_t mavlink_msg_rocket_telemetry_get_pressure_hpa(const mavlink_message_t* msg)
-{
-    return _MAV_RETURN_uint16_t(msg,  78);
+    return _MAV_RETURN_int16_t(msg,  80);
 }
 
 /**
@@ -1050,7 +1050,7 @@ static inline uint16_t mavlink_msg_rocket_telemetry_get_pressure_hpa(const mavli
  */
 static inline int16_t mavlink_msg_rocket_telemetry_get_temp_celsius(const mavlink_message_t* msg)
 {
-    return _MAV_RETURN_int16_t(msg,  80);
+    return _MAV_RETURN_int16_t(msg,  82);
 }
 
 /**
@@ -1060,7 +1060,7 @@ static inline int16_t mavlink_msg_rocket_telemetry_get_temp_celsius(const mavlin
  */
 static inline uint16_t mavlink_msg_rocket_telemetry_get_system_states(const mavlink_message_t* msg)
 {
-    return _MAV_RETURN_uint16_t(msg,  82);
+    return _MAV_RETURN_uint16_t(msg,  84);
 }
 
 /**
@@ -1070,7 +1070,7 @@ static inline uint16_t mavlink_msg_rocket_telemetry_get_system_states(const mavl
  */
 static inline uint16_t mavlink_msg_rocket_telemetry_get_event_states(const mavlink_message_t* msg)
 {
-    return _MAV_RETURN_uint16_t(msg,  84);
+    return _MAV_RETURN_uint16_t(msg,  86);
 }
 
 /**
@@ -1080,7 +1080,7 @@ static inline uint16_t mavlink_msg_rocket_telemetry_get_event_states(const mavli
  */
 static inline uint16_t mavlink_msg_rocket_telemetry_get_battery_mv(const mavlink_message_t* msg)
 {
-    return _MAV_RETURN_uint16_t(msg,  86);
+    return _MAV_RETURN_uint16_t(msg,  88);
 }
 
 /**
@@ -1090,7 +1090,7 @@ static inline uint16_t mavlink_msg_rocket_telemetry_get_battery_mv(const mavlink
  */
 static inline uint16_t mavlink_msg_rocket_telemetry_get_vel(const mavlink_message_t* msg)
 {
-    return _MAV_RETURN_uint16_t(msg,  88);
+    return _MAV_RETURN_uint16_t(msg,  90);
 }
 
 /**
@@ -1100,7 +1100,7 @@ static inline uint16_t mavlink_msg_rocket_telemetry_get_vel(const mavlink_messag
  */
 static inline uint16_t mavlink_msg_rocket_telemetry_get_cog(const mavlink_message_t* msg)
 {
-    return _MAV_RETURN_uint16_t(msg,  90);
+    return _MAV_RETURN_uint16_t(msg,  92);
 }
 
 /**
@@ -1110,7 +1110,7 @@ static inline uint16_t mavlink_msg_rocket_telemetry_get_cog(const mavlink_messag
  */
 static inline uint8_t mavlink_msg_rocket_telemetry_get_mission_state(const mavlink_message_t* msg)
 {
-    return _MAV_RETURN_uint8_t(msg,  92);
+    return _MAV_RETURN_uint8_t(msg,  94);
 }
 
 /**
@@ -1120,7 +1120,7 @@ static inline uint8_t mavlink_msg_rocket_telemetry_get_mission_state(const mavli
  */
 static inline uint8_t mavlink_msg_rocket_telemetry_get_gps_fix(const mavlink_message_t* msg)
 {
-    return _MAV_RETURN_uint8_t(msg,  93);
+    return _MAV_RETURN_uint8_t(msg,  95);
 }
 
 /**
@@ -1130,7 +1130,7 @@ static inline uint8_t mavlink_msg_rocket_telemetry_get_gps_fix(const mavlink_mes
  */
 static inline uint8_t mavlink_msg_rocket_telemetry_get_satellites_nb(const mavlink_message_t* msg)
 {
-    return _MAV_RETURN_uint8_t(msg,  94);
+    return _MAV_RETURN_uint8_t(msg,  96);
 }
 
 /**
@@ -1157,6 +1157,7 @@ static inline void mavlink_msg_rocket_telemetry_decode(const mavlink_message_t* 
     rocket_telemetry->highg_acc_z = mavlink_msg_rocket_telemetry_get_highg_acc_z(msg);
     rocket_telemetry->highg_acc_vertical = mavlink_msg_rocket_telemetry_get_highg_acc_vertical(msg);
     rocket_telemetry->imu_acc_vertical = mavlink_msg_rocket_telemetry_get_imu_acc_vertical(msg);
+    rocket_telemetry->pressure_pa = mavlink_msg_rocket_telemetry_get_pressure_pa(msg);
     rocket_telemetry->roll = mavlink_msg_rocket_telemetry_get_roll(msg);
     rocket_telemetry->pitch = mavlink_msg_rocket_telemetry_get_pitch(msg);
     rocket_telemetry->yaw = mavlink_msg_rocket_telemetry_get_yaw(msg);
@@ -1166,7 +1167,6 @@ static inline void mavlink_msg_rocket_telemetry_decode(const mavlink_message_t* 
     rocket_telemetry->imu_mag_x = mavlink_msg_rocket_telemetry_get_imu_mag_x(msg);
     rocket_telemetry->imu_mag_y = mavlink_msg_rocket_telemetry_get_imu_mag_y(msg);
     rocket_telemetry->imu_mag_z = mavlink_msg_rocket_telemetry_get_imu_mag_z(msg);
-    rocket_telemetry->pressure_hpa = mavlink_msg_rocket_telemetry_get_pressure_hpa(msg);
     rocket_telemetry->temp_celsius = mavlink_msg_rocket_telemetry_get_temp_celsius(msg);
     rocket_telemetry->system_states = mavlink_msg_rocket_telemetry_get_system_states(msg);
     rocket_telemetry->event_states = mavlink_msg_rocket_telemetry_get_event_states(msg);
