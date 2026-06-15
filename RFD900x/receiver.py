@@ -75,7 +75,7 @@ def run_receiver():
                 mission_state = data.get("mission_state")
                 gps_fix = data.get("gps_fix")
                 satellites_nb = data.get("satellites_nb")
-                pressure_hpa = data.get("pressure_hpa")
+                pressure_pa = data.get("pressure_pa")
                 altitude_msl_m = data.get("altitude_msl_m")
                 temp_celsius = data.get("temp_celsius")
                 imu_acc_x = data.get("imu_acc_x")
@@ -96,6 +96,8 @@ def run_receiver():
                 kalman_v = data.get("kalman_v")
                 system_states = data.get("system_states")
                 event_states = data.get("event_states")
+
+                print(f"raw: {msg.to_dict()}")
 
                 print(f"\n{color}{'='*18} {nom} | MAVLink {msg_type} | {time.strftime('%H:%M:%S')} {'='*18}\033[0m")
 
@@ -132,8 +134,8 @@ def run_receiver():
                 if event_states is not None:
                     print(f"  Event states   : 0x{event_states:04X}")
 
-                if pressure_hpa is not None:
-                    print(f"  Pression       : {pressure_hpa:.2f} hPa")
+                if pressure_pa is not None:
+                    print(f"  Pression       : {pressure_pa / 100.0:.2f} hPa")
 
                 if temp_celsius is not None:
                     # temp_celsius sent as cdegC (centi-degrees C)
