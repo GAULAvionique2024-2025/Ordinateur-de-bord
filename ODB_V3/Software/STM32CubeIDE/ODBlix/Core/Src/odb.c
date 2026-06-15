@@ -14,6 +14,7 @@
 #include "tools/profiler.h"
 #include "Comm/beacon_comm.h"
 #include <ctype.h>
+#include <math.h>
 
 #define DEBUG_PRINTF(...) do { \
     if(current_config.debug_mode) { \
