@@ -23,19 +23,19 @@ typedef enum {
     LOGGER_ERROR_FLASH_ERASE = -2,
 } logger_error_t;
 
-typedef struct {
+typedef struct __attribute__((packed)) {
     uint32_t magic_number;   // To identify the start of a valid header
     uint32_t flight_id;      // Incremented each time
     uint32_t time_date;
     uint32_t metadata_rsv;   // Reserved for future use (new functionality)
 } logger_header_t;
 
-typedef struct {
+typedef struct __attribute__((packed)) {
     uint32_t magic_number;  // To identify the start of a valid data packet
     odb_data_t data;		// The actual ODB data
 } logger_data_t;
 
-typedef struct {
+typedef struct __attribute__((packed)) {
     uint32_t magic_number;  // To identify the start of a valid stats packet
     odb_stats_t stats;      // The actual ODB stats
 } logger_stats_t;

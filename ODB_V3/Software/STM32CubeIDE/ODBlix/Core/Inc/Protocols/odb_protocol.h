@@ -174,9 +174,9 @@ typedef struct __attribute__((packed)) {
     float       kalman_z;           // filtered altitude from Kalman filter in m (converted to cm for MAVLink)
     float       kalman_v;           // filtered velocity from Kalman filter in m/s (converted to cm/s for MAVLink)
 
-    // TOTAL 117
+    // TOTAL 121 + 4 (header)
     // Empty data to reach 128 bytes
-    uint8_t padding[11];
+    uint8_t padding[3];
 } odb_data_t;
 #define ODB_DATA_SIZE sizeof(odb_data_t)
 //_Static_assert(sizeof(odb_data_t) == 128, "odb_data_t_size_error");

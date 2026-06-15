@@ -128,7 +128,20 @@ int8_t Logger_Init(void) {
 
 void Logger_PushData(odb_data_t *new_data) {
     if(write_index >= LOG_BUFFER_SIZE) {
-        return;
+        if(flush_pending) {
+        	// TODO: add error counter "missed frames"
+            return;
+        } else {
+            current_flush_buf = current_write_buf;
+            flush_pending = true;
+
+            if(current_write_buf == buffer_A) {
+                current_write_buf = buffer_B;
+            } else {
+                current_write_buf = buffer_A;
+            }
+            write_index = 0;
+        }
     }
 
     current_write_buf[write_index].magic_number = LOGGER_DATA_MAGIC_NUMBER;
@@ -136,21 +149,17 @@ void Logger_PushData(odb_data_t *new_data) {
     write_index++;
 
     if(write_index >= LOG_BUFFER_SIZE) {
-        if(flush_pending) {
-            // TODO: add error counter "missed frames"
-            write_index--;
-            return; 
-        }
+        if(!flush_pending) {
+            current_flush_buf = current_write_buf;
+            flush_pending = true;
 
-        current_flush_buf = current_write_buf;
-        flush_pending = true;
-        if(current_write_buf == buffer_A) {
-            current_write_buf = buffer_B;
-        } else {
-            current_write_buf = buffer_A;
+            if(current_write_buf == buffer_A) {
+                current_write_buf = buffer_B;
+            } else {
+                current_write_buf = buffer_A;
+            }
+            write_index = 0;
         }
-        
-        write_index = 0;
     }
 }
 
