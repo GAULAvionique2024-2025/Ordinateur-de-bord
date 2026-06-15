@@ -1,0 +1,2 @@
+https://github.com/mavlink/mavlink
+python3 -m pymavlink.tools.mavgen --lang=C --wire-protocol=2.0 --output=odb_mavlink_v1 message_definitions\v1.0\odb_mavlink_v1.xml

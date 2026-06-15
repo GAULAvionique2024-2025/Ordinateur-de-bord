@@ -5,7 +5,7 @@
 
 
 typedef struct __mavlink_rocket_telemetry_t {
- uint32_t time_boot_ms; /*< [ms] Timestamp in milliseconds.*/
+ uint32_t time_boot_ms; /*< [ms] Timestamp since system boot in milliseconds.*/
  float roll; /*< [cdeg] Roll angle in centi-degrees.*/
  float pitch; /*< [cdeg] Pitch angle in centi-degrees.*/
  float yaw; /*< [cdeg] Yaw angle in centi-degrees.*/
@@ -57,10 +57,6 @@ typedef struct __mavlink_rocket_telemetry_t {
     "ROCKET_TELEMETRY", \
     34, \
     {  { "time_boot_ms", NULL, MAVLINK_TYPE_UINT32_T, 0, 0, offsetof(mavlink_rocket_telemetry_t, time_boot_ms) }, \
-         { "system_states", NULL, MAVLINK_TYPE_UINT16_T, 0, 104, offsetof(mavlink_rocket_telemetry_t, system_states) }, \
-         { "event_states", NULL, MAVLINK_TYPE_UINT16_T, 0, 106, offsetof(mavlink_rocket_telemetry_t, event_states) }, \
-         { "mission_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 114, offsetof(mavlink_rocket_telemetry_t, mission_state) }, \
-         { "battery_mv", NULL, MAVLINK_TYPE_UINT16_T, 0, 108, offsetof(mavlink_rocket_telemetry_t, battery_mv) }, \
          { "roll", NULL, MAVLINK_TYPE_FLOAT, 0, 4, offsetof(mavlink_rocket_telemetry_t, roll) }, \
          { "pitch", NULL, MAVLINK_TYPE_FLOAT, 0, 8, offsetof(mavlink_rocket_telemetry_t, pitch) }, \
          { "yaw", NULL, MAVLINK_TYPE_FLOAT, 0, 12, offsetof(mavlink_rocket_telemetry_t, yaw) }, \
@@ -79,17 +75,21 @@ typedef struct __mavlink_rocket_telemetry_t {
          { "highg_acc_x", NULL, MAVLINK_TYPE_FLOAT, 0, 64, offsetof(mavlink_rocket_telemetry_t, highg_acc_x) }, \
          { "highg_acc_y", NULL, MAVLINK_TYPE_FLOAT, 0, 68, offsetof(mavlink_rocket_telemetry_t, highg_acc_y) }, \
          { "highg_acc_z", NULL, MAVLINK_TYPE_FLOAT, 0, 72, offsetof(mavlink_rocket_telemetry_t, highg_acc_z) }, \
-         { "gps_fix", NULL, MAVLINK_TYPE_UINT8_T, 0, 115, offsetof(mavlink_rocket_telemetry_t, gps_fix) }, \
          { "lat", NULL, MAVLINK_TYPE_INT32_T, 0, 76, offsetof(mavlink_rocket_telemetry_t, lat) }, \
          { "lon", NULL, MAVLINK_TYPE_INT32_T, 0, 80, offsetof(mavlink_rocket_telemetry_t, lon) }, \
          { "gps_alt", NULL, MAVLINK_TYPE_INT32_T, 0, 84, offsetof(mavlink_rocket_telemetry_t, gps_alt) }, \
-         { "vel", NULL, MAVLINK_TYPE_UINT16_T, 0, 110, offsetof(mavlink_rocket_telemetry_t, vel) }, \
-         { "cog", NULL, MAVLINK_TYPE_UINT16_T, 0, 112, offsetof(mavlink_rocket_telemetry_t, cog) }, \
-         { "satellites_nb", NULL, MAVLINK_TYPE_UINT8_T, 0, 116, offsetof(mavlink_rocket_telemetry_t, satellites_nb) }, \
          { "imu_acc_vertical", NULL, MAVLINK_TYPE_FLOAT, 0, 88, offsetof(mavlink_rocket_telemetry_t, imu_acc_vertical) }, \
          { "highg_acc_vertical", NULL, MAVLINK_TYPE_FLOAT, 0, 92, offsetof(mavlink_rocket_telemetry_t, highg_acc_vertical) }, \
          { "kalman_z", NULL, MAVLINK_TYPE_FLOAT, 0, 96, offsetof(mavlink_rocket_telemetry_t, kalman_z) }, \
          { "kalman_v", NULL, MAVLINK_TYPE_FLOAT, 0, 100, offsetof(mavlink_rocket_telemetry_t, kalman_v) }, \
+         { "system_states", NULL, MAVLINK_TYPE_UINT16_T, 0, 104, offsetof(mavlink_rocket_telemetry_t, system_states) }, \
+         { "event_states", NULL, MAVLINK_TYPE_UINT16_T, 0, 106, offsetof(mavlink_rocket_telemetry_t, event_states) }, \
+         { "battery_mv", NULL, MAVLINK_TYPE_UINT16_T, 0, 108, offsetof(mavlink_rocket_telemetry_t, battery_mv) }, \
+         { "vel", NULL, MAVLINK_TYPE_UINT16_T, 0, 110, offsetof(mavlink_rocket_telemetry_t, vel) }, \
+         { "cog", NULL, MAVLINK_TYPE_UINT16_T, 0, 112, offsetof(mavlink_rocket_telemetry_t, cog) }, \
+         { "mission_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 114, offsetof(mavlink_rocket_telemetry_t, mission_state) }, \
+         { "gps_fix", NULL, MAVLINK_TYPE_UINT8_T, 0, 115, offsetof(mavlink_rocket_telemetry_t, gps_fix) }, \
+         { "satellites_nb", NULL, MAVLINK_TYPE_UINT8_T, 0, 116, offsetof(mavlink_rocket_telemetry_t, satellites_nb) }, \
          } \
 }
 #else
@@ -97,10 +97,6 @@ typedef struct __mavlink_rocket_telemetry_t {
     "ROCKET_TELEMETRY", \
     34, \
     {  { "time_boot_ms", NULL, MAVLINK_TYPE_UINT32_T, 0, 0, offsetof(mavlink_rocket_telemetry_t, time_boot_ms) }, \
-         { "system_states", NULL, MAVLINK_TYPE_UINT16_T, 0, 104, offsetof(mavlink_rocket_telemetry_t, system_states) }, \
-         { "event_states", NULL, MAVLINK_TYPE_UINT16_T, 0, 106, offsetof(mavlink_rocket_telemetry_t, event_states) }, \
-         { "mission_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 114, offsetof(mavlink_rocket_telemetry_t, mission_state) }, \
-         { "battery_mv", NULL, MAVLINK_TYPE_UINT16_T, 0, 108, offsetof(mavlink_rocket_telemetry_t, battery_mv) }, \
          { "roll", NULL, MAVLINK_TYPE_FLOAT, 0, 4, offsetof(mavlink_rocket_telemetry_t, roll) }, \
          { "pitch", NULL, MAVLINK_TYPE_FLOAT, 0, 8, offsetof(mavlink_rocket_telemetry_t, pitch) }, \
          { "yaw", NULL, MAVLINK_TYPE_FLOAT, 0, 12, offsetof(mavlink_rocket_telemetry_t, yaw) }, \
@@ -119,17 +115,21 @@ typedef struct __mavlink_rocket_telemetry_t {
          { "highg_acc_x", NULL, MAVLINK_TYPE_FLOAT, 0, 64, offsetof(mavlink_rocket_telemetry_t, highg_acc_x) }, \
          { "highg_acc_y", NULL, MAVLINK_TYPE_FLOAT, 0, 68, offsetof(mavlink_rocket_telemetry_t, highg_acc_y) }, \
          { "highg_acc_z", NULL, MAVLINK_TYPE_FLOAT, 0, 72, offsetof(mavlink_rocket_telemetry_t, highg_acc_z) }, \
-         { "gps_fix", NULL, MAVLINK_TYPE_UINT8_T, 0, 115, offsetof(mavlink_rocket_telemetry_t, gps_fix) }, \
          { "lat", NULL, MAVLINK_TYPE_INT32_T, 0, 76, offsetof(mavlink_rocket_telemetry_t, lat) }, \
          { "lon", NULL, MAVLINK_TYPE_INT32_T, 0, 80, offsetof(mavlink_rocket_telemetry_t, lon) }, \
          { "gps_alt", NULL, MAVLINK_TYPE_INT32_T, 0, 84, offsetof(mavlink_rocket_telemetry_t, gps_alt) }, \
-         { "vel", NULL, MAVLINK_TYPE_UINT16_T, 0, 110, offsetof(mavlink_rocket_telemetry_t, vel) }, \
-         { "cog", NULL, MAVLINK_TYPE_UINT16_T, 0, 112, offsetof(mavlink_rocket_telemetry_t, cog) }, \
-         { "satellites_nb", NULL, MAVLINK_TYPE_UINT8_T, 0, 116, offsetof(mavlink_rocket_telemetry_t, satellites_nb) }, \
          { "imu_acc_vertical", NULL, MAVLINK_TYPE_FLOAT, 0, 88, offsetof(mavlink_rocket_telemetry_t, imu_acc_vertical) }, \
          { "highg_acc_vertical", NULL, MAVLINK_TYPE_FLOAT, 0, 92, offsetof(mavlink_rocket_telemetry_t, highg_acc_vertical) }, \
          { "kalman_z", NULL, MAVLINK_TYPE_FLOAT, 0, 96, offsetof(mavlink_rocket_telemetry_t, kalman_z) }, \
          { "kalman_v", NULL, MAVLINK_TYPE_FLOAT, 0, 100, offsetof(mavlink_rocket_telemetry_t, kalman_v) }, \
+         { "system_states", NULL, MAVLINK_TYPE_UINT16_T, 0, 104, offsetof(mavlink_rocket_telemetry_t, system_states) }, \
+         { "event_states", NULL, MAVLINK_TYPE_UINT16_T, 0, 106, offsetof(mavlink_rocket_telemetry_t, event_states) }, \
+         { "battery_mv", NULL, MAVLINK_TYPE_UINT16_T, 0, 108, offsetof(mavlink_rocket_telemetry_t, battery_mv) }, \
+         { "vel", NULL, MAVLINK_TYPE_UINT16_T, 0, 110, offsetof(mavlink_rocket_telemetry_t, vel) }, \
+         { "cog", NULL, MAVLINK_TYPE_UINT16_T, 0, 112, offsetof(mavlink_rocket_telemetry_t, cog) }, \
+         { "mission_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 114, offsetof(mavlink_rocket_telemetry_t, mission_state) }, \
+         { "gps_fix", NULL, MAVLINK_TYPE_UINT8_T, 0, 115, offsetof(mavlink_rocket_telemetry_t, gps_fix) }, \
+         { "satellites_nb", NULL, MAVLINK_TYPE_UINT8_T, 0, 116, offsetof(mavlink_rocket_telemetry_t, satellites_nb) }, \
          } \
 }
 #endif
@@ -140,11 +140,7 @@ typedef struct __mavlink_rocket_telemetry_t {
  * @param component_id ID of this component (e.g. 200 for IMU)
  * @param msg The MAVLink message to compress the data into
  *
- * @param time_boot_ms [ms] Timestamp in milliseconds.
- * @param system_states  Current system state bitfield.
- * @param event_states  Current events states (pyros fired, apogee, etc.).
- * @param mission_state  Mission state.
- * @param battery_mv [mV] Battery voltage in millivolts.
+ * @param time_boot_ms [ms] Timestamp since system boot in milliseconds.
  * @param roll [cdeg] Roll angle in centi-degrees.
  * @param pitch [cdeg] Pitch angle in centi-degrees.
  * @param yaw [cdeg] Yaw angle in centi-degrees.
@@ -163,21 +159,25 @@ typedef struct __mavlink_rocket_telemetry_t {
  * @param highg_acc_x [cm/s/s] High-G Acceleration X in centimeters per second squared.
  * @param highg_acc_y [cm/s/s] High-G Acceleration Y in centimeters per second squared.
  * @param highg_acc_z [cm/s/s] High-G Acceleration Z in centimeters per second squared.
- * @param gps_fix  GPS fix type (0: No fix, 1: Active fix, etc.).
  * @param lat [degE7] Latitude in degrees * 1E7.
  * @param lon [degE7] Longitude in degrees * 1E7.
  * @param gps_alt [mm] Altitude (MSL) from GPS in millimeters.
- * @param vel [cm/s] Ground speed in centimeters per second.
- * @param cog [cdeg] Course over ground in centi-degrees.
- * @param satellites_nb  Number of visible satellites.
  * @param imu_acc_vertical [cm/s/s] Vertical acceleration from IMU in centimeters per second squared.
  * @param highg_acc_vertical [cm/s/s] Vertical acceleration from High-G in centimeters per second squared.
  * @param kalman_z [cm] Filtered altitude from Kalman filter in centimeters.
  * @param kalman_v [cm/s] Filtered velocity from Kalman filter in centimeters per second.
+ * @param system_states  Current system state bitfield.
+ * @param event_states  Current events states (pyros fired, apogee, etc.).
+ * @param battery_mv [mV] Battery voltage in millivolts.
+ * @param vel [cm/s] Ground speed in centimeters per second.
+ * @param cog [cdeg] Course over ground in centi-degrees.
+ * @param mission_state  Mission state.
+ * @param gps_fix  GPS fix type (0: No fix, 1: Active fix, etc.).
+ * @param satellites_nb  Number of visible satellites.
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_rocket_telemetry_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg,
-                               uint32_t time_boot_ms, uint16_t system_states, uint16_t event_states, uint8_t mission_state, uint16_t battery_mv, float roll, float pitch, float yaw, float imu_acc_x, float imu_acc_y, float imu_acc_z, float imu_gyro_x, float imu_gyro_y, float imu_gyro_z, float imu_mag_x, float imu_mag_y, float imu_mag_z, float altitude_msl_m, float pressure_pa, float temp_celsius, float highg_acc_x, float highg_acc_y, float highg_acc_z, uint8_t gps_fix, int32_t lat, int32_t lon, int32_t gps_alt, uint16_t vel, uint16_t cog, uint8_t satellites_nb, float imu_acc_vertical, float highg_acc_vertical, float kalman_z, float kalman_v)
+                               uint32_t time_boot_ms, float roll, float pitch, float yaw, float imu_acc_x, float imu_acc_y, float imu_acc_z, float imu_gyro_x, float imu_gyro_y, float imu_gyro_z, float imu_mag_x, float imu_mag_y, float imu_mag_z, float altitude_msl_m, float pressure_pa, float temp_celsius, float highg_acc_x, float highg_acc_y, float highg_acc_z, int32_t lat, int32_t lon, int32_t gps_alt, float imu_acc_vertical, float highg_acc_vertical, float kalman_z, float kalman_v, uint16_t system_states, uint16_t event_states, uint16_t battery_mv, uint16_t vel, uint16_t cog, uint8_t mission_state, uint8_t gps_fix, uint8_t satellites_nb)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_ROCKET_TELEMETRY_LEN];
@@ -268,11 +268,7 @@ static inline uint16_t mavlink_msg_rocket_telemetry_pack(uint8_t system_id, uint
  * @param status MAVLink status structure
  * @param msg The MAVLink message to compress the data into
  *
- * @param time_boot_ms [ms] Timestamp in milliseconds.
- * @param system_states  Current system state bitfield.
- * @param event_states  Current events states (pyros fired, apogee, etc.).
- * @param mission_state  Mission state.
- * @param battery_mv [mV] Battery voltage in millivolts.
+ * @param time_boot_ms [ms] Timestamp since system boot in milliseconds.
  * @param roll [cdeg] Roll angle in centi-degrees.
  * @param pitch [cdeg] Pitch angle in centi-degrees.
  * @param yaw [cdeg] Yaw angle in centi-degrees.
@@ -291,21 +287,25 @@ static inline uint16_t mavlink_msg_rocket_telemetry_pack(uint8_t system_id, uint
  * @param highg_acc_x [cm/s/s] High-G Acceleration X in centimeters per second squared.
  * @param highg_acc_y [cm/s/s] High-G Acceleration Y in centimeters per second squared.
  * @param highg_acc_z [cm/s/s] High-G Acceleration Z in centimeters per second squared.
- * @param gps_fix  GPS fix type (0: No fix, 1: Active fix, etc.).
  * @param lat [degE7] Latitude in degrees * 1E7.
  * @param lon [degE7] Longitude in degrees * 1E7.
  * @param gps_alt [mm] Altitude (MSL) from GPS in millimeters.
- * @param vel [cm/s] Ground speed in centimeters per second.
- * @param cog [cdeg] Course over ground in centi-degrees.
- * @param satellites_nb  Number of visible satellites.
  * @param imu_acc_vertical [cm/s/s] Vertical acceleration from IMU in centimeters per second squared.
  * @param highg_acc_vertical [cm/s/s] Vertical acceleration from High-G in centimeters per second squared.
  * @param kalman_z [cm] Filtered altitude from Kalman filter in centimeters.
  * @param kalman_v [cm/s] Filtered velocity from Kalman filter in centimeters per second.
+ * @param system_states  Current system state bitfield.
+ * @param event_states  Current events states (pyros fired, apogee, etc.).
+ * @param battery_mv [mV] Battery voltage in millivolts.
+ * @param vel [cm/s] Ground speed in centimeters per second.
+ * @param cog [cdeg] Course over ground in centi-degrees.
+ * @param mission_state  Mission state.
+ * @param gps_fix  GPS fix type (0: No fix, 1: Active fix, etc.).
+ * @param satellites_nb  Number of visible satellites.
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_rocket_telemetry_pack_status(uint8_t system_id, uint8_t component_id, mavlink_status_t *_status, mavlink_message_t* msg,
-                               uint32_t time_boot_ms, uint16_t system_states, uint16_t event_states, uint8_t mission_state, uint16_t battery_mv, float roll, float pitch, float yaw, float imu_acc_x, float imu_acc_y, float imu_acc_z, float imu_gyro_x, float imu_gyro_y, float imu_gyro_z, float imu_mag_x, float imu_mag_y, float imu_mag_z, float altitude_msl_m, float pressure_pa, float temp_celsius, float highg_acc_x, float highg_acc_y, float highg_acc_z, uint8_t gps_fix, int32_t lat, int32_t lon, int32_t gps_alt, uint16_t vel, uint16_t cog, uint8_t satellites_nb, float imu_acc_vertical, float highg_acc_vertical, float kalman_z, float kalman_v)
+                               uint32_t time_boot_ms, float roll, float pitch, float yaw, float imu_acc_x, float imu_acc_y, float imu_acc_z, float imu_gyro_x, float imu_gyro_y, float imu_gyro_z, float imu_mag_x, float imu_mag_y, float imu_mag_z, float altitude_msl_m, float pressure_pa, float temp_celsius, float highg_acc_x, float highg_acc_y, float highg_acc_z, int32_t lat, int32_t lon, int32_t gps_alt, float imu_acc_vertical, float highg_acc_vertical, float kalman_z, float kalman_v, uint16_t system_states, uint16_t event_states, uint16_t battery_mv, uint16_t vel, uint16_t cog, uint8_t mission_state, uint8_t gps_fix, uint8_t satellites_nb)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_ROCKET_TELEMETRY_LEN];
@@ -399,11 +399,7 @@ static inline uint16_t mavlink_msg_rocket_telemetry_pack_status(uint8_t system_i
  * @param component_id ID of this component (e.g. 200 for IMU)
  * @param chan The MAVLink channel this message will be sent over
  * @param msg The MAVLink message to compress the data into
- * @param time_boot_ms [ms] Timestamp in milliseconds.
- * @param system_states  Current system state bitfield.
- * @param event_states  Current events states (pyros fired, apogee, etc.).
- * @param mission_state  Mission state.
- * @param battery_mv [mV] Battery voltage in millivolts.
+ * @param time_boot_ms [ms] Timestamp since system boot in milliseconds.
  * @param roll [cdeg] Roll angle in centi-degrees.
  * @param pitch [cdeg] Pitch angle in centi-degrees.
  * @param yaw [cdeg] Yaw angle in centi-degrees.
@@ -422,22 +418,26 @@ static inline uint16_t mavlink_msg_rocket_telemetry_pack_status(uint8_t system_i
  * @param highg_acc_x [cm/s/s] High-G Acceleration X in centimeters per second squared.
  * @param highg_acc_y [cm/s/s] High-G Acceleration Y in centimeters per second squared.
  * @param highg_acc_z [cm/s/s] High-G Acceleration Z in centimeters per second squared.
- * @param gps_fix  GPS fix type (0: No fix, 1: Active fix, etc.).
  * @param lat [degE7] Latitude in degrees * 1E7.
  * @param lon [degE7] Longitude in degrees * 1E7.
  * @param gps_alt [mm] Altitude (MSL) from GPS in millimeters.
- * @param vel [cm/s] Ground speed in centimeters per second.
- * @param cog [cdeg] Course over ground in centi-degrees.
- * @param satellites_nb  Number of visible satellites.
  * @param imu_acc_vertical [cm/s/s] Vertical acceleration from IMU in centimeters per second squared.
  * @param highg_acc_vertical [cm/s/s] Vertical acceleration from High-G in centimeters per second squared.
  * @param kalman_z [cm] Filtered altitude from Kalman filter in centimeters.
  * @param kalman_v [cm/s] Filtered velocity from Kalman filter in centimeters per second.
+ * @param system_states  Current system state bitfield.
+ * @param event_states  Current events states (pyros fired, apogee, etc.).
+ * @param battery_mv [mV] Battery voltage in millivolts.
+ * @param vel [cm/s] Ground speed in centimeters per second.
+ * @param cog [cdeg] Course over ground in centi-degrees.
+ * @param mission_state  Mission state.
+ * @param gps_fix  GPS fix type (0: No fix, 1: Active fix, etc.).
+ * @param satellites_nb  Number of visible satellites.
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_rocket_telemetry_pack_chan(uint8_t system_id, uint8_t component_id, uint8_t chan,
                                mavlink_message_t* msg,
-                                   uint32_t time_boot_ms,uint16_t system_states,uint16_t event_states,uint8_t mission_state,uint16_t battery_mv,float roll,float pitch,float yaw,float imu_acc_x,float imu_acc_y,float imu_acc_z,float imu_gyro_x,float imu_gyro_y,float imu_gyro_z,float imu_mag_x,float imu_mag_y,float imu_mag_z,float altitude_msl_m,float pressure_pa,float temp_celsius,float highg_acc_x,float highg_acc_y,float highg_acc_z,uint8_t gps_fix,int32_t lat,int32_t lon,int32_t gps_alt,uint16_t vel,uint16_t cog,uint8_t satellites_nb,float imu_acc_vertical,float highg_acc_vertical,float kalman_z,float kalman_v)
+                                   uint32_t time_boot_ms,float roll,float pitch,float yaw,float imu_acc_x,float imu_acc_y,float imu_acc_z,float imu_gyro_x,float imu_gyro_y,float imu_gyro_z,float imu_mag_x,float imu_mag_y,float imu_mag_z,float altitude_msl_m,float pressure_pa,float temp_celsius,float highg_acc_x,float highg_acc_y,float highg_acc_z,int32_t lat,int32_t lon,int32_t gps_alt,float imu_acc_vertical,float highg_acc_vertical,float kalman_z,float kalman_v,uint16_t system_states,uint16_t event_states,uint16_t battery_mv,uint16_t vel,uint16_t cog,uint8_t mission_state,uint8_t gps_fix,uint8_t satellites_nb)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_ROCKET_TELEMETRY_LEN];
@@ -531,7 +531,7 @@ static inline uint16_t mavlink_msg_rocket_telemetry_pack_chan(uint8_t system_id,
  */
 static inline uint16_t mavlink_msg_rocket_telemetry_encode(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, const mavlink_rocket_telemetry_t* rocket_telemetry)
 {
-    return mavlink_msg_rocket_telemetry_pack(system_id, component_id, msg, rocket_telemetry->time_boot_ms, rocket_telemetry->system_states, rocket_telemetry->event_states, rocket_telemetry->mission_state, rocket_telemetry->battery_mv, rocket_telemetry->roll, rocket_telemetry->pitch, rocket_telemetry->yaw, rocket_telemetry->imu_acc_x, rocket_telemetry->imu_acc_y, rocket_telemetry->imu_acc_z, rocket_telemetry->imu_gyro_x, rocket_telemetry->imu_gyro_y, rocket_telemetry->imu_gyro_z, rocket_telemetry->imu_mag_x, rocket_telemetry->imu_mag_y, rocket_telemetry->imu_mag_z, rocket_telemetry->altitude_msl_m, rocket_telemetry->pressure_pa, rocket_telemetry->temp_celsius, rocket_telemetry->highg_acc_x, rocket_telemetry->highg_acc_y, rocket_telemetry->highg_acc_z, rocket_telemetry->gps_fix, rocket_telemetry->lat, rocket_telemetry->lon, rocket_telemetry->gps_alt, rocket_telemetry->vel, rocket_telemetry->cog, rocket_telemetry->satellites_nb, rocket_telemetry->imu_acc_vertical, rocket_telemetry->highg_acc_vertical, rocket_telemetry->kalman_z, rocket_telemetry->kalman_v);
+    return mavlink_msg_rocket_telemetry_pack(system_id, component_id, msg, rocket_telemetry->time_boot_ms, rocket_telemetry->roll, rocket_telemetry->pitch, rocket_telemetry->yaw, rocket_telemetry->imu_acc_x, rocket_telemetry->imu_acc_y, rocket_telemetry->imu_acc_z, rocket_telemetry->imu_gyro_x, rocket_telemetry->imu_gyro_y, rocket_telemetry->imu_gyro_z, rocket_telemetry->imu_mag_x, rocket_telemetry->imu_mag_y, rocket_telemetry->imu_mag_z, rocket_telemetry->altitude_msl_m, rocket_telemetry->pressure_pa, rocket_telemetry->temp_celsius, rocket_telemetry->highg_acc_x, rocket_telemetry->highg_acc_y, rocket_telemetry->highg_acc_z, rocket_telemetry->lat, rocket_telemetry->lon, rocket_telemetry->gps_alt, rocket_telemetry->imu_acc_vertical, rocket_telemetry->highg_acc_vertical, rocket_telemetry->kalman_z, rocket_telemetry->kalman_v, rocket_telemetry->system_states, rocket_telemetry->event_states, rocket_telemetry->battery_mv, rocket_telemetry->vel, rocket_telemetry->cog, rocket_telemetry->mission_state, rocket_telemetry->gps_fix, rocket_telemetry->satellites_nb);
 }
 
 /**
@@ -545,7 +545,7 @@ static inline uint16_t mavlink_msg_rocket_telemetry_encode(uint8_t system_id, ui
  */
 static inline uint16_t mavlink_msg_rocket_telemetry_encode_chan(uint8_t system_id, uint8_t component_id, uint8_t chan, mavlink_message_t* msg, const mavlink_rocket_telemetry_t* rocket_telemetry)
 {
-    return mavlink_msg_rocket_telemetry_pack_chan(system_id, component_id, chan, msg, rocket_telemetry->time_boot_ms, rocket_telemetry->system_states, rocket_telemetry->event_states, rocket_telemetry->mission_state, rocket_telemetry->battery_mv, rocket_telemetry->roll, rocket_telemetry->pitch, rocket_telemetry->yaw, rocket_telemetry->imu_acc_x, rocket_telemetry->imu_acc_y, rocket_telemetry->imu_acc_z, rocket_telemetry->imu_gyro_x, rocket_telemetry->imu_gyro_y, rocket_telemetry->imu_gyro_z, rocket_telemetry->imu_mag_x, rocket_telemetry->imu_mag_y, rocket_telemetry->imu_mag_z, rocket_telemetry->altitude_msl_m, rocket_telemetry->pressure_pa, rocket_telemetry->temp_celsius, rocket_telemetry->highg_acc_x, rocket_telemetry->highg_acc_y, rocket_telemetry->highg_acc_z, rocket_telemetry->gps_fix, rocket_telemetry->lat, rocket_telemetry->lon, rocket_telemetry->gps_alt, rocket_telemetry->vel, rocket_telemetry->cog, rocket_telemetry->satellites_nb, rocket_telemetry->imu_acc_vertical, rocket_telemetry->highg_acc_vertical, rocket_telemetry->kalman_z, rocket_telemetry->kalman_v);
+    return mavlink_msg_rocket_telemetry_pack_chan(system_id, component_id, chan, msg, rocket_telemetry->time_boot_ms, rocket_telemetry->roll, rocket_telemetry->pitch, rocket_telemetry->yaw, rocket_telemetry->imu_acc_x, rocket_telemetry->imu_acc_y, rocket_telemetry->imu_acc_z, rocket_telemetry->imu_gyro_x, rocket_telemetry->imu_gyro_y, rocket_telemetry->imu_gyro_z, rocket_telemetry->imu_mag_x, rocket_telemetry->imu_mag_y, rocket_telemetry->imu_mag_z, rocket_telemetry->altitude_msl_m, rocket_telemetry->pressure_pa, rocket_telemetry->temp_celsius, rocket_telemetry->highg_acc_x, rocket_telemetry->highg_acc_y, rocket_telemetry->highg_acc_z, rocket_telemetry->lat, rocket_telemetry->lon, rocket_telemetry->gps_alt, rocket_telemetry->imu_acc_vertical, rocket_telemetry->highg_acc_vertical, rocket_telemetry->kalman_z, rocket_telemetry->kalman_v, rocket_telemetry->system_states, rocket_telemetry->event_states, rocket_telemetry->battery_mv, rocket_telemetry->vel, rocket_telemetry->cog, rocket_telemetry->mission_state, rocket_telemetry->gps_fix, rocket_telemetry->satellites_nb);
 }
 
 /**
@@ -559,18 +559,14 @@ static inline uint16_t mavlink_msg_rocket_telemetry_encode_chan(uint8_t system_i
  */
 static inline uint16_t mavlink_msg_rocket_telemetry_encode_status(uint8_t system_id, uint8_t component_id, mavlink_status_t* _status, mavlink_message_t* msg, const mavlink_rocket_telemetry_t* rocket_telemetry)
 {
-    return mavlink_msg_rocket_telemetry_pack_status(system_id, component_id, _status, msg,  rocket_telemetry->time_boot_ms, rocket_telemetry->system_states, rocket_telemetry->event_states, rocket_telemetry->mission_state, rocket_telemetry->battery_mv, rocket_telemetry->roll, rocket_telemetry->pitch, rocket_telemetry->yaw, rocket_telemetry->imu_acc_x, rocket_telemetry->imu_acc_y, rocket_telemetry->imu_acc_z, rocket_telemetry->imu_gyro_x, rocket_telemetry->imu_gyro_y, rocket_telemetry->imu_gyro_z, rocket_telemetry->imu_mag_x, rocket_telemetry->imu_mag_y, rocket_telemetry->imu_mag_z, rocket_telemetry->altitude_msl_m, rocket_telemetry->pressure_pa, rocket_telemetry->temp_celsius, rocket_telemetry->highg_acc_x, rocket_telemetry->highg_acc_y, rocket_telemetry->highg_acc_z, rocket_telemetry->gps_fix, rocket_telemetry->lat, rocket_telemetry->lon, rocket_telemetry->gps_alt, rocket_telemetry->vel, rocket_telemetry->cog, rocket_telemetry->satellites_nb, rocket_telemetry->imu_acc_vertical, rocket_telemetry->highg_acc_vertical, rocket_telemetry->kalman_z, rocket_telemetry->kalman_v);
+    return mavlink_msg_rocket_telemetry_pack_status(system_id, component_id, _status, msg,  rocket_telemetry->time_boot_ms, rocket_telemetry->roll, rocket_telemetry->pitch, rocket_telemetry->yaw, rocket_telemetry->imu_acc_x, rocket_telemetry->imu_acc_y, rocket_telemetry->imu_acc_z, rocket_telemetry->imu_gyro_x, rocket_telemetry->imu_gyro_y, rocket_telemetry->imu_gyro_z, rocket_telemetry->imu_mag_x, rocket_telemetry->imu_mag_y, rocket_telemetry->imu_mag_z, rocket_telemetry->altitude_msl_m, rocket_telemetry->pressure_pa, rocket_telemetry->temp_celsius, rocket_telemetry->highg_acc_x, rocket_telemetry->highg_acc_y, rocket_telemetry->highg_acc_z, rocket_telemetry->lat, rocket_telemetry->lon, rocket_telemetry->gps_alt, rocket_telemetry->imu_acc_vertical, rocket_telemetry->highg_acc_vertical, rocket_telemetry->kalman_z, rocket_telemetry->kalman_v, rocket_telemetry->system_states, rocket_telemetry->event_states, rocket_telemetry->battery_mv, rocket_telemetry->vel, rocket_telemetry->cog, rocket_telemetry->mission_state, rocket_telemetry->gps_fix, rocket_telemetry->satellites_nb);
 }
 
 /**
  * @brief Send a rocket_telemetry message
  * @param chan MAVLink channel to send the message
  *
- * @param time_boot_ms [ms] Timestamp in milliseconds.
- * @param system_states  Current system state bitfield.
- * @param event_states  Current events states (pyros fired, apogee, etc.).
- * @param mission_state  Mission state.
- * @param battery_mv [mV] Battery voltage in millivolts.
+ * @param time_boot_ms [ms] Timestamp since system boot in milliseconds.
  * @param roll [cdeg] Roll angle in centi-degrees.
  * @param pitch [cdeg] Pitch angle in centi-degrees.
  * @param yaw [cdeg] Yaw angle in centi-degrees.
@@ -589,21 +585,25 @@ static inline uint16_t mavlink_msg_rocket_telemetry_encode_status(uint8_t system
  * @param highg_acc_x [cm/s/s] High-G Acceleration X in centimeters per second squared.
  * @param highg_acc_y [cm/s/s] High-G Acceleration Y in centimeters per second squared.
  * @param highg_acc_z [cm/s/s] High-G Acceleration Z in centimeters per second squared.
- * @param gps_fix  GPS fix type (0: No fix, 1: Active fix, etc.).
  * @param lat [degE7] Latitude in degrees * 1E7.
  * @param lon [degE7] Longitude in degrees * 1E7.
  * @param gps_alt [mm] Altitude (MSL) from GPS in millimeters.
- * @param vel [cm/s] Ground speed in centimeters per second.
- * @param cog [cdeg] Course over ground in centi-degrees.
- * @param satellites_nb  Number of visible satellites.
  * @param imu_acc_vertical [cm/s/s] Vertical acceleration from IMU in centimeters per second squared.
  * @param highg_acc_vertical [cm/s/s] Vertical acceleration from High-G in centimeters per second squared.
  * @param kalman_z [cm] Filtered altitude from Kalman filter in centimeters.
  * @param kalman_v [cm/s] Filtered velocity from Kalman filter in centimeters per second.
+ * @param system_states  Current system state bitfield.
+ * @param event_states  Current events states (pyros fired, apogee, etc.).
+ * @param battery_mv [mV] Battery voltage in millivolts.
+ * @param vel [cm/s] Ground speed in centimeters per second.
+ * @param cog [cdeg] Course over ground in centi-degrees.
+ * @param mission_state  Mission state.
+ * @param gps_fix  GPS fix type (0: No fix, 1: Active fix, etc.).
+ * @param satellites_nb  Number of visible satellites.
  */
 #ifdef MAVLINK_USE_CONVENIENCE_FUNCTIONS
 
-static inline void mavlink_msg_rocket_telemetry_send(mavlink_channel_t chan, uint32_t time_boot_ms, uint16_t system_states, uint16_t event_states, uint8_t mission_state, uint16_t battery_mv, float roll, float pitch, float yaw, float imu_acc_x, float imu_acc_y, float imu_acc_z, float imu_gyro_x, float imu_gyro_y, float imu_gyro_z, float imu_mag_x, float imu_mag_y, float imu_mag_z, float altitude_msl_m, float pressure_pa, float temp_celsius, float highg_acc_x, float highg_acc_y, float highg_acc_z, uint8_t gps_fix, int32_t lat, int32_t lon, int32_t gps_alt, uint16_t vel, uint16_t cog, uint8_t satellites_nb, float imu_acc_vertical, float highg_acc_vertical, float kalman_z, float kalman_v)
+static inline void mavlink_msg_rocket_telemetry_send(mavlink_channel_t chan, uint32_t time_boot_ms, float roll, float pitch, float yaw, float imu_acc_x, float imu_acc_y, float imu_acc_z, float imu_gyro_x, float imu_gyro_y, float imu_gyro_z, float imu_mag_x, float imu_mag_y, float imu_mag_z, float altitude_msl_m, float pressure_pa, float temp_celsius, float highg_acc_x, float highg_acc_y, float highg_acc_z, int32_t lat, int32_t lon, int32_t gps_alt, float imu_acc_vertical, float highg_acc_vertical, float kalman_z, float kalman_v, uint16_t system_states, uint16_t event_states, uint16_t battery_mv, uint16_t vel, uint16_t cog, uint8_t mission_state, uint8_t gps_fix, uint8_t satellites_nb)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_ROCKET_TELEMETRY_LEN];
@@ -692,7 +692,7 @@ static inline void mavlink_msg_rocket_telemetry_send(mavlink_channel_t chan, uin
 static inline void mavlink_msg_rocket_telemetry_send_struct(mavlink_channel_t chan, const mavlink_rocket_telemetry_t* rocket_telemetry)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
-    mavlink_msg_rocket_telemetry_send(chan, rocket_telemetry->time_boot_ms, rocket_telemetry->system_states, rocket_telemetry->event_states, rocket_telemetry->mission_state, rocket_telemetry->battery_mv, rocket_telemetry->roll, rocket_telemetry->pitch, rocket_telemetry->yaw, rocket_telemetry->imu_acc_x, rocket_telemetry->imu_acc_y, rocket_telemetry->imu_acc_z, rocket_telemetry->imu_gyro_x, rocket_telemetry->imu_gyro_y, rocket_telemetry->imu_gyro_z, rocket_telemetry->imu_mag_x, rocket_telemetry->imu_mag_y, rocket_telemetry->imu_mag_z, rocket_telemetry->altitude_msl_m, rocket_telemetry->pressure_pa, rocket_telemetry->temp_celsius, rocket_telemetry->highg_acc_x, rocket_telemetry->highg_acc_y, rocket_telemetry->highg_acc_z, rocket_telemetry->gps_fix, rocket_telemetry->lat, rocket_telemetry->lon, rocket_telemetry->gps_alt, rocket_telemetry->vel, rocket_telemetry->cog, rocket_telemetry->satellites_nb, rocket_telemetry->imu_acc_vertical, rocket_telemetry->highg_acc_vertical, rocket_telemetry->kalman_z, rocket_telemetry->kalman_v);
+    mavlink_msg_rocket_telemetry_send(chan, rocket_telemetry->time_boot_ms, rocket_telemetry->roll, rocket_telemetry->pitch, rocket_telemetry->yaw, rocket_telemetry->imu_acc_x, rocket_telemetry->imu_acc_y, rocket_telemetry->imu_acc_z, rocket_telemetry->imu_gyro_x, rocket_telemetry->imu_gyro_y, rocket_telemetry->imu_gyro_z, rocket_telemetry->imu_mag_x, rocket_telemetry->imu_mag_y, rocket_telemetry->imu_mag_z, rocket_telemetry->altitude_msl_m, rocket_telemetry->pressure_pa, rocket_telemetry->temp_celsius, rocket_telemetry->highg_acc_x, rocket_telemetry->highg_acc_y, rocket_telemetry->highg_acc_z, rocket_telemetry->lat, rocket_telemetry->lon, rocket_telemetry->gps_alt, rocket_telemetry->imu_acc_vertical, rocket_telemetry->highg_acc_vertical, rocket_telemetry->kalman_z, rocket_telemetry->kalman_v, rocket_telemetry->system_states, rocket_telemetry->event_states, rocket_telemetry->battery_mv, rocket_telemetry->vel, rocket_telemetry->cog, rocket_telemetry->mission_state, rocket_telemetry->gps_fix, rocket_telemetry->satellites_nb);
 #else
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_ROCKET_TELEMETRY, (const char *)rocket_telemetry, MAVLINK_MSG_ID_ROCKET_TELEMETRY_MIN_LEN, MAVLINK_MSG_ID_ROCKET_TELEMETRY_LEN, MAVLINK_MSG_ID_ROCKET_TELEMETRY_CRC);
 #endif
@@ -706,7 +706,7 @@ static inline void mavlink_msg_rocket_telemetry_send_struct(mavlink_channel_t ch
   is usually the receive buffer for the channel, and allows a reply to an
   incoming message with minimum stack space usage.
  */
-static inline void mavlink_msg_rocket_telemetry_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint32_t time_boot_ms, uint16_t system_states, uint16_t event_states, uint8_t mission_state, uint16_t battery_mv, float roll, float pitch, float yaw, float imu_acc_x, float imu_acc_y, float imu_acc_z, float imu_gyro_x, float imu_gyro_y, float imu_gyro_z, float imu_mag_x, float imu_mag_y, float imu_mag_z, float altitude_msl_m, float pressure_pa, float temp_celsius, float highg_acc_x, float highg_acc_y, float highg_acc_z, uint8_t gps_fix, int32_t lat, int32_t lon, int32_t gps_alt, uint16_t vel, uint16_t cog, uint8_t satellites_nb, float imu_acc_vertical, float highg_acc_vertical, float kalman_z, float kalman_v)
+static inline void mavlink_msg_rocket_telemetry_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint32_t time_boot_ms, float roll, float pitch, float yaw, float imu_acc_x, float imu_acc_y, float imu_acc_z, float imu_gyro_x, float imu_gyro_y, float imu_gyro_z, float imu_mag_x, float imu_mag_y, float imu_mag_z, float altitude_msl_m, float pressure_pa, float temp_celsius, float highg_acc_x, float highg_acc_y, float highg_acc_z, int32_t lat, int32_t lon, int32_t gps_alt, float imu_acc_vertical, float highg_acc_vertical, float kalman_z, float kalman_v, uint16_t system_states, uint16_t event_states, uint16_t battery_mv, uint16_t vel, uint16_t cog, uint8_t mission_state, uint8_t gps_fix, uint8_t satellites_nb)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char *buf = (char *)msgbuf;
@@ -796,51 +796,11 @@ static inline void mavlink_msg_rocket_telemetry_send_buf(mavlink_message_t *msgb
 /**
  * @brief Get field time_boot_ms from rocket_telemetry message
  *
- * @return [ms] Timestamp in milliseconds.
+ * @return [ms] Timestamp since system boot in milliseconds.
  */
 static inline uint32_t mavlink_msg_rocket_telemetry_get_time_boot_ms(const mavlink_message_t* msg)
 {
     return _MAV_RETURN_uint32_t(msg,  0);
-}
-
-/**
- * @brief Get field system_states from rocket_telemetry message
- *
- * @return  Current system state bitfield.
- */
-static inline uint16_t mavlink_msg_rocket_telemetry_get_system_states(const mavlink_message_t* msg)
-{
-    return _MAV_RETURN_uint16_t(msg,  104);
-}
-
-/**
- * @brief Get field event_states from rocket_telemetry message
- *
- * @return  Current events states (pyros fired, apogee, etc.).
- */
-static inline uint16_t mavlink_msg_rocket_telemetry_get_event_states(const mavlink_message_t* msg)
-{
-    return _MAV_RETURN_uint16_t(msg,  106);
-}
-
-/**
- * @brief Get field mission_state from rocket_telemetry message
- *
- * @return  Mission state.
- */
-static inline uint8_t mavlink_msg_rocket_telemetry_get_mission_state(const mavlink_message_t* msg)
-{
-    return _MAV_RETURN_uint8_t(msg,  114);
-}
-
-/**
- * @brief Get field battery_mv from rocket_telemetry message
- *
- * @return [mV] Battery voltage in millivolts.
- */
-static inline uint16_t mavlink_msg_rocket_telemetry_get_battery_mv(const mavlink_message_t* msg)
-{
-    return _MAV_RETURN_uint16_t(msg,  108);
 }
 
 /**
@@ -1024,16 +984,6 @@ static inline float mavlink_msg_rocket_telemetry_get_highg_acc_z(const mavlink_m
 }
 
 /**
- * @brief Get field gps_fix from rocket_telemetry message
- *
- * @return  GPS fix type (0: No fix, 1: Active fix, etc.).
- */
-static inline uint8_t mavlink_msg_rocket_telemetry_get_gps_fix(const mavlink_message_t* msg)
-{
-    return _MAV_RETURN_uint8_t(msg,  115);
-}
-
-/**
  * @brief Get field lat from rocket_telemetry message
  *
  * @return [degE7] Latitude in degrees * 1E7.
@@ -1061,36 +1011,6 @@ static inline int32_t mavlink_msg_rocket_telemetry_get_lon(const mavlink_message
 static inline int32_t mavlink_msg_rocket_telemetry_get_gps_alt(const mavlink_message_t* msg)
 {
     return _MAV_RETURN_int32_t(msg,  84);
-}
-
-/**
- * @brief Get field vel from rocket_telemetry message
- *
- * @return [cm/s] Ground speed in centimeters per second.
- */
-static inline uint16_t mavlink_msg_rocket_telemetry_get_vel(const mavlink_message_t* msg)
-{
-    return _MAV_RETURN_uint16_t(msg,  110);
-}
-
-/**
- * @brief Get field cog from rocket_telemetry message
- *
- * @return [cdeg] Course over ground in centi-degrees.
- */
-static inline uint16_t mavlink_msg_rocket_telemetry_get_cog(const mavlink_message_t* msg)
-{
-    return _MAV_RETURN_uint16_t(msg,  112);
-}
-
-/**
- * @brief Get field satellites_nb from rocket_telemetry message
- *
- * @return  Number of visible satellites.
- */
-static inline uint8_t mavlink_msg_rocket_telemetry_get_satellites_nb(const mavlink_message_t* msg)
-{
-    return _MAV_RETURN_uint8_t(msg,  116);
 }
 
 /**
@@ -1131,6 +1051,86 @@ static inline float mavlink_msg_rocket_telemetry_get_kalman_z(const mavlink_mess
 static inline float mavlink_msg_rocket_telemetry_get_kalman_v(const mavlink_message_t* msg)
 {
     return _MAV_RETURN_float(msg,  100);
+}
+
+/**
+ * @brief Get field system_states from rocket_telemetry message
+ *
+ * @return  Current system state bitfield.
+ */
+static inline uint16_t mavlink_msg_rocket_telemetry_get_system_states(const mavlink_message_t* msg)
+{
+    return _MAV_RETURN_uint16_t(msg,  104);
+}
+
+/**
+ * @brief Get field event_states from rocket_telemetry message
+ *
+ * @return  Current events states (pyros fired, apogee, etc.).
+ */
+static inline uint16_t mavlink_msg_rocket_telemetry_get_event_states(const mavlink_message_t* msg)
+{
+    return _MAV_RETURN_uint16_t(msg,  106);
+}
+
+/**
+ * @brief Get field battery_mv from rocket_telemetry message
+ *
+ * @return [mV] Battery voltage in millivolts.
+ */
+static inline uint16_t mavlink_msg_rocket_telemetry_get_battery_mv(const mavlink_message_t* msg)
+{
+    return _MAV_RETURN_uint16_t(msg,  108);
+}
+
+/**
+ * @brief Get field vel from rocket_telemetry message
+ *
+ * @return [cm/s] Ground speed in centimeters per second.
+ */
+static inline uint16_t mavlink_msg_rocket_telemetry_get_vel(const mavlink_message_t* msg)
+{
+    return _MAV_RETURN_uint16_t(msg,  110);
+}
+
+/**
+ * @brief Get field cog from rocket_telemetry message
+ *
+ * @return [cdeg] Course over ground in centi-degrees.
+ */
+static inline uint16_t mavlink_msg_rocket_telemetry_get_cog(const mavlink_message_t* msg)
+{
+    return _MAV_RETURN_uint16_t(msg,  112);
+}
+
+/**
+ * @brief Get field mission_state from rocket_telemetry message
+ *
+ * @return  Mission state.
+ */
+static inline uint8_t mavlink_msg_rocket_telemetry_get_mission_state(const mavlink_message_t* msg)
+{
+    return _MAV_RETURN_uint8_t(msg,  114);
+}
+
+/**
+ * @brief Get field gps_fix from rocket_telemetry message
+ *
+ * @return  GPS fix type (0: No fix, 1: Active fix, etc.).
+ */
+static inline uint8_t mavlink_msg_rocket_telemetry_get_gps_fix(const mavlink_message_t* msg)
+{
+    return _MAV_RETURN_uint8_t(msg,  115);
+}
+
+/**
+ * @brief Get field satellites_nb from rocket_telemetry message
+ *
+ * @return  Number of visible satellites.
+ */
+static inline uint8_t mavlink_msg_rocket_telemetry_get_satellites_nb(const mavlink_message_t* msg)
+{
+    return _MAV_RETURN_uint8_t(msg,  116);
 }
 
 /**
