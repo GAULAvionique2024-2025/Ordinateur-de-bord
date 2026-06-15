@@ -14,7 +14,8 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#define LOG_BUFFER_SIZE	32 // 400 ms (max wait erase sector w25q) / TASK_LOGGER_FREQ_MS = 20 frames + security
+#define LOG_BUFFER_SIZE				32 					// 400 ms (max wait erase sector w25q) / TASK_LOGGER_FREQ_MS = 20 frames + security
+#define LOGGER_MIN_FLIGHT_SPACE  	(5 * 1024 * 1024) 	// 5Mo
 
 
 typedef enum {

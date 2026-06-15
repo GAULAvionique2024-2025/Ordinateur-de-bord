@@ -86,9 +86,11 @@ int8_t Logger_Init(void) {
     uint32_t next_id = 0;
     Logger_ScanFlash(&flash_current_address, &next_id);
 
-    if(flash_current_address >= (LOGGER_MAX_ALLOWED_ADDRESS - FLASH_SECTOR_SIZE_BYTE)) {
+    // Check free space
+    if((flash_current_address + LOGGER_MIN_FLIGHT_SPACE) >= LOGGER_MAX_ALLOWED_ADDRESS) {
         flash_current_address = 0;
         next_id = 1;
+
         Logger_Erase();
     }
 
@@ -113,7 +115,6 @@ int8_t Logger_Init(void) {
     flash_current_address += FLASH_SECTOR_SIZE_BYTE;
 
     W25Q_EraseSector(&w25q, flash_current_address);
-
     stats_reserved_address = flash_current_address;
     flash_current_address += W25Q512_PAGE_SIZE;
 
@@ -173,12 +174,13 @@ void Logger_Task(void) {
             break;
 
         case LOGGER_START_WRITE: {
-            uint32_t total_size = LOG_BUFFER_SIZE * sizeof(logger_data_t);
-            uint32_t bytes_to_write = total_size - flush_bytes_written;
+        	uint32_t total_size = LOG_BUFFER_SIZE * sizeof(logger_data_t);
+        	uint32_t bytes_to_write = total_size - flush_bytes_written;
+        	uint32_t space_in_page = W25Q512_PAGE_SIZE - (flash_current_address % W25Q512_PAGE_SIZE);
 
-            if(bytes_to_write > W25Q512_PAGE_SIZE) {
-                bytes_to_write = W25Q512_PAGE_SIZE;
-            }
+        	if(bytes_to_write > space_in_page) {
+				bytes_to_write = space_in_page;
+			}
 
             if((flash_current_address + bytes_to_write) > LOGGER_MAX_ALLOWED_ADDRESS) {
                 flush_pending = false;
@@ -188,16 +190,12 @@ void Logger_Task(void) {
             }
 
             uint8_t *write_ptr = ((uint8_t*)current_flush_buf) + flush_bytes_written;
-            if(W25Q_WritePageNoWait(&w25q, write_ptr, flash_current_address, bytes_to_write) == 0) {
-                flash_current_address += bytes_to_write;
-                flush_bytes_written += bytes_to_write;
-
-                if(flash_current_address % W25Q512_PAGE_SIZE != 0) {
-                    flash_current_address = ((flash_current_address / W25Q512_PAGE_SIZE) + 1) * W25Q512_PAGE_SIZE;
-                }
-                logger_state = LOGGER_WAIT_FLASH_BUSY;
-            }
-            break;
+			if(W25Q_WritePageNoWait(&w25q, write_ptr, flash_current_address, bytes_to_write) == 0) {
+				flash_current_address += bytes_to_write;
+				flush_bytes_written += bytes_to_write;
+				logger_state = LOGGER_WAIT_FLASH_BUSY;
+			}
+			break;
         }
 
         case LOGGER_WAIT_FLASH_BUSY:
