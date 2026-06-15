@@ -18,17 +18,16 @@
 /* === ODB === */
 // Init system_states
 /*
- * [15] : IdeFIX communication OK
- * [14] : Bluetooth module OK
- * [13] : Flash memory OK
- * [12] : SD card OK
- * [11] : Temperature sensor OK
- * [10] : High-G accelerometer OK
- * [9]  : GPS OK
- * [8]  : Barometer OK
- * [7]  : IMU OK
- * [6]  : Radio OK
- * [5]  : Pyros armed OK
+ * [14] : IdeFIX communication OK
+ * [13] : Bluetooth module OK
+ * [12] : Flash memory OK
+ * [11] : SD card OK
+ * [10] : Temperature sensor OK
+ * [9] : High-G accelerometer OK
+ * [8]  : GPS OK
+ * [7]  : Barometer OK
+ * [6]  : IMU OK
+ * [5]  : Radio OK
  * [4]  : Pyro arming module OK
  * [3]  : Pyro 1 connected
  * [2]  : Pyro 2 connected
