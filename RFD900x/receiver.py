@@ -10,8 +10,8 @@ mavutil.mavlink = mavlink_dialect
 mavutil.current_dialect = "odb_mavlink_v1"
 
 # --- CONFIGURATION ---
-SERIAL_PORT = "COM5"
-#SERIAL_PORT = "udpin:0.0.0.0:14550"
+#SERIAL_PORT = "COM5"
+SERIAL_PORT = "udpin:0.0.0.0:14550"
 BAUD_RATE = 115200
 SOURCE_SYSTEM = 1
 BOOSTER_SYS_ID = 2

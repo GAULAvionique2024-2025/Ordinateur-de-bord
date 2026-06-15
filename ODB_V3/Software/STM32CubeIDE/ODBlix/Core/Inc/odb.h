@@ -23,7 +23,7 @@
 #include "Drivers/smtb0927twr.h"
 #include "Drivers/system_measurements.h"
 #include "Drivers/w25q512jv.h"
-#include "mavlink/odb_mavlink_v1/mavlink.h"
+#include "Protocols/odb_protocol.h"
 #include "stm32f4xx_hal.h"
 #include <stdint.h>
 #include <stdio.h>
@@ -31,7 +31,6 @@
 #include <stdarg.h>
 #include <stdbool.h>
 #include <assert.h>
-#include <Protocols/odb_protocol.h>
 
 
 typedef enum {

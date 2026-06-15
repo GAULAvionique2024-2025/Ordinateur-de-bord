@@ -14,7 +14,7 @@
 #include "Protocols/odb_protocol.h"
 #include "Drivers/smtb0927twr.h"
 #include "stm32f4xx_hal.h"
-
+#include <math.h>
 #include <stdint.h>
 
 
