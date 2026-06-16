@@ -83,10 +83,26 @@ l76lm33_state_t L76LM33_Init(l76lm33_t *dev) {
     // Initialize circular buffer
     RingBuffer_Init(&(dev->UART_Buffer), dev->ring_buffer_arr, L76LM33_BUFFER_SIZE);
 
-    // Start UART DMA Reception
-    if(HAL_UARTEx_ReceiveToIdle_DMA(dev->huart, dev->dma_buffer, L76LM33_BUFFER_SIZE) != HAL_OK) {
-        return L76LM33_ERROR;
-    }
+    /* Baudrate
+	 * "$PMTK251,115200*1F<CR><LF>"
+	*/
+	const char NMEA_BAUD[] = "$PMTK251,115200*1F\r\n";
+	if(L76LM33_SendCommand(dev, NMEA_BAUD, strlen(NMEA_BAUD)) != L76LM33_OK) return L76LM33_ERROR;
+	HAL_Delay(100);
+
+	// Restart UART DMA Reception
+	HAL_UART_AbortReceive(dev->huart);
+	dev->huart->Init.BaudRate = 115200;
+	if(HAL_UART_Init(dev->huart) != HAL_OK) {
+		return L76LM33_ERROR;
+	}
+	// Clear pending buffers
+	__HAL_UART_CLEAR_OREFLAG(dev->huart);
+	__HAL_UART_CLEAR_FEFLAG(dev->huart);
+	// Start DMA reception
+	if(HAL_UARTEx_ReceiveToIdle_DMA(dev->huart, dev->dma_buffer, L76LM33_BUFFER_SIZE) != HAL_OK) {
+		return L76LM33_ERROR;
+	}
 
     /*
      * Search GPS + Galileo satellites only (disables BeiDou and GLONASS to allow 10Hz)
@@ -138,14 +154,6 @@ l76lm33_state_t L76LM33_Init(l76lm33_t *dev) {
     const char NMEA_OUTPUT[] = "$PMTK314,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*28\r\n";
     if(L76LM33_SendCommand(dev, NMEA_OUTPUT, strlen(NMEA_OUTPUT)) != L76LM33_OK) return L76LM33_ERROR;
     HAL_Delay(10);
-    /*
-     * Set position fix interval to 100ms (10Hz) TODO: 5Hz practical, but 10Hz theoretical
-     * "$PMTK220,100*2F<CR><LF>"
-     * "$PMTK220,200*2C<CR><LF>"
-    */
-    const char NMEA_RATE[] = "$PMTK220,100*2F\r\n";
-    if(L76LM33_SendCommand(dev, NMEA_RATE, strlen(NMEA_RATE)) != L76LM33_OK) return L76LM33_ERROR;
-    HAL_Delay(10);
 
     // Navigation mode
     if(dev->profile == L76_FLIGHT_PROFILE_30K) {
@@ -163,25 +171,14 @@ l76lm33_state_t L76LM33_Init(l76lm33_t *dev) {
     }
     HAL_Delay(10);
 
-    /* Baudrate
-     * "$PMTK251,115200*1F<CR><LF>"
-    */
-    const char NMEA_BAUD[] = "$PMTK251,115200*1F\r\n";
-    if(L76LM33_SendCommand(dev, NMEA_BAUD, strlen(NMEA_BAUD)) != L76LM33_OK) return L76LM33_ERROR;
-    HAL_Delay(50);
-
-    // Restart UART DMA Reception
-    HAL_UART_AbortReceive(dev->huart);
-    dev->huart->Init.BaudRate = 115200;
-    if(HAL_UART_Init(dev->huart) != HAL_OK) {
-    	return L76LM33_ERROR;
-    }
-    // Clear pending buffers
-    __HAL_UART_CLEAR_OREFLAG(dev->huart);
-    __HAL_UART_CLEAR_FEFLAG(dev->huart);
-    if(HAL_UARTEx_ReceiveToIdle_DMA(dev->huart, dev->dma_buffer, L76LM33_BUFFER_SIZE) != HAL_OK) {
-        return L76LM33_ERROR;
-    }
+    /*
+	 * Set position fix interval to 100ms (10Hz) TODO: 5Hz practical, but 10Hz theoretical
+	 * "$PMTK220,100*2F<CR><LF>"
+	 * "$PMTK220,200*2C<CR><LF>"
+	*/
+	const char NMEA_RATE[] = "$PMTK220,100*2F\r\n";
+	if(L76LM33_SendCommand(dev, NMEA_RATE, strlen(NMEA_RATE)) != L76LM33_OK) return L76LM33_ERROR;
+	HAL_Delay(10);
 
     return L76LM33_OK;
 }

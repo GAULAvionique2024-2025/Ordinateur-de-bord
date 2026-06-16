@@ -99,7 +99,7 @@ int8_t NMEA_ParseRMC(nmea_t *gps_data, const char *nmea_sentence) {
                 char degrees[3] = {token[0], token[1], '\0'};
                 double deg = atof(degrees);
                 double min = atof(token + 2);
-                gps_data->lat = (int32_t)((deg + min / 60.0f) * 10000000.0f);
+                gps_data->lat = (int32_t)((deg + min / 60.0) * 10000000.0);
             }  
         } else if(token_idx == 4) { // LAT INDICATOR
             if(token[0] == 'S') gps_data->lat = -gps_data->lat;
@@ -108,7 +108,7 @@ int8_t NMEA_ParseRMC(nmea_t *gps_data, const char *nmea_sentence) {
                 char degrees[4] = {token[0], token[1], token[2], '\0'};
                 double deg = atof(degrees);
                 double min = atof(token + 3);
-                gps_data->lon = (int32_t)((deg + min / 60.0f) * 10000000.0f);
+                gps_data->lon = (int32_t)((deg + min / 60.0) * 10000000.0);
             }  
         } else if(token_idx == 6) { // LON INDICATOR
             if(token[0] == 'W') gps_data->lon = -gps_data->lon;
@@ -138,7 +138,7 @@ int8_t NMEA_ParseRMC(nmea_t *gps_data, const char *nmea_sentence) {
 					gps_data->date.month = (uint8_t)atoi(month_str);
 					gps_data->date.year  = (uint8_t)atoi(year_str);
 
-					gps_data->date_raw = ((uint32_t)gps_data->date.day << 16) | ((uint32_t)gps_data->date.month << 8) | (uint32_t)gps_data->date.day;
+					gps_data->date_raw = ((uint32_t)gps_data->date.day << 16) | ((uint32_t)gps_data->date.month << 8) | (uint32_t)gps_data->date.year;
 				}
 			}
 		}

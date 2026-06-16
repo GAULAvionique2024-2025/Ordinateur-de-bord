@@ -464,6 +464,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t size) {
 	if(huart->Instance == l76lm33.huart->Instance) {
 		L76LM33_UART_RxEventCallback(&l76lm33, size);
+		HAL_UARTEx_ReceiveToIdle_DMA(l76lm33.huart, l76lm33.dma_buffer, L76LM33_BUFFER_SIZE);
 	}
 }
 

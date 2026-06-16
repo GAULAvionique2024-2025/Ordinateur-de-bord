@@ -19,7 +19,7 @@
 #include "stm32f4xx_hal.h"
 
 
-#define L76LM33_BUFFER_SIZE  256    // NMEA sentence is around 80 char max, has to be a power of two.
+#define L76LM33_BUFFER_SIZE  512    // NMEA sentence is around 90 char max, has to be a power of two + margin.
 #define L76LM33_UART_TIMEOUT 500    // For UART transmit
 
 typedef enum {
