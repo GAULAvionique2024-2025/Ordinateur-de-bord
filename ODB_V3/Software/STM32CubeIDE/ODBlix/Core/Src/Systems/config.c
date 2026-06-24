@@ -60,6 +60,49 @@ const odb_config_t default_config = {
 	.idefix_frequency_hz = 444270000,
 };
 
+static config_error_t Config_Validate(odb_config_t* new_config) {
+    if(new_config == NULL) {
+        return CONFIG_ERR_MAGIC_NUMBER;
+    }
+
+    if(new_config->magic_number != CONFIG_MAGIC_NUMBER) {
+        return CONFIG_ERR_MAGIC_NUMBER;
+    }
+
+    if(new_config->version_major != CONFIG_PROTOCOL_VERSION_MAJOR) {
+        return CONFIG_ERR_VERSION;
+    }
+
+    if(new_config->stage_role < 2 || new_config->stage_role > 3) {
+        return CONFIG_ERR_STAGE_ROLE;
+    }
+
+    if(new_config->apogee_failsafe_ms >= new_config->pyros_arming_failsafe_ms) {
+        return CONFIG_ERR_TIMING_CONFLICT;
+    }
+
+    if(new_config->min_needed_pyro_nb > 4 || new_config->min_needed_pyro_nb == 0) {
+        return CONFIG_ERR_PYRO_LIMITS;
+    }
+    if (new_config->main_fire_attempt_max_nb == 0 || new_config->drogue_fire_attempt_max_nb == 0) {
+        return CONFIG_ERR_PYRO_LIMITS;
+    }
+
+    if(new_config->acc_z_launch_threshold <= 0.0f || new_config->acc_z_launch_threshold >= 39.24f) {
+        return CONFIG_ERR_THRESHOLDS;
+    }
+
+    if(new_config->main_deploy_altitude_threshold_m < 50.0f) {
+        return CONFIG_ERR_THRESHOLDS;
+    }
+
+    if(new_config->apogee_detect_v_threshold > 0.0f) {
+        return CONFIG_ERR_THRESHOLDS;
+    }
+
+    return CONFIG_VALID_OK;
+}
+
 void Config_Init(void) {
     odb_config_t temp_config;
     if(W25Q_Read(&w25q, (uint8_t*)&temp_config, FLASH_CONFIG_START_ADDRESS, sizeof(odb_config_t)) == 0) {
@@ -76,6 +119,11 @@ void Config_Init(void) {
 }
 
 int8_t Config_SaveToFlash(void) {
+	config_error_t validation_result = Config_Validate(&current_config);
+	if(validation_result != CONFIG_VALID_OK) {
+		return (int8_t)validation_result;
+	}
+
 	if(W25Q_EraseSector(&w25q, FLASH_CONFIG_START_ADDRESS) != 0) {
     	return -1; // failed
     }

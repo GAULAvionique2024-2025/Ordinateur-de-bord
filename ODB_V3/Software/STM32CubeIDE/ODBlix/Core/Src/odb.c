@@ -467,7 +467,7 @@ void ODB_Update(odb_data_t *data, odb_stats_t *stats) {
     }
     //Profiler_StopTask(PROFILE_TASK_GPS);
 
-    data->time_boot_ms = now_ms; // TODO: change in time_ms
+    data->time_boot_ms = now_ms;
     data->battery_mv = (uint16_t)(system_measurements.vin_batt);
 
     if(stats) {

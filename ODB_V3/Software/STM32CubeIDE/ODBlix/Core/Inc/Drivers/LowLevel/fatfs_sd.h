@@ -11,11 +11,9 @@
 #ifndef INC_GAUL_DRIVERS_FATFS_SD_H
 #define INC_GAUL_DRIVERS__FATFS_SD_H
 
-#define SD_CS_GPIO_Port GPIOA
-#define SD_CS_Pin 4
-#define SPI_TIMEOUT 200
+#include "integer.h"
+#include "diskio.h"
 
-/* Definitions for MMC/SDC command */
 #define CMD0     (0x40+0)     /* GO_IDLE_STATE */
 #define CMD1     (0x40+1)     /* SEND_OP_COND */
 #define CMD8     (0x40+8)     /* SEND_IF_COND */
@@ -33,7 +31,6 @@
 #define CMD58    (0x40+58)    /* READ_OCR */
 
 DSTATUS SD_disk_initialize (BYTE pdrv);
-
 DSTATUS SD_disk_status (BYTE pdrv);
 DRESULT SD_disk_read (BYTE pdrv, BYTE* buff, DWORD sector, UINT count);
 DRESULT SD_disk_write (BYTE pdrv, const BYTE* buff, DWORD sector, UINT count);

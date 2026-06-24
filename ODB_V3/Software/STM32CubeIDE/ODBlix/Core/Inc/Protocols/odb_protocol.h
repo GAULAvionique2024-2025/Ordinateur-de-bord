@@ -72,7 +72,6 @@
 #define FLAG_MACH_LOCK_ENABLED          (1 << 8)
 ///...
 
-// TODO: maybe use RTC + POSIX timestamps instead of time since boot
 // pyro event stucture with time of event and pyro number
 typedef struct __attribute__((packed)) {
     bool fired;

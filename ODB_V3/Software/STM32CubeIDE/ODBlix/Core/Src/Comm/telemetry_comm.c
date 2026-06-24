@@ -17,7 +17,7 @@ static void Telemetry_TransmitMessage(rfd900x_t *rfd_dev, const mavlink_message_
 
     rfd900x_state_t err = RFD900x_Transmit(rfd_dev, local_tx_buffer, len);
     if(err == RFD_BUSY) {
-        // TODO: add missing transmit counter
+        // TODO: add missing error counter
     }
 }
 

@@ -25,6 +25,16 @@
 #define CONFIG_MAGIC_NUMBER  			0x434F4E46 // CONF
 /* =========== */
 
+typedef enum {
+    CONFIG_VALID_OK = 0,
+    CONFIG_ERR_MAGIC_NUMBER = -1,
+    CONFIG_ERR_VERSION = -2,
+    CONFIG_ERR_STAGE_ROLE = -3,
+    CONFIG_ERR_TIMING_CONFLICT = -4,
+    CONFIG_ERR_PYRO_LIMITS = -5,
+    CONFIG_ERR_THRESHOLDS = -6
+} config_error_t;
+
 extern odb_config_t current_config;
 
 void Config_Init(void);

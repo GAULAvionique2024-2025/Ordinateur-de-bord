@@ -172,7 +172,7 @@ l76lm33_state_t L76LM33_Init(l76lm33_t *dev) {
     HAL_Delay(10);
 
     /*
-	 * Set position fix interval to 100ms (10Hz) TODO: 5Hz practical, but 10Hz theoretical
+	 * Set position fix interval to 100ms (10Hz) -> 5Hz practical, but 10Hz theoretical
 	 * "$PMTK220,100*2F<CR><LF>"
 	 * "$PMTK220,200*2C<CR><LF>"
 	*/

@@ -10,7 +10,6 @@
 
 #include <stdint.h>
 
-// TODO: Check viability of frequencies
 #define TASK_REBOOT_MANAGER_FREQ_MS		50		// 20Hz
 #define TASK_FSM_FREQ_MS              	5       // 200Hz
 #define TASK_DATA_UPDATE_FREQ_MS      	10      // 100Hz
