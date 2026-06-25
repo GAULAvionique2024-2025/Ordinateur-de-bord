@@ -3825,12 +3825,6 @@
 		(uuid "099b9bf5-1dfa-4e15-a7a9-e11c8cfe8da8")
 	)
 	(junction
-		(at 40.64 71.12)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "11f156bb-edc9-4d4f-a1c3-252b0de664bd")
-	)
-	(junction
 		(at 161.29 83.82)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -3937,6 +3931,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "60ebd7f6-aad1-4c8e-8ef3-bb7c6ce298d2")
+	)
+	(junction
+		(at 40.64 71.12)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "63d0cd9e-fc1c-494d-a897-90a90ce1f33f")
 	)
 	(junction
 		(at 30.48 34.29)
@@ -5532,7 +5532,7 @@
 	)
 	(wire
 		(pts
-			(xy 39.37 71.12) (xy 40.64 71.12)
+			(xy 38.1 71.12) (xy 40.64 71.12)
 		)
 		(stroke
 			(width 0)
@@ -5562,7 +5562,7 @@
 	)
 	(wire
 		(pts
-			(xy 30.48 71.12) (xy 34.29 71.12)
+			(xy 30.48 71.12) (xy 33.02 71.12)
 		)
 		(stroke
 			(width 0)
@@ -9255,7 +9255,7 @@
 		(dnp no)
 		(uuid "4998a777-de91-405c-ba7d-e17344d1eaaa")
 		(property "Reference" "R70"
-			(at 115.824 172.72 90)
+			(at 114.554 173.228 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -9266,7 +9266,7 @@
 			)
 		)
 		(property "Value" "1.5k"
-			(at 115.062 177.8 90)
+			(at 114.554 177.546 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -14802,7 +14802,7 @@
 	)
 	(symbol
 		(lib_id "Device:FerriteBead_Small")
-		(at 36.83 71.12 90)
+		(at 35.56 71.12 90)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -14812,7 +14812,7 @@
 		(dnp no)
 		(uuid "cd418d35-ab46-4df7-85f6-5ebb48b712a0")
 		(property "Reference" "FB3"
-			(at 36.83 65.786 90)
+			(at 35.56 65.786 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -14822,7 +14822,7 @@
 			)
 		)
 		(property "Value" "600R"
-			(at 36.83 68.326 90)
+			(at 35.56 68.326 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -14832,7 +14832,7 @@
 			)
 		)
 		(property "Footprint" "Inductor_SMD:L_1210_3225Metric"
-			(at 36.83 72.898 90)
+			(at 35.56 72.898 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -14843,7 +14843,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.digikey.ca/en/products/detail/taiyo-yuden/FBMH3225HM601NT/957843"
-			(at 36.83 71.12 0)
+			(at 35.56 71.12 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -14854,7 +14854,7 @@
 			)
 		)
 		(property "Description" "600 Ohms @ 100 MHz 1 Power Line Ferrite Bead 1210 (3225 Metric) 3A 42mOhm"
-			(at 36.83 71.12 0)
+			(at 35.56 71.12 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -14865,7 +14865,7 @@
 			)
 		)
 		(property "DigiKey_Part_Number" "587-1755-1-ND"
-			(at 36.83 71.12 90)
+			(at 35.56 71.12 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -14876,7 +14876,7 @@
 			)
 		)
 		(property "Purchase-URL" ""
-			(at 36.83 71.12 90)
+			(at 35.56 71.12 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -14887,7 +14887,7 @@
 			)
 		)
 		(property "Sim.Device" ""
-			(at 36.83 71.12 90)
+			(at 35.56 71.12 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -14898,7 +14898,7 @@
 			)
 		)
 		(property "Sim.Pins" ""
-			(at 36.83 71.12 90)
+			(at 35.56 71.12 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -14909,7 +14909,7 @@
 			)
 		)
 		(property "Sim.Type" ""
-			(at 36.83 71.12 90)
+			(at 35.56 71.12 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -14920,7 +14920,7 @@
 			)
 		)
 		(property "Manufacturer_Part_Number" "FBMH3225HM601NT"
-			(at 36.83 71.12 90)
+			(at 35.56 71.12 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -15917,7 +15917,7 @@
 		(dnp no)
 		(uuid "e5be18b1-2fca-4f55-b8f6-894f069be977")
 		(property "Reference" "R71"
-			(at 116.078 179.578 90)
+			(at 114.554 179.578 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -15928,7 +15928,7 @@
 			)
 		)
 		(property "Value" "1.5k"
-			(at 115.062 184.15 90)
+			(at 114.554 183.896 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
