@@ -575,7 +575,7 @@
       "method": 0,
       "sort_order": 0
     },
-    "bom_export_filename": "production\\bom.csv",
+    "bom_export_filename": "${PROJECTNAME}.csv",
     "bom_fmt_presets": [],
     "bom_fmt_settings": {
       "field_delimiter": ",",
@@ -847,7 +847,7 @@
         "uuid": "4b06c5d1-aa8b-48ed-8972-b43a60cfab78"
       }
     ],
-    "used_designators": "R89-90,#PWR65",
+    "used_designators": "R32,R89-90,#PWR8,#PWR21,#PWR65,Q4",
     "variants": []
   },
   "sheets": [

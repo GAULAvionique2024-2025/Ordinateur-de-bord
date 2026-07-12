@@ -5380,6 +5380,17 @@
 		)
 		(uuid "b3d5f7d3-9c71-4351-be92-78802f95282c")
 	)
+	(text "TODO Schematic:\n[X] - Fix protocol select IMU\n[X] - Fix pin reset GPS\n[X] - Revoir circuit pyro et continuité\n[X] - Ajouter protection polarité\n[ ] - Plus grosses diodes\n[ ] - Mettre connecteurs Molex plus petits pour RFD et Idefix\n[ ] - Ajouter pins continuité et resets sur STM\n\nTODO PCB :\n[ ] - MAJ tous les changements schematic\n[ ] - Silkscreen debugging\n"
+		(exclude_from_sim no)
+		(at 22.606 180.34 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "d327a577-b680-458f-908a-afb6042f8f27")
+	)
 	(text "USART3_RX"
 		(exclude_from_sim no)
 		(at 213.106 127.254 0)
@@ -10370,6 +10381,30 @@
 		(uuid "f0ee14e9-2f87-4948-bfe2-dde4afaa79c4")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 130.002 55.88 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+	)
+	(global_label "Pyro_CTN"
+		(shape input)
+		(at 44.45 200.66 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "f6b6d7c7-7f0d-48ed-85cd-ae603e6074af")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 32.7563 200.66 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
