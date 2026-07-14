@@ -1007,14 +1007,14 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOD_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOF, CriticalLED_G_Pin|CriticalLED_R_Pin|Pyros_Arm_Pin|Fire_4_Pin
-                          |Fire_3_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOF, CriticalLED_G_Pin|CriticalLED_R_Pin|Pyros_CTN_Pin|Pyros_Arm_Pin
+                          |Fire_4_Pin|Fire_3_Pin|Fire_2_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOA, PA_An_Pin|BARO_SPI1_CS_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOG, Fire_2_Pin|Fire_1_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(Fire_1_GPIO_Port, Fire_1_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(SD_SPI5_CS_GPIO_Port, SD_SPI5_CS_Pin, GPIO_PIN_RESET);
@@ -1022,10 +1022,10 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(IMU_nReset_GPIO_Port, IMU_nReset_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : CriticalLED_G_Pin CriticalLED_R_Pin Pyros_Arm_Pin Fire_4_Pin
-                           Fire_3_Pin */
-  GPIO_InitStruct.Pin = CriticalLED_G_Pin|CriticalLED_R_Pin|Pyros_Arm_Pin|Fire_4_Pin
-                          |Fire_3_Pin;
+  /*Configure GPIO pins : CriticalLED_G_Pin CriticalLED_R_Pin Pyros_CTN_Pin Pyros_Arm_Pin
+                           Fire_4_Pin Fire_3_Pin Fire_2_Pin */
+  GPIO_InitStruct.Pin = CriticalLED_G_Pin|CriticalLED_R_Pin|Pyros_CTN_Pin|Pyros_Arm_Pin
+                          |Fire_4_Pin|Fire_3_Pin|Fire_2_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -1038,18 +1038,26 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : Fire_2_Pin Fire_1_Pin */
-  GPIO_InitStruct.Pin = Fire_2_Pin|Fire_1_Pin;
+  /*Configure GPIO pin : Fire_1_Pin */
+  GPIO_InitStruct.Pin = Fire_1_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
+  HAL_GPIO_Init(Fire_1_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : Power_Good_Pin */
   GPIO_InitStruct.Pin = Power_Good_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(Power_Good_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : PE10 */
+  GPIO_InitStruct.Pin = GPIO_PIN_10;
+  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+  GPIO_InitStruct.Alternate = GPIO_AF12_FSMC;
+  HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
   /*Configure GPIO pin : SD_SPI5_CS_Pin */
   GPIO_InitStruct.Pin = SD_SPI5_CS_Pin;
@@ -1071,6 +1079,12 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : USB_5V_Pin */
+  GPIO_InitStruct.Pin = USB_5V_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(USB_5V_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : IMU_INT_Pin */
   GPIO_InitStruct.Pin = IMU_INT_Pin;

@@ -5626,7 +5626,7 @@
 		)
 		(uuid "84729548-4827-44e5-9689-74f758daa10f")
 	)
-	(text "${/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372/adc6630a-148c-4b6e-b308-9cb2acd234f0:REFERENCE}, ${/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372/6232a2e0-926a-4e4d-a9df-85a8a2c9a99e:REFERENCE} are there to clamp the line to ${/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372/a7ab30b6-1c68-4176-964a-109ef5b035cc:VALUE}\n\nThe voltage divider form by ${/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372/1fc7b8cd-8707-4b65-a4c3-5357653aeaad:REFERENCE} and ${/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372/2e3093ad-5b8b-4ec8-88b6-78ab2fbcc977:REFERENCE} are there \nto lower V_{in} to be safe for the stm\n\nIf V_{in} = 24v (Max value)\n24 * ${/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372/2e3093ad-5b8b-4ec8-88b6-78ab2fbcc977:VALUE} / (${/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372/1fc7b8cd-8707-4b65-a4c3-5357653aeaad:VALUE} + ${/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372/2e3093ad-5b8b-4ec8-88b6-78ab2fbcc977:VALUE}) = 3.13v\n\nWith ${/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372/2e3093ad-5b8b-4ec8-88b6-78ab2fbcc977:REFERENCE} and ${/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372/1fc7b8cd-8707-4b65-a4c3-5357653aeaad:REFERENCE} the total resistance is\n${/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372/2e3093ad-5b8b-4ec8-88b6-78ab2fbcc977:VALUE} + ${/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372/1fc7b8cd-8707-4b65-a4c3-5357653aeaad:VALUE} = 207k\nWith this resistance and V_{in} = 24v we get 24v/207k = 0.116mA\nThe igniter we use is J-Tek Igniter.\nThe maximum test current is 40mA\n0.116mA < 40mA = We are good\n\nTo make an continuity test, you need to arm the pyros before \nthen check the sense_X voltage.\nif V_{sense} > 0 = continuity\nelse open"
+	(text "The voltage divider form by ${/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372/1fc7b8cd-8707-4b65-a4c3-5357653aeaad:REFERENCE} and ${/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372/2e3093ad-5b8b-4ec8-88b6-78ab2fbcc977:REFERENCE} are there \nto lower V_{in} to be safe for the stm\n\nIf V_{in} = 24v (Max value)\n24 * ${/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372/2e3093ad-5b8b-4ec8-88b6-78ab2fbcc977:VALUE} / (${/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372/1fc7b8cd-8707-4b65-a4c3-5357653aeaad:VALUE} + ${/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372/2e3093ad-5b8b-4ec8-88b6-78ab2fbcc977:VALUE}) = 3.13v\n\nWith ${/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372/2e3093ad-5b8b-4ec8-88b6-78ab2fbcc977:REFERENCE} and ${/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372/1fc7b8cd-8707-4b65-a4c3-5357653aeaad:REFERENCE} the total resistance is\n${/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372/2e3093ad-5b8b-4ec8-88b6-78ab2fbcc977:VALUE} + ${/4b06c5d1-aa8b-48ed-8972-b43a60cfab78/8ab7427e-7183-4caa-ac8a-08b0bd412372/1fc7b8cd-8707-4b65-a4c3-5357653aeaad:VALUE} = 207k\nWith this resistance and V_{in} = 24v we get 24v/207k = 0.116mA\nThe igniter we use is J-Tek Igniter.\nThe maximum test current is 40mA\n0.116mA < 40mA = We are good\n\nTo make an continuity test, you need to arm the pyros before \nthen check the sense_X voltage.\nif V_{sense} > 0 = continuity\nelse open"
 		(exclude_from_sim no)
 		(at 199.898 109.728 0)
 		(effects
@@ -8635,7 +8635,7 @@
 			)
 		)
 	)
-	(global_label "Pyro_CTN"
+	(global_label "Pyros_CTN"
 		(shape input)
 		(at 252.73 53.34 180)
 		(fields_autoplaced yes)
@@ -8647,7 +8647,7 @@
 		)
 		(uuid "8f6ee406-b837-40dc-9169-8b2780cb3cfb")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 241.0363 53.34 0)
+			(at 240.0082 53.34 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
