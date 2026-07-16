@@ -10303,30 +10303,6 @@
 			)
 		)
 	)
-	(global_label "Pyro_CTN"
-		(shape input)
-		(at 44.45 200.66 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "f6b6d7c7-7f0d-48ed-85cd-ae603e6074af")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 32.7563 200.66 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-	)
 	(global_label "PA_An"
 		(shape input)
 		(at 243.84 55.88 0)
