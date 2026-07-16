@@ -5380,7 +5380,7 @@
 		)
 		(uuid "b3d5f7d3-9c71-4351-be92-78802f95282c")
 	)
-	(text "TODO Schematic:\n[X] - Fix protocol select IMU\n[X] - Fix pin reset GPS\n[X] - Revoir circuit pyro et continuité\n[X] - Ajouter protection polarité\n[X] - Plus grosses diodes\n[X] - Mettre connecteurs Molex plus petits pour RFD et Idefix\n[ ] - Ajouter pins continuité et resets sur STM\n\nTODO PCB :\n[ ] - MAJ tous les changements schematic\n[ ] - Silkscreen debugging\n"
+	(text "TODO Schematic:\n[X] - Fix protocol select IMU\n[X] - Fix pin reset GPS\n[X] - Revoir circuit pyro et continuité\n[X] - Ajouter protection polarité\n[X] - Plus grosses diodes\n[X] - Mettre connecteurs Molex plus petits pour RFD et Idefix\n[X] - Ajouter pins continuité et resets sur STM\n\nTODO PCB :\n[X] - MAJ tous les changements schematic\n[X] - Silkscreen debugging\n"
 		(exclude_from_sim no)
 		(at 22.606 180.34 0)
 		(effects
