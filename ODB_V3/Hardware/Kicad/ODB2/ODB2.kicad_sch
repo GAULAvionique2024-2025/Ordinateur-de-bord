@@ -9139,7 +9139,7 @@
 			)
 		)
 	)
-	(global_label "GPS_USART6_TX"
+	(global_label "L76LM33_USART6_TX"
 		(shape input)
 		(at 383.54 227.33 0)
 		(fields_autoplaced yes)
@@ -9151,7 +9151,7 @@
 		)
 		(uuid "80657f67-3c9f-412e-9c72-3f6444e707d5")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 401.4627 227.33 0)
+			(at 406.0588 227.33 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10375,7 +10375,7 @@
 			)
 		)
 	)
-	(global_label "GPS_USART6_RX"
+	(global_label "L76LM33_USART6_RX"
 		(shape input)
 		(at 383.54 224.79 0)
 		(fields_autoplaced yes)
@@ -10387,7 +10387,7 @@
 		)
 		(uuid "fa573a1e-ed7b-4fbb-8bcf-79dc3fe419f8")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 401.7651 224.79 0)
+			(at 406.3612 224.79 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
