@@ -9,8 +9,6 @@
 #include "Drivers/MEM2067.h"
 
 static FATFS fs;
-static FIL fil;
-static FRESULT fresult;
 
 static FATFS *pfr;
 static DWORD fre_clust;
@@ -66,12 +64,12 @@ mem2067_state_t MEM2067_Mount(const char* filename) {
 }
 
 void MEM2067_Write(const char *filename, const DataField data[], size_t num_fields) {
-    FIL fil;
-    FRESULT fresult;
-    char buffer[256];
-    size_t offset = 0;
+	static FIL fil;
+	static char buffer[256];
+	FRESULT fresult;
+	size_t offset = 0;
 
-    fresult = f_open(&fil, filename, FA_READ);
+	fresult = f_open(&fil, filename, FA_OPEN_ALWAYS | FA_WRITE);
     if(fresult != FR_OK) {
     	return;
     }

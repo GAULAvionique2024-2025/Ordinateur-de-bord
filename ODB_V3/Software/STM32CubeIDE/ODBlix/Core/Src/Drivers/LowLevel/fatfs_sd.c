@@ -74,7 +74,9 @@ static bool SD_RxDataBlock(BYTE *buff, UINT btr) {
 
     if(token != 0xFE) return 0; // Erreur
 
-    HAL_SPI_Receive(&hspi5, buff, btr, HAL_MAX_DELAY);
+    for(UINT i = 0; i < btr; i++) {
+		buff[i] = SPI_RxByte();
+	}
     SPI_RxByte();
     SPI_RxByte();
     return 1;
