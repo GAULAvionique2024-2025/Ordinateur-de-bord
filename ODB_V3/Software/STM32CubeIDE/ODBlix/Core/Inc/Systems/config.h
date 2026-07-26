@@ -14,7 +14,8 @@
 #include <stdint.h>
 
 /* === Constants === */
-#define EXPECTED_CONFIG_COUNT 22
+#define EXPECTED_CONFIG_COUNT 	22
+#define MEM2067_FILENAME		"log.csv"
 
 /* === Flash Mapping Configuration === */
 #define FLASH_CONFIG_START_ADDRESS      (W25Q512_FLASH_SIZE_BYTE - FLASH_SECTOR_SIZE_BYTE) // 0x03FFF000
@@ -23,6 +24,23 @@
 #define LOGGER_DATA_MAGIC_NUMBER	    0x44415441 // DATA
 #define LOGGER_STATS_MAGIC_NUMBER	    0x53544154 // STAT
 #define CONFIG_MAGIC_NUMBER  			0x434F4E46 // CONF
+/* =========== */
+
+/* === Limits === */
+/* === Stage Limits --- */
+#define CONFIG_STAGE_ROLE_MIN			(2U)
+#define CONFIG_STAGE_ROLE_MAX			(3U)
+/* --- Pyro Limits --- */
+#define CONFIG_PYRO_NEEDED_MIN			(1U)
+#define CONFIG_PYRO_NEEDED_MAX			(4U)
+#define CONFIG_PYRO_ATTEMPTS_MIN		(1U)
+/* --- Acceleration & Thresholds --- */
+#define CONFIG_ACC_Z_LAUNCH_MIN_MS2		(0.0f)
+#define CONFIG_ACC_Z_LAUNCH_MAX_MS2		(39.24f)
+/* --- Altitude Thresholds --- */
+#define CONFIG_MAIN_DEPLOY_ALT_MIN_M	(50.0f)
+/* --- Velocity Thresholds --- */
+#define CONFIG_APOGEE_DETECT_V_MAX_MS	(0.0f)
 /* =========== */
 
 typedef enum {

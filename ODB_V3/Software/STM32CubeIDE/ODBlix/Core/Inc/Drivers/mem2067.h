@@ -41,17 +41,22 @@ typedef struct {
     DataUnion 	data;
 } DataField;
 
+typedef enum {
+	MEM2067_OK,
+	MEM2067_ERROR
+} mem2067_state_t;
+
 typedef struct {
 	uint32_t total_space;
 	uint32_t free_space;
-} MEM2067;
+} mem2067_t;
 
 
-uint8_t MEM2067_Mount(const char *filename);
+mem2067_state_t MEM2067_Mount(const char *filename);
 void MEM2067_Write(const char *filename, const DataField data[], size_t num_fields);
 char *MEM2067_Read(const char *filename);
 void MEM2067_Unmount(void);
-void MEM2067_Infos(MEM2067 *devMEM);
+void MEM2067_Infos(mem2067_t *dev);
 
 const char* FATFS_ErrorToString(FRESULT result);
 

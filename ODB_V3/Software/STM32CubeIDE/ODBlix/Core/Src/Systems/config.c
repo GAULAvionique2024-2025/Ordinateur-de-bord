@@ -60,7 +60,7 @@ const odb_config_t default_config = {
 	.idefix_frequency_hz = 444270000,
 };
 
-static config_error_t Config_Validate(odb_config_t* new_config) {
+static config_error_t Config_Validate(const odb_config_t* new_config) {
     if(new_config == NULL) {
         return CONFIG_ERR_MAGIC_NUMBER;
     }
@@ -73,31 +73,40 @@ static config_error_t Config_Validate(odb_config_t* new_config) {
         return CONFIG_ERR_VERSION;
     }
 
-    if(new_config->stage_role < 2 || new_config->stage_role > 3) {
-        return CONFIG_ERR_STAGE_ROLE;
-    }
+    if(current_config.debug_mode == 0) {
+    	/* Validate Stage Role */
+		if(new_config->stage_role < CONFIG_STAGE_ROLE_MIN || new_config->stage_role > CONFIG_STAGE_ROLE_MAX) {
+			return CONFIG_ERR_STAGE_ROLE;
+		}
 
-    if(new_config->apogee_failsafe_ms >= new_config->pyros_arming_failsafe_ms) {
-        return CONFIG_ERR_TIMING_CONFLICT;
-    }
+		/* Validate Fail-safes & Timings */
+		if(new_config->apogee_failsafe_ms <= new_config->pyros_arming_failsafe_ms) {
+			return CONFIG_ERR_TIMING_CONFLICT;
+		}
 
-    if(new_config->min_needed_pyro_nb > 4 || new_config->min_needed_pyro_nb == 0) {
-        return CONFIG_ERR_PYRO_LIMITS;
-    }
-    if (new_config->main_fire_attempt_max_nb == 0 || new_config->drogue_fire_attempt_max_nb == 0) {
-        return CONFIG_ERR_PYRO_LIMITS;
-    }
+		/* Validate Pyro Configuration */
+		if(new_config->min_needed_pyro_nb < CONFIG_PYRO_NEEDED_MIN || new_config->min_needed_pyro_nb > CONFIG_PYRO_NEEDED_MAX) {
+			return CONFIG_ERR_PYRO_LIMITS;
+		}
 
-    if(new_config->acc_z_launch_threshold <= 0.0f || new_config->acc_z_launch_threshold >= 39.24f) {
-        return CONFIG_ERR_THRESHOLDS;
-    }
+		if(new_config->main_fire_attempt_max_nb < CONFIG_PYRO_ATTEMPTS_MIN || new_config->drogue_fire_attempt_max_nb < CONFIG_PYRO_ATTEMPTS_MIN) {
+			return CONFIG_ERR_PYRO_LIMITS;
+		}
 
-    if(new_config->main_deploy_altitude_threshold_m < 50.0f) {
-        return CONFIG_ERR_THRESHOLDS;
-    }
+		/* Validate Acceleration Thresholds */
+		if(new_config->acc_z_launch_threshold <= CONFIG_ACC_Z_LAUNCH_MIN_MS2 || new_config->acc_z_launch_threshold >= CONFIG_ACC_Z_LAUNCH_MAX_MS2) {
+			return CONFIG_ERR_THRESHOLDS;
+		}
 
-    if(new_config->apogee_detect_v_threshold > 0.0f) {
-        return CONFIG_ERR_THRESHOLDS;
+		/* Validate Altitude Thresholds */
+		if(new_config->main_deploy_altitude_threshold_m < CONFIG_MAIN_DEPLOY_ALT_MIN_M) {
+			return CONFIG_ERR_THRESHOLDS;
+		}
+
+		/* Validate Velocity Thresholds */
+		if(new_config->apogee_detect_v_threshold > CONFIG_APOGEE_DETECT_V_MAX_MS) {
+			return CONFIG_ERR_THRESHOLDS;
+		}
     }
 
     return CONFIG_VALID_OK;

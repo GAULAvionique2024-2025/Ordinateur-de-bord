@@ -166,7 +166,7 @@ void AppComm_ProcessRx(hm11_t *hm11_dev) {
                     } else if(cmd == CMD_REQ_CFG) {
                         const odb_config_t *actual_config = Config_Get();
                         AppComm_SendFrame(hm11_dev, MSG_GENERIC_DATA, (uint8_t*)actual_config, CONFIG_DATA_SIZE);
-                    } else if (cmd == CMD_REQ_EVENTS) {
+                    } else if(cmd == CMD_REQ_EVENTS) {
 						const odb_stats_t *last_flight_stats = Logger_GetLastFlightStats();
 						if (last_flight_stats != NULL) {
 							AppComm_SendFrame(hm11_dev, MSG_GENERIC_DATA, (uint8_t*)last_flight_stats, ODB_STATS_SIZE);

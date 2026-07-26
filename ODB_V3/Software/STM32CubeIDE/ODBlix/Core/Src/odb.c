@@ -35,6 +35,7 @@ extern buzzer_t buzzer;
 extern system_measurements_t system_measurements;
 extern w25q_t w25q;
 extern idefix_t idefix;
+extern mem2067_t mem2067;
 static kalman_nav_t kalman_filter;
 
 bool is_pyros_armed = false;		// TODO: Temporaire before v2
@@ -316,6 +317,15 @@ odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats) {
         DEBUG_PRINTF("Erreur : Init IdeFIX\n");
     }
 
+    if(MEM2067_Mount(MEM2067_FILENAME) == MEM2067_OK) {
+		warning += 1;
+		DEBUG_PRINTF("Erreur : Init RFD900x\n");
+	} else {
+		system_states |= FLAG_SD_OK;
+		MEM2067_Infos(&mem2067);
+		DEBUG_PRINTF("INFOS : Stockage disponible: %lu octets libres sur %lu disponibles.\n", mem2067.free_space, mem2067.total_space);
+	}
+
     if(CriticalLed_Init(&critical_led) != 0) {
 		warning += 1;
 		DEBUG_PRINTF("Erreur : Init Critical LED\n");
@@ -328,9 +338,14 @@ odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats) {
         DEBUG_PRINTF("Erreur : Alimentation non conforme !\n");
     } else if(error > 0) {
         odb_state = ODB_ERROR;
-        DEBUG_PRINTF("Erreur : %d erreur(s) detectee(s) lors de l'initialisation du systeme.\n", error);
+        DEBUG_PRINTF("Erreur : %d erreur(s) detectee(s) lors de l'initialisation du systeme. Certaines fonctionnalites essentielles ne sont pas disponibles.\n", error);
     } else {
-        odb_state = ODB_OK;
+    	if(warning > 0) {
+			odb_state = ODB_WARNING;
+			DEBUG_PRINTF("Warning : %d warning(s) detecte(s) lors de l'initialisation du systeme. Certaines fonctionnalites facultatives ne sont pas disponibles.\n", warning);
+		} else {
+			odb_state = ODB_OK;
+		}
     }
 
     // Update system infos

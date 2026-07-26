@@ -16,11 +16,10 @@ static FATFS *pfr;
 static DWORD fre_clust;
 
 
-uint8_t MEM2067_Mount(const char* filename) {
-
+mem2067_state_t MEM2067_Mount(const char* filename) {
 	FRESULT fresult = f_mount(&fs, "", 1);
-	if (fresult != FR_OK) {
-		return 0;
+	if(fresult != FR_OK) {
+		return MEM2067_ERROR;
 	}
 	// Create file with read / write access and open it
 	char commentHeader[] = 	"Comments";
@@ -63,24 +62,23 @@ uint8_t MEM2067_Mount(const char* filename) {
 	    };
 	MEM2067_Write(filename, headers, HEADER_NUM);
 
-	return 1;
+	return MEM2067_OK;
 }
 
 void MEM2067_Write(const char *filename, const DataField data[], size_t num_fields) {
-
     FIL fil;
     FRESULT fresult;
     char buffer[256];
     size_t offset = 0;
 
-    fresult = f_open(&fil, filename, FA_OPEN_ALWAYS | FA_WRITE);
+    fresult = f_open(&fil, filename, FA_READ);
     if(fresult != FR_OK) {
     	return;
     }
 
     f_lseek(&fil, f_size(&fil));
 
-    for (size_t i = 0; i < num_fields; i++) {
+    for(size_t i = 0; i < num_fields; i++) {
         switch (data[i].type) {
             case DATA_TYPE_INT:
                 offset += snprintf(buffer + offset, sizeof(buffer) - offset, "%d", data[i].data.i);
@@ -100,18 +98,23 @@ void MEM2067_Write(const char *filename, const DataField data[], size_t num_fiel
             case DATA_TYPE_STRING:
                 offset += snprintf(buffer + offset, sizeof(buffer) - offset, "%s", data[i].data.str);
                 break;
+            default:
+            	return;
         }
-        if (i < num_fields - 1) {
+
+        if(offset >= sizeof(buffer) - 1) break;
+
+        if(i < num_fields - 1) {
             offset += snprintf(buffer + offset, sizeof(buffer) - offset, "\t");
         } else {
             offset += snprintf(buffer + offset, sizeof(buffer) - offset, "\n");
         }
     }
 
-    // Écrire les données dans le fichier
-    if (f_puts(buffer, &fil) == EOF) {
-        // Gérer l'erreur d'écriture dans le fichier
+    if(f_puts(buffer, &fil) == EOF) {
+        // TODO: Handle writing error
     }
+
     f_close(&fil);
 }
 
@@ -121,7 +124,7 @@ char *MEM2067_Read(const char *filename) {
 
     FIL fil;
     FRESULT fresult = f_open(&fil, filename, FA_READ);
-    if (fresult == FR_OK) {
+    if(fresult == FR_OK) {
         f_gets(buffer, sizeof(buffer), &fil);
         f_close(&fil);
     }
@@ -132,33 +135,29 @@ void MEM2067_Unmount(void) {
     f_mount(NULL, "", 1);
 }
 
-void MEM2067_Infos(MEM2067 *devMEM) {
-
+void MEM2067_Infos(mem2067_t *dev) {
 	f_getfree("", &fre_clust, &pfr);
-	devMEM->total_space = (uint32_t)((pfr->n_fatent - 2) * pfr->csize * 0.5);
-	devMEM->free_space = (uint32_t)(fre_clust * pfr->csize * 0.5);
+	dev->total_space = (uint32_t)((pfr->n_fatent - 2) * pfr->csize * 0.5);
+	dev->free_space = (uint32_t)(fre_clust * pfr->csize * 0.5);
 }
 
-int bufsize (char* buf)
-{
+int bufsize (char* buf) {
 	int i = 0;
-	while (*buf++ != '\0')
+	while(*buf++ != '\0')
 		i++;
+
 	return i;
 }
 
-void bufclear(char* p_Buffer)
-{
-	for (int i = 0; i < BUFFER_SIZE; i++)
-	{
+void bufclear(char* p_Buffer) {
+	for(int i = 0; i < BUFFER_SIZE; i++) {
 		p_Buffer[i] = '\0';
 	}
 }
 
 // Debugging
 const char* FATFS_ErrorToString(FRESULT result) {
-
-    switch (result) {
+    switch(result) {
         case FR_OK: return "Succeeded\r\n";
         case FR_DISK_ERR: return "A hard error occurred in the low level disk I/O layer\r\n";
         case FR_INT_ERR: return "Assertion failed\r\n";
