@@ -11,16 +11,11 @@
 #include "odb.h"
 #include "Systems/config.h"
 #include "Systems/logger.h"
-#include "tools/profiler.h"
+#include "Tools/profiler.h"
 #include "Comm/beacon_comm.h"
+#include "Utils/utils.h"
 #include <ctype.h>
 #include <math.h>
-
-#define DEBUG_PRINTF(...) do { \
-    if(current_config.debug_mode) { \
-        printf(__VA_ARGS__); \
-    } \
-} while(0)
 
 
 extern adxl382_t adxl382;
@@ -181,28 +176,27 @@ odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats) {
         Config_Init();
         Logger_Init();
     } else {
-        error += 1;
-        DEBUG_PRINTF("Erreur : Init W25Q\n");
+        error++;
+        DEBUG_PRINTF("ERROR : Init W25Q\n");
     }
 
     if(SystemMeasurements_Init(&system_measurements) == 0) {
         SystemMeasurements_ComputePower(&system_measurements);
         if(system_measurements.vin_batt <= VIN_BATT_MIN_MV || system_measurements.vin_batt >= VIN_BATT_MAX_MV || system_measurements.v5_buck <= V5_MIN_MV || system_measurements.v5_buck >= V5_MAX_MV || system_measurements.v3_buck <= V3_MIN_MV || system_measurements.v3_buck >= V3_MAX_MV || system_measurements.pg_v5 == false) {
             alimentation_fault = true;
-            DEBUG_PRINTF("Erreur : Batterie trop faible ou batterie defaillante\n");
+            DEBUG_PRINTF("ERROR : Battery too weak or faulty battery\n");
         }
 
         uint8_t pyros_connected = 0;
-		const uint32_t FLAG_PYRO_CONN[4] = {FLAG_PYRO1_CONN, FLAG_PYRO2_CONN, FLAG_PYRO3_CONN, FLAG_PYRO4_CONN};
-		const char* role_names[] = {"NONE", "MAIN", "DROGUE", "MAIN_BACKUP", "DROGUE_BACKUP"};
+		const uint32_t FLAG_PYRO_CONN[PYRO_MAX] = {FLAG_PYRO1_CONN, FLAG_PYRO2_CONN, FLAG_PYRO3_CONN, FLAG_PYRO4_CONN};
 
 		SystemMeasurements_ComputePyros(&system_measurements);
 		bool is_armed = Pyro_Arming(&system_measurements, true);
 		if(is_armed) {
 			system_states |= FLAG_PYROS_ARMED_OK;
 		} else {
-			error += 1;
-			DEBUG_PRINTF("Erreur : Armement des Pyros bloque\n");
+			error++;
+			DEBUG_PRINTF("ERROR : Pyros arming blocked\n");
 		}
 
 		is_armed = Pyro_Arming(&system_measurements, false);
@@ -210,8 +204,8 @@ odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats) {
 			system_states |= FLAG_PYROS_ARMED_OK;
 		} else {
 			system_states &= ~FLAG_PYROS_ARMED_OK;
-			error += 1;
-			DEBUG_PRINTF("Erreur : Desarmement des Pyros bloque\n");
+			error++;
+			DEBUG_PRINTF("ERROR : Pyros disarming blocked\n");
 		}
 
 		for(int i = 0; i < PYRO_MAX; i++) {
@@ -222,75 +216,79 @@ odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats) {
 				system_states |= FLAG_PYRO_CONN[i];
 				DEBUG_PRINTF("Pyro %i connecte", i);
 
-				if(role != PYRO_ROLE_NONE) {
+				// Check config set and config match
+				if(role != PYRO_ROLE_NONE && Pyro_GetByRole(role) == &pyros[i]) {
 					pyros_connected++;
+					DEBUG_PRINTF("INFOS : Pyro %d (%s) detected\n", i + 1, PYRO_ROLES_LOOKUP[role]);
+				} else {
+					DEBUG_PRINTF("INFOS : Pyro %d connected, but doesn't have role set\n", i + 1);
 				}
 			} else {
 				if(role != PYRO_ROLE_NONE) {
-					warning += 1;
-					DEBUG_PRINTF("Erreur : Pyro %d (%s) deconnecte\n", i + 1, role_names[role]);
+					warning++;
+					DEBUG_PRINTF("ERROR : Pyro %d (%s) deconnected, but has role set\n", i + 1, PYRO_ROLES_LOOKUP[role]);
 				}
 			}
 		}
 
 		// Protection
 		if(pyros_connected < current_config.min_needed_pyro_nb) {
-			error += 1;
-			DEBUG_PRINTF("Erreur : Pas assez de pyros connectes ! (%d/%d)\n", pyros_connected, current_config.min_needed_pyro_nb);
+			error++;
+			DEBUG_PRINTF("ERROR : Not enough connected pyros (%d/%d)\n", pyros_connected, current_config.min_needed_pyro_nb);
 		}
 
         SystemMeasurements_ComputeTemperature(&system_measurements);
         if(system_measurements.temperature < MAX6612MXK_MIN_TEMP_C || system_measurements.temperature > MAX6612MXK_MAX_TEMP_C) {
-            error += 1;
-            DEBUG_PRINTF("Erreur : Temperature hors limites !\n");
+            error++;
+            DEBUG_PRINTF("ERROR : Temperature out of range\n");
         } else {
         	system_states |= FLAG_TEMP_OK;
         }
     } else {
-        error += 1;
-        DEBUG_PRINTF("Erreur : Init SystemMeasurements\n");
+        error++;
+        DEBUG_PRINTF("ERROR : Init SystemMeasurements\n");
     }
 
     if(BNO055_Init(&bno055) == BNO055_OK) {
         system_states |= FLAG_IMU_OK;
     } else {
-        error += 1;
-        DEBUG_PRINTF("Erreur : Init BNO055\n");
+        error++;
+        DEBUG_PRINTF("ERROR : Init BNO055\n");
     }
 
     if(MS5611_Init(&ms5611, OSR1024, OSR1024) == MS5611_OK) {
         system_states |= FLAG_BARO_OK;
     } else {
-        error += 1;
-        DEBUG_PRINTF("Erreur : Init MS5611\n");
+        error++;
+        DEBUG_PRINTF("ERROR : Init MS5611\n");
     }
 
     if(ADXL382_Init(&adxl382) == ADXL382_OK) {
         system_states |= FLAG_HIGHG_OK;
     } else {
-        error += 1;
-        DEBUG_PRINTF("Erreur : Init ADXL382\n");
+        error++;
+        DEBUG_PRINTF("ERROR : Init ADXL382\n");
     }
 
     if(L76LM33_Init(&l76lm33) == L76LM33_OK) {
         system_states |= FLAG_GPS_OK;
     } else {
-        error += 1;
-        DEBUG_PRINTF("Erreur : Init L76LM33\n");
+        error++;
+        DEBUG_PRINTF("ERROR : Init L76LM33\n");
     }
 
     if(RFD900x_Init(&rfd900x) == RFD_OK) {
         system_states |= FLAG_RADIO_OK;
     } else {
-        error += 1;
-        DEBUG_PRINTF("Erreur : Init RFD900x\n");
+        error++;
+        DEBUG_PRINTF("ERROR : Init RFD900x\n");
     }
 
     if(HM11_Init(&hm11) == HM11_OK) {
     	system_states |= FLAG_BT_OK;
     } else {
-    	warning += 1;
-    	DEBUG_PRINTF("Erreur : HM-11 ne repond pas ou possede une connexion active.\n");
+    	warning++;
+    	DEBUG_PRINTF("ERROR : HM-11 doesn't respond or has an active connection.\n");
     }
 
     // Kalman filter initialization -> calculate R_static
@@ -314,8 +312,8 @@ odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats) {
         system_states |= FLAG_IDEFIX_OK;
         Beacon_SetFrequency(&idefix);
     } else {
-        warning += 1;
-        DEBUG_PRINTF("Erreur : Init IdeFIX\n");
+    	warning++;
+        DEBUG_PRINTF("ERROR : Init IdeFIX\n");
     }
 
     if(MEM2067_Mount() == MEM2067_OK) {
@@ -323,35 +321,39 @@ odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats) {
     		system_states |= FLAG_SD_OK;
 			MEM2067_Infos(&mem2067);
 			data->sd_space = (uint16_t)(((uint64_t)mem2067.free_space * 100) / 2097152);
-			DEBUG_PRINTF("INFOS : Stockage disponible: %lu octets libres sur %lu disponibles.\n", mem2067.free_space, mem2067.total_space);
+			DEBUG_PRINTF("INFOS : Available SD storage: %lu free bytes out of %lu available\n", mem2067.free_space, mem2067.total_space);
 			//f_printf(&active_file, "Time(ms)\tMode\tAltitude\tTemp\n");
 			//MEM2067_Sync();
     	} else {
-    		warning += 1;
-    		DEBUG_PRINTF("Erreur : Open file MEM2067\n");
+    		warning++;
+    		DEBUG_PRINTF("ERROR : Open file MEM2067\n");
     	}
 	} else {
-		warning += 1;
-		DEBUG_PRINTF("Erreur : Mount MEM2067\n");
+		warning++;
+		DEBUG_PRINTF("ERROR : Mount MEM2067\n");
 	}
 
     if(CriticalLed_Init(&critical_led) != 0) {
-		warning += 1;
-		DEBUG_PRINTF("Erreur : Init Critical LED\n");
+    	warning++;
+		DEBUG_PRINTF("ERROR : Init Critical LED\n");
 	}
     // Sensors Init End
 
     odb_state_t odb_state = ODB_ERROR;
     if(alimentation_fault) {
         odb_state = ODB_ALIMENTATION_ERROR;
-        DEBUG_PRINTF("Erreur : Alimentation non conforme !\n");
+        DEBUG_PRINTF("ERROR : Non-compliant power supply\n");
     } else if(error > 0) {
         odb_state = ODB_ERROR;
-        DEBUG_PRINTF("Erreur : %d erreur(s) detectee(s) lors de l'initialisation du systeme. Certaines fonctionnalites essentielles ne sont pas disponibles.\n", error);
+        DEBUG_PRINTF("ERROR : %d ERROR(s) detected during system initialization. Some essential features are unavailable\n", error);
+        if(!current_config.debug_mode) {
+        	CriticalLED_SetColor(&critical_led, RED);
+        	while(1) {} // Stop execution
+        }
     } else {
     	if(warning > 0) {
 			odb_state = ODB_WARNING;
-			DEBUG_PRINTF("Warning : %d warning(s) detecte(s) lors de l'initialisation du systeme. Certaines fonctionnalites facultatives ne sont pas disponibles.\n", warning);
+			DEBUG_PRINTF("WARNING : %d WARNING(s) detected during system initialization. Some optional features are unavailable.\n", warning);
 		} else {
 			odb_state = ODB_OK;
 		}

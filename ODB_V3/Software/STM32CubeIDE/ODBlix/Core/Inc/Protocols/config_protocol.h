@@ -15,14 +15,24 @@
 #define CONFIG_PROTOCOL_VERSION_MINOR 0
 
 /* === Pyro Role === */
+#define PYRO_ROLES(X)			\
+    X(PYRO_ROLE_NONE)    		\
+    X(PYRO_ROLE_MAIN)  			\
+    X(PYRO_ROLE_DROGUE)    		\
+    X(PYRO_ROLE_MAIN_BACKUP)	\
+	X(PYRO_ROLE_DROGUE_BACKUP)
+
+#define AS_ENUM(NAME) NAME,
+#define AS_STRING(NAME) #NAME,
+
 typedef enum {
-    PYRO_ROLE_NONE          = 0,
-    PYRO_ROLE_MAIN          = 1,
-    PYRO_ROLE_DROGUE        = 2,
-    PYRO_ROLE_MAIN_BACKUP   = 3,
-    PYRO_ROLE_DROGUE_BACKUP = 4,
-	PYROS_ROLE_MAX			= 5
+	PYRO_ROLES(AS_ENUM)
+	PYROS_ROLE_MAX
 } pyro_role_t;
+
+static const char* const PYRO_ROLES_LOOKUP[] = {
+	PYRO_ROLES(AS_STRING)
+};
 
 /* === Configuration Structure === */
 typedef struct __attribute__((packed)) {

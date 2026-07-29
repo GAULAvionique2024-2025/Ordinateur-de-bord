@@ -16,6 +16,12 @@
 #define G_TO_MS2(g) 			((GRAVITY_MS2) * (g))
 #define PRESSURE_SEA_LEVEL_HPA	1013.25f    // hPa
 
+#define DEBUG_PRINTF(...) do { \
+    if(current_config.debug_mode) { \
+        printf(__VA_ARGS__); \
+    } \
+} while(0)
+
 /* === Offset === */
 typedef struct {
     float c0;
