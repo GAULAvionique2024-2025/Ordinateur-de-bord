@@ -8,38 +8,21 @@
 #ifndef INC_DRIVERS_MEM2067_H_
 #define INC_DRIVERS_MEM2067_H_
 
-#define BUFFER_SIZE 1024
-
 #include <fatfs.h>
 #include "Drivers/LowLevel/fatfs_sd.h"
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdarg.h>
 
-#define HEADER_NUM 18
+extern FIL active_file;
+extern uint8_t file_is_open;
 
-typedef union {
-    int 	i;
-    float 	f;
-    double 	d;
-    short 	s;
-    char 	c;
-    char* 	str;
-} DataUnion;
-
-typedef enum {
-    DATA_TYPE_INT,
-    DATA_TYPE_FLOAT,
-    DATA_TYPE_DOUBLE,
-    DATA_TYPE_SHORT,
-    DATA_TYPE_CHAR,
-	DATA_TYPE_STRING
-} DataType;
-
-typedef struct {
-    DataType 	type;
-    DataUnion 	data;
-} DataField;
+// Timestamp + f_printf on SD card
+#define MEM2067_Log(...) \
+    (file_is_open ? \
+        ((f_printf(&active_file, "%lu\t", HAL_GetTick()) > 0 && f_printf(&active_file, __VA_ARGS__) > 0) \
+            ? MEM2067_OK : MEM2067_ERROR) : MEM2067_ERROR)
 
 typedef enum {
 	MEM2067_OK,
@@ -51,16 +34,16 @@ typedef struct {
 	uint32_t free_space;
 } mem2067_t;
 
-
-mem2067_state_t MEM2067_Mount(const char *filename);
-void MEM2067_Write(const char *filename, const DataField data[], size_t num_fields);
-char *MEM2067_Read(const char *filename);
+mem2067_state_t MEM2067_Mount(void);
 void MEM2067_Unmount(void);
 void MEM2067_Infos(mem2067_t *dev);
 
-const char* FATFS_ErrorToString(FRESULT result);
+mem2067_state_t MEM2067_OpenFile(const char *filename);
+mem2067_state_t MEM2067_Sync(void);
+mem2067_state_t MEM2067_CloseFile(void);
+char *MEM2067_Read(const char *filename);
 
-int bufsize(char *buf);
-void bufclear(char *p_Buffer);
+// Debug
+const char* FATFS_ErrorToString(FRESULT result);
 
 #endif /* INC_DRIVERS_MEM2067_H_ */

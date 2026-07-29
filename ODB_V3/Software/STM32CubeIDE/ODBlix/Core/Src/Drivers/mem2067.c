@@ -1,7 +1,7 @@
 /*
  * mem2067.c
  *
- *  Created on: 19 juin 2026
+ *  Created on: 26 juillet 2026
  *      Author: gagno
  */
 
@@ -9,122 +9,61 @@
 #include "Drivers/MEM2067.h"
 
 static FATFS fs;
+FIL active_file;
+uint8_t file_is_open = 0;
 
-static FATFS *pfr;
-static DWORD fre_clust;
 
-
-mem2067_state_t MEM2067_Mount(const char* filename) {
+mem2067_state_t MEM2067_Mount(void) {
 	FRESULT fresult = f_mount(&fs, "", 1);
 	if(fresult != FR_OK) {
 		return MEM2067_ERROR;
 	}
-	// Create file with read / write access and open it
-	char commentHeader[] = 	"Comments";
-	char timeHeader[] = 	"Time";
-	char modeHeader[] = 	"Mode";
-	char altHeader[] = 		"Altitude";
-	char tempHeader[] = 	"Temperature";
-	char latHeader[] = 		"GPS_Latitude";
-	char longHeader[] = 	"GPS_Longitude";
-	char gyroXHeader[] = 	"Gyro_X";
-	char gyroYHeader[] = 	"Gyro_Y";
-	char gyroZHeader[] = 	"Gyro_Z";
-	char accXHeader[] = 	"Acc_X";
-	char accYHeader[] = 	"Acc_Y";
-	char accZHeader[] = 	"Acc_Z";
-	char velXHeader[] = 	"Vel_X";
-	char velYHeader[] = 	"Vel_Y";
-	char velZHeader[] = 	"Vel_Z";
-	char rollHeader[] = 	"Roll";
-	char pitchHeader[] = 	"Pitch";
-	DataField headers[] = {
-	        {DATA_TYPE_STRING, .data.str = commentHeader},
-	        {DATA_TYPE_STRING, .data.str = timeHeader},
-			{DATA_TYPE_STRING, .data.str = modeHeader},
-			{DATA_TYPE_STRING, .data.str = altHeader},
-			{DATA_TYPE_STRING, .data.str = tempHeader},
-			{DATA_TYPE_STRING, .data.str = latHeader},
-			{DATA_TYPE_STRING, .data.str = longHeader},
-			{DATA_TYPE_STRING, .data.str = gyroXHeader},
-			{DATA_TYPE_STRING, .data.str = gyroYHeader},
-			{DATA_TYPE_STRING, .data.str = gyroZHeader},
-			{DATA_TYPE_STRING, .data.str = accXHeader},
-			{DATA_TYPE_STRING, .data.str = accYHeader},
-	        {DATA_TYPE_STRING, .data.str = accZHeader},
-			{DATA_TYPE_STRING, .data.str = velXHeader},
-			{DATA_TYPE_STRING, .data.str = velYHeader},
-			{DATA_TYPE_STRING, .data.str = velZHeader},
-			{DATA_TYPE_STRING, .data.str = rollHeader},
-			{DATA_TYPE_STRING, .data.str = pitchHeader}
-	    };
-	MEM2067_Write(filename, headers, HEADER_NUM);
-
 	return MEM2067_OK;
 }
 
-void MEM2067_Write(const char *filename, const DataField data[], size_t num_fields) {
-	static FIL fil;
-	static char buffer[256];
-	FRESULT fresult;
-	size_t offset = 0;
+mem2067_state_t MEM2067_OpenFile(const char *filename) {
+    if(file_is_open) return MEM2067_ERROR;
 
-	fresult = f_open(&fil, filename, FA_OPEN_ALWAYS | FA_WRITE);
+    FRESULT fresult = f_open(&active_file, filename, FA_OPEN_ALWAYS | FA_WRITE);
     if(fresult != FR_OK) {
-    	return;
+        return MEM2067_ERROR;
     }
 
-    f_lseek(&fil, f_size(&fil));
+    f_lseek(&active_file, f_size(&active_file));
+    file_is_open = 1;
 
-    for(size_t i = 0; i < num_fields; i++) {
-        switch (data[i].type) {
-            case DATA_TYPE_INT:
-                offset += snprintf(buffer + offset, sizeof(buffer) - offset, "%d", data[i].data.i);
-                break;
-            case DATA_TYPE_FLOAT:
-                offset += snprintf(buffer + offset, sizeof(buffer) - offset, "%.6f", data[i].data.f);
-                break;
-            case DATA_TYPE_DOUBLE:
-                offset += snprintf(buffer + offset, sizeof(buffer) - offset, "%.6lf", data[i].data.d);
-                break;
-            case DATA_TYPE_SHORT:
-                offset += snprintf(buffer + offset, sizeof(buffer) - offset, "%d", data[i].data.s);
-                break;
-            case DATA_TYPE_CHAR:
-                offset += snprintf(buffer + offset, sizeof(buffer) - offset, "%c", data[i].data.c);
-                break;
-            case DATA_TYPE_STRING:
-                offset += snprintf(buffer + offset, sizeof(buffer) - offset, "%s", data[i].data.str);
-                break;
-            default:
-            	return;
-        }
+    return MEM2067_OK;
+}
 
-        if(offset >= sizeof(buffer) - 1) break;
+mem2067_state_t MEM2067_Sync(void) {
+    if(!file_is_open) return MEM2067_ERROR;
 
-        if(i < num_fields - 1) {
-            offset += snprintf(buffer + offset, sizeof(buffer) - offset, "\t");
-        } else {
-            offset += snprintf(buffer + offset, sizeof(buffer) - offset, "\n");
-        }
+    if(f_sync(&active_file) != FR_OK) {
+        return MEM2067_ERROR;
     }
 
-    if(f_puts(buffer, &fil) == EOF) {
-        // TODO: Handle writing error
-    }
+    return MEM2067_OK;
+}
 
-    f_close(&fil);
+mem2067_state_t MEM2067_CloseFile(void) {
+    if(!file_is_open) return MEM2067_ERROR;
+
+    f_close(&active_file);
+    file_is_open = 0;
+
+    return MEM2067_OK;
 }
 
 char *MEM2067_Read(const char *filename) {
     static char buffer[128];
+    static FIL read_fil;
+
     memset(buffer, 0, sizeof(buffer));
 
-    FIL fil;
-    FRESULT fresult = f_open(&fil, filename, FA_READ);
+    FRESULT fresult = f_open(&read_fil, filename, FA_READ);
     if(fresult == FR_OK) {
-        f_gets(buffer, sizeof(buffer), &fil);
-        f_close(&fil);
+        f_gets(buffer, sizeof(buffer), &read_fil);
+        f_close(&read_fil);
     }
     return buffer;
 }
@@ -134,26 +73,13 @@ void MEM2067_Unmount(void) {
 }
 
 void MEM2067_Infos(mem2067_t *dev) {
-	f_getfree("", &fre_clust, &pfr);
-	dev->total_space = (uint32_t)((pfr->n_fatent - 2) * pfr->csize * 0.5);
-	dev->free_space = (uint32_t)(fre_clust * pfr->csize * 0.5);
+    FATFS *pfr;
+    DWORD fre_clust;
+    f_getfree("", &fre_clust, &pfr);
+    dev->total_space = (uint32_t)((pfr->n_fatent - 2) * pfr->csize * 0.5);
+    dev->free_space = (uint32_t)(fre_clust * pfr->csize * 0.5);
 }
 
-int bufsize (char* buf) {
-	int i = 0;
-	while(*buf++ != '\0')
-		i++;
-
-	return i;
-}
-
-void bufclear(char* p_Buffer) {
-	for(int i = 0; i < BUFFER_SIZE; i++) {
-		p_Buffer[i] = '\0';
-	}
-}
-
-// Debugging
 const char* FATFS_ErrorToString(FRESULT result) {
     switch(result) {
         case FR_OK: return "Succeeded\r\n";

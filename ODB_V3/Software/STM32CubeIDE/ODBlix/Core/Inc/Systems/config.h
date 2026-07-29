@@ -50,7 +50,8 @@ typedef enum {
     CONFIG_ERR_STAGE_ROLE = -3,
     CONFIG_ERR_TIMING_CONFLICT = -4,
     CONFIG_ERR_PYRO_LIMITS = -5,
-    CONFIG_ERR_THRESHOLDS = -6
+	CONFIG_ERR_PYRO_ROLE = -6,
+    CONFIG_ERR_THRESHOLDS = -7
 } config_error_t;
 
 extern odb_config_t current_config;

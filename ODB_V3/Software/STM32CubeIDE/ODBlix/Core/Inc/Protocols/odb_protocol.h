@@ -13,7 +13,7 @@
 
 /* === Protocol Versioning === */
 #define ODB_PROTOCOL_VERSION_MAJOR 1
-#define ODB_PROTOCOL_VERSION_MINOR 0
+#define ODB_PROTOCOL_VERSION_MINOR 1
 
 /* === ODB === */
 // Init system_states
@@ -165,6 +165,8 @@ typedef struct __attribute__((packed)) {
     uint16_t    vel;                // Ground velocity in cm/s -> Linked with L76LM33
     uint16_t    cog;                // Course Over Ground in centi-degrees -> Linked with L76LM33
     uint8_t     satellites_nb;      // Number of satellites used for the fix -> Linked with L76LM33
+    // SD
+    uint16_t	sd_space;			// Available space in current sd card -> Linked with MEM2067
 
     // Statistics
     float       imu_acc_vertical;   // Vertical acceleration (World frame) from IMU in m/s2 (converted to cm/s2 for MAVLink) -> Linked with BNO055
@@ -172,9 +174,9 @@ typedef struct __attribute__((packed)) {
     float       kalman_z;           // filtered altitude from Kalman filter in m (converted to cm for MAVLink)
     float       kalman_v;           // filtered velocity from Kalman filter in m/s (converted to cm/s for MAVLink)
 
-    // TOTAL 121 + 4 (header)
+    // TOTAL 123 + 4 (header)
     // Empty data to reach 128 bytes
-    uint8_t padding[3];
+    uint8_t padding[1];
 } odb_data_t;
 #define ODB_DATA_SIZE sizeof(odb_data_t)
 //_Static_assert(sizeof(odb_data_t) == 128, "odb_data_t_size_error");

@@ -213,7 +213,7 @@ class DataServiceManager with ChangeNotifier {
   double imuMagX = 0.0, imuMagY = 0.0, imuMagZ = 0.0;
   double accHighGX = 0.0, accHighGY = 0.0, accHighGZ = 0.0;
   double highGAccVertical = 0.0;
-  double sdUsed = 0.0, sdMax = 0.0;
+  double sdFree= 0;
   double gpsLat = 0.0, gpsLon = 0.0, gpsAlt = 0.0;
   double gpsVelocity = 0.0, gpsCourse = 0.0;
   int gpsSatellites = 0;
@@ -239,8 +239,6 @@ class DataServiceManager with ChangeNotifier {
       : 0.0;
   String get temperatureDisplay =>
       temperature != 0.0 ? '${temperature.toStringAsFixed(1)}°C' : '—';
-  double get sdUsagePercent =>
-      sdMax > 0 ? (sdUsed / sdMax * 100).clamp(0, 100) : 0.0;
   double pressureToAltitude(
     double pressureHpa, [
     double seaLevelHpa = 1013.25,
@@ -691,7 +689,7 @@ class DataServiceManager with ChangeNotifier {
         int payloadSize = view.getUint16(offset, Endian.little); offset += 2;
         odbFrameVersion = 'v$versionMajor.$versionMinor';
 
-        if (versionMajor == 1 && versionMinor == 0) {
+        if (versionMajor == 1 && versionMinor == 1) {
           // --- Status ---
           timeBootMs = view.getUint32(offset, Endian.little); offset += 4;
           systemStates = view.getUint16(offset, Endian.little); offset += 2;
@@ -736,6 +734,9 @@ class DataServiceManager with ChangeNotifier {
           gpsCourse = view.getUint16(offset, Endian.little) / 100.0; offset += 2;   // Format cdeg -> deg
           gpsSatellites = view.getUint8(offset); offset += 1;
           
+          // --- SD Card ---
+          sdFree = view.getUint16(offset, Endian.little) / 100.0; offset += 2;
+
           // --- Statistics ---
           imuAccVertical = view.getFloat32(offset, Endian.little); offset += 4;
           highGAccVertical = view.getFloat32(offset, Endian.little); offset += 4;

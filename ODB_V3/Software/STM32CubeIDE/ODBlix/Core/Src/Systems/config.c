@@ -89,6 +89,17 @@ static config_error_t Config_Validate(const odb_config_t* new_config) {
 			return CONFIG_ERR_PYRO_LIMITS;
 		}
 
+		bool is_drogue = false;
+		for(uint8_t i = 0; i < CONFIG_PYRO_NEEDED_MAX - 1; i++) {
+			if(new_config->pyro_roles[i] == PYRO_ROLE_DROGUE) {
+				is_drogue = true;
+				break;
+			}
+		}
+		if(!is_drogue) {
+			return CONFIG_ERR_PYRO_ROLE;
+		}
+
 		if(new_config->main_fire_attempt_max_nb < CONFIG_PYRO_ATTEMPTS_MIN || new_config->drogue_fire_attempt_max_nb < CONFIG_PYRO_ATTEMPTS_MIN) {
 			return CONFIG_ERR_PYRO_LIMITS;
 		}

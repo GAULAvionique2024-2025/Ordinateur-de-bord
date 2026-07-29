@@ -42,6 +42,23 @@ void Task_DataUpdate(void) {
 
 void Task_Logger(void) {
     Logger_Task();
+    /* TODO: add:
+     * f_printf(&active_file, "Time(ms)\tMode\tAltitude\tTemp\n");
+		MEM2067_Sync();
+
+		and
+
+		if (HAL_GetTick() - last_sync_time >= 1000) {
+			MEM2067_Sync();
+			last_sync_time = HAL_GetTick();
+		}
+
+		and
+
+		MEM2067_CloseFile();
+        MEM2067_Unmount();
+     */
+
 }
 
 void Task_Telemetry(void) {

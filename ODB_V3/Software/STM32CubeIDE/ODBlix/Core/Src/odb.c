@@ -110,6 +110,7 @@ void ODB_Reset(odb_data_t *data, odb_stats_t *stats) {
     data->highg_acc_vertical = 0.0f;
     data->kalman_z = 0.0f;
     data->kalman_v = 0.0f;
+    data->sd_space = 0;
 
     if(!stats) {
         return;
@@ -317,13 +318,21 @@ odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats) {
         DEBUG_PRINTF("Erreur : Init IdeFIX\n");
     }
 
-    if(MEM2067_Mount(MEM2067_FILENAME) == MEM2067_OK) {
-		warning += 1;
-		DEBUG_PRINTF("Erreur : Init RFD900x\n");
+    if(MEM2067_Mount() == MEM2067_OK) {
+    	if(MEM2067_OpenFile(MEM2067_FILENAME) == MEM2067_OK) {
+    		system_states |= FLAG_SD_OK;
+			MEM2067_Infos(&mem2067);
+			data->sd_space = (uint16_t)(((uint64_t)mem2067.free_space * 100) / 2097152);
+			DEBUG_PRINTF("INFOS : Stockage disponible: %lu octets libres sur %lu disponibles.\n", mem2067.free_space, mem2067.total_space);
+			//f_printf(&active_file, "Time(ms)\tMode\tAltitude\tTemp\n");
+			//MEM2067_Sync();
+    	} else {
+    		warning += 1;
+    		DEBUG_PRINTF("Erreur : Open file MEM2067\n");
+    	}
 	} else {
-		system_states |= FLAG_SD_OK;
-		MEM2067_Infos(&mem2067);
-		DEBUG_PRINTF("INFOS : Stockage disponible: %lu octets libres sur %lu disponibles.\n", mem2067.free_space, mem2067.total_space);
+		warning += 1;
+		DEBUG_PRINTF("Erreur : Mount MEM2067\n");
 	}
 
     if(CriticalLed_Init(&critical_led) != 0) {

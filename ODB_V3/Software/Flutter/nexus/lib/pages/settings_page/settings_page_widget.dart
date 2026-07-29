@@ -1141,7 +1141,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
               ),
               ListTile(
                 contentPadding: EdgeInsets.zero,
-                title: const Text('Version de la trame Config ODB'),
+                title: const Text('Version de la Config ODB'),
                 subtitle: Text(
                   data.odbConfigFrameVersion.isNotEmpty
                       ? data.odbConfigFrameVersion

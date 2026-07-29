@@ -1650,7 +1650,7 @@ class _BottomMetricsGrid extends StatelessWidget {
                     children: [
                       Text(
                         (connected && data.sdSensorState == SensorState.ok)
-                            ? '${(data.sdMax - data.sdUsed).toStringAsFixed(2)} GB libre'
+                            ? '${data.sdFree.toStringAsFixed(2)} GB libre'
                             : '—',
                         style:
                             FlutterFlowTheme.of(context).titleMedium.override(
@@ -1666,29 +1666,6 @@ class _BottomMetricsGrid extends StatelessWidget {
                                       .titleMedium
                                       .fontStyle,
                                 ),
-                      ),
-                      Text(
-                        (connected && data.sdSensorState == SensorState.ok)
-                            ? '${data.sdMax.toStringAsFixed(0)} GB'
-                            : '—',
-                        style: FlutterFlowTheme.of(context).bodySmall.override(
-                              font: GoogleFonts.inter(
-                                fontWeight: FlutterFlowTheme.of(context)
-                                    .bodySmall
-                                    .fontWeight,
-                                fontStyle: FlutterFlowTheme.of(context)
-                                    .bodySmall
-                                    .fontStyle,
-                              ),
-                              color: FlutterFlowTheme.of(context).secondaryText,
-                              letterSpacing: 0.0,
-                              fontWeight: FlutterFlowTheme.of(context)
-                                  .bodySmall
-                                  .fontWeight,
-                              fontStyle: FlutterFlowTheme.of(context)
-                                  .bodySmall
-                                  .fontStyle,
-                            ),
                       ),
                       Text(
                         (connected && data.sdSensorState == SensorState.ok)
