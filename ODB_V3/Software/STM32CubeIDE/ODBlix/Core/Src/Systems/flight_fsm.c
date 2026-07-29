@@ -234,9 +234,17 @@ void FSM_Update(void) {
 					// TODO: add low power sensor states and logger
 					Scheduler_RemoveTask("Data_Update");
 					Scheduler_RemoveTask("FSM");
-					Scheduler_RemoveTask("Logger");
 					Scheduler_RemoveTask("Telemetry");
 					Scheduler_SetActive("Idefix", true);
+
+					// Copy flight data to sd card
+					const odb_data_t* actual_flight_data = Logger_GetLastFlightData();
+					const odb_data_t* actual_flight_stats = Logger_GetLastFlightStats();
+
+
+					MEM2067_CloseFile();
+					MEM2067_Unmount();
+					Scheduler_RemoveTask("Logger");
 
 					Buzzer_StartPeriodicBip(&buzzer, current_config.buzzer_report_tone_hz, 500, 500);
 

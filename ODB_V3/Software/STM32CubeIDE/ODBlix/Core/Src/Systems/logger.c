@@ -226,6 +226,7 @@ void Logger_SaveStats(const odb_stats_t *stats) {
     previous_flight_header_addr = last_flight_header_addr;
 }
 
+// TODO: iterate other else, only last flight data while be found (in memory its a serie of flight data with different timestamps)
 const odb_data_t* Logger_GetLastFlightData(void) {
     if(previous_flight_header_addr == 0xFFFFFFFF) {
         return NULL;
