@@ -56,23 +56,6 @@ bool Scheduler_AddTask(char *name, void (*func)(void), uint32_t period_ms) {
     return true;
 }
 
-// TODO: add sleep/low energy mode of target chip of task
-bool Scheduler_RemoveTask(const char *name) {
-    for(uint8_t i = 0; i < task_count; i++) {
-        if(tasks[i].is_active && tasks[i].name != NULL) {
-        	if(tasks[i].name == name) {
-                tasks[i].is_active = false;
-                tasks[i].task_func = NULL;
-                tasks[i].name = NULL;
-
-                return true;
-            }
-        }
-    }
-    
-    return false;
-}
-
 void Scheduler_Run(void) {
     uint32_t current_time = HAL_GetTick();
     for(uint8_t i = 0; i < task_count; i++) {

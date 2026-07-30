@@ -95,6 +95,8 @@ typedef struct __attribute__((packed)) {
 
 // states of the events for statistics reporting
 typedef struct __attribute__((packed)) {
+	uint32_t flight_id;				// in event state
+
     uint32_t date;       			// internal event for POSTFLIGHT reporting (save in FLASH/SD)
 
     pyro_event_t pyro1;				// in event state
@@ -121,7 +123,7 @@ typedef struct __attribute__((packed)) {
     int32_t  last_lon;              // internal event for POSTFLIGHT reporting (save in FLASH/SD)
     uint32_t flight_time_ms;		// internal event for POSTFLIGHT reporting (save in FLASH/SD)
 
-    // TOTAL 144
+    // TOTAL 148
 } odb_stats_t;
 #define ODB_STATS_SIZE sizeof(odb_stats_t)
 

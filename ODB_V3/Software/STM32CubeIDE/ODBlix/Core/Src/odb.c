@@ -1,5 +1,5 @@
 /*
- * system.c
+ * odb.c
  *
  *  Created on: 3 mai 2026
  *      Author: gagno
@@ -16,6 +16,7 @@
 #include "Utils/utils.h"
 #include <ctype.h>
 #include <math.h>
+#include <stdio.h>
 
 
 extern adxl382_t adxl382;
@@ -111,6 +112,8 @@ void ODB_Reset(odb_data_t *data, odb_stats_t *stats) {
         return;
     }
 
+    stats->flight_id = 0;
+    stats->date = 0;
     stats->pyros_arm.activated = false;
     stats->pyros_arm.start_time_ms = 0;
     stats->pyros_arm.end_time_ms = 0;
@@ -175,6 +178,7 @@ odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats) {
         system_states |= FLAG_FLASH_OK;
         Config_Init();
         Logger_Init();
+        stats->flight_id = Logger_GetCurrentFlightId();
     } else {
         error++;
         DEBUG_PRINTF("ERROR : Init W25Q\n");
@@ -272,6 +276,9 @@ odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats) {
 
     if(L76LM33_Init(&l76lm33) == L76LM33_OK) {
         system_states |= FLAG_GPS_OK;
+        if(l76lm33.gps_data.gps_fix == 0) {
+        	warning++;
+        }
     } else {
         error++;
         DEBUG_PRINTF("ERROR : Init L76LM33\n");
@@ -317,13 +324,13 @@ odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats) {
     }
 
     if(MEM2067_Mount() == MEM2067_OK) {
-    	if(MEM2067_OpenFile(MEM2067_FILENAME) == MEM2067_OK) {
+    	char sd_filename[13];
+    	snprintf(sd_filename, sizeof(sd_filename), "FLT_%lu.CSV", stats->flight_id);
+    	if(MEM2067_OpenFile(sd_filename) == MEM2067_OK) {
     		system_states |= FLAG_SD_OK;
 			MEM2067_Infos(&mem2067);
 			data->sd_space = (uint16_t)(((uint64_t)mem2067.free_space * 100) / 2097152);
 			DEBUG_PRINTF("INFOS : Available SD storage: %lu free bytes out of %lu available\n", mem2067.free_space, mem2067.total_space);
-			//f_printf(&active_file, "Time(ms)\tMode\tAltitude\tTemp\n");
-			//MEM2067_Sync();
     	} else {
     		warning++;
     		DEBUG_PRINTF("ERROR : Open file MEM2067\n");

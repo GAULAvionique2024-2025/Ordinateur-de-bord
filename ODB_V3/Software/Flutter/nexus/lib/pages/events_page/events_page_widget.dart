@@ -33,9 +33,18 @@ class _EventsPageWidgetState extends State<EventsPageWidget> {
     super.dispose();
   }
 
+  // Formatage des temps simples en secondes
   String _formatTimeMs(int timeMs) {
     if (timeMs == 0) return '—';
     return '${(timeMs / 1000.0).toStringAsFixed(2)} s';
+  }
+
+  // Formatage spécifique pour les window_event_t (Start -> End)
+  String _formatWindow(WindowEvent window) {
+    if (!window.activated && window.startTimeMs == 0) return '—';
+    String start = _formatTimeMs(window.startTimeMs);
+    String end = window.endTimeMs > 0 ? _formatTimeMs(window.endTimeMs) : 'En cours';
+    return '$start -> $end';
   }
 
   @override
@@ -127,6 +136,7 @@ class _EventsPageWidgetState extends State<EventsPageWidget> {
                       ],
                     ),
                     const SizedBox(height: 16.0),
+                    
                     _buildSectionCard(
                       context,
                       'Cinématique Max',
@@ -139,6 +149,18 @@ class _EventsPageWidgetState extends State<EventsPageWidget> {
                       ],
                     ),
                     const SizedBox(height: 16.0),
+                    
+                    _buildSectionCard(
+                      context,
+                      'Sécurité & Verrouillages',
+                      Icons.security,
+                      [
+                        _buildDataRow(context, 'Armement Pyros', stats.pyrosArm.activated || stats.pyrosArm.startTimeMs > 0 ? 'Déclenché' : '—', _formatWindow(stats.pyrosArm)),
+                        _buildDataRow(context, 'Mach Lock', stats.machLock.activated || stats.machLock.startTimeMs > 0 ? 'Déclenché' : '—', _formatWindow(stats.machLock)),
+                      ],
+                    ),
+                    const SizedBox(height: 16.0),
+
                     _buildSectionCard(
                       context,
                       'Déploiements & Pyros',
@@ -153,12 +175,15 @@ class _EventsPageWidgetState extends State<EventsPageWidget> {
                       ],
                     ),
                     const SizedBox(height: 16.0),
+
                     _buildSectionCard(
                       context,
                       'Informations Générales',
                       Icons.info_outline,
                       [
+                        _buildDataRow(context, 'ID du Vol', '#${stats.flightId}', ''),
                         _buildDataRow(context, 'Temps de Vol Total', _formatTimeMs(stats.flightTimeMs), ''),
+                        _buildDataRow(context, 'Date (Raw GPS)', stats.date > 0 ? stats.date.toString() : '—', ''),
                         _buildDataRow(context, 'Dernière Latitude', '${(stats.lastLat / 10000000.0).toStringAsFixed(5)}°', ''),
                         _buildDataRow(context, 'Dernière Longitude', '${(stats.lastLon / 10000000.0).toStringAsFixed(5)}°', ''),
                       ],
@@ -172,82 +197,82 @@ class _EventsPageWidgetState extends State<EventsPageWidget> {
         ),
       )
     );
-    }
+  }
 
-    Widget _buildSectionCard(BuildContext context, String title, IconData icon, List<Widget> rows) {
-      return Material(
-        color: Colors.transparent,
-        elevation: 2.0,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
-        child: Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: FlutterFlowTheme.of(context).secondaryBackground,
-            borderRadius: BorderRadius.circular(16.0),
-            border: Border.all(color: FlutterFlowTheme.of(context).alternate, width: 1.0),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Icon(icon, color: FlutterFlowTheme.of(context).primary, size: 24.0),
-                    const SizedBox(width: 12.0),
-                    Text(
-                      title,
-                      style: FlutterFlowTheme.of(context).titleMedium.override(
-                            font: GoogleFonts.interTight(fontWeight: FontWeight.bold),
-                          ),
-                    ),
-                  ],
-                ),
-                const Divider(height: 24.0, thickness: 1.0, color: Color(0xFFE0E3E7)),
-                ...rows.divide(const SizedBox(height: 12.0)),
-              ],
-            ),
+  Widget _buildSectionCard(BuildContext context, String title, IconData icon, List<Widget> rows) {
+    return Material(
+      color: Colors.transparent,
+      elevation: 2.0,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
+      child: Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: FlutterFlowTheme.of(context).secondaryBackground,
+          borderRadius: BorderRadius.circular(16.0),
+          border: Border.all(color: FlutterFlowTheme.of(context).alternate, width: 1.0),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Icon(icon, color: FlutterFlowTheme.of(context).primary, size: 24.0),
+                  const SizedBox(width: 12.0),
+                  Text(
+                    title,
+                    style: FlutterFlowTheme.of(context).titleMedium.override(
+                          font: GoogleFonts.interTight(fontWeight: FontWeight.bold),
+                        ),
+                  ),
+                ],
+              ),
+              const Divider(height: 24.0, thickness: 1.0, color: Color(0xFFE0E3E7)),
+              ...rows.divide(const SizedBox(height: 12.0)),
+            ],
           ),
         ),
-      );
-    }
+      ),
+    );
+  }
 
-    Widget _buildDataRow(BuildContext context, String label, String value, String time) {
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            flex: 2,
-            child: Text(
-              label,
-              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                    font: GoogleFonts.inter(),
-                    color: FlutterFlowTheme.of(context).secondaryText,
-                  ),
-            ),
+  Widget _buildDataRow(BuildContext context, String label, String value, String time) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Expanded(
+          flex: 2,
+          child: Text(
+            label,
+            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                  font: GoogleFonts.inter(),
+                  color: FlutterFlowTheme.of(context).secondaryText,
+                ),
           ),
-          Expanded(
-            flex: 1,
-            child: Text(
-              value,
-              textAlign: TextAlign.right,
-              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                    font: GoogleFonts.inter(fontWeight: FontWeight.w600),
-                  ),
-            ),
+        ),
+        Expanded(
+          flex: 1,
+          child: Text(
+            value,
+            textAlign: TextAlign.right,
+            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                  font: GoogleFonts.inter(fontWeight: FontWeight.w600),
+                ),
           ),
-          Expanded(
-            flex: 1,
-            child: Text(
-              time,
-              textAlign: TextAlign.right,
-              style: FlutterFlowTheme.of(context).bodySmall.override(
-                    font: GoogleFonts.inter(),
-                    color: FlutterFlowTheme.of(context).tertiary,
-                  ),
-            ),
+        ),
+        Expanded(
+          flex: 1,
+          child: Text(
+            time,
+            textAlign: TextAlign.right,
+            style: FlutterFlowTheme.of(context).bodySmall.override(
+                  font: GoogleFonts.inter(),
+                  color: FlutterFlowTheme.of(context).tertiary,
+                ),
           ),
-        ],
-      );
-    }
+        ),
+      ],
+    );
+  }
 }

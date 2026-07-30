@@ -15,7 +15,6 @@
 
 /* === Constants === */
 #define EXPECTED_CONFIG_COUNT 	22
-#define MEM2067_FILENAME		"log.csv"
 
 /* === Flash Mapping Configuration === */
 #define FLASH_CONFIG_START_ADDRESS      (W25Q512_FLASH_SIZE_BYTE - FLASH_SECTOR_SIZE_BYTE) // 0x03FFF000

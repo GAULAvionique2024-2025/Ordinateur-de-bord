@@ -13,6 +13,7 @@
 #include "Systems/logger.h"
 #include "Protocols/odb_protocol.h"
 #include "Drivers/smtb0927twr.h"
+#include "Drivers/mem2067.h"
 #include "stm32f4xx_hal.h"
 #include <math.h>
 #include <stdint.h>
@@ -52,8 +53,8 @@ void FSM_Update(void) {
         case STATE_ARMED:
             if(flight_data.highg_acc_z > current_config.acc_z_launch_threshold) {
                 ODB_SetMissionState(&flight_data, STATE_INFLIGHT);
-                Scheduler_RemoveTask("BTRx");
-                Scheduler_RemoveTask("BTTx");
+                Scheduler_SetActive("BTRx", false);
+                Scheduler_SetActive("BTTx", false);
 
                 HAL_TIM_Base_Start(&htim5);      	// Start timer to measure time since launch
                 __HAL_TIM_SET_COUNTER(&htim5, 0);   // Reset timer counter
@@ -69,6 +70,7 @@ void FSM_Update(void) {
                     // Wait for boost phase detection
                     if(flight_data.kalman_v >= current_config.boost_phase_v_threshold) {
                         flight_data.event_states |= FLAG_MACH_LOCK_ENABLED;
+                        flight_stats.mach_lock.start_time_ms = HAL_GetTick();
                         current_substate = SUB_FAST;
                     }
                     break;
@@ -76,7 +78,6 @@ void FSM_Update(void) {
                 case SUB_FAST:
                     // Wait for fast ascent detection
                 	if(flight_data.kalman_v < current_config.boost_phase_v_threshold) {
-						flight_data.event_states &= ~FLAG_MACH_LOCK_ENABLED;
 						current_substate = SUB_COAST;
 					}
                     break;
@@ -94,14 +95,16 @@ void FSM_Update(void) {
 					 * 1. Nominal apogee detection : velocity below threshold after a reasonable flight duration (to avoid early detection during boost or fast phase)
 					 * 2. Failsafe timeout : if apogee not detected after a maximum time
 					 */
-					bool mach_lock_enabled = ((flight_data.event_states & FLAG_MACH_LOCK_ENABLED) != 0U);
-                	bool nominal_apogee = (flight_data.kalman_v < current_config.apogee_detect_v_threshold) && (flight_duration > current_config.pyros_arming_failsafe_ms);
-					bool failsafe_timeout = (flight_duration > current_config.apogee_failsafe_ms);
+                	bool mach_lock_enabled = ((flight_data.event_states & FLAG_MACH_LOCK_ENABLED) != 0U);
+                	if(mach_lock_enabled) {
+                	    if(flight_duration > current_config.pyros_arming_failsafe_ms) {
+                	    	flight_data.event_states &= ~FLAG_MACH_LOCK_ENABLED;
+                	    	mach_lock_enabled = false;
+                	    }
+                	}
 
-					if(mach_lock_enabled) {
-						// Turbulence window: keep estimation running but forbid deployment transition.
-						break;
-					}
+                	bool nominal_apogee = (flight_data.kalman_v < current_config.apogee_detect_v_threshold) && (flight_duration > current_config.pyros_arming_failsafe_ms);
+                	bool failsafe_timeout = (flight_duration > current_config.apogee_failsafe_ms);
 
 					if(nominal_apogee || failsafe_timeout) {
 						if(!flight_stats.apogee.valid) {
@@ -135,7 +138,7 @@ void FSM_Update(void) {
 
 				case SUB_DROGUE:
 					if(!is_pyros_armed) {
-						Pyro_Arming(&system_measurements, true);
+						is_pyros_armed = Pyro_Arming(&system_measurements, true);
 					}
 
 					pyro_t *drogue = Pyro_GetByRole(PYRO_ROLE_DROGUE);
@@ -147,8 +150,8 @@ void FSM_Update(void) {
 								Pyro_Fire(drogue, &system_measurements);
 								fire_attempt_count++;
 								fire_timer = HAL_GetTick();
-							} else {
-								backup_active = (drogue_backup != NULL && drogue_backup->is_connected);
+							} else if(drogue_backup != NULL && drogue_backup->is_connected) {
+								backup_active = true;
 								fire_attempt_count = 0;
 								fire_timer = HAL_GetTick();
 							}
@@ -161,7 +164,7 @@ void FSM_Update(void) {
 						}
 					}
 
-					if(flight_data.kalman_z <= current_config.main_deploy_altitude_threshold_m && fire_attempt_count >= 1) {
+					if(flight_data.kalman_z <= current_config.main_deploy_altitude_threshold_m) {
 						if(!flight_stats.main_deploy.valid) {
 							flight_stats.main_deploy.valid = true;
 							flight_stats.main_deploy.value = flight_data.kalman_z;
@@ -172,7 +175,6 @@ void FSM_Update(void) {
 						fire_attempt_count = 0;
 						backup_active = false;
 
-						// Arming Main
 						pyro_t *main_pyro = Pyro_GetByRole(PYRO_ROLE_MAIN);
 						if(main_pyro) {
 							Pyro_Arming(&system_measurements, true);
@@ -196,8 +198,8 @@ void FSM_Update(void) {
 								Pyro_Fire(main_pyro, &system_measurements);
 								fire_attempt_count++;
 								fire_timer = HAL_GetTick();
-							} else {
-								backup_active = (main_backup != NULL && main_backup->is_connected);
+							} else if(main_backup != NULL && main_backup->is_connected) {
+								backup_active = true;
 								fire_attempt_count = 0;
 								fire_timer = HAL_GetTick();
 							}
@@ -216,7 +218,6 @@ void FSM_Update(void) {
 							Pyro_Arming(&system_measurements, false);
 
 							current_substate = SUB_LANDED;
-							current_global_state = STATE_POSTFLIGHT;
 						}
 					} else {
 						landing_timer = 0;
@@ -224,31 +225,21 @@ void FSM_Update(void) {
 					break;
 
 				case SUB_LANDED:
-					flight_stats.flight_time_ms = flight_duration;
-					ODB_SetMissionState(&flight_data, STATE_POSTFLIGHT);
-					current_global_state = STATE_POSTFLIGHT;
+				    flight_stats.flight_time_ms = flight_duration;
 
-					Logger_SaveStats(&flight_stats);
+				    Logger_SaveStats(&flight_stats);
 
-					// Low power
-					// TODO: add low power sensor states and logger
-					Scheduler_RemoveTask("Data_Update");
-					Scheduler_RemoveTask("FSM");
-					Scheduler_RemoveTask("Telemetry");
-					Scheduler_SetActive("Idefix", true);
+				    Scheduler_SetActive("Data_Update", false);
+				    Scheduler_SetActive("Telemetry", false);
+				    Scheduler_SetActive("Idefix", true);
 
-					// Copy flight data to sd card
-					const odb_data_t* actual_flight_data = Logger_GetLastFlightData();
-					const odb_data_t* actual_flight_stats = Logger_GetLastFlightStats();
+				    Logger_ExportToSD(&flight_stats);
 
+				    Buzzer_StartPeriodicBip(&buzzer, current_config.buzzer_report_tone_hz, 500, 500);
 
-					MEM2067_CloseFile();
-					MEM2067_Unmount();
-					Scheduler_RemoveTask("Logger");
-
-					Buzzer_StartPeriodicBip(&buzzer, current_config.buzzer_report_tone_hz, 500, 500);
-
-					break;
+				    ODB_SetMissionState(&flight_data, STATE_POSTFLIGHT);
+				    current_global_state = STATE_POSTFLIGHT;
+				    break;
 			}
 			break;
 

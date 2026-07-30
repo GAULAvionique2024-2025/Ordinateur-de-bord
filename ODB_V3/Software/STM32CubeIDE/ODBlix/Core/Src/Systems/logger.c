@@ -6,6 +6,7 @@
  */
 
 #include "Systems/logger.h"
+#include "Drivers/mem2067.h"
 #include "Systems/config.h"
 #include <string.h>
 
@@ -13,10 +14,13 @@
 typedef enum {
     LOGGER_IDLE,
     LOGGER_START_WRITE,
-    LOGGER_WAIT_FLASH_BUSY
+    LOGGER_WAIT_FLASH_BUSY,
+	LOGGER_SD_DUMP_HEADER,
+	LOGGER_SD_DUMP_DATA
 } logger_state_t;
 static logger_state_t logger_state = LOGGER_IDLE;
 
+// FLASH
 static logger_data_t buffer_A[LOG_BUFFER_SIZE];
 static logger_data_t buffer_B[LOG_BUFFER_SIZE];
 static logger_data_t *current_write_buf = buffer_A;
@@ -34,6 +38,11 @@ static uint32_t stats_reserved_address = 0;
 static uint32_t previous_flight_header_addr = 0xFFFFFFFF;
 
 extern w25q_t w25q;
+
+// SD
+static uint32_t sd_dump_cursor = 0;
+static bool start_sd_dump = false;
+static const odb_stats_t *sd_dump_stats = NULL;
 
 
 static bool Logger_ReadHeader(uint32_t addr, logger_header_t *header) {
@@ -170,17 +179,23 @@ void Logger_Task(void) {
             if(flush_pending) {
                 flush_bytes_written = 0;
                 logger_state = LOGGER_START_WRITE;
+            } else if(start_sd_dump) {
+                start_sd_dump = false;
+                if(file_is_open && sd_dump_stats != NULL) {
+                    logger_state = LOGGER_SD_DUMP_HEADER;
+                }
             }
             break;
 
-        case LOGGER_START_WRITE: {
-        	uint32_t total_size = LOG_BUFFER_SIZE * sizeof(logger_data_t);
-        	uint32_t bytes_to_write = total_size - flush_bytes_written;
-        	uint32_t space_in_page = W25Q512_PAGE_SIZE - (flash_current_address % W25Q512_PAGE_SIZE);
+        case LOGGER_START_WRITE:
+        {
+            uint32_t total_size = LOG_BUFFER_SIZE * sizeof(logger_data_t);
+            uint32_t bytes_to_write = total_size - flush_bytes_written;
+            uint32_t space_in_page = W25Q512_PAGE_SIZE - (flash_current_address % W25Q512_PAGE_SIZE);
 
-        	if(bytes_to_write > space_in_page) {
-				bytes_to_write = space_in_page;
-			}
+            if(bytes_to_write > space_in_page) {
+                bytes_to_write = space_in_page;
+            }
 
             if((flash_current_address + bytes_to_write) > LOGGER_MAX_ALLOWED_ADDRESS) {
                 flush_pending = false;
@@ -190,12 +205,12 @@ void Logger_Task(void) {
             }
 
             uint8_t *write_ptr = ((uint8_t*)current_flush_buf) + flush_bytes_written;
-			if(W25Q_WritePageNoWait(&w25q, write_ptr, flash_current_address, bytes_to_write) == 0) {
-				flash_current_address += bytes_to_write;
-				flush_bytes_written += bytes_to_write;
-				logger_state = LOGGER_WAIT_FLASH_BUSY;
-			}
-			break;
+            if(W25Q_WritePageNoWait(&w25q, write_ptr, flash_current_address, bytes_to_write) == 0) {
+                flash_current_address += bytes_to_write;
+                flush_bytes_written += bytes_to_write;
+                logger_state = LOGGER_WAIT_FLASH_BUSY;
+            }
+            break;
         }
 
         case LOGGER_WAIT_FLASH_BUSY:
@@ -211,6 +226,91 @@ void Logger_Task(void) {
                 }
             }
             break;
+
+        case LOGGER_SD_DUMP_HEADER:
+            if(file_is_open) {
+                f_printf(&active_file, "# === FLIGHT STATISTICS ===\n");
+                f_printf(&active_file, "# Date : %lu | Temps de vol : %lu ms\n", sd_dump_stats->date, sd_dump_stats->flight_time_ms);
+                f_printf(&active_file, "# Last GPS Coordinates : Lat %ld, Lon %ld\n", sd_dump_stats->last_lat, sd_dump_stats->last_lon);
+
+                f_printf(&active_file, "# -- Pyros Evenements --\n");
+                f_printf(&active_file, "# Pyro 1 : Fired=%d, Time=%lu ms\n", sd_dump_stats->pyro1.fired, sd_dump_stats->pyro1.time_ms);
+                f_printf(&active_file, "# Pyro 2 : Fired=%d, Time=%lu ms\n", sd_dump_stats->pyro2.fired, sd_dump_stats->pyro2.time_ms);
+                f_printf(&active_file, "# Pyro 3 : Fired=%d, Time=%lu ms\n", sd_dump_stats->pyro3.fired, sd_dump_stats->pyro3.time_ms);
+                f_printf(&active_file, "# Pyro 4 : Fired=%d, Time=%lu ms\n", sd_dump_stats->pyro4.fired, sd_dump_stats->pyro4.time_ms);
+
+                f_printf(&active_file, "# -- Windowed Events --\n");
+                f_printf(&active_file, "# Pyros Arming : Act=%d, Start=%lu ms, End=%lu ms\n", sd_dump_stats->pyros_arm.activated, sd_dump_stats->pyros_arm.start_time_ms, sd_dump_stats->pyros_arm.end_time_ms);
+                f_printf(&active_file, "# Mach Lock : Act=%d, Start=%lu ms, End=%lu ms\n", sd_dump_stats->mach_lock.activated, sd_dump_stats->mach_lock.start_time_ms, sd_dump_stats->mach_lock.end_time_ms);
+
+                f_printf(&active_file, "# -- Altitude Metrics (Valid, Value, Time_ms) --\n");
+                f_printf(&active_file, "# Max Altitude GPS : V=%d, %.2f mm, T=%lu ms\n", sd_dump_stats->max_altitude_gps.valid, sd_dump_stats->max_altitude_gps.value, sd_dump_stats->max_altitude_gps.time_ms);
+                f_printf(&active_file, "# Max Altitude Baro : V=%d, %.2f m, T=%lu ms\n", sd_dump_stats->max_altitude_baro.valid, sd_dump_stats->max_altitude_baro.value, sd_dump_stats->max_altitude_baro.time_ms);
+                f_printf(&active_file, "# Max Altitude Kalman : V=%d, %.2f m, T=%lu ms\n", sd_dump_stats->max_altitude_kalman.valid, sd_dump_stats->max_altitude_kalman.value, sd_dump_stats->max_altitude_kalman.time_ms);
+                f_printf(&active_file, "# Apogee Detected : V=%d, %.2f m, T=%lu ms\n", sd_dump_stats->apogee.valid, sd_dump_stats->apogee.value, sd_dump_stats->apogee.time_ms);
+                f_printf(&active_file, "# Main Deployment : V=%d, %.2f m, T=%lu ms\n", sd_dump_stats->main_deploy.valid, sd_dump_stats->main_deploy.value, sd_dump_stats->main_deploy.time_ms);
+                f_printf(&active_file, "# Drogue Deployment : V=%d, %.2f m, T=%lu ms\n", sd_dump_stats->drogue_deploy.valid, sd_dump_stats->drogue_deploy.value, sd_dump_stats->drogue_deploy.time_ms);
+
+                f_printf(&active_file, "# -- Acceleration and Speed Metrics --\n");
+                f_printf(&active_file, "# Max Ascend Speed : V=%d, %.2f m/s, T=%lu ms\n", sd_dump_stats->max_ascend_speed.valid, sd_dump_stats->max_ascend_speed.value, sd_dump_stats->max_ascend_speed.time_ms);
+                f_printf(&active_file, "# Max Descend Speed : V=%d, %.2f m/s, T=%lu ms\n", sd_dump_stats->max_descend_speed.valid, sd_dump_stats->max_descend_speed.value, sd_dump_stats->max_descend_speed.time_ms);
+                f_printf(&active_file, "# Max Ascend Acceleration : V=%d, %.2f m/s2, T=%lu ms\n", sd_dump_stats->max_ascend_accel.valid, sd_dump_stats->max_ascend_accel.value, sd_dump_stats->max_ascend_accel.time_ms);
+                f_printf(&active_file, "# Max Descend Acceleration : V=%d, %.2f m/s2, T=%lu ms\n", sd_dump_stats->max_descend_accel.valid, sd_dump_stats->max_descend_accel.value, sd_dump_stats->max_descend_accel.time_ms);
+                f_printf(&active_file, "# =======================================\n\n");
+
+                f_printf(&active_file, "V_Maj,V_Min,Payload_Size,TimeBoot_ms,Sys_States,Event_States,Mission_State,Battery_mV,");
+                f_printf(&active_file, "Roll,Pitch,Yaw,IMU_Acc_X,IMU_Acc_Y,IMU_Acc_Z,IMU_Gyro_X,IMU_Gyro_Y,IMU_Gyro_Z,IMU_Mag_X,IMU_Mag_Y,IMU_Mag_Z,");
+                f_printf(&active_file, "Alt_MSL_m,Press_Pa,Temp_C,HighG_Acc_X,HighG_Acc_Y,HighG_Acc_Z,");
+                f_printf(&active_file, "GPS_Fix,Lat,Lon,GPS_Alt_mm,Vel,COG,Sat_NB,SD_Space,IMU_Acc_Vert,HighG_Acc_Vert,Kalman_Z,Kalman_V\n");
+
+                Logger_StartReadingFlight(Logger_GetCurrentFlightAddress(), &sd_dump_cursor);
+                logger_state = LOGGER_SD_DUMP_DATA;
+            } else {
+                logger_state = LOGGER_IDLE;
+            }
+            break;
+
+        case LOGGER_SD_DUMP_DATA:
+            if(file_is_open) {
+                odb_data_t frame;
+                for(uint8_t i = 0; i < 5; i++) {
+                    if(Logger_ReadNextData(&sd_dump_cursor, &frame)) {
+                        f_printf(&active_file, "%u,%u,%u,%lu,%u,%u,%u,%u,",
+                            frame.version_major, frame.version_minor, frame.payload_size,
+                            frame.time_boot_ms, frame.system_states, frame.event_states,
+                            frame.mission_state, frame.battery_mv
+                        );
+
+                        f_printf(&active_file, "%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,",
+                            frame.roll, frame.pitch, frame.yaw,
+                            frame.imu_acc_x, frame.imu_acc_y, frame.imu_acc_z,
+                            frame.imu_gyro_x, frame.imu_gyro_y, frame.imu_gyro_z,
+                            frame.imu_mag_x, frame.imu_mag_y, frame.imu_mag_z
+                        );
+
+                        f_printf(&active_file, "%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,",
+                            frame.altitude_msl_m, frame.pressure_pa, frame.temp_celsius,
+                            frame.highg_acc_x, frame.highg_acc_y, frame.highg_acc_z
+                        );
+
+                        f_printf(&active_file, "%u,%ld,%ld,%ld,%u,%u,%u,%u,%.2f,%.2f,%.2f,%.2f\n",
+                            frame.gps_fix, frame.lat, frame.lon, frame.gps_alt,
+                            frame.vel, frame.cog, frame.satellites_nb, frame.sd_space,
+                            frame.imu_acc_vertical, frame.highg_acc_vertical,
+                            frame.kalman_z, frame.kalman_v
+                        );
+                    } else {
+                        MEM2067_Sync();
+                        MEM2067_CloseFile();
+                        MEM2067_Unmount();
+                        logger_state = LOGGER_IDLE;
+                        break;
+                    }
+                }
+            } else {
+                logger_state = LOGGER_IDLE;
+            }
+            break;
     }
 }
 
@@ -222,36 +322,39 @@ void Logger_SaveStats(const odb_stats_t *stats) {
     stats_packet.stats = *stats;
 
     W25Q_WritePage(&w25q, (uint8_t*)&stats_packet, stats_reserved_address, sizeof(logger_stats_t));
-
-    previous_flight_header_addr = last_flight_header_addr;
 }
 
-// TODO: iterate other else, only last flight data while be found (in memory its a serie of flight data with different timestamps)
-const odb_data_t* Logger_GetLastFlightData(void) {
-    if(previous_flight_header_addr == 0xFFFFFFFF) {
-        return NULL;
+uint32_t Logger_GetCurrentFlightAddress(void) {
+    return last_flight_header_addr;
+}
+
+uint32_t Logger_GetCurrentFlightId(void) {
+    return last_flight_id;
+}
+
+void Logger_StartReadingFlight(uint32_t header_addr, uint32_t *cursor) {
+    if(header_addr == 0xFFFFFFFF) {
+        *cursor = 0xFFFFFFFF;
+        return;
+    }
+    *cursor = header_addr + FLASH_SECTOR_SIZE_BYTE + W25Q512_PAGE_SIZE;
+}
+
+bool Logger_ReadNextData(uint32_t *cursor, odb_data_t *out_data) {
+    if(*cursor == 0xFFFFFFFF || *cursor >= LOGGER_MAX_ALLOWED_ADDRESS) {
+        return false;
     }
 
-    uint32_t read_addr = previous_flight_header_addr + FLASH_SECTOR_SIZE_BYTE + W25Q512_PAGE_SIZE;
     logger_data_t temp_packet;
+    W25Q_Read(&w25q, (uint8_t*)&temp_packet, *cursor, sizeof(logger_data_t));
 
-    static odb_data_t last_valid_packet;
-    memset(&last_valid_packet, 0, sizeof(odb_data_t));
-    bool found = false;
-
-    while(read_addr < LOGGER_MAX_ALLOWED_ADDRESS) {
-        W25Q_Read(&w25q, (uint8_t*)&temp_packet, read_addr, sizeof(logger_data_t));
-        
-        if(temp_packet.magic_number == LOGGER_DATA_MAGIC_NUMBER) {
-            last_valid_packet = temp_packet.data;
-            found = true;
-            read_addr += sizeof(logger_data_t);
-        } else {
-            break; // No more valid packets
-        }
+    if(temp_packet.magic_number == LOGGER_DATA_MAGIC_NUMBER) {
+        *out_data = temp_packet.data;
+        *cursor += sizeof(logger_data_t);
+        return true;
     }
 
-    return found ? &last_valid_packet : NULL;
+    return false;
 }
 
 const odb_stats_t* Logger_GetLastFlightStats(void) {
@@ -288,6 +391,13 @@ bool Logger_Erase(void) {
 	}
 
 	return true;
+}
+
+void Logger_ExportToSD(const odb_stats_t *stats) {
+    if(stats != NULL) {
+        sd_dump_stats = stats;
+        start_sd_dump = true;
+    }
 }
 
 /*

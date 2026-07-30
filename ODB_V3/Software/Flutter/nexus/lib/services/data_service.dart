@@ -27,6 +27,7 @@ class Metric {
 }
 
 class OdbStats {
+  final int flightId;
   final int date;
   final List<PyroEvent> pyroEvents;
   final WindowEvent pyrosArm;
@@ -46,6 +47,7 @@ class OdbStats {
   final int flightTimeMs;
 
   OdbStats({
+    required this.flightId,
     required this.date,
     required this.pyroEvents,
     required this.pyrosArm,
@@ -68,6 +70,10 @@ class OdbStats {
   factory OdbStats.fromBytes(Uint8List data) {
     final view = ByteData.sublistView(data);
     int off = 0;
+
+    final flightId = view.getUint32(off, Endian.little);
+    off += 4;
+
     final date = view.getUint32(off, Endian.little);
     off += 4;
 
@@ -121,6 +127,7 @@ class OdbStats {
     off += 4;
 
     return OdbStats(
+      flightId: flightId,
       date: date,
       pyroEvents: pyros,
       pyrosArm: pyrosArm,
@@ -836,7 +843,7 @@ class DataServiceManager with ChangeNotifier {
               ConsoleService().log('Erreur: Configuration ODB v$versionMajor.$versionMinor non supportée.');
             }
           } else {
-            if (payload.length == 144) {
+            if (payload.length == 148) {
               try {
                 lastFlightStats = OdbStats.fromBytes(Uint8List.fromList(payload));
                 _safeNotifyListeners();
