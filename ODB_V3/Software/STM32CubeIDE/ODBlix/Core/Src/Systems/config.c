@@ -90,7 +90,7 @@ static config_error_t Config_Validate(const odb_config_t* new_config) {
 		}
 
 		bool is_drogue = false;
-		for(uint8_t i = 0; i < CONFIG_PYRO_NEEDED_MAX - 1; i++) {
+		for(uint8_t i = 0; i < CONFIG_PYRO_NEEDED_MAX; i++) {
 			if(new_config->pyro_roles[i] == PYRO_ROLE_DROGUE) {
 				is_drogue = true;
 				break;

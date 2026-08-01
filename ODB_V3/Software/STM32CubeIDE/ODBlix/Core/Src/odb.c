@@ -34,7 +34,8 @@ extern idefix_t idefix;
 extern mem2067_t mem2067;
 static kalman_nav_t kalman_filter;
 
-bool is_pyros_armed = false;		// TODO: Temporaire before v2
+static float ground_altitude_msl_m = 0.0f;
+
 
 static void ODB_UpdateMetricMax(metric_t *metric, float candidate_value, uint32_t time_ms) {
     if(!metric) {
@@ -177,8 +178,12 @@ odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats) {
     if(W25Q_Init(&w25q) == 0) {
         system_states |= FLAG_FLASH_OK;
         Config_Init();
-        Logger_Init();
-        stats->flight_id = Logger_GetCurrentFlightId();
+        if(Logger_Init() != LOGGER_SUCCESS) {
+        	error++;
+        	DEBUG_PRINTF("ERROR : Init Logger\n");
+        } else {
+        	stats->flight_id = Logger_GetCurrentFlightId();
+        }
     } else {
         error++;
         DEBUG_PRINTF("ERROR : Init W25Q\n");
@@ -195,18 +200,14 @@ odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats) {
 		const uint32_t FLAG_PYRO_CONN[PYRO_MAX] = {FLAG_PYRO1_CONN, FLAG_PYRO2_CONN, FLAG_PYRO3_CONN, FLAG_PYRO4_CONN};
 
 		SystemMeasurements_ComputePyros(&system_measurements);
-		bool is_armed = Pyro_Arming(&system_measurements, true);
-		if(is_armed) {
+		if(Pyro_Arming(&system_measurements, true, true) == PYRO_OK) {
 			system_states |= FLAG_PYROS_ARMED_OK;
 		} else {
 			error++;
 			DEBUG_PRINTF("ERROR : Pyros arming blocked\n");
 		}
 
-		is_armed = Pyro_Arming(&system_measurements, false);
-		if(!is_armed) {
-			system_states |= FLAG_PYROS_ARMED_OK;
-		} else {
+		if(Pyro_Arming(&system_measurements, false, true) == PYRO_OK) {
 			system_states &= ~FLAG_PYROS_ARMED_OK;
 			error++;
 			DEBUG_PRINTF("ERROR : Pyros disarming blocked\n");
@@ -300,20 +301,26 @@ odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats) {
 
     // Kalman filter initialization -> calculate R_static
     if((system_states & FLAG_BARO_OK) && (system_states & FLAG_HIGHG_OK)) {
-        float samples[KALMAN_NAV_SAMPLE_NB];
-        float sum = 0;
-        float temperature, pressure, alt;
-        for(int i = 0; i < KALMAN_NAV_SAMPLE_NB; i++) { 
-            MS5611_Update(&ms5611); 
-            HAL_Delay(10);
-            MS5611_Compute(&ms5611, &temperature, &pressure);
-            alt = Math_ComputeAltitudeMSL(pressure);
+		float samples[KALMAN_NAV_SAMPLE_NB];
+		float sum = 0;
+		float temperature, pressure, alt;
+		for(int i = 0; i < KALMAN_NAV_SAMPLE_NB; i++) {
+			MS5611_Update(&ms5611);
+			HAL_Delay(10);
+			MS5611_Compute(&ms5611, &temperature, &pressure);
+			alt = Math_ComputeAltitudeMSL(pressure);
 			samples[i] = alt;
 			sum += samples[i];
-        }
+		}
 
-        KalmanNav_Init(&kalman_filter, sum/KALMAN_NAV_SAMPLE_NB, samples, KALMAN_NAV_SAMPLE_NB);
-    }
+		// Kalman use MSL instead of AGL
+		ground_altitude_msl_m = sum / KALMAN_NAV_SAMPLE_NB;
+		for(int i = 0; i < KALMAN_NAV_SAMPLE_NB; i++) {
+			samples[i] -= ground_altitude_msl_m;
+		}
+
+		KalmanNav_Init(&kalman_filter, 0.0f, samples, KALMAN_NAV_SAMPLE_NB);
+	}
 
     if(Idefix_Init(&idefix) == IDEFIX_OK) {
         system_states |= FLAG_IDEFIX_OK;
@@ -382,9 +389,6 @@ odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats) {
 		}
 	}
 
-    // Security
-    Pyro_Arming(&system_measurements, false);
-
     return odb_state;
 }
 
@@ -402,6 +406,7 @@ void ODB_Update(odb_data_t *data, odb_stats_t *stats) {
     SystemMeasurements_ComputePyros(&system_measurements);
 
     data->temp_celsius = system_measurements.temperature;
+    const bool pyros_arming_enabled = Pyro_IsArmed(&system_measurements);
     data->system_states &= ~(FLAG_PYRO1_CONN | FLAG_PYRO2_CONN | FLAG_PYRO3_CONN | FLAG_PYRO4_CONN);
 	if(pyros[0].is_connected) data->system_states |= FLAG_PYRO1_CONN;
 	if(pyros[1].is_connected) data->system_states |= FLAG_PYRO2_CONN;
@@ -422,6 +427,7 @@ void ODB_Update(odb_data_t *data, odb_stats_t *stats) {
     //Profiler_StopTask(PROFILE_TASK_BARO);
 
     //Profiler_StartTask(PROFILE_TASK_IMU);
+    const bool mach_lock_enabled = (stats != NULL) ? stats->mach_lock.activated : false;
     /* TODO: Fix that...
     if(BNO055_IsDataReady(&bno055)) {
 
@@ -479,7 +485,7 @@ void ODB_Update(odb_data_t *data, odb_stats_t *stats) {
         raw_accel_z = data->imu_acc_vertical;
     }
     KalmanNav_Predict(&kalman_filter, raw_accel_z);
-    KalmanNav_Update(&kalman_filter, data->altitude_msl_m, data->event_states & FLAG_MACH_LOCK_ENABLED);
+    KalmanNav_Update(&kalman_filter, data->altitude_msl_m - ground_altitude_msl_m, mach_lock_enabled);
     data->kalman_z = (float)kalman_filter.z;
     data->kalman_v = (float)kalman_filter.v;
     //Profiler_StopTask(PROFILE_TASK_KALMAN);
@@ -504,26 +510,23 @@ void ODB_Update(odb_data_t *data, odb_stats_t *stats) {
     data->battery_mv = (uint16_t)(system_measurements.vin_batt);
 
     if(stats) {
-        const bool mach_lock_enabled = (data->event_states & FLAG_MACH_LOCK_ENABLED) != 0U;
-
-        ODB_UpdateWindowEvent(&stats->pyros_arm, is_pyros_armed, now_ms);
         stats->pyro1.fired = pyros[0].is_fire;
         stats->pyro2.fired = pyros[1].is_fire;
         stats->pyro3.fired = pyros[2].is_fire;
         stats->pyro4.fired = pyros[3].is_fire;
 
-        ODB_UpdateWindowEvent(&stats->mach_lock, mach_lock_enabled, now_ms);
+        ODB_UpdateWindowEvent(&stats->pyros_arm, pyros_arming_enabled, now_ms);
 
-        if(stats->pyro1.fired) {
+        if(stats->pyro1.fired && stats->pyro1.time_ms == 0) {
             stats->pyro1.time_ms = now_ms;
         }
-        if(stats->pyro2.fired) {
+        if(stats->pyro2.fired && stats->pyro2.time_ms == 0) {
             stats->pyro2.time_ms = now_ms;
         }
-        if(stats->pyro3.fired) {
+        if(stats->pyro3.fired && stats->pyro3.time_ms == 0) {
             stats->pyro3.time_ms = now_ms;
         }
-        if(stats->pyro4.fired) {
+        if(stats->pyro4.fired && stats->pyro4.time_ms == 0) {
             stats->pyro4.time_ms = now_ms;
         }
 

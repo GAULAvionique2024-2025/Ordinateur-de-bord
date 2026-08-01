@@ -13,19 +13,20 @@
 #define ADC_THERMAL_DRIFT_PPM  	0.00003f
 
 // Ranks DMA
-#define IDX_PYRO4				0
-#define IDX_PYRO1				1
-#define IDX_TEMP  				2
-#define IDX_VIN_BATT  			3
-#define IDX_V5_BUCK   			4
-#define IDX_V3_BUCK   			5
-#define IDX_PYRO3				6
-#define IDX_PYRO2				7
-#define IDX_TEMP_INT  			8
-#define IDX_VREFINT   			9
+#define IDX_PYROS_ARMED			0
+#define IDX_PYRO4				1
+#define IDX_PYRO1				2
+#define IDX_TEMP  				3
+#define IDX_VIN_BATT  			4
+#define IDX_V5_BUCK   			5
+#define IDX_V3_BUCK   			6
+#define IDX_PYRO3				7
+#define IDX_PYRO2				8
+#define IDX_TEMP_INT  			9
+#define IDX_VREFINT   			10
 
-#define NB_WAIT_CYCLE			50	// Number of ADC/DMA acquisition to wait before keep measures
-#define TIMEOUT_WAIT_CYCLE_MS	500
+#define NB_WAIT_CYCLE			10		// Number of ADC/DMA acquisition to wait before keep measures
+#define TIMEOUT_WAIT_CYCLE_MS	100
 
 #define DIV_MULT_VIN_BATT 		207		// 180k + 27k
 #define DIV_DIV_VIN_BATT 		27		// 27k
@@ -122,13 +123,13 @@ void SystemMeasurements_ComputeTemperature(system_measurements_t *dev) {
 }
 
 void SystemMeasurements_ComputePyros(system_measurements_t *dev) {
-    //uint16_t arm = adc_buffer[0];
+    uint16_t arm = SystemMeasurements_GetCompensatedVoltage(adc_buffer[IDX_PYROS_ARMED], dev);
     uint16_t p4  = SystemMeasurements_GetCompensatedVoltage(adc_buffer[IDX_PYRO4], dev);
     uint16_t p1  = SystemMeasurements_GetCompensatedVoltage(adc_buffer[IDX_PYRO1], dev);
     uint16_t p3  = SystemMeasurements_GetCompensatedVoltage(adc_buffer[IDX_PYRO3], dev);
     uint16_t p2  = SystemMeasurements_GetCompensatedVoltage(adc_buffer[IDX_PYRO2], dev);
 
-    //dev->pyros_arming 	= arm;
+    dev->pyros_arming 	= arm;
     dev->pyro_status[0] = p1;
     dev->pyro_status[1] = p2;
     dev->pyro_status[2] = p3;

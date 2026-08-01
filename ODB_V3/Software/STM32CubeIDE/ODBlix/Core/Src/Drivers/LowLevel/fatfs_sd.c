@@ -13,6 +13,8 @@
 #define FALSE 0
 #define bool BYTE
 
+#define SD_POWER_ON_TIMEOUT_MS 500
+
 #include "stm32f4xx_hal.h"
 #include "main.h"
 
@@ -32,13 +34,13 @@ static void DESELECT(void) {
 }
 
 static void SPI_TxByte(uint8_t data) {
-    HAL_SPI_Transmit(&hspi5, &data, 1, HAL_MAX_DELAY);
+    HAL_SPI_Transmit(&hspi5, &data, 1, 10);
 }
 
 static uint8_t SPI_RxByte(void) {
     uint8_t dummy = 0xFF;
     uint8_t data;
-    HAL_SPI_TransmitReceive(&hspi5, &dummy, &data, 1, HAL_MAX_DELAY);
+    HAL_SPI_TransmitReceive(&hspi5, &dummy, &data, 1, 10);
     return data;
 }
 
@@ -56,11 +58,19 @@ static void SD_PowerOn(void) {
     DESELECT();
     for(int i = 0; i < 10; i++) SPI_TxByte(0xFF);
     SELECT();
+
     cmd_arg[0] = (CMD0 | 0x40);
     cmd_arg[1] = 0; cmd_arg[2] = 0; cmd_arg[3] = 0; cmd_arg[4] = 0;
     cmd_arg[5] = 0x95;
-    for (int i = 0; i < 6; i++) SPI_TxByte(cmd_arg[i]);
-    while (SPI_RxByte() != 0x01);
+    for(int i = 0; i < 6; i++) SPI_TxByte(cmd_arg[i]);
+
+    uint32_t tickstart = HAL_GetTick();
+	while (SPI_RxByte() != 0x01) {
+		if ((HAL_GetTick() - tickstart) > SD_POWER_ON_TIMEOUT_MS) {
+			break;
+		}
+	}
+
     DESELECT();
     SPI_TxByte(0XFF);
 }
@@ -84,19 +94,28 @@ static bool SD_RxDataBlock(BYTE *buff, UINT btr) {
 
 static bool SD_TxDataBlock(const BYTE *buff, BYTE token) {
     uint8_t resp;
-    if (SD_ReadyWait() != 0xFF) return 0;
+    if(SD_ReadyWait() != 0xFF) return 0;
     SPI_TxByte(token);
 
-    if (token != 0xFD) {
-        HAL_SPI_Transmit(&hspi5, (uint8_t*)buff, 512, HAL_MAX_DELAY);
+    if(token != 0xFD) {
+        if(HAL_SPI_Transmit(&hspi5, (uint8_t*)buff, 512, 100) != HAL_OK) {
+            return 0;
+        }
         SPI_RxByte();
         SPI_RxByte();
 
-        while (1) {
+        uint32_t tickstart = HAL_GetTick();
+        while(1) {
             resp = SPI_RxByte();
             if ((resp & 0x1F) == 0x05) break;
+            if ((HAL_GetTick() - tickstart) > 500) return 0; // Timeout !
         }
-        while (SPI_RxByte() == 0);
+
+        // --- CORRECTION : Timeout sur le signal "Busy" (0x00) ---
+        tickstart = HAL_GetTick();
+        while(SPI_RxByte() == 0) {
+            if((HAL_GetTick() - tickstart) > 500) return 0; // Timeout !
+        }
     }
     return ((resp & 0x1F) == 0x05) ? 1 : 0;
 }

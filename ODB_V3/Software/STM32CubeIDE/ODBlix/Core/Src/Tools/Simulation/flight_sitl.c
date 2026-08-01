@@ -17,6 +17,7 @@
 #include "Drivers/smtb0927twr.h"
 #include "Drivers/system_measurements.h"
 #include "Drivers/w25q512jv.h"
+#include "Drivers/mem2067.h"
 #include "mavlink/odb_mavlink_v1/mavlink.h"
 #include "Systems/flight_fsm.h"
 #include "Protocols/odb_protocol.h"
@@ -112,7 +113,7 @@ void Scheduler_SetActive(const char* task_name, bool state) {}
 void Buzzer_StartPeriodicBip(buzzer_t *dev, uint16_t freq_hz, uint32_t on_time_ms, uint32_t off_time_ms) {}
 void Buzzer_ProcessPeriodicBip(buzzer_t *dev) {}
 
-bool Pyro_Arming(system_measurements_t *measures, bool arming) {
+pyros_state_t Pyro_Arming(system_measurements_t *measures, bool arming, bool is_test) {
     if (arming && !is_pyros_armed) {
     	Add_Event("pyros_arm_on", "pyros arming window opened");
     } else if (!arming && is_pyros_armed) {
@@ -120,8 +121,15 @@ bool Pyro_Arming(system_measurements_t *measures, bool arming) {
     }
     is_pyros_armed = arming;
 
-    return true;
+    return (pyros_state_t)arming;
 }
+
+bool Pyro_IsArmed(system_measurements_t *measures) {
+    return is_pyros_armed;
+}
+
+void Logger_ExportToSD(odb_stats_t *stats) {}
+
 uint8_t ODB_GetPyroStates(const odb_data_t *data) { return 0x0F; }
 
 pyro_t* Pyro_GetByRole(pyro_role_t role) {
@@ -141,7 +149,7 @@ pyro_t* Pyro_GetByRole(pyro_role_t role) {
     return NULL;
 }
 
-bool Pyro_Fire(pyro_t *dev, system_measurements_t *measures) {
+pyros_state_t Pyro_Fire(pyro_t *dev, system_measurements_t *measures) {
     if(dev && !dev->is_fire) {
         dev->is_fire = true;
         char msg[64], evt_type[64];
@@ -153,10 +161,11 @@ bool Pyro_Fire(pyro_t *dev, system_measurements_t *measures) {
         Add_Event(evt_type, msg);
 
         // Validation FSM basée dynamiquement sur les rôles et non plus sur des canaux codés en dur
-        if (role == PYRO_ROLE_DROGUE && first_drogue_fire_ms == 0) first_drogue_fire_ms = simulated_ms;
-        if (role == PYRO_ROLE_MAIN && first_main_fire_ms == 0) first_main_fire_ms = simulated_ms;
+        if ((role == PYRO_ROLE_DROGUE || role == PYRO_ROLE_DROGUE_BACKUP) && first_drogue_fire_ms == 0) first_drogue_fire_ms = simulated_ms;
+        if ((role == PYRO_ROLE_MAIN || role == PYRO_ROLE_MAIN_BACKUP) && first_main_fire_ms == 0) first_main_fire_ms = simulated_ms;
     }
-    return true;
+
+    return PYRO_OK;
 }
 
 extern void FSM_Update(void);
@@ -197,7 +206,6 @@ void Load_Config_From_File(bool is_sustainer) {
         if (line[0] == '#' || line[0] == '\n' || line[0] == '\r') continue;
 
         char key[64] = {0}, value[64] = {0};
-        // Parseur robuste qui tolère les espaces
         if (sscanf(line, " %63[^= \t] = %63s", key, value) == 2) {
             if (strcmp(key, "odb_name") == 0) strncpy(current_config.odb_name, value, sizeof(current_config.odb_name)-1);
             else if (strcmp(key, "stage_role") == 0) current_config.stage_role = atoi(value);
@@ -210,8 +218,12 @@ void Load_Config_From_File(bool is_sustainer) {
             else if (strcmp(key, "drogue_fire_attempt_max_nb") == 0) current_config.drogue_fire_attempt_max_nb = atoi(value);
             else if (strcmp(key, "main_fire_attempt_max_nb") == 0) current_config.main_fire_attempt_max_nb = atoi(value);
             else if (strcmp(key, "fire_attempt_delay_ms") == 0) current_config.fire_attempt_delay_ms = atoi(value);
+            else if (strcmp(key, "landing_detect_v_threshold") == 0) current_config.landing_detect_v_threshold = atof(value);
+            else if (strcmp(key, "landing_detect_threshold_ms") == 0) current_config.landing_detect_threshold_ms = atoi(value);
+            else if (strcmp(key, "buzzer_report_tone_hz") == 0) current_config.buzzer_report_tone_hz = atoi(value);
+            else if (strcmp(key, "min_needed_pyro_nb") == 0) current_config.min_needed_pyro_nb = atoi(value);
 
-            // Nouveau: Décodage des rôles pyros depuis le fichier .cfg
+            // Décodage des rôles pyros depuis le fichier .cfg
             else if (strcmp(key, "pyro1_role") == 0) {
                 if (strstr(value, "MAIN_BKP")) current_config.pyro_roles[0] = PYRO_ROLE_MAIN_BACKUP;
                 else if (strstr(value, "DROGUE_BKP")) current_config.pyro_roles[0] = PYRO_ROLE_DROGUE_BACKUP;
@@ -324,10 +336,18 @@ int main(int argc, char** argv) {
             // Recherche des temps théoriques dans le CSV
             if (raw_z_m > max_raw_alt) {
                 max_raw_alt = raw_z_m;
-                theo_apogee_ms = simulated_ms;
-                theo_main_ms = 0; // On reset car on monte encore
-            } else if (raw_z_m <= current_config.main_deploy_altitude_threshold_m && theo_main_ms == 0 && max_raw_alt > current_config.main_deploy_altitude_threshold_m) {
-                theo_main_ms = simulated_ms; // Moment où on croise 450m en descendant
+                if (simulated_ms > 1000) {
+                    theo_apogee_ms = simulated_ms;
+                }
+
+                if (raw_z_m > current_config.main_deploy_altitude_threshold_m) {
+                    theo_main_ms = 0;
+                }
+            } else if (raw_z_m <= current_config.main_deploy_altitude_threshold_m &&
+                       theo_main_ms == 0 &&
+                       max_raw_alt > current_config.main_deploy_altitude_threshold_m &&
+                       raw_vel < -5.0f) {
+                theo_main_ms = simulated_ms;
             }
 
             uint32_t absolute_tim5 = (uint32_t)(t * 1000000.0f);

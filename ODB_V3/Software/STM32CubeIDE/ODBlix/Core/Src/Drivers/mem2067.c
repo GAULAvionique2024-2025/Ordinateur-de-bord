@@ -18,6 +18,7 @@ mem2067_state_t MEM2067_Mount(void) {
 	if(fresult != FR_OK) {
 		return MEM2067_ERROR;
 	}
+
 	return MEM2067_OK;
 }
 

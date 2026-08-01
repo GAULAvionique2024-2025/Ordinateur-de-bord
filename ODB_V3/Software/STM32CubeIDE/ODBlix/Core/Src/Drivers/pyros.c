@@ -11,69 +11,72 @@
 #include "Drivers/pyros.h"
 #include <stddef.h>
 
-
-#define DMA_RISING_TIME_MS 	10000
-#define PYRO_THRESHOLD_CONN 100
+#define PYRO_RISING_TIME_MS		250
+#define PYRO_THRESHOLD_CONN 	1000
+#define PYRO_THRESHOLD_ARMED	1000
 
 extern pyro_t pyros[PYRO_MAX];
-extern bool is_pyros_armed;
 
-bool is_pa_an_active = false;
 
-/*
- * PA_AN is configured in push-pull mode to power senses and check pyros continuity without arming them
- * TODO: Fix Kicad schematic to add a dedicated pin to power senses to keep PA_An the sense of arming continuity
- * TODO: Remove HAL_Delay
- */
-int8_t Pyro_Init(pyro_t *dev, system_measurements_t *measures) {
+pyros_state_t Pyro_Init(pyro_t *dev, system_measurements_t *measures) {
 	if(!dev || !measures || dev->channel >= PYRO_MAX || !dev->fire_port || !dev->fire_pin) {
-		return -1; // failed
+		return PYRO_INIT_ERROR; // failed
 	}
 
-	if(!is_pa_an_active) {
-		HAL_GPIO_WritePin(PA_An_GPIO_Port, PA_An_Pin, GPIO_PIN_SET);
-		HAL_Delay(DMA_RISING_TIME_MS);
-		is_pa_an_active = true;
-	}
+	HAL_GPIO_WritePin(Pyros_CTN_GPIO_Port, Pyros_CTN_Pin, GPIO_PIN_SET);
+	HAL_Delay(PYRO_RISING_TIME_MS);
 
 	SystemMeasurements_ComputePyros(measures);
-
 	dev->is_connected = (measures->pyro_status[dev->channel] >= PYRO_THRESHOLD_CONN);
 	dev->is_fire = false;
 
-	return (dev->is_connected) ? 0 : -1;
+	HAL_GPIO_WritePin(Pyros_CTN_GPIO_Port, Pyros_CTN_Pin, GPIO_PIN_RESET);
+
+	return (dev->is_connected) ? PYRO_OK : PYRO_INIT_ERROR;
 }
 
-bool Pyro_Arming(system_measurements_t *measures, bool arming) {
-	// Define in main.h (generated in IOC)
-	if (arming) {
-		HAL_GPIO_WritePin(PA_An_GPIO_Port, PA_An_Pin, GPIO_PIN_RESET);
-		HAL_Delay(10);
-		HAL_GPIO_WritePin(Pyros_Arm_GPIO_Port, Pyros_Arm_Pin, GPIO_PIN_SET);
-		is_pyros_armed = true;
-	} else {
-		HAL_GPIO_WritePin(Pyros_Arm_GPIO_Port, Pyros_Arm_Pin, GPIO_PIN_RESET);
-		HAL_Delay(10);
-		HAL_GPIO_WritePin(PA_An_GPIO_Port, PA_An_Pin, GPIO_PIN_SET);
-		is_pyros_armed = false;
+bool Pyro_IsArmed(system_measurements_t *measures) {
+	if(!measures) {
+		return false;
 	}
 
-	return arming;
+	SystemMeasurements_ComputePyros(measures);
+	bool is_pyros_armed = (measures->pyros_arming >= PYRO_THRESHOLD_ARMED);
+
+	return is_pyros_armed;
 }
 
-bool Pyro_Fire(pyro_t *dev, system_measurements_t *measures) {
-	if(!dev || !dev->fire_port) return false;
+pyros_state_t Pyro_Arming(system_measurements_t *measures, bool arming, bool is_test) {
+	if(!measures) return PYRO_ARMING_ERROR;
+
+	if(arming) {
+		HAL_GPIO_WritePin(Pyros_CTN_GPIO_Port, Pyros_CTN_Pin, GPIO_PIN_RESET);
+		HAL_GPIO_WritePin(Pyros_Arm_GPIO_Port, Pyros_Arm_Pin, GPIO_PIN_SET);
+	} else {
+		HAL_GPIO_WritePin(Pyros_Arm_GPIO_Port, Pyros_Arm_Pin, GPIO_PIN_RESET);
+	}
+
+	if(is_test) HAL_Delay(PYRO_RISING_TIME_MS);
+
+	return (Pyro_IsArmed(measures) == arming) ? PYRO_OK : PYRO_ARMING_ERROR;
+}
+
+pyros_state_t Pyro_Fire(pyro_t *dev, system_measurements_t *measures) {
+	if(!dev || !dev->fire_port || !dev->fire_pin) return PYRO_FIRE_ERROR;
 
 	HAL_GPIO_WritePin(dev->fire_port, dev->fire_pin, GPIO_PIN_SET);
 	HAL_Delay(250);
 	HAL_GPIO_WritePin(dev->fire_port, dev->fire_pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(Pyros_CTN_GPIO_Port, Pyros_CTN_Pin, GPIO_PIN_SET);
 
 	SystemMeasurements_ComputePyros(measures);
 	if(measures->pyro_status[dev->channel] < PYRO_THRESHOLD_CONN) {
 		dev->is_fire = true;
 	}
 
-	return true;
+	HAL_GPIO_WritePin(Pyros_CTN_GPIO_Port, Pyros_CTN_Pin, GPIO_PIN_RESET);
+
+	return (dev->is_fire) ? PYRO_OK : PYRO_FIRE_ERROR;
 }
 
 pyro_t* Pyro_GetByRole(pyro_role_t role) {

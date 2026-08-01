@@ -12,7 +12,7 @@
 #include <stdbool.h>
 
 
-#define W25Q512_JEDEC_ID                    0xEF4020
+#define W25Q512_JEDEC_ID                    0xEF7020
 
 #define W25Q512_FLASH_SIZE                  0x4000000 // 512 MBits => 64 MBytes
 #define W25Q512_SECTOR_SIZE                 0x1000    // 4 Ko

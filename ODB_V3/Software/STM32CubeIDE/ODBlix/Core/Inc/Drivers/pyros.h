@@ -19,6 +19,13 @@
 
 
 typedef enum {
+	PYRO_OK = 0,
+	PYRO_INIT_ERROR = -1,
+	PYRO_ARMING_ERROR = -2,
+	PYRO_FIRE_ERROR = -3
+} pyros_state_t;
+
+typedef enum {
 	PYRO_1 		= 0,
 	PYRO_2 		= 1,
 	PYRO_3 		= 2,
@@ -31,15 +38,16 @@ typedef struct {
 	uint16_t		fire_pin;
 
 	pyro_channel_t  channel;
-
 	bool			is_connected;
 	bool			is_fire;
 } pyro_t;
 
-int8_t Pyro_Init(pyro_t *dev, system_measurements_t *measures);
 
-bool Pyro_Arming(system_measurements_t *measures, bool arming);
-bool Pyro_Fire(pyro_t *dev, system_measurements_t *measures);
+pyros_state_t Pyro_Init(pyro_t *dev, system_measurements_t *measures);
+
+pyros_state_t Pyro_Arming(system_measurements_t *measures, bool arming, bool is_test);
+bool Pyro_IsArmed(system_measurements_t *measures);
+pyros_state_t Pyro_Fire(pyro_t *dev, system_measurements_t *measures);
 
 pyro_t* Pyro_GetByRole(pyro_role_t role);
 

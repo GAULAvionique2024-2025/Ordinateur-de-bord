@@ -16,7 +16,7 @@ extern critical_led_t critical_led;
 extern system_measurements_t system_measurements;
 extern idefix_t idefix;
 extern pyro_t pyros[4];
-extern bool is_pyros_armed;
+
 
 static void AppComm_SendFrame(hm11_t *hm11_dev, app_msg_type_t type, const uint8_t *payload, uint8_t len) {
     if(!hm11_dev || !hm11_dev->is_connected) return;
@@ -118,11 +118,11 @@ void AppComm_ProcessRx(hm11_t *hm11_dev) {
                         AppComm_SendAck(hm11_dev, CMD_PING, 1);
                     } else if(cmd == CMD_ARM_DISARM) {
                         bool arm = payload[1] == 1;
-                        is_pyros_armed = Pyro_Arming(&system_measurements, arm);
+                        bool is_pyros_armed = Pyro_Arming(&system_measurements, arm, true) == PYRO_OK;
                         AppComm_SendAck(hm11_dev, CMD_ARM_DISARM, is_pyros_armed == arm ? 1 : 0);
                     } else if(cmd == CMD_FIRE_PYRO) {
                         uint8_t pyro_idx = payload[1];
-                        if(is_pyros_armed && pyro_idx < PYRO_MAX) {
+                        if(Pyro_IsArmed(&system_measurements) && pyro_idx < PYRO_MAX) {
                             Pyro_Fire(&pyros[pyro_idx], &system_measurements);
                             AppComm_SendAck(hm11_dev, CMD_FIRE_PYRO, 1);
                         } else {

@@ -14,7 +14,7 @@
 #include <stdbool.h>
 
 
-#define DMA_INDEX_SIZE			10		// Number of ranks
+#define DMA_INDEX_SIZE			11		// Number of ranks
 
 #define MAX6612MXK_MAX_TEMP_C 	150.0f
 #define MAX6612MXK_MIN_TEMP_C 	-55.0f
@@ -43,7 +43,7 @@ typedef struct {
     uint16_t 			v5_buck;
     uint16_t 			v3_buck;
     uint16_t			pg_v5;
-    //uint16_t 			pyros_arming;
+    uint16_t 			pyros_arming;
     uint16_t 			pyro_status[4];
 } system_measurements_t;
 

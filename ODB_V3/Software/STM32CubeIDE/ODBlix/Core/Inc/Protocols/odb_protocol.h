@@ -44,7 +44,7 @@
 #define FLAG_BARO_OK                    (1 << 7)
 #define FLAG_IMU_OK                     (1 << 6)
 #define FLAG_RADIO_OK                   (1 << 5)
-#define FLAG_PYROS_ARMED_OK             (1 << 4) // False positive
+#define FLAG_PYROS_ARMED_OK             (1 << 4)
 #define FLAG_PYRO1_CONN                 (1 << 3)
 #define FLAG_PYRO2_CONN                 (1 << 2)
 #define FLAG_PYRO3_CONN                 (1 << 1)
