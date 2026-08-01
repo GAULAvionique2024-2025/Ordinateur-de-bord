@@ -127,7 +127,7 @@ bno055_error_t BNO055_Init(bno055_t *dev);
 void BNO055_HardReset(bno055_t *dev);
 bno055_error_t BNO055_SetPowerMode(bno055_t *dev, bno055_pwr_mode_t power_mode);
 
-bool BNO055_IsDataReady(bno055_t *dev);
+//bool BNO055_IsDataReady(bno055_t *dev);
 bno055_error_t BNO055_ReadAllData(bno055_t *dev);
 bno055_error_t BNO055_ReadTemperature(bno055_t *dev);
 bno055_error_t BNO055_UpdateCalibration(bno055_t *dev);
@@ -136,5 +136,7 @@ void BNO055_ComputeVerticalAcc(bno055_t *dev);
 
 bno055_error_t BNO055_GetCalibrationProfile(bno055_t *dev, bno055_calib_profile_t *profile);
 bno055_error_t BNO055_SetCalibrationProfile(bno055_t *dev, bno055_calib_profile_t *profile);
+
+bno055_error_t BNO055_GetSwRevision(bno055_t *dev, uint16_t *sw_rev);
 
 #endif // INC_DRIVERS_BNO055_H_

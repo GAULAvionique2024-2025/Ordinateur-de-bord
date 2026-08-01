@@ -255,6 +255,7 @@ odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats) {
     }
 
     if(BNO055_Init(&bno055) == BNO055_OK) {
+    	uint16_t sw_revision = 0x00;
         system_states |= FLAG_IMU_OK;
     } else {
         error++;
@@ -362,7 +363,7 @@ odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats) {
         DEBUG_PRINTF("ERROR : %d ERROR(s) detected during system initialization. Some essential features are unavailable\n", error);
         if(!current_config.debug_mode) {
         	CriticalLED_SetColor(&critical_led, RED);
-        	while(1) {} // Stop execution
+        	//while(1) {} // Stop execution
         }
     } else {
     	if(warning > 0) {
@@ -428,11 +429,6 @@ void ODB_Update(odb_data_t *data, odb_stats_t *stats) {
 
     //Profiler_StartTask(PROFILE_TASK_IMU);
     const bool mach_lock_enabled = (stats != NULL) ? stats->mach_lock.activated : false;
-    /* TODO: Fix that...
-    if(BNO055_IsDataReady(&bno055)) {
-
-    }
-    */
     if(BNO055_ReadAllData(&bno055) == BNO055_OK) {
 		data->imu_acc_x = bno055.acc_x;
 		data->imu_acc_y = bno055.acc_y;

@@ -153,7 +153,7 @@ typedef struct __attribute__((packed)) {
     float		imu_mag_z;			// IMU Magnetometer Z in uT (converted to cuT for MAVLink) -> Linked with BNO055
     // Pressure & Temp
     float		altitude_msl_m;		// Altitude in m (converted to cm for MAVLink) from barometer referenced with the sea level (MLS)-> Linked with MS5611
-    float       pressure_pa;       // Atmospheric pressure in Pa (converted to hPa for MAVLink) -> Linked with MS5611
+    float       pressure_pa;       	// Atmospheric pressure in Pa (converted to hPa for MAVLink) -> Linked with MS5611
     float       temp_celsius;       // Board or environment temperature in °C (converted to °cC for MAVLink) -> Linked with MAX6612MXK
     // High-G Acclerometer
     float       highg_acc_x;        // High-G Acceleration X in m/s2 (converted to cm/s2 for MAVLink) -> Linked with ADXL382
@@ -173,7 +173,7 @@ typedef struct __attribute__((packed)) {
     // Statistics
     float       imu_acc_vertical;   // Vertical acceleration (World frame) from IMU in m/s2 (converted to cm/s2 for MAVLink) -> Linked with BNO055
     float       highg_acc_vertical; // Vertical acceleration (World frame) from High-G Accelerometer in m/s2 (converted to cm/s2 for MAVLink) -> Linked with ADXL382
-    float       kalman_z;           // filtered altitude from Kalman filter in m (converted to cm for MAVLink)
+    float       kalman_z;           // filtered altitude from Kalman filter in m (converted to cm for MAVLink) referenced with the above ground level (AGL) -> altitude_msl_m - initial altitude value
     float       kalman_v;           // filtered velocity from Kalman filter in m/s (converted to cm/s for MAVLink)
 
     // TOTAL 123 + 4 (header)

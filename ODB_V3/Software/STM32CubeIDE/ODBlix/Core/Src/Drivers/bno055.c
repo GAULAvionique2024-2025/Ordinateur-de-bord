@@ -11,6 +11,8 @@
 
 #define BNO055_ID_VAL               0xA0
 // Page 0
+#define BNO055_REG_SW_REV_ID_LSB    0x04
+#define BNO055_REG_SW_REV_ID_MSB    0x05
 #define BNO055_REG_PAGE_ID          0x07
 #define BNO055_REG_CHIP_ID          0x00
 #define BNO055_REG_ACC_DATA_X_LSB   0x08 // Accel: 6 octets
@@ -260,6 +262,8 @@ void BNO055_HardReset(bno055_t *dev) {
     BNO055_Reset(dev);
 }
 
+// REV ID 3.11 -> no DRDY, only specific hysteresis
+/*
 bool BNO055_IsDataReady(bno055_t *dev) {
     if(dev->data_ready_flag) {
         dev->data_ready_flag = false;
@@ -268,6 +272,7 @@ bool BNO055_IsDataReady(bno055_t *dev) {
 
     return false;
 }
+*/
 
 bno055_error_t BNO055_ReadAllData(bno055_t *dev) {
     uint8_t buffer[18];
@@ -410,6 +415,21 @@ bno055_error_t BNO055_SetCalibrationProfile(bno055_t *dev, bno055_calib_profile_
         return BNO055_I2C_ERROR;
     }
     HAL_Delay(25);
+
+    return BNO055_OK;
+}
+
+bno055_error_t BNO055_GetSwRevision(bno055_t *dev, uint16_t *sw_rev) {
+    uint8_t buffer[2];
+    if(BNO055_SetPage(dev->hi2c, 0x00) != 0) {
+        return BNO055_CONFIG_ERROR;
+    }
+
+    if(BNO055_ReadRegs(dev->hi2c, BNO055_REG_SW_REV_ID_LSB, buffer, 2) != 0) {
+        return BNO055_I2C_ERROR;
+    }
+
+    *sw_rev = (uint16_t)((buffer[1] << 8) | buffer[0]);
 
     return BNO055_OK;
 }
