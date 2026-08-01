@@ -40,7 +40,7 @@
 #include "Drivers/rfd900x.h"
 #include "Drivers/smtb0927twr.h"
 #include "Drivers/system_measurements.h"
-#include "Drivers/w25q512jv.h"
+#include "Drivers/w25q512jveim.h"
 #include "Utils/reboot_manager.h"
 /* USER CODE END Includes */
 

@@ -22,7 +22,7 @@
 #include "Drivers/rfd900x.h"
 #include "Drivers/smtb0927twr.h"
 #include "Drivers/system_measurements.h"
-#include "Drivers/w25q512jv.h"
+#include "Drivers/w25q512jveim.h"
 #include "Drivers/mem2067.h"
 #include "Protocols/odb_protocol.h"
 #include "stm32f4xx_hal.h"

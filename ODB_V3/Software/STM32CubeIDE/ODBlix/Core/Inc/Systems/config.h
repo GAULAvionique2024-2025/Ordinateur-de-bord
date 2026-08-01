@@ -8,7 +8,7 @@
 #ifndef INC_SYSTEMS_CONFIG_H_
 #define INC_SYSTEMS_CONFIG_H_
 
-#include "Drivers/w25q512jv.h"
+#include "Drivers/w25q512jveim.h"
 #include "Protocols/config_protocol.h"
 #include "Utils/utils.h"
 #include <stdint.h>

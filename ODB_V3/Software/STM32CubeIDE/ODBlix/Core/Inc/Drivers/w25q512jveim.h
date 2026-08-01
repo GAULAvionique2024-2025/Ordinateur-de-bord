@@ -5,8 +5,8 @@
  * Author: gagno
  */
 
-#ifndef INC_DRIVERS_W25Q512JV_H_
-#define INC_DRIVERS_W25Q512JV_H_
+#ifndef INC_DRIVERS_W25Q512JVEIM_H_
+#define INC_DRIVERS_W25Q512JVEIM_H_
 
 #include "stm32f4xx_hal.h"
 #include <stdbool.h>
@@ -39,4 +39,4 @@ bool W25Q_IsBusy(QSPI_HandleTypeDef *hqspi);
 int8_t W25Q_SetMemoryMappedMode(w25q_t *dev, bool enable);    // If enable is true, the flash will be mapped to the QSPI memory space, allowing for direct read access. If false, the flash will be in indirect mode, requiring commands to read/write.
 int8_t W25Q_SetDeepPowerDown(w25q_t *dev, bool enable);       // If enable is true, the flash will enter deep power down mode, reducing power consumption. In this mode, the flash will not respond to any command except for the release from deep power down command. If false, the flash will exit deep power down mode and be ready for normal operation. Incompatible with memory mapped mode.
 
-#endif /* INC_DRIVERS_W25Q512JV_H_ */
+#endif /* INC_DRIVERS_W25Q512JVEIM_H_ */

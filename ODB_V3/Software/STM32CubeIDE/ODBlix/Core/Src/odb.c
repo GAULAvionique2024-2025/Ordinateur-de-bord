@@ -255,7 +255,6 @@ odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats) {
     }
 
     if(BNO055_Init(&bno055) == BNO055_OK) {
-    	uint16_t sw_revision = 0x00;
         system_states |= FLAG_IMU_OK;
     } else {
         error++;

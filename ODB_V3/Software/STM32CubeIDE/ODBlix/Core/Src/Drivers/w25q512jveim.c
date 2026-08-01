@@ -5,7 +5,7 @@
  * Author: gagno
  */
 
-#include "Drivers/w25q512jv.h"
+#include "Drivers/w25q512jveim.h"
 #include <string.h>
 
 
