@@ -69,14 +69,6 @@ static config_error_t Config_Validate(const odb_config_t* new_config) {
         return CONFIG_ERR_MAGIC_NUMBER;
     }
 
-    // CRC32
-	size_t data_size = sizeof(odb_config_t) - sizeof(uint32_t);
-	uint32_t calculated_crc = CRC32_Compute((const uint8_t*)new_config, data_size);
-
-	if(new_config->crc32 != calculated_crc) {
-		return CONFIG_ERR_CRC;
-	}
-
     if(new_config->version_major != CONFIG_PROTOCOL_VERSION_MAJOR) {
         return CONFIG_ERR_VERSION;
     }

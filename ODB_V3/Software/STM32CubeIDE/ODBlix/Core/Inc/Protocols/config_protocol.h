@@ -37,7 +37,6 @@ static const char* const PYRO_ROLES_LOOKUP[] = {
 /* === Configuration Structure === */
 typedef struct __attribute__((packed)) {
 	uint32_t 	magic_number;
-	uint32_t 	crc32;
 
 	uint8_t  	version_major;
 	uint8_t  	version_minor;

@@ -39,10 +39,6 @@ float Math_ComputeAltitudeMSL(float current_pressure);
 float Math_ComputeAltitudeAGL(float current_pressure, float ground_elevation_msl);
 /* =========== */
 
-/* === CRC === */
-uint32_t CRC32_Compute(const uint8_t *data, size_t length);
-/* =========== */
-
 /* === HELPERS === */
 typedef struct {
 	uint32_t  	start_time;
