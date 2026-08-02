@@ -15,6 +15,8 @@ extern uint32_t SystemCoreClock;
 
 
 void KalmanNav_Init(kalman_nav_t *dev, float mean_alt, float *samples, uint8_t sample_count) {
+	if(!dev | (sample_count == 0)) return;
+
     dev->z = mean_alt;
     dev->v = 0.0f;
     dev->a_bias = 0.0f;
@@ -54,7 +56,12 @@ void KalmanNav_Predict(kalman_nav_t *dev, float acc_world_z) {
     uint32_t diff_cycles = now_cycles - dev->last_cycles;
     float dt = (float)diff_cycles / (float)SystemCoreClock;
     dev->last_cycles = now_cycles;
-    //if(dt <= 0.0f || dt > 0.5f) return; // Overflow security check
+
+    // Overflow security check
+	if(dt <= 0.0f) return;
+	if(dt > 0.5f) {
+		dt = 0.5f;
+	}
 
     // State prediction
     float a = acc_world_z - dev->a_bias;
