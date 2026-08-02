@@ -277,9 +277,6 @@ odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats) {
 
     if(L76LM33_Init(&l76lm33) == L76LM33_OK) {
         system_states |= FLAG_GPS_OK;
-        if(l76lm33.gps_data.gps_fix == 0) {
-        	warning++;
-        }
     } else {
         error++;
         DEBUG_PRINTF("ERROR : Init L76LM33\n");
@@ -486,7 +483,8 @@ void ODB_Update(odb_data_t *data, odb_stats_t *stats) {
     //Profiler_StopTask(PROFILE_TASK_KALMAN);
 
     //Profiler_StartTask(PROFILE_TASK_GPS);
-    if(L76LM33_Compute(&l76lm33) == L76LM33_OK) {
+    l76lm33_state_t gps_status = L76LM33_Compute(&l76lm33);
+    if(gps_status == L76LM33_OK || gps_status == L76LM33_NO_VALID_FRAME) {
       data->gps_fix         = l76lm33.gps_data.gps_fix;
       data->lat             = l76lm33.gps_data.lat;
       data->lon             = l76lm33.gps_data.lon;
@@ -495,10 +493,10 @@ void ODB_Update(odb_data_t *data, odb_stats_t *stats) {
       data->cog             = l76lm33.gps_data.cog;
       data->satellites_nb   = l76lm33.gps_data.satellites_nb;
 
-      data->system_states |= FLAG_GPS_OK;
-    } else {
-    	data->system_states &= ~FLAG_GPS_OK;
-    }
+      //data->system_states |= FLAG_GPS_OK;
+    } //else {
+    	//data->system_states &= ~FLAG_GPS_OK;
+    //}
     //Profiler_StopTask(PROFILE_TASK_GPS);
 
     data->time_boot_ms = now_ms;

@@ -23,11 +23,12 @@
 #define L76LM33_UART_TIMEOUT 500    // For UART transmit
 
 typedef enum {
-	L76LM33_ERROR_UART = -4,
-	L76LM33_ERROR_DEV  = -3,
-    L76LM33_EMPTY_BUFF = -2,
-    L76LM33_ERROR      = -1,
-    L76LM33_OK         =  0
+	L76LM33_ERROR_UART 		= -5,
+	L76LM33_ERROR_DEV  		= -4,
+    L76LM33_EMPTY_BUFF 		= -3,
+	L76LM33_NO_VALID_FRAME 	= -2,
+    L76LM33_ERROR      		= -1,
+    L76LM33_OK         		=  0
 } l76lm33_state_t;
 
 typedef enum {

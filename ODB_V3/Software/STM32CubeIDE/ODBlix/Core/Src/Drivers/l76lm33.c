@@ -194,9 +194,9 @@ l76lm33_state_t L76LM33_Compute(l76lm33_t *dev) {
     if(valid != L76LM33_OK) return L76LM33_ERROR;
 
     if(NMEA_ValidateRMC(temp_nmea_buffer) == 0) {
-        if(NMEA_ParseRMC(&(dev->gps_data), temp_nmea_buffer) != 0) return L76LM33_ERROR;
+        if(NMEA_ParseRMC(&(dev->gps_data), temp_nmea_buffer) != 0) return L76LM33_NO_VALID_FRAME;
     } else if(NMEA_ValidateGGA(temp_nmea_buffer) == 0) {
-        if(NMEA_ParseGGA(&(dev->gps_data), temp_nmea_buffer) != 0) return L76LM33_ERROR;
+        if(NMEA_ParseGGA(&(dev->gps_data), temp_nmea_buffer) != 0) return L76LM33_NO_VALID_FRAME;
     }
 
     return L76LM33_OK;

@@ -443,11 +443,13 @@ class _TopMetricsGrid extends StatelessWidget {
                         width: 12.0,
                         height: 12.0,
                         decoration: BoxDecoration(
-                          color: data.batterySensorState == SensorState.ok
+                          color: connected
+                            ? (data.batterySensorState == SensorState.ok
                               ? (data.goodPowerState
-                                  ? FlutterFlowTheme.of(context).success
-                                  : FlutterFlowTheme.of(context).error)
-                              : FlutterFlowTheme.of(context).secondaryText,
+                                ? FlutterFlowTheme.of(context).success
+                                : FlutterFlowTheme.of(context).error)
+                              : FlutterFlowTheme.of(context).secondaryText)
+                            : FlutterFlowTheme.of(context).secondaryText,
                           shape: BoxShape.circle,
                         ),
                       ),
@@ -468,7 +470,11 @@ class _TopMetricsGrid extends StatelessWidget {
                                     .titleLarge
                                     .fontStyle,
                               ),
-                              color: FlutterFlowTheme.of(context).success,
+                                color: connected && data.batterySensorState == SensorState.ok
+                                  ? (data.goodPowerState
+                                    ? FlutterFlowTheme.of(context).success
+                                    : FlutterFlowTheme.of(context).error)
+                                  : FlutterFlowTheme.of(context).secondaryText,
                               letterSpacing: 0.0,
                               fontWeight: FontWeight.bold,
                               fontStyle: FlutterFlowTheme.of(context)
@@ -489,12 +495,12 @@ class _TopMetricsGrid extends StatelessWidget {
                                     .bodySmall
                                     .fontStyle,
                               ),
-                              color: data.batterySensorState == SensorState.ok
+                                color: connected && data.batterySensorState == SensorState.ok
                                   ? (data.batteryPercent > 60
-                                      ? FlutterFlowTheme.of(context).primary
-                                      : (data.batteryPercent > 30
-                                          ? FlutterFlowTheme.of(context).warning
-                                          : FlutterFlowTheme.of(context).error))
+                                    ? FlutterFlowTheme.of(context).primary
+                                    : (data.batteryPercent > 30
+                                      ? FlutterFlowTheme.of(context).warning
+                                      : FlutterFlowTheme.of(context).error))
                                   : FlutterFlowTheme.of(context).secondaryText,
                               letterSpacing: 0.0,
                               fontWeight: FlutterFlowTheme.of(context)
@@ -518,12 +524,12 @@ class _TopMetricsGrid extends StatelessWidget {
                                     .bodySmall
                                     .fontStyle,
                               ),
-                              color: data.batterySensorState == SensorState.ok
+                                color: connected && data.batterySensorState == SensorState.ok
                                   ? (data.batteryPercent > 60
-                                      ? FlutterFlowTheme.of(context).primary
-                                      : (data.batteryPercent > 30
-                                          ? FlutterFlowTheme.of(context).warning
-                                          : FlutterFlowTheme.of(context).error))
+                                    ? FlutterFlowTheme.of(context).primary
+                                    : (data.batteryPercent > 30
+                                      ? FlutterFlowTheme.of(context).warning
+                                      : FlutterFlowTheme.of(context).error))
                                   : FlutterFlowTheme.of(context).secondaryText,
                               letterSpacing: 0.0,
                               fontWeight: FlutterFlowTheme.of(context)
@@ -548,7 +554,12 @@ class _TopMetricsGrid extends StatelessWidget {
                                     .bodySmall
                                     .fontStyle,
                               ),
-                              color: FlutterFlowTheme.of(context).success,
+                                color: connected
+                                  ? ((data.batterySensorState == SensorState.ok &&
+                                      data.goodPowerState)
+                                    ? FlutterFlowTheme.of(context).success
+                                    : FlutterFlowTheme.of(context).error)
+                                  : FlutterFlowTheme.of(context).secondaryText,
                               letterSpacing: 0.0,
                               fontWeight: FontWeight.w600,
                               fontStyle: FlutterFlowTheme.of(context)
