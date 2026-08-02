@@ -73,7 +73,7 @@ static config_error_t Config_Validate(const odb_config_t* new_config) {
         return CONFIG_ERR_VERSION;
     }
 
-    if(current_config.debug_mode == 0) {
+    if(new_config->debug_mode == 0) {
     	/* Validate Stage Role */
 		if(new_config->stage_role < CONFIG_STAGE_ROLE_MIN || new_config->stage_role > CONFIG_STAGE_ROLE_MAX) {
 			return CONFIG_ERR_STAGE_ROLE;
