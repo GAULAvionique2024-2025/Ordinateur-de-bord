@@ -231,7 +231,7 @@ odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats) {
 			} else {
 				if(role != PYRO_ROLE_NONE) {
 					warning++;
-					DEBUG_PRINTF("ERROR : Pyro %d (%s) deconnected, but has role set\n", i + 1, PYRO_ROLES_LOOKUP[role]);
+					DEBUG_PRINTF("WARNING : Pyro %d (%s) deconnected, but has role set\n", i + 1, PYRO_ROLES_LOOKUP[role]);
 				}
 			}
 		}
@@ -293,7 +293,7 @@ odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats) {
     	system_states |= FLAG_BT_OK;
     } else {
     	warning++;
-    	DEBUG_PRINTF("ERROR : HM-11 doesn't respond or has an active connection.\n");
+    	DEBUG_PRINTF("WARNING : HM-11 doesn't respond or has an active connection.\n");
     }
 
     // Kalman filter initialization -> calculate R_static
@@ -324,7 +324,7 @@ odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats) {
         Beacon_SetFrequency(&idefix);
     } else {
     	warning++;
-        DEBUG_PRINTF("ERROR : Init IdeFIX\n");
+        DEBUG_PRINTF("WARNING : Init IdeFIX\n");
     }
 
     if(MEM2067_Mount() == MEM2067_OK) {
@@ -337,16 +337,16 @@ odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats) {
 			DEBUG_PRINTF("INFOS : Available SD storage: %lu free bytes out of %lu available\n", mem2067.free_space, mem2067.total_space);
     	} else {
     		warning++;
-    		DEBUG_PRINTF("ERROR : Open file MEM2067\n");
+    		DEBUG_PRINTF("WARNING : Open file MEM2067\n");
     	}
 	} else {
 		warning++;
-		DEBUG_PRINTF("ERROR : Mount MEM2067\n");
+		DEBUG_PRINTF("WARNING : Mount MEM2067\n");
 	}
 
     if(CriticalLed_Init(&critical_led) != 0) {
     	warning++;
-		DEBUG_PRINTF("ERROR : Init Critical LED\n");
+		DEBUG_PRINTF("WARNING : Init Critical LED\n");
 	}
     // Sensors Init End
 

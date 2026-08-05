@@ -7,6 +7,7 @@
 
 
 #include "Drivers/smtb0927twr.h"
+#include <stdlib.h>
 
 
 #define TIMER_CLK_HZ 1000000
@@ -45,6 +46,8 @@ static void Buzzer_PlayTone(buzzer_t *dev, uint16_t freq_hz, uint32_t duration) 
 }
 
 static void Buzzer_Bip(buzzer_t *dev, uint8_t count, uint32_t on_time, uint32_t off_time, uint16_t freq) {
+	if(count == 0) return;
+
     for(uint8_t i = 0; i < count; i++) {
         Buzzer_PlayTone(dev, freq, on_time);
         HAL_TIM_PWM_Stop(dev->htim, dev->channel);
@@ -107,7 +110,7 @@ void Buzzer_RunRoutine(buzzer_t *dev, buzzer_routines_t routine) {
  * Pause 3s
  * Start Bip -> 5s biiiiip...
 */
-void Buzzer_ReportStatus(buzzer_t *dev, uint16_t freq_hz, uint16_t battery_dv, bool pyros_continuity[4], uint8_t global_state, const uint32_t flight_time_ms, const float max_altitude, bool valid) {
+void Buzzer_ReportStatus(buzzer_t *dev, uint16_t freq_hz, uint16_t battery_dv, bool pyros_continuity[4], int8_t global_state, const uint32_t flight_time_ms, const float max_altitude, bool valid) {
 	if(freq_hz > BUZZER_MAX_FREQ) return;
 
     // Battery voltage
@@ -172,15 +175,12 @@ void Buzzer_ReportStatus(buzzer_t *dev, uint16_t freq_hz, uint16_t battery_dv, b
     Buzzer_Pause(3000);
 
     // Global state
-    if(global_state < 1) global_state = 1;
-    if(global_state > 8) global_state = 8;
-
-    Buzzer_Bip(dev, global_state, 250, 250, freq_hz);
+    Buzzer_Bip(dev, abs(global_state), 250, 250, freq_hz);
 
     Buzzer_Pause(3000);
 
     // Start Bip
-    if(global_state == 1) {
+    if(global_state > -2) {
         Buzzer_Bip(dev, 1, 5000, 250, freq_hz);
     }
 }
