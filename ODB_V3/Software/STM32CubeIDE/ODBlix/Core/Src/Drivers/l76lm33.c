@@ -87,7 +87,9 @@ l76lm33_state_t L76LM33_Init(l76lm33_t *dev) {
 	 * "$PMTK251,115200*1F<CR><LF>"
 	*/
 	const char NMEA_BAUD[] = "$PMTK251,115200*1F\r\n";
-	if(L76LM33_SendCommand(dev, NMEA_BAUD, strlen(NMEA_BAUD)) != L76LM33_OK) return L76LM33_ERROR;
+	if(L76LM33_SendCommand(dev, NMEA_BAUD, strlen(NMEA_BAUD)) != L76LM33_OK) {
+		return L76LM33_ERROR;
+	}
 	HAL_Delay(100);
 
 	// Restart UART DMA Reception

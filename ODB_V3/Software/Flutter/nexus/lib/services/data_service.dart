@@ -183,7 +183,6 @@ class DataServiceManager with ChangeNotifier {
   int systemStates = 0;
   int eventStates = 0;
   int missionState = -1;
-  String odbState = '';
   String odbFrameVersion = '';
   String odbConfigFrameVersion = '';
   bool hasOdbConfig = false;
@@ -239,6 +238,10 @@ class DataServiceManager with ChangeNotifier {
   SensorState gpsSensorState = SensorState.unknown;
   SensorState barometerSensorState = SensorState.unknown;
   RadioState radioState = RadioState.disconnected;
+  SensorState flashSensorState = SensorState.unknown;
+  SensorState idefixSensorState = SensorState.unknown;
+  SensorState btModuleState = SensorState.unknown;
+  SensorState pyroArmingModuleState = SensorState.unknown;
 
   // ---------- Getter / valeurs derivées ----------
   double get batteryPercent => batteryVoltageMax > 0
@@ -365,7 +368,6 @@ class DataServiceManager with ChangeNotifier {
       : '—';
   String get missionStatus {
     if (missionStateDisplay != '—') return missionStateDisplay;
-    if (odbState.isNotEmpty) return odbState;
     return systemStateDisplay;
   }
 
@@ -427,11 +429,11 @@ class DataServiceManager with ChangeNotifier {
       (temperatureSensorState == SensorState.ok &&
       imuSensorState == SensorState.ok &&
       accHighGSensorState == SensorState.ok &&
-      sdSensorState == SensorState.ok &&
+      flashSensorState == SensorState.ok &&
       gpsSensorState == SensorState.ok &&
-      gpsFix >= 1 &&
       barometerSensorState == SensorState.ok &&
       goodPowerState == true &&
+      pyroArmingModuleState == SensorState.ok &&
       pyrosActiveCount >= 0);
   bool get missionReady => odbSensorState && radioState == RadioState.connected;
   bool get hasConnection => btService.connectedDevice != null;
@@ -442,7 +444,6 @@ class DataServiceManager with ChangeNotifier {
     systemStates = 0;
     eventStates = 0;
     missionState = -1;
-    odbState = '';
     odbFrameVersion = '';
     odbConfigFrameVersion = '';
     hasOdbConfig = false;
@@ -693,7 +694,7 @@ class DataServiceManager with ChangeNotifier {
         
         int versionMajor = view.getUint8(offset); offset += 1;
         int versionMinor = view.getUint8(offset); offset += 1;
-        int payloadSize = view.getUint16(offset, Endian.little); offset += 2;
+        offset += 2;
         odbFrameVersion = 'v$versionMajor.$versionMinor';
 
         if (versionMajor == 1 && versionMinor == 1) {
@@ -750,16 +751,21 @@ class DataServiceManager with ChangeNotifier {
           kalmanAltitudeM = view.getFloat32(offset, Endian.little); offset += 4;
           kalmanVelocityMS = view.getFloat32(offset, Endian.little); offset += 4;
           
+          radioState = (systemStates & (1 << 5)) != 0 ? RadioState.connected : RadioState.disconnected;
           gpsSensorState = (systemStates & (1 << 8)) != 0 ? SensorState.ok : SensorState.error;
           barometerSensorState = (systemStates & (1 << 7)) != 0 ? SensorState.ok : SensorState.error;
           imuSensorState = (systemStates & (1 << 6)) != 0 ? SensorState.ok : SensorState.error;
           accHighGSensorState = (systemStates & (1 << 9)) != 0 ? SensorState.ok : SensorState.error;
           temperatureSensorState = (systemStates & (1 << 10)) != 0 ? SensorState.ok : SensorState.error;
           sdSensorState = (systemStates & (1 << 11)) != 0 ? SensorState.ok : SensorState.error;
+          flashSensorState = (systemStates & (1 << 12)) != 0 ? SensorState.ok : SensorState.error;
+          btModuleState = (systemStates & (1 << 13)) != 0 ? SensorState.ok : SensorState.error;
+          idefixSensorState = (systemStates & (1 << 14)) != 0 ? SensorState.ok : SensorState.error;
           
           batterySensorState = batteryVoltage > 0 ? SensorState.ok : SensorState.error;
-          goodPowerState = batteryVoltage >= 7.0;
+          goodPowerState = batteryVoltage >= 5.0;
           
+          pyroArmingModuleState = (systemStates & (1 << 4)) != 0 ? SensorState.ok : SensorState.error;
           pyrosArmed = eventPyrosArmed;
 
           bool pyro1Conn = (systemStates & (1 << 3)) != 0;
@@ -794,7 +800,7 @@ class DataServiceManager with ChangeNotifier {
             offset += 4;
             int versionMajor = view.getUint8(offset); offset += 1;
             int versionMinor = view.getUint8(offset); offset += 1;
-            int payloadSize = view.getUint16(offset, Endian.little); offset += 2;
+            offset += 2;
              
             odbConfigFrameVersion = 'v$versionMajor.$versionMinor';
              

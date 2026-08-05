@@ -448,9 +448,7 @@ void ODB_Update(odb_data_t *data, odb_stats_t *stats) {
 	} else {
         data->system_states &= ~FLAG_IMU_OK;
     }
-    if(BNO055_ReadTemperature(&bno055) == BNO055_OK) {
-    	data->system_states |= FLAG_IMU_OK;
-    } else {
+    if(BNO055_ReadTemperature(&bno055) != BNO055_OK) {
     	data->system_states &= ~FLAG_IMU_OK;
     }
     //Profiler_StopTask(PROFILE_TASK_IMU);

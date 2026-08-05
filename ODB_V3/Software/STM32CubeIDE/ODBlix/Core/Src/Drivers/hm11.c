@@ -117,6 +117,7 @@ hm11_state_t HM11_Init(hm11_t *dev) {
 		HAL_Delay(100);
 		if(HM11_TestUARTConnection(dev) == false) {
 			err = HM11_ERROR;
+			return err;
 		}
 	}
 
