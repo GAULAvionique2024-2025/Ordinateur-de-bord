@@ -388,6 +388,37 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                       ].divide(const SizedBox(height: 12.0)),
                     ),
                   ),
+                  _buildSectionTitle(context, 'Vol'),
+                  _buildSectionCard(
+                    context,
+                    Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        _buildActionRow(
+                          context,
+                          title: 'Test du module d\'armement',
+                          description: 'Test du module d\'armement des pyros pour la FSM',
+                          buttonText: 'Envoyer',
+                          buttonColor: connected ? FlutterFlowTheme.of(context).tertiary : FlutterFlowTheme.of(context).secondaryText,
+                          onPressed: connected ? () async {
+                            ConsoleService().log('Test d\'armement des pyros demandé');
+                            await data.testArmingModule();
+                          } : null,
+                        ),
+                        _buildActionRow(
+                          context,
+                          title: 'Mise en départ du vol',
+                          description: 'Activer la mise en départ du vol de la FSM',
+                          buttonText: 'Envoyer',
+                          buttonColor: connected ? FlutterFlowTheme.of(context).tertiary : FlutterFlowTheme.of(context).secondaryText,
+                          onPressed: connected ? () async {
+                            ConsoleService().log('Activation départ du vol demandé');
+                            await data.setReadyFlight();
+                          } : null,
+                        ),
+                      ].divide(const SizedBox(height: 12.0)),
+                    ),
+                  ),
                   _buildSectionTitle(context, 'Déclenchement Pyrotechnique'),
                   _buildSectionCard(
                     context,

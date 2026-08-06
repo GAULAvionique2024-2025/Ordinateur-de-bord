@@ -1,5 +1,6 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -31,6 +32,8 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
   late OverviewPageModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  bool _isTested = false;
 
   @override
   void initState() {
@@ -312,12 +315,61 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
                 ].divide(const SizedBox(width: 12.0)),
               ),
             ),
+            Padding(
+              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
+              child: Align(
+                alignment: const AlignmentDirectional(0.0, 0.0),
+                child: FFButtonWidget(
+                  onPressed: connected
+                      ? () async {
+                          if (!_isTested) {
+                            await data.testArmingModule();
+                            setState(() {
+                              _isTested = true;
+                            });
+                          } else {
+                            await data.setReadyFlight();
+                            setState(() {
+                              _isTested = false;
+                            });
+                          }
+                        }
+                      : null,
+                  text: _isTested
+                      ? 'Activer la mise en départ'
+                      : 'Tester le module d\'armement',
+                  options: FFButtonOptions(
+                    height: 60.0,
+                    padding: const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                    iconPadding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                    color: Colors.transparent,
+                    borderSide: BorderSide(
+                      color: connected ? Colors.white : const Color(0x40FFFFFF),
+                      width: 2.0,
+                    ),
+                    textStyle: FlutterFlowTheme.of(context).bodySmall.override(
+                          font: GoogleFonts.inter(
+                            fontWeight: FontWeight.w600,
+                            fontStyle: FlutterFlowTheme.of(context).bodySmall.fontStyle,
+                          ),
+                          color: Colors.white,
+                          letterSpacing: 0.0,
+                          fontWeight: FontWeight.w600,
+                          fontStyle: FlutterFlowTheme.of(context).bodySmall.fontStyle,
+                        ),
+                    elevation: 0.0,
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                ),
+              ),
+            )
           ],
         ),
       ),
     );
   }
 
+  @override
   Widget build(BuildContext context) {
     final bt = context.watch<BluetoothServiceManager>();
     final data = context.watch<DataServiceManager>();

@@ -11,10 +11,13 @@
 
 typedef enum {
     STATE_PREFLIGHT,
+	STATE_ARMING_TEST,
     STATE_ARMED,
     STATE_INFLIGHT,
     STATE_POSTFLIGHT
 } global_state_t;
+
+
 
 typedef enum {
     SUB_BOOST,

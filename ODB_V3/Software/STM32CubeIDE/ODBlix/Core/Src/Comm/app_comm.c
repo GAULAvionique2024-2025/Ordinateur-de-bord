@@ -17,6 +17,9 @@ extern system_measurements_t system_measurements;
 extern idefix_t idefix;
 extern pyro_t pyros[4];
 
+extern odb_data_t flight_data;
+extern volatile bool is_ready_by_app;
+
 
 static void AppComm_SendFrame(hm11_t *hm11_dev, app_msg_type_t type, const uint8_t *payload, uint8_t len) {
     if(!hm11_dev || !hm11_dev->is_connected) return;
@@ -173,6 +176,29 @@ void AppComm_ProcessRx(hm11_t *hm11_dev) {
 						} else {
 							AppComm_SendAck(hm11_dev, CMD_REQ_EVENTS, 0);
 						}
+					} else if(cmd == CMD_SET_READY_FLIGHT) {
+						is_ready_by_app = true;
+						AppComm_SendAck(hm11_dev, CMD_SET_READY_FLIGHT, 1);
+					} else if(cmd == CMD_TEST_ARMING_MODULE) {
+						bool error = false;
+						if(Pyro_Arming(&system_measurements, true, true) == PYRO_OK) {
+							flight_data.system_states |= FLAG_PYROS_ARMED_OK;
+                        } else {
+                        	error = true;
+                            DEBUG_PRINTF("ERROR : Pyros arming blocked\n");
+                        }
+
+                        if(Pyro_Arming(&system_measurements, false, true) != PYRO_OK) {
+                        	flight_data.system_states &= ~FLAG_PYROS_ARMED_OK;
+                            error = true;
+                            DEBUG_PRINTF("ERROR : Pyros disarming blocked\n");
+                        }
+
+                        if(!error) {
+                        	AppComm_SendAck(hm11_dev, CMD_TEST_ARMING_MODULE, 1);
+                        } else {
+                        	AppComm_SendAck(hm11_dev, CMD_TEST_ARMING_MODULE, 0);
+                        }
 					}
                 }
                 CriticalLED_SetColor(&critical_led, NONE);

@@ -302,10 +302,12 @@ class DataServiceManager with ChangeNotifier {
       case 0:
         return 'PREFLIGHT';
       case 1:
-        return 'ARMED';
+        return 'ARMING TEST';
       case 2:
-        return 'INFLIGHT';
+        return 'ARMED';
       case 3:
+        return 'INFLIGHT';
+      case 4:
         return 'POSTFLIGHT';
       default:
         return '—';
@@ -669,6 +671,26 @@ class DataServiceManager with ChangeNotifier {
 
     await btService.sendBinary(0x03, [0x07]);
     ConsoleService().log('Demande de réinitialisation usine envoyée.');
+  }
+
+  Future<void> setReadyFlight() async {
+    if (!hasConnection) {
+      ConsoleService().log('Aucune connexion Bluetooth avec l\'ODB');
+      return;
+    }
+    
+    await btService.sendBinary(0x03, [0x0A]);
+    ConsoleService().log('Demande de mise en départ envoyée.');
+  }
+
+  Future<void> testArmingModule() async {
+    if (!hasConnection) {
+      ConsoleService().log('Aucune connexion Bluetooth avec l\'ODB');
+      return;
+    }
+    
+    await btService.sendBinary(0x03, [0x0B]);
+    ConsoleService().log('Demande de test du module d\'armement envoyée.');
   }
 
   // ---------- EVENTS (Last flight stats) ----------

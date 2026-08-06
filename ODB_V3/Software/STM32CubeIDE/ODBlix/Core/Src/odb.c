@@ -200,18 +200,6 @@ odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats) {
 		const uint32_t FLAG_PYRO_CONN[PYRO_MAX] = {FLAG_PYRO1_CONN, FLAG_PYRO2_CONN, FLAG_PYRO3_CONN, FLAG_PYRO4_CONN};
 
 		SystemMeasurements_ComputePyros(&system_measurements);
-		if(Pyro_Arming(&system_measurements, true, true) == PYRO_OK) {
-			system_states |= FLAG_PYROS_ARMED_OK;
-		} else {
-			error++;
-			DEBUG_PRINTF("ERROR : Pyros arming blocked\n");
-		}
-
-		if(Pyro_Arming(&system_measurements, false, true) == PYRO_OK) {
-			system_states &= ~FLAG_PYROS_ARMED_OK;
-			error++;
-			DEBUG_PRINTF("ERROR : Pyros disarming blocked\n");
-		}
 
 		for(int i = 0; i < PYRO_MAX; i++) {
 			pyro_role_t role = (pyro_role_t)current_config.pyro_roles[i];

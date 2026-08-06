@@ -28,6 +28,7 @@ extern pyro_t pyros[4];
 
 global_state_t current_global_state = STATE_PREFLIGHT;
 volatile inflight_substate_t current_substate = SUB_BOOST;
+volatile bool is_ready_by_app = false;
 
 static uint32_t fire_timer = 0;
 static uint32_t flight_duration = 0;
@@ -42,12 +43,23 @@ void FSM_Update(void) {
 	flight_duration = __HAL_TIM_GET_COUNTER(&htim5) / 1000; // Failsafe apogee timeout (us)
     switch(current_global_state) {
         case STATE_PREFLIGHT:
-            // Security : Continuity pyros and stability check
-            if(ODB_GetPyroStates(&flight_data) >= current_config.min_needed_pyro_nb && fabs(flight_data.kalman_v) < current_config.landing_detect_v_threshold) {
-                ODB_SetMissionState(&flight_data, STATE_ARMED);
-                current_global_state = STATE_ARMED;
+            // Security : Continuity pyros, stability check and app unlock
+        	bool pyros_ok = (ODB_GetPyroStates(&flight_data) >= current_config.min_needed_pyro_nb);
+        	bool is_static = (fabs(flight_data.kalman_v) < current_config.landing_detect_v_threshold);
+        	if(pyros_ok && is_static) {
+                ODB_SetMissionState(&flight_data, STATE_ARMING_TEST);
+                current_global_state = STATE_ARMING_TEST;
             }
             break;
+
+        case STATE_ARMING_TEST:
+        	if((flight_data.system_states & FLAG_PYROS_ARMED_OK) != 0) {
+        	    if(is_ready_by_app) {
+        	        ODB_SetMissionState(&flight_data, STATE_ARMED);
+        	        current_global_state = STATE_ARMED;
+        	    }
+        	}
+			break;
 
         case STATE_ARMED:
             if(flight_data.highg_acc_z > current_config.acc_z_launch_threshold) {
@@ -78,7 +90,9 @@ void FSM_Update(void) {
 
                 case SUB_FAST:
                     // Wait for fast ascent detection
-                	if(flight_data.kalman_v < current_config.boost_phase_v_threshold) {
+	                if(flight_duration > current_config.pyros_arming_failsafe_ms || flight_data.kalman_v < current_config.boost_phase_v_threshold) {
+						flight_stats.mach_lock.activated = false;
+						flight_stats.mach_lock.end_time_ms = HAL_GetTick();
 						current_substate = SUB_COAST;
 					}
                     break;
@@ -92,17 +106,10 @@ void FSM_Update(void) {
 						break;
 					}
 
-                	/* WINDOWED FAILSAFE LOGIC
+	                /* WINDOWED FAILSAFE LOGIC
 					 * 1. Nominal apogee detection : velocity below threshold after a reasonable flight duration (to avoid early detection during boost or fast phase)
 					 * 2. Failsafe timeout : if apogee not detected after a maximum time
 					 */
-                	if(flight_stats.mach_lock.activated) {
-                	    if(flight_duration > current_config.pyros_arming_failsafe_ms) {
-                	        flight_stats.mach_lock.activated = false;
-                	        flight_stats.mach_lock.end_time_ms = HAL_GetTick();
-                	    }
-                	}
-
                 	bool nominal_apogee = (flight_data.kalman_v < current_config.apogee_detect_v_threshold) && (flight_duration > current_config.pyros_arming_failsafe_ms);
                 	bool failsafe_timeout = (flight_duration > current_config.apogee_failsafe_ms);
 
