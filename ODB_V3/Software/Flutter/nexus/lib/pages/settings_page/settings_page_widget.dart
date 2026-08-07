@@ -43,6 +43,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
   final TextEditingController _idefixFrequencyController =
       TextEditingController();
   bool _debugMode = false;
+  int _axisProfileValue = DataServiceManager.axisProfileP0;
   bool _enableBuzzer = false;
   double _buzzerToneHz = 100.0;
   int _stageRoleValue = DataServiceManager.stageRoleSustainer;
@@ -62,6 +63,9 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
       initialExpanded: false,
     )..addListener(() => safeSetState(() {}));
     _model.resetExpandableController = ExpandableController(
+      initialExpanded: false,
+    )..addListener(() => safeSetState(() {}));
+    _model.sensorsExpandableController = ExpandableController(
       initialExpanded: false,
     )..addListener(() => safeSetState(() {}));
     _model.pyrosExpandableController = ExpandableController(
@@ -120,6 +124,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
       data.odbName,
       data.stageRole,
       data.debugMode,
+      data.axisProfile,
       data.enableBuzzer,
       data.minNeededPyroNb,
       data.drogueFireAttemptMaxNb,
@@ -155,6 +160,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
           _odbNameController.clear();
           _stageRoleValue = DataServiceManager.stageRoleSustainer;
           _debugMode = false;
+          _axisProfileValue = DataServiceManager.axisProfileP0;
           _enableBuzzer = false;
           _buzzerToneHz = 100.0;
           _pyroDelayController.clear();
@@ -199,6 +205,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
         _odbNameController.text = data.odbName;
         _stageRoleValue = data.stageRole;
         _debugMode = data.debugMode;
+        _axisProfileValue = data.axisProfile;
         _enableBuzzer = data.enableBuzzer;
         _buzzerToneHz = data.buzzerReportToneHz > 0
             ? data.buzzerReportToneHz.toDouble()
@@ -207,16 +214,12 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
         _pyroFailsafeController.text = data.pyrosArmingFailsafeMs.toString();
         _minPyrosController.text = data.minNeededPyroNb.toString();
         _accLaunchController.text = data.accZLaunchThreshold.toStringAsFixed(2);
-        _boostVoltageController.text = data.boostPhaseVThreshold
-            .toStringAsFixed(2);
-        _apogeeVoltageController.text = data.apogeeDetectVThreshold
-            .toStringAsFixed(2);
-        _landingVoltageController.text = data.landingDetectVThreshold
-            .toStringAsFixed(2);
+        _boostVoltageController.text = data.boostPhaseVThreshold.toStringAsFixed(2);
+        _apogeeVoltageController.text = data.apogeeDetectVThreshold.toStringAsFixed(2);
+        _landingVoltageController.text = data.landingDetectVThreshold.toStringAsFixed(2);
         _landingDelayController.text = data.landingDetectThresholdMs.toString();
         _apogeeFailsafeController.text = data.apogeeFailsafeMs.toString();
-        _deployAltitudeController.text = data.mainDeployAltitudeThresholdM
-            .toStringAsFixed(2);
+        _deployAltitudeController.text = data.mainDeployAltitudeThresholdM.toStringAsFixed(2);
         _maxDrogueController.text = data.drogueFireAttemptMaxNb.toString();
         _maxMainController.text = data.mainFireAttemptMaxNb.toString();
         _idefixFrequencyController.text = data.idefixFrequencyHz.toString();
@@ -240,15 +243,16 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
           child: Text(
             'Rôle de stage',
             style: FlutterFlowTheme.of(context).bodyMedium.override(
-              font: GoogleFonts.inter(
-                fontWeight: FontWeight.w600,
-                fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-              ),
-              fontSize: 14.0,
-              letterSpacing: 0.0,
-              fontWeight: FontWeight.w600,
-              fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-            ),
+                  font: GoogleFonts.inter(
+                    fontWeight: FontWeight.w600,
+                    fontStyle:
+                        FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                  ),
+                  fontSize: 14.0,
+                  letterSpacing: 0.0,
+                  fontWeight: FontWeight.w600,
+                  fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                ),
           ),
         ),
         Expanded(
@@ -310,6 +314,211 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
     );
   }
 
+  Widget _buildAxisProfileDropdown(
+    BuildContext context, {
+    required DataServiceManager data,
+    required bool enabled,
+  }) {
+    final axisProfileLabels = <String>[
+      'Z+',
+      'Z+90°',
+      'Z+180°',
+      'Z+270°',
+      'X+',
+      'Y+',
+      'X-',
+      'Y-',
+    ];
+
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        SizedBox(
+          width: 180,
+          child: Text(
+            'Profil axe',
+            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                  font: GoogleFonts.inter(
+                    fontWeight: FontWeight.w600,
+                    fontStyle:
+                        FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                  ),
+                  fontSize: 14.0,
+                  letterSpacing: 0.0,
+                  fontWeight: FontWeight.w600,
+                  fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                ),
+          ),
+        ),
+        Expanded(
+          child: DropdownButtonFormField<int>(
+            initialValue: _axisProfileValue,
+            onChanged: enabled
+                ? (value) {
+                    if (value == null) return;
+                    safeSetState(() {
+                      _axisProfileValue = value;
+                    });
+                    data.axisProfile = value;
+                  }
+                : null,
+            isExpanded: true,
+            items: List.generate(
+              axisProfileLabels.length,
+              (index) => DropdownMenuItem<int>(
+                value: index,
+                child: Text(axisProfileLabels[index]),
+              ),
+            ),
+            decoration: InputDecoration(
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 12,
+                vertical: 14,
+              ),
+              filled: true,
+              fillColor: FlutterFlowTheme.of(context).secondaryBackground,
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: FlutterFlowTheme.of(context).alternate,
+                  width: 1,
+                ),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: FlutterFlowTheme.of(context).primary,
+                  width: 1,
+                ),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              disabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: FlutterFlowTheme.of(context).alternate,
+                  width: 1,
+                ),
+                borderRadius: BorderRadius.circular(12),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildAxisVisualizer(BuildContext context, int profile) {
+    String noseAxis = '';
+    String description = '';
+    IconData visualIcon;
+    Color iconColor = FlutterFlowTheme.of(context).primary;
+
+    switch (profile) {
+      case 0:
+      case 1:
+      case 2:
+      case 3:
+        noseAxis = 'Axe Z (Face de la carte)';
+        description = 'La carte est fixée horizontalement (à plat dans un couple).';
+        visualIcon = Icons.layers; // Représente des plans horizontaux
+        iconColor = FlutterFlowTheme.of(context).secondary;
+        break;
+      case 4:
+        noseAxis = 'Axe +X';
+        description = 'La carte est fixée verticalement. La flèche de l\'axe X sérigraphiée sur le PCB pointe vers le nez de la fusée.';
+        visualIcon = Icons.arrow_upward_rounded;
+        break;
+      case 5:
+        noseAxis = 'Axe +Y';
+        description = 'La carte est fixée verticalement. La flèche de l\'axe Y sérigraphiée sur le PCB pointe vers le nez de la fusée.';
+        visualIcon = Icons.arrow_upward_rounded;
+        break;
+      case 6:
+        noseAxis = 'Axe -X';
+        description = 'La carte est fixée verticalement à l\'envers. L\'arrière de la flèche X pointe vers le nez de la fusée.';
+        visualIcon = Icons.arrow_downward_rounded;
+        iconColor = FlutterFlowTheme.of(context).error;
+        break;
+      case 7:
+        noseAxis = 'Axe -Y';
+        description = 'La carte est fixée verticalement à l\'envers. L\'arrière de la flèche Y pointe vers le nez de la fusée.';
+        visualIcon = Icons.arrow_downward_rounded;
+        iconColor = FlutterFlowTheme.of(context).error;
+        break;
+      default:
+        noseAxis = 'Inconnu';
+        description = 'Profil non reconnu.';
+        visualIcon = Icons.help_outline;
+    }
+
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 300),
+      child: Container(
+        key: ValueKey<int>(profile),
+        margin: const EdgeInsets.only(top: 16.0),
+        padding: const EdgeInsets.all(16.0),
+        decoration: BoxDecoration(
+          color: FlutterFlowTheme.of(context).primaryBackground,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: FlutterFlowTheme.of(context).alternate,
+            width: 1,
+          ),
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: 48,
+              height: 48,
+              decoration: BoxDecoration(
+                color: FlutterFlowTheme.of(context).secondaryBackground,
+                shape: BoxShape.circle,
+                boxShadow: const [
+                  BoxShadow(
+                    blurRadius: 4,
+                    color: Color(0x1A000000),
+                    offset: Offset(0, 2),
+                  )
+                ],
+              ),
+              child: Icon(
+                visualIcon,
+                color: iconColor,
+                size: 24,
+              ),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Direction Apogée : $noseAxis',
+                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                          font: GoogleFonts.inter(
+                            fontWeight: FontWeight.bold,
+                          ),
+                          color: FlutterFlowTheme.of(context).primaryText,
+                        ),
+                  ),
+                  const SizedBox(height: 6),
+                  Text(
+                    description,
+                    style: FlutterFlowTheme.of(context).bodySmall.override(
+                          font: GoogleFonts.inter(
+                            height: 1.4,
+                          ),
+                          color: FlutterFlowTheme.of(context).secondaryText,
+                        ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   static const List<String> _pyroRoleLabels = [
     'NA',
     'M1',
@@ -336,15 +545,17 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
             child: Text(
               'Pyro ${pyroIndex + 1}',
               style: FlutterFlowTheme.of(context).bodyMedium.override(
-                font: GoogleFonts.inter(
-                  fontWeight: FontWeight.w600,
-                  fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                ),
-                fontSize: 14.0,
-                letterSpacing: 0.0,
-                fontWeight: FontWeight.w600,
-                fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-              ),
+                    font: GoogleFonts.inter(
+                      fontWeight: FontWeight.w600,
+                      fontStyle:
+                          FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                    ),
+                    fontSize: 14.0,
+                    letterSpacing: 0.0,
+                    fontWeight: FontWeight.w600,
+                    fontStyle:
+                        FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                  ),
             ),
           ),
           Expanded(
@@ -465,14 +676,14 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
         ),
       ),
       style: FlutterFlowTheme.of(context).bodyMedium.override(
-        font: GoogleFonts.inter(
-          fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-          fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-        ),
-        letterSpacing: 0.0,
-        fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-        fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-      ),
+            font: GoogleFonts.inter(
+              fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
+              fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+            ),
+            letterSpacing: 0.0,
+            fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
+            fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+          ),
     );
 
     return Column(
@@ -486,17 +697,18 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
               child: Text(
                 label,
                 style: FlutterFlowTheme.of(context).bodyMedium.override(
-                  font: GoogleFonts.inter(
-                    fontWeight: FontWeight.w600,
-                    fontStyle: FlutterFlowTheme.of(
-                      context,
-                    ).bodyMedium.fontStyle,
-                  ),
-                  fontSize: 14.0,
-                  letterSpacing: 0.0,
-                  fontWeight: FontWeight.w600,
-                  fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                ),
+                      font: GoogleFonts.inter(
+                        fontWeight: FontWeight.w600,
+                        fontStyle: FlutterFlowTheme.of(
+                          context,
+                        ).bodyMedium.fontStyle,
+                      ),
+                      fontSize: 14.0,
+                      letterSpacing: 0.0,
+                      fontWeight: FontWeight.w600,
+                      fontStyle:
+                          FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                    ),
               ),
             ),
             Expanded(child: field),
@@ -520,27 +732,27 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
       title: Text(
         title,
         style: FlutterFlowTheme.of(context).bodyLarge.override(
-          font: GoogleFonts.inter(
-            fontWeight: FlutterFlowTheme.of(context).bodyLarge.fontWeight,
-            fontStyle: FlutterFlowTheme.of(context).bodyLarge.fontStyle,
-          ),
-          letterSpacing: 0.0,
-          fontWeight: FlutterFlowTheme.of(context).bodyLarge.fontWeight,
-          fontStyle: FlutterFlowTheme.of(context).bodyLarge.fontStyle,
-        ),
+              font: GoogleFonts.inter(
+                fontWeight: FlutterFlowTheme.of(context).bodyLarge.fontWeight,
+                fontStyle: FlutterFlowTheme.of(context).bodyLarge.fontStyle,
+              ),
+              letterSpacing: 0.0,
+              fontWeight: FlutterFlowTheme.of(context).bodyLarge.fontWeight,
+              fontStyle: FlutterFlowTheme.of(context).bodyLarge.fontStyle,
+            ),
       ),
       subtitle: Text(
         subtitle,
         style: FlutterFlowTheme.of(context).bodySmall.override(
-          font: GoogleFonts.inter(
-            fontWeight: FlutterFlowTheme.of(context).bodySmall.fontWeight,
-            fontStyle: FlutterFlowTheme.of(context).bodySmall.fontStyle,
-          ),
-          color: FlutterFlowTheme.of(context).secondaryText,
-          letterSpacing: 0.0,
-          fontWeight: FlutterFlowTheme.of(context).bodySmall.fontWeight,
-          fontStyle: FlutterFlowTheme.of(context).bodySmall.fontStyle,
-        ),
+              font: GoogleFonts.inter(
+                fontWeight: FlutterFlowTheme.of(context).bodySmall.fontWeight,
+                fontStyle: FlutterFlowTheme.of(context).bodySmall.fontStyle,
+              ),
+              color: FlutterFlowTheme.of(context).secondaryText,
+              letterSpacing: 0.0,
+              fontWeight: FlutterFlowTheme.of(context).bodySmall.fontWeight,
+              fontStyle: FlutterFlowTheme.of(context).bodySmall.fontStyle,
+            ),
       ),
       activeThumbColor: FlutterFlowTheme.of(context).primary,
       contentPadding: EdgeInsets.zero,
@@ -564,15 +776,16 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
           child: Text(
             '$label: ${value.round()}',
             style: FlutterFlowTheme.of(context).bodyMedium.override(
-              font: GoogleFonts.inter(
-                fontWeight: FontWeight.w600,
-                fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-              ),
-              fontSize: 14.0,
-              letterSpacing: 0.0,
-              fontWeight: FontWeight.w600,
-              fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-            ),
+                  font: GoogleFonts.inter(
+                    fontWeight: FontWeight.w600,
+                    fontStyle:
+                        FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                  ),
+                  fontSize: 14.0,
+                  letterSpacing: 0.0,
+                  fontWeight: FontWeight.w600,
+                  fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                ),
           ),
         ),
         Expanded(
@@ -777,6 +990,43 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                 },
               ),
             ].divide(const SizedBox(height: 12.0)),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSensorsSection(
+    BuildContext context,
+    TextStyle headerStyle, {
+    required DataServiceManager data,
+    required bool enabled,
+  }) {
+    return _buildSectionCard(
+      context,
+      ExpandableNotifier(
+        controller: _model.sensorsExpandableController,
+        child: ExpandablePanel(
+          header: Row(
+            children: [
+              Icon(
+                Icons.sensors,
+                color: FlutterFlowTheme.of(context).primary,
+                size: 24,
+              ),
+              Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
+                child: Text('Capteurs', style: headerStyle),
+              ),
+            ],
+          ),
+          collapsed: const SizedBox.shrink(),
+          expanded: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildAxisProfileDropdown(context, data: data, enabled: enabled),
+              _buildAxisVisualizer(context, _axisProfileValue),
+            ],
           ),
         ),
       ),
@@ -1186,17 +1436,19 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                 'Attention : ces actions réinitialisent la configuration ou la mémoire complète de l\'ODB.',
                 textAlign: TextAlign.center,
                 style: FlutterFlowTheme.of(context).bodySmall.override(
-                  font: GoogleFonts.inter(
-                    fontWeight:
-                        FlutterFlowTheme.of(context).bodySmall.fontWeight,
-                    fontStyle:
-                        FlutterFlowTheme.of(context).bodySmall.fontStyle,
-                  ),
-                  color: FlutterFlowTheme.of(context).warning,
-                  letterSpacing: 0.0,
-                  fontWeight: FlutterFlowTheme.of(context).bodySmall.fontWeight,
-                  fontStyle: FlutterFlowTheme.of(context).bodySmall.fontStyle,
-                ),
+                      font: GoogleFonts.inter(
+                        fontWeight:
+                            FlutterFlowTheme.of(context).bodySmall.fontWeight,
+                        fontStyle:
+                            FlutterFlowTheme.of(context).bodySmall.fontStyle,
+                      ),
+                      color: FlutterFlowTheme.of(context).warning,
+                      letterSpacing: 0.0,
+                      fontWeight:
+                          FlutterFlowTheme.of(context).bodySmall.fontWeight,
+                      fontStyle:
+                          FlutterFlowTheme.of(context).bodySmall.fontStyle,
+                    ),
               ),
               Center(
                 child: ElevatedButton.icon(
@@ -1317,6 +1569,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                       odbName: _odbNameController.text,
                       stageRole: _stageRoleValue.toString(),
                       debugMode: _debugMode,
+                      axisProfile: _axisProfileValue.toString(),
                       enableBuzzer: _enableBuzzer,
                       minNeededPyroNb: _minPyrosController.text,
                       drogueFireAttemptMaxNb: _maxDrogueController.text,
@@ -1359,20 +1612,26 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
     final connected = data.hasConnection;
     _syncOdbConfig(data);
 
-    final expandableHeaderStyle = FlutterFlowTheme.of(context).bodyMedium
-        .override(
-          font: GoogleFonts.interTight(
-            fontWeight: FontWeight.w600,
-            fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-          ),
-          fontSize: 16.0,
-          letterSpacing: 0.0,
-          fontWeight: FontWeight.w600,
-          fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-        );
+    final expandableHeaderStyle =
+        FlutterFlowTheme.of(context).bodyMedium.override(
+              font: GoogleFonts.interTight(
+                fontWeight: FontWeight.w600,
+                fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+              ),
+              fontSize: 16.0,
+              letterSpacing: 0.0,
+              fontWeight: FontWeight.w600,
+              fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+            );
 
     final sections = <Widget>[
       _buildProfileSection(
+        context,
+        expandableHeaderStyle,
+        data: data,
+        enabled: connected,
+      ),
+      _buildSensorsSection(
         context,
         expandableHeaderStyle,
         data: data,
@@ -1419,15 +1678,15 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
       Text(
         'Certains paramètres nécessitent le redémarrage de l\'alimentation pour prendre effet.',
         style: FlutterFlowTheme.of(context).bodySmall.override(
-          font: GoogleFonts.inter(
-            fontWeight: FlutterFlowTheme.of(context).bodySmall.fontWeight,
-            fontStyle: FlutterFlowTheme.of(context).bodySmall.fontStyle,
-          ),
-          color: FlutterFlowTheme.of(context).warning,
-          letterSpacing: 0.0,
-          fontWeight: FlutterFlowTheme.of(context).bodySmall.fontWeight,
-          fontStyle: FlutterFlowTheme.of(context).bodySmall.fontStyle,
-        ),
+              font: GoogleFonts.inter(
+                fontWeight: FlutterFlowTheme.of(context).bodySmall.fontWeight,
+                fontStyle: FlutterFlowTheme.of(context).bodySmall.fontStyle,
+              ),
+              color: FlutterFlowTheme.of(context).warning,
+              letterSpacing: 0.0,
+              fontWeight: FlutterFlowTheme.of(context).bodySmall.fontWeight,
+              fontStyle: FlutterFlowTheme.of(context).bodySmall.fontStyle,
+            ),
       ),
       _buildAboutSection(context, expandableHeaderStyle, data),
     ];
@@ -1448,55 +1707,52 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children:
-                    [
-                          Text(
-                            'Settings',
-                            style: FlutterFlowTheme.of(context).displaySmall
-                                .override(
-                                  font: GoogleFonts.interTight(
-                                    fontWeight: FontWeight.bold,
-                                    fontStyle: FlutterFlowTheme.of(
-                                      context,
-                                    ).displaySmall.fontStyle,
-                                  ),
-                                  fontSize: 28.0,
-                                  letterSpacing: 0.0,
-                                  fontWeight: FontWeight.bold,
-                                  fontStyle: FlutterFlowTheme.of(
-                                    context,
-                                  ).displaySmall.fontStyle,
-                                ),
+                children: [
+                  Text(
+                    'Settings',
+                    style: FlutterFlowTheme.of(context).displaySmall.override(
+                          font: GoogleFonts.interTight(
+                            fontWeight: FontWeight.bold,
+                            fontStyle: FlutterFlowTheme.of(
+                              context,
+                            ).displaySmall.fontStyle,
                           ),
-                          Text(
-                            'Paramètres Nexus & de l\'ordinateur de bord',
-                            style: FlutterFlowTheme.of(context).bodyMedium
-                                .override(
-                                  font: GoogleFonts.inter(
-                                    fontWeight: FlutterFlowTheme.of(
-                                      context,
-                                    ).bodyMedium.fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(
-                                      context,
-                                    ).bodyMedium.fontStyle,
-                                  ),
-                                  color: FlutterFlowTheme.of(
-                                    context,
-                                  ).secondaryText,
-                                  letterSpacing: 0.0,
-                                  fontWeight: FlutterFlowTheme.of(
-                                    context,
-                                  ).bodyMedium.fontWeight,
-                                  fontStyle: FlutterFlowTheme.of(
-                                    context,
-                                  ).bodyMedium.fontStyle,
-                                ),
+                          fontSize: 28.0,
+                          letterSpacing: 0.0,
+                          fontWeight: FontWeight.bold,
+                          fontStyle: FlutterFlowTheme.of(
+                            context,
+                          ).displaySmall.fontStyle,
+                        ),
+                  ),
+                  Text(
+                    'Paramètres Nexus & de l\'ordinateur de bord',
+                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                          font: GoogleFonts.inter(
+                            fontWeight: FlutterFlowTheme.of(
+                              context,
+                            ).bodyMedium.fontWeight,
+                            fontStyle: FlutterFlowTheme.of(
+                              context,
+                            ).bodyMedium.fontStyle,
                           ),
-                          ...sections,
-                        ]
-                        .divide(SizedBox(height: 16.0))
-                        .addToStart(SizedBox(height: 16.0))
-                        .addToEnd(SizedBox(height: 24.0)),
+                          color: FlutterFlowTheme.of(
+                            context,
+                          ).secondaryText,
+                          letterSpacing: 0.0,
+                          fontWeight: FlutterFlowTheme.of(
+                            context,
+                          ).bodyMedium.fontWeight,
+                          fontStyle: FlutterFlowTheme.of(
+                            context,
+                          ).bodyMedium.fontStyle,
+                        ),
+                  ),
+                  ...sections,
+                ]
+                    .divide(SizedBox(height: 16.0))
+                    .addToStart(SizedBox(height: 16.0))
+                    .addToEnd(SizedBox(height: 24.0)),
               ),
             ),
           ),

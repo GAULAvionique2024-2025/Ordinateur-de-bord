@@ -5,7 +5,64 @@ import 'dart:typed_data';
 import 'package:nexus/services/bluetooth_service.dart';
 import 'package:nexus/services/console_service.dart';
 
-// ---------- ODB Stats parsing structures ----------
+// ============================================================================
+// ========================== OUTILS BINAIRES (DRY) ===========================
+// ============================================================================
+
+class ByteCursor {
+  final ByteData data;
+  int offset = 0;
+
+  ByteCursor(Uint8List bytes) : data = ByteData.sublistView(bytes);
+
+  int readUint8() { final v = data.getUint8(offset); offset += 1; return v; }
+  int readUint16() { final v = data.getUint16(offset, Endian.little); offset += 2; return v; }
+  int readUint32() { final v = data.getUint32(offset, Endian.little); offset += 4; return v; }
+  int readInt32() { final v = data.getInt32(offset, Endian.little); offset += 4; return v; }
+  double readFloat32() { final v = data.getFloat32(offset, Endian.little); offset += 4; return v; }
+
+  List<int> readUint8Array(int length) {
+    final list = <int>[];
+    for (int i = 0; i < length; i++) list.add(readUint8());
+    return list;
+  }
+
+  String readString(int maxLength) {
+    final bytes = readUint8Array(maxLength);
+    return utf8.decode(bytes.where((b) => b != 0).toList());
+  }
+}
+
+class ByteBuilder {
+  final ByteData data;
+  int offset = 0;
+
+  ByteBuilder(int size) : data = ByteData(size);
+
+  void writeUint8(int v) { data.setUint8(offset, v); offset += 1; }
+  void writeUint16(int v) { data.setUint16(offset, v, Endian.little); offset += 2; }
+  void writeUint32(int v) { data.setUint32(offset, v, Endian.little); offset += 4; }
+  void writeFloat32(double v) { data.setFloat32(offset, v, Endian.little); offset += 4; }
+
+  void writeUint8Array(List<int> v) {
+    for (var b in v) writeUint8(b);
+  }
+
+  void writeString(String str, int fixedLength) {
+    final bytes = utf8.encode(str);
+    for (int i = 0; i < fixedLength; i++) {
+      writeUint8(i < bytes.length ? bytes[i] : 0);
+    }
+  }
+
+  Uint8List toBytes() => data.buffer.asUint8List();
+}
+
+
+// ============================================================================
+// ========================== CLASSES DE DONNÉES ==============================
+// ============================================================================
+
 class PyroEvent {
   final bool fired;
   final int timeMs;
@@ -47,115 +104,282 @@ class OdbStats {
   final int flightTimeMs;
 
   OdbStats({
-    required this.flightId,
-    required this.date,
-    required this.pyroEvents,
-    required this.pyrosArm,
-    required this.machLock,
-    required this.maxAltitudeGps,
-    required this.maxAltitudeBaro,
-    required this.maxAltitudeKalman,
-    required this.apogee,
-    required this.mainDeploy,
-    required this.drogueDeploy,
-    required this.maxAscendSpeed,
-    required this.maxAscendAccel,
-    required this.maxDescendSpeed,
-    required this.maxDescendAccel,
-    required this.lastLat,
-    required this.lastLon,
-    required this.flightTimeMs,
+    required this.flightId, required this.date, required this.pyroEvents,
+    required this.pyrosArm, required this.machLock, required this.maxAltitudeGps,
+    required this.maxAltitudeBaro, required this.maxAltitudeKalman, required this.apogee,
+    required this.mainDeploy, required this.drogueDeploy, required this.maxAscendSpeed,
+    required this.maxAscendAccel, required this.maxDescendSpeed, required this.maxDescendAccel,
+    required this.lastLat, required this.lastLon, required this.flightTimeMs,
   });
 
-  factory OdbStats.fromBytes(Uint8List data) {
-    final view = ByteData.sublistView(data);
-    int off = 0;
+  factory OdbStats.fromBytes(Uint8List bytes) {
+    final reader = ByteCursor(bytes);
+    
+    final flightId = reader.readUint32();
+    final date = reader.readUint32();
 
-    final flightId = view.getUint32(off, Endian.little);
-    off += 4;
+    final pyros = List.generate(4, (_) => PyroEvent(reader.readUint8() != 0, reader.readUint32()));
 
-    final date = view.getUint32(off, Endian.little);
-    off += 4;
+    final pyrosArm = WindowEvent(reader.readUint8() != 0, reader.readUint32(), reader.readUint32());
+    final machLock = WindowEvent(reader.readUint8() != 0, reader.readUint32(), reader.readUint32());
 
-    List<PyroEvent> pyros = [];
-    for (int i = 0; i < 4; i++) {
-      final fired = view.getUint8(off) != 0;
-      off += 1;
-      final time = view.getUint32(off, Endian.little);
-      off += 4;
-      pyros.add(PyroEvent(fired, time));
-    }
-
-    final pyrosArm = WindowEvent(
-      view.getUint8(off) != 0,
-      view.getUint32(off + 1, Endian.little),
-      view.getUint32(off + 5, Endian.little),
-    );
-    off += 9;
-
-    final machLock = WindowEvent(
-      view.getUint8(off) != 0,
-      view.getUint32(off + 1, Endian.little),
-      view.getUint32(off + 5, Endian.little),
-    );
-    off += 9;
-
-    Metric readMetric() {
-      final valid = view.getUint8(off) != 0;
-      final value = view.getFloat32(off + 1, Endian.little);
-      final t = view.getUint32(off + 5, Endian.little);
-      off += 9;
-      return Metric(valid, value, t);
-    }
-
-    final maxAltGps = readMetric();
-    final maxAltBaro = readMetric();
-    final maxAltKalman = readMetric();
-    final apogee = readMetric();
-    final mainDeploy = readMetric();
-    final drogueDeploy = readMetric();
-    final maxAscendSpeed = readMetric();
-    final maxAscendAccel = readMetric();
-    final maxDescendSpeed = readMetric();
-    final maxDescendAccel = readMetric();
-
-    final lastLat = view.getInt32(off, Endian.little);
-    off += 4;
-    final lastLon = view.getInt32(off, Endian.little);
-    off += 4;
-    final flightTime = view.getUint32(off, Endian.little);
-    off += 4;
+    Metric readMetric() => Metric(reader.readUint8() != 0, reader.readFloat32(), reader.readUint32());
 
     return OdbStats(
-      flightId: flightId,
-      date: date,
-      pyroEvents: pyros,
-      pyrosArm: pyrosArm,
-      machLock: machLock,
-      maxAltitudeGps: maxAltGps,
-      maxAltitudeBaro: maxAltBaro,
-      maxAltitudeKalman: maxAltKalman,
-      apogee: apogee,
-      mainDeploy: mainDeploy,
-      drogueDeploy: drogueDeploy,
-      maxAscendSpeed: maxAscendSpeed,
-      maxAscendAccel: maxAscendAccel,
-      maxDescendSpeed: maxDescendSpeed,
-      maxDescendAccel: maxDescendAccel,
-      lastLat: lastLat,
-      lastLon: lastLon,
-      flightTimeMs: flightTime,
+      flightId: flightId, date: date, pyroEvents: pyros,
+      pyrosArm: pyrosArm, machLock: machLock,
+      maxAltitudeGps: readMetric(), maxAltitudeBaro: readMetric(), maxAltitudeKalman: readMetric(),
+      apogee: readMetric(), mainDeploy: readMetric(), drogueDeploy: readMetric(),
+      maxAscendSpeed: readMetric(), maxAscendAccel: readMetric(),
+      maxDescendSpeed: readMetric(), maxDescendAccel: readMetric(),
+      lastLat: reader.readInt32(), lastLon: reader.readInt32(),
+      flightTimeMs: reader.readUint32(),
     );
   }
 }
 
-enum SensorState { unknown, ok, error }
+class OdbConfig {
+  final int magicNumber;
+  final int versionMajor;
+  final int versionMinor;
+  final int payloadSize;
+  
+  final String odbName;
+  final int stageRole;
+  final bool debugMode;
+  final int axisProfile;
+  final int fireAttemptDelayMs;
+  final int pyrosArmingFailsafeMs;
+  final int minNeededPyroNb;
+  final List<int> pyroRoles;
+  final double accZLaunchThreshold;
+  final double boostPhaseVThreshold;
+  final double apogeeDetectVThreshold;
+  final double landingDetectVThreshold;
+  final int landingDetectThresholdMs;
+  final int apogeeFailsafeMs;
+  final double mainDeployAltitudeThresholdM;
+  final int drogueFireAttemptMaxNb;
+  final int mainFireAttemptMaxNb;
+  final bool enableBuzzer;
+  final int buzzerReportToneHz;
+  final int idefixFrequencyHz;
 
+  OdbConfig({
+    this.magicNumber = 0x434F4E46, this.versionMajor = 1, this.versionMinor = 1, this.payloadSize = 93,
+    required this.odbName, required this.stageRole, required this.debugMode, required this.axisProfile,
+    required this.fireAttemptDelayMs, required this.pyrosArmingFailsafeMs, required this.minNeededPyroNb,
+    required this.pyroRoles, required this.accZLaunchThreshold, required this.boostPhaseVThreshold,
+    required this.apogeeDetectVThreshold, required this.landingDetectVThreshold, required this.landingDetectThresholdMs,
+    required this.apogeeFailsafeMs, required this.mainDeployAltitudeThresholdM, required this.drogueFireAttemptMaxNb,
+    required this.mainFireAttemptMaxNb, required this.enableBuzzer, required this.buzzerReportToneHz, required this.idefixFrequencyHz,
+  });
+
+  factory OdbConfig.fromBytes(Uint8List bytes) {
+    final reader = ByteCursor(bytes);
+    return OdbConfig(
+      magicNumber: reader.readUint32(), versionMajor: reader.readUint8(),
+      versionMinor: reader.readUint8(), payloadSize: reader.readUint16(),
+      odbName: reader.readString(32),
+      stageRole: reader.readUint8(),
+      debugMode: reader.readUint8() == 1,
+      axisProfile: reader.readUint8(),
+      fireAttemptDelayMs: reader.readUint32(),
+      pyrosArmingFailsafeMs: reader.readUint32(),
+      minNeededPyroNb: reader.readUint8(),
+      pyroRoles: reader.readUint8Array(4),
+      accZLaunchThreshold: reader.readFloat32(),
+      boostPhaseVThreshold: reader.readFloat32(),
+      apogeeDetectVThreshold: reader.readFloat32(),
+      landingDetectVThreshold: reader.readFloat32(),
+      landingDetectThresholdMs: reader.readUint32(),
+      apogeeFailsafeMs: reader.readUint32(),
+      mainDeployAltitudeThresholdM: reader.readFloat32(),
+      drogueFireAttemptMaxNb: reader.readUint8(),
+      mainFireAttemptMaxNb: reader.readUint8(),
+      enableBuzzer: reader.readUint8() == 1,
+      buzzerReportToneHz: reader.readUint16(),
+      idefixFrequencyHz: reader.readUint32(),
+    );
+  }
+
+  OdbConfig copyWith({
+    String? odbName,
+    int? stageRole,
+    bool? debugMode,
+    int? axisProfile,
+    int? fireAttemptDelayMs,
+    int? pyrosArmingFailsafeMs,
+    int? minNeededPyroNb,
+    List<int>? pyroRoles,
+    double? accZLaunchThreshold,
+    double? boostPhaseVThreshold,
+    double? apogeeDetectVThreshold,
+    double? landingDetectVThreshold,
+    int? landingDetectThresholdMs,
+    int? apogeeFailsafeMs,
+    double? mainDeployAltitudeThresholdM,
+    int? drogueFireAttemptMaxNb,
+    int? mainFireAttemptMaxNb,
+    bool? enableBuzzer,
+    int? buzzerReportToneHz,
+    int? idefixFrequencyHz,
+  }) {
+    return OdbConfig(
+      odbName: odbName ?? this.odbName,
+      stageRole: stageRole ?? this.stageRole,
+      debugMode: debugMode ?? this.debugMode,
+      axisProfile: axisProfile ?? this.axisProfile,
+      fireAttemptDelayMs: fireAttemptDelayMs ?? this.fireAttemptDelayMs,
+      pyrosArmingFailsafeMs: pyrosArmingFailsafeMs ?? this.pyrosArmingFailsafeMs,
+      minNeededPyroNb: minNeededPyroNb ?? this.minNeededPyroNb,
+      pyroRoles: pyroRoles ?? this.pyroRoles,
+      accZLaunchThreshold: accZLaunchThreshold ?? this.accZLaunchThreshold,
+      boostPhaseVThreshold: boostPhaseVThreshold ?? this.boostPhaseVThreshold,
+      apogeeDetectVThreshold: apogeeDetectVThreshold ?? this.apogeeDetectVThreshold,
+      landingDetectVThreshold: landingDetectVThreshold ?? this.landingDetectVThreshold,
+      landingDetectThresholdMs: landingDetectThresholdMs ?? this.landingDetectThresholdMs,
+      apogeeFailsafeMs: apogeeFailsafeMs ?? this.apogeeFailsafeMs,
+      mainDeployAltitudeThresholdM: mainDeployAltitudeThresholdM ?? this.mainDeployAltitudeThresholdM,
+      drogueFireAttemptMaxNb: drogueFireAttemptMaxNb ?? this.drogueFireAttemptMaxNb,
+      mainFireAttemptMaxNb: mainFireAttemptMaxNb ?? this.mainFireAttemptMaxNb,
+      enableBuzzer: enableBuzzer ?? this.enableBuzzer,
+      buzzerReportToneHz: buzzerReportToneHz ?? this.buzzerReportToneHz,
+      idefixFrequencyHz: idefixFrequencyHz ?? this.idefixFrequencyHz,
+    );
+  }
+
+  Uint8List toBytes() {
+    final writer = ByteBuilder(93);
+    writer.writeUint32(magicNumber);
+    writer.writeUint8(versionMajor);
+    writer.writeUint8(versionMinor);
+    writer.writeUint16(payloadSize);
+    writer.writeString(odbName, 32);
+    writer.writeUint8(stageRole);
+    writer.writeUint8(debugMode ? 1 : 0);
+    writer.writeUint8(axisProfile);
+    writer.writeUint32(fireAttemptDelayMs);
+    writer.writeUint32(pyrosArmingFailsafeMs);
+    writer.writeUint8(minNeededPyroNb);
+    writer.writeUint8Array(pyroRoles);
+    writer.writeFloat32(accZLaunchThreshold);
+    writer.writeFloat32(boostPhaseVThreshold);
+    writer.writeFloat32(apogeeDetectVThreshold);
+    writer.writeFloat32(landingDetectVThreshold);
+    writer.writeUint32(landingDetectThresholdMs);
+    writer.writeUint32(apogeeFailsafeMs);
+    writer.writeFloat32(mainDeployAltitudeThresholdM);
+    writer.writeUint8(drogueFireAttemptMaxNb);
+    writer.writeUint8(mainFireAttemptMaxNb);
+    writer.writeUint8(enableBuzzer ? 1 : 0);
+    writer.writeUint16(buzzerReportToneHz);
+    writer.writeUint32(idefixFrequencyHz);
+    return writer.toBytes();
+  }
+}
+
+class OdbTelemetry {
+  final int versionMajor;
+  final int versionMinor;
+  final int payloadSize;
+  
+  final int timeBootMs;
+  final int systemStates;
+  final int eventStates;
+  final int missionState;
+  final int batteryMv;
+  
+  final double roll, pitch, yaw;
+  final double imuAccX, imuAccY, imuAccZ;
+  final double imuGyroX, imuGyroY, imuGyroZ;
+  final double imuMagX, imuMagY, imuMagZ;
+  
+  final double altitudeMslM, pressurePa, tempCelsius;
+  final double highgAccX, highgAccY, highgAccZ;
+  
+  final int gpsFix;
+  final double gpsLat, gpsLon, gpsAlt, gpsVelocity, gpsCourse;
+  final int satellitesNb;
+  
+  final int sdSpace;
+  final double imuAccVertical, highgAccVertical, kalmanZ, kalmanV;
+
+  OdbTelemetry.fromBytes(Uint8List bytes) 
+      : this._internal(ByteCursor(bytes));
+
+  OdbTelemetry._internal(ByteCursor reader)
+      : versionMajor = reader.readUint8(),
+        versionMinor = reader.readUint8(),
+        payloadSize = reader.readUint16(),
+        
+        timeBootMs = reader.readUint32(),
+        systemStates = reader.readUint16(),
+        eventStates = reader.readUint16(),
+        missionState = reader.readUint8(),
+        batteryMv = reader.readUint16(),
+        
+        roll = reader.readFloat32(),
+        pitch = reader.readFloat32(),
+        yaw = reader.readFloat32(),
+        
+        imuAccX = reader.readFloat32(),
+        imuAccY = reader.readFloat32(),
+        imuAccZ = reader.readFloat32(),
+        
+        imuGyroX = reader.readFloat32(),
+        imuGyroY = reader.readFloat32(),
+        imuGyroZ = reader.readFloat32(),
+        
+        imuMagX = reader.readFloat32(),
+        imuMagY = reader.readFloat32(),
+        imuMagZ = reader.readFloat32(),
+        
+        altitudeMslM = reader.readFloat32(),
+        pressurePa = reader.readFloat32(),
+        tempCelsius = reader.readFloat32(),
+        
+        highgAccX = reader.readFloat32(),
+        highgAccY = reader.readFloat32(),
+        highgAccZ = reader.readFloat32(),
+        
+        gpsFix = reader.readUint8(),
+        gpsLat = reader.readInt32() / 10000000.0,
+        gpsLon = reader.readInt32() / 10000000.0,
+        gpsAlt = reader.readInt32() / 1000.0,
+        gpsVelocity = reader.readUint16() / 100.0,
+        gpsCourse = reader.readUint16() / 100.0,
+        satellitesNb = reader.readUint8(),
+        
+        sdSpace = reader.readUint16(),
+        
+        imuAccVertical = reader.readFloat32(),
+        highgAccVertical = reader.readFloat32(),
+        kalmanZ = reader.readFloat32(),
+        kalmanV = reader.readFloat32() {
+            reader.readUint8(); // End padding
+        }
+}
+
+enum SensorState { unknown, ok, error }
 enum RadioState { disconnected, connecting, connected }
+
+
+// ============================================================================
+// ========================== GESTIONNAIRE PRINCIPAL ==========================
+// ============================================================================
 
 class DataServiceManager with ChangeNotifier {
   static const int stageRoleBooster = 2;
   static const int stageRoleSustainer = 3;
+  static const int axisProfileP0 = 0;
+  static const int axisProfileP1 = 1;
+  static const int axisProfileP2 = 2;
+  static const int axisProfileP3 = 3;
+  static const int axisProfileP4 = 4;
+  static const int axisProfileP5 = 5;
+  static const int axisProfileP6 = 6;
+  static const int axisProfileP7 = 7;
   static const int eventFlagPyrosArmed = 1 << 0;
   static const int eventFlagPyro1Fired = 1 << 1;
   static const int eventFlagPyro2Fired = 1 << 2;
@@ -165,6 +389,8 @@ class DataServiceManager with ChangeNotifier {
   static const int eventFlagMainDeployed = 1 << 6;
   static const int eventFlagDrogueDeployed = 1 << 7;
   static const int eventFlagMachLockEnabled = 1 << 8;
+  static const int expectedProtocolMajor = 1;
+  static const int expectedProtocolMinor = 1;
 
   final BluetoothServiceManager btService;
   DataServiceManager(this.btService);
@@ -178,147 +404,198 @@ class DataServiceManager with ChangeNotifier {
     }
   }
 
-  // ---------- Variables extraites ----------
-  int timeBootMs = 0;
-  int systemStates = 0;
-  int eventStates = 0;
-  int missionState = -1;
-  String odbFrameVersion = '';
-  String odbConfigFrameVersion = '';
-  bool hasOdbConfig = false;
-  String odbName = '';
-  int stageRole = stageRoleSustainer;
-  bool debugMode = false;
-  bool enableBuzzer = false;
-  int minNeededPyroNb = 0;
-  int drogueFireAttemptMaxNb = 0;
-  int mainFireAttemptMaxNb = 0;
-  double accZLaunchThreshold = 0.0;
-  double boostPhaseVThreshold = 0.0;
-  double apogeeDetectVThreshold = 0.0;
-  double mainDeployAltitudeThresholdM = 0.0;
-  double landingDetectVThreshold = 0.0;
-  int buzzerReportToneHz = 0;
-  int landingDetectThresholdMs = 0;
-  int fireAttemptDelayMs = 0;
-  int pyrosArmingFailsafeMs = 0;
-  int apogeeFailsafeMs = 0;
-  int idefixFrequencyHz = 0;
-  List<int> pyroRoles = List.filled(4, 0);
-  int vinMv = 0;
-  double batteryVoltage = 0.0;
-  double batteryVoltageMax = 24.0;
-  bool goodPowerState = false;
-  double temperature = 0.0;
-  List<bool> pyros = List.filled(4, false);
-  bool pyrosArmed = false;
-  double roll = 0.0, pitch = 0.0, yaw = 0.0;
-  double imuAccX = 0.0, imuAccY = 0.0, imuAccZ = 0.0;
-  double imuAccVertical = 0.0;
-  double imuGyroX = 0.0, imuGyroY = 0.0, imuGyroZ = 0.0;
-  double imuMagX = 0.0, imuMagY = 0.0, imuMagZ = 0.0;
-  double accHighGX = 0.0, accHighGY = 0.0, accHighGZ = 0.0;
-  double highGAccVertical = 0.0;
-  double sdFree= 0;
-  double gpsLat = 0.0, gpsLon = 0.0, gpsAlt = 0.0;
-  double gpsVelocity = 0.0, gpsCourse = 0.0;
-  int gpsSatellites = 0;
-  int gpsFix = 0;
-  double barometerPressure = 0.0;
-  double altitudeMslM = 0.0;
-  double kalmanAltitudeM = 0.0;
-  double kalmanVelocityMS = 0.0;
+  // Objets de données
+  OdbTelemetry? telemetry;
+  OdbConfig? config;
+  OdbStats? lastFlightStats;
 
-  // ---------- États des capteurs ----------
-  SensorState batterySensorState = SensorState.unknown;
-  SensorState temperatureSensorState = SensorState.unknown;
-  SensorState imuSensorState = SensorState.unknown;
-  SensorState accHighGSensorState = SensorState.unknown;
-  SensorState sdSensorState = SensorState.unknown;
-  SensorState gpsSensorState = SensorState.unknown;
-  SensorState barometerSensorState = SensorState.unknown;
-  RadioState radioState = RadioState.disconnected;
-  SensorState flashSensorState = SensorState.unknown;
-  SensorState idefixSensorState = SensorState.unknown;
-  SensorState btModuleState = SensorState.unknown;
-  SensorState pyroArmingModuleState = SensorState.unknown;
+  // Version Handler
+  bool hasVersionMismatch = false;
+  String versionMismatchMessage = '';
 
-  // ---------- Getter / valeurs derivées ----------
-  double get batteryPercent => batteryVoltageMax > 0
-      ? (batteryVoltage / batteryVoltageMax * 100).clamp(0, 100)
-      : 0.0;
-  String get temperatureDisplay =>
-      temperature != 0.0 ? '${temperature.toStringAsFixed(1)}°C' : '—';
-  double pressureToAltitude(
-    double pressureHpa, [
-    double seaLevelHpa = 1013.25,
-  ]) {
+  void clearVersionMismatch() {
+    if (hasVersionMismatch) {
+      hasVersionMismatch = false;
+      versionMismatchMessage = '';
+      _safeNotifyListeners();
+    }
+  }
+
+
+  // ---------- Getters UI ----------
+  
+  // Télémétrie / Variables dérivées
+  int get timeBootMs => telemetry?.timeBootMs ?? 0;
+  int get systemStates => telemetry?.systemStates ?? 0;
+  int get eventStates => telemetry?.eventStates ?? 0;
+  int get missionState => telemetry?.missionState ?? -1;
+  
+  String get odbFrameVersion => telemetry != null ? 'v${telemetry!.versionMajor}.${telemetry!.versionMinor}' : '';
+  String get odbConfigFrameVersion => config != null ? 'v${config!.versionMajor}.${config!.versionMinor}' : '';
+  bool get hasOdbConfig => config != null;
+  
+  double get batteryVoltageMax => 24.0;
+  int get vinMv => telemetry?.batteryMv ?? 0;
+  double get batteryVoltage => vinMv / 1000.0;
+  double get temperature => telemetry?.tempCelsius ?? 0.0;
+  
+  double get roll => telemetry?.roll ?? 0.0;
+  double get pitch => telemetry?.pitch ?? 0.0;
+  double get yaw => telemetry?.yaw ?? 0.0;
+  double get imuAccX => telemetry?.imuAccX ?? 0.0;
+  double get imuAccY => telemetry?.imuAccY ?? 0.0;
+  double get imuAccZ => telemetry?.imuAccZ ?? 0.0;
+  double get imuAccVertical => telemetry?.imuAccVertical ?? 0.0;
+  double get imuGyroX => telemetry?.imuGyroX ?? 0.0;
+  double get imuGyroY => telemetry?.imuGyroY ?? 0.0;
+  double get imuGyroZ => telemetry?.imuGyroZ ?? 0.0;
+  double get imuMagX => telemetry?.imuMagX ?? 0.0;
+  double get imuMagY => telemetry?.imuMagY ?? 0.0;
+  double get imuMagZ => telemetry?.imuMagZ ?? 0.0;
+  
+  double get accHighGX => telemetry?.highgAccX ?? 0.0;
+  double get accHighGY => telemetry?.highgAccY ?? 0.0;
+  double get accHighGZ => telemetry?.highgAccZ ?? 0.0;
+  double get highGAccVertical => telemetry?.highgAccVertical ?? 0.0;
+  
+  double get barometerPressure => telemetry?.pressurePa ?? 0.0;
+  double get altitudeMslM => telemetry?.altitudeMslM ?? 0.0;
+  double get kalmanAltitudeM => telemetry?.kalmanZ ?? 0.0;
+  double get kalmanVelocityMS => telemetry?.kalmanV ?? 0.0;
+  
+  int get gpsFix => telemetry?.gpsFix ?? 0;
+  double get gpsLat => telemetry?.gpsLat ?? 0.0;
+  double get gpsLon => telemetry?.gpsLon ?? 0.0;
+  double get gpsAlt => telemetry?.gpsAlt ?? 0.0;
+  double get gpsVelocity => telemetry?.gpsVelocity ?? 0.0;
+  double get gpsCourse => telemetry?.gpsCourse ?? 0.0;
+  int get gpsSatellites => telemetry?.satellitesNb ?? 0;
+  
+  double get sdFree => (telemetry?.sdSpace ?? 0) / 100.0;
+
+  // Configuration Mapping
+  String get odbName => config?.odbName ?? '';
+  int get stageRole => config?.stageRole ?? stageRoleSustainer;
+  bool get debugMode => config?.debugMode ?? false;
+  int get axisProfile => config?.axisProfile ?? axisProfileP0;
+  bool get enableBuzzer => config?.enableBuzzer ?? false;
+  int get minNeededPyroNb => config?.minNeededPyroNb ?? 0;
+  int get drogueFireAttemptMaxNb => config?.drogueFireAttemptMaxNb ?? 0;
+  int get mainFireAttemptMaxNb => config?.mainFireAttemptMaxNb ?? 0;
+  double get accZLaunchThreshold => config?.accZLaunchThreshold ?? 0.0;
+  double get boostPhaseVThreshold => config?.boostPhaseVThreshold ?? 0.0;
+  double get apogeeDetectVThreshold => config?.apogeeDetectVThreshold ?? 0.0;
+  double get mainDeployAltitudeThresholdM => config?.mainDeployAltitudeThresholdM ?? 0.0;
+  double get landingDetectVThreshold => config?.landingDetectVThreshold ?? 0.0;
+  int get buzzerReportToneHz => config?.buzzerReportToneHz ?? 0;
+  int get landingDetectThresholdMs => config?.landingDetectThresholdMs ?? 0;
+  int get fireAttemptDelayMs => config?.fireAttemptDelayMs ?? 0;
+  int get pyrosArmingFailsafeMs => config?.pyrosArmingFailsafeMs ?? 0;
+  int get apogeeFailsafeMs => config?.apogeeFailsafeMs ?? 0;
+  int get idefixFrequencyHz => config?.idefixFrequencyHz ?? 0;
+  List<int> get pyroRoles => config?.pyroRoles ?? List.filled(4, 0);
+
+
+  // ---------- Setters UI ----------
+  
+  set odbName(String value) { config = config?.copyWith(odbName: value); _safeNotifyListeners(); }
+  set stageRole(int value) { config = config?.copyWith(stageRole: value); _safeNotifyListeners(); }
+  set debugMode(bool value) { config = config?.copyWith(debugMode: value); _safeNotifyListeners(); }
+  set axisProfile(int value) { config = config?.copyWith(axisProfile: value); _safeNotifyListeners(); }
+  set enableBuzzer(bool value) { config = config?.copyWith(enableBuzzer: value); _safeNotifyListeners(); }
+  set minNeededPyroNb(int value) { config = config?.copyWith(minNeededPyroNb: value); _safeNotifyListeners(); }
+  set drogueFireAttemptMaxNb(int value) { config = config?.copyWith(drogueFireAttemptMaxNb: value); _safeNotifyListeners(); }
+  set mainFireAttemptMaxNb(int value) { config = config?.copyWith(mainFireAttemptMaxNb: value); _safeNotifyListeners(); }
+  set accZLaunchThreshold(double value) { config = config?.copyWith(accZLaunchThreshold: value); _safeNotifyListeners(); }
+  set boostPhaseVThreshold(double value) { config = config?.copyWith(boostPhaseVThreshold: value); _safeNotifyListeners(); }
+  set apogeeDetectVThreshold(double value) { config = config?.copyWith(apogeeDetectVThreshold: value); _safeNotifyListeners(); }
+  set mainDeployAltitudeThresholdM(double value) { config = config?.copyWith(mainDeployAltitudeThresholdM: value); _safeNotifyListeners(); }
+  set landingDetectVThreshold(double value) { config = config?.copyWith(landingDetectVThreshold: value); _safeNotifyListeners(); }
+  set buzzerReportToneHz(int value) { config = config?.copyWith(buzzerReportToneHz: value); _safeNotifyListeners(); }
+  set landingDetectThresholdMs(int value) { config = config?.copyWith(landingDetectThresholdMs: value); _safeNotifyListeners(); }
+  set fireAttemptDelayMs(int value) { config = config?.copyWith(fireAttemptDelayMs: value); _safeNotifyListeners(); }
+  set pyrosArmingFailsafeMs(int value) { config = config?.copyWith(pyrosArmingFailsafeMs: value); _safeNotifyListeners(); }
+  set apogeeFailsafeMs(int value) { config = config?.copyWith(apogeeFailsafeMs: value); _safeNotifyListeners(); }
+  set idefixFrequencyHz(int value) { config = config?.copyWith(idefixFrequencyHz: value); _safeNotifyListeners(); }
+  set pyroRoles(List<int> value) { config = config?.copyWith(pyroRoles: value); _safeNotifyListeners(); }
+
+
+  // ---------- États des capteurs dynamiques ----------
+  
+  RadioState get radioState => (systemStates & (1 << 5)) != 0 ? RadioState.connected : RadioState.disconnected;
+  SensorState get gpsSensorState => (systemStates & (1 << 8)) != 0 ? SensorState.ok : SensorState.error;
+  SensorState get barometerSensorState => (systemStates & (1 << 7)) != 0 ? SensorState.ok : SensorState.error;
+  SensorState get imuSensorState => (systemStates & (1 << 6)) != 0 ? SensorState.ok : SensorState.error;
+  SensorState get accHighGSensorState => (systemStates & (1 << 9)) != 0 ? SensorState.ok : SensorState.error;
+  SensorState get temperatureSensorState => (systemStates & (1 << 10)) != 0 ? SensorState.ok : SensorState.error;
+  SensorState get sdSensorState => (systemStates & (1 << 11)) != 0 ? SensorState.ok : SensorState.error;
+  SensorState get flashSensorState => (systemStates & (1 << 12)) != 0 ? SensorState.ok : SensorState.error;
+  SensorState get btModuleState => (systemStates & (1 << 13)) != 0 ? SensorState.ok : SensorState.error;
+  SensorState get idefixSensorState => (systemStates & (1 << 14)) != 0 ? SensorState.ok : SensorState.error;
+  SensorState get batterySensorState => batteryVoltage > 0 ? SensorState.ok : SensorState.error;
+  bool get goodPowerState => batteryVoltage >= 5.0;
+  SensorState get pyroArmingModuleState => (systemStates & (1 << 4)) != 0 ? SensorState.ok : SensorState.error;
+  
+  bool get pyrosArmed => eventPyrosArmed;
+  List<bool> get pyros {
+    return [
+      ((systemStates & (1 << 3)) != 0) && !eventPyro1Fired,
+      ((systemStates & (1 << 2)) != 0) && !eventPyro2Fired,
+      ((systemStates & (1 << 1)) != 0) && !eventPyro3Fired,
+      ((systemStates & (1 << 0)) != 0) && !eventPyro4Fired,
+    ];
+  }
+
+
+  // ---------- Formatters ----------
+  
+  double get batteryPercent => batteryVoltageMax > 0 ? (batteryVoltage / batteryVoltageMax * 100).clamp(0, 100) : 0.0;
+  String get temperatureDisplay => temperature != 0.0 ? '${temperature.toStringAsFixed(1)}°C' : '—';
+  
+  double pressureToAltitude(double pressureHpa, [double seaLevelHpa = 1013.25]) {
     if (pressureHpa <= 0 || seaLevelHpa <= 0) return 0.0;
     final ratio = pressureHpa / seaLevelHpa;
     final alt = 44330.0 * (1 - pow(ratio, 1 / 5.255));
     return alt.isFinite ? alt.toDouble() : 0.0;
   }
-
   double get barometerAlt => pressureToAltitude(barometerPressure);
 
   String get altitudeDisplay {
     if (!hasConnection) return '—';
-    if (barometerSensorState == SensorState.ok) {
-      return '${barometerAlt.toStringAsFixed(0)} m';
-    }
-    if (hasValidGpsFix) {
-      return '${gpsAlt.toStringAsFixed(0)} m';
-    }
+    if (barometerSensorState == SensorState.ok) return '${barometerAlt.toStringAsFixed(0)} m';
+    if (hasValidGpsFix) return '${gpsAlt.toStringAsFixed(0)} m';
     return '—';
   }
 
   int get pyrosActiveCount => pyros.where((p) => p).length;
   String get pyrosSummary => pyros.map((p) => p ? '1' : '0').join(',');
-  static const List<String> _pyroRoleNames = [
-    'None',
-    'Main',
-    'Drogue',
-    'Main #2',
-    'Drogue #1',
-  ];
+  static const List<String> _pyroRoleNames = ['None', 'Main', 'Drogue', 'Main #2', 'Drogue #1'];
 
   String pyroRoleLabel(int pyroIndex, {bool connected = true}) {
     if (!connected) return '-';
     final roleIndex = pyroIndex < pyroRoles.length ? pyroRoles[pyroIndex] : 0;
-    if (roleIndex < 0 || roleIndex >= _pyroRoleNames.length) {
-      return _pyroRoleNames.first;
-    }
+    if (roleIndex < 0 || roleIndex >= _pyroRoleNames.length) return _pyroRoleNames.first;
     return _pyroRoleNames[roleIndex];
   }
 
   String pyroDisplayLabel(int pyroIndex, {required bool connected}) {
-    return connected
-        ? 'Pyro ${pyroIndex + 1} (${pyroRoleLabel(pyroIndex, connected: connected)})'
-        : 'Pyro ${pyroIndex + 1} (-)';
+    return connected ? 'Pyro ${pyroIndex + 1} (${pyroRoleLabel(pyroIndex, connected: connected)})' : 'Pyro ${pyroIndex + 1} (-)';
   }
 
   String get missionStateDisplay {
     switch (missionState) {
-      case 0:
-        return 'PREFLIGHT';
-      case 1:
-        return 'ARMING TEST';
-      case 2:
-        return 'ARMED';
-      case 3:
-        return 'INFLIGHT';
-      case 4:
-        return 'POSTFLIGHT';
-      default:
-        return '—';
+      case 0: return 'PREFLIGHT';
+      case 1: return 'ARMING TEST';
+      case 2: return 'ARMED';
+      case 3: return 'INFLIGHT';
+      case 4: return 'POSTFLIGHT';
+      default: return '—';
     }
   }
 
-  String get systemStateDisplay =>
-      systemStates > 0 ? 'Flags $systemStates' : '—';
+  String get systemStateDisplay => systemStates > 0 ? 'Flags $systemStates' : '—';
   String get eventStateDisplay {
     if (eventStates <= 0) return '—';
-
     final activeFlags = <String>[];
     if (eventPyrosArmed) activeFlags.add('Pyros armed');
     if (eventPyro1Fired) activeFlags.add('Pyro 1 fired');
@@ -329,7 +606,6 @@ class DataServiceManager with ChangeNotifier {
     if (eventMainDeployed) activeFlags.add('Main deployed');
     if (eventDrogueDeployed) activeFlags.add('Drogue deployed');
     if (eventMachLockEnabled) activeFlags.add('Mach lock enabled');
-
     return activeFlags.isEmpty ? 'Events $eventStates' : activeFlags.join(', ');
   }
 
@@ -342,6 +618,7 @@ class DataServiceManager with ChangeNotifier {
   bool get eventMainDeployed => (eventStates & eventFlagMainDeployed) != 0;
   bool get eventDrogueDeployed => (eventStates & eventFlagDrogueDeployed) != 0;
   bool get eventMachLockEnabled => (eventStates & eventFlagMachLockEnabled) != 0;
+  
   String get vinDisplay {
     if (vinMv > 0) return '$vinMv mV';
     if (batteryVoltage > 0) return '${(batteryVoltage * 1000).round()} mV';
@@ -349,7 +626,6 @@ class DataServiceManager with ChangeNotifier {
   }
 
   String get timeBootDisplay => timeBootMs > 0 ? '$timeBootMs ms' : '—';
-
   String get timeBootFormatted {
     if (timeBootMs <= 0) return '00h:00m:00s:00ms';
     final hours = timeBootMs ~/ 3600000;
@@ -359,76 +635,37 @@ class DataServiceManager with ChangeNotifier {
     return '${hours.toString().padLeft(2, '0')}h:${minutes.toString().padLeft(2, '0')}m:${seconds.toString().padLeft(2, '0')}s:${milliseconds.toString().padLeft(2, '0')}ms';
   }
 
-  String get attitudeDisplay => hasConnection
-      ? 'R ${roll.toStringAsFixed(1)}°  P ${pitch.toStringAsFixed(1)}°  Y ${yaw.toStringAsFixed(1)}°'
-      : '—';
-    String get gpsVelocityDisplay => hasValidGpsFix
-      ? '${gpsVelocity.toStringAsFixed(1)} m/s'
-      : '—';
-    String get gpsCourseDisplay => hasValidGpsFix
-      ? '${gpsCourse.toStringAsFixed(0)}°'
-      : '—';
+  String get attitudeDisplay => hasConnection ? 'R ${roll.toStringAsFixed(1)}°  P ${pitch.toStringAsFixed(1)}°  Y ${yaw.toStringAsFixed(1)}°' : '—';
+  String get gpsVelocityDisplay => hasValidGpsFix ? '${gpsVelocity.toStringAsFixed(1)} m/s' : '—';
+  String get gpsCourseDisplay => hasValidGpsFix ? '${gpsCourse.toStringAsFixed(0)}°' : '—';
+  
   String get missionStatus {
     if (missionStateDisplay != '—') return missionStateDisplay;
     return systemStateDisplay;
   }
 
-  // --- IMU / Accelerations ---
   String get imuAccDisplay => hasConnection && imuSensorState == SensorState.ok
-      ? 'X: ${imuAccX.toStringAsFixed(2)} | Y: ${imuAccY.toStringAsFixed(2)} | Z: ${imuAccZ.toStringAsFixed(2)} m/s²'
-      : '—';
+      ? 'X: ${imuAccX.toStringAsFixed(2)} | Y: ${imuAccY.toStringAsFixed(2)} | Z: ${imuAccZ.toStringAsFixed(2)} m/s²' : '—';
   String get imuGyroDisplay => hasConnection && imuSensorState == SensorState.ok
-      ? 'X: ${imuGyroX.toStringAsFixed(2)} | Y: ${imuGyroY.toStringAsFixed(2)} | Z: ${imuGyroZ.toStringAsFixed(2)} °/s'
-      : '—';
-  String get highGAccDisplay =>
-      hasConnection && accHighGSensorState == SensorState.ok
-      ? 'X: ${accHighGX.toStringAsFixed(2)} | Y: ${accHighGY.toStringAsFixed(2)} | Z: ${accHighGZ.toStringAsFixed(2)} m/s²'
-      : '—';
+      ? 'X: ${imuGyroX.toStringAsFixed(2)} | Y: ${imuGyroY.toStringAsFixed(2)} | Z: ${imuGyroZ.toStringAsFixed(2)} °/s' : '—';
+  String get highGAccDisplay => hasConnection && accHighGSensorState == SensorState.ok
+      ? 'X: ${accHighGX.toStringAsFixed(2)} | Y: ${accHighGY.toStringAsFixed(2)} | Z: ${accHighGZ.toStringAsFixed(2)} m/s²' : '—';
 
-  String get imuAccVerticalDisplay =>
-      hasConnection && imuSensorState == SensorState.ok
-      ? '${imuAccVertical.toStringAsFixed(2)} m/s²'
-      : '—';
+  String get imuAccVerticalDisplay => hasConnection && imuSensorState == SensorState.ok ? '${imuAccVertical.toStringAsFixed(2)} m/s²' : '—';
+  String get highGAccVerticalDisplay => hasConnection && accHighGSensorState == SensorState.ok ? '${highGAccVertical.toStringAsFixed(2)} m/s²' : '—';
 
-  String get highGAccVerticalDisplay =>
-      hasConnection && accHighGSensorState == SensorState.ok
-      ? '${highGAccVertical.toStringAsFixed(2)} m/s²'
-      : '—';
+  String get pressureDisplay => hasConnection && barometerSensorState == SensorState.ok ? '${barometerPressure.toStringAsFixed(2)} hPa' : '—';
+  String get altitudeMslDisplay => hasConnection ? '${altitudeMslM.toStringAsFixed(2)} m' : '—';
+  String get kalmanAltitudeDisplay => hasConnection ? kalmanAltitudeM.toStringAsFixed(2) : '—';
+  String get kalmanVelocityDisplay => hasConnection ? kalmanVelocityMS.toStringAsFixed(2) : '—';
 
-  // --- Barometer ---
-  String get pressureDisplay =>
-      hasConnection && barometerSensorState == SensorState.ok
-      ? '${barometerPressure.toStringAsFixed(2)} hPa'
-      : '—';
+  String get gpsLatDisplay => hasValidGpsFix ? '${gpsLat.toStringAsFixed(6)}°' : '—';
+  String get gpsLonDisplay => hasValidGpsFix ? '${gpsLon.toStringAsFixed(6)}°' : '—';
+  String get gpsAltDisplay => hasValidGpsFix ? '${gpsAlt.toStringAsFixed(1)} m' : '—';
+  String get gpsSatellitesDisplay => hasValidGpsFix ? '$gpsSatellites satellites' : '—';
+  String get gpsFixDisplay => hasConnection ? (gpsFix > 0 ? '✓ Actif' : '✗ Aucun fix') : '—';
 
-  String get altitudeMslDisplay =>
-      hasConnection ? '${altitudeMslM.toStringAsFixed(2)} m' : '—';
-
-  String get kalmanAltitudeDisplay =>
-      hasConnection ? kalmanAltitudeM.toStringAsFixed(2) : '—';
-
-  String get kalmanVelocityDisplay =>
-      hasConnection ? kalmanVelocityMS.toStringAsFixed(2) : '—';
-
-  // --- GPS ---
-    String get gpsLatDisplay => hasValidGpsFix
-      ? '${gpsLat.toStringAsFixed(6)}°'
-      : '—';
-    String get gpsLonDisplay => hasValidGpsFix
-      ? '${gpsLon.toStringAsFixed(6)}°'
-      : '—';
-    String get gpsAltDisplay => hasValidGpsFix
-      ? '${gpsAlt.toStringAsFixed(1)} m'
-      : '—';
-  String get gpsSatellitesDisplay =>
-      hasValidGpsFix
-      ? '$gpsSatellites satellites'
-      : '—';
-  String get gpsFixDisplay =>
-      hasConnection ? (gpsFix > 0 ? '✓ Actif' : '✗ Aucun fix') : '—';
-
-  bool get odbSensorState =>
-      (temperatureSensorState == SensorState.ok &&
+  bool get odbSensorState => (temperatureSensorState == SensorState.ok &&
       imuSensorState == SensorState.ok &&
       accHighGSensorState == SensorState.ok &&
       flashSensorState == SensorState.ok &&
@@ -437,443 +674,186 @@ class DataServiceManager with ChangeNotifier {
       goodPowerState == true &&
       pyroArmingModuleState == SensorState.ok &&
       pyrosActiveCount >= 0);
+
   bool get missionReady => odbSensorState && radioState == RadioState.connected;
   bool get hasConnection => btService.connectedDevice != null;
   bool get hasValidGpsFix => hasConnection && gpsSensorState == SensorState.ok && gpsFix > 0;
 
   void resetOdbConfig() {
-    timeBootMs = 0;
-    systemStates = 0;
-    eventStates = 0;
-    missionState = -1;
-    odbFrameVersion = '';
-    odbConfigFrameVersion = '';
-    hasOdbConfig = false;
-    odbName = '';
-    stageRole = stageRoleSustainer;
-    debugMode = false;
-    enableBuzzer = false;
-    minNeededPyroNb = 0;
-    drogueFireAttemptMaxNb = 0;
-    mainFireAttemptMaxNb = 0;
-    accZLaunchThreshold = 0.0;
-    boostPhaseVThreshold = 0.0;
-    apogeeDetectVThreshold = 0.0;
-    mainDeployAltitudeThresholdM = 0.0;
-    landingDetectVThreshold = 0.0;
-    buzzerReportToneHz = 0;
-    landingDetectThresholdMs = 0;
-    fireAttemptDelayMs = 0;
-    pyrosArmingFailsafeMs = 0;
-    apogeeFailsafeMs = 0;
-    idefixFrequencyHz = 0;
-    pyroRoles = List.filled(4, 0);
+    telemetry = null;
+    config = null;
     lastFlightStats = null;
     _safeNotifyListeners();
   }
 
-  int _parseInt(String value, int fallback) {
-    return int.tryParse(value.trim()) ?? fallback;
-  }
 
-  double _parseDouble(String value, double fallback) {
-    return double.tryParse(value.trim().replaceAll(',', '.')) ?? fallback;
-  }
+  // ---------- COMMANDES ----------
+
+  int _parseInt(String value, int fallback) => int.tryParse(value.trim()) ?? fallback;
+  double _parseDouble(String value, double fallback) => double.tryParse(value.trim().replaceAll(',', '.')) ?? fallback;
 
   Future<void> refreshOdb() async {
-    if (!hasConnection) {
-      ConsoleService().log('Aucune connexion Bluetooth avec l\'ODB');
-      return;
-    }
+    if (!hasConnection) { ConsoleService().log('Aucune connexion Bluetooth avec l\'ODB'); return; }
     await btService.sendBinary(0x03, [0x06]);
   }
 
   Future<void> commandPing() async {
-    if (!hasConnection) {
-      ConsoleService().log('Aucune connexion Bluetooth avec l\'ODB');
-      return;
-    }
+    if (!hasConnection) { ConsoleService().log('Aucune connexion Bluetooth avec l\'ODB'); return; }
     await btService.sendBinary(0x03, [0x01]);
   }
 
   Future<void> commandArm(bool arm) async {
-    if (!hasConnection) {
-      ConsoleService().log('Aucune connexion Bluetooth avec l\'ODB');
-      return;
-    }
+    if (!hasConnection) { ConsoleService().log('Aucune connexion Bluetooth avec l\'ODB'); return; }
     await btService.sendBinary(0x03, [0x02, arm ? 1 : 0]);
   }
 
   Future<void> commandFire(int pyroIndex) async {
-    if (!hasConnection) {
-      ConsoleService().log('Aucune connexion Bluetooth avec l\'ODB');
-      return;
-    }
+    if (!hasConnection) { ConsoleService().log('Aucune connexion Bluetooth avec l\'ODB'); return; }
     await btService.sendBinary(0x03, [0x03, pyroIndex]);
   }
 
   Future<void> applyOdbSettings({
-    required String odbName,
-    required String stageRole,
-    required bool debugMode,
-    required bool enableBuzzer,
-    required String minNeededPyroNb,
-    required String drogueFireAttemptMaxNb,
-    required String mainFireAttemptMaxNb,
-    required String accZLaunchThreshold,
-    required String boostPhaseVThreshold,
-    required String apogeeDetectVThreshold,
-    required String mainDeployAltitudeThresholdM,
-    required String landingDetectVThreshold,
-    required String buzzerReportToneHz,
-    required String landingDetectThresholdMs,
-    required String fireAttemptDelayMs,
-    required String pyrosArmingFailsafeMs,
-    required String apogeeFailsafeMs,
-    required String idefixFrequencyHz,
-    required List<int> pyroRoles,
+    required String odbName, required String stageRole, required bool debugMode, required String axisProfile,
+    required bool enableBuzzer, required String minNeededPyroNb, required String drogueFireAttemptMaxNb, required String mainFireAttemptMaxNb,
+    required String accZLaunchThreshold, required String boostPhaseVThreshold, required String apogeeDetectVThreshold,
+    required String mainDeployAltitudeThresholdM, required String landingDetectVThreshold, required String buzzerReportToneHz,
+    required String landingDetectThresholdMs, required String fireAttemptDelayMs, required String pyrosArmingFailsafeMs,
+    required String apogeeFailsafeMs, required String idefixFrequencyHz, required List<int> pyroRoles,
   }) async {
     if (!hasConnection) {
+      if (hasVersionMismatch) {
+        ConsoleService().log('Envoi bloqué : Conflit de version détecté.');
+        return; 
+      }
+      
       ConsoleService().log('Aucune connexion Bluetooth avec l\'ODB');
       return;
     }
 
-    final byteData = ByteData(92);
-    int offset = 0;
+    final newConfig = OdbConfig(
+      odbName: odbName,
+      stageRole: _parseInt(stageRole, this.stageRole),
+      debugMode: debugMode,
+      axisProfile: _parseInt(axisProfile, this.axisProfile),
+      fireAttemptDelayMs: _parseInt(fireAttemptDelayMs, this.fireAttemptDelayMs),
+      pyrosArmingFailsafeMs: _parseInt(pyrosArmingFailsafeMs, this.pyrosArmingFailsafeMs),
+      minNeededPyroNb: _parseInt(minNeededPyroNb, this.minNeededPyroNb),
+      pyroRoles: pyroRoles,
+      accZLaunchThreshold: _parseDouble(accZLaunchThreshold, this.accZLaunchThreshold),
+      boostPhaseVThreshold: _parseDouble(boostPhaseVThreshold, this.boostPhaseVThreshold),
+      apogeeDetectVThreshold: _parseDouble(apogeeDetectVThreshold, this.apogeeDetectVThreshold),
+      landingDetectVThreshold: _parseDouble(landingDetectVThreshold, this.landingDetectVThreshold),
+      landingDetectThresholdMs: _parseInt(landingDetectThresholdMs, this.landingDetectThresholdMs),
+      apogeeFailsafeMs: _parseInt(apogeeFailsafeMs, this.apogeeFailsafeMs),
+      mainDeployAltitudeThresholdM: _parseDouble(mainDeployAltitudeThresholdM, this.mainDeployAltitudeThresholdM),
+      drogueFireAttemptMaxNb: _parseInt(drogueFireAttemptMaxNb, this.drogueFireAttemptMaxNb),
+      mainFireAttemptMaxNb: _parseInt(mainFireAttemptMaxNb, this.mainFireAttemptMaxNb),
+      enableBuzzer: enableBuzzer,
+      buzzerReportToneHz: _parseInt(buzzerReportToneHz, this.buzzerReportToneHz),
+      idefixFrequencyHz: _parseInt(idefixFrequencyHz, this.idefixFrequencyHz),
+    );
 
-    // 1. magic_number & Header
-    byteData.setUint32(offset, 0x434F4E46, Endian.little); 
-    offset += 4;
-
-    byteData.setUint8(offset, 1);
-    offset += 1;
-    byteData.setUint8(offset, 0);
-    offset += 1;
-    byteData.setUint16(offset, 92, Endian.little);
-    offset += 2;
-
-    // 2. odb_name[32]
-    final nameBytes = utf8.encode(odbName.trim());
-    for (int i = 0; i < 32; i++) {
-      // On remplit avec le nom et on padde avec des zéros (null-terminator)
-      byteData.setUint8(offset + i, i < nameBytes.length && i < 31 ? nameBytes[i] : 0);
-    }
-    offset += 32;
-
-    // 3. stage_role (2 = BOOSTER, 3 = SUSTAINER)
-    byteData.setUint8(offset, _parseInt(stageRole, this.stageRole)); 
-    offset += 1;
-
-    // 4. debug_mode
-    byteData.setUint8(offset, debugMode ? 1 : 0); 
-    offset += 1;
-
-    // 5. fire_attempt_delay_ms
-    byteData.setUint32(offset, _parseInt(fireAttemptDelayMs, this.fireAttemptDelayMs), Endian.little); 
-    offset += 4;
-
-    // 6. pyros_arming_failsafe_ms
-    byteData.setUint32(offset, _parseInt(pyrosArmingFailsafeMs, this.pyrosArmingFailsafeMs), Endian.little); 
-    offset += 4;
-
-    // 7. min_needed_pyro_nb
-    byteData.setUint8(offset, _parseInt(minNeededPyroNb, this.minNeededPyroNb)); 
-    offset += 1;
-
-    // 8. pyro_roles[4]
-    for (int i = 0; i < 4; i++) {
-      byteData.setUint8(offset + i, i < pyroRoles.length ? pyroRoles[i] : 0);
-    }
-    offset += 4;
-
-    // 9. acc_z_launch_threshold
-    byteData.setFloat32(offset, _parseDouble(accZLaunchThreshold, this.accZLaunchThreshold), Endian.little); 
-    offset += 4;
-
-    // 10. boost_phase_v_threshold
-    byteData.setFloat32(offset, _parseDouble(boostPhaseVThreshold, this.boostPhaseVThreshold), Endian.little); 
-    offset += 4;
-
-    // 11. apogee_detect_v_threshold
-    byteData.setFloat32(offset, _parseDouble(apogeeDetectVThreshold, this.apogeeDetectVThreshold), Endian.little); 
-    offset += 4;
-
-    // 12. landing_detect_v_threshold
-    byteData.setFloat32(offset, _parseDouble(landingDetectVThreshold, this.landingDetectVThreshold), Endian.little); 
-    offset += 4;
-
-    // 13. landing_detect_threshold_ms
-    byteData.setUint32(offset, _parseInt(landingDetectThresholdMs, this.landingDetectThresholdMs), Endian.little); 
-    offset += 4;
-
-    // 14. apogee_failsafe_ms
-    byteData.setUint32(offset, _parseInt(apogeeFailsafeMs, this.apogeeFailsafeMs), Endian.little); 
-    offset += 4;
-
-    // 15. main_deploy_altitude_threshold_m
-    byteData.setFloat32(offset, _parseDouble(mainDeployAltitudeThresholdM, this.mainDeployAltitudeThresholdM), Endian.little); 
-    offset += 4;
-
-    // 16. drogue_fire_attempt_max_nb
-    byteData.setUint8(offset, _parseInt(drogueFireAttemptMaxNb, this.drogueFireAttemptMaxNb)); 
-    offset += 1;
-
-    // 17. main_fire_attempt_max_nb
-    byteData.setUint8(offset, _parseInt(mainFireAttemptMaxNb, this.mainFireAttemptMaxNb)); 
-    offset += 1;
-
-    // 18. enable_buzzer
-    byteData.setUint8(offset, enableBuzzer ? 1 : 0); 
-    offset += 1;
-
-    // 19. buzzer_report_tone_hz
-    byteData.setUint16(offset, _parseInt(buzzerReportToneHz, this.buzzerReportToneHz), Endian.little); 
-    offset += 2;
-
-    // 20. idefix_frequency_hz
-    byteData.setUint32(offset, _parseInt(idefixFrequencyHz, this.idefixFrequencyHz), Endian.little); 
-    offset += 4;
-
-    await btService.sendBinary(0x02, byteData.buffer.asUint8List());
+    await btService.sendBinary(0x02, newConfig.toBytes());
     ConsoleService().log('Envoi de la nouvelle configuration ...');
 
-    await Future.delayed(const Duration(milliseconds: 200)); 
+    await Future.delayed(const Duration(milliseconds: 200));
 
     await btService.sendBinary(0x03, [0x04]);
     ConsoleService().log('Demande de sauvegarde Flash et de redémarrage envoyée.');
   }
 
   Future<void> resetOdbSettingsToDefault() async {
-    if (!hasConnection) {
-      ConsoleService().log('Aucune connexion Bluetooth avec l\'ODB');
-      return;
-    }
-    
+    if (!hasConnection) { ConsoleService().log('Aucune connexion Bluetooth avec l\'ODB'); return; }
     await btService.sendBinary(0x03, [0x05]);
     ConsoleService().log('Demande de réinitialisation de la configuration envoyée.');
   }
 
   Future<void> resetOdbFlights() async {
-    if (!hasConnection) {
-      ConsoleService().log('Aucune connexion Bluetooth avec l\'ODB');
-      return;
-    }
-    
+    if (!hasConnection) { ConsoleService().log('Aucune connexion Bluetooth avec l\'ODB'); return; }
     await btService.sendBinary(0x03, [0x09]);
     ConsoleService().log('Demande de réinitialisation des données de vol envoyée.');
   }
 
   Future<void> resetOdbMemory() async {
-    if (!hasConnection) {
-      ConsoleService().log('Aucune connexion Bluetooth avec l\'ODB');
-      return;
-    }
-
+    if (!hasConnection) { ConsoleService().log('Aucune connexion Bluetooth avec l\'ODB'); return; }
     await btService.sendBinary(0x03, [0x07]);
     ConsoleService().log('Demande de réinitialisation usine envoyée.');
   }
 
   Future<void> setReadyFlight() async {
-    if (!hasConnection) {
-      ConsoleService().log('Aucune connexion Bluetooth avec l\'ODB');
-      return;
-    }
-    
+    if (!hasConnection) { ConsoleService().log('Aucune connexion Bluetooth avec l\'ODB'); return; }
     await btService.sendBinary(0x03, [0x0A]);
     ConsoleService().log('Demande de mise en départ envoyée.');
   }
 
   Future<void> testArmingModule() async {
-    if (!hasConnection) {
-      ConsoleService().log('Aucune connexion Bluetooth avec l\'ODB');
-      return;
-    }
-    
+    if (!hasConnection) { ConsoleService().log('Aucune connexion Bluetooth avec l\'ODB'); return; }
     await btService.sendBinary(0x03, [0x0B]);
     ConsoleService().log('Demande de test du module d\'armement envoyée.');
   }
 
-  // ---------- EVENTS (Last flight stats) ----------
-  OdbStats? lastFlightStats;
-
   Future<void> requestLastFlightEvents() async {
-    if (!hasConnection) {
-      ConsoleService().log('Aucune connexion Bluetooth avec l\'ODB');
-      return;
-    }
+    if (!hasConnection) { ConsoleService().log('Aucune connexion Bluetooth avec l\'ODB'); return; }
     ConsoleService().log('Demande des événements du dernier vol...');
     await btService.sendBinary(0x03, [0x08]);
   }
 
   // ---------- PARSER ----------
+  
   void parseBinaryMessage(int type, List<int> payload) {
     if (_isDisposed) return;
-    final ByteData view = ByteData.sublistView(Uint8List.fromList(payload));
+    final bytes = Uint8List.fromList(payload);
 
     try {
       if (type == 0x01) { // MSG_TELEMETRY
-        int offset = 0;
-        
-        int versionMajor = view.getUint8(offset); offset += 1;
-        int versionMinor = view.getUint8(offset); offset += 1;
-        offset += 2;
-        odbFrameVersion = 'v$versionMajor.$versionMinor';
+        telemetry = OdbTelemetry.fromBytes(bytes);
 
-        if (versionMajor == 1 && versionMinor == 1) {
-          // --- Status ---
-          timeBootMs = view.getUint32(offset, Endian.little); offset += 4;
-          systemStates = view.getUint16(offset, Endian.little); offset += 2;
-          eventStates = view.getUint16(offset, Endian.little); offset += 2;
-          missionState = view.getUint8(offset); offset += 1;
-          vinMv = view.getUint16(offset, Endian.little); offset += 2;
-          batteryVoltage = vinMv / 1000.0;
-          
-          // --- IMU ---
-          roll = view.getFloat32(offset, Endian.little); offset += 4;
-          pitch = view.getFloat32(offset, Endian.little); offset += 4;
-          yaw = view.getFloat32(offset, Endian.little); offset += 4;
-          
-          imuAccX = view.getFloat32(offset, Endian.little); offset += 4;
-          imuAccY = view.getFloat32(offset, Endian.little); offset += 4;
-          imuAccZ = view.getFloat32(offset, Endian.little); offset += 4;
-          
-          imuGyroX = view.getFloat32(offset, Endian.little); offset += 4;
-          imuGyroY = view.getFloat32(offset, Endian.little); offset += 4;
-          imuGyroZ = view.getFloat32(offset, Endian.little); offset += 4;
-          
-          imuMagX = view.getFloat32(offset, Endian.little); offset += 4;
-          imuMagY = view.getFloat32(offset, Endian.little); offset += 4;
-          imuMagZ = view.getFloat32(offset, Endian.little); offset += 4;
-          
-          // --- Pressure & Temp ---
-          altitudeMslM = view.getFloat32(offset, Endian.little); offset += 4;
-          barometerPressure = view.getFloat32(offset, Endian.little); offset += 4;
-          temperature = view.getFloat32(offset, Endian.little); offset += 4;
-          
-          // --- High-G ---
-          accHighGX = view.getFloat32(offset, Endian.little); offset += 4;
-          accHighGY = view.getFloat32(offset, Endian.little); offset += 4;
-          accHighGZ = view.getFloat32(offset, Endian.little); offset += 4;
-          
-          // --- GPS ---
-          gpsFix = view.getUint8(offset); offset += 1;
-          gpsLat = view.getInt32(offset, Endian.little) / 10000000.0; offset += 4; // Format degE7
-          gpsLon = view.getInt32(offset, Endian.little) / 10000000.0; offset += 4; // Format degE7
-          gpsAlt = view.getInt32(offset, Endian.little) / 1000.0; offset += 4;     // Format mm -> m
-          gpsVelocity = view.getUint16(offset, Endian.little) / 100.0; offset += 2; // Format cm/s -> m/s
-          gpsCourse = view.getUint16(offset, Endian.little) / 100.0; offset += 2;   // Format cdeg -> deg
-          gpsSatellites = view.getUint8(offset); offset += 1;
-          
-          // --- SD Card ---
-          sdFree = view.getUint16(offset, Endian.little) / 100.0; offset += 2;
-
-          // --- Statistics ---
-          imuAccVertical = view.getFloat32(offset, Endian.little); offset += 4;
-          highGAccVertical = view.getFloat32(offset, Endian.little); offset += 4;
-          kalmanAltitudeM = view.getFloat32(offset, Endian.little); offset += 4;
-          kalmanVelocityMS = view.getFloat32(offset, Endian.little); offset += 4;
-          
-          radioState = (systemStates & (1 << 5)) != 0 ? RadioState.connected : RadioState.disconnected;
-          gpsSensorState = (systemStates & (1 << 8)) != 0 ? SensorState.ok : SensorState.error;
-          barometerSensorState = (systemStates & (1 << 7)) != 0 ? SensorState.ok : SensorState.error;
-          imuSensorState = (systemStates & (1 << 6)) != 0 ? SensorState.ok : SensorState.error;
-          accHighGSensorState = (systemStates & (1 << 9)) != 0 ? SensorState.ok : SensorState.error;
-          temperatureSensorState = (systemStates & (1 << 10)) != 0 ? SensorState.ok : SensorState.error;
-          sdSensorState = (systemStates & (1 << 11)) != 0 ? SensorState.ok : SensorState.error;
-          flashSensorState = (systemStates & (1 << 12)) != 0 ? SensorState.ok : SensorState.error;
-          btModuleState = (systemStates & (1 << 13)) != 0 ? SensorState.ok : SensorState.error;
-          idefixSensorState = (systemStates & (1 << 14)) != 0 ? SensorState.ok : SensorState.error;
-          
-          batterySensorState = batteryVoltage > 0 ? SensorState.ok : SensorState.error;
-          goodPowerState = batteryVoltage >= 5.0;
-          
-          pyroArmingModuleState = (systemStates & (1 << 4)) != 0 ? SensorState.ok : SensorState.error;
-          pyrosArmed = eventPyrosArmed;
-
-          bool pyro1Conn = (systemStates & (1 << 3)) != 0;
-          bool pyro1Fired = eventPyro1Fired;
-          pyros[0] = pyro1Conn && !pyro1Fired;
-
-          bool pyro2Conn = (systemStates & (1 << 2)) != 0;
-          bool pyro2Fired = eventPyro2Fired;
-          pyros[1] = pyro2Conn && !pyro2Fired;
-
-          bool pyro3Conn = (systemStates & (1 << 1)) != 0;
-          bool pyro3Fired = eventPyro3Fired;
-          pyros[2] = pyro3Conn && !pyro3Fired;
-
-          bool pyro4Conn = (systemStates & (1 << 0)) != 0;
-          bool pyro4Fired = eventPyro4Fired;
-          pyros[3] = pyro4Conn && !pyro4Fired;
-
-          _safeNotifyListeners();
-
+        // Version Verification
+        if (telemetry!.versionMajor != expectedProtocolMajor || telemetry!.versionMinor != expectedProtocolMinor) {
+           hasVersionMismatch = true;
+           versionMismatchMessage = 'Télémétrie incompatible.\nAvionique : v${telemetry!.versionMajor}.${telemetry!.versionMinor} | Application (Attendue) : v$expectedProtocolMajor.$expectedProtocolMinor';
+           _safeNotifyListeners();
+           return;
         } else {
-          ConsoleService().log('Erreur: Télémétrie v$versionMajor.$versionMinor non supportée.');
+           clearVersionMismatch();
         }
 
+        if (telemetry!.versionMajor != expectedProtocolMajor || telemetry!.versionMinor != expectedProtocolMinor) {
+           ConsoleService().log('Erreur: Télémétrie v${telemetry!.versionMajor}.${telemetry!.versionMinor} non supportée.');
+           return;
+        }
+        _safeNotifyListeners();
+
       } else if (type == 0x02) { // MSG_GENERIC_DATA
-        int offset = 0;
-        
         if (payload.length >= 4) {
-          int magicNumber = view.getUint32(offset, Endian.little); 
+          final magicNumber = ByteData.sublistView(bytes).getUint32(0, Endian.little); 
           
           if (magicNumber == 0x434F4E46) { // 'CONF'
-            offset += 4;
-            int versionMajor = view.getUint8(offset); offset += 1;
-            int versionMinor = view.getUint8(offset); offset += 1;
-            offset += 2;
-             
-            odbConfigFrameVersion = 'v$versionMajor.$versionMinor';
-             
-            if (versionMajor == 1 && versionMinor == 0) {
-              // 1. Extraction du nom
-              List<int> nameBytes = [];
-              for (int i = 0; i < 32; i++) {
-                int b = view.getUint8(offset + i);
-                if (b != 0) nameBytes.add(b);
-              }
-              odbName = utf8.decode(nameBytes);
-              offset += 32;
+            final tempConfig = OdbConfig.fromBytes(bytes);
 
-              // 2. Variables simples
-              stageRole = view.getUint8(offset); offset += 1;
-              debugMode = view.getUint8(offset) == 1; offset += 1;
-              fireAttemptDelayMs = view.getUint32(offset, Endian.little); offset += 4;
-              pyrosArmingFailsafeMs = view.getUint32(offset, Endian.little); offset += 4;
-              minNeededPyroNb = view.getUint8(offset); offset += 1;
-
-              // 3. Tableau des rôles pyros
-              pyroRoles = [];
-              for (int i = 0; i < 4; i++) {
-                pyroRoles.add(view.getUint8(offset + i));
-              }
-              offset += 4;
-
-              // 4. Seuils
-              accZLaunchThreshold = view.getFloat32(offset, Endian.little); offset += 4;
-              boostPhaseVThreshold = view.getFloat32(offset, Endian.little); offset += 4;
-              apogeeDetectVThreshold = view.getFloat32(offset, Endian.little); offset += 4;
-              landingDetectVThreshold = view.getFloat32(offset, Endian.little); offset += 4;
-              landingDetectThresholdMs = view.getUint32(offset, Endian.little); offset += 4;
-              apogeeFailsafeMs = view.getUint32(offset, Endian.little); offset += 4;
-              mainDeployAltitudeThresholdM = view.getFloat32(offset, Endian.little); offset += 4;
-              drogueFireAttemptMaxNb = view.getUint8(offset); offset += 1;
-              mainFireAttemptMaxNb = view.getUint8(offset); offset += 1;
-              enableBuzzer = view.getUint8(offset) == 1; offset += 1;
-              buzzerReportToneHz = view.getUint16(offset, Endian.little); offset += 2;
-              idefixFrequencyHz = view.getUint32(offset, Endian.little); offset += 4;
-
-              hasOdbConfig = true;
+            // Version Verification
+            if (tempConfig.versionMajor == expectedProtocolMajor && tempConfig.versionMinor == expectedProtocolMinor) {
+              config = tempConfig;
+              clearVersionMismatch();
               _safeNotifyListeners();
               ConsoleService().log('Configuration ODB lue et synchronisée avec succès !');
             } else {
-              ConsoleService().log('Erreur: Configuration ODB v$versionMajor.$versionMinor non supportée.');
+              hasVersionMismatch = true;
+              versionMismatchMessage = 'Configuration incompatible.\nAvionique : v${tempConfig.versionMajor}.${tempConfig.versionMinor} | Application (Attendue) : v$expectedProtocolMajor.$expectedProtocolMinor';
+              _safeNotifyListeners();
+            }
+            
+            if (tempConfig.versionMajor == expectedProtocolMajor && tempConfig.versionMinor == expectedProtocolMinor) {
+              config = tempConfig;
+              _safeNotifyListeners();
+              ConsoleService().log('Configuration ODB lue et synchronisée avec succès !');
+            } else {
+              ConsoleService().log('Erreur: Configuration ODB v${tempConfig.versionMajor}.${tempConfig.versionMinor} non supportée.');
             }
           } else {
             if (payload.length == 148) {
               try {
-                lastFlightStats = OdbStats.fromBytes(Uint8List.fromList(payload));
+                lastFlightStats = OdbStats.fromBytes(bytes);
                 _safeNotifyListeners();
                 ConsoleService().log('Événements du dernier vol reçus (${payload.length} octets).');
               } catch (e) {
@@ -886,9 +866,10 @@ class DataServiceManager with ChangeNotifier {
         } else {
           ConsoleService().log('Erreur: Payload MSG_GENERIC_DATA trop petit (${payload.length} octets).');
         }
+        
       } else if (type == 0x04) { // MSG_ACK
-        int cmdAcked = view.getUint8(0);
-        int status = view.getUint8(1);
+        int cmdAcked = bytes[0];
+        int status = bytes[1];
         ConsoleService().log('ACK Reçu (CMD: 0x${cmdAcked.toRadixString(16)}, Status: ${status == 1 ? "OK" : "FAIL"})');
       }
     } catch (e) {

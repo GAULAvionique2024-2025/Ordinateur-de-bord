@@ -6,6 +6,7 @@
  */
 
 #include "Drivers/bno055.h"
+#include "Systems/config.h"
 #include "Utils/utils.h"
 #include <math.h>
 
@@ -101,7 +102,7 @@ static int8_t BNO055_SetAccConfig(bno055_t *dev, bno055_acc_range_t range) {
         return -1;
     }
     
-    // Set range (les 2 bits de poids faible)
+    // Set range
     uint8_t new_acc_config = (current_acc_config & 0xFC) | range;
     if(BNO055_WriteReg(dev->hi2c, BNO055_REG_ACC_CONFIG, new_acc_config) != 0) {
         return -1;
@@ -115,7 +116,7 @@ static int8_t BNO055_SetAccConfig(bno055_t *dev, bno055_acc_range_t range) {
     return 0; // success
 }
 
-static int8_t BNO055_SetAxisRemap(bno055_t *dev, bno055_axis_profile_t profile) {
+static int8_t BNO055_SetAxisRemap(bno055_t *dev, acc_axis_profile_t profile) {
     uint8_t config = BNO055_REMAP_CONFIG[profile];
     uint8_t sign = BNO055_REMAP_SIGN[profile];
     if(BNO055_WriteReg(dev->hi2c, BNO055_REG_AXIS_MAP_CONFIG, config) != 0) {
@@ -212,6 +213,7 @@ bno055_error_t BNO055_Init(bno055_t *dev) {
     }
 
     // Set axis remap
+    dev->axis_profile = (acc_axis_profile_t)current_config.axis_profile;
     if(BNO055_SetAxisRemap(dev, dev->axis_profile) != 0) {
     	return BNO055_CONFIG_ERROR;
     }

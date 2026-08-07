@@ -11,7 +11,7 @@
 #include "Drivers/pyros.h"
 #include <stddef.h>
 
-#define PYRO_RISING_TIME_MS		250
+#define PYRO_RISING_TIME_MS		100
 #define PYRO_THRESHOLD_CONN 	1000
 #define PYRO_THRESHOLD_ARMED	1000
 

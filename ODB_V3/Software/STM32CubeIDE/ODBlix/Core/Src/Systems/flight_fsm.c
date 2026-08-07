@@ -27,7 +27,8 @@ extern TIM_HandleTypeDef htim5;
 extern pyro_t pyros[4];
 
 global_state_t current_global_state = STATE_PREFLIGHT;
-volatile inflight_substate_t current_substate = SUB_BOOST;
+volatile preflight_substate_t current_preflight_substate = STATE_STATIC_ORIENTED;
+volatile inflight_substate_t current_inflight_substate = SUB_BOOST;
 volatile bool is_ready_by_app = false;
 
 static uint32_t fire_timer = 0;
@@ -43,23 +44,30 @@ void FSM_Update(void) {
 	flight_duration = __HAL_TIM_GET_COUNTER(&htim5) / 1000; // Failsafe apogee timeout (us)
     switch(current_global_state) {
         case STATE_PREFLIGHT:
-            // Security : Continuity pyros, stability check and app unlock
-        	bool pyros_ok = (ODB_GetPyroStates(&flight_data) >= current_config.min_needed_pyro_nb);
-        	bool is_static = (fabs(flight_data.kalman_v) < current_config.landing_detect_v_threshold);
-        	if(pyros_ok && is_static) {
-                ODB_SetMissionState(&flight_data, STATE_ARMING_TEST);
-                current_global_state = STATE_ARMING_TEST;
-            }
-            break;
+        	switch(current_preflight_substate) {
+        		case STATE_STATIC_ORIENTED:
+        			// Security : Continuity pyros, stability check, orientation and app unlock
+					bool pyros_ok = (ODB_GetPyroStates(&flight_data) >= current_config.min_needed_pyro_nb);
+					bool is_static = (fabs(flight_data.kalman_v) < current_config.landing_detect_v_threshold);
+					bool is_oriented_up = flight_data.imu_acc_z > 9; // TODO: change this to a real value
+					if(pyros_ok && is_static && is_oriented_up) {
+						current_preflight_substate = STATE_ARMING_TEST;
+					}
+					break;
 
-        case STATE_ARMING_TEST:
-        	if((flight_data.system_states & FLAG_PYROS_ARMED_OK) != 0) {
-        	    if(is_ready_by_app) {
-        	        ODB_SetMissionState(&flight_data, STATE_ARMED);
-        	        current_global_state = STATE_ARMED;
-        	    }
+    			case STATE_ARMING_TEST:
+    				if((flight_data.system_states & FLAG_PYROS_ARMED_OK) != 0) {
+    					current_preflight_substate = STATE_WAITING_FLIGHT;
+    				}
+    				break;
+
+    			case STATE_WAITING_FLIGHT:
+					if(is_ready_by_app) {
+						ODB_SetMissionState(&flight_data, STATE_ARMED);
+						current_global_state = STATE_ARMED;
+					}
+					break;
         	}
-			break;
 
         case STATE_ARMED:
             if(flight_data.highg_acc_z > current_config.acc_z_launch_threshold) {
@@ -70,13 +78,13 @@ void FSM_Update(void) {
                 HAL_TIM_Base_Start(&htim5);      	// Start timer to measure time since launch
                 __HAL_TIM_SET_COUNTER(&htim5, 0);   // Reset timer counter
                 current_global_state = STATE_INFLIGHT;
-                current_substate = SUB_BOOST;
+                current_inflight_substate = SUB_BOOST;
             }
             break;
 
         case STATE_INFLIGHT:
             // Handle substate transitions based on events
-            switch(current_substate) {
+            switch(current_inflight_substate) {
                 case SUB_BOOST:
                     // Wait for boost phase detection
                 	if(flight_data.kalman_v >= current_config.boost_phase_v_threshold) {
@@ -84,7 +92,7 @@ void FSM_Update(void) {
                 	    if(flight_stats.mach_lock.start_time_ms == 0) {
                 	        flight_stats.mach_lock.start_time_ms = HAL_GetTick();
                 	    }
-                	    current_substate = SUB_FAST;
+                	    current_inflight_substate = SUB_FAST;
                 	}
                     break;
 
@@ -93,7 +101,7 @@ void FSM_Update(void) {
 	                if(flight_duration > current_config.pyros_arming_failsafe_ms || flight_data.kalman_v < current_config.boost_phase_v_threshold) {
 						flight_stats.mach_lock.activated = false;
 						flight_stats.mach_lock.end_time_ms = HAL_GetTick();
-						current_substate = SUB_COAST;
+						current_inflight_substate = SUB_COAST;
 					}
                     break;
 
@@ -102,7 +110,7 @@ void FSM_Update(void) {
                 	if(current_config.stage_role == 3 && !sustainer_ignited && flight_data.highg_acc_z > current_config.acc_z_launch_threshold) {
                 		// cyclic inflight substate for sustainer
                 		sustainer_ignited = true;
-						current_substate = SUB_BOOST;
+						current_inflight_substate = SUB_BOOST;
 						break;
 					}
 
@@ -120,7 +128,7 @@ void FSM_Update(void) {
 							flight_stats.apogee.time_ms = HAL_GetTick();
 						}
 
-						current_substate = SUB_DROGUE;
+						current_inflight_substate = SUB_DROGUE;
 						fire_timer = 0;
 						fire_attempt_count = 0;
 						backup_active = false;
@@ -182,7 +190,7 @@ void FSM_Update(void) {
 					}
 
 					if(flight_data.kalman_z <= current_config.main_deploy_altitude_threshold_m) {
-						current_substate = SUB_MAIN;
+						current_inflight_substate = SUB_MAIN;
 						fire_timer = 0;
 						fire_attempt_count = 0;
 						backup_active = false;
@@ -243,7 +251,7 @@ void FSM_Update(void) {
 						if(HAL_GetTick() - landing_timer > current_config.landing_detect_threshold_ms) {
 							Pyro_Arming(&system_measurements, false, false);
 
-							current_substate = SUB_LANDED;
+							current_inflight_substate = SUB_LANDED;
 						}
 					} else {
 						landing_timer = 0;

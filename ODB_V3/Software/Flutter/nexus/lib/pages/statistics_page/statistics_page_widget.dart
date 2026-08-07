@@ -944,7 +944,7 @@ class _ImuMetricsCard extends StatelessWidget {
                         ),
                         Text(
                           (connected && data.imuSensorState == SensorState.ok)
-                              ? 'Z: ${data.imuAccZ.toStringAsFixed(2)} m/s²'
+                              ? 'Y: ${data.imuAccY.toStringAsFixed(2)} m/s²'
                               : '—',
                           style:
                               FlutterFlowTheme.of(context).bodyMedium.override(
@@ -2010,30 +2010,6 @@ class _BottomMetricsGrid extends StatelessWidget {
                       ),
                       Text(
                         'hPa',
-                        style: FlutterFlowTheme.of(context).bodySmall.override(
-                              font: GoogleFonts.inter(
-                                fontWeight: FlutterFlowTheme.of(context)
-                                    .bodySmall
-                                    .fontWeight,
-                                fontStyle: FlutterFlowTheme.of(context)
-                                    .bodySmall
-                                    .fontStyle,
-                              ),
-                              color: FlutterFlowTheme.of(context).secondaryText,
-                              letterSpacing: 0.0,
-                              fontWeight: FlutterFlowTheme.of(context)
-                                  .bodySmall
-                                  .fontWeight,
-                              fontStyle: FlutterFlowTheme.of(context)
-                                  .bodySmall
-                                  .fontStyle,
-                            ),
-                      ),
-                      Text(
-                        (connected &&
-                                data.barometerSensorState == SensorState.ok)
-                            ? '${data.barometerAlt.toStringAsFixed(2)} m'
-                            : '—',
                         style: FlutterFlowTheme.of(context).bodySmall.override(
                               font: GoogleFonts.inter(
                                 fontWeight: FlutterFlowTheme.of(context)

@@ -8,6 +8,7 @@
 #ifndef INC_DRIVERS_BNO055_H_
 #define INC_DRIVERS_BNO055_H_
 
+#include "Protocols/config_protocol.h"
 #include "stm32f4xx_hal.h"
 #include <stdint.h>
 #include <stdbool.h>
@@ -57,17 +58,6 @@ typedef enum {
     BNO055_PWR_MODE_SUSPEND     = 0x02  // All sensors disabled, lowest power consumption
 } bno055_pwr_mode_t;
 
-typedef enum {
-    BNO055_AXIS_P0 = 0, // Default: X forward, Y left, Z up
-    BNO055_AXIS_P1,     // On its side, rotated 90°
-    BNO055_AXIS_P2,     // On its side, rotated 180°
-    BNO055_AXIS_P3,     // On its side, rotated 270°
-    BNO055_AXIS_P4,     // Vertical, on the long side
-    BNO055_AXIS_P5,     // Vertical, on the short side
-    BNO055_AXIS_P6,     // Vertical, on the other long side
-    BNO055_AXIS_P7,     // Vertical, on the other short side
-} bno055_axis_profile_t;
-
 typedef struct {
     uint8_t data[22];
 } bno055_calib_profile_t;
@@ -99,7 +89,7 @@ typedef struct {
     uint16_t                rst_pin;
 
     bno055_op_mode_t 		op_mode;
-    bno055_axis_profile_t   axis_profile;
+    acc_axis_profile_t   	axis_profile;
     bno055_acc_range_t      acc_range;
 
     bno055_unit_accel_t     acc_unit;

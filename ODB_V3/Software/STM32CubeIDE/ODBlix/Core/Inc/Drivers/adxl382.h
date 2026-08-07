@@ -8,6 +8,7 @@
 #ifndef INC_DRIVERS_ADXL382_H_
 #define INC_DRIVERS_ADXL382_H_
 
+#include "Protocols/config_protocol.h"
 #include "Utils/utils.h"
 #include "stm32f4xx_hal.h"
 #include <stdint.h>
@@ -46,6 +47,7 @@ typedef struct {
     I2C_HandleTypeDef               *hi2c;
     adxl382_mode_t                  mode;
     adxl382_range_t                 range;
+    acc_axis_profile_t              axis_profile;
     coeff_poly3_t					x_axis_offset, y_axis_offset, z_axis_offset;
 
     uint8_t                         raw_buffer[8];	// Data stored by registers

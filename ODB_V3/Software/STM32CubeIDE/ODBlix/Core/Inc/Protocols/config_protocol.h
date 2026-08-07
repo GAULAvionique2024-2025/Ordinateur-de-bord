@@ -12,7 +12,7 @@
 
 /* === Protocol Versioning === */
 #define CONFIG_PROTOCOL_VERSION_MAJOR 1
-#define CONFIG_PROTOCOL_VERSION_MINOR 0
+#define CONFIG_PROTOCOL_VERSION_MINOR 1
 
 /* === Pyro Role === */
 #define PYRO_ROLES(X)			\
@@ -34,47 +34,64 @@ static const char* const PYRO_ROLES_LOOKUP[] = {
 	PYRO_ROLES(AS_STRING)
 };
 
+/* === Sensors === */
+typedef enum {
+    ACC_AXIS_PROFILE_P0 = 0, // Default: X forward, Y left, Z up
+	ACC_AXIS_PROFILE_P1,     // On its side, rotated 90°
+    ACC_AXIS_PROFILE_P2,     // On its side, rotated 180°
+    ACC_AXIS_PROFILE_P3,     // On its side, rotated 270°
+    ACC_AXIS_PROFILE_P4,     // Vertical, on the long side
+    ACC_AXIS_PROFILE_P5,     // Vertical, on the short side
+    ACC_AXIS_PROFILE_P6,     // Vertical, on the other long side
+    ACC_AXIS_PROFILE_P7,     // Vertical, on the other short side
+	ACC_AXIS_PROFILE_MAX
+} acc_axis_profile_t;
+
 /* === Configuration Structure === */
 typedef struct __attribute__((packed)) {
-	uint32_t 	magic_number;
+	uint32_t 			magic_number;
 
-	uint8_t  	version_major;
-	uint8_t  	version_minor;
-	uint16_t 	payload_size;
+	uint8_t  			version_major;
+	uint8_t  			version_minor;
+	uint16_t 			payload_size;
 
     // Profile
-    char 		odb_name[32];				// max 12 char
+    char 				odb_name[32];				// max 12 char
+
     // Stage
-    uint8_t 	stage_role;         		// 2 = BOOSTER, 3 = SUSTAINER
-    uint8_t 	debug_mode;
+    uint8_t 			stage_role;         		// 2 = BOOSTER, 3 = SUSTAINER
+    uint8_t 			debug_mode;
+
+    // Sensors
+    acc_axis_profile_t	axis_profile;
 
     // Pyros
-    uint32_t 	fire_attempt_delay_ms;
-    uint32_t 	pyros_arming_failsafe_ms;
-    uint8_t 	min_needed_pyro_nb;
-    uint8_t 	pyro_roles[4];
+    uint32_t 			fire_attempt_delay_ms;
+    uint32_t 			pyros_arming_failsafe_ms;
+    uint8_t 			min_needed_pyro_nb;
+    uint8_t 			pyro_roles[4];
 
     // Phase
-    float 		acc_z_launch_threshold;
-    float 		boost_phase_v_threshold;
-    float 		apogee_detect_v_threshold;
-    float 		landing_detect_v_threshold;
-    uint32_t 	landing_detect_threshold_ms;
-    uint32_t 	apogee_failsafe_ms;
+    float 				acc_z_launch_threshold;
+    float 				boost_phase_v_threshold;
+    float 				apogee_detect_v_threshold;
+    float 				landing_detect_v_threshold;
+    uint32_t 			landing_detect_threshold_ms;
+    uint32_t 			apogee_failsafe_ms;
 
     // Parachute
-    float 		main_deploy_altitude_threshold_m;
-    uint8_t 	drogue_fire_attempt_max_nb;
-    uint8_t 	main_fire_attempt_max_nb;
+    float 				main_deploy_altitude_threshold_m;
+    uint8_t 			drogue_fire_attempt_max_nb;
+    uint8_t 			main_fire_attempt_max_nb;
 
     // Buzzer
-    uint8_t 	enable_buzzer;
-    uint16_t 	buzzer_report_tone_hz;
+    uint8_t 			enable_buzzer;
+    uint16_t 			buzzer_report_tone_hz;
 
     // IdeFIX
-    uint32_t 	idefix_frequency_hz;
+    uint32_t 			idefix_frequency_hz;
 
-    // TOTAL 92
+    // TOTAL 93
 } odb_config_t;
 #define CONFIG_DATA_SIZE sizeof(odb_config_t)
 

@@ -28,6 +28,9 @@ const odb_config_t default_config = {
     .stage_role = 2,
     .debug_mode = 1,
 
+	// Sensors
+	.axis_profile = 0,
+
     // Pyros
     .fire_attempt_delay_ms = 250,
     .pyros_arming_failsafe_ms = 40000,
@@ -43,7 +46,7 @@ const odb_config_t default_config = {
     .acc_z_launch_threshold = 29.42f, 				// m/s2 (3.0G)
     .boost_phase_v_threshold = 100.0f,				// m/s
     .apogee_detect_v_threshold = -2.0f,				// m/s
-    .landing_detect_v_threshold = 0.5f,				// m/s
+    .landing_detect_v_threshold = 1.0f,				// m/s
     .landing_detect_threshold_ms = 10000,			// ms
     .apogee_failsafe_ms = 60000,					// ms
 
@@ -77,6 +80,11 @@ static config_error_t Config_Validate(const odb_config_t* new_config) {
     	/* Validate Stage Role */
 		if(new_config->stage_role < CONFIG_STAGE_ROLE_MIN || new_config->stage_role > CONFIG_STAGE_ROLE_MAX) {
 			return CONFIG_ERR_STAGE_ROLE;
+		}
+
+		/* Validate Profile Axis */
+		if(new_config->stage_role < ACC_AXIS_PROFILE_P0 || new_config->stage_role > ACC_AXIS_PROFILE_MAX) {
+			return CONFIG_ERR_PROFILE_AXIS;
 		}
 
 		/* Validate Fail-safes & Timings */
@@ -125,15 +133,19 @@ static config_error_t Config_Validate(const odb_config_t* new_config) {
 
 void Config_Init(void) {
     odb_config_t temp_config;
-    if(W25Q_Read(&w25q, (uint8_t*)&temp_config, FLASH_CONFIG_START_ADDRESS, sizeof(odb_config_t)) == 0) {
-    	// Check magic number
+
+    if(W25Q_Read(&w25q, (uint8_t*)&temp_config, FLASH_CONFIG_START_ADDRESS, CONFIG_DATA_SIZE) == 0) {
         if(temp_config.magic_number == CONFIG_MAGIC_NUMBER) {
-            memcpy(&current_config, &temp_config, sizeof(odb_config_t));
-            return; // success
+            if(temp_config.version_major == CONFIG_PROTOCOL_VERSION_MAJOR && temp_config.version_minor == CONFIG_PROTOCOL_VERSION_MINOR && temp_config.payload_size == CONFIG_DATA_SIZE) {
+                memcpy(&current_config, &temp_config, CONFIG_DATA_SIZE);
+
+                return;
+            } else {
+                DEBUG_PRINTF("WARNING : Config version mismatch (Flash V%d.%d, FW V%d.%d). Loading defaults.\n", temp_config.version_major, temp_config.version_minor, CONFIG_PROTOCOL_VERSION_MAJOR, CONFIG_PROTOCOL_VERSION_MINOR);
+            }
         }
     }
 
-    // No valid config found in flash, load defaults and save to flash
     Config_LoadDefaults();
     Config_SaveToFlash();
 }
@@ -148,7 +160,7 @@ int8_t Config_SaveToFlash(void) {
     	return -1; // failed
     }
 
-    if(W25Q_WritePage(&w25q, (uint8_t*)&current_config, FLASH_CONFIG_START_ADDRESS, sizeof(odb_config_t)) != 0) {
+    if(W25Q_WritePage(&w25q, (uint8_t*)&current_config, FLASH_CONFIG_START_ADDRESS, CONFIG_DATA_SIZE) != 0) {
         return -1; // failed
     }
 
@@ -156,7 +168,7 @@ int8_t Config_SaveToFlash(void) {
 }
 
 void Config_LoadDefaults(void) {
-    memcpy(&current_config, &default_config, sizeof(odb_config_t));
+    memcpy(&current_config, &default_config, CONFIG_DATA_SIZE);
 }
 
 const odb_config_t* Config_Get(void) {

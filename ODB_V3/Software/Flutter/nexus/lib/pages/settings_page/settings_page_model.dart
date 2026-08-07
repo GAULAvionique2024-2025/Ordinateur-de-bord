@@ -9,6 +9,7 @@ class SettingsPageModel extends FlutterFlowModel<SettingsPageWidget> {
   // State field(s) for Expandable widget.
   late ExpandableController expandableExpandableController;
   late ExpandableController resetExpandableController;
+  late ExpandableController sensorsExpandableController;
   late ExpandableController pyrosExpandableController;
   late ExpandableController phaseExpandableController;
   late ExpandableController parachuteExpandableController;
@@ -23,6 +24,7 @@ class SettingsPageModel extends FlutterFlowModel<SettingsPageWidget> {
   void dispose() {
     expandableExpandableController.dispose();
     resetExpandableController.dispose();
+    sensorsExpandableController.dispose();
     pyrosExpandableController.dispose();
     phaseExpandableController.dispose();
     parachuteExpandableController.dispose();

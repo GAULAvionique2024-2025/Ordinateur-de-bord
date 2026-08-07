@@ -6,6 +6,10 @@
  */
 
 
+#include "Drivers/adxl382.h"
+#include "Systems/config.h"
+
+
 #define ADXL382_DEVID_AD_VAL      0xAD
 #define ADXL382_DEVID_MST_VAL     0x1D
 #define ADXL382_PART_ID_VAL       0x17
@@ -23,9 +27,6 @@
 #define ADXL382_REG_OP_MODE       0x26
 #define ADXL382_REG_DIG_EN        0x27
 #define ADXL382_REG_REG_RESET     0x2A
-
-
-#include "Drivers/adxl382.h"
 
 
 static int8_t ADXL382_ReadReg(I2C_HandleTypeDef *hi2c, uint8_t reg, uint8_t *data) {
@@ -90,6 +91,54 @@ static int8_t ADXL382_SetRange(adxl382_t *dev, adxl382_range_t range) {
     return 0; // success
 }
 
+static void ADXL382_RemapAxes(float *x, float *y, float *z, acc_axis_profile_t profile) {
+    float temp_x = *x;
+    float temp_y = *y;
+    float temp_z = *z;
+
+    switch (profile) {
+        case 0: // P0
+            break;
+        case 1: // P1
+            *x = -temp_y;
+            *y = temp_x;
+            *z = temp_z;
+            break;
+        case 2: // P2
+            *x = -temp_x;
+            *y = -temp_y;
+            *z = temp_z;
+            break;
+        case 3: // P3
+            *x = temp_y;
+            *y = -temp_x;
+            *z = temp_z;
+            break;
+        case 4: // P4
+            *x = -temp_z;
+            *y = temp_y;
+            *z = temp_x;
+            break;
+        case 5: // P5
+            *x = temp_z;
+            *y = -temp_x;
+            *z = -temp_y;
+            break;
+        case 6: // P6
+            *x = temp_z;
+            *y = temp_y;
+            *z = -temp_x;
+            break;
+        case 7: // P7
+            *x = -temp_z;
+            *y = -temp_x;
+            *z = -temp_y;
+            break;
+        default:
+            break;
+    }
+}
+
 
 int8_t ADXL382_SetMode(adxl382_t *dev, adxl382_mode_t mode) {
     uint8_t op_mode_reg = 0;
@@ -133,6 +182,9 @@ adxl382_error_t ADXL382_Init(adxl382_t *dev) {
     if(ADXL382_SetRange(dev, dev->range) != 0) {
 		return ADXL382_RANGE_ERROR;
 	}
+
+    // Set axis profile
+    dev->axis_profile = current_config.axis_profile;
 
     // Mode
 	if(ADXL382_SetMode(dev, dev->mode) != 0) {
@@ -198,6 +250,8 @@ void ADXL382_Compute(adxl382_t *dev, const float current_quat[4]) {
     accel[0] = acc_x_raw - offset_x;
     accel[1] = acc_y_raw - offset_y;
     accel[2] = acc_z_raw - offset_z;
+
+    ADXL382_RemapAxes(&accel[0], &accel[1], &accel[2], dev->axis_profile);
 
     dev->acc_x = accel[0] * GRAVITY_MS2;
     dev->acc_y = accel[1] * GRAVITY_MS2;
