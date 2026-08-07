@@ -77,6 +77,10 @@ static config_error_t Config_Validate(const odb_config_t* new_config) {
     }
 
     if(new_config->debug_mode == 0) {
+    	/* Validate ODB Name */
+    	if(new_config->odb_name[0] == ' ') {
+    		return CONFIG_ERR_ODB_NAME;
+    	}
     	/* Validate Stage Role */
 		if(new_config->stage_role < CONFIG_STAGE_ROLE_MIN || new_config->stage_role > CONFIG_STAGE_ROLE_MAX) {
 			return CONFIG_ERR_STAGE_ROLE;

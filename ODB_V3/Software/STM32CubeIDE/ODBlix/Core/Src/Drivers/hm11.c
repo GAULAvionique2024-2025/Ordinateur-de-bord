@@ -46,13 +46,26 @@ static bool HM11_SendATCommand(hm11_t *dev, const char *cmd, const char *expecte
 }
 
 static bool HM11_SetName(hm11_t *dev, const char *name) {
-    if(strlen(name) > 12) return false;
+    if(name == NULL) return false;
 
-    char cmd[20];
-    sprintf(cmd, "AT+NAME%s", name);
-    char expected[19];
-    sprintf(expected, "OK+Set:%s", name);
-    return HM11_SendATCommand(dev, cmd, expected);
+    char clean_name[13] = {0};
+    size_t clean_len = 0;
+
+    for(size_t i = 0; i < strlen(name) && clean_len < 12; i++) {
+        if(name[i] >= 32 && name[i] <= 126) {
+            clean_name[clean_len++] = name[i];
+        }
+    }
+
+    while(clean_len > 0 && clean_name[clean_len - 1] == ' ') {
+        clean_name[--clean_len] = '\0';
+    }
+    if(clean_len == 0) return false;
+
+    char cmd[24];
+    snprintf(cmd, sizeof(cmd), "AT+NAME%s", clean_name);
+
+    return HM11_SendATCommand(dev, cmd, "OK+Set");
 }
 
 

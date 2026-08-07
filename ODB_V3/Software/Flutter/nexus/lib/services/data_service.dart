@@ -686,6 +686,7 @@ class DataServiceManager with ChangeNotifier {
     telemetry = null;
     config = null;
     lastFlightStats = null;
+    clearVersionMismatch();
     _safeNotifyListeners();
   }
 
@@ -734,7 +735,7 @@ class DataServiceManager with ChangeNotifier {
     }
 
     final newConfig = OdbConfig(
-      odbName: odbName,
+      odbName: odbName.trim(),
       stageRole: _parseInt(stageRole, this.stageRole),
       debugMode: debugMode,
       axisProfile: _parseInt(axisProfile, this.axisProfile),
@@ -813,18 +814,14 @@ class DataServiceManager with ChangeNotifier {
 
         // Version Verification
         if (telemetry!.versionMajor != expectedProtocolMajor || telemetry!.versionMinor != expectedProtocolMinor) {
-           hasVersionMismatch = true;
-           versionMismatchMessage = 'Télémétrie incompatible.\nAvionique : v${telemetry!.versionMajor}.${telemetry!.versionMinor} | Application (Attendue) : v$expectedProtocolMajor.$expectedProtocolMinor';
-           _safeNotifyListeners();
-           return;
-        } else {
-           clearVersionMismatch();
+          hasVersionMismatch = true;
+          versionMismatchMessage = 'Télémétrie incompatible.\nAvionique : v${telemetry!.versionMajor}.${telemetry!.versionMinor} | Application (Attendue) : v$expectedProtocolMajor.$expectedProtocolMinor';
+          ConsoleService().log('Erreur: Télémétrie v${telemetry!.versionMajor}.${telemetry!.versionMinor} non supportée.');
+          _safeNotifyListeners();
+          return;
         }
 
-        if (telemetry!.versionMajor != expectedProtocolMajor || telemetry!.versionMinor != expectedProtocolMinor) {
-           ConsoleService().log('Erreur: Télémétrie v${telemetry!.versionMajor}.${telemetry!.versionMinor} non supportée.');
-           return;
-        }
+        clearVersionMismatch();
         _safeNotifyListeners();
 
       } else if (type == 0x02) { // MSG_GENERIC_DATA
