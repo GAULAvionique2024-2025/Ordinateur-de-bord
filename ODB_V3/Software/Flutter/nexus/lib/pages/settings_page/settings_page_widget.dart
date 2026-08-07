@@ -52,6 +52,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
   String _appVersion = '';
   String _buildNumber = '';
   String _lastHydratedConfigSignature = '';
+  bool _hasPendingTextEdits = false;
 
   @override
   void initState() {
@@ -186,7 +187,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
     }
 
     final configSignature = _buildOdbConfigSignature(data);
-    if (configSignature == _lastHydratedConfigSignature) {
+    if (configSignature == _lastHydratedConfigSignature || _hasPendingTextEdits) {
       return;
     }
 
@@ -858,8 +859,10 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
             maxLength: 12,
             controller: _odbNameController,
             enabled: enabled,
-            onChanged: (value) {
-              data.odbName = value;
+            onChanged: (_) {
+              safeSetState(() {
+                _hasPendingTextEdits = true;
+              });
             },
           ),
         ],
@@ -960,9 +963,10 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                 keyboardType: TextInputType.number,
                 controller: _pyroDelayController,
                 enabled: enabled,
-                onChanged: (value) {
-                  data.fireAttemptDelayMs =
-                      int.tryParse(value) ?? data.fireAttemptDelayMs;
+                onChanged: (_) {
+                  safeSetState(() {
+                    _hasPendingTextEdits = true;
+                  });
                 },
               ),
               _buildLabeledSettingField(
@@ -972,9 +976,10 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                 keyboardType: TextInputType.number,
                 controller: _pyroFailsafeController,
                 enabled: enabled,
-                onChanged: (value) {
-                  data.pyrosArmingFailsafeMs =
-                      int.tryParse(value) ?? data.pyrosArmingFailsafeMs;
+                onChanged: (_) {
+                  safeSetState(() {
+                    _hasPendingTextEdits = true;
+                  });
                 },
               ),
               _buildLabeledSettingField(
@@ -984,9 +989,10 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                 keyboardType: TextInputType.number,
                 controller: _minPyrosController,
                 enabled: enabled,
-                onChanged: (value) {
-                  data.minNeededPyroNb =
-                      int.tryParse(value) ?? data.minNeededPyroNb;
+                onChanged: (_) {
+                  safeSetState(() {
+                    _hasPendingTextEdits = true;
+                  });
                 },
               ),
             ].divide(const SizedBox(height: 12.0)),
@@ -1070,10 +1076,10 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                 ),
                 controller: _accLaunchController,
                 enabled: enabled,
-                onChanged: (value) {
-                  data.accZLaunchThreshold =
-                      double.tryParse(value.replaceAll(',', '.')) ??
-                      data.accZLaunchThreshold;
+                onChanged: (_) {
+                  safeSetState(() {
+                    _hasPendingTextEdits = true;
+                  });
                 },
               ),
               _buildLabeledSettingField(
@@ -1085,10 +1091,10 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                 ),
                 controller: _boostVoltageController,
                 enabled: enabled,
-                onChanged: (value) {
-                  data.boostPhaseVThreshold =
-                      double.tryParse(value.replaceAll(',', '.')) ??
-                      data.boostPhaseVThreshold;
+                onChanged: (_) {
+                  safeSetState(() {
+                    _hasPendingTextEdits = true;
+                  });
                 },
               ),
               _buildLabeledSettingField(
@@ -1100,10 +1106,10 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                 ),
                 controller: _apogeeVoltageController,
                 enabled: enabled,
-                onChanged: (value) {
-                  data.apogeeDetectVThreshold =
-                      double.tryParse(value.replaceAll(',', '.')) ??
-                      data.apogeeDetectVThreshold;
+                onChanged: (_) {
+                  safeSetState(() {
+                    _hasPendingTextEdits = true;
+                  });
                 },
               ),
               _buildLabeledSettingField(
@@ -1115,10 +1121,10 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                 ),
                 controller: _landingVoltageController,
                 enabled: enabled,
-                onChanged: (value) {
-                  data.landingDetectVThreshold =
-                      double.tryParse(value.replaceAll(',', '.')) ??
-                      data.landingDetectVThreshold;
+                onChanged: (_) {
+                  safeSetState(() {
+                    _hasPendingTextEdits = true;
+                  });
                 },
               ),
               _buildLabeledSettingField(
@@ -1128,9 +1134,10 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                 keyboardType: TextInputType.number,
                 controller: _landingDelayController,
                 enabled: enabled,
-                onChanged: (value) {
-                  data.landingDetectThresholdMs =
-                      int.tryParse(value) ?? data.landingDetectThresholdMs;
+                onChanged: (_) {
+                  safeSetState(() {
+                    _hasPendingTextEdits = true;
+                  });
                 },
               ),
               _buildLabeledSettingField(
@@ -1140,9 +1147,10 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                 keyboardType: TextInputType.number,
                 controller: _apogeeFailsafeController,
                 enabled: enabled,
-                onChanged: (value) {
-                  data.apogeeFailsafeMs =
-                      int.tryParse(value) ?? data.apogeeFailsafeMs;
+                onChanged: (_) {
+                  safeSetState(() {
+                    _hasPendingTextEdits = true;
+                  });
                 },
               ),
             ].divide(const SizedBox(height: 12.0)),
@@ -1187,11 +1195,10 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                 keyboardType: TextInputType.number,
                 controller: _idefixFrequencyController,
                 enabled: enabled,
-                onChanged: (value) {
-                  final parsed = int.tryParse(value);
-                  if (parsed == null) return;
-
-                  data.idefixFrequencyHz = parsed;
+                onChanged: (_) {
+                  safeSetState(() {
+                    _hasPendingTextEdits = true;
+                  });
                 },
               ),
             ],
@@ -1238,10 +1245,10 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                 ),
                 controller: _deployAltitudeController,
                 enabled: enabled,
-                onChanged: (value) {
-                  data.mainDeployAltitudeThresholdM =
-                      double.tryParse(value.replaceAll(',', '.')) ??
-                      data.mainDeployAltitudeThresholdM;
+                onChanged: (_) {
+                  safeSetState(() {
+                    _hasPendingTextEdits = true;
+                  });
                 },
               ),
               _buildLabeledSettingField(
@@ -1251,9 +1258,10 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                 keyboardType: TextInputType.number,
                 controller: _maxDrogueController,
                 enabled: enabled,
-                onChanged: (value) {
-                  data.drogueFireAttemptMaxNb =
-                      int.tryParse(value) ?? data.drogueFireAttemptMaxNb;
+                onChanged: (_) {
+                  safeSetState(() {
+                    _hasPendingTextEdits = true;
+                  });
                 },
               ),
               _buildLabeledSettingField(
@@ -1263,9 +1271,10 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                 keyboardType: TextInputType.number,
                 controller: _maxMainController,
                 enabled: enabled,
-                onChanged: (value) {
-                  data.mainFireAttemptMaxNb =
-                      int.tryParse(value) ?? data.mainFireAttemptMaxNb;
+                onChanged: (_) {
+                  safeSetState(() {
+                    _hasPendingTextEdits = true;
+                  });
                 },
               ),
             ].divide(const SizedBox(height: 12.0)),
@@ -1543,6 +1552,10 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                 ? () async {
                     await data.refreshOdb();
                     if (!context.mounted) return;
+                    safeSetState(() {
+                      _hasPendingTextEdits = false;
+                    });
+                    if (!context.mounted) return;
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                         content: Text(
@@ -1588,6 +1601,10 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                       idefixFrequencyHz: _idefixFrequencyController.text,
                       pyroRoles: _pyroRoleValues,
                     );
+                    if (!context.mounted) return;
+                    safeSetState(() {
+                      _hasPendingTextEdits = false;
+                    });
                     if (!context.mounted) return;
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Paramètres ODB envoyés')),
