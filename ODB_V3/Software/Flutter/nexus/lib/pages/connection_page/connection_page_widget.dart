@@ -184,7 +184,7 @@ class _ConnectionPageWidgetState extends State<ConnectionPageWidget> {
                 try {
                   await context.read<BluetoothServiceManager>().connect(device, dataService);
                 } catch (e) {
-                  if (mounted) {
+                  if (context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text('Erreur connexion: $e')),
                     );
@@ -291,7 +291,7 @@ class _ConnectionPageWidgetState extends State<ConnectionPageWidget> {
                             if (state != BluetoothAdapterState.on) {
                               _showBluetoothDisabledDialog();
                             } else {
-                              if(mounted) {
+                              if(context.mounted) {
                                 await context.read<BluetoothServiceManager>().refreshScan(timeout: const Duration(seconds: 15));
                               }
                             }

@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'dart:math';
 import 'dart:convert';
-import 'dart:typed_data';
 import 'package:nexus/services/bluetooth_service.dart';
 import 'package:nexus/services/console_service.dart';
 
@@ -23,7 +22,9 @@ class ByteCursor {
 
   List<int> readUint8Array(int length) {
     final list = <int>[];
-    for (int i = 0; i < length; i++) list.add(readUint8());
+    for (int i = 0; i < length; i++) {
+      list.add(readUint8());
+    }
     return list;
   }
 
@@ -45,7 +46,9 @@ class ByteBuilder {
   void writeFloat32(double v) { data.setFloat32(offset, v, Endian.little); offset += 4; }
 
   void writeUint8Array(List<int> v) {
-    for (var b in v) writeUint8(b);
+    for (var b in v) {
+      writeUint8(b);
+    }
   }
 
   void writeString(String str, int fixedLength) {
@@ -725,7 +728,7 @@ class DataServiceManager with ChangeNotifier {
         ConsoleService().log('Envoi bloqué : Conflit de version détecté.');
         return; 
       }
-      
+
       ConsoleService().log('Aucune connexion Bluetooth avec l\'ODB');
       return;
     }

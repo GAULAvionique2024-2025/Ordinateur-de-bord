@@ -2284,7 +2284,7 @@ class _BottomMetricsGrid extends StatelessWidget {
                     children: [
                       Text(
                         (connected && data.idefixSensorState == SensorState.ok)
-                            ? '${(data.idefixFrequencyHz / 1000000).toStringAsFixed(3)}'
+                            ? (data.idefixFrequencyHz / 1000000).toStringAsFixed(3)
                             : '—',
                         style:
                             FlutterFlowTheme.of(context).titleMedium.override(

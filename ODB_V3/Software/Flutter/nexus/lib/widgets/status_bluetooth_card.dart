@@ -11,11 +11,11 @@ class StatusBluetoothCard extends StatelessWidget {
   final List<Color>? gradientColors;
 
   const StatusBluetoothCard({
-    Key? key,
+    super.key,
     this.subtitle,
     this.icon,
     this.gradientColors,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
