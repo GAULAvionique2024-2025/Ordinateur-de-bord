@@ -645,21 +645,21 @@ class DataServiceManager with ChangeNotifier {
     switch (globalState) {
       case 0: // PREFLIGHT
         switch (subState) {
-          case 0: return 'PREFLIGHT (STATIC)';
-          case 1: return 'PREFLIGHT (PYROS TEST)';
-          case 2: return 'PREFLIGHT (READY)';
+          case 0: return 'PREFLIGHT (Static)';
+          case 1: return 'PREFLIGHT (Pyros Test)';
+          case 2: return 'PREFLIGHT (Ready)';
           default: return 'PREFLIGHT';
         }
       case 1: 
         return 'ARMED';
       case 2: // INFLIGHT
         switch (subState) {
-          case 0: return 'INFLIGHT (BOOST)';
-          case 1: return 'INFLIGHT (FAST)';
-          case 2: return 'INFLIGHT (COAST)';
-          case 3: return 'INFLIGHT (DROGUE)';
-          case 4: return 'INFLIGHT (MAIN)';
-          case 5: return 'INFLIGHT (LANDED)';
+          case 0: return 'INFLIGHT (Boost)';
+          case 1: return 'INFLIGHT (Fast)';
+          case 2: return 'INFLIGHT (Coast)';
+          case 3: return 'INFLIGHT (Drogue)';
+          case 4: return 'INFLIGHT (Main)';
+          case 5: return 'INFLIGHT (Landed)';
           default: return 'INFLIGHT';
         }
       case 3: 
