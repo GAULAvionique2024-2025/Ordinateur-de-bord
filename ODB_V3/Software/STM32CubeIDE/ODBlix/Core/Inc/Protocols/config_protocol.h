@@ -37,14 +37,14 @@ static const char* const PYRO_ROLES_LOOKUP[] = {
 /* === Sensors === */
 typedef enum {
     ACC_AXIS_PROFILE_P0 = 0, // Default: X forward, Y left, Z up
-	ACC_AXIS_PROFILE_P1,     // On its side, rotated 90°
-    ACC_AXIS_PROFILE_P2,     // On its side, rotated 180°
-    ACC_AXIS_PROFILE_P3,     // On its side, rotated 270°
-    ACC_AXIS_PROFILE_P4,     // Vertical, on the long side
-    ACC_AXIS_PROFILE_P5,     // Vertical, on the short side
-    ACC_AXIS_PROFILE_P6,     // Vertical, on the other long side
-    ACC_AXIS_PROFILE_P7,     // Vertical, on the other short side
-	ACC_AXIS_PROFILE_MAX
+    ACC_AXIS_PROFILE_P1,     // Horizontal, rotated 90° clockwise (Z up)
+    ACC_AXIS_PROFILE_P2,     // Horizontal, rotated 180° (Z up)
+    ACC_AXIS_PROFILE_P3,     // Horizontal, rotated 270° clockwise (Z up)
+    ACC_AXIS_PROFILE_P4,     // Vertical, rolled +90° (Right side up)
+    ACC_AXIS_PROFILE_P5,     // Vertical, pitched +90° (Front face forward)
+    ACC_AXIS_PROFILE_P6,     // Vertical, rolled -90° (Left side up)
+    ACC_AXIS_PROFILE_P7,     // Vertical, pitched -90° (Back face forward)
+    ACC_AXIS_PROFILE_MAX
 } acc_axis_profile_t;
 
 /* === Configuration Structure === */

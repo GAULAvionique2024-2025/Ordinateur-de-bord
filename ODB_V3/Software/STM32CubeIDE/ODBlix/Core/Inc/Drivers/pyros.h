@@ -18,6 +18,11 @@
 #include <stdbool.h>
 
 
+#define PYRO_THRESHOLD_CONN 	300
+#define PYRO_THRESHOLD_ARMED 	1000
+#define PYRO_RISING_TIME_MS		100
+
+
 typedef enum {
 	PYRO_OK = 0,
 	PYRO_INIT_ERROR = -1,
@@ -43,11 +48,14 @@ typedef struct {
 } pyro_t;
 
 
-pyros_state_t Pyro_Init(pyro_t *dev, system_measurements_t *measures);
+pyros_state_t Pyro_Init(pyro_t *dev);
 
+void Pyro_SetContinuity(bool enable);
+bool Pyro_IsContinuityActive(system_measurements_t *measures);
 pyros_state_t Pyro_Arming(system_measurements_t *measures, bool arming, bool is_test);
 bool Pyro_IsArmed(system_measurements_t *measures);
-pyros_state_t Pyro_Fire(pyro_t *dev, system_measurements_t *measures);
+pyros_state_t Pyro_StartFire(pyro_t *dev);
+void Pyro_StopFire(pyro_t *dev);
 
 pyro_t* Pyro_GetByRole(pyro_role_t role);
 

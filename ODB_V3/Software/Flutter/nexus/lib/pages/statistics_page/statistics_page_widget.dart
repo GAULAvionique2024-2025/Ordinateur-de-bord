@@ -444,12 +444,12 @@ class _TopMetricsGrid extends StatelessWidget {
                         height: 12.0,
                         decoration: BoxDecoration(
                           color: connected
-                            ? (data.batterySensorState == SensorState.ok
-                              ? (data.goodPowerState
-                                ? FlutterFlowTheme.of(context).success
-                                : FlutterFlowTheme.of(context).error)
-                              : FlutterFlowTheme.of(context).secondaryText)
-                            : FlutterFlowTheme.of(context).secondaryText,
+                              ? (data.batterySensorState == SensorState.ok
+                                  ? (data.goodPowerState
+                                      ? FlutterFlowTheme.of(context).success
+                                      : FlutterFlowTheme.of(context).error)
+                                  : FlutterFlowTheme.of(context).secondaryText)
+                              : FlutterFlowTheme.of(context).secondaryText,
                           shape: BoxShape.circle,
                         ),
                       ),
@@ -460,8 +460,8 @@ class _TopMetricsGrid extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        (connected && data.batterySensorState == SensorState.ok)
-                            ? '${data.batteryVoltage.toStringAsFixed(2)}V'
+                        connected && data.batterySensorState == SensorState.ok
+                            ? data.batteryVoltageDisplay
                             : '—',
                         style: FlutterFlowTheme.of(context).titleLarge.override(
                               font: GoogleFonts.interTight(
@@ -470,10 +470,11 @@ class _TopMetricsGrid extends StatelessWidget {
                                     .titleLarge
                                     .fontStyle,
                               ),
-                                color: connected && data.batterySensorState == SensorState.ok
+                              color: connected &&
+                                      data.batterySensorState == SensorState.ok
                                   ? (data.goodPowerState
-                                    ? FlutterFlowTheme.of(context).success
-                                    : FlutterFlowTheme.of(context).error)
+                                      ? FlutterFlowTheme.of(context).success
+                                      : FlutterFlowTheme.of(context).error)
                                   : FlutterFlowTheme.of(context).secondaryText,
                               letterSpacing: 0.0,
                               fontWeight: FontWeight.bold,
@@ -483,8 +484,8 @@ class _TopMetricsGrid extends StatelessWidget {
                             ),
                       ),
                       Text(
-                        (connected && data.batterySensorState == SensorState.ok)
-                            ? '${data.batteryPercent.toStringAsFixed(1)}%'
+                        connected && data.batterySensorState == SensorState.ok
+                            ? data.batteryPercentDisplay
                             : '—',
                         style: FlutterFlowTheme.of(context).bodySmall.override(
                               font: GoogleFonts.inter(
@@ -495,12 +496,13 @@ class _TopMetricsGrid extends StatelessWidget {
                                     .bodySmall
                                     .fontStyle,
                               ),
-                                color: connected && data.batterySensorState == SensorState.ok
+                              color: connected &&
+                                      data.batterySensorState == SensorState.ok
                                   ? (data.batteryPercent > 60
-                                    ? FlutterFlowTheme.of(context).primary
-                                    : (data.batteryPercent > 30
-                                      ? FlutterFlowTheme.of(context).warning
-                                      : FlutterFlowTheme.of(context).error))
+                                      ? FlutterFlowTheme.of(context).primary
+                                      : (data.batteryPercent > 30
+                                          ? FlutterFlowTheme.of(context).warning
+                                          : FlutterFlowTheme.of(context).error))
                                   : FlutterFlowTheme.of(context).secondaryText,
                               letterSpacing: 0.0,
                               fontWeight: FlutterFlowTheme.of(context)
@@ -512,8 +514,8 @@ class _TopMetricsGrid extends StatelessWidget {
                             ),
                       ),
                       Text(
-                        (connected && data.batterySensorState == SensorState.ok)
-                            ? '${data.batteryVoltageMax.toStringAsFixed(2)} V'
+                        connected && data.batterySensorState == SensorState.ok
+                            ? data.batteryVoltageMaxDisplay
                             : '—',
                         style: FlutterFlowTheme.of(context).bodySmall.override(
                               font: GoogleFonts.inter(
@@ -524,12 +526,13 @@ class _TopMetricsGrid extends StatelessWidget {
                                     .bodySmall
                                     .fontStyle,
                               ),
-                                color: connected && data.batterySensorState == SensorState.ok
+                              color: connected &&
+                                      data.batterySensorState == SensorState.ok
                                   ? (data.batteryPercent > 60
-                                    ? FlutterFlowTheme.of(context).primary
-                                    : (data.batteryPercent > 30
-                                      ? FlutterFlowTheme.of(context).warning
-                                      : FlutterFlowTheme.of(context).error))
+                                      ? FlutterFlowTheme.of(context).primary
+                                      : (data.batteryPercent > 30
+                                          ? FlutterFlowTheme.of(context).warning
+                                          : FlutterFlowTheme.of(context).error))
                                   : FlutterFlowTheme.of(context).secondaryText,
                               letterSpacing: 0.0,
                               fontWeight: FlutterFlowTheme.of(context)
@@ -554,11 +557,12 @@ class _TopMetricsGrid extends StatelessWidget {
                                     .bodySmall
                                     .fontStyle,
                               ),
-                                color: connected
-                                  ? ((data.batterySensorState == SensorState.ok &&
-                                      data.goodPowerState)
-                                    ? FlutterFlowTheme.of(context).success
-                                    : FlutterFlowTheme.of(context).error)
+                              color: connected
+                                  ? ((data.batterySensorState ==
+                                              SensorState.ok &&
+                                          data.goodPowerState)
+                                      ? FlutterFlowTheme.of(context).success
+                                      : FlutterFlowTheme.of(context).error)
                                   : FlutterFlowTheme.of(context).secondaryText,
                               letterSpacing: 0.0,
                               fontWeight: FontWeight.w600,
@@ -851,7 +855,7 @@ class _ImuMetricsCard extends StatelessWidget {
       ),
       child: Container(
         width: double.infinity,
-        height: 280.0,
+        height: 340.0,
         decoration: BoxDecoration(
           color: FlutterFlowTheme.of(context).secondaryBackground,
           borderRadius: BorderRadius.circular(16.0),
@@ -925,7 +929,7 @@ class _ImuMetricsCard extends StatelessWidget {
                         ),
                         Text(
                           (connected && data.imuSensorState == SensorState.ok)
-                              ? 'X: ${data.imuAccX.toStringAsFixed(2)} m/s²'
+                              ? data.imuAccXDisplay
                               : '—',
                           style:
                               FlutterFlowTheme.of(context).bodyMedium.override(
@@ -944,7 +948,7 @@ class _ImuMetricsCard extends StatelessWidget {
                         ),
                         Text(
                           (connected && data.imuSensorState == SensorState.ok)
-                              ? 'Y: ${data.imuAccY.toStringAsFixed(2)} m/s²'
+                              ? data.imuAccYDisplay
                               : '—',
                           style:
                               FlutterFlowTheme.of(context).bodyMedium.override(
@@ -963,7 +967,7 @@ class _ImuMetricsCard extends StatelessWidget {
                         ),
                         Text(
                           (connected && data.imuSensorState == SensorState.ok)
-                              ? 'Z: ${data.imuAccZ.toStringAsFixed(2)} m/s²'
+                              ? data.imuAccZDisplay
                               : '—',
                           style:
                               FlutterFlowTheme.of(context).bodyMedium.override(
@@ -1013,7 +1017,7 @@ class _ImuMetricsCard extends StatelessWidget {
                         ),
                         Text(
                           (connected && data.imuSensorState == SensorState.ok)
-                              ? 'X: ${data.imuGyroX.toStringAsFixed(2)} °/s'
+                              ? data.imuGyroXDisplay
                               : '—',
                           style:
                               FlutterFlowTheme.of(context).bodyMedium.override(
@@ -1032,7 +1036,7 @@ class _ImuMetricsCard extends StatelessWidget {
                         ),
                         Text(
                           (connected && data.imuSensorState == SensorState.ok)
-                              ? 'Y: ${data.imuGyroY.toStringAsFixed(2)} °/s'
+                              ? data.imuGyroYDisplay
                               : '—',
                           style:
                               FlutterFlowTheme.of(context).bodyMedium.override(
@@ -1051,7 +1055,7 @@ class _ImuMetricsCard extends StatelessWidget {
                         ),
                         Text(
                           (connected && data.imuSensorState == SensorState.ok)
-                              ? 'Z: ${data.imuGyroZ.toStringAsFixed(2)} °/s'
+                              ? data.imuGyroZDisplay
                               : '—',
                           style:
                               FlutterFlowTheme.of(context).bodyMedium.override(
@@ -1101,7 +1105,7 @@ class _ImuMetricsCard extends StatelessWidget {
                         ),
                         Text(
                           (connected && data.imuSensorState == SensorState.ok)
-                              ? 'X: ${data.imuMagX.toStringAsFixed(2)} µT'
+                              ? data.imuMagXDisplay
                               : '—',
                           style:
                               FlutterFlowTheme.of(context).bodyMedium.override(
@@ -1120,7 +1124,7 @@ class _ImuMetricsCard extends StatelessWidget {
                         ),
                         Text(
                           (connected && data.imuSensorState == SensorState.ok)
-                              ? 'Y: ${data.imuMagY.toStringAsFixed(2)} µT'
+                              ? data.imuMagYDisplay
                               : '—',
                           style:
                               FlutterFlowTheme.of(context).bodyMedium.override(
@@ -1139,7 +1143,7 @@ class _ImuMetricsCard extends StatelessWidget {
                         ),
                         Text(
                           (connected && data.imuSensorState == SensorState.ok)
-                              ? 'Z: ${data.imuMagZ.toStringAsFixed(2)} µT'
+                              ? data.imuMagZDisplay
                               : '—',
                           style:
                               FlutterFlowTheme.of(context).bodyMedium.override(
@@ -1198,7 +1202,68 @@ class _ImuMetricsCard extends StatelessWidget {
                           ),
                           Text(
                             (connected && data.imuSensorState == SensorState.ok)
-                                ? '${data.imuAccVertical.toStringAsFixed(2)} m/s²'
+                                ? data.imuAccVerticalDisplay
+                                : '—',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  font: GoogleFonts.inter(
+                                    fontWeight: FontWeight.w500,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .fontStyle,
+                                  ),
+                                  letterSpacing: 0.0,
+                                  fontWeight: FontWeight.w500,
+                                  fontStyle: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .fontStyle,
+                                ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ].divide(const SizedBox(width: 24.0)),
+                ),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 4.0),
+                            child: Text(
+                              'TEMP',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodySmall
+                                  .override(
+                                    font: GoogleFonts.inter(
+                                      fontWeight: FontWeight.w600,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .bodySmall
+                                          .fontStyle,
+                                    ),
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryText,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.w600,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .bodySmall
+                                        .fontStyle,
+                                  ),
+                            ),
+                          ),
+                          Text(
+                            (connected && data.imuSensorState == SensorState.ok)
+                                ? data.imuTempDisplay
                                 : '—',
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
@@ -1259,7 +1324,7 @@ class _ImuMetricsCard extends StatelessWidget {
                           ),
                           Text(
                             (connected && data.imuSensorState == SensorState.ok)
-                                ? '${data.pitch.toStringAsFixed(1)}°'
+                                ? data.pitchDisplay
                                 : '—',
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
@@ -1311,7 +1376,7 @@ class _ImuMetricsCard extends StatelessWidget {
                           ),
                           Text(
                             (connected && data.imuSensorState == SensorState.ok)
-                                ? '${data.roll.toStringAsFixed(1)}°'
+                                ? data.rollDisplay
                                 : '—',
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
@@ -1363,7 +1428,7 @@ class _ImuMetricsCard extends StatelessWidget {
                           ),
                           Text(
                             (connected && data.imuSensorState == SensorState.ok)
-                                ? '${data.yaw.toStringAsFixed(1)}°'
+                                ? data.yawDisplay
                                 : '—',
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
@@ -1480,7 +1545,7 @@ class _HighGMetricsCard extends StatelessWidget {
                         Text(
                           (connected &&
                                   data.accHighGSensorState == SensorState.ok)
-                              ? 'X: ${data.accHighGX.toStringAsFixed(2)} m/s²'
+                              ? data.highGAccXDisplay
                               : '—',
                           style:
                               FlutterFlowTheme.of(context).bodyMedium.override(
@@ -1500,7 +1565,7 @@ class _HighGMetricsCard extends StatelessWidget {
                         Text(
                           (connected &&
                                   data.accHighGSensorState == SensorState.ok)
-                              ? 'Y: ${data.accHighGY.toStringAsFixed(2)} m/s²'
+                              ? data.highGAccYDisplay
                               : '—',
                           style:
                               FlutterFlowTheme.of(context).bodyMedium.override(
@@ -1520,7 +1585,7 @@ class _HighGMetricsCard extends StatelessWidget {
                         Text(
                           (connected &&
                                   data.accHighGSensorState == SensorState.ok)
-                              ? 'Z: ${data.accHighGZ.toStringAsFixed(2)} m/s²'
+                              ? data.highGAccZDisplay
                               : '—',
                           style:
                               FlutterFlowTheme.of(context).bodyMedium.override(
@@ -1540,7 +1605,27 @@ class _HighGMetricsCard extends StatelessWidget {
                         Text(
                           (connected &&
                                   data.accHighGSensorState == SensorState.ok)
-                              ? 'ACC: ${data.highGAccVertical.toStringAsFixed(2)} m/s²'
+                              ? data.highGTempDisplay
+                              : '—',
+                          style:
+                              FlutterFlowTheme.of(context).bodyMedium.override(
+                                    font: GoogleFonts.inter(
+                                      fontWeight: FontWeight.w500,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontStyle,
+                                    ),
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.w500,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .fontStyle,
+                                  ),
+                        ),
+                        Text(
+                          (connected &&
+                                  data.accHighGSensorState == SensorState.ok)
+                              ? 'ACC: ${data.highGAccVerticalDisplay}'
                               : '—',
                           style:
                               FlutterFlowTheme.of(context).bodyMedium.override(
@@ -1661,7 +1746,7 @@ class _BottomMetricsGrid extends StatelessWidget {
                     children: [
                       Text(
                         (connected && data.sdSensorState == SensorState.ok)
-                            ? '${data.sdFree.toStringAsFixed(2)} GB libre'
+                            ? data.sdFreeDisplay
                             : '—',
                         style:
                             FlutterFlowTheme.of(context).titleMedium.override(
@@ -1772,8 +1857,8 @@ class _BottomMetricsGrid extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        (connected && data.gpsSensorState == SensorState.ok)
-                            ? '${data.gpsLat.toStringAsFixed(5)}°'
+                        connected && data.gpsSensorState == SensorState.ok
+                            ? data.gpsLatDisplay
                             : '—',
                         style: FlutterFlowTheme.of(context).bodySmall.override(
                               font: GoogleFonts.inter(
@@ -1790,8 +1875,8 @@ class _BottomMetricsGrid extends StatelessWidget {
                             ),
                       ),
                       Text(
-                        (connected && data.gpsSensorState == SensorState.ok)
-                            ? '${data.gpsLon.toStringAsFixed(5)}°'
+                        connected && data.gpsSensorState == SensorState.ok
+                            ? data.gpsLonDisplay
                             : '—',
                         style: FlutterFlowTheme.of(context).bodySmall.override(
                               font: GoogleFonts.inter(
@@ -1808,8 +1893,8 @@ class _BottomMetricsGrid extends StatelessWidget {
                             ),
                       ),
                       Text(
-                        (connected && data.gpsSensorState == SensorState.ok)
-                            ? 'Alt: ${data.gpsAlt.toStringAsFixed(0)} m'
+                        connected && data.gpsSensorState == SensorState.ok
+                            ? 'Alt: ${data.gpsAltDisplay}'
                             : '—',
                         style: FlutterFlowTheme.of(context).bodySmall.override(
                               font: GoogleFonts.inter(
@@ -1833,13 +1918,7 @@ class _BottomMetricsGrid extends StatelessWidget {
                       Text(
                         connected
                             ? (data.gpsSensorState == SensorState.ok
-                                ? (data.gpsFix == 0
-                                    ? 'No fix'
-                                    : data.gpsFix == 1
-                                        ? 'GPS fix'
-                                        : data.gpsFix == 2
-                                            ? 'Differential fix'
-                                            : 'Autre fix')
+                                ? data.gpsFixDisplay
                                 : 'No fix')
                             : '—',
                         style: FlutterFlowTheme.of(context).bodySmall.override(
@@ -1859,7 +1938,7 @@ class _BottomMetricsGrid extends StatelessWidget {
                       ),
                       Text(
                         connected && data.gpsSensorState == SensorState.ok
-                            ? '${data.gpsSatellites} satellites'
+                            ? data.gpsSatellitesDisplay
                             : '—',
                         style: FlutterFlowTheme.of(context).bodySmall.override(
                               font: GoogleFonts.inter(
@@ -1991,7 +2070,7 @@ class _BottomMetricsGrid extends StatelessWidget {
                       Text(
                         (connected &&
                                 data.barometerSensorState == SensorState.ok)
-                            ? data.barometerPressure.toStringAsFixed(2)
+                            ? data.pressureDisplay
                             : '—',
                         style:
                             FlutterFlowTheme.of(context).titleMedium.override(
@@ -2007,27 +2086,6 @@ class _BottomMetricsGrid extends StatelessWidget {
                                       .titleMedium
                                       .fontStyle,
                                 ),
-                      ),
-                      Text(
-                        'hPa',
-                        style: FlutterFlowTheme.of(context).bodySmall.override(
-                              font: GoogleFonts.inter(
-                                fontWeight: FlutterFlowTheme.of(context)
-                                    .bodySmall
-                                    .fontWeight,
-                                fontStyle: FlutterFlowTheme.of(context)
-                                    .bodySmall
-                                    .fontStyle,
-                              ),
-                              color: FlutterFlowTheme.of(context).secondaryText,
-                              letterSpacing: 0.0,
-                              fontWeight: FlutterFlowTheme.of(context)
-                                  .bodySmall
-                                  .fontWeight,
-                              fontStyle: FlutterFlowTheme.of(context)
-                                  .bodySmall
-                                  .fontStyle,
-                            ),
                       ),
                       Text(
                         (connected &&
@@ -2284,7 +2342,7 @@ class _BottomMetricsGrid extends StatelessWidget {
                     children: [
                       Text(
                         (connected && data.idefixSensorState == SensorState.ok)
-                            ? (data.idefixFrequencyHz / 1000000).toStringAsFixed(3)
+                            ? data.idefixFrequencyDisplay
                             : '—',
                         style:
                             FlutterFlowTheme.of(context).titleMedium.override(

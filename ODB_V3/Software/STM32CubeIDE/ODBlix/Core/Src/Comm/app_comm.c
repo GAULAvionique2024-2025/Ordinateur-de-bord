@@ -42,7 +42,7 @@ static void AppComm_SendFrame(hm11_t *hm11_dev, app_msg_type_t type, const uint8
 }
 
 void AppComm_SendTelemetry(hm11_t *hm11_dev, const odb_data_t *data) {
-    AppComm_SendFrame(hm11_dev, MSG_TELEMETRY, (const uint8_t*)data, sizeof(odb_data_t));
+    AppComm_SendFrame(hm11_dev, MSG_TELEMETRY, (const uint8_t*)data, ODB_DATA_SIZE);
 }
 
 static void AppComm_SendAck(hm11_t *hm11_dev, app_cmd_id_t cmd, uint8_t status) {
@@ -126,7 +126,9 @@ void AppComm_ProcessRx(hm11_t *hm11_dev) {
                     } else if(cmd == CMD_FIRE_PYRO) {
                         uint8_t pyro_idx = payload[1];
                         if(Pyro_IsArmed(&system_measurements) && pyro_idx < PYRO_MAX) {
-                            Pyro_Fire(&pyros[pyro_idx], &system_measurements);
+                        	Pyro_StartFire(&pyros[pyro_idx]);
+                        	HAL_Delay(PYRO_RISING_TIME_MS);
+                        	Pyro_StopFire(&pyros[pyro_idx]);
                             AppComm_SendAck(hm11_dev, CMD_FIRE_PYRO, 1);
                         } else {
                             AppComm_SendAck(hm11_dev, CMD_FIRE_PYRO, 0);
@@ -181,6 +183,7 @@ void AppComm_ProcessRx(hm11_t *hm11_dev) {
 						AppComm_SendAck(hm11_dev, CMD_SET_READY_FLIGHT, 1);
 					} else if(cmd == CMD_TEST_ARMING_MODULE) {
 						bool error = false;
+						// Arming module
 						if(Pyro_Arming(&system_measurements, true, true) == PYRO_OK) {
 							flight_data.system_states |= FLAG_PYROS_ARMED_OK;
                         } else {
@@ -199,6 +202,41 @@ void AppComm_ProcessRx(hm11_t *hm11_dev) {
                         } else {
                         	AppComm_SendAck(hm11_dev, CMD_TEST_ARMING_MODULE, 0);
                         }
+					} else if(cmd == CMD_TEST_PYROS) {
+						uint8_t pyros_connected = 0;
+						bool check_failed = false;
+						const uint32_t FLAG_PYRO_CONN[PYRO_MAX] = {FLAG_PYRO1_CONN, FLAG_PYRO2_CONN, FLAG_PYRO3_CONN, FLAG_PYRO4_CONN};
+
+						Pyro_SetContinuity(true);
+						HAL_Delay(PYRO_RISING_TIME_MS);
+						SystemMeasurements_ComputePyros(&system_measurements);
+
+						for(int i = 0; i < PYRO_MAX; i++) {
+							pyro_role_t role = (pyro_role_t)current_config.pyro_roles[i];
+							bool is_physically_connected = (flight_data.system_states & FLAG_PYRO_CONN[i]) != 0;
+							if(is_physically_connected) {
+								if(role != PYRO_ROLE_NONE && Pyro_GetByRole(role) == &pyros[i]) {
+									DEBUG_PRINTF("INFOS : Pyro %d (%s) detected\n", i + 1, PYRO_ROLES_LOOKUP[role]);
+									pyros_connected++;
+								} else {
+									DEBUG_PRINTF("INFOS : Pyro %d connected, but doesn't have role set\n", i + 1);
+								}
+							} else {
+								if(role != PYRO_ROLE_NONE) {
+									DEBUG_PRINTF("WARNING : Pyro %d (%s) disconnected, but has role set\n", i + 1, PYRO_ROLES_LOOKUP[role]);
+									check_failed = true;
+								}
+							}
+						}
+
+						// Protection
+						if((pyros_connected >= current_config.min_needed_pyro_nb) && !check_failed) {
+							AppComm_SendAck(hm11_dev, CMD_TEST_PYROS, 1);
+							Pyro_SetContinuity(false);
+						} else {
+							DEBUG_PRINTF("ERROR : Not enough connected pyros (%d/%d) or config mismatch\n", pyros_connected, current_config.min_needed_pyro_nb);
+							AppComm_SendAck(hm11_dev, CMD_TEST_PYROS, 0);
+						}
 					}
                 }
                 CriticalLED_SetColor(&critical_led, NONE);

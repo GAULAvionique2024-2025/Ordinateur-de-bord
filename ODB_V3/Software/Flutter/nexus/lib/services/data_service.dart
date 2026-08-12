@@ -107,12 +107,24 @@ class OdbStats {
   final int flightTimeMs;
 
   OdbStats({
-    required this.flightId, required this.date, required this.pyroEvents,
-    required this.pyrosArm, required this.machLock, required this.maxAltitudeGps,
-    required this.maxAltitudeBaro, required this.maxAltitudeKalman, required this.apogee,
-    required this.mainDeploy, required this.drogueDeploy, required this.maxAscendSpeed,
-    required this.maxAscendAccel, required this.maxDescendSpeed, required this.maxDescendAccel,
-    required this.lastLat, required this.lastLon, required this.flightTimeMs,
+    required this.flightId,
+    required this.date,
+    required this.pyroEvents,
+    required this.pyrosArm,
+    required this.machLock,
+    required this.maxAltitudeGps,
+    required this.maxAltitudeBaro,
+    required this.maxAltitudeKalman,
+    required this.apogee,
+    required this.mainDeploy,
+    required this.drogueDeploy,
+    required this.maxAscendSpeed,
+    required this.maxAscendAccel,
+    required this.maxDescendSpeed,
+    required this.maxDescendAccel,
+    required this.lastLat,
+    required this.lastLon,
+    required this.flightTimeMs,
   });
 
   factory OdbStats.fromBytes(Uint8List bytes) {
@@ -129,13 +141,23 @@ class OdbStats {
     Metric readMetric() => Metric(reader.readUint8() != 0, reader.readFloat32(), reader.readUint32());
 
     return OdbStats(
-      flightId: flightId, date: date, pyroEvents: pyros,
-      pyrosArm: pyrosArm, machLock: machLock,
-      maxAltitudeGps: readMetric(), maxAltitudeBaro: readMetric(), maxAltitudeKalman: readMetric(),
-      apogee: readMetric(), mainDeploy: readMetric(), drogueDeploy: readMetric(),
-      maxAscendSpeed: readMetric(), maxAscendAccel: readMetric(),
-      maxDescendSpeed: readMetric(), maxDescendAccel: readMetric(),
-      lastLat: reader.readInt32(), lastLon: reader.readInt32(),
+      flightId: flightId,
+      date: date,
+      pyroEvents: pyros,
+      pyrosArm: pyrosArm,
+      machLock: machLock,
+      maxAltitudeGps: readMetric(),
+      maxAltitudeBaro: readMetric(),
+      maxAltitudeKalman: readMetric(),
+      apogee: readMetric(),
+      mainDeploy: readMetric(),
+      drogueDeploy: readMetric(),
+      maxAscendSpeed: readMetric(),
+      maxAscendAccel: readMetric(),
+      maxDescendSpeed: readMetric(),
+      maxDescendAccel: readMetric(),
+      lastLat: reader.readInt32(),
+      lastLon: reader.readInt32(),
       flightTimeMs: reader.readUint32(),
     );
   }
@@ -169,20 +191,39 @@ class OdbConfig {
   final int idefixFrequencyHz;
 
   OdbConfig({
-    this.magicNumber = 0x434F4E46, this.versionMajor = 1, this.versionMinor = 1, this.payloadSize = 93,
-    required this.odbName, required this.stageRole, required this.debugMode, required this.axisProfile,
-    required this.fireAttemptDelayMs, required this.pyrosArmingFailsafeMs, required this.minNeededPyroNb,
-    required this.pyroRoles, required this.accZLaunchThreshold, required this.boostPhaseVThreshold,
-    required this.apogeeDetectVThreshold, required this.landingDetectVThreshold, required this.landingDetectThresholdMs,
-    required this.apogeeFailsafeMs, required this.mainDeployAltitudeThresholdM, required this.drogueFireAttemptMaxNb,
-    required this.mainFireAttemptMaxNb, required this.enableBuzzer, required this.buzzerReportToneHz, required this.idefixFrequencyHz,
+    this.magicNumber = 0x434F4E46,
+    this.versionMajor = 1,
+    this.versionMinor = 1,
+    this.payloadSize = 93,
+    required this.odbName,
+    required this.stageRole,
+    required this.debugMode,
+    required this.axisProfile,
+    required this.fireAttemptDelayMs,
+    required this.pyrosArmingFailsafeMs,
+    required this.minNeededPyroNb,
+    required this.pyroRoles,
+    required this.accZLaunchThreshold,
+    required this.boostPhaseVThreshold,
+    required this.apogeeDetectVThreshold,
+    required this.landingDetectVThreshold,
+    required this.landingDetectThresholdMs,
+    required this.apogeeFailsafeMs,
+    required this.mainDeployAltitudeThresholdM,
+    required this.drogueFireAttemptMaxNb,
+    required this.mainFireAttemptMaxNb,
+    required this.enableBuzzer,
+    required this.buzzerReportToneHz,
+    required this.idefixFrequencyHz,
   });
 
   factory OdbConfig.fromBytes(Uint8List bytes) {
     final reader = ByteCursor(bytes);
     return OdbConfig(
-      magicNumber: reader.readUint32(), versionMajor: reader.readUint8(),
-      versionMinor: reader.readUint8(), payloadSize: reader.readUint16(),
+      magicNumber: reader.readUint32(),
+      versionMajor: reader.readUint8(),
+      versionMinor: reader.readUint8(),
+      payloadSize: reader.readUint16(),
       odbName: reader.readString(32),
       stageRole: reader.readUint8(),
       debugMode: reader.readUint8() == 1,
@@ -297,9 +338,11 @@ class OdbTelemetry {
   final double imuAccX, imuAccY, imuAccZ;
   final double imuGyroX, imuGyroY, imuGyroZ;
   final double imuMagX, imuMagY, imuMagZ;
+  final double imuTemp;
   
   final double altitudeMslM, pressurePa, tempCelsius;
   final double highgAccX, highgAccY, highgAccZ;
+  final double highgTemp;
   
   final int gpsFix;
   final double gpsLat, gpsLon, gpsAlt, gpsVelocity, gpsCourse;
@@ -308,8 +351,7 @@ class OdbTelemetry {
   final int sdSpace;
   final double imuAccVertical, highgAccVertical, kalmanZ, kalmanV;
 
-  OdbTelemetry.fromBytes(Uint8List bytes) 
-      : this._internal(ByteCursor(bytes));
+  OdbTelemetry.fromBytes(Uint8List bytes) : this._internal(ByteCursor(bytes));
 
   OdbTelemetry._internal(ByteCursor reader)
       : versionMajor = reader.readUint8(),
@@ -337,6 +379,7 @@ class OdbTelemetry {
         imuMagX = reader.readFloat32(),
         imuMagY = reader.readFloat32(),
         imuMagZ = reader.readFloat32(),
+        imuTemp = reader.readFloat32(),
         
         altitudeMslM = reader.readFloat32(),
         pressurePa = reader.readFloat32(),
@@ -345,6 +388,7 @@ class OdbTelemetry {
         highgAccX = reader.readFloat32(),
         highgAccY = reader.readFloat32(),
         highgAccZ = reader.readFloat32(),
+        highgTemp = reader.readFloat32(),
         
         gpsFix = reader.readUint8(),
         gpsLat = reader.readInt32() / 10000000.0,
@@ -360,8 +404,8 @@ class OdbTelemetry {
         highgAccVertical = reader.readFloat32(),
         kalmanZ = reader.readFloat32(),
         kalmanV = reader.readFloat32() {
-            reader.readUint8(); // End padding
-        }
+    reader.readUint8(); // End padding
+  }
 }
 
 enum SensorState { unknown, ok, error }
@@ -392,8 +436,10 @@ class DataServiceManager with ChangeNotifier {
   static const int eventFlagMainDeployed = 1 << 6;
   static const int eventFlagDrogueDeployed = 1 << 7;
   static const int eventFlagMachLockEnabled = 1 << 8;
-  static const int expectedProtocolMajor = 1;
-  static const int expectedProtocolMinor = 1;
+  static const int expectedConfigMajor = 1;
+  static const int expectedConfigMinor = 1;
+  static const int expectedTelemetryMajor = 1;
+  static const int expectedTelemetryMinor = 2;
 
   final BluetoothServiceManager btService;
   DataServiceManager(this.btService);
@@ -455,10 +501,12 @@ class DataServiceManager with ChangeNotifier {
   double get imuMagX => telemetry?.imuMagX ?? 0.0;
   double get imuMagY => telemetry?.imuMagY ?? 0.0;
   double get imuMagZ => telemetry?.imuMagZ ?? 0.0;
+  double get imuTemp => telemetry?.imuTemp ?? 0.0;
   
-  double get accHighGX => telemetry?.highgAccX ?? 0.0;
-  double get accHighGY => telemetry?.highgAccY ?? 0.0;
-  double get accHighGZ => telemetry?.highgAccZ ?? 0.0;
+  double get highGAccX => telemetry?.highgAccX ?? 0.0;
+  double get highGAccY => telemetry?.highgAccY ?? 0.0;
+  double get highGAccZ => telemetry?.highgAccZ ?? 0.0;
+  double get highgTemp => telemetry?.highgTemp ?? 0.0;
   double get highGAccVertical => telemetry?.highgAccVertical ?? 0.0;
   
   double get barometerPressure => telemetry?.pressurePa ?? 0.0;
@@ -551,9 +599,12 @@ class DataServiceManager with ChangeNotifier {
 
 
   // ---------- Formatters ----------
-  
+
   double get batteryPercent => batteryVoltageMax > 0 ? (batteryVoltage / batteryVoltageMax * 100).clamp(0, 100) : 0.0;
-  String get temperatureDisplay => temperature != 0.0 ? '${temperature.toStringAsFixed(1)}°C' : '—';
+  String get batteryVoltageDisplay => batteryVoltage > 0 ? '${batteryVoltage.toStringAsFixed(2)} V' : '—';
+  String get batteryVoltageMaxDisplay => batteryVoltageMax > 0 ? '${batteryVoltageMax.toStringAsFixed(2)} V' : '—';
+  String get batteryPercentDisplay => batteryVoltageMax > 0 ? '${batteryPercent.toStringAsFixed(1)}%' : '—';
+  String get temperatureDisplay => temperature != 0.0 ? '${temperature.toStringAsFixed(2)} °C' : '—';
   
   double pressureToAltitude(double pressureHpa, [double seaLevelHpa = 1013.25]) {
     if (pressureHpa <= 0 || seaLevelHpa <= 0) return 0.0;
@@ -586,13 +637,35 @@ class DataServiceManager with ChangeNotifier {
   }
 
   String get missionStateDisplay {
-    switch (missionState) {
-      case 0: return 'PREFLIGHT';
-      case 1: return 'ARMING TEST';
-      case 2: return 'ARMED';
-      case 3: return 'INFLIGHT';
-      case 4: return 'POSTFLIGHT';
-      default: return '—';
+    if (missionState < 0) return '—';
+
+    final globalState = (missionState >> 4) & 0x0F;
+    final subState = missionState & 0x0F;
+
+    switch (globalState) {
+      case 0: // PREFLIGHT
+        switch (subState) {
+          case 0: return 'PREFLIGHT (STATIC)';
+          case 1: return 'PREFLIGHT (PYROS TEST)';
+          case 2: return 'PREFLIGHT (READY)';
+          default: return 'PREFLIGHT';
+        }
+      case 1: 
+        return 'ARMED';
+      case 2: // INFLIGHT
+        switch (subState) {
+          case 0: return 'INFLIGHT (BOOST)';
+          case 1: return 'INFLIGHT (FAST)';
+          case 2: return 'INFLIGHT (COAST)';
+          case 3: return 'INFLIGHT (DROGUE)';
+          case 4: return 'INFLIGHT (MAIN)';
+          case 5: return 'INFLIGHT (LANDED)';
+          default: return 'INFLIGHT';
+        }
+      case 3: 
+        return 'POSTFLIGHT';
+      default: 
+        return '—';
     }
   }
 
@@ -622,13 +695,6 @@ class DataServiceManager with ChangeNotifier {
   bool get eventDrogueDeployed => (eventStates & eventFlagDrogueDeployed) != 0;
   bool get eventMachLockEnabled => (eventStates & eventFlagMachLockEnabled) != 0;
   
-  String get vinDisplay {
-    if (vinMv > 0) return '$vinMv mV';
-    if (batteryVoltage > 0) return '${(batteryVoltage * 1000).round()} mV';
-    return '—';
-  }
-
-  String get timeBootDisplay => timeBootMs > 0 ? '$timeBootMs ms' : '—';
   String get timeBootFormatted {
     if (timeBootMs <= 0) return '00h:00m:00s:00ms';
     final hours = timeBootMs ~/ 3600000;
@@ -638,7 +704,6 @@ class DataServiceManager with ChangeNotifier {
     return '${hours.toString().padLeft(2, '0')}h:${minutes.toString().padLeft(2, '0')}m:${seconds.toString().padLeft(2, '0')}s:${milliseconds.toString().padLeft(2, '0')}ms';
   }
 
-  String get attitudeDisplay => hasConnection ? 'R ${roll.toStringAsFixed(1)}°  P ${pitch.toStringAsFixed(1)}°  Y ${yaw.toStringAsFixed(1)}°' : '—';
   String get gpsVelocityDisplay => hasValidGpsFix ? '${gpsVelocity.toStringAsFixed(1)} m/s' : '—';
   String get gpsCourseDisplay => hasValidGpsFix ? '${gpsCourse.toStringAsFixed(0)}°' : '—';
   
@@ -647,12 +712,73 @@ class DataServiceManager with ChangeNotifier {
     return systemStateDisplay;
   }
 
-  String get imuAccDisplay => hasConnection && imuSensorState == SensorState.ok
-      ? 'X: ${imuAccX.toStringAsFixed(2)} | Y: ${imuAccY.toStringAsFixed(2)} | Z: ${imuAccZ.toStringAsFixed(2)} m/s²' : '—';
-  String get imuGyroDisplay => hasConnection && imuSensorState == SensorState.ok
-      ? 'X: ${imuGyroX.toStringAsFixed(2)} | Y: ${imuGyroY.toStringAsFixed(2)} | Z: ${imuGyroZ.toStringAsFixed(2)} °/s' : '—';
-  String get highGAccDisplay => hasConnection && accHighGSensorState == SensorState.ok
-      ? 'X: ${accHighGX.toStringAsFixed(2)} | Y: ${accHighGY.toStringAsFixed(2)} | Z: ${accHighGZ.toStringAsFixed(2)} m/s²' : '—';
+  String get imuTempDisplay => hasConnection && imuSensorState == SensorState.ok
+      ? '${imuTemp.toStringAsFixed(2)} °C'
+      : '—';
+  String get imuAccXDisplay => hasConnection && imuSensorState == SensorState.ok
+      ? 'X: ${imuAccX.toStringAsFixed(2)} m/s²'
+      : '—';
+  String get imuAccYDisplay => hasConnection && imuSensorState == SensorState.ok
+      ? 'Y: ${imuAccY.toStringAsFixed(2)} m/s²'
+      : '—';
+  String get imuAccZDisplay => hasConnection && imuSensorState == SensorState.ok
+      ? 'Z: ${imuAccZ.toStringAsFixed(2)} m/s²'
+      : '—';
+  String get imuGyroXDisplay =>
+      hasConnection && imuSensorState == SensorState.ok
+          ? 'X: ${imuGyroX.toStringAsFixed(2)} °/s'
+          : '—';
+  String get imuGyroYDisplay =>
+      hasConnection && imuSensorState == SensorState.ok
+          ? 'Y: ${imuGyroY.toStringAsFixed(2)} °/s'
+          : '—';
+  String get imuGyroZDisplay =>
+      hasConnection && imuSensorState == SensorState.ok
+          ? 'Z: ${imuGyroZ.toStringAsFixed(2)} °/s'
+          : '—';
+  String get imuMagXDisplay => hasConnection && imuSensorState == SensorState.ok
+      ? 'X: ${imuMagX.toStringAsFixed(2)} µT'
+      : '—';
+  String get imuMagYDisplay => hasConnection && imuSensorState == SensorState.ok
+      ? 'Y: ${imuMagY.toStringAsFixed(2)} µT'
+      : '—';
+  String get imuMagZDisplay => hasConnection && imuSensorState == SensorState.ok
+      ? 'Z: ${imuMagZ.toStringAsFixed(2)} µT'
+      : '—';
+  String get pitchDisplay => hasConnection && imuSensorState == SensorState.ok
+      ? '${pitch.toStringAsFixed(1)}°'
+      : '—';
+  String get rollDisplay => hasConnection && imuSensorState == SensorState.ok
+      ? '${roll.toStringAsFixed(1)}°'
+      : '—';
+  String get yawDisplay => hasConnection && imuSensorState == SensorState.ok
+      ? '${yaw.toStringAsFixed(1)}°'
+      : '—';
+
+  String get highGAccXDisplay =>
+      hasConnection && accHighGSensorState == SensorState.ok
+          ? 'X: ${highGAccX.toStringAsFixed(2)} m/s²'
+          : '—';
+  String get highGAccYDisplay =>
+      hasConnection && accHighGSensorState == SensorState.ok
+          ? 'Y: ${highGAccY.toStringAsFixed(2)} m/s²'
+          : '—';
+  String get highGAccZDisplay =>
+      hasConnection && accHighGSensorState == SensorState.ok
+          ? 'Z: ${highGAccZ.toStringAsFixed(2)} m/s²'
+          : '—';
+  String get highGTempDisplay =>
+      hasConnection && accHighGSensorState == SensorState.ok
+          ? 'TEMP: ${highgTemp.toStringAsFixed(2)} °C'
+          : '—';
+
+  String get sdFreeDisplay => hasConnection && sdSensorState == SensorState.ok
+      ? '${sdFree.toStringAsFixed(2)} GB libre'
+      : '—';
+  String get idefixFrequencyDisplay =>
+      hasConnection && idefixSensorState == SensorState.ok
+          ? (idefixFrequencyHz / 1000000).toStringAsFixed(3)
+          : '—';
 
   String get imuAccVerticalDisplay => hasConnection && imuSensorState == SensorState.ok ? '${imuAccVertical.toStringAsFixed(2)} m/s²' : '—';
   String get highGAccVerticalDisplay => hasConnection && accHighGSensorState == SensorState.ok ? '${highGAccVertical.toStringAsFixed(2)} m/s²' : '—';
@@ -666,7 +792,7 @@ class DataServiceManager with ChangeNotifier {
   String get gpsLonDisplay => hasValidGpsFix ? '${gpsLon.toStringAsFixed(6)}°' : '—';
   String get gpsAltDisplay => hasValidGpsFix ? '${gpsAlt.toStringAsFixed(1)} m' : '—';
   String get gpsSatellitesDisplay => hasValidGpsFix ? '$gpsSatellites satellites' : '—';
-  String get gpsFixDisplay => hasConnection ? (gpsFix > 0 ? '✓ Actif' : '✗ Aucun fix') : '—';
+  String get gpsFixDisplay => hasConnection ? (gpsFix > 0 ? 'Actif' : 'Aucun fix') : '—';
 
   bool get odbSensorState => (temperatureSensorState == SensorState.ok &&
       imuSensorState == SensorState.ok &&
@@ -717,17 +843,31 @@ class DataServiceManager with ChangeNotifier {
   }
 
   Future<void> applyOdbSettings({
-    required String odbName, required String stageRole, required bool debugMode, required String axisProfile,
-    required bool enableBuzzer, required String minNeededPyroNb, required String drogueFireAttemptMaxNb, required String mainFireAttemptMaxNb,
-    required String accZLaunchThreshold, required String boostPhaseVThreshold, required String apogeeDetectVThreshold,
-    required String mainDeployAltitudeThresholdM, required String landingDetectVThreshold, required String buzzerReportToneHz,
-    required String landingDetectThresholdMs, required String fireAttemptDelayMs, required String pyrosArmingFailsafeMs,
-    required String apogeeFailsafeMs, required String idefixFrequencyHz, required List<int> pyroRoles,
+    required String odbName,
+    required String stageRole,
+    required bool debugMode,
+    required String axisProfile,
+    required bool enableBuzzer,
+    required String minNeededPyroNb,
+    required String drogueFireAttemptMaxNb,
+    required String mainFireAttemptMaxNb,
+    required String accZLaunchThreshold,
+    required String boostPhaseVThreshold,
+    required String apogeeDetectVThreshold,
+    required String mainDeployAltitudeThresholdM,
+    required String landingDetectVThreshold,
+    required String buzzerReportToneHz,
+    required String landingDetectThresholdMs,
+    required String fireAttemptDelayMs,
+    required String pyrosArmingFailsafeMs,
+    required String apogeeFailsafeMs,
+    required String idefixFrequencyHz,
+    required List<int> pyroRoles,
   }) async {
     if (!hasConnection) {
       if (hasVersionMismatch) {
         ConsoleService().log('Envoi bloqué : Conflit de version détecté.');
-        return; 
+        return;
       }
 
       ConsoleService().log('Aucune connexion Bluetooth avec l\'ODB');
@@ -796,6 +936,12 @@ class DataServiceManager with ChangeNotifier {
     ConsoleService().log('Demande de test du module d\'armement envoyée.');
   }
 
+  Future<void> testPyrosContinuity() async {
+    if (!hasConnection) { ConsoleService().log('Aucune connexion Bluetooth avec l\'ODB'); return; }
+    await btService.sendBinary(0x03, [0x0C]);
+    ConsoleService().log('Demande de test de la continuité des pyros envoyée.');
+  }
+
   Future<void> requestLastFlightEvents() async {
     if (!hasConnection) { ConsoleService().log('Aucune connexion Bluetooth avec l\'ODB'); return; }
     ConsoleService().log('Demande des événements du dernier vol...');
@@ -812,10 +958,9 @@ class DataServiceManager with ChangeNotifier {
       if (type == 0x01) { // MSG_TELEMETRY
         telemetry = OdbTelemetry.fromBytes(bytes);
 
-        // Version Verification
-        if (telemetry!.versionMajor != expectedProtocolMajor || telemetry!.versionMinor != expectedProtocolMinor) {
+        if (telemetry!.versionMajor != expectedTelemetryMajor || telemetry!.versionMinor != expectedTelemetryMinor) {
           hasVersionMismatch = true;
-          versionMismatchMessage = 'Télémétrie incompatible.\nAvionique : v${telemetry!.versionMajor}.${telemetry!.versionMinor} | Application (Attendue) : v$expectedProtocolMajor.$expectedProtocolMinor';
+          versionMismatchMessage = 'Télémétrie incompatible.\nAvionique : v${telemetry!.versionMajor}.${telemetry!.versionMinor} | Application (Attendue) : v$expectedTelemetryMajor.$expectedTelemetryMinor';
           ConsoleService().log('Erreur: Télémétrie v${telemetry!.versionMajor}.${telemetry!.versionMinor} non supportée.');
           _safeNotifyListeners();
           return;
@@ -831,24 +976,16 @@ class DataServiceManager with ChangeNotifier {
           if (magicNumber == 0x434F4E46) { // 'CONF'
             final tempConfig = OdbConfig.fromBytes(bytes);
 
-            // Version Verification
-            if (tempConfig.versionMajor == expectedProtocolMajor && tempConfig.versionMinor == expectedProtocolMinor) {
+            if (tempConfig.versionMajor == expectedConfigMajor && tempConfig.versionMinor == expectedConfigMinor) {
               config = tempConfig;
               clearVersionMismatch();
               _safeNotifyListeners();
               ConsoleService().log('Configuration ODB lue et synchronisée avec succès !');
             } else {
               hasVersionMismatch = true;
-              versionMismatchMessage = 'Configuration incompatible.\nAvionique : v${tempConfig.versionMajor}.${tempConfig.versionMinor} | Application (Attendue) : v$expectedProtocolMajor.$expectedProtocolMinor';
-              _safeNotifyListeners();
-            }
-            
-            if (tempConfig.versionMajor == expectedProtocolMajor && tempConfig.versionMinor == expectedProtocolMinor) {
-              config = tempConfig;
-              _safeNotifyListeners();
-              ConsoleService().log('Configuration ODB lue et synchronisée avec succès !');
-            } else {
+              versionMismatchMessage = 'Configuration incompatible.\nAvionique : v${tempConfig.versionMajor}.${tempConfig.versionMinor} | Application (Attendue) : v$expectedConfigMajor.$expectedConfigMinor';
               ConsoleService().log('Erreur: Configuration ODB v${tempConfig.versionMajor}.${tempConfig.versionMinor} non supportée.');
+              _safeNotifyListeners();
             }
           } else {
             if (payload.length == 148) {

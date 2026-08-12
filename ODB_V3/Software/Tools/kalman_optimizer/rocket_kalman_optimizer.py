@@ -38,13 +38,34 @@ class KalmanFilter:
         self.P = F @ self.P @ F.T + Q
         return self.x
 
-    def update(self, measurement):
+    def update(self, measurement, is_machlock=False):
+        ALT_60K_M = 60000.0
+        ALT_90K_M = 90000.0
+        R_PENALTY = 1000.0
+
+        current_z = self.x[0, 0]
+
+        if is_machlock or current_z >= ALT_90K_M:
+            r_alt = R_PENALTY
+        elif current_z >= ALT_60K_M:
+            r_alt = self.R_sensor * 10.0
+        else:
+            r_alt = self.R_sensor
+
         H = np.array([[1.0, 0.0, 0.0]])
         y = measurement - (H @ self.x)[0, 0]
-        S = (H @ self.P @ H.T)[0, 0] + self.R_sensor
+        
+        S = (H @ self.P @ H.T)[0, 0] + r_alt
+        
+        if (y**2 > 9.0 * S) and (y**2 > 25.0):
+            return y, S
+            
         K = self.P @ H.T / S
         self.x = self.x + K * y
         self.P = (np.eye(3) - K @ H) @ self.P
+        
+        self.P = (self.P + self.P.T) * 0.5
+        
         return y, S
 
 
@@ -197,7 +218,6 @@ class AdvancedKalmanOptimizer:
         plt.tight_layout()
         plt.show()
 
-# TODO: ajouter les données de l'ODB1, easymini, etc...
 if __name__ == "__main__":
     csv_filename = "real_rocket_flight.csv"
     

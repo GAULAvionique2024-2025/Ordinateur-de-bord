@@ -43,6 +43,19 @@ float Math_ComputeWorldVerticalAcc(const float accel[3], const float quat[4], bo
 
     return a_world_z;
 }
+
+void Math_6FacesCalibration(float accel[3], const faces_calibration_t *calib) {
+	if(!calib) return;
+
+	float temp[3];
+	temp[0] = accel[0] - calib->bias[0];
+	temp[1] = accel[1] - calib->bias[1];
+	temp[2] = accel[2] - calib->bias[2];
+
+	accel[0] = calib->scale_matrix[0][0] * temp[0] + calib->scale_matrix[0][1] * temp[1] + calib->scale_matrix[0][2] * temp[2];
+	accel[1] = calib->scale_matrix[1][0] * temp[0] + calib->scale_matrix[1][1] * temp[1] + calib->scale_matrix[1][2] * temp[2];
+	accel[2] = calib->scale_matrix[2][0] * temp[0] + calib->scale_matrix[2][1] * temp[1] + calib->scale_matrix[2][2] * temp[2];
+}
 /* =========== */
 
 /* === Altitude === */

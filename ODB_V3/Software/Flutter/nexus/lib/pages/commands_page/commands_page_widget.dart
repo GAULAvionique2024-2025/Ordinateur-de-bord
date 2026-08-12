@@ -405,6 +405,17 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                             await data.testArmingModule();
                           } : null,
                         ),
+                         _buildActionRow(
+                          context,
+                          title: 'Test de la continuité des pyros',
+                          description: 'Test de la continuité des pyros et des rôles pour la FSM',
+                          buttonText: 'Envoyer',
+                          buttonColor: connected ? FlutterFlowTheme.of(context).tertiary : FlutterFlowTheme.of(context).secondaryText,
+                          onPressed: connected ? () async {
+                            ConsoleService().log('Test d\'armement des pyros demandé');
+                            await data.testPyrosContinuity();
+                          } : null,
+                        ),
                         _buildActionRow(
                           context,
                           title: 'Mise en départ du vol',

@@ -49,13 +49,14 @@ typedef struct {
     adxl382_range_t                 range;
     acc_axis_profile_t              axis_profile;
     coeff_poly3_t					x_axis_offset, y_axis_offset, z_axis_offset;
+    faces_calibration_t				faces_offset;
 
     uint8_t                         raw_buffer[8];	// Data stored by registers
     float             				acc_x;	        // m/s2, after thermal compensation and local frame transformation
     float             				acc_y;	        // m/s2, after thermal compensation and local frame transformation
     float             				acc_z;	        // m/s2, after thermal compensation and local frame transformation
     float            				acc_vertical;   // m/s2, vertical acceleration after world frame transformation and gravity compensation (effective acceleration)
-    float               			temp;	        // C
+    float               			temperature;	// C
 } adxl382_t;
 
 

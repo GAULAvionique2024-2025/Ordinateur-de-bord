@@ -196,38 +196,13 @@ odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats) {
             DEBUG_PRINTF("ERROR : Battery too weak or faulty battery\n");
         }
 
-        uint8_t pyros_connected = 0;
-		const uint32_t FLAG_PYRO_CONN[PYRO_MAX] = {FLAG_PYRO1_CONN, FLAG_PYRO2_CONN, FLAG_PYRO3_CONN, FLAG_PYRO4_CONN};
-
-		SystemMeasurements_ComputePyros(&system_measurements);
-
 		for(int i = 0; i < PYRO_MAX; i++) {
-			pyro_role_t role = (pyro_role_t)current_config.pyro_roles[i];
-			int8_t init_res = Pyro_Init(&pyros[i], &system_measurements);
-
-			if(init_res == 0) {
-				system_states |= FLAG_PYRO_CONN[i];
-				DEBUG_PRINTF("Pyro %i connecte", i);
-
-				// Check config set and config match
-				if(role != PYRO_ROLE_NONE && Pyro_GetByRole(role) == &pyros[i]) {
-					pyros_connected++;
-					DEBUG_PRINTF("INFOS : Pyro %d (%s) detected\n", i + 1, PYRO_ROLES_LOOKUP[role]);
-				} else {
-					DEBUG_PRINTF("INFOS : Pyro %d connected, but doesn't have role set\n", i + 1);
-				}
+			if(Pyro_Init(&pyros[i]) == PYRO_OK) {
+				DEBUG_PRINTF("Pyro %i configured\n", i);
 			} else {
-				if(role != PYRO_ROLE_NONE) {
-					warning++;
-					DEBUG_PRINTF("WARNING : Pyro %d (%s) deconnected, but has role set\n", i + 1, PYRO_ROLES_LOOKUP[role]);
-				}
+				error++;
+				DEBUG_PRINTF("Pyro %i configuration failed\n", i);
 			}
-		}
-
-		// Protection
-		if(pyros_connected < current_config.min_needed_pyro_nb) {
-			error++;
-			DEBUG_PRINTF("ERROR : Not enough connected pyros (%d/%d)\n", pyros_connected, current_config.min_needed_pyro_nb);
 		}
 
         SystemMeasurements_ComputeTemperature(&system_measurements);
@@ -362,7 +337,7 @@ odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats) {
     data->system_states = system_states;
     data->version_major = ODB_PROTOCOL_VERSION_MAJOR;
 	data->version_minor = ODB_PROTOCOL_VERSION_MINOR;
-	data->payload_size = sizeof(odb_data_t);
+	data->payload_size = ODB_DATA_SIZE;
 
     // Buzzer report
 	if(current_config.enable_buzzer) {
@@ -392,11 +367,34 @@ void ODB_Update(odb_data_t *data, odb_stats_t *stats) {
 
     data->temp_celsius = system_measurements.temperature;
     const bool pyros_arming_enabled = Pyro_IsArmed(&system_measurements);
-    data->system_states &= ~(FLAG_PYRO1_CONN | FLAG_PYRO2_CONN | FLAG_PYRO3_CONN | FLAG_PYRO4_CONN);
-	if(pyros[0].is_connected) data->system_states |= FLAG_PYRO1_CONN;
-	if(pyros[1].is_connected) data->system_states |= FLAG_PYRO2_CONN;
-	if(pyros[2].is_connected) data->system_states |= FLAG_PYRO3_CONN;
-	if(pyros[3].is_connected) data->system_states |= FLAG_PYRO4_CONN;
+    bool is_ctn_active = Pyro_IsContinuityActive(&system_measurements);
+    if(is_ctn_active) {
+    	for(int i = 0; i < PYRO_MAX; i++) {
+			pyros[i].is_connected = (system_measurements.pyro_status[i] >= PYRO_THRESHOLD_CONN);
+		}
+    }
+    uint16_t new_pyros_states = data->system_states;
+    if(pyros[0].is_connected) {
+    	new_pyros_states |= FLAG_PYRO1_CONN;
+    } else {
+    	new_pyros_states &= ~FLAG_PYRO1_CONN;
+    }
+	if(pyros[1].is_connected) {
+		new_pyros_states |= FLAG_PYRO2_CONN;
+	} else {
+		new_pyros_states &= ~FLAG_PYRO2_CONN;
+	}
+	if(pyros[2].is_connected) {
+		new_pyros_states |= FLAG_PYRO3_CONN;
+	} else {
+		new_pyros_states &= ~FLAG_PYRO3_CONN;
+	}
+	if(pyros[3].is_connected) {
+		new_pyros_states |= FLAG_PYRO4_CONN;
+	} else {
+		new_pyros_states &= ~FLAG_PYRO4_CONN;
+	}
+	data->system_states = new_pyros_states;
     //Profiler_StopTask(PROFILE_TASK_ADC);
 
     //Profiler_StartTask(PROFILE_TASK_BARO);
@@ -436,7 +434,9 @@ void ODB_Update(odb_data_t *data, odb_stats_t *stats) {
 	} else {
         data->system_states &= ~FLAG_IMU_OK;
     }
-    if(BNO055_ReadTemperature(&bno055) != BNO055_OK) {
+    if(BNO055_ReadTemperature(&bno055) == BNO055_OK) {
+    	data->imu_temp = bno055.temperature;
+    } else {
     	data->system_states &= ~FLAG_IMU_OK;
     }
     //Profiler_StopTask(PROFILE_TASK_IMU);
@@ -449,6 +449,7 @@ void ODB_Update(odb_data_t *data, odb_stats_t *stats) {
 		data->highg_acc_y = adxl382.acc_y;
 		data->highg_acc_z = adxl382.acc_z;
 		data->highg_acc_vertical = adxl382.acc_vertical;
+		data->highg_temp = adxl382.temperature;
 
 		data->system_states |= FLAG_HIGHG_OK;
     } else {
@@ -531,12 +532,13 @@ void ODB_Update(odb_data_t *data, odb_stats_t *stats) {
     }
 }
 
-int8_t ODB_SetMissionState(odb_data_t *data, uint8_t mission_state) {
+int8_t ODB_SetMissionState(odb_data_t *data, uint8_t global_state, uint8_t sub_state) {
     if(!data) {
         return ODB_ERROR;
     }
 
-    data->mission_state = mission_state;
+    data->mission_state = ((global_state & 0x0F) << 4) | (sub_state & 0x0F);
+
     return ODB_OK;
 }
 

@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 # ==============================================================================
 
 # Températures internes lues par l'ADXL382 lors des paliers (en °C)
-temperatures = np.array([-40.0, -25.0, -10.0, 5.0, 20.0, 35.0, 50.0, 65.0, 85.0])
+temperatures = np.array([-60.0, -50.0, -40.0, -30.0, -20.0, -10.0, 0.0, 10.0, 20.0, 30.0, 40.0, 50.0, 60.0, 70.0, 80.0])
 
 # Erreurs d'offset mesurées pour chaque axe (en g)
 # (Erreur = Valeur lue - Valeur attendue)
@@ -16,7 +16,7 @@ offset_y = np.array([ 0.004,  0.002,  0.001,  0.000, -0.001, -0.002, -0.003, -0.
 offset_z = np.array([-0.012, -0.005,  0.002,  0.008,  0.004,  0.000, -0.003,  0.001,  0.009])
 
 # Degré du polynôme
-ORDRE_POLYNOME = 3 
+ORDRE_POLYNOME = 3
 
 # ==============================================================================
 # 2. CALCUL DES COEFFICIENTS (RÉGRESSION POLYNOMIALE)

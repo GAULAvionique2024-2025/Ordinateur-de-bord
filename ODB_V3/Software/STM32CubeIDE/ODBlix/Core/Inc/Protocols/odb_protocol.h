@@ -13,7 +13,7 @@
 
 /* === Protocol Versioning === */
 #define ODB_PROTOCOL_VERSION_MAJOR 1
-#define ODB_PROTOCOL_VERSION_MINOR 1
+#define ODB_PROTOCOL_VERSION_MINOR 2
 
 /* === ODB === */
 // Init system_states
@@ -151,6 +151,7 @@ typedef struct __attribute__((packed)) {
     float		imu_mag_x;			// IMU Magnetometer X in uT (converted to cuT for MAVLink) -> Linked with BNO055
     float		imu_mag_y;			// IMU Magnetometer Y in uT (converted to cuT for MAVLink) -> Linked with BNO055
     float		imu_mag_z;			// IMU Magnetometer Z in uT (converted to cuT for MAVLink) -> Linked with BNO055
+    float		imu_temp;			// IMU Temperature in °C (converted to °cC for MAVLink) -> Linked with BNO055
     // Pressure & Temp
     float		altitude_msl_m;		// Altitude in m (converted to cm for MAVLink) from barometer referenced with the sea level (MLS)-> Linked with MS5611
     float       pressure_pa;       	// Atmospheric pressure in Pa (converted to hPa for MAVLink) -> Linked with MS5611
@@ -159,6 +160,7 @@ typedef struct __attribute__((packed)) {
     float       highg_acc_x;        // High-G Acceleration X in m/s2 (converted to cm/s2 for MAVLink) -> Linked with ADXL382
     float       highg_acc_y;        // High-G Acceleration Y in m/s2 (converted to cm/s2 for MAVLink) -> Linked with ADXL382
     float       highg_acc_z;        // High-G Acceleration Z in m/s2 (converted to cm/s2 for MAVLink) -> Linked with ADXL382
+    float		highg_temp;			// High-G Temperature in °C (converted to °cC for MAVLink) -> Linked with ADXL382
     // GPS
     uint8_t     gps_fix;            // 1 = Active fix, 0 = Void/No fix, 2 = ... -> Linked with L76LM33
     int32_t     lat;                // Latitude in degE7 (MAVLink format: deg * 10^7) -> Linked with L76LM33
@@ -176,8 +178,8 @@ typedef struct __attribute__((packed)) {
     float       kalman_z;           // filtered altitude from Kalman filter in m (converted to cm for MAVLink) referenced with the above ground level (AGL) -> altitude_msl_m - initial altitude value
     float       kalman_v;           // filtered velocity from Kalman filter in m/s (converted to cm/s for MAVLink)
 
-    // TOTAL 123 + 4 (header)
-    // Empty data to reach 128 bytes
+    // TOTAL 127 + 4 (header)
+    // Empty data to reach 132 bytes
     uint8_t padding[1];
 } odb_data_t;
 #define ODB_DATA_SIZE sizeof(odb_data_t)

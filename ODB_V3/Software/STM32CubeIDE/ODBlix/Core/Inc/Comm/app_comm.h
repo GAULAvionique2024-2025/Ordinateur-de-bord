@@ -38,7 +38,8 @@ typedef enum {
 	CMD_SET_READY_FLIGHT 	= 0x0A,
 
 	// Tests
-    CMD_TEST_ARMING_MODULE  = 0x0B
+    CMD_TEST_ARMING_MODULE  = 0x0B,
+	CMD_TEST_PYROS			= 0x0C
 } app_cmd_id_t;
 
 void AppComm_SendTelemetry(hm11_t *hm11_dev, const odb_data_t *data);

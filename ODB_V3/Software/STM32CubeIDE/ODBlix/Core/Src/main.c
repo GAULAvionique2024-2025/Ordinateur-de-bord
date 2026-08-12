@@ -107,6 +107,14 @@ adxl382_t adxl382 = {
 		.c1 = 0.0f,
 		.c2 = 0.0f,
 		.c3 = 0.0f,
+	},
+	.faces_offset = {
+		.scale_matrix = {
+			{1.0f, 0.0f, 0.0f},
+			{0.0f, 1.0f, 0.0f},
+			{0.0f, 0.0f, 1.0f}
+		},
+		.bias = {0.0f, 0.0f, 0.0f}
 	}
 };
 bno055_t bno055 = {

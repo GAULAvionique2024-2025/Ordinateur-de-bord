@@ -33,7 +33,7 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  bool _isTested = false;
+  int _preflightStep = 0;
 
   @override
   void initState() {
@@ -320,29 +320,41 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
               child: Align(
                 alignment: const AlignmentDirectional(0.0, 0.0),
                 child: FFButtonWidget(
-                  onPressed: connected
+                  // Le bouton est inactif si non connecté, ou si l'étape 3 est atteinte (Prêt)
+                  onPressed: connected && _preflightStep < 3
                       ? () async {
-                          if (!_isTested) {
+                          if (_preflightStep == 0) {
                             await data.testArmingModule();
                             setState(() {
-                              _isTested = true;
+                              _preflightStep = 1;
                             });
-                          } else {
+                          } else if (_preflightStep == 1) {
+                            await data.testPyrosContinuity(); 
+                            setState(() {
+                              _preflightStep = 2;
+                            });
+                          } else if (_preflightStep == 2) {
                             await data.setReadyFlight();
                             setState(() {
-                              _isTested = false;
+                              _preflightStep = 3;
                             });
                           }
                         }
                       : null,
-                  text: _isTested
-                      ? 'Activer la mise en départ'
-                      : 'Tester le module d\'armement',
+                  text: _preflightStep == 0
+                      ? 'Tester le module d\'armement'
+                      : _preflightStep == 1
+                          ? 'Tester la continuité pyros'
+                          : _preflightStep == 2
+                              ? 'Activer la mise en départ'
+                              : '🚀 Prêt pour le vol',
                   options: FFButtonOptions(
                     height: 60.0,
                     padding: const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
                     iconPadding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    color: Colors.transparent,
+                    color: _preflightStep == 3 
+                        ? const Color(0x60FFFFFF)
+                        : Colors.transparent,
                     borderSide: BorderSide(
                       color: connected ? Colors.white : const Color(0x40FFFFFF),
                       width: 2.0,
@@ -374,6 +386,14 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
     final bt = context.watch<BluetoothServiceManager>();
     final data = context.watch<DataServiceManager>();
     final connected = data.hasConnection;
+
+    if (!connected && _preflightStep != 0) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        setState(() {
+          _preflightStep = 0;
+        });
+      });
+    }
 
     return GestureDetector(
       onTap: () {

@@ -18,7 +18,7 @@ typedef enum {
 
 typedef enum {
 	STATE_STATIC_ORIENTED,
-	STATE_ARMING_TEST,
+	STATE_PYROS_TEST,
 	STATE_WAITING_FLIGHT
 } preflight_substate_t;
 

@@ -47,7 +47,7 @@ odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats);
 void ODB_Reset(odb_data_t *data, odb_stats_t *stats);
 void ODB_Update(odb_data_t *data, odb_stats_t *stats);
 uint16_t ODB_SetEventStates(const odb_stats_t *stats);
-int8_t ODB_SetMissionState(odb_data_t *data, uint8_t mission_state);
+int8_t ODB_SetMissionState(odb_data_t *data, uint8_t global_state, uint8_t sub_state);
 uint8_t ODB_GetPyroStates(const odb_data_t *data);
 
 

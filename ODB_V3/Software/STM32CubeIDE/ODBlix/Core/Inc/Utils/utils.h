@@ -30,8 +30,14 @@ typedef struct {
     float c3;
 } coeff_poly3_t;
 
+typedef struct {
+    float scale_matrix[3][3];
+    float bias[3];
+} faces_calibration_t;
+
 float Thermal_ComputeOffset(coeff_poly3_t coeffs, float temp);
 float Math_ComputeWorldVerticalAcc(const float accel[3], const float quat[4], bool gravity_compensation);
+void Math_6FacesCalibration(float accel[3], const faces_calibration_t *calib);
 /* =========== */
 
 /* === Altitude === */

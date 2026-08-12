@@ -417,37 +417,40 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
       case 1:
       case 2:
       case 3:
-        noseAxis = 'Axe Z (Face de la carte)';
-        description = 'La carte est fixée horizontalement (à plat dans un couple).';
-        visualIcon = Icons.layers; // Représente des plans horizontaux
+        noseAxis = 'Axe +Z (P0)';
+        description = 'La carte est fixée horizontalement (à plat dans un couple). L\'axe Z pointe vers le nez.';
+        visualIcon = Icons.layers;
         iconColor = FlutterFlowTheme.of(context).secondary;
         break;
       case 4:
-        noseAxis = 'Axe +X';
-        description = 'La carte est fixée verticalement. La flèche de l\'axe X sérigraphiée sur le PCB pointe vers le nez de la fusée.';
-        visualIcon = Icons.arrow_upward_rounded;
+        noseAxis = 'Axe +X (P4)';
+        description = 'La carte est fixée verticalement. La flèche de l\'axe X sur le PCB pointe vers le nez de la fusée.';
+        visualIcon = Icons.arrow_downward_rounded;
+        iconColor = FlutterFlowTheme.of(context).error;
         break;
       case 5:
-        noseAxis = 'Axe +Y';
-        description = 'La carte est fixée verticalement. La flèche de l\'axe Y sérigraphiée sur le PCB pointe vers le nez de la fusée.';
-        visualIcon = Icons.arrow_upward_rounded;
+        noseAxis = 'Axe +X';
+        description = 'La carte est fixée verticalement. La flèche de l\'axe X sur le PCB pointe vers le nez de la fusée.';
+        visualIcon = Icons.arrow_downward_rounded;
+        iconColor = FlutterFlowTheme.of(context).error;
         break;
       case 6:
-        noseAxis = 'Axe -X';
-        description = 'La carte est fixée verticalement à l\'envers. L\'arrière de la flèche X pointe vers le nez de la fusée.';
-        visualIcon = Icons.arrow_downward_rounded;
-        iconColor = FlutterFlowTheme.of(context).error;
+        noseAxis = 'Axe +Y';
+        description = 'La carte est fixée verticalement sur la tranche. Le côté gauche de la carte (+Y) pointe vers le nez de la fusée.';
+        visualIcon = Icons.arrow_upward_rounded;
+        iconColor = FlutterFlowTheme.of(context).primary;
         break;
       case 7:
-        noseAxis = 'Axe -Y';
-        description = 'La carte est fixée verticalement à l\'envers. L\'arrière de la flèche Y pointe vers le nez de la fusée.';
-        visualIcon = Icons.arrow_downward_rounded;
-        iconColor = FlutterFlowTheme.of(context).error;
+        noseAxis = 'Axe -X';
+        description = 'La carte est fixée verticalement. La flèche de l\'axe X sur le PCB pointe vers le moteur de la fusée.';
+        visualIcon = Icons.arrow_upward_rounded;
+        iconColor = FlutterFlowTheme.of(context).primary;
         break;
       default:
         noseAxis = 'Inconnu';
         description = 'Profil non reconnu.';
         visualIcon = Icons.help_outline;
+        iconColor = FlutterFlowTheme.of(context).error;
     }
 
     return AnimatedSwitcher(

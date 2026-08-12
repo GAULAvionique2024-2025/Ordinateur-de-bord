@@ -26,7 +26,7 @@
 #define ADXL382_REG_ZDATA_L       0x1A
 #define ADXL382_REG_OP_MODE       0x26
 #define ADXL382_REG_DIG_EN        0x27
-#define ADXL382_REG_REG_RESET     0x2A
+#define ADXL382_REG_RESET     	  0x2A
 
 
 static int8_t ADXL382_ReadReg(I2C_HandleTypeDef *hi2c, uint8_t reg, uint8_t *data) {
@@ -54,7 +54,7 @@ static int8_t ADXL382_ReadRegs(I2C_HandleTypeDef *hi2c, uint8_t reg, uint8_t *da
 }
 
 static int8_t ADXL382_Reset(adxl382_t *dev) {
-    if(ADXL382_WriteReg(dev->hi2c, ADXL382_REG_REG_RESET, 0x80) != HAL_OK) {
+    if(ADXL382_WriteReg(dev->hi2c, ADXL382_REG_RESET, 0x03) != HAL_OK) {
         return -1;
     }
     HAL_Delay(10);
@@ -92,49 +92,72 @@ static int8_t ADXL382_SetRange(adxl382_t *dev, adxl382_range_t range) {
 }
 
 static void ADXL382_RemapAxes(float *x, float *y, float *z, acc_axis_profile_t profile) {
-    float temp_x = *x;
-    float temp_y = *y;
-    float temp_z = *z;
+    float bno_x = -(*y);
+    float bno_y = *x;
+    float bno_z = *z;
 
     switch (profile) {
-        case 0: // P0
+        case ACC_AXIS_PROFILE_P0:
+            // X'=X, Y'=Y, Z'=Z
+            *x = bno_x;
+            *y = bno_y;
+            *z = bno_z;
             break;
-        case 1: // P1
-            *x = -temp_y;
-            *y = temp_x;
-            *z = temp_z;
+
+        case ACC_AXIS_PROFILE_P1:
+            // X'=Y, Y'=-X, Z'=Z
+            *x = bno_y;
+            *y = -bno_x;
+            *z = bno_z;
             break;
-        case 2: // P2
-            *x = -temp_x;
-            *y = -temp_y;
-            *z = temp_z;
+
+        case ACC_AXIS_PROFILE_P2:
+            // X'=-X, Y'=-Y, Z'=Z
+            *x = -bno_x;
+            *y = -bno_y;
+            *z = bno_z;
             break;
-        case 3: // P3
-            *x = temp_y;
-            *y = -temp_x;
-            *z = temp_z;
+
+        case ACC_AXIS_PROFILE_P3:
+            // X'=Y, Y'=X, Z'=Z
+            *x = bno_y;
+            *y = bno_x;
+            *z = bno_z;
             break;
-        case 4: // P4
-            *x = -temp_z;
-            *y = temp_y;
-            *z = temp_x;
+
+        case ACC_AXIS_PROFILE_P4:
+            // X'=X, Y'=Z, Z'=-Y
+            *x = bno_x;
+            *y = bno_z;
+            *z = -bno_y;
             break;
-        case 5: // P5
-            *x = temp_z;
-            *y = -temp_x;
-            *z = -temp_y;
+
+        case ACC_AXIS_PROFILE_P5:
+            // X'=Z, Y'=Y, Z'=-X
+            *x = bno_z;
+            *y = bno_y;
+            *z = -bno_x;
             break;
-        case 6: // P6
-            *x = temp_z;
-            *y = temp_y;
-            *z = -temp_x;
+
+        case ACC_AXIS_PROFILE_P6:
+            // X'=X, Y'=-Z, Z'=Y
+            *x = bno_x;
+            *y = -bno_z;
+            *z = bno_y;
             break;
-        case 7: // P7
-            *x = -temp_z;
-            *y = -temp_x;
-            *z = -temp_y;
+
+        case ACC_AXIS_PROFILE_P7:
+            // X'=-Z, Y'=Y, Z'=X
+            *x = -bno_z;
+            *y = bno_y;
+            *z = bno_x;
             break;
+
         default:
+            // Fallback on P0
+            *x = bno_x;
+            *y = bno_y;
+            *z = bno_z;
             break;
     }
 }
@@ -223,10 +246,10 @@ void ADXL382_Compute(adxl382_t *dev, const float current_quat[4]) {
     int16_t t_brut = (int16_t)(((uint16_t)dev->raw_buffer[6] << 8) | dev->raw_buffer[7]);
     t_brut >>= 4; // 16 bits -> 12 bits adc
 
-    dev->temp = 25.0f + ((float)t_brut - 550.0f) * 0.098039215f;
+    dev->temperature = 25.0f + ((float)t_brut - 550.0f) * 0.098039215f;
 
-    float t = dev->temp;
-    float delta_t = dev->temp - 25.0f;
+    float t = dev->temperature;
+    float delta_t = dev->temperature - 25.0f;
 
     float scale_factor_25c = 2000.0f;
     if (dev->range == ADXL382_RANGE_30G) {
@@ -247,15 +270,17 @@ void ADXL382_Compute(adxl382_t *dev, const float current_quat[4]) {
     float offset_z = Thermal_ComputeOffset(dev->z_axis_offset, t);
 
     float accel[3];
-    accel[0] = acc_x_raw - offset_x;
-    accel[1] = acc_y_raw - offset_y;
-    accel[2] = acc_z_raw - offset_z;
+	accel[0] = (acc_x_raw - offset_x) * GRAVITY_MS2;
+	accel[1] = (acc_y_raw - offset_y) * GRAVITY_MS2;
+	accel[2] = (acc_z_raw - offset_z) * GRAVITY_MS2;
 
-    ADXL382_RemapAxes(&accel[0], &accel[1], &accel[2], dev->axis_profile);
+	Math_6FacesCalibration(accel, &dev->faces_offset);
 
-    dev->acc_x = accel[0] * GRAVITY_MS2;
-    dev->acc_y = accel[1] * GRAVITY_MS2;
-    dev->acc_z = accel[2] * GRAVITY_MS2;
+	ADXL382_RemapAxes(&accel[0], &accel[1], &accel[2], dev->axis_profile);
+
+	dev->acc_x = accel[0];
+	dev->acc_y = accel[1];
+	dev->acc_z = accel[2];
 
     dev->acc_vertical = Math_ComputeWorldVerticalAcc(accel, current_quat, false);
 }
