@@ -1602,15 +1602,18 @@ class _HighGMetricsCard extends StatelessWidget {
                                         .fontStyle,
                                   ),
                         ),
+                        const SizedBox(height: 8.0),
                         Text(
                           (connected &&
                                   data.accHighGSensorState == SensorState.ok)
-                              ? data.highGTempDisplay
+                              ? 'TEMP: ${data.highGTempDisplay}'
                               : '—',
                           style:
                               FlutterFlowTheme.of(context).bodyMedium.override(
                                     font: GoogleFonts.inter(
-                                      fontWeight: FontWeight.w500,
+                                      fontWeight: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontWeight,
                                       fontStyle: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .fontStyle,

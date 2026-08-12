@@ -769,7 +769,7 @@ class DataServiceManager with ChangeNotifier {
           : '—';
   String get highGTempDisplay =>
       hasConnection && accHighGSensorState == SensorState.ok
-          ? 'TEMP: ${highgTemp.toStringAsFixed(2)} °C'
+          ? '${highgTemp.toStringAsFixed(2)} °C'
           : '—';
 
   String get sdFreeDisplay => hasConnection && sdSensorState == SensorState.ok
