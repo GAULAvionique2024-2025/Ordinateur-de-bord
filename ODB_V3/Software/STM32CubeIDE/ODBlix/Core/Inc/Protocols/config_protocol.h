@@ -12,7 +12,7 @@
 
 /* === Protocol Versioning === */
 #define CONFIG_PROTOCOL_VERSION_MAJOR 1
-#define CONFIG_PROTOCOL_VERSION_MINOR 1
+#define CONFIG_PROTOCOL_VERSION_MINOR 2
 
 /* === Pyro Role === */
 #define PYRO_ROLES(X)			\
@@ -61,6 +61,7 @@ typedef struct __attribute__((packed)) {
     // Stage
     uint8_t 			stage_role;         		// 2 = BOOSTER, 3 = SUSTAINER
     uint8_t 			debug_mode;
+    uint8_t				flight_test_mode;
 
     // Sensors
     acc_axis_profile_t	axis_profile;
@@ -91,7 +92,7 @@ typedef struct __attribute__((packed)) {
     // IdeFIX
     uint32_t 			idefix_frequency_hz;
 
-    // TOTAL 93
+    // TOTAL 94
 } odb_config_t;
 #define CONFIG_DATA_SIZE sizeof(odb_config_t)
 

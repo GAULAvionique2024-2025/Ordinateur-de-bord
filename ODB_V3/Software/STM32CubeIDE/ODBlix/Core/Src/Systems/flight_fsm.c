@@ -115,8 +115,17 @@ void FSM_Update(void) {
 					bool is_static = (fabs(flight_data.kalman_v) < current_config.landing_detect_v_threshold);
 					bool is_oriented_up = flight_data.imu_acc_z > STATIC_ACC_Z_THRESHOLD;
 					if(is_static && is_oriented_up) {
-						current_preflight_substate = STATE_PYROS_TEST;
-						ODB_SetMissionState(&flight_data, STATE_PREFLIGHT, STATE_PYROS_TEST);
+						if(current_config.flight_test_mode) {
+							// Positive false
+							flight_data.system_states |= FLAG_PYROS_ARMED_OK;
+							flight_data.system_states |= FLAG_PYRO1_CONN | FLAG_PYRO2_CONN | FLAG_PYRO3_CONN | FLAG_PYRO4_CONN;
+							// Skip pyros/arm check
+							current_preflight_substate = STATE_WAITING_FLIGHT;
+							ODB_SetMissionState(&flight_data, STATE_PREFLIGHT, STATE_WAITING_FLIGHT);
+						} else {
+							current_preflight_substate = STATE_PYROS_TEST;
+							ODB_SetMissionState(&flight_data, STATE_PREFLIGHT, STATE_PYROS_TEST);
+						}
 					}
 					break;
 

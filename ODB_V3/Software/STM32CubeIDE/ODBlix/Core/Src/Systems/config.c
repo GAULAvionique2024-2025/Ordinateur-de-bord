@@ -27,6 +27,7 @@ const odb_config_t default_config = {
     // Stage
     .stage_role = 2,
     .debug_mode = 1,
+	.flight_test_mode = 0,
 
 	// Sensors
 	.axis_profile = 0,

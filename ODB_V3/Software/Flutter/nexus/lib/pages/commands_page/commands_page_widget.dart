@@ -398,7 +398,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                           context,
                           title: 'Test du module d\'armement',
                           description: 'Test du module d\'armement des pyros pour la FSM',
-                          buttonText: 'Envoyer',
+                          buttonText: 'Tester',
                           buttonColor: connected ? FlutterFlowTheme.of(context).tertiary : FlutterFlowTheme.of(context).secondaryText,
                           onPressed: connected ? () async {
                             ConsoleService().log('Test d\'armement des pyros demandé');
@@ -409,7 +409,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                           context,
                           title: 'Test de la continuité des pyros',
                           description: 'Test de la continuité des pyros et des rôles pour la FSM',
-                          buttonText: 'Envoyer',
+                          buttonText: 'Tester',
                           buttonColor: connected ? FlutterFlowTheme.of(context).tertiary : FlutterFlowTheme.of(context).secondaryText,
                           onPressed: connected ? () async {
                             ConsoleService().log('Test d\'armement des pyros demandé');
@@ -420,10 +420,21 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                           context,
                           title: 'Mise en départ du vol',
                           description: 'Activer la mise en départ du vol de la FSM',
-                          buttonText: 'Envoyer',
+                          buttonText: 'Tester',
                           buttonColor: connected ? FlutterFlowTheme.of(context).tertiary : FlutterFlowTheme.of(context).secondaryText,
                           onPressed: connected ? () async {
                             ConsoleService().log('Activation départ du vol demandé');
+                            await data.setReadyFlight();
+                          } : null,
+                        ),
+                        _buildActionRow(
+                          context,
+                          title: 'Mise en Sub Boost',
+                          description: 'Passer à l\'étape Boost du vol de la FSM',
+                          buttonText: 'Aller',
+                          buttonColor: connected ? FlutterFlowTheme.of(context).tertiary : FlutterFlowTheme.of(context).secondaryText,
+                          onPressed: connected ? () async {
+                            ConsoleService().log('Passer à l\'étape Boost du vol demandé');
                             await data.setReadyFlight();
                           } : null,
                         ),

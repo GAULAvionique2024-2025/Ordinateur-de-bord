@@ -172,6 +172,7 @@ class OdbConfig {
   final String odbName;
   final int stageRole;
   final bool debugMode;
+  final bool flightTestMode;
   final int axisProfile;
   final int fireAttemptDelayMs;
   final int pyrosArmingFailsafeMs;
@@ -193,11 +194,12 @@ class OdbConfig {
   OdbConfig({
     this.magicNumber = 0x434F4E46,
     this.versionMajor = 1,
-    this.versionMinor = 1,
-    this.payloadSize = 93,
+    this.versionMinor = 2,
+    this.payloadSize = 94,
     required this.odbName,
     required this.stageRole,
     required this.debugMode,
+    required this.flightTestMode,
     required this.axisProfile,
     required this.fireAttemptDelayMs,
     required this.pyrosArmingFailsafeMs,
@@ -227,6 +229,7 @@ class OdbConfig {
       odbName: reader.readString(32),
       stageRole: reader.readUint8(),
       debugMode: reader.readUint8() == 1,
+      flightTestMode: reader.readUint8() == 1,
       axisProfile: reader.readUint8(),
       fireAttemptDelayMs: reader.readUint32(),
       pyrosArmingFailsafeMs: reader.readUint32(),
@@ -251,6 +254,7 @@ class OdbConfig {
     String? odbName,
     int? stageRole,
     bool? debugMode,
+    bool? flightTestMode,
     int? axisProfile,
     int? fireAttemptDelayMs,
     int? pyrosArmingFailsafeMs,
@@ -273,6 +277,7 @@ class OdbConfig {
       odbName: odbName ?? this.odbName,
       stageRole: stageRole ?? this.stageRole,
       debugMode: debugMode ?? this.debugMode,
+      flightTestMode: flightTestMode ?? this.flightTestMode,
       axisProfile: axisProfile ?? this.axisProfile,
       fireAttemptDelayMs: fireAttemptDelayMs ?? this.fireAttemptDelayMs,
       pyrosArmingFailsafeMs: pyrosArmingFailsafeMs ?? this.pyrosArmingFailsafeMs,
@@ -294,7 +299,7 @@ class OdbConfig {
   }
 
   Uint8List toBytes() {
-    final writer = ByteBuilder(93);
+    final writer = ByteBuilder(94);
     writer.writeUint32(magicNumber);
     writer.writeUint8(versionMajor);
     writer.writeUint8(versionMinor);
@@ -302,6 +307,7 @@ class OdbConfig {
     writer.writeString(odbName, 32);
     writer.writeUint8(stageRole);
     writer.writeUint8(debugMode ? 1 : 0);
+    writer.writeUint8(flightTestMode ? 1 : 0);
     writer.writeUint8(axisProfile);
     writer.writeUint32(fireAttemptDelayMs);
     writer.writeUint32(pyrosArmingFailsafeMs);
@@ -437,7 +443,7 @@ class DataServiceManager with ChangeNotifier {
   static const int eventFlagDrogueDeployed = 1 << 7;
   static const int eventFlagMachLockEnabled = 1 << 8;
   static const int expectedConfigMajor = 1;
-  static const int expectedConfigMinor = 1;
+  static const int expectedConfigMinor = 2;
   static const int expectedTelemetryMajor = 1;
   static const int expectedTelemetryMinor = 2;
 
@@ -528,6 +534,7 @@ class DataServiceManager with ChangeNotifier {
   String get odbName => config?.odbName ?? '';
   int get stageRole => config?.stageRole ?? stageRoleSustainer;
   bool get debugMode => config?.debugMode ?? false;
+  bool get flightTestMode => config?.flightTestMode ?? false;
   int get axisProfile => config?.axisProfile ?? axisProfileP0;
   bool get enableBuzzer => config?.enableBuzzer ?? false;
   int get minNeededPyroNb => config?.minNeededPyroNb ?? 0;
@@ -552,6 +559,7 @@ class DataServiceManager with ChangeNotifier {
   set odbName(String value) { config = config?.copyWith(odbName: value); _safeNotifyListeners(); }
   set stageRole(int value) { config = config?.copyWith(stageRole: value); _safeNotifyListeners(); }
   set debugMode(bool value) { config = config?.copyWith(debugMode: value); _safeNotifyListeners(); }
+  set flightTestMode(bool value) { config = config?.copyWith(flightTestMode: value); _safeNotifyListeners(); }
   set axisProfile(int value) { config = config?.copyWith(axisProfile: value); _safeNotifyListeners(); }
   set enableBuzzer(bool value) { config = config?.copyWith(enableBuzzer: value); _safeNotifyListeners(); }
   set minNeededPyroNb(int value) { config = config?.copyWith(minNeededPyroNb: value); _safeNotifyListeners(); }
@@ -848,6 +856,7 @@ class DataServiceManager with ChangeNotifier {
     required String odbName,
     required String stageRole,
     required bool debugMode,
+    required bool flightTestMode,
     required String axisProfile,
     required bool enableBuzzer,
     required String minNeededPyroNb,
@@ -880,6 +889,7 @@ class DataServiceManager with ChangeNotifier {
       odbName: odbName.trim(),
       stageRole: _parseInt(stageRole, this.stageRole),
       debugMode: debugMode,
+      flightTestMode: flightTestMode,
       axisProfile: _parseInt(axisProfile, this.axisProfile),
       fireAttemptDelayMs: _parseInt(fireAttemptDelayMs, this.fireAttemptDelayMs),
       pyrosArmingFailsafeMs: _parseInt(pyrosArmingFailsafeMs, this.pyrosArmingFailsafeMs),

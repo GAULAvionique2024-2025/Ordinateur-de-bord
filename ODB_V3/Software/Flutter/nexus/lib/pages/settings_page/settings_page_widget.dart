@@ -43,6 +43,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
   final TextEditingController _idefixFrequencyController =
       TextEditingController();
   bool _debugMode = false;
+  bool _flightTestMode = false;
   int _axisProfileValue = DataServiceManager.axisProfileP0;
   bool _enableBuzzer = false;
   double _buzzerToneHz = 100.0;
@@ -161,6 +162,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
           _odbNameController.clear();
           _stageRoleValue = DataServiceManager.stageRoleSustainer;
           _debugMode = false;
+          _flightTestMode = false;
           _axisProfileValue = DataServiceManager.axisProfileP0;
           _enableBuzzer = false;
           _buzzerToneHz = 100.0;
@@ -206,6 +208,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
         _odbNameController.text = data.odbName;
         _stageRoleValue = data.stageRole;
         _debugMode = data.debugMode;
+        _flightTestMode = data.flightTestMode;
         _axisProfileValue = data.axisProfile;
         _enableBuzzer = data.enableBuzzer;
         _buzzerToneHz = data.buzzerReportToneHz > 0
@@ -904,7 +907,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
               _buildStageRoleDropdown(context, data: data, enabled: enabled),
               _buildBooleanSetting(
                 context,
-                title: 'Mode debug',
+                title: 'Mode Debug',
                 subtitle: 'Activer le mode debug',
                 value: _debugMode,
                 enabled: enabled,
@@ -913,6 +916,19 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                     _debugMode = value;
                   });
                   data.debugMode = value;
+                },
+              ),
+              _buildBooleanSetting(
+                context,
+                title: 'Mode Test Flight',
+                subtitle: 'Activer le mode de test de vol',
+                value: _flightTestMode,
+                enabled: enabled,
+                onChanged: (value) {
+                  safeSetState(() {
+                    _flightTestMode = value;
+                  });
+                  data.flightTestMode = value;
                 },
               ),
             ].divide(const SizedBox(height: 12.0)),
@@ -1585,6 +1601,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                       odbName: _odbNameController.text,
                       stageRole: _stageRoleValue.toString(),
                       debugMode: _debugMode,
+                      flightTestMode: _flightTestMode,
                       axisProfile: _axisProfileValue.toString(),
                       enableBuzzer: _enableBuzzer,
                       minNeededPyroNb: _minPyrosController.text,
