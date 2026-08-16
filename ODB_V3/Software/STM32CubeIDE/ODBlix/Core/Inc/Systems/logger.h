@@ -14,7 +14,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#define LOG_BUFFER_SIZE				32 					// 400 ms (max wait erase sector w25q) / TASK_LOGGER_FREQ_MS = 20 frames + security
+#define LOG_BUFFER_SIZE				256 				// 400 ms (max wait erase sector w25q) / TASK_LOGGER_FREQ_MS = 20 frames + security
 #define LOGGER_MIN_FLIGHT_SPACE  	(5 * 1024 * 1024) 	// 5Mo
 
 
@@ -45,8 +45,11 @@ typedef struct __attribute__((packed)) {
 int8_t Logger_Init(void);
 
 void Logger_PushData(odb_data_t *new_data);
+void Logger_Enable(bool enable);
+bool Logger_IsLogging(void);
 void Logger_Task(void);
 void Logger_SaveStats(const odb_stats_t *stats);
+void Logger_FlushRemaining(void);
 uint32_t Logger_GetCurrentFlightAddress(void);
 uint32_t Logger_GetCurrentFlightId(void);
 void Logger_StartReadingFlight(uint32_t header_addr, uint32_t *cursor);

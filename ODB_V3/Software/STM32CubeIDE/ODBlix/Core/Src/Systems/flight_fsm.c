@@ -146,6 +146,10 @@ void FSM_Update(void) {
 						ODB_SetMissionState(&flight_data, STATE_ARMED, 0);
 						Pyro_SetContinuity(false);
 						Pyro_Arming(&system_measurements, false, false);
+
+						Logger_Enable(true);
+
+
 						current_global_state = STATE_ARMED;
 					}
 					break;
@@ -281,6 +285,9 @@ void FSM_Update(void) {
 
 				case SUB_LANDED:
 				    flight_stats.flight_time_ms = flight_duration;
+
+				    Logger_Enable(false);
+				    Logger_FlushRemaining();
 
 				    Logger_SaveStats(&flight_stats);
 

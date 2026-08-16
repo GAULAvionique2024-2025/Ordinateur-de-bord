@@ -37,6 +37,8 @@ static uint32_t stats_reserved_address = 0;
 
 static uint32_t previous_flight_header_addr = 0xFFFFFFFF;
 
+static bool is_logging = false;
+
 extern w25q_t w25q;
 
 // SD
@@ -137,6 +139,8 @@ int8_t Logger_Init(void) {
 }
 
 void Logger_PushData(odb_data_t *new_data) {
+	if(!is_logging || new_data == NULL) return;
+
     if(write_index >= LOG_BUFFER_SIZE) {
         if(flush_pending) {
         	// TODO: add error counter "missed frames"
@@ -322,6 +326,26 @@ void Logger_SaveStats(const odb_stats_t *stats) {
     stats_packet.stats = *stats;
 
     W25Q_WritePage(&w25q, (uint8_t*)&stats_packet, stats_reserved_address, sizeof(logger_stats_t));
+}
+
+void Logger_Enable(bool enable) {
+    is_logging = enable;
+    if(enable) {
+        write_index = 0;
+        flush_pending = false;
+    }
+}
+
+bool Logger_IsLogging(void) {
+    return is_logging;
+}
+
+void Logger_FlushRemaining(void) {
+    if(write_index > 0 && !flush_pending) {
+        current_flush_buf = current_write_buf;
+        flush_pending = true;
+        write_index = 0;
+    }
 }
 
 uint32_t Logger_GetCurrentFlightAddress(void) {

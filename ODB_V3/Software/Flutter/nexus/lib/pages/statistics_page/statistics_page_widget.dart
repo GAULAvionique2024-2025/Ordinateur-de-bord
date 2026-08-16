@@ -1949,10 +1949,47 @@ class _BottomMetricsGrid extends StatelessWidget {
                                   .fontStyle,
                             ),
                       ),
+                      const SizedBox(height: 4.0),
+                      Text(
+                        "Santé de la Flash:",
+                        style: FlutterFlowTheme.of(context).bodySmall.override(
+                              font: GoogleFonts.inter(
+                                fontWeight: FontWeight.w500,
+                                fontStyle: FlutterFlowTheme.of(context)
+                                    .bodySmall
+                                    .fontStyle,
+                              ),
+                              color: FlutterFlowTheme.of(context).secondaryText,
+                              letterSpacing: 0.0,
+                              fontWeight: FontWeight.w500,
+                              fontStyle: FlutterFlowTheme.of(context)
+                                  .bodySmall
+                                  .fontStyle,
+                            ),
+                      ),
+                      Text(
+                        (connected && data.flashSensorState == SensorState.ok)
+                            ? 'Excellente'
+                            : '—',
+                        style: FlutterFlowTheme.of(context).bodySmall.override(
+                              font: GoogleFonts.inter(
+                                fontWeight: FontWeight.w600,
+                                fontStyle: FlutterFlowTheme.of(context)
+                                    .bodySmall
+                                    .fontStyle,
+                              ),
+                              color: FlutterFlowTheme.of(context).success,
+                              letterSpacing: 0.0,
+                              fontWeight: FontWeight.w600,
+                              fontStyle: FlutterFlowTheme.of(context)
+                                  .bodySmall
+                                  .fontStyle,
+                            ),
+                      ),
                     ].divide(const SizedBox(height: 4.0)),
                   ),
                   Text(
-                    'CARTE SD',
+                    'FLASH & CARTE SD',
                     style: FlutterFlowTheme.of(context).labelSmall.override(
                           font: GoogleFonts.inter(
                             fontWeight: FontWeight.w600,

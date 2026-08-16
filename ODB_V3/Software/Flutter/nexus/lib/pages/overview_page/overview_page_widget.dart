@@ -33,8 +33,6 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  int _preflightStep = 0;
-
   @override
   void initState() {
     super.initState();
@@ -44,7 +42,6 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
   @override
   void dispose() {
     _model.dispose();
-
     super.dispose();
   }
 
@@ -189,6 +186,50 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
     required BluetoothServiceManager bt,
     required DataServiceManager data,
   }) {
+    
+    final int globalState = data.missionState >= 0 ? ((data.missionState >> 4) & 0x0F) : -1;
+    final int subState = data.missionState >= 0 ? (data.missionState & 0x0F) : -1;
+    
+    final bool isStaticOriented = (globalState == 0 && subState == 0);
+    final bool isPyrosTest = (globalState == 0 && subState == 1);
+    final bool isWaitingFlight = (globalState == 0 && subState == 2);
+    final bool isArmed = (globalState == 1);
+    
+    final bool armingMaskOk = data.pyroArmingModuleState == SensorState.ok;
+    final bool allConditionsMet = data.missionReady;
+
+    String btnText = 'En attente...';
+    Future<void> Function()? btnAction;
+    bool isBtnFaded = false;
+
+    if (!connected || data.missionState < 0) {
+      btnText = 'En attente de connexion...';
+      btnAction = null;
+      isBtnFaded = true;
+    } else if (isStaticOriented) {
+      btnText = 'Orientation statique en cours...';
+      btnAction = null;
+    } else if (isPyrosTest) {
+      if (!armingMaskOk) {
+        btnText = 'Tester le module d\'armement';
+        btnAction = () async => await data.testArmingModule();
+      } else {
+        btnText = 'Tester la continuité des pyros';
+        btnAction = () async => await data.testPyrosContinuity();
+      }
+    } else if (isWaitingFlight) {
+      btnText = 'Activer la mise en départ';
+      btnAction = allConditionsMet ? () async => await data.setReadyFlight() : null;
+    } else if (isArmed) {
+      btnText = 'Prêt pour le vol';
+      btnAction = null;
+      isBtnFaded = true;
+    } else {
+      btnText = data.missionStateDisplay;
+      btnAction = null;
+      isBtnFaded = true;
+    }
+
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -320,43 +361,17 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
               child: Align(
                 alignment: const AlignmentDirectional(0.0, 0.0),
                 child: FFButtonWidget(
-                  // Le bouton est inactif si non connecté, ou si l'étape 3 est atteinte (Prêt)
-                  onPressed: connected && _preflightStep < 3
-                      ? () async {
-                          if (_preflightStep == 0) {
-                            await data.testArmingModule();
-                            setState(() {
-                              _preflightStep = 1;
-                            });
-                          } else if (_preflightStep == 1) {
-                            await data.testPyrosContinuity(); 
-                            setState(() {
-                              _preflightStep = 2;
-                            });
-                          } else if (_preflightStep == 2) {
-                            await data.setReadyFlight();
-                            setState(() {
-                              _preflightStep = 3;
-                            });
-                          }
-                        }
-                      : null,
-                  text: _preflightStep == 0
-                      ? 'Tester le module d\'armement'
-                      : _preflightStep == 1
-                          ? 'Tester la continuité pyros'
-                          : _preflightStep == 2
-                              ? 'Activer la mise en départ'
-                              : '🚀 Prêt pour le vol',
+                  onPressed: btnAction != null ? () async => await btnAction!() : null,
+                  text: btnText,
                   options: FFButtonOptions(
                     height: 60.0,
                     padding: const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
                     iconPadding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    color: _preflightStep == 3 
+                    color: isBtnFaded 
                         ? const Color(0x60FFFFFF)
                         : Colors.transparent,
                     borderSide: BorderSide(
-                      color: connected ? Colors.white : const Color(0x40FFFFFF),
+                      color: (connected && btnAction != null) ? Colors.white : const Color(0x40FFFFFF),
                       width: 2.0,
                     ),
                     textStyle: FlutterFlowTheme.of(context).bodySmall.override(
@@ -386,14 +401,6 @@ class _OverviewPageWidgetState extends State<OverviewPageWidget> {
     final bt = context.watch<BluetoothServiceManager>();
     final data = context.watch<DataServiceManager>();
     final connected = data.hasConnection;
-
-    if (!connected && _preflightStep != 0) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        setState(() {
-          _preflightStep = 0;
-        });
-      });
-    }
 
     return GestureDetector(
       onTap: () {
