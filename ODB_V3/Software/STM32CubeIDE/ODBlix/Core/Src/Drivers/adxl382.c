@@ -98,65 +98,57 @@ static void ADXL382_RemapAxes(float *x, float *y, float *z, acc_axis_profile_t p
 
     switch (profile) {
         case ACC_AXIS_PROFILE_P0:
-            // X'=X, Y'=Y, Z'=Z
             *x = bno_x;
             *y = bno_y;
             *z = bno_z;
             break;
 
         case ACC_AXIS_PROFILE_P1:
-            // X'=Y, Y'=-X, Z'=Z
-            *x = bno_y;
-            *y = -bno_x;
+            *x = -bno_y;
+            *y = bno_x;
             *z = bno_z;
             break;
 
         case ACC_AXIS_PROFILE_P2:
-            // X'=-X, Y'=-Y, Z'=Z
             *x = -bno_x;
             *y = -bno_y;
             *z = bno_z;
             break;
 
         case ACC_AXIS_PROFILE_P3:
-            // X'=Y, Y'=X, Z'=Z
             *x = bno_y;
-            *y = bno_x;
+            *y = -bno_x;
             *z = bno_z;
             break;
 
         case ACC_AXIS_PROFILE_P4:
-            // X'=X, Y'=Z, Z'=-Y
             *x = bno_x;
             *y = bno_z;
-            *z = -bno_y;
+            *z = bno_y;
             break;
 
         case ACC_AXIS_PROFILE_P5:
-            // X'=Z, Y'=Y, Z'=-X
-            *x = bno_z;
-            *y = bno_y;
+            *x = bno_y;
+            *y = bno_z;
             *z = -bno_x;
             break;
 
         case ACC_AXIS_PROFILE_P6:
-            // X'=X, Y'=-Z, Z'=Y
-            *x = bno_x;
-            *y = -bno_z;
-            *z = bno_y;
+        	*x = -bno_x;
+			*y = bno_z;
+			*z = -bno_y;
             break;
 
         case ACC_AXIS_PROFILE_P7:
-            // X'=-Z, Y'=Y, Z'=X
-            *x = -bno_z;
-            *y = bno_y;
-            *z = bno_x;
+        	*x = bno_y;
+			*y = bno_z;
+			*z = bno_x;
             break;
 
         default:
-            // Fallback on P0
+            // Fallback
             *x = bno_x;
-            *y = bno_y;
+            *y = bno_z;
             *z = bno_z;
             break;
     }

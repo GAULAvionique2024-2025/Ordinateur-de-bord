@@ -40,9 +40,9 @@
 #define BNO055_REG_SYS_STATUS       0x39
 #define BNO055_REG_SYS_ERR          0x3A
 
-
-const uint8_t BNO055_REMAP_CONFIG[] = {0x24, 0x21, 0x24, 0x21, 0x18, 0x06, 0x18, 0x06};
-const uint8_t BNO055_REMAP_SIGN[]   = {0x00, 0x02, 0x03, 0x01, 0x04, 0x04, 0x02, 0x01};
+//									   P0	 P1	   P2	 P3	   P4	 P5	   P6	 P7
+const uint8_t BNO055_REMAP_CONFIG[] = {0x24, 0x21, 0x24, 0x21, 0x18, 0x09, 0x18, 0x09};
+const uint8_t BNO055_REMAP_SIGN[]   = {0x00, 0x02, 0x06, 0x04, 0x00, 0x04, 0x05, 0x00};
 
 static int8_t BNO055_ReadReg(I2C_HandleTypeDef *hi2c, uint8_t reg, uint8_t *data) {
     if(HAL_I2C_Mem_Read(hi2c, BNO055_I2C_ADDR, reg, I2C_MEMADD_SIZE_8BIT, data, 1, 25) != HAL_OK) {
