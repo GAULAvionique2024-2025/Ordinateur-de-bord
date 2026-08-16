@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-#define GRAVITY_MS2 			9.80665f	// m/s
+#define GRAVITY_MS2 			9.80665f	// m/s2
 #define G_TO_MS2(g) 			((GRAVITY_MS2) * (g))
 #define PRESSURE_SEA_LEVEL_HPA	1013.25f    // hPa
 

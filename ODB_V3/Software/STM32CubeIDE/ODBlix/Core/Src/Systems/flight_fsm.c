@@ -19,7 +19,7 @@
 #include <stdint.h>
 
 
-#define STATIC_ACC_Z_THRESHOLD 8.0f
+#define STATIC_ACC_Z_THRESHOLD 6.0f
 
 extern buzzer_t buzzer;
 extern odb_data_t flight_data;

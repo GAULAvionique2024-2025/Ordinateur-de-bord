@@ -44,6 +44,7 @@
 const uint8_t BNO055_REMAP_CONFIG[] = {0x24, 0x21, 0x24, 0x21, 0x18, 0x09, 0x18, 0x09};
 const uint8_t BNO055_REMAP_SIGN[]   = {0x00, 0x02, 0x06, 0x04, 0x00, 0x04, 0x05, 0x00};
 
+
 static int8_t BNO055_ReadReg(I2C_HandleTypeDef *hi2c, uint8_t reg, uint8_t *data) {
     if(HAL_I2C_Mem_Read(hi2c, BNO055_I2C_ADDR, reg, I2C_MEMADD_SIZE_8BIT, data, 1, 25) != HAL_OK) {
         return -1;
@@ -180,7 +181,7 @@ bno055_error_t BNO055_Init(bno055_t *dev) {
 
     // Disable Reset
     HAL_GPIO_WritePin(dev->rst_port, dev->rst_pin, GPIO_PIN_SET);
-    HAL_Delay(700);
+    HAL_Delay(800);
 
     // Check ID
     uint8_t id;

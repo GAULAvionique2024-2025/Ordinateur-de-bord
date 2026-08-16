@@ -114,6 +114,8 @@ void KalmanNav_Update(kalman_nav_t *dev, float measured_alt, bool is_machlock) {
     float S = dev->P[0][0] + dev->R_alt;
     // Spikes protection: 3.0f * sqrtf(S) for respect the 3-sigma rule
     if(y*y > 9.0f * S && y*y > 25.0f) {
+    	dev->P[0][0] += dev->R_alt * 0.5f;
+		dev->P[1][1] += dev->Q_accel;
         return;
     }
     float K[3];

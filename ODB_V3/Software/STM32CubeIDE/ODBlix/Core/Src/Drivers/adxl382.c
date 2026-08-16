@@ -274,5 +274,5 @@ void ADXL382_Compute(adxl382_t *dev, const float current_quat[4]) {
 	dev->acc_y = accel[1];
 	dev->acc_z = accel[2];
 
-    dev->acc_vertical = Math_ComputeWorldVerticalAcc(accel, current_quat, false);
+    dev->acc_vertical = Math_ComputeWorldVerticalAcc(accel, current_quat, true);
 }

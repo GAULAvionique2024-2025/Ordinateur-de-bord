@@ -450,7 +450,7 @@ void ODB_Update(odb_data_t *data, odb_stats_t *stats) {
     // Kalman filter update with dynamic R_alt
     //Profiler_StartTask(PROFILE_TASK_KALMAN);
     float raw_accel_z = data->highg_acc_vertical;
-    if(fabs(raw_accel_z) < current_config.acc_z_launch_threshold) {
+    if(fabs(raw_accel_z + GRAVITY_MS2) < current_config.acc_z_launch_threshold) {
         raw_accel_z = data->imu_acc_vertical;
     }
     KalmanNav_Predict(&kalman_filter, raw_accel_z);

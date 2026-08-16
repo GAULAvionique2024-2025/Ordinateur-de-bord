@@ -12,7 +12,7 @@
 #include <stdbool.h>
 
 
-#define Q_ACCEL 0.02f // Process noise for acceleration (tune based on IMU/HIGHG noise)
+#define Q_ACCEL 0.5f // Process noise for acceleration (tune based on IMU/HIGHG noise)
 #define Q_BIAS 0.001f // Process noise for bias (tune based on IMU/HIGHG noise)
 
 // Altitude thresholds for Dynamic R adjustment
