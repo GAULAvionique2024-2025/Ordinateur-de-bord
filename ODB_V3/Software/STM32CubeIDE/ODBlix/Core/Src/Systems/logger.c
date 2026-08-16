@@ -277,32 +277,30 @@ void Logger_Task(void) {
         case LOGGER_SD_DUMP_DATA:
             if(file_is_open) {
                 odb_data_t frame;
+                char line_buf[256];
+
                 for(uint8_t i = 0; i < 5; i++) {
                     if(Logger_ReadNextData(&sd_dump_cursor, &frame)) {
-                        f_printf(&active_file, "%u,%u,%u,%lu,%u,%u,%u,%u,",
+                        snprintf(line_buf, sizeof(line_buf),
+                            "%u,%u,%u,%lu,%u,%u,%u,%u,"
+                            "%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,"
+                            "%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,"
+                            "%u,%ld,%ld,%ld,%u,%u,%u,%u,%.2f,%.2f,%.2f,%.2f\n",
                             frame.version_major, frame.version_minor, frame.payload_size,
                             frame.time_boot_ms, frame.system_states, frame.event_states,
-                            frame.mission_state, frame.battery_mv
-                        );
-
-                        f_printf(&active_file, "%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,",
+                            frame.mission_state, frame.battery_mv,
                             frame.roll, frame.pitch, frame.yaw,
                             frame.imu_acc_x, frame.imu_acc_y, frame.imu_acc_z,
                             frame.imu_gyro_x, frame.imu_gyro_y, frame.imu_gyro_z,
-                            frame.imu_mag_x, frame.imu_mag_y, frame.imu_mag_z
-                        );
-
-                        f_printf(&active_file, "%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,",
+                            frame.imu_mag_x, frame.imu_mag_y, frame.imu_mag_z,
                             frame.altitude_msl_m, frame.pressure_pa, frame.temp_celsius,
-                            frame.highg_acc_x, frame.highg_acc_y, frame.highg_acc_z
-                        );
-
-                        f_printf(&active_file, "%u,%ld,%ld,%ld,%u,%u,%u,%u,%.2f,%.2f,%.2f,%.2f\n",
+                            frame.highg_acc_x, frame.highg_acc_y, frame.highg_acc_z,
                             frame.gps_fix, frame.lat, frame.lon, frame.gps_alt,
                             frame.vel, frame.cog, frame.satellites_nb, frame.sd_space,
                             frame.imu_acc_vertical, frame.highg_acc_vertical,
                             frame.kalman_z, frame.kalman_v
                         );
+                        f_puts(line_buf, &active_file);
                     } else {
                         MEM2067_Sync();
                         MEM2067_CloseFile();
@@ -311,8 +309,6 @@ void Logger_Task(void) {
                         break;
                     }
                 }
-            } else {
-                logger_state = LOGGER_IDLE;
             }
             break;
     }

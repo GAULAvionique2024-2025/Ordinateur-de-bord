@@ -149,7 +149,6 @@ void FSM_Update(void) {
 
 						Logger_Enable(true);
 
-
 						current_global_state = STATE_ARMED;
 					}
 					break;
