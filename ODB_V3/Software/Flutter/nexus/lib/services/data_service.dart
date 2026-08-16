@@ -783,8 +783,8 @@ class DataServiceManager with ChangeNotifier {
   String get imuAccVerticalDisplay => hasConnection && imuSensorState == SensorState.ok ? '${imuAccVertical.toStringAsFixed(2)} m/s²' : '—';
   String get highGAccVerticalDisplay => hasConnection && accHighGSensorState == SensorState.ok ? '${highGAccVertical.toStringAsFixed(2)} m/s²' : '—';
 
-  String get pressureDisplay => hasConnection && barometerSensorState == SensorState.ok ? '${barometerPressure.toStringAsFixed(2)} hPa' : '—';
-  String get altitudeMslDisplay => hasConnection ? '${altitudeMslM.toStringAsFixed(2)} m' : '—';
+  String get pressureDisplay => hasConnection && barometerSensorState == SensorState.ok ? barometerPressure.toStringAsFixed(2) : '—';
+  String get altitudeMslDisplay => hasConnection ? altitudeMslM.toStringAsFixed(2) : '—';
   String get kalmanAltitudeDisplay => hasConnection ? kalmanAltitudeM.toStringAsFixed(2) : '—';
   String get kalmanVelocityDisplay => hasConnection ? kalmanVelocityMS.toStringAsFixed(2) : '—';
 
@@ -794,15 +794,17 @@ class DataServiceManager with ChangeNotifier {
   String get gpsSatellitesDisplay => hasValidGpsFix ? '$gpsSatellites satellites' : '—';
   String get gpsFixDisplay => hasConnection ? (gpsFix > 0 ? 'Actif' : 'Aucun fix') : '—';
 
-  bool get odbSensorState => (temperatureSensorState == SensorState.ok &&
+  bool get odbSensorState => (
+      temperatureSensorState == SensorState.ok &&
       imuSensorState == SensorState.ok &&
       accHighGSensorState == SensorState.ok &&
       flashSensorState == SensorState.ok &&
       gpsSensorState == SensorState.ok &&
       barometerSensorState == SensorState.ok &&
-      goodPowerState == true &&
-      pyroArmingModuleState == SensorState.ok &&
-      pyrosActiveCount >= 0);
+      goodPowerState == true
+      //pyroArmingModuleState == SensorState.ok &&
+      //pyrosActiveCount >= 0
+    );
 
   bool get missionReady => odbSensorState && radioState == RadioState.connected;
   bool get hasConnection => btService.connectedDevice != null;

@@ -19,6 +19,8 @@
 #include <stdint.h>
 
 
+#define STATIC_ACC_Z_THRESHOLD 8.0f
+
 extern buzzer_t buzzer;
 extern odb_data_t flight_data;
 extern odb_stats_t flight_stats;
@@ -111,7 +113,7 @@ void FSM_Update(void) {
         		case STATE_STATIC_ORIENTED:
         			// Security : stability check, orientation
 					bool is_static = (fabs(flight_data.kalman_v) < current_config.landing_detect_v_threshold);
-					bool is_oriented_up = flight_data.imu_acc_z > 9; // TODO: change this to a real value
+					bool is_oriented_up = flight_data.imu_acc_z > STATIC_ACC_Z_THRESHOLD;
 					if(is_static && is_oriented_up) {
 						current_preflight_substate = STATE_PYROS_TEST;
 						ODB_SetMissionState(&flight_data, STATE_PREFLIGHT, STATE_PYROS_TEST);
@@ -131,6 +133,16 @@ void FSM_Update(void) {
     			case STATE_WAITING_FLIGHT:
     				// Security : app unlock
 					if(is_ready_by_app) {
+						// Buzzer report (Blocking routine)
+						if(current_config.enable_buzzer) {
+							const odb_stats_t *last_stats = Logger_GetLastFlightStats();
+							if(last_stats != NULL) {
+								Buzzer_ReportStatus(&buzzer, current_config.buzzer_report_tone_hz, system_measurements.vin_batt, (bool[]){(flight_data.system_states & FLAG_PYRO1_CONN) != 0U, (flight_data.system_states & FLAG_PYRO2_CONN) != 0U, (flight_data.system_states & FLAG_PYRO3_CONN) != 0U, (flight_data.system_states & FLAG_PYRO4_CONN) != 0U}, 0U, last_stats->flight_time_ms, last_stats->max_altitude_kalman.value, last_stats->max_altitude_kalman.valid);
+							} else {
+								Buzzer_ReportStatus(&buzzer, current_config.buzzer_report_tone_hz, system_measurements.vin_batt, (bool[]){(flight_data.system_states & FLAG_PYRO1_CONN) != 0U, (flight_data.system_states & FLAG_PYRO2_CONN) != 0U, (flight_data.system_states & FLAG_PYRO3_CONN) != 0U, (flight_data.system_states & FLAG_PYRO4_CONN) != 0U}, 0U, 0, 0.0f, false);
+							}
+						}
+
 						ODB_SetMissionState(&flight_data, STATE_ARMED, 0);
 						Pyro_SetContinuity(false);
 						Pyro_Arming(&system_measurements, false, false);

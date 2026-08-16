@@ -273,7 +273,7 @@ odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats) {
 			sum += samples[i];
 		}
 
-		// Kalman use MSL instead of AGL
+		// Kalman use AGL instead of MSL
 		ground_altitude_msl_m = sum / KALMAN_NAV_SAMPLE_NB;
 		for(int i = 0; i < KALMAN_NAV_SAMPLE_NB; i++) {
 			samples[i] -= ground_altitude_msl_m;
@@ -338,16 +338,6 @@ odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats) {
     data->version_major = ODB_PROTOCOL_VERSION_MAJOR;
 	data->version_minor = ODB_PROTOCOL_VERSION_MINOR;
 	data->payload_size = ODB_DATA_SIZE;
-
-    // Buzzer report
-	if(current_config.enable_buzzer) {
-		const odb_stats_t *last_stats = Logger_GetLastFlightStats();
-		if(last_stats != NULL) {
-			Buzzer_ReportStatus(&buzzer, current_config.buzzer_report_tone_hz, system_measurements.vin_batt, (bool[]){(system_states & FLAG_PYRO1_CONN) != 0U, (system_states & FLAG_PYRO2_CONN) != 0U, (system_states & FLAG_PYRO3_CONN) != 0U, (system_states & FLAG_PYRO4_CONN) != 0U}, odb_state, last_stats->flight_time_ms, last_stats->max_altitude_kalman.value, last_stats->max_altitude_kalman.valid);
-		} else {
-			Buzzer_ReportStatus(&buzzer, current_config.buzzer_report_tone_hz, system_measurements.vin_batt, (bool[]){(system_states & FLAG_PYRO1_CONN) != 0U, (system_states & FLAG_PYRO2_CONN) != 0U, (system_states & FLAG_PYRO3_CONN) != 0U, (system_states & FLAG_PYRO4_CONN) != 0U}, odb_state, 0, 0.0f, false);
-		}
-	}
 
     return odb_state;
 }
