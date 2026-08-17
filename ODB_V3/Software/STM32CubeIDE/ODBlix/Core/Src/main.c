@@ -279,6 +279,7 @@ int main(void)
   MX_TIM4_Init();
   MX_TIM5_Init();
   /* USER CODE BEGIN 2 */
+  HAL_Delay(2000);
   DWT_Init();
   ODB_Init(&flight_data, &flight_stats);
   RebootManager_Init();

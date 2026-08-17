@@ -40,6 +40,8 @@
 #define BNO055_REG_SYS_STATUS       0x39
 #define BNO055_REG_SYS_ERR          0x3A
 
+#define BNO055_ID_CHECK_RETRY		5
+
 //									   P0	 P1	   P2	 P3	   P4	 P5	   P6	 P7
 const uint8_t BNO055_REMAP_CONFIG[] = {0x24, 0x21, 0x24, 0x21, 0x18, 0x09, 0x18, 0x09};
 const uint8_t BNO055_REMAP_SIGN[]   = {0x00, 0x02, 0x06, 0x04, 0x00, 0x04, 0x05, 0x00};
@@ -180,17 +182,30 @@ bno055_error_t BNO055_Init(bno055_t *dev) {
     }
 
     // Disable Reset
+    HAL_GPIO_WritePin(dev->rst_port, dev->rst_pin, GPIO_PIN_RESET);
+    HAL_Delay(30);
     HAL_GPIO_WritePin(dev->rst_port, dev->rst_pin, GPIO_PIN_SET);
     HAL_Delay(800);
 
     // Check ID
-    uint8_t id;
-    if(BNO055_ReadReg(dev->hi2c, BNO055_REG_CHIP_ID, &id) != 0) {
-        return BNO055_I2C_ERROR;
-    }
-    if(id != BNO055_ID_VAL) {
-        return BNO055_ID_ERROR;
-    }
+    uint8_t id = 0;
+    int8_t retries = BNO055_ID_CHECK_RETRY;
+	bool id_found = false;
+	while(retries > 0) {
+		if(BNO055_ReadReg(dev->hi2c, BNO055_REG_CHIP_ID, &id) == 0) {
+			if(id == BNO055_ID_VAL) {
+				id_found = true;
+				break;
+			}
+		}
+
+		HAL_Delay(100);
+		retries--;
+	}
+
+	if(!id_found) {
+		return BNO055_ID_ERROR;
+	}
 
     // Reset
     BNO055_Reset(dev);

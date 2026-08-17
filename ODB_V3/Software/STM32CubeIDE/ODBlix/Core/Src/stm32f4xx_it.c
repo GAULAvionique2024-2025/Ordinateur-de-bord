@@ -468,6 +468,20 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t size) {
 	}
 }
 
+void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart) {
+    if (huart->Instance == l76lm33.huart->Instance) {
+        if (huart->ErrorCode & HAL_UART_ERROR_ORE ||
+            huart->ErrorCode & HAL_UART_ERROR_NE ||
+            huart->ErrorCode & HAL_UART_ERROR_FE) {
+
+            __HAL_UART_CLEAR_OREFLAG(huart);
+            __HAL_UART_CLEAR_FEFLAG(huart);
+            __HAL_UART_CLEAR_NEFLAG(huart);
+
+            HAL_UARTEx_ReceiveToIdle_DMA(huart, l76lm33.dma_buffer, L76LM33_BUFFER_SIZE);
+        }
+    }
+}
 /*
  * RFD900x (Radio)
  */

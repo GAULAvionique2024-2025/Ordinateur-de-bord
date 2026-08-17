@@ -18,7 +18,7 @@ extern idefix_t idefix;
 extern pyro_t pyros[4];
 
 extern odb_data_t flight_data;
-extern volatile bool is_ready_by_app;
+extern bool is_ready_by_app;
 
 
 static void AppComm_SendFrame(hm11_t *hm11_dev, app_msg_type_t type, const uint8_t *payload, uint8_t len) {
