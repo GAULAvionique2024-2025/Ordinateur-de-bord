@@ -25,6 +25,7 @@ extern buzzer_t buzzer;
 extern odb_data_t flight_data;
 extern odb_stats_t flight_stats;
 extern system_measurements_t system_measurements;
+extern rfd900x_t rfd900x;
 extern TIM_HandleTypeDef htim5;
 extern pyro_t pyros[4];
 
@@ -302,6 +303,8 @@ void FSM_Update(void) {
 				    Scheduler_SetActive("Data_Update", false);
 				    Scheduler_SetActive("Telemetry", false);
 				    Scheduler_SetActive("Idefix", true);
+
+				    RFD900x_Sleep(&rfd900x);
 
 				    Logger_ExportToSD(&flight_stats);
 
