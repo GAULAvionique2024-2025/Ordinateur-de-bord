@@ -15,8 +15,6 @@ typedef enum {
     LOGGER_IDLE,
     LOGGER_START_WRITE,
     LOGGER_WAIT_FLASH_BUSY,
-	LOGGER_SD_DUMP_HEADER,
-	LOGGER_SD_DUMP_DATA
 } logger_state_t;
 static logger_state_t logger_state = LOGGER_IDLE;
 
@@ -40,11 +38,7 @@ static uint32_t previous_flight_header_addr = 0xFFFFFFFF;
 static bool is_logging = false;
 
 extern w25q_t w25q;
-
-// SD
-static uint32_t sd_dump_cursor = 0;
-static bool start_sd_dump = false;
-static const odb_stats_t *sd_dump_stats = NULL;
+extern odb_stats_t flight_stats;
 
 
 static bool Logger_ReadHeader(uint32_t addr, logger_header_t *header) {
@@ -67,13 +61,17 @@ static void Logger_ScanFlash(uint32_t *next_free_addr, uint32_t *next_id) {
             found_addr = addr;
             addr += FLASH_SECTOR_SIZE_BYTE;
         } else {
-        	uint32_t first_word;
-			uint32_t data_word;
+        	bool is_empty = true;
+        	uint32_t check_word;
+        	for(int i = 0; i < 16; i++) {
+				W25Q_Read(&w25q, (uint8_t*)&check_word, addr + (i * 4), 4);
+				if(check_word != 0xFFFFFFFF) {
+					is_empty = false;
+					break;
+				}
+			}
 
-			W25Q_Read(&w25q, (uint8_t*)&first_word, addr, 4);
-			W25Q_Read(&w25q, (uint8_t*)&data_word, addr + W25Q512_PAGE_SIZE, 4);
-
-			if(first_word != 0xFFFFFFFF || data_word != 0xFFFFFFFF) {
+			if(!is_empty) {
 				addr += FLASH_SECTOR_SIZE_BYTE;
 			} else {
 				break;
@@ -97,119 +95,6 @@ static void Logger_ScanFlash(uint32_t *next_free_addr, uint32_t *next_id) {
     *next_free_addr = addr;
 }
 
-static void Logger_HeaderCSV() {
-	char header_buf[256];
-
-	f_puts("# === FLIGHT STATISTICS ===\n", &active_file);
-
-	sprintf(header_buf, "# Date : %lu | Temps de vol : %lu ms\n", sd_dump_stats->date, sd_dump_stats->flight_time_ms);
-	f_puts(header_buf, &active_file);
-
-	sprintf(header_buf, "# Last GPS Coordinates : Lat %ld, Lon %ld\n", sd_dump_stats->last_lat, sd_dump_stats->last_lon);
-	f_puts(header_buf, &active_file);
-
-	f_puts("# -- Pyros Evenements --\n", &active_file);
-
-	sprintf(header_buf, "# Pyro 1 : Fired=%d, Time=%lu ms\n", sd_dump_stats->pyro1.fired, sd_dump_stats->pyro1.time_ms);
-	f_puts(header_buf, &active_file);
-
-	sprintf(header_buf, "# Pyro 2 : Fired=%d, Time=%lu ms\n", sd_dump_stats->pyro2.fired, sd_dump_stats->pyro2.time_ms);
-	f_puts(header_buf, &active_file);
-
-	sprintf(header_buf, "# Pyro 3 : Fired=%d, Time=%lu ms\n", sd_dump_stats->pyro3.fired, sd_dump_stats->pyro3.time_ms);
-	f_puts(header_buf, &active_file);
-
-	sprintf(header_buf, "# Pyro 4 : Fired=%d, Time=%lu ms\n", sd_dump_stats->pyro4.fired, sd_dump_stats->pyro4.time_ms);
-	f_puts(header_buf, &active_file);
-
-	f_puts("# -- Windowed Events --\n", &active_file);
-
-	sprintf(header_buf, "# Pyros Arming : Act=%d, Start=%lu ms, End=%lu ms\n", sd_dump_stats->pyros_arm.activated, sd_dump_stats->pyros_arm.start_time_ms, sd_dump_stats->pyros_arm.end_time_ms);
-	f_puts(header_buf, &active_file);
-
-	sprintf(header_buf, "# Mach Lock : Act=%d, Start=%lu ms, End=%lu ms\n", sd_dump_stats->mach_lock.activated, sd_dump_stats->mach_lock.start_time_ms, sd_dump_stats->mach_lock.end_time_ms);
-	f_puts(header_buf, &active_file);
-
-	f_puts("# -- Altitude Metrics (Valid, Value, Time_ms) --\n", &active_file);
-
-	sprintf(header_buf, "# Max Altitude GPS : V=%d, %.4f mm, T=%lu ms\n", sd_dump_stats->max_altitude_gps.valid, sd_dump_stats->max_altitude_gps.value, sd_dump_stats->max_altitude_gps.time_ms);
-	f_puts(header_buf, &active_file);
-
-	sprintf(header_buf, "# Max Altitude Baro : V=%d, %.4f m, T=%lu ms\n", sd_dump_stats->max_altitude_baro.valid, sd_dump_stats->max_altitude_baro.value, sd_dump_stats->max_altitude_baro.time_ms);
-	f_puts(header_buf, &active_file);
-
-	sprintf(header_buf, "# Max Altitude Kalman : V=%d, %.4f m, T=%lu ms\n", sd_dump_stats->max_altitude_kalman.valid, sd_dump_stats->max_altitude_kalman.value, sd_dump_stats->max_altitude_kalman.time_ms);
-	f_puts(header_buf, &active_file);
-
-	sprintf(header_buf, "# Apogee Detected : V=%d, %.4f m, T=%lu ms\n", sd_dump_stats->apogee.valid, sd_dump_stats->apogee.value, sd_dump_stats->apogee.time_ms);
-	f_puts(header_buf, &active_file);
-
-	sprintf(header_buf, "# Main Deployment : V=%d, %.4f m, T=%lu ms\n", sd_dump_stats->main_deploy.valid, sd_dump_stats->main_deploy.value, sd_dump_stats->main_deploy.time_ms);
-	f_puts(header_buf, &active_file);
-
-	sprintf(header_buf, "# Drogue Deployment : V=%d, %.4f m, T=%lu ms\n", sd_dump_stats->drogue_deploy.valid, sd_dump_stats->drogue_deploy.value, sd_dump_stats->drogue_deploy.time_ms);
-	f_puts(header_buf, &active_file);
-
-	f_puts("# -- Acceleration and Speed Metrics --\n", &active_file);
-
-	sprintf(header_buf, "# Max Ascend Speed : V=%d, %.4f m/s, T=%lu ms\n", sd_dump_stats->max_ascend_speed.valid, sd_dump_stats->max_ascend_speed.value, sd_dump_stats->max_ascend_speed.time_ms);
-	f_puts(header_buf, &active_file);
-
-	sprintf(header_buf, "# Max Descend Speed : V=%d, %.4f m/s, T=%lu ms\n", sd_dump_stats->max_descend_speed.valid, sd_dump_stats->max_descend_speed.value, sd_dump_stats->max_descend_speed.time_ms);
-	f_puts(header_buf, &active_file);
-
-	sprintf(header_buf, "# Max Ascend Acceleration : V=%d, %.4f m/s2, T=%lu ms\n", sd_dump_stats->max_ascend_accel.valid, sd_dump_stats->max_ascend_accel.value, sd_dump_stats->max_ascend_accel.time_ms);
-	f_puts(header_buf, &active_file);
-
-	sprintf(header_buf, "# Max Descend Acceleration : V=%d, %.4f m/s2, T=%lu ms\n", sd_dump_stats->max_descend_accel.valid, sd_dump_stats->max_descend_accel.value, sd_dump_stats->max_descend_accel.time_ms);
-	f_puts(header_buf, &active_file);
-
-	f_puts("# =======================================\n\n", &active_file);
-
-	f_puts("TimeBoot_ms,Sys_States,Event_States,Mission_State,Battery_mV,", &active_file);
-	f_puts("Roll,Pitch,Yaw,IMU_Acc_X,IMU_Acc_Y,IMU_Acc_Z,IMU_Gyro_X,IMU_Gyro_Y,IMU_Gyro_Z,IMU_Mag_X,IMU_Mag_Y,IMU_Mag_Z,", &active_file);
-	f_puts("Alt_MSL_m,Press_Pa,Temp_C,HighG_Acc_X,HighG_Acc_Y,HighG_Acc_Z,", &active_file);
-	f_puts("GPS_Fix,Lat,Lon,GPS_Alt_mm,Vel,COG,Sat_NB,SD_Space,IMU_Acc_Vert,HighG_Acc_Vert,Kalman_Z,Kalman_V\n", &active_file);
-
-	Logger_StartReadingFlight(Logger_GetCurrentFlightAddress(), &sd_dump_cursor);
-	logger_state = LOGGER_SD_DUMP_DATA;
-}
-
-void Logger_RuntimeCSV() {
-	odb_data_t frame;
-	char line_buf[512];
-
-	for(uint8_t i = 0; i < 5; i++) {
-		if(Logger_ReadNextData(&sd_dump_cursor, &frame)) {
-			snprintf(line_buf, sizeof(line_buf),
-				"%lu,%u,%u,%u,%u,"
-				"%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,"
-				"%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,"
-				"%u,%ld,%ld,%ld,%u,%u,%u,%u,%.4f,%.4f,%.4f,%.4f\n",
-				frame.time_boot_ms, frame.system_states, frame.event_states,
-				frame.mission_state, frame.battery_mv,
-				frame.roll, frame.pitch, frame.yaw,
-				frame.imu_acc_x, frame.imu_acc_y, frame.imu_acc_z,
-				frame.imu_gyro_x, frame.imu_gyro_y, frame.imu_gyro_z,
-				frame.imu_mag_x, frame.imu_mag_y, frame.imu_mag_z,
-				frame.altitude_agl_m, frame.pressure_pa, frame.temp_celsius,
-				frame.highg_acc_x, frame.highg_acc_y, frame.highg_acc_z,
-				frame.gps_fix, frame.lat, frame.lon, frame.gps_alt,
-				frame.vel, frame.cog, frame.satellites_nb, frame.sd_space,
-				frame.imu_acc_vertical, frame.highg_acc_vertical,
-				frame.kalman_z, frame.kalman_v
-			);
-			f_puts(line_buf, &active_file);
-		} else {
-			MEM2067_Sync();
-			MEM2067_CloseFile();
-			MEM2067_Unmount();
-			logger_state = LOGGER_IDLE;
-			break;
-		}
-	}
-}
-
 int8_t Logger_Init(void) {
     uint32_t next_id = 0;
     Logger_ScanFlash(&flash_current_address, &next_id);
@@ -225,6 +110,13 @@ int8_t Logger_Init(void) {
     if(W25Q_EraseSector(&w25q, flash_current_address) != 0) {
         return LOGGER_ERROR_FLASH_ERASE;
     }
+
+    // Secuty Check
+    uint32_t verify_word;
+	W25Q_Read(&w25q, (uint8_t*)&verify_word, flash_current_address, 4);
+	if(verify_word != 0xFFFFFFFF) {
+		return LOGGER_ERROR_FLASH_ERASE;
+	}
 
     logger_header_t header = {
         .magic_number = LOGGER_MAGIC_HEADER,
@@ -260,7 +152,7 @@ void Logger_PushData(odb_data_t *new_data) {
 
     if(write_index >= LOG_BUFFER_SIZE) {
         if(flush_pending) {
-        	// TODO: add error counter "missed frames"
+        	flight_stats.missed_frames++;
             return;
         } else {
             current_flush_buf = current_write_buf;
@@ -295,18 +187,13 @@ void Logger_PushData(odb_data_t *new_data) {
 }
 
 void Logger_Task(void) {
-    switch(logger_state) {
-        case LOGGER_IDLE:
-            if(flush_pending) {
-                flush_bytes_written = 0;
-                logger_state = LOGGER_START_WRITE;
-            } else if(start_sd_dump) {
-                start_sd_dump = false;
-                if(file_is_open && sd_dump_stats != NULL) {
-                    logger_state = LOGGER_SD_DUMP_HEADER;
-                }
-            }
-            break;
+	switch(logger_state) {
+		case LOGGER_IDLE:
+			if(flush_pending) {
+				flush_bytes_written = 0;
+				logger_state = LOGGER_START_WRITE;
+			}
+			break;
 
         case LOGGER_START_WRITE:
         {
@@ -352,20 +239,6 @@ void Logger_Task(void) {
                 }
             }
             break;
-
-        case LOGGER_SD_DUMP_HEADER:
-			if(file_is_open) {
-				Logger_HeaderCSV();
-			} else {
-				logger_state = LOGGER_IDLE;
-			}
-			break;
-
-        case LOGGER_SD_DUMP_DATA:
-            if(file_is_open) {
-            	Logger_RuntimeCSV();
-            }
-            break;
     }
 }
 
@@ -389,10 +262,6 @@ void Logger_Enable(bool enable) {
 
 bool Logger_IsLogging(void) {
     return is_logging;
-}
-
-bool Logger_IsBusy(void) {
-    return (flush_pending || logger_state != LOGGER_IDLE);
 }
 
 void Logger_FlushRemaining(void) {
@@ -473,160 +342,121 @@ bool Logger_Erase(void) {
 }
 
 void Logger_ExportToSD(const odb_stats_t *stats) {
-    if(stats != NULL) {
-        sd_dump_stats = stats;
-        start_sd_dump = true;
+    if(stats == NULL || !file_is_open) {
+        return;
     }
-}
 
-
-/* === TEST === */
-/*
-static void Logger_WriteStatsToCSV(const odb_stats_t *stats) {
     char header_buf[256];
+    char line_buf[512];
 
     f_puts("# === FLIGHT STATISTICS ===\n", &active_file);
 
-    if (stats != NULL) {
-        sprintf(header_buf, "# Date : %lu | Temps de vol : %lu ms\n", stats->date, stats->flight_time_ms);
-        f_puts(header_buf, &active_file);
+    sprintf(header_buf, "# Date : %lu | Temps de vol : %lu ms\n", stats->date, stats->flight_time_ms);
+    f_puts(header_buf, &active_file);
 
-        sprintf(header_buf, "# Last GPS Coordinates : Lat %ld, Lon %ld\n", stats->last_lat, stats->last_lon);
-        f_puts(header_buf, &active_file);
+    sprintf(header_buf, "# Last GPS Coordinates : Lat %ld, Lon %ld\n", stats->last_lat, stats->last_lon);
+    f_puts(header_buf, &active_file);
 
-        f_puts("# -- Pyros Evenements --\n", &active_file);
-        sprintf(header_buf, "# Pyro 1 : Fired=%d, Time=%lu ms\n", stats->pyro1.fired, stats->pyro1.time_ms);
-        f_puts(header_buf, &active_file);
-        sprintf(header_buf, "# Pyro 2 : Fired=%d, Time=%lu ms\n", stats->pyro2.fired, stats->pyro2.time_ms);
-        f_puts(header_buf, &active_file);
-        sprintf(header_buf, "# Pyro 3 : Fired=%d, Time=%lu ms\n", stats->pyro3.fired, stats->pyro3.time_ms);
-        f_puts(header_buf, &active_file);
-        sprintf(header_buf, "# Pyro 4 : Fired=%d, Time=%lu ms\n", stats->pyro4.fired, stats->pyro4.time_ms);
-        f_puts(header_buf, &active_file);
+    f_puts("# -- Pyros Evenements --\n", &active_file);
+    sprintf(header_buf, "# Pyro 1 : Fired=%d, Time=%lu ms\n", stats->pyro1.fired, stats->pyro1.time_ms);
+    f_puts(header_buf, &active_file);
+    sprintf(header_buf, "# Pyro 2 : Fired=%d, Time=%lu ms\n", stats->pyro2.fired, stats->pyro2.time_ms);
+    f_puts(header_buf, &active_file);
+    sprintf(header_buf, "# Pyro 3 : Fired=%d, Time=%lu ms\n", stats->pyro3.fired, stats->pyro3.time_ms);
+    f_puts(header_buf, &active_file);
+    sprintf(header_buf, "# Pyro 4 : Fired=%d, Time=%lu ms\n", stats->pyro4.fired, stats->pyro4.time_ms);
+    f_puts(header_buf, &active_file);
 
-        f_puts("# -- Windowed Events --\n", &active_file);
-        sprintf(header_buf, "# Pyros Arming : Act=%d, Start=%lu ms, End=%lu ms\n", stats->pyros_arm.activated, stats->pyros_arm.start_time_ms, stats->pyros_arm.end_time_ms);
-        f_puts(header_buf, &active_file);
-        sprintf(header_buf, "# Mach Lock : Act=%d, Start=%lu ms, End=%lu ms\n", stats->mach_lock.activated, stats->mach_lock.start_time_ms, stats->mach_lock.end_time_ms);
-        f_puts(header_buf, &active_file);
+    f_puts("# -- Windowed Events --\n", &active_file);
+    sprintf(header_buf, "# Pyros Arming : Act=%d, Start=%lu ms, End=%lu ms\n", stats->pyros_arm.activated, stats->pyros_arm.start_time_ms, stats->pyros_arm.end_time_ms);
+    f_puts(header_buf, &active_file);
+    sprintf(header_buf, "# Mach Lock : Act=%d, Start=%lu ms, End=%lu ms\n", stats->mach_lock.activated, stats->mach_lock.start_time_ms, stats->mach_lock.end_time_ms);
+    f_puts(header_buf, &active_file);
 
-        f_puts("# -- Altitude Metrics (Valid, Value, Time_ms) --\n", &active_file);
-        sprintf(header_buf, "# Max Altitude GPS : V=%d, %.4f mm, T=%lu ms\n", stats->max_altitude_gps.valid, stats->max_altitude_gps.value, stats->max_altitude_gps.time_ms);
-        f_puts(header_buf, &active_file);
-        sprintf(header_buf, "# Max Altitude Baro : V=%d, %.4f m, T=%lu ms\n", stats->max_altitude_baro.valid, stats->max_altitude_baro.value, stats->max_altitude_baro.time_ms);
-        f_puts(header_buf, &active_file);
-        sprintf(header_buf, "# Max Altitude Kalman : V=%d, %.4f m, T=%lu ms\n", stats->max_altitude_kalman.valid, stats->max_altitude_kalman.value, stats->max_altitude_kalman.time_ms);
-        f_puts(header_buf, &active_file);
-        sprintf(header_buf, "# Apogee Detected : V=%d, %.4f m, T=%lu ms\n", stats->apogee.valid, stats->apogee.value, stats->apogee.time_ms);
-        f_puts(header_buf, &active_file);
-        sprintf(header_buf, "# Main Deployment : V=%d, %.4f m, T=%lu ms\n", stats->main_deploy.valid, stats->main_deploy.value, stats->main_deploy.time_ms);
-        f_puts(header_buf, &active_file);
-        sprintf(header_buf, "# Drogue Deployment : V=%d, %.4f m, T=%lu ms\n", stats->drogue_deploy.valid, stats->drogue_deploy.value, stats->drogue_deploy.time_ms);
-        f_puts(header_buf, &active_file);
+    f_puts("# -- Altitude Metrics (Valid, Value, Time_ms) --\n", &active_file);
+    sprintf(header_buf, "# Max Altitude GPS : V=%d, %.4f mm, T=%lu ms\n", stats->max_altitude_gps.valid, stats->max_altitude_gps.value, stats->max_altitude_gps.time_ms);
+    f_puts(header_buf, &active_file);
+    sprintf(header_buf, "# Max Altitude Baro : V=%d, %.4f m, T=%lu ms\n", stats->max_altitude_baro.valid, stats->max_altitude_baro.value, stats->max_altitude_baro.time_ms);
+    f_puts(header_buf, &active_file);
+    sprintf(header_buf, "# Max Altitude Kalman : V=%d, %.4f m, T=%lu ms\n", stats->max_altitude_kalman.valid, stats->max_altitude_kalman.value, stats->max_altitude_kalman.time_ms);
+    f_puts(header_buf, &active_file);
+    sprintf(header_buf, "# Apogee Detected : V=%d, %.4f m, T=%lu ms\n", stats->apogee.valid, stats->apogee.value, stats->apogee.time_ms);
+    f_puts(header_buf, &active_file);
+    sprintf(header_buf, "# Main Deployment : V=%d, %.4f m, T=%lu ms\n", stats->main_deploy.valid, stats->main_deploy.value, stats->main_deploy.time_ms);
+    f_puts(header_buf, &active_file);
+    sprintf(header_buf, "# Drogue Deployment : V=%d, %.4f m, T=%lu ms\n", stats->drogue_deploy.valid, stats->drogue_deploy.value, stats->drogue_deploy.time_ms);
+    f_puts(header_buf, &active_file);
 
-        f_puts("# -- Acceleration and Speed Metrics --\n", &active_file);
-        sprintf(header_buf, "# Max Ascend Speed : V=%d, %.4f m/s, T=%lu ms\n", stats->max_ascend_speed.valid, stats->max_ascend_speed.value, stats->max_ascend_speed.time_ms);
-        f_puts(header_buf, &active_file);
-        sprintf(header_buf, "# Max Descend Speed : V=%d, %.4f m/s, T=%lu ms\n", stats->max_descend_speed.valid, stats->max_descend_speed.value, stats->max_descend_speed.time_ms);
-        f_puts(header_buf, &active_file);
-        sprintf(header_buf, "# Max Ascend Acceleration : V=%d, %.4f m/s2, T=%lu ms\n", stats->max_ascend_accel.valid, stats->max_ascend_accel.value, stats->max_ascend_accel.time_ms);
-        f_puts(header_buf, &active_file);
-        sprintf(header_buf, "# Max Descend Acceleration : V=%d, %.4f m/s2, T=%lu ms\n", stats->max_descend_accel.valid, stats->max_descend_accel.value, stats->max_descend_accel.time_ms);
-        f_puts(header_buf, &active_file);
-    } else {
-        f_puts("# STATS CORRUPTED OR MISSING\n", &active_file);
-    }
+    f_puts("# -- Acceleration and Speed Metrics --\n", &active_file);
+    sprintf(header_buf, "# Max Ascend Speed : V=%d, %.4f m/s, T=%lu ms\n", stats->max_ascend_speed.valid, stats->max_ascend_speed.value, stats->max_ascend_speed.time_ms);
+    f_puts(header_buf, &active_file);
+    sprintf(header_buf, "# Max Descend Speed : V=%d, %.4f m/s, T=%lu ms\n", stats->max_descend_speed.valid, stats->max_descend_speed.value, stats->max_descend_speed.time_ms);
+    f_puts(header_buf, &active_file);
+    sprintf(header_buf, "# Max Ascend Acceleration : V=%d, %.4f m/s2, T=%lu ms\n", stats->max_ascend_accel.valid, stats->max_ascend_accel.value, stats->max_ascend_accel.time_ms);
+    f_puts(header_buf, &active_file);
+    sprintf(header_buf, "# Max Descend Acceleration : V=%d, %.4f m/s2, T=%lu ms\n", stats->max_descend_accel.valid, stats->max_descend_accel.value, stats->max_descend_accel.time_ms);
+    f_puts(header_buf, &active_file);
+    f_puts("# -- DEBUG --\n", &active_file);
+    sprintf(header_buf, "# Missed Frames: %lu\n", stats->missed_frames);
+    f_puts(header_buf, &active_file);
+    sprintf(header_buf, "# Pre-Pyros Test : %lu ms\n", stats->fsm_trans.pre_pyros_test);
+	f_puts(header_buf, &active_file);
+	sprintf(header_buf, "# Pre-Waiting Flight : %lu ms\n", stats->fsm_trans.pre_waiting_flight);
+	f_puts(header_buf, &active_file);
+	sprintf(header_buf, "# Armed : %lu ms\n", stats->fsm_trans.armed);
+	f_puts(header_buf, &active_file);
+	sprintf(header_buf, "# Boost Phase : %lu ms\n", stats->fsm_trans.inflight_boost);
+	f_puts(header_buf, &active_file);
+	sprintf(header_buf, "# Fast Ascent : %lu ms\n", stats->fsm_trans.inflight_fast);
+	f_puts(header_buf, &active_file);
+	sprintf(header_buf, "# Coast Phase : %lu ms\n", stats->fsm_trans.inflight_coast);
+	f_puts(header_buf, &active_file);
+	sprintf(header_buf, "# Drogue Deploy : %lu ms\n", stats->fsm_trans.inflight_drogue);
+	f_puts(header_buf, &active_file);
+	sprintf(header_buf, "# Main Deploy : %lu ms\n", stats->fsm_trans.inflight_main);
+	f_puts(header_buf, &active_file);
+	sprintf(header_buf, "# Landed : %lu ms\n", stats->fsm_trans.inflight_landed);
+	f_puts(header_buf, &active_file);
+	sprintf(header_buf, "# Postflight : %lu ms\n", stats->fsm_trans.postflight);
+	f_puts(header_buf, &active_file);
 
     f_puts("# =======================================\n\n", &active_file);
+
     f_puts("TimeBoot_ms,Sys_States,Event_States,Mission_State,Battery_mV,"
            "Roll,Pitch,Yaw,IMU_Acc_X,IMU_Acc_Y,IMU_Acc_Z,IMU_Gyro_X,IMU_Gyro_Y,IMU_Gyro_Z,IMU_Mag_X,IMU_Mag_Y,IMU_Mag_Z,"
            "Alt_MSL_m,Press_Pa,Temp_C,HighG_Acc_X,HighG_Acc_Y,HighG_Acc_Z,"
            "GPS_Fix,Lat,Lon,GPS_Alt_mm,Vel,COG,Sat_NB,SD_Space,IMU_Acc_Vert,HighG_Acc_Vert,Kalman_Z,Kalman_V\n", &active_file);
-}
 
-void Logger_DumpAllToSD(void) {
-    uint32_t addr = 0;
-    logger_header_t header;
-    char filename[32];
-    char line_buf[512];
+    uint32_t cursor = 0;
+    Logger_StartReadingFlight(Logger_GetCurrentFlightAddress(), &cursor);
+    odb_data_t frame;
 
-    while (addr < LOGGER_MAX_ALLOWED_ADDRESS) {
-        if (Logger_ReadHeader(addr, &header)) {
-            uint32_t flight_id = header.flight_id;
-            snprintf(filename, sizeof(filename), "FLT_%04lu.CSV", flight_id);
-
-            if (f_open(&active_file, filename, FA_WRITE | FA_CREATE_ALWAYS) == FR_OK) {
-
-                uint32_t stats_addr = addr + FLASH_SECTOR_SIZE_BYTE;
-                logger_stats_t stats_packet;
-                bool has_stats = false;
-
-                if(W25Q_Read(&w25q, (uint8_t*)&stats_packet, stats_addr, sizeof(logger_stats_t)) == 0) {
-                    if (stats_packet.magic_number == LOGGER_STATS_MAGIC_NUMBER) {
-                        has_stats = true;
-                    }
-                }
-
-                if (has_stats) {
-                    Logger_WriteStatsToCSV(&stats_packet.stats);
-                } else {
-                    Logger_WriteStatsToCSV(NULL);
-                }
-
-                uint32_t cursor;
-                Logger_StartReadingFlight(addr, &cursor);
-                odb_data_t frame;
-                uint32_t data_count = 0;
-
-                while (Logger_ReadNextData(&cursor, &frame)) {
-                    data_count++;
-                    snprintf(line_buf, sizeof(line_buf),
-                        "%lu,%u,%u,%u,%u,"
-                        "%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,"
-                        "%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,"
-                        "%u,%ld,%ld,%ld,%u,%u,%u,%u,%.4f,%.4f,%.4f,%.4f\n",
-                        frame.time_boot_ms, frame.system_states, frame.event_states,
-                        frame.mission_state, frame.battery_mv,
-                        frame.roll, frame.pitch, frame.yaw,
-                        frame.imu_acc_x, frame.imu_acc_y, frame.imu_acc_z,
-                        frame.imu_gyro_x, frame.imu_gyro_y, frame.imu_gyro_z,
-                        frame.imu_mag_x, frame.imu_mag_y, frame.imu_mag_z,
-                        frame.altitude_agl_m, frame.pressure_pa, frame.temp_celsius,
-                        frame.highg_acc_x, frame.highg_acc_y, frame.highg_acc_z,
-                        frame.gps_fix, frame.lat, frame.lon, frame.gps_alt,
-                        frame.vel, frame.cog, frame.satellites_nb, frame.sd_space,
-                        frame.imu_acc_vertical, frame.highg_acc_vertical,
-                        frame.kalman_z, frame.kalman_v
-                    );
-                    f_puts(line_buf, &active_file);
-                }
-
-                f_sync(&active_file);
-                f_close(&active_file);
-
-                if(data_count > 0) {
-                    addr = ((cursor / FLASH_SECTOR_SIZE_BYTE) + 1) * FLASH_SECTOR_SIZE_BYTE;
-                } else {
-                    addr += FLASH_SECTOR_SIZE_BYTE;
-                }
-
-            } else {
-                addr += FLASH_SECTOR_SIZE_BYTE;
-            }
-        } else {
-            uint32_t first_word, data_word;
-            W25Q_Read(&w25q, (uint8_t*)&first_word, addr, 4);
-            W25Q_Read(&w25q, (uint8_t*)&data_word, addr + W25Q512_PAGE_SIZE, 4);
-
-            if(first_word != 0xFFFFFFFF || data_word != 0xFFFFFFFF) {
-                addr += FLASH_SECTOR_SIZE_BYTE;
-            } else {
-                break;
-            }
-        }
+    while(Logger_ReadNextData(&cursor, &frame)) {
+        snprintf(line_buf, sizeof(line_buf),
+            "%lu,%u,%u,%u,%u,"
+            "%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,"
+            "%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,"
+            "%u,%ld,%ld,%ld,%u,%u,%u,%u,%.4f,%.4f,%.4f,%.4f\n",
+            frame.time_boot_ms, frame.system_states, frame.event_states,
+            frame.mission_state, frame.battery_mv,
+            frame.roll, frame.pitch, frame.yaw,
+            frame.imu_acc_x, frame.imu_acc_y, frame.imu_acc_z,
+            frame.imu_gyro_x, frame.imu_gyro_y, frame.imu_gyro_z,
+            frame.imu_mag_x, frame.imu_mag_y, frame.imu_mag_z,
+            frame.altitude_agl_m, frame.pressure_pa, frame.temp_celsius,
+            frame.highg_acc_x, frame.highg_acc_y, frame.highg_acc_z,
+            frame.gps_fix, frame.lat, frame.lon, frame.gps_alt,
+            frame.vel, frame.cog, frame.satellites_nb, frame.sd_space,
+            frame.imu_acc_vertical, frame.highg_acc_vertical,
+            frame.kalman_z, frame.kalman_v
+        );
+        f_puts(line_buf, &active_file);
     }
+
+    MEM2067_Sync();
+    MEM2067_CloseFile();
+    MEM2067_Unmount();
 }
-*/
 
 /*
 void Test_W25Q_Logging(void) {
@@ -639,8 +469,8 @@ void Test_W25Q_Logging(void) {
     DEBUG_PRINTF("[TEST] Génération et écriture de 500 frames en Flash...\n");
     for (int i = 0; i < 500; i++) {
         mock_data.time_boot_ms = i * 20;
-        mock_data.altitude_msl_m = (float)i * 2.5f;
-        mock_data.kalman_z = mock_data.altitude_msl_m;
+        mock_data.altitude_agl_m = (float)i * 2.5f;
+        mock_data.kalman_z = mock_data.altitude_agl_m;
         mock_data.kalman_v = 150.0f - (i * 0.3f);
 
         if (i > 250) {

@@ -14,7 +14,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#define LOG_BUFFER_SIZE				256 				// 400 ms (max wait erase sector w25q) / TASK_LOGGER_FREQ_MS = 20 frames + security
+#define LOG_BUFFER_SIZE				512 				// 400 ms (max wait erase sector w25q) / TASK_LOGGER_FREQ_MS = 20 frames + security
 #define LOGGER_MIN_FLIGHT_SPACE  	(5 * 1024 * 1024) 	// 5Mo
 
 
@@ -47,7 +47,6 @@ int8_t Logger_Init(void);
 void Logger_PushData(odb_data_t *new_data);
 void Logger_Enable(bool enable);
 bool Logger_IsLogging(void);
-bool Logger_IsBusy(void);
 void Logger_Task(void);
 void Logger_SaveStats(const odb_stats_t *stats);
 void Logger_FlushRemaining(void);

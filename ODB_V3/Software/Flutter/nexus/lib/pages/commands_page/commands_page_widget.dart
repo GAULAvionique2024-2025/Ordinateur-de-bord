@@ -359,7 +359,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                           title: 'Test du module d\'armement',
                           description: 'Test du module d\'armement des pyros pour la FSM',
                           buttonText: 'Exécuter',
-                          buttonColor: connected ? FlutterFlowTheme.of(context).tertiary : FlutterFlowTheme.of(context).secondaryText,
+                          buttonColor: connected ? FlutterFlowTheme.of(context).primary : FlutterFlowTheme.of(context).secondaryText,
                           onPressed: connected ? () async {
                             ConsoleService().log('Test d\'armement des pyros demandé');
                             await data.testArmingModule();
@@ -370,7 +370,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                           title: 'Test de la continuité des pyros',
                           description: 'Test de la continuité des pyros et des rôles',
                           buttonText: 'Exécuter',
-                          buttonColor: connected ? FlutterFlowTheme.of(context).tertiary : FlutterFlowTheme.of(context).secondaryText,
+                          buttonColor: connected ? FlutterFlowTheme.of(context).primary : FlutterFlowTheme.of(context).secondaryText,
                           onPressed: connected ? () async {
                             ConsoleService().log('Test de continuité des pyros demandé');
                             await data.testPyrosContinuity();
@@ -381,7 +381,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                           title: 'Test du mach lock',
                           description: 'Test de le mach lock pour les accélérations dépassant mach 1',
                           buttonText: 'Exécuter',
-                          buttonColor: connected ? FlutterFlowTheme.of(context).tertiary : FlutterFlowTheme.of(context).secondaryText,
+                          buttonColor: connected ? FlutterFlowTheme.of(context).primary : FlutterFlowTheme.of(context).secondaryText,
                           onPressed: connected ? () async {
                             ConsoleService().log('Test de mach lock demandé');
                             await data.testMachLock();
@@ -401,7 +401,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                           title: 'Calibration Accéléromètre',
                           description: 'Calibrer les axes X, Y, Z',
                           buttonText: 'Calibrer',
-                          buttonColor: connected ? FlutterFlowTheme.of(context).tertiary : FlutterFlowTheme.of(context).secondaryText,
+                          buttonColor: connected ? FlutterFlowTheme.of(context).error : FlutterFlowTheme.of(context).secondaryText,
                           onPressed: connected ? () {
                             ConsoleService().log('Calibration Accéléromètre demandé (Pas encore implémenté)');
                             //bt.send('CALIB1\r\n');
@@ -412,7 +412,7 @@ class _CommandsPageWidgetState extends State<CommandsPageWidget> {
                           title: 'Calibration Baromètre',
                           description: 'Réglage altitude de référence',
                           buttonText: 'Calibrer',
-                          buttonColor: connected ? FlutterFlowTheme.of(context).tertiary : FlutterFlowTheme.of(context).secondaryText,
+                          buttonColor: connected ? FlutterFlowTheme.of(context).error : FlutterFlowTheme.of(context).secondaryText,
                           onPressed: connected ? () {
                             ConsoleService().log('Calibration Baromètre demandé (Pas encore implémenté)');
                             //bt.send('CALIB2\r\n');

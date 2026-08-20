@@ -14,6 +14,7 @@
 #include "Tools/profiler.h"
 #include "Comm/beacon_comm.h"
 #include "Utils/utils.h"
+#include "stm32f4xx_hal.h"
 #include <ctype.h>
 #include <math.h>
 #include <stdio.h>
@@ -160,6 +161,18 @@ void ODB_Reset(odb_data_t *data, odb_stats_t *stats) {
     stats->max_descend_accel.value = 0.0f;
     stats->max_descend_accel.time_ms = 0;
     stats->flight_time_ms = 0;
+    stats->flight_start_time_ms = 0;
+    stats->missed_frames = 0;
+    stats->fsm_trans.pre_pyros_test = 0;
+	stats->fsm_trans.pre_waiting_flight = 0;
+	stats->fsm_trans.armed = 0;
+	stats->fsm_trans.inflight_boost = 0;
+	stats->fsm_trans.inflight_fast = 0;
+	stats->fsm_trans.inflight_coast = 0;
+	stats->fsm_trans.inflight_drogue = 0;
+	stats->fsm_trans.inflight_main = 0;
+	stats->fsm_trans.inflight_landed = 0;
+	stats->fsm_trans.postflight = 0;
 }
 
 odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats) {
@@ -491,33 +504,34 @@ void ODB_Update(odb_data_t *data, odb_stats_t *stats) {
     data->battery_mv = (uint16_t)(system_measurements.vin_batt);
 
     if(stats) {
-        stats->pyro1.fired = pyros[0].is_fire;
-        stats->pyro2.fired = pyros[1].is_fire;
-        stats->pyro3.fired = pyros[2].is_fire;
-        stats->pyro4.fired = pyros[3].is_fire;
+    	uint32_t current_flight_time_ms = now_ms - stats->flight_start_time_ms;
+		stats->pyro1.fired = pyros[0].is_fire;
+		stats->pyro2.fired = pyros[1].is_fire;
+		stats->pyro3.fired = pyros[2].is_fire;
+		stats->pyro4.fired = pyros[3].is_fire;
 
-        ODB_UpdateWindowEvent(&stats->pyros_arm, pyros_arming_enabled, now_ms);
+		ODB_UpdateWindowEvent(&stats->pyros_arm, pyros_arming_enabled, current_flight_time_ms);
 
-        if(stats->pyro1.fired && stats->pyro1.time_ms == 0) {
-            stats->pyro1.time_ms = now_ms;
-        }
-        if(stats->pyro2.fired && stats->pyro2.time_ms == 0) {
-            stats->pyro2.time_ms = now_ms;
-        }
-        if(stats->pyro3.fired && stats->pyro3.time_ms == 0) {
-            stats->pyro3.time_ms = now_ms;
-        }
-        if(stats->pyro4.fired && stats->pyro4.time_ms == 0) {
-            stats->pyro4.time_ms = now_ms;
-        }
+		if(stats->pyro1.fired && stats->pyro1.time_ms == 0) {
+			stats->pyro1.time_ms = current_flight_time_ms;
+		}
+		if(stats->pyro2.fired && stats->pyro2.time_ms == 0) {
+			stats->pyro2.time_ms = current_flight_time_ms;
+		}
+		if(stats->pyro3.fired && stats->pyro3.time_ms == 0) {
+			stats->pyro3.time_ms = current_flight_time_ms;
+		}
+		if(stats->pyro4.fired && stats->pyro4.time_ms == 0) {
+			stats->pyro4.time_ms = current_flight_time_ms;
+		}
 
-        ODB_UpdateMetricMax(&stats->max_altitude_gps, (float)data->gps_alt, now_ms);
-        ODB_UpdateMetricMax(&stats->max_altitude_baro, data->altitude_agl_m, now_ms);
-        ODB_UpdateMetricMax(&stats->max_altitude_kalman, data->kalman_z, now_ms);
-        ODB_UpdateMetricMax(&stats->max_ascend_speed, (data->kalman_v > 0.0f) ? data->kalman_v : 0.0f, now_ms);
-        ODB_UpdateMetricMax(&stats->max_descend_speed, (data->kalman_v < 0.0f) ? -data->kalman_v : 0.0f, now_ms);
-        ODB_UpdateMetricMax(&stats->max_ascend_accel, (raw_accel_z > 0.0f) ? raw_accel_z : 0.0f, now_ms);
-        ODB_UpdateMetricMax(&stats->max_descend_accel, (raw_accel_z < 0.0f) ? -raw_accel_z : 0.0f, now_ms);
+		ODB_UpdateMetricMax(&stats->max_altitude_gps, (float)data->gps_alt, current_flight_time_ms);
+		ODB_UpdateMetricMax(&stats->max_altitude_baro, data->altitude_agl_m, current_flight_time_ms);
+		ODB_UpdateMetricMax(&stats->max_altitude_kalman, data->kalman_z, current_flight_time_ms);
+		ODB_UpdateMetricMax(&stats->max_ascend_speed, (data->kalman_v > 0.0f) ? data->kalman_v : 0.0f, current_flight_time_ms);
+		ODB_UpdateMetricMax(&stats->max_descend_speed, (data->kalman_v < 0.0f) ? -data->kalman_v : 0.0f, current_flight_time_ms);
+		ODB_UpdateMetricMax(&stats->max_ascend_accel, (raw_accel_z > 0.0f) ? raw_accel_z : 0.0f, current_flight_time_ms);
+		ODB_UpdateMetricMax(&stats->max_descend_accel, (raw_accel_z < 0.0f) ? -raw_accel_z : 0.0f, current_flight_time_ms);
 
         if(data->gps_fix >= 1) {
             stats->last_lat = data->lat;

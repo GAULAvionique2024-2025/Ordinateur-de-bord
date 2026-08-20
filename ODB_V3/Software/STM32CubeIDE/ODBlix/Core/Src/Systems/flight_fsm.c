@@ -38,6 +38,7 @@ static uint32_t fire_timer = 0;
 static uint32_t flight_duration = 0;
 static uint32_t landing_timer = 0;
 static uint8_t fire_attempt_count = 0;
+
 static bool sustainer_ignited = false;
 static bool backup_active = false;
 
@@ -69,7 +70,7 @@ static void FSM_HandleDeployment(pyro_role_t primary_role, pyro_role_t backup_ro
                 if(!deploy_stat->valid) {
                     deploy_stat->valid = true;
                     deploy_stat->value = flight_data.kalman_z;
-                    deploy_stat->time_ms = current_time;
+                    deploy_stat->time_ms = current_time - flight_stats.flight_start_time_ms;
                 }
 
                 fire_attempt_count++;
@@ -91,7 +92,7 @@ static void FSM_HandleDeployment(pyro_role_t primary_role, pyro_role_t backup_ro
                 if(!deploy_stat->valid) {
                     deploy_stat->valid = true;
                     deploy_stat->value = flight_data.kalman_z;
-                    deploy_stat->time_ms = current_time;
+                    deploy_stat->time_ms = current_time - flight_stats.flight_start_time_ms;
                 }
 
                 fire_attempt_count++;
@@ -129,9 +130,11 @@ void FSM_Update(void) {
 							flight_data.system_states |= FLAG_PYROS_ARMED_OK;
 							// Skip pyros/arm check
 							current_preflight_substate = STATE_WAITING_FLIGHT;
+							flight_stats.fsm_trans.pre_waiting_flight = HAL_GetTick();
 							ODB_SetMissionState(&flight_data, STATE_PREFLIGHT, STATE_WAITING_FLIGHT);
 						} else {
 							current_preflight_substate = STATE_PYROS_TEST;
+							flight_stats.fsm_trans.pre_pyros_test = HAL_GetTick();
 							ODB_SetMissionState(&flight_data, STATE_PREFLIGHT, STATE_PYROS_TEST);
 						}
 					}
@@ -143,6 +146,7 @@ void FSM_Update(void) {
 					bool arm_ok = (flight_data.system_states & FLAG_PYROS_ARMED_OK) != 0;
     				if(pyros_ok && arm_ok) {
     					current_preflight_substate = STATE_WAITING_FLIGHT;
+    					flight_stats.fsm_trans.pre_waiting_flight = HAL_GetTick();
     					ODB_SetMissionState(&flight_data, STATE_PREFLIGHT, STATE_WAITING_FLIGHT);
     				}
     				break;
@@ -160,13 +164,14 @@ void FSM_Update(void) {
 							}
 						}
 
-						ODB_SetMissionState(&flight_data, STATE_ARMED, 0);
 						Pyro_SetContinuity(false);
 						Pyro_Arming(&system_measurements, false, false);
 
 						Logger_Enable(true);
 
 						current_global_state = STATE_ARMED;
+						flight_stats.fsm_trans.armed = HAL_GetTick();
+						ODB_SetMissionState(&flight_data, STATE_ARMED, 0);
 					}
 					break;
         	}
@@ -174,16 +179,18 @@ void FSM_Update(void) {
 
         case STATE_ARMED:
             if(flight_data.highg_acc_z > current_config.acc_z_launch_threshold) {
-            	ODB_SetMissionState(&flight_data, STATE_INFLIGHT, SUB_BOOST);
                 if(!current_config.flight_test_mode) {
                 	Scheduler_SetActive("BTRx", false);
                 	Scheduler_SetActive("BTTx", false);
                 }
 
+                flight_stats.flight_start_time_ms = HAL_GetTick();
                 HAL_TIM_Base_Start(&htim5);      	// Start timer to measure time since launch
                 __HAL_TIM_SET_COUNTER(&htim5, 0);   // Reset timer counter
                 current_global_state = STATE_INFLIGHT;
                 current_inflight_substate = SUB_BOOST;
+                flight_stats.fsm_trans.inflight_boost = 0;
+                ODB_SetMissionState(&flight_data, STATE_INFLIGHT, SUB_BOOST);
             }
             break;
 
@@ -195,9 +202,10 @@ void FSM_Update(void) {
                 	if(flight_data.kalman_v >= current_config.boost_phase_v_threshold) {
                 	    flight_stats.mach_lock.activated = true;
                 	    if(flight_stats.mach_lock.start_time_ms == 0) {
-                	        flight_stats.mach_lock.start_time_ms = HAL_GetTick();
+                	        flight_stats.mach_lock.start_time_ms = HAL_GetTick() - flight_stats.flight_start_time_ms;
                 	    }
                 	    current_inflight_substate = SUB_FAST;
+                	    flight_stats.fsm_trans.inflight_fast = HAL_GetTick() - flight_stats.flight_start_time_ms;
                 	    ODB_SetMissionState(&flight_data, STATE_INFLIGHT, SUB_FAST);
                 	}
                     break;
@@ -206,8 +214,9 @@ void FSM_Update(void) {
                     // Wait for fast ascent detection
 	                if(flight_duration > current_config.pyros_arming_failsafe_ms || flight_data.kalman_v < current_config.boost_phase_v_threshold) {
 						flight_stats.mach_lock.activated = false;
-						flight_stats.mach_lock.end_time_ms = HAL_GetTick();
+						flight_stats.mach_lock.end_time_ms = HAL_GetTick() - flight_stats.flight_start_time_ms;
 						current_inflight_substate = SUB_COAST;
+						flight_stats.fsm_trans.inflight_coast = HAL_GetTick() - flight_stats.flight_start_time_ms;
 						ODB_SetMissionState(&flight_data, STATE_INFLIGHT, SUB_COAST);
 					}
                     break;
@@ -218,6 +227,7 @@ void FSM_Update(void) {
                 		// cyclic inflight substate for sustainer
                 		sustainer_ignited = true;
 						current_inflight_substate = SUB_BOOST;
+						flight_stats.fsm_trans.inflight_drogue = HAL_GetTick() - flight_stats.flight_start_time_ms;
 						ODB_SetMissionState(&flight_data, STATE_INFLIGHT, SUB_BOOST);
 						break;
 					}
@@ -232,10 +242,11 @@ void FSM_Update(void) {
 						if(!flight_stats.apogee.valid) {
 							flight_stats.apogee.valid = true;
 							flight_stats.apogee.value = flight_data.kalman_z;
-							flight_stats.apogee.time_ms = HAL_GetTick();
+							flight_stats.apogee.time_ms = HAL_GetTick() - flight_stats.flight_start_time_ms;
 						}
 
 						current_inflight_substate = SUB_DROGUE;
+						flight_stats.fsm_trans.inflight_drogue = HAL_GetTick() - flight_stats.flight_start_time_ms;
 						ODB_SetMissionState(&flight_data, STATE_INFLIGHT, SUB_DROGUE);
 
 						fire_timer = 0;
@@ -263,6 +274,7 @@ void FSM_Update(void) {
 
 					if(flight_data.kalman_z <= current_config.main_deploy_altitude_threshold_m) {
 						current_inflight_substate = SUB_MAIN;
+						flight_stats.fsm_trans.inflight_main = HAL_GetTick() - flight_stats.flight_start_time_ms;
 						ODB_SetMissionState(&flight_data, STATE_INFLIGHT, SUB_MAIN);
 
 						fire_timer = 0;
@@ -288,11 +300,12 @@ void FSM_Update(void) {
 					FSM_HandleDeployment(PYRO_ROLE_MAIN, PYRO_ROLE_MAIN_BACKUP, &flight_stats.main_deploy, current_config.main_fire_attempt_max_nb);
 
 					if(fabs(flight_data.kalman_v) < current_config.landing_detect_v_threshold) {
-						if(landing_timer == 0) landing_timer = HAL_GetTick();
+						if(landing_timer == 0) landing_timer = HAL_GetTick() - flight_stats.flight_start_time_ms;
 						if(HAL_GetTick() - landing_timer > current_config.landing_detect_threshold_ms) {
 							Pyro_Arming(&system_measurements, false, false);
 
 							current_inflight_substate = SUB_LANDED;
+							flight_stats.fsm_trans.inflight_landed = HAL_GetTick() - flight_stats.flight_start_time_ms;
 							ODB_SetMissionState(&flight_data, STATE_INFLIGHT, SUB_LANDED);
 						}
 					} else {
@@ -305,10 +318,6 @@ void FSM_Update(void) {
 
 				    Logger_Enable(false);
 				    Logger_FlushRemaining();
-				    while(Logger_IsBusy()) {
-						Logger_Task();
-						HAL_Delay(1);
-					}
 
 				    Logger_SaveStats(&flight_stats);
 
@@ -323,6 +332,7 @@ void FSM_Update(void) {
 				    Buzzer_StartPeriodicBip(&buzzer, current_config.buzzer_report_tone_hz, 500, 500);
 
 				    current_global_state = STATE_POSTFLIGHT;
+				    flight_stats.fsm_trans.postflight = HAL_GetTick() - flight_stats.flight_start_time_ms;
 				    ODB_SetMissionState(&flight_data, STATE_POSTFLIGHT, 0);
 				    break;
 			}

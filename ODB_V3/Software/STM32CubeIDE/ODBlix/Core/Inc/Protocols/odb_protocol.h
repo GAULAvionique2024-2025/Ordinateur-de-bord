@@ -92,6 +92,18 @@ typedef struct __attribute__((packed)) {
     uint32_t time_ms;
 } metric_t;
 
+typedef struct __attribute__((packed)) {
+    uint32_t pre_pyros_test;
+    uint32_t pre_waiting_flight;
+    uint32_t armed;
+    uint32_t inflight_boost;
+    uint32_t inflight_fast;
+    uint32_t inflight_coast;
+    uint32_t inflight_drogue;
+    uint32_t inflight_main;
+    uint32_t inflight_landed;
+    uint32_t postflight;
+} fsm_transitions_t;
 
 // states of the events for statistics reporting
 typedef struct __attribute__((packed)) {
@@ -122,8 +134,13 @@ typedef struct __attribute__((packed)) {
     int32_t	 last_lat;              // internal event for POSTFLIGHT reporting (save in FLASH/SD)
     int32_t  last_lon;              // internal event for POSTFLIGHT reporting (save in FLASH/SD)
     uint32_t flight_time_ms;		// internal event for POSTFLIGHT reporting (save in FLASH/SD)
+    uint32_t flight_start_time_ms;	// internal event for POSTFLIGHT reporting (save in FLASH/SD)
 
-    // TOTAL 148
+    fsm_transitions_t fsm_trans;	// internal event for POSTFLIGHT reporting (save in FLASH/SD)
+
+    uint32_t missed_frames;			// internal event for POSTFLIGHT reporting (save in FLASH/SD)
+
+    // TOTAL 152
 } odb_stats_t;
 #define ODB_STATS_SIZE sizeof(odb_stats_t)
 

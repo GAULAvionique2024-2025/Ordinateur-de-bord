@@ -248,11 +248,11 @@ void AppComm_ProcessRx(hm11_t *hm11_dev) {
 					} else if(cmd == CMD_TEST_ARMED) {
 						current_global_state = STATE_ARMED;
 						AppComm_SendAck(hm11_dev, CMD_TEST_ARMING_MODULE, 1);
-					} else if(cmd == CMD_TEST_SUBBOST) {
+					} else if(cmd == CMD_TEST_SUBBOOST) {
 						current_global_state = STATE_INFLIGHT;
 						current_inflight_substate = SUB_BOOST;
-						AppComm_SendAck(hm11_dev, CMD_TEST_SUBBOST, 1);
-					} else if(cmd == CMD_TEST_SUBBOST) {
+						AppComm_SendAck(hm11_dev, CMD_TEST_SUBBOOST, 1);
+					} else if(cmd == CMD_TEST_SUBFAST) {
 						current_global_state = STATE_INFLIGHT;
 						current_inflight_substate = SUB_FAST;
 						AppComm_SendAck(hm11_dev, CMD_TEST_SUBFAST, 1);
