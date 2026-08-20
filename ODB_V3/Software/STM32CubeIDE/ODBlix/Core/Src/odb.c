@@ -90,7 +90,7 @@ void ODB_Reset(odb_data_t *data, odb_stats_t *stats) {
     data->imu_mag_x = 0.0f;
     data->imu_mag_y = 0.0f;
     data->imu_mag_z = 0.0f;
-    data->altitude_msl_m = 0.0f;
+    data->altitude_agl_m = 0.0f;
     data->pressure_pa = 0.0f;
     data->temp_celsius = 0.0f;
     data->highg_acc_x = 0.0f;
@@ -292,7 +292,7 @@ odb_state_t ODB_Init(odb_data_t *data, odb_stats_t *stats) {
 
     if(MEM2067_Mount() == MEM2067_OK) {
     	char sd_filename[13];
-    	snprintf(sd_filename, sizeof(sd_filename), "FLT_%lu.CSV", stats->flight_id);
+    	snprintf(sd_filename, sizeof(sd_filename), "FLT_%lu.csv", stats->flight_id);
     	if(MEM2067_OpenFile(sd_filename) == MEM2067_OK) {
     		system_states |= FLAG_SD_OK;
 			MEM2067_Infos(&mem2067);
@@ -392,7 +392,7 @@ void ODB_Update(odb_data_t *data, odb_stats_t *stats) {
     MS5611_Update(&ms5611);
     if(MS5611_Compute(&ms5611, &temperature, &pressure) == MS5611_OK) {
     	data->pressure_pa = pressure;
-		data->altitude_msl_m = Math_ComputeAltitudeMSL(pressure);
+    	data->altitude_agl_m = Math_ComputeAltitudeMSL(pressure) - ground_altitude_msl_m;
 		data->system_states |= FLAG_BARO_OK;
     } else {
         data->system_states &= ~FLAG_BARO_OK;
@@ -432,7 +432,18 @@ void ODB_Update(odb_data_t *data, odb_stats_t *stats) {
     //Profiler_StopTask(PROFILE_TASK_IMU);
 
     //Profiler_StartTask(PROFILE_TASK_HIGHG);
-    const float current_quat[4] = {bno055.quat.w, bno055.quat.x, bno055.quat.y, bno055.quat.z};
+    float current_quat[4];
+	if(mach_lock_enabled) {
+		current_quat[0] = 1.0f; // w
+		current_quat[1] = 0.0f; // x
+		current_quat[2] = 0.0f; // y
+		current_quat[3] = 0.0f; // z
+	} else {
+		current_quat[0] = bno055.quat.w;
+		current_quat[1] = bno055.quat.x;
+		current_quat[2] = bno055.quat.y;
+		current_quat[3] = bno055.quat.z;
+	}
     if(ADXL382_ReadData(&adxl382) == ADXL382_OK) {
     	ADXL382_Compute(&adxl382, current_quat);
 		data->highg_acc_x = adxl382.acc_x;
@@ -454,7 +465,7 @@ void ODB_Update(odb_data_t *data, odb_stats_t *stats) {
         raw_accel_z = data->imu_acc_vertical;
     }
     KalmanNav_Predict(&kalman_filter, raw_accel_z);
-    KalmanNav_Update(&kalman_filter, data->altitude_msl_m - ground_altitude_msl_m, mach_lock_enabled);
+    KalmanNav_Update(&kalman_filter, data->altitude_agl_m, mach_lock_enabled);
     data->kalman_z = (float)kalman_filter.z;
     data->kalman_v = (float)kalman_filter.v;
     //Profiler_StopTask(PROFILE_TASK_KALMAN);
@@ -501,7 +512,7 @@ void ODB_Update(odb_data_t *data, odb_stats_t *stats) {
         }
 
         ODB_UpdateMetricMax(&stats->max_altitude_gps, (float)data->gps_alt, now_ms);
-        ODB_UpdateMetricMax(&stats->max_altitude_baro, data->altitude_msl_m, now_ms);
+        ODB_UpdateMetricMax(&stats->max_altitude_baro, data->altitude_agl_m, now_ms);
         ODB_UpdateMetricMax(&stats->max_altitude_kalman, data->kalman_z, now_ms);
         ODB_UpdateMetricMax(&stats->max_ascend_speed, (data->kalman_v > 0.0f) ? data->kalman_v : 0.0f, now_ms);
         ODB_UpdateMetricMax(&stats->max_descend_speed, (data->kalman_v < 0.0f) ? -data->kalman_v : 0.0f, now_ms);

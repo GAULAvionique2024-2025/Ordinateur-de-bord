@@ -37,9 +37,17 @@ typedef enum {
 	CMD_RESET_FLIGHTS 		= 0x09,
 	CMD_SET_READY_FLIGHT 	= 0x0A,
 
-	// Tests
+	// Tests FSM
     CMD_TEST_ARMING_MODULE  = 0x0B,
-	CMD_TEST_PYROS			= 0x0C
+	CMD_TEST_PYROS			= 0x0C,
+	CMD_TEST_ARMED			= 0x0D,
+	CMD_TEST_SUBBOST		= 0x0E,
+	CMD_TEST_SUBFAST		= 0x0F,
+	CMD_TEST_SUBCOAST		= 0x10,
+	CMD_TEST_SUBDROGUE		= 0x11,
+	CMD_TEST_SUBMAIN		= 0x12,
+	CMD_TEST_SUBLANDED		= 0x13,
+	CMD_TEST_MACHLOCK		= 0x14,
 } app_cmd_id_t;
 
 void AppComm_SendTelemetry(hm11_t *hm11_dev, const odb_data_t *data);

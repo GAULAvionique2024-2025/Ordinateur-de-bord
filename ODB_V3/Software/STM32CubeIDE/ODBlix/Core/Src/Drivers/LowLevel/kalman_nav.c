@@ -104,7 +104,7 @@ void KalmanNav_Update(kalman_nav_t *dev, float measured_alt, bool is_machlock) {
         dev->R_alt = dev->R_static * 10.0f;
     } else {
         // Below 60k m, we consider the altitude measurement by barometer to be reliable and use the static R value based on initialization
-        dev->R_alt = dev->R_static;
+        dev->R_alt = dev->R_static * 0.1f;
     }
 
     // Innovation
@@ -113,11 +113,16 @@ void KalmanNav_Update(kalman_nav_t *dev, float measured_alt, bool is_machlock) {
     // Kalman scale K = PH' (HPH' + R)^-1
     float S = dev->P[0][0] + dev->R_alt;
     // Spikes protection: 3.0f * sqrtf(S) for respect the 3-sigma rule
-    if(y*y > 9.0f * S && y*y > 25.0f) {
-    	dev->P[0][0] += dev->R_alt * 0.5f;
-		dev->P[1][1] += dev->Q_accel;
+    if(y*y > 9.0f * S && y*y > 10000.0f) {
+    	dev->P[0][0] += dev->R_alt * 0.1f;
+    	dev->P[1][1] += dev->Q_accel * 0.1f;
+
+    	// Clamp
+    	if(dev->P[0][0] > 1000.0f) dev->P[0][0] = 1000.0f;
+    	if(dev->P[1][1] > 1000.0f) dev->P[1][1] = 1000.0f;
         return;
     }
+
     float K[3];
     K[0] = dev->P[0][0] / S;
     K[1] = dev->P[1][0] / S;

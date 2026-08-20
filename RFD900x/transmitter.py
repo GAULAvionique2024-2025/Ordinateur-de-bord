@@ -44,7 +44,7 @@ def run_transmitter():
             imu_mag_x=int(12.3 * 100.0),     # 12.3 uT -> 1230 cuT
             imu_mag_y=int(45.6 * 100.0),
             imu_mag_z=int(78.9 * 100.0),
-            altitude_msl_cm=int(1200.0 * 100.0),
+            altitude_agl_m=int(1200.0 * 100.0),
             pressure_pa=int(101325),    
             temp_celsius=int(25.0 * 100.0),      # 25 C -> 2500 cdegC
             highg_acc_x=int(0.00 * 100.0),
@@ -85,7 +85,7 @@ def run_transmitter():
             imu_mag_x=int(13.0 * 100.0),
             imu_mag_y=int(46.0 * 100.0),
             imu_mag_z=int(79.0 * 100.0),
-            altitude_msl_cm=int(8500.0 * 100.0),
+            altitude_agl_m=int(8500.0 * 100.0),
             pressure_pa=int(75500),
             temp_celsius=int(18.0 * 100.0),
             highg_acc_x=int(0.00 * 100.0),

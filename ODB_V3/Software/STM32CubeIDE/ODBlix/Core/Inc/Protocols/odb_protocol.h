@@ -153,7 +153,7 @@ typedef struct __attribute__((packed)) {
     float		imu_mag_z;			// IMU Magnetometer Z in uT (converted to cuT for MAVLink) -> Linked with BNO055
     float		imu_temp;			// IMU Temperature in °C (converted to °cC for MAVLink) -> Linked with BNO055
     // Pressure & Temp
-    float		altitude_msl_m;		// Altitude in m (converted to cm for MAVLink) from barometer referenced with the sea level (MLS)-> Linked with MS5611
+    float		altitude_agl_m;		// Altitude in m (converted to cm for MAVLink) from barometer referenced with the sea level (AGL)-> Linked with MS5611
     float       pressure_pa;       	// Atmospheric pressure in Pa (converted to hPa for MAVLink) -> Linked with MS5611
     float       temp_celsius;       // Board or environment temperature in °C (converted to °cC for MAVLink) -> Linked with MAX6612MXK
     // High-G Acclerometer

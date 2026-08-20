@@ -936,6 +936,12 @@ class DataServiceManager with ChangeNotifier {
     ConsoleService().log('Demande de réinitialisation usine envoyée.');
   }
 
+  Future<void> requestLastFlightEvents() async {
+    if (!hasConnection) { ConsoleService().log('Aucune connexion Bluetooth avec l\'ODB'); return; }
+    ConsoleService().log('Demande des événements du dernier vol...');
+    await btService.sendBinary(0x03, [0x08]);
+  }
+
   Future<void> setReadyFlight() async {
     if (!hasConnection) { ConsoleService().log('Aucune connexion Bluetooth avec l\'ODB'); return; }
     await btService.sendBinary(0x03, [0x0A]);
@@ -954,10 +960,52 @@ class DataServiceManager with ChangeNotifier {
     ConsoleService().log('Demande de test de la continuité des pyros envoyée.');
   }
 
-  Future<void> requestLastFlightEvents() async {
+  Future<void> setSubArmed() async {
     if (!hasConnection) { ConsoleService().log('Aucune connexion Bluetooth avec l\'ODB'); return; }
-    ConsoleService().log('Demande des événements du dernier vol...');
-    await btService.sendBinary(0x03, [0x08]);
+    await btService.sendBinary(0x03, [0x0D]);
+    ConsoleService().log('Demande de mise en sub armed envoyée.');
+  }
+
+  Future<void> setSubBoost() async {
+    if (!hasConnection) { ConsoleService().log('Aucune connexion Bluetooth avec l\'ODB'); return; }
+    await btService.sendBinary(0x03, [0x0E]);
+    ConsoleService().log('Demande de mise en sub boost envoyée.');
+  }
+
+  Future<void> setSubFast() async {
+    if (!hasConnection) { ConsoleService().log('Aucune connexion Bluetooth avec l\'ODB'); return; }
+    await btService.sendBinary(0x03, [0x0F]);
+    ConsoleService().log('Demande de mise en sub fast envoyée.');
+  }
+
+  Future<void> setSubCoast() async {
+    if (!hasConnection) { ConsoleService().log('Aucune connexion Bluetooth avec l\'ODB'); return; }
+    await btService.sendBinary(0x03, [0x10]);
+    ConsoleService().log('Demande de mise en sub coast envoyée.');
+  }
+
+  Future<void> setSubDrogue() async {
+    if (!hasConnection) { ConsoleService().log('Aucune connexion Bluetooth avec l\'ODB'); return; }
+    await btService.sendBinary(0x03, [0x11]);
+    ConsoleService().log('Demande de mise en sub drogue envoyée.');
+  }
+
+  Future<void> setSubMain() async {
+    if (!hasConnection) { ConsoleService().log('Aucune connexion Bluetooth avec l\'ODB'); return; }
+    await btService.sendBinary(0x03, [0x12]);
+    ConsoleService().log('Demande de mise en sub main envoyée.');
+  }
+
+  Future<void> setSubLanded() async {
+    if (!hasConnection) { ConsoleService().log('Aucune connexion Bluetooth avec l\'ODB'); return; }
+    await btService.sendBinary(0x03, [0x13]);
+    ConsoleService().log('Demande de mise en sub landed envoyée.');
+  }
+
+  Future<void> testMachLock() async {
+    if (!hasConnection) { ConsoleService().log('Aucune connexion Bluetooth avec l\'ODB'); return; }
+    await btService.sendBinary(0x03, [0x14]);
+    ConsoleService().log('Demande de test mach lock envoyée.');
   }
 
   // ---------- PARSER ----------

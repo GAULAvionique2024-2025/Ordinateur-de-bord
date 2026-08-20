@@ -35,7 +35,7 @@
 #define CONFIG_PYRO_ATTEMPTS_MIN		(1U)
 /* --- Acceleration & Thresholds --- */
 #define CONFIG_ACC_Z_LAUNCH_MIN_MS2		(0.0f)
-#define CONFIG_ACC_Z_LAUNCH_MAX_MS2		(39.24f)
+#define CONFIG_ACC_Z_LAUNCH_MAX_MS2		(39.24f) // 4G
 /* --- Altitude Thresholds --- */
 #define CONFIG_MAIN_DEPLOY_ALT_MIN_M	(50.0f)
 /* --- Velocity Thresholds --- */

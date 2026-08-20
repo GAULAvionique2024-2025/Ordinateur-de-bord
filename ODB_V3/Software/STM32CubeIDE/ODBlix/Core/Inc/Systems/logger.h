@@ -47,6 +47,7 @@ int8_t Logger_Init(void);
 void Logger_PushData(odb_data_t *new_data);
 void Logger_Enable(bool enable);
 bool Logger_IsLogging(void);
+bool Logger_IsBusy(void);
 void Logger_Task(void);
 void Logger_SaveStats(const odb_stats_t *stats);
 void Logger_FlushRemaining(void);
@@ -56,6 +57,7 @@ void Logger_StartReadingFlight(uint32_t header_addr, uint32_t *cursor);
 bool Logger_ReadNextData(uint32_t *cursor, odb_data_t *out_data);
 const odb_stats_t* Logger_GetLastFlightStats(void);
 void Logger_ExportToSD(const odb_stats_t *stats);
+//void Logger_DumpAllToSD(void);
 
 bool Logger_Erase(void);
 

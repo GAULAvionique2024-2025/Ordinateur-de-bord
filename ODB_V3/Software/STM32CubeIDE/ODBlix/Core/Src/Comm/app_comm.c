@@ -9,6 +9,7 @@
 #include "Comm/app_comm.h"
 #include "Comm/beacon_comm.h"
 #include "Utils/reboot_manager.h"
+#include "Systems/flight_fsm.h"
 #include <string.h>
 
 extern w25q_t w25q;
@@ -18,6 +19,9 @@ extern idefix_t idefix;
 extern pyro_t pyros[4];
 
 extern odb_data_t flight_data;
+extern global_state_t current_global_state;
+extern preflight_substate_t current_preflight_substate;
+extern inflight_substate_t current_inflight_substate;
 extern bool is_ready_by_app;
 
 
@@ -179,8 +183,12 @@ void AppComm_ProcessRx(hm11_t *hm11_dev) {
 							AppComm_SendAck(hm11_dev, CMD_REQ_EVENTS, 0);
 						}
 					} else if(cmd == CMD_SET_READY_FLIGHT) {
-						is_ready_by_app = true;
-						AppComm_SendAck(hm11_dev, CMD_SET_READY_FLIGHT, 1);
+						if(current_global_state == STATE_PREFLIGHT && current_preflight_substate == STATE_WAITING_FLIGHT) {
+							is_ready_by_app = true;
+							AppComm_SendAck(hm11_dev, CMD_SET_READY_FLIGHT, 1);
+						} else {
+							AppComm_SendAck(hm11_dev, CMD_SET_READY_FLIGHT, 0);
+						}
 					} else if(cmd == CMD_TEST_ARMING_MODULE) {
 						bool error = false;
 						// Arming module
@@ -237,6 +245,40 @@ void AppComm_ProcessRx(hm11_t *hm11_dev) {
 							DEBUG_PRINTF("ERROR : Not enough connected pyros (%d/%d) or config mismatch\n", pyros_connected, current_config.min_needed_pyro_nb);
 							AppComm_SendAck(hm11_dev, CMD_TEST_PYROS, 0);
 						}
+					} else if(cmd == CMD_TEST_ARMED) {
+						current_global_state = STATE_ARMED;
+						AppComm_SendAck(hm11_dev, CMD_TEST_ARMING_MODULE, 1);
+					} else if(cmd == CMD_TEST_SUBBOST) {
+						current_global_state = STATE_INFLIGHT;
+						current_inflight_substate = SUB_BOOST;
+						AppComm_SendAck(hm11_dev, CMD_TEST_SUBBOST, 1);
+					} else if(cmd == CMD_TEST_SUBBOST) {
+						current_global_state = STATE_INFLIGHT;
+						current_inflight_substate = SUB_FAST;
+						AppComm_SendAck(hm11_dev, CMD_TEST_SUBFAST, 1);
+					} else if(cmd == CMD_TEST_SUBCOAST) {
+						current_global_state = STATE_INFLIGHT;
+						current_inflight_substate = SUB_COAST;
+						AppComm_SendAck(hm11_dev, CMD_TEST_SUBCOAST, 1);
+					} else if(cmd == CMD_TEST_SUBDROGUE) {
+						current_global_state = STATE_INFLIGHT;
+						current_inflight_substate = SUB_DROGUE;
+						AppComm_SendAck(hm11_dev, CMD_TEST_SUBDROGUE, 1);
+					} else if(cmd == CMD_TEST_SUBMAIN) {
+						current_global_state = STATE_INFLIGHT;
+						current_inflight_substate = SUB_MAIN;
+						AppComm_SendAck(hm11_dev, CMD_TEST_SUBMAIN, 1);
+					} else if(cmd == CMD_TEST_SUBLANDED) {
+						current_global_state = STATE_INFLIGHT;
+						current_inflight_substate = SUB_LANDED;
+						AppComm_SendAck(hm11_dev, CMD_TEST_SUBLANDED, 1);
+					} else if(cmd == CMD_TEST_MACHLOCK) {
+						if((flight_data.event_states | FLAG_MACH_LOCK_ENABLED) != 0) {
+							flight_data.event_states &= ~FLAG_MACH_LOCK_ENABLED;
+						} else {
+							flight_data.event_states |= FLAG_MACH_LOCK_ENABLED;
+						}
+						AppComm_SendAck(hm11_dev, CMD_TEST_MACHLOCK, 1);
 					}
                 }
                 CriticalLED_SetColor(&critical_led, NONE);

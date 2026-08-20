@@ -13,7 +13,7 @@
 #define TASK_REBOOT_MANAGER_FREQ_MS		50		// 20Hz
 #define TASK_FSM_FREQ_MS              	5       // 200Hz
 #define TASK_DATA_UPDATE_FREQ_MS      	10      // 100Hz
-#define TASK_LOGGER_FREQ_MS           	20      // 50Hz (134 bytes odb_data_t * 50Hz = 6.6KB per second)
+#define TASK_LOGGER_FREQ_MS           	50      // 20Hz (134 bytes odb_data_t * 50Hz = 2680 bytes per second)
 #define TASK_TELEMETRY_FREQ_MS        	200     // 5Hz
 #define TASK_IDEFIX_FREQ_MS        		30000   // 0.033Hz
 #define TASK_BLUETOOTH_APP_RX_FREQ_MS   50      // 20Hz

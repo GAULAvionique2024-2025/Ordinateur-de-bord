@@ -22,7 +22,7 @@ const odb_config_t default_config = {
 	.payload_size = CONFIG_DATA_SIZE,
 
     // Profile
-    .odb_name = "ODB_1",
+    .odb_name = "ODBlix",
 
     // Stage
     .stage_role = 2,
@@ -46,8 +46,8 @@ const odb_config_t default_config = {
     // Phase
     .acc_z_launch_threshold = 29.42f, 				// m/s2 (3.0G)
     .boost_phase_v_threshold = 100.0f,				// m/s
-    .apogee_detect_v_threshold = -2.0f,				// m/s
-    .landing_detect_v_threshold = 1.0f,				// m/s
+    .apogee_detect_v_threshold = -5.0f,				// m/s
+    .landing_detect_v_threshold = 5.0f,				// m/s
     .landing_detect_threshold_ms = 10000,			// ms
     .apogee_failsafe_ms = 60000,					// ms
 

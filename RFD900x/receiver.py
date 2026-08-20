@@ -10,8 +10,8 @@ mavutil.mavlink = mavlink_dialect
 mavutil.current_dialect = "odb_mavlink_v1"
 
 # --- CONFIGURATION ---
-#SERIAL_PORT = "COM5"
-SERIAL_PORT = "udpin:0.0.0.0:14550"
+SERIAL_PORT = "COM10"
+#SERIAL_PORT = "udpin:0.0.0.0:14550"
 BAUD_RATE = 115200
 SOURCE_SYSTEM = 1
 BOOSTER_SYS_ID = 2
@@ -42,8 +42,8 @@ def run_receiver():
             sys_id = msg.get_srcSystem()
 
             if msg_type == "BAD_DATA":
-                raw_payload = msg.get_msgbuf()
-                print(f"\n\033[91m[ERREUR CRC/FORMAT]\033[0m Reçu : {raw_payload.hex(' ')}")
+                #raw_payload = msg.get_msgbuf()
+                #print(f"\n\033[91m[ERREUR CRC/FORMAT]\033[0m Reçu : {raw_payload.hex(' ')}")
                 continue
 
             if msg_type == "ROCKET_TELEMETRY":
@@ -76,7 +76,7 @@ def run_receiver():
                 gps_fix = data.get("gps_fix")
                 satellites_nb = data.get("satellites_nb")
                 pressure_pa = data.get("pressure_pa")
-                altitude_msl_m = data.get("altitude_msl_m")
+                altitude_agl_m = data.get("altitude_agl_m")
                 temp_celsius = data.get("temp_celsius")
                 imu_acc_x = data.get("imu_acc_x")
                 imu_acc_y = data.get("imu_acc_y")
@@ -97,7 +97,7 @@ def run_receiver():
                 system_states = data.get("system_states")
                 event_states = data.get("event_states")
 
-                print(f"raw: {msg.to_dict()}")
+                #print(f"raw: {msg.to_dict()}")
 
                 print(f"\n{color}{'='*18} {nom} | MAVLink {msg_type} | {time.strftime('%H:%M:%S')} {'='*18}\033[0m")
 
@@ -107,9 +107,9 @@ def run_receiver():
                 if gps_alt is not None:
                     print(f"  GPS altitude   : {gps_alt / 1000.0:.2f} m")
 
-                if altitude_msl_m is not None:
-                    # altitude_msl_m sent as cm in MAVLink XML -> convert to meters
-                    print(f"  Altitude MSL   : {altitude_msl_m / 100.0:.2f} m")
+                if altitude_agl_m is not None:
+                    # altitude_agl_m sent as cm in MAVLink XML -> convert to meters
+                    print(f"  Altitude AGL   : {altitude_agl_m / 100.0:.2f} m")
 
                 if roll is not None and pitch is not None and yaw is not None:
                     # roll/pitch/yaw are sent as cdeg (centi-degrees)
@@ -174,8 +174,8 @@ def run_receiver():
                 print(f"{color}{'='*52}\033[0m")
                 continue
 
-            print(f"\n[RAW] Type non géré : {msg_type} (Source ID: {sys_id})")
-            print(f"  Contenu : {msg.to_dict()}")
+            #print(f"\n[RAW] Type non géré : {msg_type} (Source ID: {sys_id})")
+            #print(f"  Contenu : {msg.to_dict()}")
 
     except KeyboardInterrupt:
         print("\nArrêt de la station sol.")
