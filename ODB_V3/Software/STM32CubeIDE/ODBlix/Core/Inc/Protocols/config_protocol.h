@@ -68,7 +68,7 @@ typedef struct __attribute__((packed)) {
 
     // Pyros
     uint32_t 			fire_attempt_delay_ms;
-    uint32_t 			pyros_arming_failsafe_ms;
+    float	 			pyros_arming_min_altitude_m;
     uint8_t 			min_needed_pyro_nb;
     uint8_t 			pyro_roles[4];
 

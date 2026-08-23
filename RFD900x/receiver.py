@@ -96,6 +96,9 @@ def run_receiver():
                 kalman_v = data.get("kalman_v")
                 system_states = data.get("system_states")
                 event_states = data.get("event_states")
+                lat = data.get("lat")
+                lon = data.get("lon")
+                satellites_nb = data.get("satellites_nb")
 
                 #print(f"raw: {msg.to_dict()}")
 
@@ -170,6 +173,15 @@ def run_receiver():
                 if kalman_v is not None:
                     # kalman_v sent as cm/s -> convert to m/s
                     print(f"  Kalman V       : {kalman_v/100.0:.2f} m/s")
+
+                if lon is not None:
+                    print(f"Longitude: {lon}")
+
+                if lat is not None:
+                    print(f"Latitude: {lat}")
+
+                if satellites_nb is not None:
+                    print(f"Satellites Nb:: {satellites_nb}")
 
                 print(f"{color}{'='*52}\033[0m")
                 continue

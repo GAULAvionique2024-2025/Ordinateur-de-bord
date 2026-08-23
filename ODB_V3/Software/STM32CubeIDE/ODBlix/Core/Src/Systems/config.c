@@ -34,7 +34,7 @@ const odb_config_t default_config = {
 
     // Pyros
     .fire_attempt_delay_ms = 250,
-    .pyros_arming_failsafe_ms = 40000,
+    .pyros_arming_min_altitude_m = 450,
     .min_needed_pyro_nb = 2,
     .pyro_roles = {
         PYRO_ROLE_MAIN,          // Pyro 1
@@ -92,9 +92,14 @@ static config_error_t Config_Validate(const odb_config_t* new_config) {
 			return CONFIG_ERR_PROFILE_AXIS;
 		}
 
-		/* Validate Fail-safes & Timings */
-		if(new_config->apogee_failsafe_ms <= new_config->pyros_arming_failsafe_ms) {
+		/* Validate Timings */
+		if(new_config->fire_attempt_delay_ms <= 0.0f) {
 			return CONFIG_ERR_TIMING_CONFLICT;
+		}
+
+		/* Validate Fail-safes*/
+		if(new_config->pyros_arming_min_altitude_m <= 0.0f) {
+			return CONFIG_ERR_ALTITUDE_LIMIT;
 		}
 
 		/* Validate Pyro Configuration */

@@ -212,7 +212,8 @@ void FSM_Update(void) {
 
                 case SUB_FAST:
                     // Wait for fast ascent detection
-	                if(flight_duration > current_config.pyros_arming_failsafe_ms || flight_data.kalman_v < current_config.boost_phase_v_threshold) {
+                	// TODO: add pyros_arming_min_altitude_m & pyros_fire_max_tilt_angle_deg
+	                if(flight_data.kalman_v < current_config.boost_phase_v_threshold) {
 						flight_stats.mach_lock.activated = false;
 						flight_stats.mach_lock.end_time_ms = HAL_GetTick() - flight_stats.flight_start_time_ms;
 						current_inflight_substate = SUB_COAST;
@@ -223,6 +224,7 @@ void FSM_Update(void) {
 
                 case SUB_COAST:
                     // Wait for apogee detection
+                	// TODO: add pyros_arming_min_altitude_m
                 	if(current_config.stage_role == 3 && !sustainer_ignited && flight_data.highg_acc_z > current_config.acc_z_launch_threshold) {
                 		// cyclic inflight substate for sustainer
                 		sustainer_ignited = true;
@@ -236,7 +238,7 @@ void FSM_Update(void) {
 					 * 1. Nominal apogee detection : velocity below threshold after a reasonable flight duration (to avoid early detection during boost or fast phase)
 					 * 2. Failsafe timeout : if apogee not detected after a maximum time
 					 */
-                	bool nominal_apogee = (flight_data.kalman_v < current_config.apogee_detect_v_threshold) && (flight_duration > current_config.pyros_arming_failsafe_ms);
+                	bool nominal_apogee = (flight_data.kalman_v < current_config.apogee_detect_v_threshold);
                 	bool failsafe_timeout = (flight_duration > current_config.apogee_failsafe_ms);
 					if(nominal_apogee || failsafe_timeout) {
 						if(!flight_stats.apogee.valid) {

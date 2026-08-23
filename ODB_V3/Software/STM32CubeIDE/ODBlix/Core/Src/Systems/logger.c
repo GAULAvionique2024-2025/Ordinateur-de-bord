@@ -424,7 +424,7 @@ void Logger_ExportToSD(const odb_stats_t *stats) {
 
     f_puts("TimeBoot_ms,Sys_States,Event_States,Mission_State,Battery_mV,"
            "Roll,Pitch,Yaw,IMU_Acc_X,IMU_Acc_Y,IMU_Acc_Z,IMU_Gyro_X,IMU_Gyro_Y,IMU_Gyro_Z,IMU_Mag_X,IMU_Mag_Y,IMU_Mag_Z,"
-           "Alt_MSL_m,Press_Pa,Temp_C,HighG_Acc_X,HighG_Acc_Y,HighG_Acc_Z,"
+           "Alt_AGL_m,Press_Pa,Temp_C,HighG_Acc_X,HighG_Acc_Y,HighG_Acc_Z,"
            "GPS_Fix,Lat,Lon,GPS_Alt_mm,Vel,COG,Sat_NB,SD_Space,IMU_Acc_Vert,HighG_Acc_Vert,Kalman_Z,Kalman_V\n", &active_file);
 
     uint32_t cursor = 0;
@@ -457,59 +457,3 @@ void Logger_ExportToSD(const odb_stats_t *stats) {
     MEM2067_CloseFile();
     MEM2067_Unmount();
 }
-
-/*
-void Test_W25Q_Logging(void) {
-	DEBUG_PRINTF("\n=== [TEST] DÉBUT DU TEST D'ENREGISTREMENT W25Q512 ===\n");
-
-    odb_data_t mock_data;
-    ODB_Reset(&mock_data, NULL);
-    mock_data.version_major = ODB_PROTOCOL_VERSION_MAJOR;
-
-    DEBUG_PRINTF("[TEST] Génération et écriture de 500 frames en Flash...\n");
-    for (int i = 0; i < 500; i++) {
-        mock_data.time_boot_ms = i * 20;
-        mock_data.altitude_agl_m = (float)i * 2.5f;
-        mock_data.kalman_z = mock_data.altitude_agl_m;
-        mock_data.kalman_v = 150.0f - (i * 0.3f);
-
-        if (i > 250) {
-            mock_data.event_states |= FLAG_APOGEE_DETECTED;
-            mock_data.kalman_v = -10.0f;
-        }
-
-        Logger_PushData(&mock_data);
-        Logger_Task();
-
-        while (W25Q_IsBusy(w25q.hqspi)) {
-            Logger_Task();
-            HAL_Delay(1);
-        }
-    }
-    DEBUG_PRINTF("[TEST] Écriture des frames terminée.\n");
-
-    odb_stats_t mock_stats;
-    ODB_Reset(NULL, &mock_stats);
-    mock_stats.flight_time_ms = 10000;
-
-    mock_stats.max_altitude_kalman.valid = true;
-    mock_stats.max_altitude_kalman.value = 1250.5f;
-    mock_stats.max_altitude_kalman.time_ms = 5000;
-    mock_stats.apogee.valid = true;
-    mock_stats.apogee.value = 1250.5f;
-
-    DEBUG_PRINTF("[TEST] Écriture des Stats...\n");
-    Logger_SaveStats(&mock_stats);
-
-    DEBUG_PRINTF("[TEST] Relecture des données depuis la W25Q...\n");
-    const odb_stats_t* read_stats = Logger_GetLastFlightStats();
-
-    if (read_stats->max_altitude_kalman.valid && read_stats->max_altitude_kalman.value == 1250.5f) {
-    	DEBUG_PRINTF("[TEST] SUCCÈS : Les statistiques ont été lues correctement (%.1f m) !\n", read_stats->max_altitude_kalman.value);
-    } else {
-    	DEBUG_PRINTF("[TEST] ÉCHEC : Statistiques corrompues ou non trouvées (Valeur lue: %.1f m).\n", read_stats->max_altitude_kalman.value);
-    }
-
-    DEBUG_PRINTF("=== [TEST] FIN DU TEST ===\n\n");
-}
-*/
