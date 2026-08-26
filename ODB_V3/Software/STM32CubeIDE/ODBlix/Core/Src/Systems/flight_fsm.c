@@ -104,8 +104,7 @@ static void FSM_HandleDeployment(pyro_role_t primary_role, pyro_role_t backup_ro
             if(!current_config.flight_test_mode) {
             	Pyro_StopFire(primary);
             }
-        }
-        else if(backup_active && backup != NULL) {
+        } else if(backup_active && backup != NULL) {
             if(!current_config.flight_test_mode) {
             	Pyro_StopFire(backup);
             }

@@ -69,7 +69,7 @@ pyros_state_t Pyro_Arming(system_measurements_t *measures, bool arming, bool is_
 		HAL_GPIO_WritePin(Pyros_Arm_GPIO_Port, Pyros_Arm_Pin, GPIO_PIN_RESET);
 	}
 
-	if(is_test) HAL_Delay(250);
+	if(is_test) HAL_Delay(PYRO_RISING_TIME_MS * 5);
 
 	bool is_pyros_armed = Pyro_IsArmed(measures);
 	return (is_pyros_armed == arming) ? PYRO_OK : PYRO_ARMING_ERROR;

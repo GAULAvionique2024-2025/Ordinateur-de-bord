@@ -27,6 +27,9 @@
 #define ADXL382_REG_OP_MODE       0x26
 #define ADXL382_REG_DIG_EN        0x27
 #define ADXL382_REG_RESET     	  0x2A
+#define ADXL382_REG_OR_CFG    	  0x48
+#define ADXL382_REG_TRIG_CFG  	  0x49
+#define ADXL382_REG_FILTER    	  0x50
 
 
 static int8_t ADXL382_ReadReg(I2C_HandleTypeDef *hi2c, uint8_t reg, uint8_t *data) {
@@ -154,6 +157,59 @@ static void ADXL382_RemapAxes(float *x, float *y, float *z, acc_axis_profile_t p
     }
 }
 
+static int8_t ADXL382_SetOverrangeConfig(adxl382_t *dev, adxl382_or_behavior_t or_mode) {
+    uint8_t or_cfg_val = 0;
+
+    if(ADXL382_ReadReg(dev->hi2c, ADXL382_REG_OR_CFG, &or_cfg_val) != 0) {
+        return -1;
+    }
+
+    or_cfg_val &= ~(0x03);
+    or_cfg_val |= ((uint8_t)or_mode & 0x03);
+
+    return ADXL382_WriteReg(dev->hi2c, ADXL382_REG_OR_CFG, or_cfg_val);
+}
+
+static int8_t ADXL382_SetFilterConfig(adxl382_t *dev, adxl382_filters_t filters) {
+    uint8_t trig_cfg_val = 0;
+    uint8_t filter_val = 0;
+
+    if(ADXL382_ReadReg(dev->hi2c, ADXL382_REG_TRIG_CFG, &trig_cfg_val) != 0) {
+        return -1;
+    }
+
+    trig_cfg_val &= ~(0xE4);
+    if(filters.iir7_bypass) {
+        trig_cfg_val |= (1 << 7);
+    }
+    if(filters.sinc_rate == ADXL382_SINC_16X) {
+        trig_cfg_val |= (1 << 6);
+    }
+    if(filters.iir1_enable) {
+        trig_cfg_val |= (1 << 5);
+    }
+    if(filters.round_mode == ADXL382_ROUND_FLOOR) {
+        trig_cfg_val |= (1 << 2);
+    }
+
+    if(ADXL382_WriteReg(dev->hi2c, ADXL382_REG_TRIG_CFG, trig_cfg_val) != 0) {
+        return -1;
+    }
+
+    if(filters.dcf_bypass) {
+        filter_val |= (1 << 7);
+    }
+    if(filters.eq_bypass) {
+        filter_val |= (1 << 6);
+    }
+
+    filter_val |= (((uint8_t)filters.lpf_mode & 0x03) << 4);
+    filter_val |= (((uint8_t)filters.hpf_path & 0x01) << 3);
+    filter_val |= ((uint8_t)filters.hpf_corner & 0x07);
+
+    return ADXL382_WriteReg(dev->hi2c, ADXL382_REG_FILTER, filter_val);
+}
+
 
 int8_t ADXL382_SetMode(adxl382_t *dev, adxl382_mode_t mode) {
     uint8_t op_mode_reg = 0;
@@ -196,6 +252,14 @@ adxl382_error_t ADXL382_Init(adxl382_t *dev) {
     // Range
     if(ADXL382_SetRange(dev, dev->range) != 0) {
 		return ADXL382_RANGE_ERROR;
+	}
+
+    // Filters
+    if(ADXL382_SetOverrangeConfig(dev, dev->filters_cfg.or_behavior) != 0) {
+		return ADXL382_I2C_ERROR;
+	}
+	if(ADXL382_SetFilterConfig(dev, dev->filters_cfg) != 0) {
+		return ADXL382_I2C_ERROR;
 	}
 
     // Set axis profile

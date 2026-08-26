@@ -14,7 +14,7 @@
 #define TASK_FSM_FREQ_MS              	10      // 100Hz
 #define TASK_DATA_UPDATE_FREQ_MS      	10      // 100Hz
 #define TASK_LOGGER_FREQ_MS           	10      // 100Hz (134 bytes odb_data_t * 100Hz = 13400 bytes per second) => more than 10 hours life
-#define TASK_TELEMETRY_FREQ_MS        	200     // 5Hz
+#define TASK_TELEMETRY_FREQ_MS        	1000    // 1Hz
 #define TASK_IDEFIX_FREQ_MS        		30000   // 0.033Hz
 #define TASK_BLUETOOTH_APP_RX_FREQ_MS   50      // 20Hz
 #define TASK_BLUETOOTH_APP_TX_FREQ_MS	1000    // 1Hz
